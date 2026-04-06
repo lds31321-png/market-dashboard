@@ -2311,8 +2311,18 @@ document.getElementById('pt-capital').textContent = '$' + Math.round(getCapitalU
 // ══════════════════════════════════════════════════════════════
 
 var rvData = null;        // 파싱된 원시 데이터
-var rvCapital = 35000000; // 기준 원금 (원화)
+var rvCapital = 35000000; // 기준 원금 (원화) — 연도별 미설정 시 폴백
 var rvRate = 1430;        // 환율
+var rvYearlyCapital = {}; // 연도별 원금 { '2025': 35000000, '2026': 42000000 } — 엑셀 O44:R53 동일
+
+// 해당 연도의 달러 자본금 반환 — 연도별 설정 우선, 없으면 기본 원금 사용
+function getCapitalForYear(year) {
+  var yr = String(year);
+  var krw = (rvYearlyCapital[yr] && rvYearlyCapital[yr] > 0)
+    ? rvYearlyCapital[yr]
+    : rvCapital;
+  return krw / rvRate;
+}
 
 // ── 데이터 파싱 ──────────────────────────────────────────────
 function parseReviewData(text) {
@@ -2360,7 +2370,9 @@ function aggregateDaily(rows) {
   arr.forEach(function(d) {
     cum += d.net;
     d.cumNet = cum;
-    d.cumPct = rvCapital > 0 ? cum / (rvCapital / rvRate) * 100 : 0;
+    var yr = d.date ? d.date.slice(0,4) : '';
+    var capD = yr ? getCapitalForYear(yr) : (rvCapital / rvRate);
+    d.cumPct = capD > 0 ? cum / capD * 100 : 0;
   });
   return arr;
 }
@@ -2397,9 +2409,19 @@ function aggregateMonthly(daily) {
 }
 
 // ── 성과 지표 계산 ───────────────────────────────────────────
-function calcMetrics(rows) {
-  var nets = rows.map(function(r){ return r.net; }).filter(function(v){ return v !== 0; });
-  var wins = nets.filter(function(v){ return v > 0; });
+// ── 성과 지표 계산 — 레이님 엑셀 방식 (주간 기준) ─────────────
+// 엑셀과 동일: 승률/손익비/기대비율 모두 주간 단위로 집계
+// rows: 원시 데이터 (totalNet 계산용)
+// weekly: aggregateWeekly(daily) 결과 — 주간 손익 배열
+function calcMetrics(rows, weekly) {
+  // weekly가 없으면 일별 집계에서 파생 (하위호환)
+  if (!weekly || weekly.length === 0) {
+    var daily0 = aggregateDaily(rows);
+    weekly = aggregateWeekly(daily0);
+  }
+  // 주간 손익 배열 (0인 주 제외)
+  var nets = weekly.map(function(w){ return w.net; }).filter(function(v){ return v !== 0; });
+  var wins   = nets.filter(function(v){ return v > 0; });
   var losses = nets.filter(function(v){ return v < 0; });
   var winRate = nets.length > 0 ? wins.length / nets.length * 100 : 0;
   var avgWin  = wins.length > 0 ? wins.reduce(function(s,v){return s+v;},0)/wins.length : 0;
@@ -2408,8 +2430,7 @@ function calcMetrics(rows) {
   var avgNet  = nets.length > 0 ? nets.reduce(function(s,v){return s+v;},0)/nets.length : 0;
   var stdDev  = nets.length > 1 ? Math.sqrt(nets.reduce(function(s,v){return s+(v-avgNet)*(v-avgNet);},0)/(nets.length-1)) : 0;
   var riskAdj = stdDev > 0 ? (avgNet/stdDev)*100 : 0;
-  // 기대비율: 엑셀 공식 = (승률×평균이익률) / (패률×평균손실률)
-  // 원금 대비 % 기준 → 원금 무관하게 전략 구조 자체 비교 가능
+  // 기대비율: 엑셀 공식 = (승률×평균이익률) / (패률×평균손실률) — 원금 대비 % 기준
   var capital = rvCapital / rvRate;
   if (capital <= 0) capital = 1;
   var avgWinPct  = avgWin  / capital * 100;
@@ -2418,22 +2439,31 @@ function calcMetrics(rows) {
   var expectancy = (avgLossPct > 0 && lossRate > 0)
     ? (winRate/100 * avgWinPct) / (lossRate * avgLossPct)
     : 0;
-  var maxLoss = losses.length > 0 ? Math.min.apply(null, losses.map(function(v){return -v;})) : 0;
+  var maxLoss = losses.length > 0 ? Math.max.apply(null, losses.map(function(v){ return Math.abs(v); })) : 0;
+  // totalNet은 원시 데이터 기준 (건별 합산 = 주간 합산과 동일)
+  var rawNets = rows.map(function(r){ return r.net; });
+  var totalNet = rawNets.reduce(function(s,v){return s+v;},0);
   return {
-    total: nets.length, wins: wins.length, losses: losses.length,
+    total: nets.length, wins: wins.length, losses: losses.length,  // ← 주간 기준 거래수
     winRate: winRate, avgWin: avgWin, avgLoss: avgLoss,
     plRatio: plRatio, avgNet: avgNet, stdDev: stdDev,
     riskAdj: riskAdj, expectancy: expectancy,
-    maxLoss: maxLoss, totalNet: nets.reduce(function(s,v){return s+v;},0),
+    maxLoss: maxLoss, totalNet: totalNet,
   };
 }
 
 // ── 이상값(손절 위반) 탐지 ───────────────────────────────────
+// 손절 위반은 "하루 손실이 일별 평균 손실의 3배 초과"로 판단
+// → 주간 기준 metrics.avgLoss와 별도로 일별 평균 손실 계산
 function detectAnomalies(daily, metrics) {
-  var threshold = metrics.avgLoss * 3; // 평균 손실의 3배 초과
+  var dailyLosses = daily.filter(function(d){ return d.net < 0; }).map(function(d){ return Math.abs(d.net); });
+  var dailyAvgLoss = dailyLosses.length > 0 ? dailyLosses.reduce(function(s,v){return s+v;},0)/dailyLosses.length : 0;
+  var threshold = dailyAvgLoss * 3;
   var anomalies = daily.filter(function(d){
-    return d.net < 0 && Math.abs(d.net) > threshold;
+    return d.net < 0 && dailyAvgLoss > 0 && Math.abs(d.net) > threshold;
   }).sort(function(a,b){ return a.net - b.net; });
+  // 진단·UI용으로 일별 평균 손실도 첨부
+  anomalies.dailyAvgLoss = dailyAvgLoss;
   return anomalies;
 }
 
@@ -2482,16 +2512,56 @@ function judgeMetric(key, value) {
   return       { color: 'var(--red)',    bg: 'var(--red-a)',    status: '<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:rgba(224,96,112,.7);vertical-align:middle;margin-right:4px;flex-shrink:0;margin-bottom:1px"></span>', guide: r.guide.red };
 }
 
+// ── 섹션 잠금 (데이터 없을 때 B~E 흐리게) ───────────────────
+function setReviewLock(locked) {
+  var styleId = 'rv-lock-style';
+  // 스타일 주입 (1회)
+  if (!document.getElementById(styleId)) {
+    var s = document.createElement('style');
+    s.id = styleId;
+    s.textContent = [
+      '.rv-locked{opacity:.25;pointer-events:none;user-select:none;',
+      'transition:opacity .4s ease;}',
+      '.rv-locked *{pointer-events:none!important;}',
+    ].join('');
+    document.head.appendChild(s);
+  }
+  var page = document.getElementById('page-review');
+  if (!page) return;
+  // page-review의 직접 자식 중 A섹션(처음 3개: 워크플로우 배너·A헤더·row2) 이후를 잠금
+  var children = Array.prototype.slice.call(page.children);
+  // A섹션 끝을 찾기 — row2 클래스(A-1·A-2 카드 감싸는 그리드)까지가 A
+  var pastA = false;
+  children.forEach(function(child, idx) {
+    if (child.classList && child.classList.contains('row2')) { pastA = true; return; }
+    if (!pastA) return;
+    // 이미지 저장용 숨김 div 제외
+    if (child.id === 'rv-export-preview') return;
+    if (locked) {
+      child.classList.add('rv-locked');
+    } else {
+      child.classList.remove('rv-locked');
+    }
+  });
+}
+
 // ── 메인 렌더링 ──────────────────────────────────────────────
 function renderReview() {
   if (!rvData || rvData.length === 0) {
     renderReviewEmpty();
     return;
   }
+  // 데이터 있으면 잠금 해제 + 시작 가이드 숨기기
+  setReviewLock(false);
+  var startGuide = document.getElementById('rv-start-guide');
+  if (startGuide) startGuide.style.display = 'none';
+  // 데이터 로드 후 연도 목록 갱신 (새 연도가 감지되면 UI 업데이트)
+  renderYearCapitalUI();
+
   var daily   = aggregateDaily(rvData);
   var weekly  = aggregateWeekly(daily);
   var monthly = aggregateMonthly(daily);
-  var metrics = calcMetrics(rvData);
+  var metrics = calcMetrics(rvData, weekly); // 주간 기준 (레이님 엑셀 방식)
   var anomalies = detectAnomalies(daily, metrics);
   var mdd     = calcMDD(daily);
 
@@ -2503,7 +2573,6 @@ function renderReview() {
   renderDiagnosis(metrics, anomalies, mdd, daily, weekly, monthly, rvData);
   renderMonthlyTable(monthly, daily);
   // 수렴 비율 계산 (가이드용)
-  var nW2 = Math.max(weekly.length > 0 ? daily.length/weekly.length : 5, 1);
   var nM2 = Math.max(monthly.length > 0 ? daily.length/monthly.length : 21, 1);
   var stdD_g = calcVolatility(daily);
   var stdM_g = calcVolatility(monthly) / Math.sqrt(nM2);
@@ -2521,17 +2590,58 @@ function renderReview() {
 }
 
 function renderReviewEmpty() {
-  ['rv-kpi','rv-stop-alert','rv-instrument','rv-convergence','rv-cumulative','rv-diagnosis','rv-monthly-table','rv-money-mgmt'].forEach(function(id) {
+  // B~E 섹션 흐리게 잠금
+  setReviewLock(true);
+
+  // A-2 카드 하단에 "여기서 시작" 안내 주입 (1회만)
+  if (!document.getElementById('rv-start-guide')) {
+    // rv-paste-wrap의 부모 = card-b div (항상 존재하는 안정적 타겟)
+    var pasteWrap = document.getElementById('rv-paste-wrap');
+    var cardBTarget = pasteWrap ? pasteWrap.parentNode : null;
+    if (cardBTarget) {
+      var guide = document.createElement('div');
+      guide.id = 'rv-start-guide';
+      guide.style.cssText = [
+        'margin-top:14px;padding:14px 16px;',
+        'background:linear-gradient(135deg,rgba(56,189,248,.18),rgba(56,189,248,.06));',
+        'border:1.5px solid rgba(56,189,248,.5);border-radius:10px;',
+        'display:flex;align-items:flex-start;gap:14px;',
+      ].join('');
+      guide.innerHTML = [
+        '<div style="font-size:26px;flex-shrink:0;line-height:1.2">👆</div>',
+        '<div>',
+          '<div style="font-size:13px;font-weight:800;color:var(--cyan);margin-bottom:6px">',
+            '여기서 시작하세요',
+          '</div>',
+          '<div style="font-size:11px;color:var(--t2);line-height:1.8">',
+            '① <b style="color:var(--t1)">원금·환율</b>을 확인하고<br>',
+            '② DB금융투자 <b style="color:var(--t1)">1310창</b>에서 데이터를 복사한 후<br>',
+            '③ 위의 <b style="color:var(--cyan)">+ 데이터 붙여넣기</b> 버튼을 눌러 붙여넣으세요',
+          '</div>',
+          '<div style="font-size:10px;color:var(--t3);margin-top:8px;padding:6px 10px;',
+            'background:rgba(0,0,0,.15);border-radius:5px;">',
+            '입력이 완료되면 B~E 섹션이 자동으로 채워집니다.',
+          '</div>',
+        '</div>',
+      ].join('');
+      cardBTarget.appendChild(guide);
+    }
+  }
+
+  // 빈 상태 텍스트 (각 섹션 내부)
+  ['rv-kpi','rv-stop-alert','rv-instrument','rv-convergence',
+   'rv-diagnosis','rv-monthly-table','rv-money-mgmt'].forEach(function(id) {
     var el = document.getElementById(id);
-    if (el) el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--t3);font-size:11px">HTS 데이터를 붙여넣으면 자동으로 분석됩니다.</div>';
+    if (el) el.innerHTML = '';
   });
-  // 데이터 없을 때도 기본 가이드 표시
   renderGuideCards(null, null, null, null);
 }
 
 // ── KPI 카드 — 3개 프레임워크 분류 ──────────────────────────
 function renderReviewKPI(m, mdd, daily) {
-  var cap = rvCapital / rvRate;
+  // 최근 연도 원금 기준으로 수익률·표준편차% 계산
+  var lastYr = daily && daily.length > 0 ? daily[daily.length-1].date.slice(0,4) : String(new Date().getFullYear());
+  var cap = getCapitalForYear(lastYr);
   var totalPct = cap > 0 ? (m.totalNet / cap * 100) : 0;
   var stdDevPct = cap > 0 ? (m.stdDev / cap * 100) : 0;
 
@@ -2539,6 +2649,7 @@ function renderReviewKPI(m, mdd, daily) {
   var jPL = judgeMetric('plRatio', m.plRatio);
   var jEX = judgeMetric('expectancy', m.expectancy);
   var jSD = judgeMetric('stdDevPct', stdDevPct);
+  var jRA = judgeMetric('riskAdj', m.riskAdj);
   var mddColor  = mdd<5?'var(--green)':mdd<15?'var(--yellow)':'var(--red)';
   var mddStatus = mdd<5?'🟢':mdd<15?'🟡':'🔴';
 
@@ -2551,7 +2662,7 @@ function renderReviewKPI(m, mdd, daily) {
 
   var stratStatus = worstStatus([jWR.status, jPL.status, jEX.status]);
   var riskStatus  = worstStatus([mddStatus, anomalyStatusGlobal || '🟢']);
-  var moneyStatus = worstStatus([jSD.status]);
+  var moneyStatus = worstStatus([jSD.status, jRA.status]);
 
   // 카드 렌더 헬퍼
   function kpiCard(label, value, sub, color, bar) {
@@ -2625,12 +2736,12 @@ function renderReviewKPI(m, mdd, daily) {
 
     // 매매 전략
     + framework('', '매매 전략', '얼마나 잘 버는 구조인가', stratStatus, [
-        kpiCard('승률 (기준 70%↑)', jWR.status+' '+m.winRate.toFixed(1)+'%', jWR.guide, jWR.color,
-          { p: m.winRate, c: jWR.color, ref: 70 }),
-        kpiCard('손익비 (기준 0.4↑)', jPL.status+' '+m.plRatio.toFixed(2), jPL.guide, jPL.color,
-          { p: Math.min(m.plRatio*100,100), c: jPL.color, ref: 40 }),
+        kpiCard('승률 (기준 70%↑)', jWR.status+' '+m.winRate.toFixed(1)+'%',
+          '주간 기준 · '+jWR.guide, jWR.color, { p: m.winRate, c: jWR.color, ref: 70 }),
+        kpiCard('손익비 (기준 0.4↑)', jPL.status+' '+m.plRatio.toFixed(2),
+          '주간 기준 · '+jPL.guide, jPL.color, { p: Math.min(m.plRatio*100,100), c: jPL.color, ref: 40 }),
         kpiCard('기대비율 (기준 1.0↑)', jEX.status+' '+(m.expectancy>=0?'+':'')+m.expectancy.toFixed(2),
-          '(승률×평균이익%) ÷ (패률×평균손실%)', jEX.color, null),
+          '주간 기준 · (승률×평균이익%) ÷ (패률×평균손실%)', jEX.color, null),
       ])
 
     // 위험관리
@@ -2641,15 +2752,17 @@ function renderReviewKPI(m, mdd, daily) {
           (anomaliesCountGlobal||0) > 0
             ? '<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:rgba(224,96,112,.7);vertical-align:middle;margin-right:4px;margin-bottom:1px"></span>'+(anomaliesCountGlobal||0)+'건'
             : '<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:rgba(62,207,170,.7);vertical-align:middle;margin-right:4px;margin-bottom:1px"></span>0건',
-          (anomaliesCountGlobal||0) > 0 ? '평균 손실 3배 초과 발생' : '과도한 손실 없음',
+          (anomaliesCountGlobal||0) > 0 ? '일별 평균 손실 3배 초과' : '과도한 손실 없음',
           (anomaliesCountGlobal||0) > 0 ? 'var(--red)' : 'var(--green)', null),
       ])
 
     // 자금관리
     + framework('', '자금관리', '손익이 얼마나 안정적으로 일정한가', moneyStatus, [
         kpiCard('수익 표준편차 (기준 1.5%↓)', jSD.status+' '+stdDevPct.toFixed(2)+'%',
-          jSD.guide, jSD.color,
+          '주간 기준 · '+jSD.guide, jSD.color,
           { p: Math.min(stdDevPct/5*100,100), c: jSD.color, ref: 30 }),
+        kpiCard('위험대비수익비율', jRA.status+' '+(m.riskAdj>=0?'+':'')+m.riskAdj.toFixed(2),
+          '주간 기준 · 평균수익 ÷ 표준편차 · 높을수록 안정적', jRA.color, null),
         kpiCard('손익 수렴 구조', convergenceStatusGlobal||'—',
           '일별→주간→월간 변동폭 비교', convergenceColorGlobal||'var(--t3)', null),
       ])
@@ -2761,7 +2874,6 @@ function renderStopLossAlert(anomalies, metrics, daily) {
   anomaliesCountGlobal = anomalies.length;
   anomalyStatusGlobal  = anomalies.length >= 3 ? '🔴' : anomalies.length > 0 ? '🟡' : '🟢';
 
-  var SHOW_INIT = 0;
   var newsTargets = [];
 
   // 종목코드 → 한글 + 행사가 변환
@@ -2801,10 +2913,12 @@ function renderStopLossAlert(anomalies, metrics, daily) {
     return result.slice(0, MAX).join(', ') + (result.length > MAX ? ' 외 ' + (result.length - MAX) + '건' : '');
   }
 
+  var dailyAvgLoss = anomalies.dailyAvgLoss || 0;
+
   var html = '<div style="margin-bottom:10px;padding:12px 16px;background:var(--red-a);border-radius:8px;border:1.5px solid var(--red);display:flex;align-items:center;gap:12px">'
     + '<span style="font-size:28px">⚠️</span>'
     + '<div><div style="font-size:13px;font-weight:700;color:var(--red)">손절 원칙 미준수 의심 구간 발견 — '+anomalies.length+'건</div>'
-    + '<div style="font-size:11px;color:var(--t3);margin-top:3px">평균 손실($'+metrics.avgLoss.toFixed(0)+')의 3배 초과 손실일을 표시합니다</div></div></div>';
+    + '<div style="font-size:11px;color:var(--t3);margin-top:3px">일별 평균 손실($'+dailyAvgLoss.toFixed(0)+')의 3배 초과 손실일을 표시합니다</div></div></div>';
 
   // 더보기 버튼 — 헤더 바로 아래
   html += '<button id="rv-show-more" onclick="toggleAnomalyList()" '
@@ -2821,7 +2935,7 @@ function renderStopLossAlert(anomalies, metrics, daily) {
   html += '<div id="rv-anomaly-list" style="display:flex;flex-direction:column;gap:10px">';
 
   anomalies.forEach(function(d, idx) {
-    var ratio = metrics.avgLoss > 0 ? Math.abs(d.net) / metrics.avgLoss : 0;
+    var ratio = dailyAvgLoss > 0 ? Math.abs(d.net) / dailyAvgLoss : 0;
     var severity = ratio > 10 ? 'var(--red)' : ratio > 5 ? 'var(--orange)' : 'var(--yellow)';
     var sevBg    = ratio > 10 ? 'var(--red-a)' : ratio > 5 ? 'var(--orange-a)' : 'var(--yellow-a)';
     var newsId   = 'rv-news-' + d.date.replace(/-/g,'');
@@ -2971,7 +3085,8 @@ function renderStopLossAlert(anomalies, metrics, daily) {
 // ── 수렴 구조 차트 ───────────────────────────────────────────
 function renderConvergenceChart(daily, weekly, monthly) {
   var el = document.getElementById('rv-convergence');
-  var capital = rvCapital / rvRate;
+  var lastYrC = daily && daily.length > 0 ? daily[daily.length-1].date.slice(0,4) : String(new Date().getFullYear());
+  var capital = getCapitalForYear(lastYrC);
   if (capital <= 0) capital = 1;
 
   var stdD = calcVolatility(daily);
@@ -3018,65 +3133,111 @@ function renderConvergenceChart(daily, weekly, monthly) {
       ? '발산 구조 — 장기로 갈수록 손익이 불안정해지고 있습니다'
       : '수렴 구조 주의 — 원칙이 일부 무너지고 있을 수 있습니다';
 
-  function funnelBar(label, normVal, rawStd, pctVal, barPct, desc) {
-    // 퍼플→시안 계열 그라데이션 (수렴이면 밝게, 발산이면 로즈)
-    var barGrad = isConverging
-      ? (label==='일별'
-          ? 'linear-gradient(90deg,rgba(139,151,240,.7),rgba(77,216,240,.5))'
-          : label==='주간'
-          ? 'linear-gradient(90deg,rgba(139,151,240,.55),rgba(77,216,240,.4))'
-          : 'linear-gradient(90deg,rgba(62,207,170,.6),rgba(77,216,240,.4))')
-      : (label==='일별'
-          ? 'linear-gradient(90deg,rgba(62,207,170,.6),rgba(77,216,240,.4))'
-          : label==='주간'
-          ? 'linear-gradient(90deg,rgba(232,201,106,.55),rgba(232,149,106,.4))'
-          : 'linear-gradient(90deg,rgba(224,96,112,.65),rgba(232,149,106,.5))');
-    var textColor = isConverging
-      ? (label==='일별' ? 'var(--purple)' : label==='주간' ? 'var(--cyan)' : 'var(--green)')
-      : (label==='일별' ? 'var(--green)'  : label==='주간' ? 'var(--yellow)' : 'var(--red)');
-    var margin = (100 - barPct) / 2;
-    return '<div style="margin-bottom:18px">'
-      + '<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px">'
-        + '<span style="font-size:12px;font-weight:600;color:var(--t1);font-family:var(--font-n)">'+label+' 변동폭 <span style="font-size:9px;color:var(--t3);font-weight:400">(1일 기준 환산)</span></span>'
-        + '<div style="text-align:right">'
-          + '<span style="font-family:var(--mono);font-size:13px;font-weight:700;color:'+textColor+'">±'+pctVal.toFixed(2)+'%</span>'
-          + '<span style="font-size:10px;color:var(--t3);margin-left:6px">(±$'+normVal.toFixed(0)+')</span>'
-        + '</div>'
-      + '</div>'
-      + '<div style="background:rgba(99,120,180,.08);border-radius:6px;height:20px;overflow:hidden;position:relative">'
-        + '<div style="position:absolute;left:'+margin+'%;width:'+barPct+'%;height:100%;background:'+barGrad+';border-radius:6px;transition:all 1.2s ease"></div>'
-      + '</div>'
-      + '<div style="font-size:10px;color:var(--t3);margin-top:4px">'+desc+'</div>'
-    + '</div>';
-  }
-
-  var descD = '하루 단위 기준값. 감정·원칙 준수의 영향이 가장 크게 드러납니다.';
-  var descW = isConverging
-    ? '1일 환산 기준 일별보다 작음 → 주간 누적이 안정되고 있습니다. ✅'
-    : '1일 환산 기준 일별보다 큼 → 손절 미준수 또는 특정 종목 집중이 원인일 수 있습니다.';
-  var descM = isConverging
-    ? '1일 환산 기준 가장 작음 → 월간 전략 구조가 안정적입니다. ✅'
-    : '1일 환산 기준 가장 큼 → 장기로 갈수록 손익이 불안정해지고 있습니다.';
 
   el.innerHTML =
-    '<div style="margin-bottom:16px;padding:14px 16px;background:'+statusBg+';border-radius:8px;border:1px solid '+statusColor+'">'
-      + '<div style="font-size:13px;font-weight:700;color:'+statusColor+';margin-bottom:6px">'+statusIcon+' '+statusTitle+'</div>'
-      + '<div style="font-size:11px;color:var(--t2);line-height:1.6">'
-        + '월간 변동폭을 1일 기준으로 환산하면 일별의 <b style="color:'+statusColor+'">'+ratio.toFixed(2)+'배</b>입니다.<br>'
-        + '<span style="color:var(--t3);font-size:10px">* 단순 누적이 아닌 √거래일로 나눠 기간 효과를 제거한 순수 변동성 비교입니다. 1.0 이하면 수렴, 클수록 발산.</span>'
+    // ── 최상단: 수렴/발산 판정 배너 ──────────────────────────
+    '<div style="margin-bottom:12px;padding:14px 16px;background:'+statusBg+';border-radius:8px;border:1px solid '+statusColor+'">'
+      + '<div style="font-size:13px;font-weight:700;color:'+statusColor+';margin-bottom:4px">'+statusIcon+' '+statusTitle+'</div>'
+      + '<div style="font-size:11px;color:var(--t2);">'
+        + '월간 변동폭(1일 환산)이 일별의 <b style="color:'+statusColor+'">'+ratio.toFixed(2)+'배</b>'
+        + ' — <span style="color:var(--t3);font-size:10px">1.0 이하 수렴 · 클수록 발산</span>'
       + '</div>'
     + '</div>'
-    + '<div style="font-size:10px;color:var(--t3);margin-bottom:14px;padding:8px 12px;background:var(--card2);border-radius:6px">'
-      + (isConverging
-        ? '✅ 막대가 아래로 갈수록 짧아집니다 — 원칙이 작동하며 손익이 안정되고 있습니다.'
-        : '⚠️ 막대가 아래로 갈수록 길어집니다 — 장기 손익이 단기보다 불안정한 상태입니다.')
+
+    // ── 보는 법 미니 가이드 ────────────────────────────────────
+    + '<div style="margin-bottom:16px;padding:10px 14px;background:var(--card2);border-radius:8px;border:1px solid var(--b1)">'
+      + '<div style="font-size:10px;font-weight:700;color:var(--t2);margin-bottom:10px">📖 보는 법 — 막대가 아래로 갈수록 짧아질수록 안정</div>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">'
+
+        // 이상적 패턴
+        + '<div>'
+          + '<div style="font-size:10px;font-weight:600;color:var(--green);margin-bottom:6px">✅ 이상 (수렴)</div>'
+          + ['일별', '주간', '월간'].map(function(lbl, i) {
+              var w = [90, 55, 25][i];
+              return '<div style="margin-bottom:4px;display:flex;align-items:center;gap:6px">'
+                + '<div style="width:36px;font-size:9px;color:var(--t3);flex-shrink:0">'+lbl+'</div>'
+                + '<div style="flex:1;background:rgba(99,120,180,.1);border-radius:3px;height:10px;overflow:hidden">'
+                  + '<div style="width:'+w+'%;height:100%;background:linear-gradient(90deg,rgba(62,207,170,.6),rgba(77,216,240,.4));border-radius:3px;margin:0 auto"></div>'
+                + '</div>'
+              + '</div>';
+            }).join('')
+        + '</div>'
+
+        // 문제 패턴
+        + '<div>'
+          + '<div style="font-size:10px;font-weight:600;color:var(--red);margin-bottom:6px">⚠️ 문제 (발산)</div>'
+          + ['일별', '주간', '월간'].map(function(lbl, i) {
+              var w = [25, 55, 90][i];
+              return '<div style="margin-bottom:4px;display:flex;align-items:center;gap:6px">'
+                + '<div style="width:36px;font-size:9px;color:var(--t3);flex-shrink:0">'+lbl+'</div>'
+                + '<div style="flex:1;background:rgba(99,120,180,.1);border-radius:3px;height:10px;overflow:hidden">'
+                  + '<div style="width:'+w+'%;height:100%;background:linear-gradient(90deg,rgba(224,96,112,.65),rgba(232,149,106,.5));border-radius:3px;margin:0 auto"></div>'
+                + '</div>'
+              + '</div>';
+            }).join('')
+        + '</div>'
+
+      + '</div>'
     + '</div>'
-    + funnelBar('일별', normD, stdD, pctD, barD, descD)
-    + funnelBar('주간', normW, stdW, pctW, barW, descW)
-    + funnelBar('월간', normM, stdM, pctM, barM, descM)
-    + '<div style="margin-top:8px;padding:10px 14px;background:var(--card2);border-radius:6px;font-size:10px;color:var(--t3);text-align:center">'
-      + '이상적인 구조: 일별 &gt; 주간 &gt; 월간 (1일 환산 기준) — 막대가 아래로 갈수록 짧아질수록 원칙이 잘 작동 중'
-    + '</div>';
+
+    // ── 실제 내 데이터 막대 ────────────────────────────────────
+    + (function() {
+        var rows = [
+          { label:'일별', normVal:normD, pctVal:pctD, barPct:barD, prev:null,
+            desc:'하루 단위 기준값. 원칙 준수 여부가 가장 직접적으로 반영됩니다.' },
+          { label:'주간', normVal:normW, pctVal:pctW, barPct:barW, prev:normD,
+            desc: normW <= normD
+              ? '일별보다 짧음 — 1일 환산 시 주간 누적이 안정되고 있습니다.'
+              : '일별보다 김 — 손절 미준수 또는 종목 집중이 원인일 수 있습니다.' },
+          { label:'월간', normVal:normM, pctVal:pctM, barPct:barM, prev:normW,
+            desc: normM <= normW
+              ? '주간보다 짧음 — 월간 전략 구조가 안정적입니다.'
+              : '주간보다 김 — 장기로 갈수록 손익이 불안정해지고 있습니다.' },
+        ];
+
+        return rows.map(function(row, i) {
+          var isBetter = row.prev === null || row.normVal <= row.prev;
+          var dot = isBetter
+            ? '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:rgba(62,207,170,.8);vertical-align:middle;margin-right:5px"></span>'
+            : '<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:rgba(224,96,112,.8);vertical-align:middle;margin-right:5px"></span>';
+          var arrowHtml = '';
+          if (i > 0) {
+            var arrowIcon  = isBetter ? '↓' : '↑';
+            var arrowColor = isBetter ? 'var(--green)' : 'var(--red)';
+            var arrowText  = isBetter ? '이전보다 안정' : '이전보다 불안정';
+            arrowHtml = '<div style="text-align:center;padding:3px 0;margin-bottom:8px">'
+              + '<span style="font-size:11px;font-weight:700;color:'+arrowColor+'">'+arrowIcon+'</span>'
+              + '<span style="font-size:10px;color:'+arrowColor+';margin-left:4px">'+arrowText+'</span>'
+            + '</div>';
+          }
+          var barGrad = isConverging
+            ? ['linear-gradient(90deg,rgba(139,151,240,.7),rgba(77,216,240,.5))',
+               'linear-gradient(90deg,rgba(139,151,240,.55),rgba(77,216,240,.4))',
+               'linear-gradient(90deg,rgba(62,207,170,.6),rgba(77,216,240,.4))'][i]
+            : ['linear-gradient(90deg,rgba(62,207,170,.6),rgba(77,216,240,.4))',
+               'linear-gradient(90deg,rgba(232,201,106,.55),rgba(232,149,106,.4))',
+               'linear-gradient(90deg,rgba(224,96,112,.65),rgba(232,149,106,.5))'][i];
+          var textColor = isConverging
+            ? ['var(--purple)','var(--cyan)','var(--green)'][i]
+            : ['var(--green)','var(--yellow)','var(--red)'][i];
+          var margin = (100 - row.barPct) / 2;
+
+          return arrowHtml
+            + '<div style="margin-bottom:16px">'
+              + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">'
+                + '<span style="font-size:12px;font-weight:600;color:var(--t1)">'+dot+row.label+' 변동폭 <span style="font-size:9px;color:var(--t3);font-weight:400">(1일 기준 환산)</span></span>'
+                + '<div>'
+                  + '<span style="font-family:var(--mono);font-size:13px;font-weight:700;color:'+textColor+'">±'+row.pctVal.toFixed(2)+'%</span>'
+                  + '<span style="font-size:10px;color:var(--t3);margin-left:6px">(±$'+row.normVal.toFixed(0)+')</span>'
+                + '</div>'
+              + '</div>'
+              + '<div style="background:rgba(99,120,180,.08);border-radius:6px;height:20px;overflow:hidden;position:relative">'
+                + '<div style="position:absolute;left:'+margin+'%;width:'+row.barPct+'%;height:100%;background:'+barGrad+';border-radius:6px;transition:all 1.2s ease"></div>'
+              + '</div>'
+              + '<div style="font-size:10px;color:var(--t3);margin-top:4px">'+row.desc+'</div>'
+            + '</div>';
+        }).join('');
+      })();
 }
 
 // ── 누적 수익률 차트 (자본금 대비 %) ────────────────────────
@@ -3086,11 +3247,8 @@ function renderCumulativeChart(daily) {
   var ctx = canvas.getContext('2d');
   if (window._rvCumChart) { try { window._rvCumChart.destroy(); } catch(e){} }
 
-  var capital = rvCapital / rvRate;
-  if (capital <= 0) capital = 1;
-
   var labels = daily.map(function(d){ return d.date.slice(5); });
-  var data  = daily.map(function(d){ return +(d.cumNet / capital * 100).toFixed(2); });
+  var data  = daily.map(function(d){ return +d.cumPct.toFixed(2); }); // 연도별 원금 반영
   var peaks = [], peak = -Infinity;
   data.forEach(function(v){ if(v>peak) peak=v; peaks.push(+peak.toFixed(2)); });
 
@@ -3135,14 +3293,17 @@ function renderCumulativeChart(daily) {
 function renderDiagnosis(metrics, anomalies, mdd, daily, weekly, monthly, rows) {
   var el = document.getElementById('rv-diagnosis');
   var items = [];
-  var capital = rvCapital / rvRate;
+  var lastYrD = daily && daily.length > 0 ? daily[daily.length-1].date.slice(0,4) : String(new Date().getFullYear());
+  var capital = getCapitalForYear(lastYrD);
+  if (capital <= 0) capital = 1;
 
   // ── 1. 손절 원칙 ──────────────────────────────────────────
+  var dailyAvgLoss = anomalies.dailyAvgLoss || 0;
   if (anomalies.length >= 3) {
     var worst = anomalies[0];
     items.push({ level: 'red', icon: '🔴', title: '손절 원칙 미준수 반복 ('+anomalies.length+'건)',
-      body: '평균 손실의 3배를 초과한 날이 '+anomalies.length+'건 발견됐습니다. '
-        + '가장 큰 손실일은 '+worst.date.slice(5)+' ($'+Math.abs(worst.net).toFixed(0)+', 평균의 '+(metrics.avgLoss>0?(Math.abs(worst.net)/metrics.avgLoss).toFixed(1):'-')+'배)입니다.',
+      body: '일별 평균 손실의 3배를 초과한 날이 '+anomalies.length+'건 발견됐습니다. '
+        + '가장 큰 손실일은 '+worst.date.slice(5)+' ($'+Math.abs(worst.net).toFixed(0)+', 일평균의 '+(dailyAvgLoss>0?(Math.abs(worst.net)/dailyAvgLoss).toFixed(1):'-')+'배)입니다.',
       action: '→ 손절선을 사전 가격 알람으로 설정하고 도달 즉시 청산하는 루틴을 만드세요.',
       frame: '위험관리' });
   } else if (anomalies.length > 0) {
@@ -3337,7 +3498,6 @@ function renderDiagnosis(metrics, anomalies, mdd, daily, weekly, monthly, rows) 
     var nW = Math.max(weekly.length > 0 ? daily.length/weekly.length : 5, 1);
     var nM = Math.max(monthly.length > 0 ? daily.length/monthly.length : 21, 1);
     var stdD2 = calcVolatility(daily);
-    var stdW2 = calcVolatility(weekly) / Math.sqrt(nW);
     var stdM2 = calcVolatility(monthly) / Math.sqrt(nM);
     var ratio2 = stdD2 > 0 ? stdM2 / stdD2 : 0;
     if (ratio2 > 1.3) {
@@ -3377,25 +3537,59 @@ function renderDiagnosis(metrics, anomalies, mdd, daily, weekly, monthly, rows) 
         + '</div>';
       }).join('')
     + '</div>';
+
+  // ── 자동 펼침 + 버튼 미리보기 업데이트 ───────────────────────
+  var redCnt    = items.filter(function(i){ return i.level==='red'; }).length;
+  var yellowCnt = items.filter(function(i){ return i.level==='yellow'; }).length;
+  var greenCnt  = items.filter(function(i){ return i.level==='green'; }).length;
+
+  // 긴급도 기반 버튼 색상 결정
+  var btnBorderColor = redCnt > 0 ? 'var(--red)' : yellowCnt > 0 ? 'var(--yellow)' : 'var(--cyan)';
+  var btnTextColor   = redCnt > 0 ? 'var(--red)' : yellowCnt > 0 ? 'var(--yellow)' : 'var(--cyan)';
+  var btnBg          = redCnt > 0 ? 'rgba(224,96,112,.1)' : yellowCnt > 0 ? 'rgba(232,201,106,.1)' : 'rgba(56,189,248,.1)';
+
+  // 미리보기 텍스트: 🔴 2건 · 🟡 3건 · 🟢 1건
+  var previewParts = [];
+  if (redCnt > 0)    previewParts.push('🔴 ' + redCnt + '건');
+  if (yellowCnt > 0) previewParts.push('🟡 ' + yellowCnt + '건');
+  if (greenCnt > 0 && redCnt === 0 && yellowCnt === 0) previewParts.push('🟢 ' + greenCnt + '건');
+  var previewText = previewParts.length > 0 ? previewParts.join(' · ') + ' — ' : '';
+
+  // 버튼 UI 갱신
+  var btn   = document.getElementById('rv-diagnosis-toggle-btn');
+  var label = document.getElementById('rv-diagnosis-toggle');
+  var arrow = document.getElementById('rv-diagnosis-toggle-arrow');
+
+  if (btn) {
+    btn.style.borderColor = btnBorderColor;
+    btn.style.color       = btnTextColor;
+    btn.style.background  = btnBg;
+  }
+  if (label) label.textContent = previewText + '진단 결과 접기';
+  if (arrow) arrow.textContent = '▲';
+
+  // 자동 펼침
+  el.style.display = '';
 }
 
 // ── 월별 성과표 ──────────────────────────────────────────────
 function renderMonthlyTable(monthly, daily) {
   var el = document.getElementById('rv-monthly-table');
   if (monthly.length === 0) { el.innerHTML = ''; return; }
-  var cap = rvCapital / rvRate;
 
-  // 월별 MDD 계산 — 해당 월의 일별 데이터로 계산
+  // 월별 MDD 계산 — 해당 월의 일별 데이터로 계산 (연도별 원금 적용)
   var monthMDD = {};
   if (daily && daily.length > 0) {
     monthly.forEach(function(m) {
       var monthDaily = daily.filter(function(d){ return d.date.slice(0,7) === m.key; });
       if (monthDaily.length === 0) { monthMDD[m.key] = 0; return; }
+      var capM2 = getCapitalForYear(m.key.slice(0,4));
+      if (capM2 <= 0) capM2 = 1;
       var peak = 0, mdd = 0, cum = 0;
       monthDaily.forEach(function(d) {
         cum += d.net;
         if (cum > peak) peak = cum;
-        var dd = cap > 0 ? (peak - cum) / cap * 100 : 0;
+        var dd = (peak - cum) / capM2 * 100;
         if (dd > mdd) mdd = dd;
       });
       monthMDD[m.key] = mdd;
@@ -3413,27 +3607,55 @@ function renderMonthlyTable(monthly, daily) {
     + '</tr></thead><tbody>';
 
   var maxAbs = Math.max.apply(null, monthly.map(function(m){ return Math.abs(m.net); }));
+
+  // 연도별로 그룹핑 후 소계 행 삽입
+  var yearGroups = {};
   monthly.forEach(function(m) {
-    var pct = cap > 0 ? (m.net / cap * 100) : 0;
-    var color = m.net >= 0 ? 'var(--green)' : 'var(--red)';
-    var barW = maxAbs > 0 ? Math.abs(m.net) / maxAbs * 100 : 0;
-    var mdd = monthMDD[m.key] || 0;
-    var mddColor = mdd < 5 ? 'var(--green)' : mdd < 15 ? 'var(--yellow)' : 'var(--red)';
-    html += '<tr style="border-bottom:1px solid var(--b1)">'
-      + '<td style="padding:9px 10px;font-weight:600;color:var(--t1)">'+m.key+'</td>'
-      + '<td style="padding:9px 10px;text-align:right;color:'+color+';font-weight:700">'+(m.net>=0?'+':'')+m.net.toFixed(0)+'</td>'
-      + '<td style="padding:9px 10px;text-align:right;color:'+color+'">'+(pct>=0?'+':'')+pct.toFixed(2)+'%</td>'
-      + '<td style="padding:9px 10px;text-align:right;color:'+mddColor+';font-weight:600">-'+mdd.toFixed(1)+'%</td>'
-      + '<td style="padding:9px 10px;text-align:right;color:var(--t3)">'+m.days+'일</td>'
-      + '<td style="padding:9px 10px;min-width:120px">'
-        + '<div style="display:flex;align-items:center;gap:4px">'
-          + (m.net >= 0
-              ? '<div style="width:'+barW+'%;height:10px;background:var(--green);border-radius:2px;opacity:.8;max-width:120px"></div>'
-              : '<div style="width:'+barW+'%;height:10px;background:var(--red);border-radius:2px;opacity:.8;max-width:120px"></div>')
-        + '</div>'
-      + '</td>'
+    var yr = m.key.slice(0,4);
+    if (!yearGroups[yr]) yearGroups[yr] = [];
+    yearGroups[yr].push(m);
+  });
+  var years = Object.keys(yearGroups).sort();
+
+  years.forEach(function(yr) {
+    var mList = yearGroups[yr];
+    var yrNet  = mList.reduce(function(s,m){ return s+m.net; }, 0);
+    var yrDays = mList.reduce(function(s,m){ return s+m.days; }, 0);
+    var yrColor = yrNet >= 0 ? 'var(--green)' : 'var(--red)';
+    // 월 행
+    mList.forEach(function(m) {
+      var capM = getCapitalForYear(m.key.slice(0,4));
+      var pct = capM > 0 ? (m.net / capM * 100) : 0;
+      var color = m.net >= 0 ? 'var(--green)' : 'var(--red)';
+      var barW = maxAbs > 0 ? Math.abs(m.net) / maxAbs * 100 : 0;
+      var mdd = monthMDD[m.key] || 0;
+      var mddColor = mdd < 5 ? 'var(--green)' : mdd < 15 ? 'var(--yellow)' : 'var(--red)';
+      html += '<tr style="border-bottom:1px solid var(--b1)">'
+        + '<td style="padding:9px 10px;font-weight:600;color:var(--t1)">'+m.key+'</td>'
+        + '<td style="padding:9px 10px;text-align:right;color:'+color+';font-weight:700">'+(m.net>=0?'+':'')+m.net.toFixed(0)+'</td>'
+        + '<td style="padding:9px 10px;text-align:right;color:'+color+'">'+(pct>=0?'+':'')+pct.toFixed(2)+'%</td>'
+        + '<td style="padding:9px 10px;text-align:right;color:'+mddColor+';font-weight:600">-'+mdd.toFixed(1)+'%</td>'
+        + '<td style="padding:9px 10px;text-align:right;color:var(--t3)">'+m.days+'일</td>'
+        + '<td style="padding:9px 10px;min-width:120px">'
+          + '<div style="display:flex;align-items:center;gap:4px">'
+            + '<div style="width:'+barW+'%;height:10px;background:'+(m.net>=0?'var(--green)':'var(--red)')+';border-radius:2px;opacity:.8;max-width:120px"></div>'
+          + '</div>'
+        + '</td>'
+      + '</tr>';
+    });
+    // 연도 소계 행
+    var capYr = getCapitalForYear(yr);
+    var yrPct2 = capYr > 0 ? (yrNet / capYr * 100) : 0;
+    html += '<tr style="border-bottom:2px solid rgba(139,151,240,.3);background:rgba(139,151,240,.06)">'
+      + '<td style="padding:9px 10px;font-weight:700;color:var(--purple);font-size:12px">'+yr+'년 합계</td>'
+      + '<td style="padding:9px 10px;text-align:right;color:'+yrColor+';font-weight:700;font-size:12px">'+(yrNet>=0?'+':'')+yrNet.toFixed(0)+'</td>'
+      + '<td style="padding:9px 10px;text-align:right;color:'+yrColor+';font-weight:700">'+(yrPct2>=0?'+':'')+yrPct2.toFixed(2)+'%</td>'
+      + '<td style="padding:9px 10px;text-align:right;color:var(--t3)">—</td>'
+      + '<td style="padding:9px 10px;text-align:right;color:var(--t3)">'+yrDays+'일</td>'
+      + '<td style="padding:9px 10px"></td>'
     + '</tr>';
   });
+
   html += '</tbody></table>';
 
   // CSV 내보내기 버튼
@@ -3466,19 +3688,119 @@ function clearReviewData() {
   rvData = null;
   localStorage.removeItem('rv_data');
   document.getElementById('rv-stat-tag').textContent = '데이터 없음';
+  // 시작 가이드 다시 표시
+  var g = document.getElementById('rv-start-guide');
+  if (g) g.style.display = '';
   renderReviewEmpty();
 }
+
+// ── 연도별 원금 UI (엑셀 O44:R53 동일) ────────────────────────
+// 복수 연도 데이터가 감지될 때만 A-1 카드 하단에 표시.
+// 단일 연도면 불필요하므로 숨김 처리.
+function renderYearCapitalUI() {
+  var anchor = document.getElementById('rv-capital-disp');
+  if (!anchor) return;
+
+  // 이미 렌더된 경우 제거 후 재생성
+  var existing = document.getElementById('rv-year-capital-wrap');
+  if (existing) existing.parentNode.removeChild(existing);
+
+  // 데이터에서 연도 목록 추출
+  var years = [];
+  if (rvData && rvData.length > 0) {
+    var ySet = {};
+    rvData.forEach(function(r) {
+      if (r.date) ySet[r.date.slice(0,4)] = true;
+    });
+    years = Object.keys(ySet).sort();
+  }
+
+  // ── 핵심: 연도가 2개 이상일 때만 표시 ──────────────────────
+  // 단일 연도면 기본 원금으로 충분 → 초보자에게 불필요한 UI 노출 방지
+  if (years.length < 2) return;
+
+  // 첫 감지 시 알림 (이미 설정된 값이 없을 때만)
+  var hasExistingSettings = years.some(function(yr){ return rvYearlyCapital[yr]; });
+  var isFirstDetection    = !hasExistingSettings && !window._rvYearCapShown;
+  if (isFirstDetection) {
+    window._rvYearCapShown = true;
+  }
+
+  var rows = years.map(function(yr) {
+    var val = rvYearlyCapital[yr] ? rvYearlyCapital[yr].toLocaleString() : '';
+    var placeholder = yr === years[0]
+      ? rvCapital.toLocaleString()
+      : '미입력 시 기본 원금 사용';
+    return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">'
+      + '<div style="width:52px;font-size:11px;font-weight:600;color:var(--purple);flex-shrink:0">'+yr+'년</div>'
+      + '<input type="text" id="rv-yr-cap-'+yr+'" value="'+val+'" placeholder="'+placeholder+'"'
+      + '  onchange="updateYearCapital(\''+yr+'\')"'
+      + '  style="flex:1;padding:5px 10px;background:rgba(139,151,240,.08);border:1px solid rgba(139,151,240,.3);'
+      + '  border-radius:5px;color:var(--t1);font-size:11px;font-family:var(--mono)">'
+      + '<div style="font-size:10px;color:var(--t3);width:80px;text-align:right;flex-shrink:0" id="rv-yr-cap-disp-'+yr+'">'
+      + (rvYearlyCapital[yr] ? '$' + Math.round(rvYearlyCapital[yr]/rvRate).toLocaleString() : '—')
+      + '</div>'
+    + '</div>';
+  }).join('');
+
+  var wrap = document.createElement('div');
+  wrap.id = 'rv-year-capital-wrap';
+  wrap.style.cssText = 'margin-top:10px;padding:12px 14px;border-radius:8px;'
+    + (isFirstDetection
+      ? 'background:rgba(139,151,240,.12);border:1.5px solid rgba(139,151,240,.5);'
+      : 'background:rgba(139,151,240,.05);border:1px solid rgba(139,151,240,.2);');
+
+  var headerHtml = isFirstDetection
+    ? '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">'
+        + '<span style="font-size:10px;font-weight:700;color:var(--purple)">연도별 원금 설정</span>'
+        + '<span style="font-size:9px;background:var(--purple);color:#fff;padding:2px 7px;border-radius:10px;font-weight:700">NEW</span>'
+        + '<span style="font-size:9px;color:var(--t3);margin-left:2px">'+years.length+'개 연도 감지 — 각 연도 원금을 입력하면 수익률이 정확해집니다</span>'
+      + '</div>'
+    : '<div style="font-size:10px;font-weight:700;color:var(--purple);margin-bottom:8px;letter-spacing:.04em">'
+        + '연도별 원금 설정 <span style="font-weight:400;color:var(--t3)">('+years.length+'개 연도 감지)</span>'
+      + '</div>';
+
+  wrap.innerHTML = headerHtml
+    + rows
+    + '<div style="font-size:9px;color:var(--t3);margin-top:6px;line-height:1.5">'
+    + '연도마다 원금이 달라졌다면 해당 연도 원금을 입력하세요. 미입력 시 위의 기본 원금으로 계산합니다.</div>';
+
+  anchor.parentNode.insertBefore(wrap, anchor.nextSibling);
+}
+
+window.updateYearCapital = function(yr) {
+  var el = document.getElementById('rv-yr-cap-'+yr);
+  if (!el) return;
+  var val = parseInt(String(el.value).replace(/,/g,''));
+  if (!isNaN(val) && val > 0) {
+    rvYearlyCapital[yr] = val;
+    var dispEl = document.getElementById('rv-yr-cap-disp-'+yr);
+    if (dispEl) dispEl.textContent = '$' + Math.round(val/rvRate).toLocaleString();
+  } else {
+    delete rvYearlyCapital[yr];
+    var dispEl2 = document.getElementById('rv-yr-cap-disp-'+yr);
+    if (dispEl2) dispEl2.textContent = '—';
+  }
+  // localStorage 저장
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem('rv_settings')||'{}'); } catch(e) {}
+  saved.yearlyCapital = rvYearlyCapital;
+  localStorage.setItem('rv_settings', JSON.stringify(saved));
+  // 데이터가 있으면 재렌더
+  if (rvData && rvData.length > 0) renderReview();
+};
 
 function updateRVSettings() {
   var dep = parseInt(String(document.getElementById('rv-capital-input').value).replace(/,/g,''));
   var rate = parseFloat(document.getElementById('rv-rate-input').value);
   if (!isNaN(dep) && dep > 0) rvCapital = dep;
   if (!isNaN(rate) && rate > 0) rvRate = rate;
-  localStorage.setItem('rv_settings', JSON.stringify({ capital: rvCapital, rate: rvRate }));
+  localStorage.setItem('rv_settings', JSON.stringify({ capital: rvCapital, rate: rvRate, yearlyCapital: rvYearlyCapital }));
   var capEl = document.getElementById('rv-capital-disp');
   if (capEl) {
     capEl.textContent = '자본금: ₩' + rvCapital.toLocaleString() + ' ÷ ' + rvRate + ' = $' + Math.round(rvCapital/rvRate).toLocaleString() + ' (수익률 기준)';
   }
+  renderYearCapitalUI();
   if (rvData) renderReview();
 }
 function toggleRVPaste() {
@@ -3487,14 +3809,24 @@ function toggleRVPaste() {
 }
 
 function toggleDiagnosis() {
-  var body   = document.getElementById('rv-diagnosis');
-  var label  = document.getElementById('rv-diagnosis-toggle');
-  var arrow  = document.getElementById('rv-diagnosis-toggle-arrow');
+  var body  = document.getElementById('rv-diagnosis');
+  var label = document.getElementById('rv-diagnosis-toggle');
+  var arrow = document.getElementById('rv-diagnosis-toggle-arrow');
+  var btn   = document.getElementById('rv-diagnosis-toggle-btn');
   if (!body) return;
   var isOpen = body.style.display !== 'none';
   body.style.display = isOpen ? 'none' : '';
-  if (label) label.textContent = isOpen ? '진단 결과 펼치기' : '진단 결과 접기';
   if (arrow) arrow.textContent = isOpen ? '▼' : '▲';
+  if (label) {
+    // 열 때: 기존 미리보기 텍스트에서 "접기"로, 닫을 때: "펼치기"로
+    var cur = label.textContent || '';
+    if (isOpen) {
+      // 닫기 → 미리보기 유지하되 "접기" → "펼치기"
+      label.textContent = cur.replace('접기', '펼치기');
+    } else {
+      label.textContent = cur.replace('펼치기', '접기');
+    }
+  }
 }
 
 // ── 종목별 손익 기여도 분석 ─────────────────────────────────
@@ -3551,13 +3883,20 @@ function renderInstrumentAnalysis(rows) {
 
   if (entries.length === 0) { el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--t3);font-size:11px">종목 데이터 없음</div>'; return; }
 
+  // 집계 기준 안내
+  var guideHtml = '<div style="margin-bottom:12px;padding:8px 12px;background:var(--card2);border-radius:6px;border:1px solid var(--b1);font-size:10px;color:var(--t3);line-height:1.6">'
+    + '<b style="color:var(--cyan)">📌 집계 기준</b> — 포지션 건별 (날짜 + 종목코드). '
+    + '승률·손익비는 메인 KPI(주간 기준)와 다를 수 있습니다. 종목별 기여도 파악 목적으로 활용하세요.'
+  + '</div>';
+
   var totalNet = entries.reduce(function(s,e){ return s+e.net; }, 0);
   var totalWin = entries.filter(function(e){ return e.net>0; }).reduce(function(s,e){ return s+e.net; }, 0);
   var totalLoss= entries.filter(function(e){ return e.net<0; }).reduce(function(s,e){ return s+e.net; }, 0);
   var maxAbs   = Math.max.apply(null, entries.map(function(e){ return Math.abs(e.net); }));
 
   // 상단 요약
-  var html = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">'
+  var html = guideHtml
+    + '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">'
     + ['전체 손익', '수익 기여', '손실 기여'].map(function(label, i) {
         var val = [totalNet, totalWin, totalLoss][i];
         var col = i===0?(totalNet>=0?'var(--green)':'var(--red)'): i===1?'var(--green)':'var(--red)';
@@ -3621,7 +3960,10 @@ function renderGuideCards(metrics, mdd, anomalies, convergenceRatio) {
   var el = document.getElementById('rv-guide-cards');
   if (!el) return;
 
-  var cap = rvCapital / rvRate;
+  var lastYrG = metrics && rvData && rvData.length > 0
+    ? (function(){ var d=aggregateDaily(rvData); return d.length>0?d[d.length-1].date.slice(0,4):String(new Date().getFullYear()); })()
+    : String(new Date().getFullYear());
+  var cap = getCapitalForYear(lastYrG);
   var stdDevPct = cap > 0 ? (metrics.stdDev / cap * 100) : 0;
   var hasData = metrics && metrics.total > 0;
 
@@ -3737,12 +4079,15 @@ window.generateCafeImage = function() {
 
   var daily   = aggregateDaily(rvData);
   var monthly = aggregateMonthly(daily);
-  var metrics = calcMetrics(rvData);
+  var weekly  = aggregateWeekly(daily);
+  var metrics = calcMetrics(rvData, weekly); // 주간 기준
   var anomalies = detectAnomalies(daily, metrics);
   var mdd     = calcMDD(daily);
-  var cap     = rvCapital / rvRate;
-  var totalPct = cap > 0 ? (metrics.totalNet/cap*100) : 0;
-  var stdDevPct = cap > 0 ? (metrics.stdDev/cap*100) : 0;
+  var cap     = rvCapital / rvRate; // 표시용 (자본금 텍스트)
+  var lastYr1 = daily.length > 0 ? daily[daily.length-1].date.slice(0,4) : String(new Date().getFullYear());
+  var capLast = getCapitalForYear(lastYr1);
+  var totalPct = capLast > 0 ? (metrics.totalNet/capLast*100) : 0;
+  var stdDevPct = capLast > 0 ? (metrics.stdDev/capLast*100) : 0;
   var dates = daily.map(function(d){ return d.date; }).sort();
   var period = dates[0].slice(0,10) + ' ~ ' + dates[dates.length-1].slice(0,10);
   var now = new Date();
@@ -3765,8 +4110,7 @@ window.generateCafeImage = function() {
   cc.width=720; cc.height=200;
   var ctx=cc.getContext('2d');
   ctx.fillStyle='#f8faff'; ctx.fillRect(0,0,720,200);
-  var cumPcts=[],cumNet=0;
-  daily.forEach(function(d){ cumNet+=d.net; cumPcts.push(cap>0?cumNet/cap*100:0); });
+  var cumPcts = daily.map(function(d){ return d.cumPct; }); // 연도별 원금 반영
   var minV=Math.min.apply(null,cumPcts), maxV=Math.max.apply(null,cumPcts);
   var range=Math.max(maxV-minV,0.1), pad=24;
   // 0선
@@ -3790,8 +4134,13 @@ window.generateCafeImage = function() {
   ctx.stroke();
   var chartURL = cc.toDataURL('image/png');
 
-  // 월평균 수익률 계산
-  var avgMonthPct = monthly.length>0 ? (monthly.reduce(function(s,m){return s+m.net;},0)/monthly.length/cap*100).toFixed(2) : '-';
+  // 월평균 수익률 계산 (연도별 원금 기준 월별 수익률 평균)
+  var avgMonthPct = monthly.length > 0
+    ? (monthly.reduce(function(s,m){
+        var capM = getCapitalForYear(m.key.slice(0,4));
+        return s + (capM > 0 ? m.net / capM * 100 : 0);
+      }, 0) / monthly.length).toFixed(2)
+    : '-';
 
   var html = '<div style="font-family:Malgun Gothic,sans-serif;color:#1a1a2e;max-width:720px;padding:8px">'
     + '<h2 style="font-size:20px;font-weight:800;margin:0 0 20px;padding-bottom:10px;border-bottom:2px solid #2563eb">'+title+'</h2>'
@@ -3914,7 +4263,7 @@ window.syncFromPT = function() {
   }
   rvCapital = ptSet.depositKRW;
   rvRate    = ptSet.exchangeRate || 1430;
-  localStorage.setItem('rv_settings', JSON.stringify({ capital: rvCapital, rate: rvRate }));
+  localStorage.setItem('rv_settings', JSON.stringify({ capital: rvCapital, rate: rvRate, yearlyCapital: rvYearlyCapital }));
 
   var capEl = document.getElementById('rv-capital-input');
   var rateEl = document.getElementById('rv-rate-input');
@@ -3924,7 +4273,7 @@ window.syncFromPT = function() {
   if (dispEl) dispEl.textContent = '자본금: ₩' + rvCapital.toLocaleString() + ' ÷ ' + rvRate
     + ' = $' + Math.round(rvCapital/rvRate).toLocaleString() + ' (수익률 기준)';
 
-  // 포지션 트래커 현황 요약도 갱신
+  renderYearCapitalUI();
   renderPTSummary();
 
   if (rvData && rvData.length > 0) renderReview();
@@ -3942,7 +4291,6 @@ function renderPTSummary() {
 
   var dep    = ptSet.depositKRW || 50000000;
   var used   = ptSet.usedMargin || 0;
-  var maint  = ptSet.maintMargin || 0;
   var target = ptSet.marginTarget || 0.6;
   var rate   = used / dep;
   var rateColor = rate > target + 0.1 ? 'var(--red)' : rate > target ? 'var(--orange)' : 'var(--green)';
@@ -3973,13 +4321,15 @@ window.generateDraftMemo = function() {
 
   var daily = aggregateDaily(rvData);
   var monthly = aggregateMonthly(daily);
-  var metrics = calcMetrics(rvData);
+  var weekly  = aggregateWeekly(daily);
+  var metrics = calcMetrics(rvData, weekly); // 주간 기준
   var anomalies = detectAnomalies(daily, metrics);
   var mdd = calcMDD(daily);
-  var cap = rvCapital / rvRate;
+  var cap = rvCapital / rvRate; // 표시용
+  var lastYr2 = daily.length > 0 ? daily[daily.length-1].date.slice(0,4) : String(new Date().getFullYear());
   var dates = daily.map(function(d){ return d.date; }).sort();
   var period = dates[0].slice(0,10) + ' ~ ' + dates[dates.length-1].slice(0,10);
-  var totalPct = cap > 0 ? (metrics.totalNet / cap * 100) : 0;
+  var totalPct = getCapitalForYear(lastYr2) > 0 ? (metrics.totalNet / getCapitalForYear(lastYr2) * 100) : 0;
   var selfScore = parseInt(document.getElementById('rv-selfscore') ? document.getElementById('rv-selfscore').value : 80);
 
   var instMap4 = {'OCL':'크루드오일','OES':'S&P500','OGC':'금','ONG':'천연가스','OZN':'10년국채','OADU':'호주달러','OEUU':'유로화','ENQ':'나스닥'};
@@ -4024,7 +4374,8 @@ window.generateDraftMemo = function() {
     memo1 = '이번 기간(' + period + ') 동안 손절 원칙을 일관되게 준수했습니다. 평균 손실의 3배를 초과한 과도한 손실일이 단 한 건도 없었으며 원칙이 잘 작동하고 있습니다. 승률 ' + metrics.winRate.toFixed(1) + '%로 ' + (metrics.winRate >= 70 ? '기준(70%)을 충족하고 있습니다.' : '기준(70%)에는 다소 미치지 못했지만 손절 원칙 자체는 지켜졌습니다.') + ' 다음 달도 동일한 기준을 유지하겠습니다.';
   } else {
     var worst = anomalies[0];
-    var ratio = metrics.avgLoss > 0 ? (Math.abs(worst.net)/metrics.avgLoss).toFixed(1) : '-';
+    var dAvgL = anomalies.dailyAvgLoss || 0;
+    var ratio = dAvgL > 0 ? (Math.abs(worst.net)/dAvgL).toFixed(1) : '-';
     memo1 = '이번 기간(' + period + ') 손절 원칙 미준수 의심 구간이 ' + anomalies.length + '건 발견됐습니다. 가장 큰 손실은 ' + worst.date.slice(5) + '($' + Math.abs(worst.net).toFixed(0) + ', 평균의 ' + ratio + '배)였습니다. ' + (selfScore >= 70 ? '전반적으로는 원칙을 지키려 노력했으나 일부 상황에서 버티는 심리가 작동했습니다. ' : '손절선 도달 후 버티는 패턴이 반복됐습니다. ') + '다음 달부터 손절 가격 알람을 사전 설정하고 도달 즉시 청산하는 루틴을 만들겠습니다.';
   }
 
@@ -4261,11 +4612,14 @@ function renderMoneyMgmt(rows, monthly) {
 // ── CSV 내보내기 ─────────────────────────────────────────────
 function exportCSV() {
   if (!rvData || rvData.length === 0) { alert('데이터가 없습니다.'); return; }
-  var cap = rvCapital / rvRate;
+  var cap = rvCapital / rvRate; // 기본 자본금 표시용
   var daily = aggregateDaily(rvData);
   var monthly = aggregateMonthly(daily);
-  var metrics = calcMetrics(rvData);
+  var weekly  = aggregateWeekly(daily);
+  var metrics = calcMetrics(rvData, weekly); // 주간 기준
   var mdd = calcMDD(daily);
+  var lastYr3 = daily.length > 0 ? daily[daily.length-1].date.slice(0,4) : String(new Date().getFullYear());
+  var capLast2 = getCapitalForYear(lastYr3);
 
   // BOM + 헤더
   var csv = '\uFEFF';
@@ -4276,12 +4630,12 @@ function exportCSV() {
   csv += '자본금(원),' + rvCapital + '\n';
   csv += '환율,' + rvRate + '\n';
   csv += '자본금($),' + Math.round(cap) + '\n';
-  csv += '총 거래건수,' + metrics.total + '\n';
+  csv += '총 거래주수(주간 기준),' + metrics.total + '\n';
   csv += '승률(%),' + metrics.winRate.toFixed(2) + '\n';
   csv += '손익비,' + metrics.plRatio.toFixed(2) + '\n';
   csv += '기대비율,' + metrics.expectancy.toFixed(2) + '\n';
   csv += '총 순손익($),' + metrics.totalNet.toFixed(2) + '\n';
-  csv += '총 수익률(%),' + (cap > 0 ? (metrics.totalNet / cap * 100).toFixed(2) : '0') + '\n';
+  csv += '총 수익률(%),' + (capLast2 > 0 ? (metrics.totalNet / capLast2 * 100).toFixed(2) : '0') + '\n';
   csv += 'MDD(%),' + mdd.toFixed(2) + '\n';
   csv += '\n';
 
@@ -4289,14 +4643,15 @@ function exportCSV() {
   csv += '=== 월별 성과 ===\n';
   csv += '월,손익($),수익률(%),MDD(%),거래일수\n';
   monthly.forEach(function(m) {
-    var pct = cap > 0 ? (m.net / cap * 100) : 0;
-    // 월별 MDD
+    var capM = getCapitalForYear(m.key.slice(0,4));
+    var pct = capM > 0 ? (m.net / capM * 100) : 0;
+    // 월별 MDD (연도별 원금 기준)
     var monthDaily = daily.filter(function(d){ return d.date.slice(0,7) === m.key; });
     var peak = 0, mmdd = 0, cum = 0;
     monthDaily.forEach(function(d) {
       cum += d.net;
       if (cum > peak) peak = cum;
-      var dd = cap > 0 ? (peak - cum) / cap * 100 : 0;
+      var dd = capM > 0 ? (peak - cum) / capM * 100 : 0;
       if (dd > mmdd) mmdd = dd;
     });
     csv += m.key + ',' + m.net.toFixed(2) + ',' + pct.toFixed(2) + ',' + mmdd.toFixed(2) + ',' + m.days + '\n';
@@ -4307,8 +4662,7 @@ function exportCSV() {
   csv += '=== 일별 손익 ===\n';
   csv += '날짜,일손익($),누적손익($),누적수익률(%)\n';
   daily.forEach(function(d) {
-    var cumPct = cap > 0 ? (d.cumNet / cap * 100) : 0;
-    csv += d.date + ',' + d.net.toFixed(2) + ',' + d.cumNet.toFixed(2) + ',' + cumPct.toFixed(2) + '\n';
+    csv += d.date + ',' + d.net.toFixed(2) + ',' + d.cumNet.toFixed(2) + ',' + d.cumPct.toFixed(2) + '\n'; // 연도별 원금 반영
   });
   csv += '\n';
 
@@ -4334,7 +4688,17 @@ function exportCSV() {
 // ── 초기화 ───────────────────────────────────────────────────
 (function initReview() {
   var saved = localStorage.getItem('rv_settings');
-  if (saved) { try { var s=JSON.parse(saved); rvCapital=s.capital||35000000; rvRate=s.rate||1430; } catch(e){} }
+  if (saved) {
+    try {
+      var s = JSON.parse(saved);
+      rvCapital = s.capital || 35000000;
+      rvRate    = s.rate    || 1430;
+      // 연도별 원금 복원
+      if (s.yearlyCapital && typeof s.yearlyCapital === 'object') {
+        rvYearlyCapital = s.yearlyCapital;
+      }
+    } catch(e) {}
+  }
   var savedData = localStorage.getItem('rv_data');
   if (savedData) {
     try {
@@ -4342,9 +4706,149 @@ function exportCSV() {
       document.getElementById('rv-stat-tag').textContent = rvData.length + '건 (저장됨)';
     } catch(e) { rvData = null; }
   }
+  // 연도별 원금 UI 초기 렌더 (DOM 준비 후)
+  setTimeout(function() {
+    renderYearCapitalUI();
+    // 자본금 표시 갱신
+    var capEl  = document.getElementById('rv-capital-input');
+    var rateEl = document.getElementById('rv-rate-input');
+    var dispEl = document.getElementById('rv-capital-disp');
+    if (capEl)  capEl.value  = rvCapital.toLocaleString();
+    if (rateEl) rateEl.value = rvRate;
+    if (dispEl) dispEl.textContent = '자본금: ₩' + rvCapital.toLocaleString() + ' ÷ ' + rvRate
+      + ' = $' + Math.round(rvCapital/rvRate).toLocaleString() + ' (수익률 기준)';
+
+    // ── onchange → oninput 디바운스 교체 ──────────────────────
+    // HTML이 read-only라 JS에서 이벤트 리스너를 직접 교체
+    var rvInputTimer = null;
+    function onCapitalInput() {
+      // 즉시 하단 표시 텍스트 업데이트 (빠른 피드백)
+      var dep  = parseInt(String(capEl ? capEl.value : '').replace(/,/g,''));
+      var rate = parseFloat(rateEl ? rateEl.value : '');
+      if (!isNaN(dep) && dep > 0 && !isNaN(rate) && rate > 0 && dispEl) {
+        dispEl.textContent = '자본금: ₩' + dep.toLocaleString() + ' ÷ ' + rate
+          + ' = $' + Math.round(dep/rate).toLocaleString() + ' (수익률 기준)';
+      }
+      // 300ms 후 전체 설정 저장 + 재렌더 (디바운스)
+      clearTimeout(rvInputTimer);
+      rvInputTimer = setTimeout(updateRVSettings, 300);
+    }
+    if (capEl) {
+      capEl.removeAttribute('onchange');
+      capEl.addEventListener('input', onCapitalInput);
+    }
+    if (rateEl) {
+      rateEl.removeAttribute('onchange');
+      rateEl.addEventListener('input', onCapitalInput);
+    }
+
+    // 저장된 데이터 없으면 B~E 잠금 + 시작 가이드 표시
+    if (!rvData || rvData.length === 0) {
+      renderReviewEmpty();
+    }
+
+    // ── Sticky 단계 네비게이터 주입 ───────────────────────────
+    if (!document.getElementById('rv-sticky-nav')) {
+      var page = document.getElementById('page-review');
+      if (page) {
+        // 네비 생성
+        var nav = document.createElement('div');
+        nav.id = 'rv-sticky-nav';
+        nav.style.cssText = [
+          'position:sticky;top:0;z-index:40;',
+          'margin:-4px -28px 16px;padding:8px 28px;',
+          'background:rgba(14,17,23,.92);backdrop-filter:blur(12px);',
+          'border-bottom:1px solid rgba(99,120,180,.15);',
+          'display:flex;align-items:center;gap:6px;',
+          'transition:box-shadow .2s;',
+        ].join('');
+
+        var steps = [
+          { id:'A', label:'입력',      color:'var(--cyan)',   anchor:'rv-paste-wrap' },
+          { id:'B', label:'결과 확인', color:'var(--green)',  anchor:'rv-kpi' },
+          { id:'C', label:'원인 분석', color:'var(--orange)', anchor:'rv-stop-alert' },
+          { id:'D', label:'진단',      color:'var(--yellow)', anchor:'rv-diagnosis-toggle-btn' },
+          { id:'E', label:'복기 작성', color:'var(--cyan)',   anchor:'rv-period-tag' },
+        ];
+
+        nav.innerHTML = '<span style="font-size:9px;color:var(--t3);letter-spacing:.06em;margin-right:4px;flex-shrink:0">복기</span>'
+          + steps.map(function(s) {
+              return '<button id="rv-nav-'+s.id+'" onclick="rvNavTo(\''+s.anchor+'\')" '
+                + 'style="display:flex;align-items:center;gap:5px;padding:4px 11px;border-radius:14px;'
+                + 'border:1px solid rgba(99,120,180,.2);background:transparent;'
+                + 'color:var(--t3);font-size:10px;font-weight:600;cursor:pointer;'
+                + 'transition:all .2s;white-space:nowrap;font-family:var(--font-n)"'
+                + ' onmouseover="this.style.borderColor=\''+s.color+'\';this.style.color=\''+s.color+'\'"'
+                + ' onmouseout="if(!this.dataset.active){this.style.borderColor=\'rgba(99,120,180,.2)\';this.style.color=\'var(--t3)\'}">'
+                + '<span style="font-size:11px;font-weight:900">'+s.id+'</span>'
+                + '<span>'+s.label+'</span>'
+              + '</button>'
+              + '<span style="color:var(--b2);font-size:10px">›</span>';
+            }).join('').replace(/›$/, ''); // 마지막 › 제거
+
+        // 네비 클릭 → 해당 섹션으로 스크롤
+        window.rvNavTo = function(anchorId) {
+          var el = document.getElementById(anchorId);
+          if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+        };
+
+        // IntersectionObserver — 현재 섹션 감지
+        var rvNavSteps = steps;
+        var rvObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (!entry.isIntersecting) return;
+            var anchorId = entry.target.id;
+            rvNavSteps.forEach(function(s) {
+              var btn = document.getElementById('rv-nav-'+s.id);
+              if (!btn) return;
+              var isActive = s.anchor === anchorId;
+              var colorBgMap = {
+                'var(--cyan)':   'rgba(56,189,248,.15)',
+                'var(--green)':  'rgba(62,207,170,.15)',
+                'var(--orange)': 'rgba(232,149,106,.15)',
+                'var(--yellow)': 'rgba(232,201,106,.15)',
+              };
+              btn.dataset.active = isActive ? '1' : '';
+              if (isActive) {
+                btn.style.background    = colorBgMap[s.color] || 'rgba(56,189,248,.15)';
+                btn.style.borderColor   = s.color;
+                btn.style.color         = s.color;
+                btn.style.fontWeight    = '800';
+              } else {
+                btn.style.background    = 'transparent';
+                btn.style.borderColor   = 'rgba(99,120,180,.2)';
+                btn.style.color         = 'var(--t3)';
+                btn.style.fontWeight    = '600';
+              }
+            });
+          });
+        }, { threshold: 0.1, rootMargin: '-60px 0px -60% 0px' });
+
+        // 각 섹션 앵커 요소 관찰
+        setTimeout(function() {
+          rvNavSteps.forEach(function(s) {
+            var el = document.getElementById(s.anchor);
+            if (el) rvObserver.observe(el);
+          });
+          // 초기 A 활성화
+          var btnA = document.getElementById('rv-nav-A');
+          if (btnA) {
+            btnA.dataset.active   = '1';
+            btnA.style.background = 'rgba(56,189,248,.15)';
+            btnA.style.borderColor= 'var(--cyan)';
+            btnA.style.color      = 'var(--cyan)';
+          }
+        }, 300);
+
+        // page-review 첫 번째 자식 앞에 삽입
+        page.insertBefore(nav, page.firstChild);
+      }
+    }
+  }, 150);
   // 카페 복기 양식 복원
   setTimeout(loadCafeMemo, 100);
 })();
+
 
 
 
