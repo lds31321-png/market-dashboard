@@ -4686,6 +4686,221 @@ function exportCSV() {
 }
 
 // ── 초기화 ───────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════
+//  가이드 투어 — 처음 접속 시 8단계 스포트라이트 투어
+// ══════════════════════════════════════════════════════════════
+function initRVTour() {
+  if (localStorage.getItem('rv_tour_done')) return;
+
+  var TOUR_STEPS = [
+    {
+      target: null,
+      title: '👋 매매 복기 대시보드',
+      body: '처음 오셨군요! <b>A→E 5단계 워크플로우</b>로<br>매매 데이터를 체계적으로 분석할 수 있습니다.<br>약 1분이면 전체 기능을 파악할 수 있어요.',
+      pos: 'center'
+    },
+    {
+      target: 'rv-capital-input',
+      title: 'A-1. 원금 & 환율 설정',
+      body: '투자 <b>원금(원화)</b>과 <b>환율</b>을 입력하세요.<br>연도가 여러 개라면 연도별 원금을 따로 설정할 수 있습니다.<br>수익률 계산의 기준이 됩니다.',
+      pos: 'bottom'
+    },
+    {
+      target: 'rv-paste-wrap',
+      title: 'A-2. HTS 데이터 붙여넣기',
+      body: 'DB금융투자 <b>1310창</b>을 열어<br>거래 내역 전체 선택(Ctrl+A) → 복사(Ctrl+C) 후<br>이 칸에 붙여넣기(Ctrl+V)하세요.',
+      pos: 'bottom'
+    },
+    {
+      target: 'rv-kpi',
+      title: 'B-1. KPI 성과 지표',
+      body: '<b>승률 · 손익비 · 기대비율</b> 3개 핵심 지표를<br>주간 기준으로 확인합니다.<br>🟢 양호 / 🟡 점검 / 🔴 위험으로 즉시 판단하세요.',
+      pos: 'bottom'
+    },
+    {
+      target: 'rv-cumchart-wrap',
+      title: 'B-2~3. 누적 손익 & 수렴 구조',
+      body: '<b>누적 손익 곡선</b>으로 전체 추세를 파악하고<br><b>손익 수렴 구조</b>(√거래일 정규화)로<br>장기 안정성을 확인합니다.',
+      pos: 'bottom'
+    },
+    {
+      target: 'rv-stop-alert',
+      title: 'C. 원인 분석',
+      body: '<b>손절 위반 탐지</b>: 일평균 손실의 3배 초과 여부<br><b>종목별 기여도</b>: 수익/손실 종목 파악<br><b>자금관리 분석</b>: 복구 심리 패턴 확인',
+      pos: 'top'
+    },
+    {
+      target: 'rv-diagnosis-toggle-btn',
+      title: 'D. 자동 진단 (8개 항목)',
+      body: '8개 항목을 자동으로 진단합니다.<br>문제가 있을 때 <b>자동으로 펼쳐지며</b><br>긴급도별 색상으로 우선순위를 알려줍니다.',
+      pos: 'top'
+    },
+    {
+      target: 'rv-period-tag',
+      title: 'E. 복기 작성 & 출력',
+      body: '<b>AI 초안 자동 생성</b>으로 카페 복기를<br>클릭 한 번에 완성하세요.<br>이미지 저장으로 카페 업로드도 바로 가능합니다.',
+      pos: 'top',
+      last: true
+    },
+  ];
+
+  var curStep = 0;
+
+  // ── 오버레이 (배경 어둠) ──────────────────────────────────────
+  var overlay = document.createElement('div');
+  overlay.id = 'rv-tour-overlay';
+  overlay.style.cssText = [
+    'position:fixed;inset:0;z-index:9000;',
+    'background:transparent;pointer-events:none;',
+    'transition:opacity .3s;',
+  ].join('');
+  document.body.appendChild(overlay);
+
+  // ── 스포트라이트 박스 ──────────────────────────────────────────
+  var spot = document.createElement('div');
+  spot.id = 'rv-tour-spot';
+  spot.style.cssText = [
+    'position:fixed;z-index:9001;opacity:0;',
+    'box-shadow:0 0 0 9999px rgba(0,0,0,.72);',
+    'border-radius:8px;border:2px solid rgba(56,189,248,.5);',
+    'transition:all .38s cubic-bezier(.4,0,.2,1),opacity .2s;',
+    'pointer-events:none;',
+  ].join('');
+  document.body.appendChild(spot);
+
+  // ── 툴팁 박스 ────────────────────────────────────────────────
+  var tip = document.createElement('div');
+  tip.id = 'rv-tour-tip';
+  tip.style.cssText = [
+    'position:fixed;z-index:9002;width:285px;',
+    'background:rgba(16,20,30,.97);',
+    'border:1px solid rgba(56,189,248,.3);',
+    'border-radius:12px;padding:16px 18px 14px;',
+    'box-shadow:0 8px 40px rgba(0,0,0,.7);',
+    'pointer-events:all;',
+    'transition:left .38s cubic-bezier(.4,0,.2,1),top .38s cubic-bezier(.4,0,.2,1);',
+    'font-family:var(--font-n,sans-serif);',
+  ].join('');
+  document.body.appendChild(tip);
+
+  function renderTipContent(step) {
+    var s = TOUR_STEPS[step];
+    var isLast = !!(s.last || step === TOUR_STEPS.length - 1);
+    tip.innerHTML = [
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:9px">',
+        '<span style="font-size:12px;font-weight:800;color:rgba(56,189,248,.95)">', s.title, '</span>',
+        '<span style="font-size:10px;color:rgba(120,140,180,.55)">', (step+1), ' / ', TOUR_STEPS.length, '</span>',
+      '</div>',
+      '<div style="font-size:11px;color:rgba(195,210,240,.82);line-height:1.7;margin-bottom:14px">', s.body, '</div>',
+      '<div style="display:flex;gap:7px;justify-content:flex-end;align-items:center">',
+        (step > 0 ? '<button onclick="window.rvTourStep(-1)" style="padding:5px 12px;border-radius:8px;border:1px solid rgba(99,120,180,.25);background:transparent;color:rgba(130,150,195,.7);font-size:10px;cursor:pointer;font-family:inherit">이전</button>' : ''),
+        '<button onclick="window.rvTourSkip()" style="padding:5px 12px;border-radius:8px;border:1px solid rgba(99,120,180,.25);background:transparent;color:rgba(130,150,195,.7);font-size:10px;cursor:pointer;font-family:inherit">건너뛰기</button>',
+        '<button onclick="window.rvTourStep(1)" style="padding:5px 15px;border-radius:8px;border:none;background:rgba(56,189,248,.18);color:rgba(56,189,248,.95);font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">',
+          (isLast ? '완료 🎉' : '다음 →'),
+        '</button>',
+      '</div>',
+    ].join('');
+  }
+
+  function positionTip(step) {
+    var s = TOUR_STEPS[step];
+    var tipW = 285, vw = window.innerWidth, vh = window.innerHeight;
+
+    if (!s.target) {
+      // 웰컴: 화면 정중앙
+      spot.style.opacity = '0';
+      tip.style.left = Math.max(10, (vw - tipW) / 2) + 'px';
+      tip.style.top  = Math.max(10, (vh - 200) / 2) + 'px';
+      return;
+    }
+
+    var el = document.getElementById(s.target);
+    if (!el) {
+      spot.style.opacity = '0';
+      tip.style.left = Math.max(10, (vw - tipW) / 2) + 'px';
+      tip.style.top  = Math.max(10, (vh - 200) / 2) + 'px';
+      return;
+    }
+
+    // 요소가 보이도록 스크롤
+    el.scrollIntoView({ behavior:'smooth', block:'center' });
+
+    // 스크롤 후 위치 재계산
+    setTimeout(function() {
+      var r = el.getBoundingClientRect();
+      var pad = 8;
+
+      // 스포트라이트 위치
+      spot.style.opacity = '1';
+      spot.style.left   = Math.max(0, r.left - pad) + 'px';
+      spot.style.top    = Math.max(0, r.top - pad) + 'px';
+      spot.style.width  = (r.width + pad * 2) + 'px';
+      spot.style.height = (r.height + pad * 2) + 'px';
+
+      // 툴팁 위치 계산
+      var tipH = 190;
+      var tx = Math.min(Math.max(r.left + r.width / 2 - tipW / 2, 10), vw - tipW - 10);
+      var ty;
+      if (s.pos === 'top' || r.bottom > vh * 0.7) {
+        ty = Math.max(10, r.top - tipH - 16);
+      } else {
+        ty = Math.min(r.bottom + 16, vh - tipH - 10);
+      }
+      tip.style.left = tx + 'px';
+      tip.style.top  = ty + 'px';
+    }, 380);
+  }
+
+  function showStep(step) {
+    curStep = step;
+    renderTipContent(step);
+    positionTip(step);
+  }
+
+  window.rvTourStep = function(dir) {
+    var next = curStep + dir;
+    if (next >= TOUR_STEPS.length) {
+      endTour();
+    } else if (next >= 0) {
+      showStep(next);
+    }
+  };
+
+  window.rvTourSkip = function() { endTour(); };
+
+  function endTour() {
+    localStorage.setItem('rv_tour_done', '1');
+    [overlay, spot, tip].forEach(function(el) {
+      el.style.opacity = '0';
+      el.style.pointerEvents = 'none';
+    });
+    setTimeout(function() {
+      [overlay, spot, tip].forEach(function(el) {
+        if (el.parentNode) el.parentNode.removeChild(el);
+      });
+    }, 400);
+    // 투어 재시작 버튼 표시
+    var restartBtn = document.getElementById('rv-tour-restart-btn');
+    if (restartBtn) restartBtn.style.display = 'flex';
+  }
+
+  // 시작 (DOM 안정화 후)
+  setTimeout(function() { showStep(0); }, 600);
+}
+
+// 투어 재시작 (sticky nav 버튼용)
+window.rvRestartTour = function() {
+  localStorage.removeItem('rv_tour_done');
+  // 기존 투어 요소 제거 후 재시작
+  ['rv-tour-overlay','rv-tour-spot','rv-tour-tip'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el && el.parentNode) el.parentNode.removeChild(el);
+  });
+  var restartBtn = document.getElementById('rv-tour-restart-btn');
+  if (restartBtn) restartBtn.style.display = 'none';
+  initRVTour();
+};
+
 (function initReview() {
   var saved = localStorage.getItem('rv_settings');
   if (saved) {
@@ -4842,8 +5057,35 @@ function exportCSV() {
 
         // page-review 첫 번째 자식 앞에 삽입
         page.insertBefore(nav, page.firstChild);
+
+        // ── 투어 재시작 버튼 (nav 우측 끝) ──────────────────────
+        var restartBtn = document.createElement('button');
+        restartBtn.id = 'rv-tour-restart-btn';
+        restartBtn.title = '가이드 투어 다시 보기';
+        restartBtn.onclick = function() { window.rvRestartTour(); };
+        restartBtn.style.cssText = [
+          'margin-left:auto;display:' + (localStorage.getItem('rv_tour_done') ? 'flex' : 'none') + ';',
+          'align-items:center;gap:4px;padding:4px 10px;',
+          'border-radius:14px;border:1px solid rgba(99,120,180,.2);',
+          'background:transparent;color:rgba(140,155,200,.6);',
+          'font-size:10px;cursor:pointer;font-family:var(--font-n);',
+          'white-space:nowrap;transition:all .2s;',
+        ].join('');
+        restartBtn.innerHTML = '<span>❓</span><span>투어</span>';
+        restartBtn.onmouseover = function() {
+          this.style.borderColor = 'rgba(56,189,248,.5)';
+          this.style.color = 'rgba(56,189,248,.8)';
+        };
+        restartBtn.onmouseout = function() {
+          this.style.borderColor = 'rgba(99,120,180,.2)';
+          this.style.color = 'rgba(140,155,200,.6)';
+        };
+        nav.appendChild(restartBtn);
       }
     }
+
+    // ── 가이드 투어 초기화 ─────────────────────────────────────
+    initRVTour();
   }, 150);
   // 카페 복기 양식 복원
   setTimeout(loadCafeMemo, 100);
