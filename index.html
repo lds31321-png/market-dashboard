@@ -530,6 +530,18 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
   font-size:13px;font-weight:600;color:var(--accent2);
   white-space:nowrap;
 }
+
+/* 보안 안내 배너 */
+.sec-notice{
+  background:rgba(123,140,255,0.07);
+  border-bottom:1px solid rgba(123,140,255,0.2);
+  padding:8px 28px;
+  font-size:12px;
+  color:rgba(209,213,224,0.7);
+  text-align:center;
+  letter-spacing:0.02em;
+}
+.sec-notice strong{color:var(--accent1);}
 </style>
 </head>
 <body>
@@ -561,7 +573,8 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 
 <!-- ══ TOPBAR ══ -->
 <div class="topbar">
-  <div><div class="topbar-logo">◈ Global Market Dashboard<span id="cur-asset-badge">◈ WTI 원유</span></div><div class="topbar-sub">EIA · FRED · World Bank · IMF · USDA 공식 데이터 기반</div></div>
+  <div><div class="topbar-logo">◈ Global Market Dashboard<span id="cur-asset-badge">◈ WTI 원유</span></div>
+<div class="sec-notice">🔒 <strong>보안 경고 안내</strong> — 일부 백신이 코드 난독화를 오탐할 수 있습니다. 실제 바이러스가 아니며 개인정보 수집은 없습니다. 경고창에서 <strong>무시 / 허용</strong>을 선택해 주세요.</div><div class="topbar-sub">EIA · FRED · World Bank · IMF · USDA 공식 데이터 기반</div></div>
   <div class="topbar-right">
     <div class="live-badge"><div class="ldot loading" id="status-dot"></div><span id="status-text">연결 중...</span></div>
     <button class="tb-btn" onclick="loadAllData()">↺ 새로고침</button>
