@@ -403,422 +403,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
     → 경보 잦은 시기 = 불안정 → 포지션 크기 줄여야 할 때<br>
     → 경보 없는 긴 기간 = 안정적 매매 환경
   </div></div><div class="chart-w" style="height:240px"><canvas id="cAlert"></canvas></div></div>
-
-<!-- ── 지표 구성 가이드 (인라인 토글) ──────────────────── -->
-<div style="border:1px solid rgba(77,216,240,.18);border-radius:12px;overflow:hidden;margin-top:4px;">
-  <div id="ov-guide-toggle-hd"
-    onclick="(function(el){
-      var body=document.getElementById('ov-guide-body');
-      var arr=document.getElementById('ov-guide-arrow');
-      var open=body.style.display!=='none';
-      body.style.display=open?'none':'block';
-      arr.style.transform=open?'':'rotate(180deg)';
-    })(this)"
-    style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;
-           background:linear-gradient(90deg,rgba(77,216,240,.07),rgba(167,139,250,.04));
-           cursor:pointer;transition:background .15s;user-select:none"
-    onmouseover="this.style.background='linear-gradient(90deg,rgba(77,216,240,.12),rgba(167,139,250,.07))'"
-    onmouseout="this.style.background='linear-gradient(90deg,rgba(77,216,240,.07),rgba(167,139,250,.04))'">
-    <div style="display:flex;align-items:center;gap:10px">
-      <span style="font-size:16px">📚</span>
-      <span style="font-size:14px;font-weight:800;color:var(--t1)">지표 구성 가이드</span>
-      <span style="font-size:11px;color:var(--t3);font-family:var(--font-m)">처음 보는 분도 OK — 각 지표 해설</span>
-    </div>
-    <span id="ov-guide-arrow" style="color:var(--cyan);font-size:14px;transition:transform .25s">▼</span>
-  </div>
-  <div id="ov-guide-body" style="display:none;background:var(--bg2)">
-<style>
-/* ── 토글 가이드 스타일 ─────────────────────────── */
-.g-wrap{max-width:860px;margin:0 auto;padding:16px 0 40px;}
-.g-hero{text-align:center;padding:24px 0 20px;}
-.g-hero h2{font-size:20px;font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;}
-.g-hero p{font-size:12px;color:var(--t3);}
-
-/* 메커니즘 플로우 */
-.mech-flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;margin:16px 0;}
-.mf-box{background:var(--card);border:1px solid var(--b);border-radius:10px;padding:10px 14px;text-align:center;min-width:80px;}
-.mf-box.blue{border-color:rgba(56,189,248,.4);background:rgba(56,189,248,.07);}
-.mf-box.purple{border-color:rgba(167,139,250,.4);background:rgba(167,139,250,.07);}
-.mf-box.green{border-color:rgba(52,211,153,.4);background:rgba(52,211,153,.07);}
-.mf-box.orange{border-color:rgba(251,146,60,.4);background:rgba(251,146,60,.07);}
-.mf-ico{font-size:18px;margin-bottom:3px;}
-.mf-lbl{font-size:10px;font-weight:700;color:var(--t1);}
-.mf-sub{font-size:9px;color:var(--t3);}
-.mf-arr{color:var(--t3);font-size:16px;padding:0 6px;}
-
-/* 토글 아코디언 */
-.toggle-group{margin-bottom:8px;border:1px solid var(--b);border-radius:10px;overflow:hidden;}
-.toggle-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;background:var(--card);transition:background .15s;}
-.toggle-hd:hover{background:var(--card2);}
-.toggle-hd-l{display:flex;align-items:center;gap:12px;}
-.toggle-icon{font-size:18px;}
-.toggle-title{font-size:14px;font-weight:700;color:var(--t1);}
-.toggle-badge{font-size:10px;color:var(--t3);font-family:var(--font-m);}
-.toggle-arrow{font-size:12px;color:var(--t3);transition:transform .2s;}
-.toggle-hd.open .toggle-arrow{transform:rotate(180deg);}
-.toggle-body{display:none;background:var(--bg2);border-top:1px solid var(--b);padding:20px 20px 24px;}
-.toggle-body.show{display:block;}
-
-/* 카드 안 스타일 */
-.g-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
-.g-row.col3{grid-template-columns:1fr 1fr 1fr;}
-.g-row.col1{grid-template-columns:1fr;}
-.g-card{background:var(--card);border:1px solid var(--b);border-radius:8px;padding:13px 15px;}
-.g-card-t{font-size:12px;font-weight:700;color:var(--cyan);margin-bottom:8px;}
-.g-card-b{font-size:12px;color:var(--t2);line-height:1.8;}
-.g-hl{background:rgba(56,189,248,.07);border:1px solid rgba(56,189,248,.2);border-left:3px solid var(--cyan);border-radius:6px;padding:8px 12px;margin:8px 0;font-size:12px;color:var(--t2);}
-.g-hl b{color:var(--t1);}
-.g-warn{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.2);border-left:3px solid var(--yellow);border-radius:6px;padding:8px 12px;margin:8px 0;font-size:12px;color:var(--t2);}
-.g-ok{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.2);border-left:3px solid var(--green);border-radius:6px;padding:8px 12px;margin:8px 0;font-size:12px;color:var(--t2);}
-
-/* 지표 바 시각화 */
-.ind-bar{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-.ind-bar-name{font-size:11px;color:var(--t2);width:80px;flex-shrink:0;}
-.ind-bar-track{flex:1;height:6px;background:rgba(30,48,69,.8);border-radius:3px;overflow:hidden;}
-.ind-bar-fill{height:100%;border-radius:3px;transition:width .4s;}
-.ind-bar-val{font-size:11px;color:var(--t3);width:40px;text-align:right;font-family:var(--font-m);}
-
-/* 결과 플로우 */
-.res-flow{display:flex;flex-direction:column;gap:6px;margin-top:12px;}
-.res-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--card);border:1px solid var(--b);border-radius:8px;}
-.res-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
-.res-arrow{font-size:10px;color:var(--t3);}
-.res-text{font-size:12px;color:var(--t2);}
-.res-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;}
-</style>
-
-<div class="g-wrap">
-  <!-- 헤더 -->
-  <div class="g-hero">
-    <h2>📚 지표 구성 가이드</h2>
-    <p>처음 보는 분도 OK — 각 지표가 무엇이고, 어떻게 결과가 나오는지 설명합니다</p>
-  </div>
-
-  <!-- 전체 메커니즘 플로우 -->
-  <div style="background:var(--card);border:1px solid var(--b);border-radius:12px;padding:18px 20px;margin-bottom:16px;">
-    <div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:14px;">⚙️ 전체 계산 메커니즘 — 입력 → 계산 → 출력</div>
-    <div class="mech-flow">
-      <div class="mf-box blue"><div class="mf-ico">📊</div><div class="mf-lbl">원유 일봉</div><div class="mf-sub">OHLCV 데이터</div></div>
-      <div class="mf-arr">→</div>
-      <div class="mf-box blue"><div class="mf-ico">🧮</div><div class="mf-lbl">4개 지표</div><div class="mf-sub">HV·ATR·BBW·KC</div></div>
-      <div class="mf-arr">→</div>
-      <div class="mf-box purple"><div class="mf-ico">📈</div><div class="mf-lbl">퍼센타일</div><div class="mf-sub">20년 기준 순위</div></div>
-      <div class="mf-arr">→</div>
-      <div class="mf-box purple"><div class="mf-ico">🌡️</div><div class="mf-lbl">변동성 총점</div><div class="mf-sub">0~100점</div></div>
-      <div class="mf-arr">→</div>
-      <div class="mf-box orange"><div class="mf-ico">🛡️</div><div class="mf-lbl">생존경보</div><div class="mf-sub">6개 필터</div></div>
-      <div class="mf-arr">→</div>
-      <div class="mf-box green"><div class="mf-ico">🎯</div><div class="mf-lbl">행사가</div><div class="mf-sub">손실확률 기반</div></div>
-    </div>
-    <div style="font-size:11px;color:var(--t3);text-align:center;margin-top:6px;">※ 매일 option_analysis_system.py 실행 시 자동 계산</div>
-  </div>
-
-  <!-- 토글 1: 변동성 4개 지표 -->
-  <div class="toggle-group">
-    <div class="toggle-hd" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')">
-      <div class="toggle-hd-l">
-        <span class="toggle-icon">📐</span>
-        <div>
-          <div class="toggle-title">변동성 4개 지표 — HV · ATR · BBW · KC</div>
-          <div class="toggle-badge">변동성 총점의 재료 · 가중합산 → 0~100점</div>
-        </div>
-      </div>
-      <span class="toggle-arrow">▼</span>
-    </div>
-    <div class="toggle-body">
-      <div class="g-hl"><b>💡 핵심 개념:</b> 시장이 얼마나 격하게 움직이는지를 4가지 방법으로 측정합니다. 각각 20년 역사와 비교해서 "지금 얼마나 심한가"를 0~100점으로 환산합니다.</div>
-      <div class="g-row col3" style="grid-template-columns:1fr 1fr;">
-        <div class="g-card">
-          <div class="g-card-t">📊 HV (역사적 변동성) · 가중치 30%</div>
-          <div class="g-card-b">
-            <b style="color:var(--t1)">무엇인가요?</b><br>
-            최근 20일 동안 하루하루 가격이 얼마나 흔들렸는지 측정<br><br>
-            <b style="color:var(--t1)">어떻게 계산?</b><br>
-            매일 종가의 변화율(%)을 구해서 → 20일 표준편차 → 연율화(×√252)<br><br>
-            <b style="color:var(--t1)">예시:</b><br>
-            HV 20% = 1년간 가격이 ±20% 범위에서 움직일 것으로 예상
-          </div>
-        </div>
-        <div class="g-card">
-          <div class="g-card-t">📏 ATR (평균 실제 범위) · 가중치 30%</div>
-          <div class="g-card-b">
-            <b style="color:var(--t1)">무엇인가요?</b><br>
-            하루 중 가장 높은 가격과 가장 낮은 가격의 차이 (실제 일일 변동폭)<br><br>
-            <b style="color:var(--t1)">어떻게 계산?</b><br>
-            14일간 일별 변동폭을 평균 → ATR $8 = 하루에 $8씩 움직임<br><br>
-            <b style="color:var(--t1)">활용:</b><br>
-            가격쇼크 필터 기준 (Range &gt; ATR×2 = 급등)
-          </div>
-        </div>
-        <div class="g-card">
-          <div class="g-card-t">📦 BBW (볼린저밴드 폭) · 가중치 20%</div>
-          <div class="g-card-b">
-            <b style="color:var(--t1)">무엇인가요?</b><br>
-            가격이 움직이는 '통로'의 너비. 넓을수록 변동성 높음<br><br>
-            <b style="color:var(--t1)">볼린저밴드란?</b><br>
-            20일 평균가격을 중심으로 ±2 표준편차 범위<br>
-            → 폭이 좁으면 조용, 넓으면 격렬<br><br>
-            BBW = (상단 - 하단) ÷ 중심선
-          </div>
-        </div>
-        <div class="g-card">
-          <div class="g-card-t">📡 KC (켈트너채널 폭) · 가중치 20%</div>
-          <div class="g-card-b">
-            <b style="color:var(--t1)">무엇인가요?</b><br>
-            볼린저밴드와 비슷하지만, ATR 기반으로 계산<br><br>
-            <b style="color:var(--t1)">왜 함께 쓰나요?</b><br>
-            BBW는 가격 자체의 폭, KC는 실제 일일 변동성 기반의 폭<br>
-            → 두 개를 함께 보면 더 정확<br><br>
-            KC = EMA20 ± (ATR × 1.5)
-          </div>
-        </div>
-      </div>
-      <div class="g-card" style="margin-top:10px;">
-        <div class="g-card-t">⚡ 최종 변동성 총점 계산 공식</div>
-        <div style="font-family:var(--font-m);font-size:12px;color:var(--cyan);background:#0a1520;border:1px solid var(--b);border-radius:6px;padding:12px 16px;margin:8px 0;">
-          총점 = HV퍼센타일×0.30 + ATR퍼센타일×0.30 + BBW퍼센타일×0.20 + KC퍼센타일×0.20
-        </div>
-        <div style="font-size:12px;color:var(--t2);">퍼센타일 = "20년 중 지금이 몇 번째로 높은가" (100점 = 역사상 최고, 50점 = 중간)</div>
-        <div class="g-row" style="margin-top:10px;">
-          <div style="text-align:center;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:10px;">
-            <div style="font-size:18px;">🟢</div>
-            <div style="font-size:12px;font-weight:700;color:var(--green);">0~30점</div>
-            <div style="font-size:11px;color:var(--t3);">LOW · 저변동성<br>옵션 프리미엄 부족</div>
-          </div>
-          <div style="text-align:center;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:8px;padding:10px;">
-            <div style="font-size:18px;">🟡</div>
-            <div style="font-size:12px;font-weight:700;color:var(--yellow);">30~70점</div>
-            <div style="font-size:11px;color:var(--t3);">MID · 중간 변동성<br>정상 운용 구간</div>
-          </div>
-          <div style="text-align:center;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);border-radius:8px;padding:10px;">
-            <div style="font-size:18px;">🔴</div>
-            <div style="font-size:12px;font-weight:700;color:var(--red);">70~100점</div>
-            <div style="font-size:11px;color:var(--t3);">HIGH · 고변동성<br>신규 진입 자제</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 토글 2: 생존경보 6개 필터 -->
-  <div class="toggle-group">
-    <div class="toggle-hd" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')">
-      <div class="toggle-hd-l">
-        <span class="toggle-icon">🛡️</span>
-        <div>
-          <div class="toggle-title">생존경보 시스템 — 6개 필터</div>
-          <div class="toggle-badge">레이님 원칙 · 필터 개수 → 0~3단계 경보</div>
-        </div>
-      </div>
-      <span class="toggle-arrow">▼</span>
-    </div>
-    <div class="toggle-body">
-      <div class="g-hl"><b>💡 핵심 개념:</b> 6개의 경고등 중 몇 개가 켜졌는지 세서 경보 단계를 결정합니다. 마치 자동차 계기판처럼 — 경고등이 많이 켜질수록 위험합니다.</div>
-      <div class="g-row" style="margin-top:12px;">
-        <div class="g-card">
-          <div class="g-card-t" style="color:var(--orange);">💥 가격쇼크 (2개 필터)</div>
-          <div class="g-card-b">
-            <b style="color:var(--t1)">① 당일 급등</b><br>
-            오늘 하루 변동폭(고가-저가) &gt; ATR×2<br>
-            <span style="font-size:11px;color:var(--t3);">예: ATR=$8 → 하루에 $16 이상 움직이면 경고</span><br><br>
-            <b style="color:var(--t1)">② 연속 급등</b><br>
-            최근 3일 중 2일 이상 당일 급등 발생<br>
-            <span style="font-size:11px;color:var(--t3);">며칠 연속으로 급격한 움직임이 지속될 때</span>
-          </div>
-        </div>
-        <div class="g-card">
-          <div class="g-card-t" style="color:var(--purple);">📈 변동성쇼크 (3개 필터)</div>
-          <div class="g-card-b">
-            <b style="color:var(--t1)">① HV 퍼센타일 &gt; 85%</b><br>
-            역사적 변동성이 20년 상위 15% 진입<br><br>
-            <b style="color:var(--t1)">② BBW 퍼센타일 &gt; 85%</b><br>
-            볼린저밴드 폭이 20년 상위 15% 진입<br><br>
-            <b style="color:var(--t1)">③ 변동성 총점 &gt; 80점</b><br>
-            4개 지표 종합 점수가 80점 초과
-          </div>
-        </div>
-        <div class="g-card">
-          <div class="g-card-t" style="color:var(--cyan);">💧 유동성쇼크 (1개 필터)</div>
-          <div class="g-card-b">
-            <b style="color:var(--t1)">① 거래량 급증</b><br>
-            오늘 거래량 &gt; 20일 평균 거래량 × 2배<br><br>
-            <span style="font-size:11px;color:var(--t3);">큰손들이 대규모로 움직일 때 거래량이 폭증<br>→ 급격한 방향 전환의 전조</span>
-          </div>
-        </div>
-      </div>
-      <div class="g-card" style="margin-top:10px;">
-        <div class="g-card-t">📊 경보 단계 결정 방식</div>
-        <div class="res-flow">
-          <div class="res-row">
-            <div class="res-num" style="background:rgba(52,211,153,.2);color:var(--green);">0</div>
-            <div class="res-arrow">→</div>
-            <div class="res-text">필터 <b style="color:var(--t1)">0개</b> 작동</div>
-            <div class="res-arrow">→</div>
-            <div class="res-badge" style="background:rgba(52,211,153,.15);color:var(--green);">■ 0단계 정상</div>
-            <div style="font-size:11px;color:var(--t3);margin-left:auto;">모든 조건 정상 — 정상 운용 가능</div>
-          </div>
-          <div class="res-row">
-            <div class="res-num" style="background:rgba(251,191,36,.2);color:var(--yellow);">1</div>
-            <div class="res-arrow">→</div>
-            <div class="res-text">필터 <b style="color:var(--t1)">1개</b> 작동</div>
-            <div class="res-arrow">→</div>
-            <div class="res-badge" style="background:rgba(251,191,36,.15);color:var(--yellow);">🟡 1단계 노출점검</div>
-            <div style="font-size:11px;color:var(--t3);margin-left:auto;">기존 포지션 현황 점검 권고</div>
-          </div>
-          <div class="res-row">
-            <div class="res-num" style="background:rgba(251,146,60,.2);color:var(--orange);">2~3</div>
-            <div class="res-arrow">→</div>
-            <div class="res-text">필터 <b style="color:var(--t1)">2~3개</b> 작동</div>
-            <div class="res-arrow">→</div>
-            <div class="res-badge" style="background:rgba(251,146,60,.15);color:var(--orange);">🟠 2단계 위험방어</div>
-            <div style="font-size:11px;color:var(--t3);margin-left:auto;">헤지 또는 포지션 축소 검토</div>
-          </div>
-          <div class="res-row">
-            <div class="res-num" style="background:rgba(248,113,113,.2);color:var(--red);">4+</div>
-            <div class="res-arrow">→</div>
-            <div class="res-text">필터 <b style="color:var(--t1)">4개 이상</b> 작동</div>
-            <div class="res-arrow">→</div>
-            <div class="res-badge" style="background:rgba(248,113,113,.15);color:var(--red);">🔴 3단계 위험비상</div>
-            <div style="font-size:11px;color:var(--t3);margin-left:auto;">즉각 대응 — 레이님 프로토콜 가동</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 토글 3: 손실확률 & 행사가 -->
-  <div class="toggle-group">
-    <div class="toggle-hd" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')">
-      <div class="toggle-hd-l">
-        <span class="toggle-icon">🎯</span>
-        <div>
-          <div class="toggle-title">손실확률 & 행사가 계산</div>
-          <div class="toggle-badge">레이님 원칙 · 추세별 기준 · 역사적+정규분포 하이브리드</div>
-        </div>
-      </div>
-      <span class="toggle-arrow">▼</span>
-    </div>
-    <div class="toggle-body">
-      <div class="g-hl"><b>💡 핵심 개념:</b> "만기일까지 이 행사가에 닿을 확률이 몇 %냐"를 계산합니다. 손실확률 3%인 행사가 = 97번 중 97번은 그 가격에 안 닿는다는 의미입니다.</div>
-      <div class="g-row" style="margin-top:12px;">
-        <div class="g-card">
-          <div class="g-card-t">📐 계산 방법 (하이브리드)</div>
-          <div class="g-card-b">
-            <b style="color:var(--t1)">정규분포 방식:</b><br>
-            현재가격 + 변동성 + 잔여만기 → 수학적 확률<br><br>
-            <b style="color:var(--t1)">계산 공식:</b><br>
-            <span style="font-family:var(--font-m);font-size:11px;color:var(--cyan);">Z = 목표이동폭 ÷ (HV × √(만기/252))</span><br>
-            <span style="font-family:var(--font-m);font-size:11px;color:var(--cyan);">손실확률 = 1 - 정규분포CDF(Z)</span><br><br>
-            <b style="color:var(--t1)">예시:</b><br>
-            현재가 $100, HV=50%, 만기 45일<br>
-            → 3% 손실확률 콜 행사가 ≈ $130
-          </div>
-        </div>
-        <div class="g-card">
-          <div class="g-card-t">📋 추세별 권장 기준</div>
-          <div class="g-card-b">
-            <div style="display:grid;grid-template-columns:auto 1fr 1fr;gap:4px 10px;font-size:11px;">
-              <div style="color:var(--t3);">추세</div><div style="color:var(--cyan);text-align:center;">콜 손실확률</div><div style="color:var(--orange);text-align:center;">풋 손실확률</div>
-              <div>📈 상승</div><div style="text-align:center;color:var(--t2);">3%</div><div style="text-align:center;color:var(--t2);">20%</div>
-              <div>↗ 강보합</div><div style="text-align:center;color:var(--t2);">3%</div><div style="text-align:center;color:var(--t2);">10%</div>
-              <div>→ 보합</div><div style="text-align:center;color:var(--t2);">10%</div><div style="text-align:center;color:var(--t2);">10%</div>
-              <div>↘ 약보합</div><div style="text-align:center;color:var(--t2);">10%</div><div style="text-align:center;color:var(--t2);">3%</div>
-              <div>📉 하락</div><div style="text-align:center;color:var(--t2);">20%</div><div style="text-align:center;color:var(--t2);">3%</div>
-            </div>
-            <div class="g-hl" style="margin-top:10px;"><b>상승 추세에서 콜 3% 의미:</b> 콜은 불리한 방향이니 아주 멀리 행사가를 잡고, 풋은 유리한 방향이니 넉넉하게 20%까지 허용</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 토글 4: 레짐 전이 확률 & Z-Score -->
-  <div class="toggle-group">
-    <div class="toggle-hd" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')">
-      <div class="toggle-hd-l">
-        <span class="toggle-icon">🔮</span>
-        <div>
-          <div class="toggle-title">레짐 전이 확률 & Z-Score</div>
-          <div class="toggle-badge">위험 지속 예측 · 가격 위치 판단</div>
-        </div>
-      </div>
-      <span class="toggle-arrow">▼</span>
-    </div>
-    <div class="toggle-body">
-      <div class="g-row" style="margin-top:0;">
-        <div class="g-card">
-          <div class="g-card-t">🔮 레짐 전이 확률</div>
-          <div class="g-card-b">
-            <b style="color:var(--t1)">무엇인가요?</b><br>
-            현재 변동성 레짐(LOW/MID/HIGH)이 5일·10일·20일 후에도 유지될 확률<br><br>
-            <b style="color:var(--t1)">어떻게 계산?</b><br>
-            과거 20년 데이터에서 "HIGH였을 때 5일 후에 어디에 있었나"를 세서 확률 계산<br><br>
-            <b style="color:var(--t1)">예시:</b><br>
-            HIGH→HIGH 83.5% = 지금 고변동성이면<br>5일 후에도 고변동성일 확률 83.5%
-          </div>
-        </div>
-        <div class="g-card">
-          <div class="g-card-t">📐 Z-Score (가격 위치 지수)</div>
-          <div class="g-card-b">
-            <b style="color:var(--t1)">무엇인가요?</b><br>
-            현재 가격이 20일 평균에서 얼마나 벗어났는지<br><br>
-            <b style="color:var(--t1)">계산 공식:</b><br>
-            <span style="font-family:var(--font-m);font-size:11px;color:var(--cyan);">Z = (현재가 - 20일평균) ÷ 표준편차</span><br><br>
-            <div style="font-size:11px;">
-              <span style="color:var(--red);">+2 이상</span> → 과매수 극단 (콜 매도 극히 위험)<br>
-              <span style="color:var(--yellow);">+1~+2</span> → 평균 위 (콜 주의)<br>
-              <span style="color:var(--green);">-1~+1</span> → 평균 근처 (중립)<br>
-              <span style="color:var(--yellow);">-1~-2</span> → 평균 아래 (풋 주의)<br>
-              <span style="color:var(--red);">-2 이하</span> → 과매도 극단 (풋 매도 극히 위험)
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 토글 5: 매매 확인 순서 -->
-  <div class="toggle-group">
-    <div class="toggle-hd" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')">
-      <div class="toggle-hd-l">
-        <span class="toggle-icon">✅</span>
-        <div>
-          <div class="toggle-title">매일 매매 확인 순서</div>
-          <div class="toggle-badge">A → B → C → 행사가 순서로 확인</div>
-        </div>
-      </div>
-      <span class="toggle-arrow">▼</span>
-    </div>
-    <div class="toggle-body">
-      <div class="res-flow" style="margin-top:0;">
-        <div class="res-row">
-          <div class="res-num" style="background:rgba(167,139,250,.2);color:var(--purple);font-size:12px;font-weight:900;">A</div>
-          <div class="res-text"><b style="color:var(--t1)">오늘 시황 요약</b> — 진입 가능 / 신중 / 금지 확인 → <b style="color:var(--red);">진입 금지면 여기서 종료</b></div>
-        </div>
-        <div class="res-row">
-          <div class="res-num" style="background:rgba(56,189,248,.2);color:var(--cyan);font-size:12px;font-weight:900;">B</div>
-          <div class="res-text"><b style="color:var(--t1)">핵심 지표 5개</b> — 변동성 총점·경보 단계·레짐·Z-Score 확인</div>
-        </div>
-        <div class="res-row">
-          <div class="res-num" style="background:rgba(52,211,153,.2);color:var(--green);font-size:12px;font-weight:900;">C</div>
-          <div class="res-text"><b style="color:var(--t1)">차트 분석</b> — BB 위치·레짐 지속 확률·변동성 추세 확인</div>
-        </div>
-        <div class="res-row">
-          <div class="res-num" style="background:rgba(251,191,36,.2);color:var(--yellow);font-size:12px;font-weight:900;">🎯</div>
-          <div class="res-text"><b style="color:var(--t1)">행사가 계산기</b> — 추세 선택 → 만기 선택 → 권장 행사가 확인</div>
-        </div>
-      </div>
-      <div class="g-warn" style="margin-top:12px;"><b>⚠️ 2단계 이상이면</b> 신규 진입 절대 금지. 기존 포지션 헤지 또는 청산 검토하세요.</div>
-    </div>
-  </div>
-
-</div>
-
-</div>
-
-
-  </div>
-</div>
 </div>
 </div>
 <div class="page" id="page-alert">
@@ -937,7 +521,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
       <div style="width:36px;height:36px;border-radius:8px;background:var(--purple);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#0a0e1a;flex-shrink:0">A</div>
       <div>
         <div style="font-size:16px;font-weight:800;color:var(--t1)">설정 &amp; 입력</div>
-        <div style="font-size:12px;color:var(--t2);margin-top:3px;font-weight:500">① 자금 설정 확인 → ② HTS 1316창 열기 → ③ 전체 선택(Ctrl+A) → ④ 복사(Ctrl+C) → ⑤ 아래 입력창에 붙여넣기(Ctrl+V)</div>
+        <div style="font-size:12px;color:var(--t2);margin-top:3px;font-weight:500">① 자금 설정 확인 &nbsp;→&nbsp; ② HTS 1316창 데이터 붙여넣기 &nbsp;→&nbsp; 자동 분석 시작</div>
       </div>
     </div>
     <div style="height:2px;background:linear-gradient(90deg,var(--purple),transparent);margin-top:12px;border-radius:1px"></div>
@@ -3980,13 +3564,14 @@ function initPTOnce() {
     el.addEventListener('input', onPTInput);
   });
 
-  // B~E 섹션에 pt-lockable 클래스 부여 (row2 이후 자식들)
+  // B~E 섹션에 pt-lockable 클래스 부여
+  // ※ pt-sec-b 기준 (row2 기준 시 A-2 붙여넣기 버튼도 잠겨 클릭 불가 버그)
   var page = document.getElementById('page-position');
   if (page) {
-    var foundRow2 = false;
+    var foundSecB = false;
     Array.from(page.children).forEach(function(child) {
-      if (child.className && child.className.indexOf('row2') >= 0) { foundRow2 = true; return; }
-      if (!foundRow2) return;
+      if (child.id === 'pt-sec-b') { foundSecB = true; return; }
+      if (!foundSecB) return;
       if (child.id === 'pt-sticky-nav') return; // 네비는 제외
       child.classList.add('pt-lockable');
     });
@@ -4148,7 +3733,6 @@ renderPT = function() {
 
 // 초기 렌더링
 document.getElementById('pt-capital').textContent = '$' + Math.round(getCapitalUSD()).toLocaleString();
-
 
 
 
@@ -4638,9 +4222,8 @@ var anomaliesCountGlobal = 0;
 var convergenceStatusGlobal = '—';
 var convergenceColorGlobal = 'var(--t3)';
 
-
-// ── 날짜별 시장 이슈 뉴스 링크 (C섹션) ──────────────────────
-function fetchMarketNews(date, codes, netLoss, cardId) {
+// ── 날짜별 시장 이슈 자동 검색 (GDELT 무료 API) ─────────────
+async function fetchMarketNews(date, codes, netLoss, cardId) {
   var el = document.getElementById(cardId);
   if (!el) return;
 
@@ -4670,56 +4253,57 @@ function fetchMarketNews(date, codes, netLoss, cardId) {
     'soybeans':'대두','wheat':'밀','corn':'옥수수','NASDAQ':'나스닥'
   };
   var instLabel = kwArr.map(function(k){ return instKR[k]||k; }).join(' · ');
-  var queryStr = kwArr.join(' ') + ' ' + date;
-  var queryEnc = encodeURIComponent(queryStr);
 
-  // 뉴스 링크 목록
-  var links = [
-    {
-      label: '🔍 Google News',
-      color: '#4285F4',
-      url: 'https://news.google.com/search?q=' + queryEnc + '&hl=ko&gl=KR&ceid=KR:ko'
-    },
-    {
-      label: '📈 Investing.com',
-      color: '#FF6B35',
-      url: 'https://www.investing.com/search/?q=' + encodeURIComponent(kwArr[0] || 'crude oil')
-    },
-    {
-      label: '📰 Reuters',
-      color: '#FF8000',
-      url: 'https://www.reuters.com/search/news?blob=' + queryEnc
-    },
-    {
-      label: '📊 MarketWatch',
-      color: '#1BA8B2',
-      url: 'https://www.marketwatch.com/search?q=' + queryEnc + '&ts=0&tab=All+News'
-    }
+  // GDELT 날짜 파라미터
+  var d = date.replace(/-/g,'');
+  var dt2 = new Date(date); dt2.setDate(dt2.getDate()+2);
+  var dEnd = dt2.toISOString().slice(0,10).replace(/-/g,'') + '235959';
+  var query = encodeURIComponent(kwArr.join(' OR ') + ' market');
+  var gdeltPath = '/api/v2/doc/doc?query='+query
+    +'&mode=ArtList&startdatetime='+d+'000000&enddatetime='+dEnd
+    +'&maxrecords=5&format=json';
+
+  // 시도할 URL 목록 (직접 → 프록시 순서)
+  var attempts = [
+    'https://api.gdeltproject.org' + gdeltPath,
+    'https://corsproxy.io/?' + encodeURIComponent('https://api.gdeltproject.org' + gdeltPath),
+    'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://api.gdeltproject.org' + gdeltPath),
+    'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent('https://api.gdeltproject.org' + gdeltPath),
   ];
 
-  var btnStyle = 'display:inline-flex;align-items:center;padding:5px 11px;border-radius:5px;'
-    + 'font-size:10px;font-weight:600;text-decoration:none;color:#fff;margin:3px 4px 3px 0;'
-    + 'background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);'
-    + 'transition:background .15s;';
+  var arts = [];
+  for (var ai = 0; ai < attempts.length; ai++) {
+    try {
+      var r = await fetch(attempts[ai], { signal: AbortSignal.timeout(8000) });
+      var txt = await r.text();
+      var json = JSON.parse(txt.includes('"articles"') ? txt : '{}');
+      arts = json.articles || [];
+      if (arts.length > 0) break;
+    } catch(e) { /* 다음 프록시 시도 */ }
+  }
 
-  var btns = links.map(function(lk) {
-    return '<a href="' + lk.url + '" target="_blank" rel="noopener" '
-      + 'style="' + btnStyle + 'border-left:3px solid ' + lk.color + '"'
-      + ' onmouseover="this.style.background=\'rgba(255,255,255,.14)\'"'
-      + ' onmouseout="this.style.background=\'rgba(255,255,255,.07)\'">'
-      + lk.label + '</a>';
-  }).join('');
+  if (!el) return;
 
-  el.innerHTML = '<div style="margin-top:8px;padding:10px 12px;background:rgba(0,0,0,.22);'
-    + 'border-radius:6px;border-left:2px solid var(--orange)">'
-    + '<div style="font-size:10px;font-weight:600;color:var(--orange);margin-bottom:7px">'
-    + '🔗 ' + date + ' 관련 뉴스 검색 — ' + instLabel + '</div>'
-    + '<div style="display:flex;flex-wrap:wrap;gap:2px">' + btns + '</div>'
-    + '<div style="font-size:9px;color:var(--t3);margin-top:6px;opacity:.7">'
-    + '검색어: ' + queryStr + '</div>'
+  if (arts.length === 0) {
+    el.innerHTML = '<div style="font-size:10px;color:var(--t3);margin-top:4px;padding:6px 10px;background:rgba(0,0,0,.15);border-radius:4px">'
+      + '⚠️ 해당 날짜 뉴스를 가져올 수 없습니다. GitHub Pages 배포 후 정상 작동합니다.</div>';
+    return;
+  }
+
+  var html = '<div style="margin-top:8px;padding:10px 12px;background:rgba(0,0,0,.25);border-radius:6px;border-left:2px solid var(--orange)">'
+    + '<div style="font-size:10px;font-weight:600;color:var(--orange);margin-bottom:6px">📡 ' + date + ' 시장 뉴스 — ' + instLabel + '</div>'
+    + arts.slice(0,4).map(function(a) {
+        var title = (a.title||'').slice(0,90);
+        var src = (a.domain||'').replace(/^www\./,'');
+        return '<div style="margin-bottom:5px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06)">'
+          + '<a href="'+a.url+'" target="_blank" style="font-size:10px;color:var(--t1);text-decoration:none;line-height:1.5;display:block">'
+          + title + (title.length>=90?'…':'') + '</a>'
+          + '<span style="font-size:9px;color:var(--t3)">'+src+'</span>'
+        + '</div>';
+      }).join('')
     + '</div>';
+  el.innerHTML = html;
 }
-
 
 // ── 손절 위반 경보 ───────────────────────────────────────────
 function renderStopLossAlert(anomalies, metrics, daily) {
@@ -5799,7 +5383,7 @@ function renderGuideCards(metrics, mdd, anomalies, convergenceRatio) {
     ? (function(){ var d=aggregateDaily(rvData); return d.length>0?d[d.length-1].date.slice(0,4):String(new Date().getFullYear()); })()
     : String(new Date().getFullYear());
   var cap = getCapitalForYear(lastYrG);
-  var stdDevPct = (metrics && cap > 0) ? (metrics.stdDev / cap * 100) : 0;
+  var stdDevPct = (cap > 0 && metrics && metrics.stdDev != null) ? (metrics.stdDev / cap * 100) : 0;
   var hasData = metrics && metrics.total > 0;
 
   // 강조 행 생성 함수
@@ -6298,7 +5882,7 @@ function loadCafeMemo() {
   });
 
   // API 키 상태 복원 불필요 (템플릿 방식으로 변경)
-  updateApiKeyStatus && void 0; // noop
+  if (typeof updateApiKeyStatus === 'function') updateApiKeyStatus(); // noop-safe
 }
 
 // 복기 기간 자동 표시
@@ -6958,9 +6542,6 @@ function injectTourHelpBtn() {
   // 카페 복기 양식 복원
   setTimeout(loadCafeMemo, 100);
 })();
-
-
-
 
 
 
