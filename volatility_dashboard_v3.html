@@ -4326,23 +4326,28 @@ async function fetchMarketNews(date, codes, netLoss, cardId) {
   var dt2 = new Date(date); dt2.setDate(dt2.getDate()+2);
   var dEnd = dt2.toISOString().slice(0,10).replace(/-/g,'') + '235959';
   var query = encodeURIComponent(kwArr.join(' OR ') + ' market');
-  var gdeltPath = '/api/v2/doc/doc?query='+query
+  var gdeltUrl = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+query
     +'&mode=ArtList&startdatetime='+d+'000000&enddatetime='+dEnd
     +'&maxrecords=5&format=json';
 
-  // 시도할 URL 목록 (직접 → 프록시 순서)
+  // 시도할 URL 목록 — 직접 → 프록시 5개 순서
   var attempts = [
-    'https://api.gdeltproject.org' + gdeltPath,
-    'https://corsproxy.io/?' + encodeURIComponent('https://api.gdeltproject.org' + gdeltPath),
-    'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://api.gdeltproject.org' + gdeltPath),
-    'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent('https://api.gdeltproject.org' + gdeltPath),
+    gdeltUrl,
+    'https://api.allorigins.win/raw?url=' + encodeURIComponent(gdeltUrl),
+    'https://corsproxy.io/?' + encodeURIComponent(gdeltUrl),
+    'https://thingproxy.freeboard.io/fetch/' + gdeltUrl,
+    'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(gdeltUrl),
   ];
 
   var arts = [];
   for (var ai = 0; ai < attempts.length; ai++) {
     try {
-      var r = await fetch(attempts[ai], { signal: AbortSignal.timeout(8000) });
+      var r = await fetch(attempts[ai], { signal: AbortSignal.timeout(7000) });
+      if (!r.ok) continue;
       var txt = await r.text();
+      if (txt.includes('"contents"')) {
+        try { txt = JSON.parse(txt).contents; } catch(e2){}
+      }
       var json = JSON.parse(txt.includes('"articles"') ? txt : '{}');
       arts = json.articles || [];
       if (arts.length > 0) break;
@@ -4352,8 +4357,7 @@ async function fetchMarketNews(date, codes, netLoss, cardId) {
   if (!el) return;
 
   if (arts.length === 0) {
-    el.innerHTML = '<div style="font-size:10px;color:var(--t3);margin-top:4px;padding:6px 10px;background:rgba(0,0,0,.15);border-radius:4px">'
-      + '⚠️ 해당 날짜 뉴스를 가져올 수 없습니다. GitHub Pages 배포 후 정상 작동합니다.</div>';
+    el.innerHTML = '<div style="font-size:10px;color:var(--t3);margin-top:4px;padding:6px 10px;background:rgba(0,0,0,.15);border-radius:4px">'      + '📰 ' + date + ' 날짜 뉴스를 불러오지 못했습니다.<br>'      + '<span style="opacity:.6">GDELT 서버 혼잡 또는 해당 날짜 기사 없음</span></div>';
     return;
   }
 
@@ -5450,7 +5454,7 @@ function renderGuideCards(metrics, mdd, anomalies, convergenceRatio) {
     ? (function(){ var d=aggregateDaily(rvData); return d.length>0?d[d.length-1].date.slice(0,4):String(new Date().getFullYear()); })()
     : String(new Date().getFullYear());
   var cap = getCapitalForYear(lastYrG);
-  var stdDevPct = (cap > 0 && metrics && metrics.stdDev != null) ? (metrics.stdDev / cap * 100) : 0;
+  var stdDevPct = cap > 0 ? (metrics.stdDev / cap * 100) : 0;
   var hasData = metrics && metrics.total > 0;
 
   // 강조 행 생성 함수
@@ -5949,7 +5953,7 @@ function loadCafeMemo() {
   });
 
   // API 키 상태 복원 불필요 (템플릿 방식으로 변경)
-  if (typeof updateApiKeyStatus === 'function') updateApiKeyStatus(); // noop-safe
+  updateApiKeyStatus && void 0; // noop
 }
 
 // 복기 기간 자동 표시
@@ -6609,6 +6613,7 @@ function injectTourHelpBtn() {
   // 카페 복기 양식 복원
   setTimeout(loadCafeMemo, 100);
 })();
+
 
 
 
