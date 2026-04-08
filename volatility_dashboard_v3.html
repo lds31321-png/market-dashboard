@@ -280,12 +280,13 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 </style></head><body>
 <div class="hdr"><div class="hdr-l"><div class="logo">CL</div><div><div class="hdr-title">크루드오일 옵션 매도 분석 시스템</div><div class="hdr-sub">Volatility Monitor · Survival Alert · Strike Calculator · v3.0</div></div></div><div class="hdr-r"><div class="hdr-meta" id="hdrMeta">로딩 중...</div><div class="dot"></div></div></div>
 <div class="nav">
-  <div class="nav-tab active" onclick="document.getElementById('page-overview').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo(0,0)">📊 시장 현황</div>
-  <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo(0,0)">🛡️ 생존경보</div>
-  <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo(0,0)">🎯 행사가 계산기</div>
-  <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo(0,0);renderPT()">🛡️ 자금·위험 관리</div>
-  <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-review').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo(0,0)">📈 백테스트 & 사건</div>
-  <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo(0,0)">매매 복기</div>
+  <div class="nav-tab active" onclick="document.getElementById('page-overview').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo(0,0)">📊 시장 현황</div>
+  <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo(0,0)">🛡️ 생존경보</div>
+  <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo(0,0)">🎯 행사가 계산기</div>
+  <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo(0,0);renderPT()">🛡️ 자금·위험 관리</div>
+  <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo(0,0)">📈 백테스트 & 사건</div>
+  <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-review').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo(0,0)">📖 지표 가이드</div>
+  <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo(0,0)">매매 복기</div>
 </div>
 <div class="alert-band lv0" id="alertBand"><span class="a-badge" id="aBadge">로딩중</span><span class="a-msg" id="aMsg"></span><span class="a-right" id="aRight"></span></div>
 <div class="page active" id="page-overview">
@@ -402,31 +403,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
     → 경보 잦은 시기 = 불안정 → 포지션 크기 줄여야 할 때<br>
     → 경보 없는 긴 기간 = 안정적 매매 환경
   </div></div><div class="chart-w" style="height:240px"><canvas id="cAlert"></canvas></div></div>
-</div>
-
-<!-- ── 지표 구성 가이드 인라인 토글 (시장 현황 하단) ─────────────── -->
-<div id="ov-guide-wrap" style="margin-top:4px">
-  <button id="ov-guide-toggle-btn"
-    onclick="toggleOvGuidePanel()"
-    style="width:100%;padding:13px 20px;border-radius:8px;
-      border:1.5px solid var(--cyan);
-      background:rgba(56,189,248,.08);color:var(--cyan);
-      font-size:13px;font-weight:700;
-      cursor:pointer;display:flex;align-items:center;
-      justify-content:center;gap:10px;
-      transition:all .2s;letter-spacing:.02em"
-    onmouseover="this.style.background='rgba(56,189,248,.18)';this.style.borderColor='var(--cyan)'"
-    onmouseout="this.style.background='rgba(56,189,248,.08)';this.style.borderColor='var(--cyan)'">
-    <span id="ov-guide-arrow" style="font-size:16px;transition:transform .3s">▼</span>
-    <span>📖 지표 구성 가이드</span>
-    <span style="font-size:11px;padding:2px 8px;border-radius:10px;
-      background:rgba(56,189,248,.15);border:1px solid rgba(56,189,248,.3);
-      font-weight:600;margin-left:4px">HV · ATR · BBW · 생존경보 · 손실확률</span>
-  </button>
-  <div id="ov-guide-panel" style="display:none;margin-top:8px;
-    border:1px solid rgba(56,189,248,.18);border-radius:10px;
-    overflow:hidden;background:var(--card);padding:0 0 8px">
-  </div>
 </div>
 </div>
 <div class="page" id="page-alert">
@@ -1366,7 +1342,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
       <div class="mf-arr">→</div>
       <div class="mf-box purple"><div class="mf-ico">🌡️</div><div class="mf-lbl">변동성 총점</div><div class="mf-sub">0~100점</div></div>
       <div class="mf-arr">→</div>
-      <div class="mf-box orange"><div class="mf-ico">🛡️</div><div class="mf-lbl">생존경보</div><div class="mf-sub">6개 필터</div></div>
+      <div class="mf-box orange"><div class="mf-ico">🛡️</div><div class="mf-lbl">생존경보</div><div class="mf-sub">7개 필터</div></div>
       <div class="mf-arr">→</div>
       <div class="mf-box green"><div class="mf-ico">🎯</div><div class="mf-lbl">행사가</div><div class="mf-sub">손실확률 기반</div></div>
     </div>
@@ -1460,20 +1436,20 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
     </div>
   </div>
 
-  <!-- 토글 2: 생존경보 6개 필터 -->
+  <!-- 토글 2: 생존경보 7개 필터 -->
   <div class="toggle-group">
     <div class="toggle-hd" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('show')">
       <div class="toggle-hd-l">
         <span class="toggle-icon">🛡️</span>
         <div>
-          <div class="toggle-title">생존경보 시스템 — 6개 필터</div>
+          <div class="toggle-title">생존경보 시스템 — 7개 필터</div>
           <div class="toggle-badge">레이님 원칙 · 필터 개수 → 0~3단계 경보</div>
         </div>
       </div>
       <span class="toggle-arrow">▼</span>
     </div>
     <div class="toggle-body">
-      <div class="g-hl"><b>💡 핵심 개념:</b> 6개의 경고등 중 몇 개가 켜졌는지 세서 경보 단계를 결정합니다. 마치 자동차 계기판처럼 — 경고등이 많이 켜질수록 위험합니다.</div>
+      <div class="g-hl"><b>💡 핵심 개념:</b> 7개의 경고등 중 몇 개가 켜졌는지 세서 경보 단계를 결정합니다. 마치 자동차 계기판처럼 — 경고등이 많이 켜질수록 위험합니다.</div>
       <div class="g-row" style="margin-top:12px;">
         <div class="g-card">
           <div class="g-card-t" style="color:var(--orange);">💥 가격쇼크 (2개 필터)</div>
@@ -1498,11 +1474,14 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
           </div>
         </div>
         <div class="g-card">
-          <div class="g-card-t" style="color:var(--cyan);">💧 유동성쇼크 (1개 필터)</div>
+          <div class="g-card-t" style="color:var(--cyan);">💧 유동성쇼크 (2개 필터)</div>
           <div class="g-card-b">
             <b style="color:var(--t1)">① 거래량 급증</b><br>
             오늘 거래량 &gt; 20일 평균 거래량 × 2배<br><br>
-            <span style="font-size:11px;color:var(--t3);">큰손들이 대규모로 움직일 때 거래량이 폭증<br>→ 급격한 방향 전환의 전조</span>
+            <span style="font-size:11px;color:var(--t3);">큰손들이 대규모로 움직일 때 거래량이 폭증<br>→ 급격한 방향 전환의 전조</span><br><br>
+            <b style="color:var(--t1)">② 연속 거래량 급증</b><br>
+            최근 3일 중 2일 이상 거래량 급증 (×1.5배)<br><br>
+            <span style="font-size:11px;color:var(--t3);">단발성이 아닌 지속적 이상거래 — 패닉 또는<br>정보매매 지속 신호</span>
           </div>
         </div>
       </div>
@@ -1693,7 +1672,7 @@ const gc='rgba(28,45,67,0.8)';
 let curTrend='강보합',curDays=45,curMonthPrice=null;
 
 function goTab(id){
-  var IDS=['overview','alert','strike','position','backtest','review'];
+  var IDS=['overview','alert','strike','position','backtest','guide','review'];
   document.querySelectorAll('.nav-tab').forEach(function(t,i){
     t.classList.toggle('active', IDS[i]===id);
   });
@@ -2166,7 +2145,7 @@ tpEl.innerHTML =
   + '</div>';
 
 } catch(e) { if(tpEl) tpEl.innerHTML='<div style="padding:14px;color:#f87171;font-size:11px">⚠️ C-2 오류: '+e.message+'</div>'; console.error('tpEl:',e); }
-document.getElementById('filterCount').textContent=C.n_triggered+'/6 충족';
+document.getElementById('filterCount').textContent=C.n_triggered+'/7 충족';
 var FM={
   '가격쇼크①  당일급등':    {s:'가격쇼크 ①',d:'오늘 가격 진폭 > ATR × 2배'},
   '가격쇼크②  연속급등':    {s:'가격쇼크 ②',d:'최근 3일 중 2일 이상 범위 급등'},
@@ -2174,6 +2153,7 @@ var FM={
   '변동성쇼크② BBW퍼센타일':{s:'변동성쇼크 ②',d:'볼린저밴드 폭 상위 15% 돌파'},
   '변동성쇼크③ 변동성총점':  {s:'변동성쇼크 ③',d:'변동성 총점 80점 초과'},
   '유동성쇼크① 거래량급증':  {s:'유동성쇼크 ①',d:'거래량 20일 평균의 2배 초과'},
+  '유동성쇼크② 연속거래량급증':{s:'유동성쇼크 ②',d:'최근 3일 중 2일 이상 거래량 1.5배 초과'},
 };
 var fp=document.getElementById('filterPanel');
 Object.entries(C.filters).forEach(function(entry){
@@ -2303,38 +2283,6 @@ document.getElementById('alertGuide').innerHTML=[
 
 
 // ── 시장 현황 가이드 토글 ────────────────────────────────
-function toggleOvGuidePanel() {
-  var panel  = document.getElementById('ov-guide-panel');
-  var arrow  = document.getElementById('ov-guide-arrow');
-  var isOpen = panel.style.display !== 'none';
-
-  if (!isOpen && panel.innerHTML.trim() === '') {
-    // 처음 열 때 — page-guide의 g-wrap 내용 복제
-    var src = document.querySelector('#page-guide .g-wrap');
-    if (src) {
-      var clone = src.cloneNode(true);
-      clone.style.padding = '16px 20px 8px';
-      // ① 모든 아코디언 섹션을 열린 상태로 초기화
-      clone.querySelectorAll('.toggle-bd').forEach(function(bd) {
-        bd.classList.add('show');
-      });
-      clone.querySelectorAll('.toggle-hd').forEach(function(hd) {
-        hd.classList.add('open');
-        // ② 클릭 시 CSS 클래스 방식으로 토글 (기존 HTML inline onclick과 동일 방식)
-        hd.onclick = function() {
-          this.classList.toggle('open');
-          var bd = this.nextElementSibling;
-          if (bd) bd.classList.toggle('show');
-        };
-      });
-      panel.appendChild(clone);
-    }
-  }
-
-  panel.style.display = isOpen ? 'none' : '';
-  arrow.style.transform = isOpen ? '' : 'rotate(180deg)';
-}
-
 function ovToggleGuide(id) {
   var el = document.getElementById(id);
   if (!el) return;
