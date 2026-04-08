@@ -4326,36 +4326,30 @@ async function fetchMarketNews(date, codes, netLoss, cardId) {
   var dt2 = new Date(date); dt2.setDate(dt2.getDate()+2);
   var dEnd = dt2.toISOString().slice(0,10).replace(/-/g,'') + '235959';
   var query = encodeURIComponent(kwArr.join(' OR ') + ' market');
-  var gdeltUrl = 'https://api.gdeltproject.org/api/v2/doc/doc?query='+query
-    +'&mode=ArtList&startdatetime='+d+'000000&enddatetime='+dEnd
-    +'&maxrecords=5&format=json';
-
-  // 프록시 목록 — corsproxy.io 우선 (가장 안정적)
-  var proxies = [
-    gdeltUrl,
-    'https://corsproxy.io/?' + encodeURIComponent(gdeltUrl),
-    'https://api.allorigins.win/raw?url=' + encodeURIComponent(gdeltUrl),
-    'https://thingproxy.freeboard.io/fetch/' + gdeltUrl,
-  ];
+  // Google News RSS → rss2json (CORS 네이티브 지원, API키 불필요)
+  var searchQ = encodeURIComponent(kwArr.join(' OR ') + ' ' + date);
+  var rssUrl  = 'https://news.google.com/rss/search?q=' + searchQ + '&hl=en&gl=US&ceid=US:en';
+  var apiUrl  = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(rssUrl);
 
   var arts = [];
-  for (var ai = 0; ai < proxies.length; ai++) {
-    try {
-      var controller = new AbortController();
-      var tid = setTimeout(function(){ controller.abort(); }, 8000);
-      var r = await fetch(proxies[ai], { signal: controller.signal });
-      clearTimeout(tid);
-      var txt = await r.text();
-      // allorigins {contents:'...'} 래퍼 처리
-      if (txt.indexOf('"contents"') !== -1 && txt.indexOf('"articles"') === -1) {
-        try { txt = JSON.parse(txt).contents || txt; } catch(e2){}
-      }
-      if (txt.indexOf('"articles"') === -1) continue;
-      var json = JSON.parse(txt);
-      arts = (json && json.articles) ? json.articles : [];
-      if (arts.length > 0) break;
-    } catch(e) { /* 다음 시도 */ }
-  }
+  try {
+    var controller = new AbortController();
+    var tid = setTimeout(function(){ controller.abort(); }, 9000);
+    var r = await fetch(apiUrl, { signal: controller.signal });
+    clearTimeout(tid);
+    var json = await r.json();
+    if (json.status === 'ok' && json.items && json.items.length > 0) {
+      // rss2json 포맷 → GDELT 포맷으로 변환
+      arts = json.items.slice(0, 5).map(function(item) {
+        return {
+          title:  item.title || '',
+          url:    item.link  || '',
+          domain: (item.link || '').replace(/^https?:\/\//,'').split('/')[0].replace(/^www\./,''),
+          seendate: item.pubDate || ''
+        };
+      });
+    }
+  } catch(e) { /* fetch 실패 */ }
 
   if (!el) return;
 
@@ -4363,8 +4357,7 @@ async function fetchMarketNews(date, codes, netLoss, cardId) {
     el.innerHTML = '<div style="font-size:10px;color:var(--t3);margin-top:4px;padding:6px 10px;'
       + 'background:rgba(0,0,0,.15);border-radius:4px">'
       + '📰 ' + date + ' 뉴스 로드 실패 — <a href="https://www.google.com/search?q='
-      + encodeURIComponent(kwArr.join(' OR ') + ' ' + date)
-      + '" target="_blank" style="color:var(--cyan);text-decoration:none">Google 검색 ↗</a></div>';
+      + searchQ + '" target="_blank" style="color:var(--cyan);text-decoration:none">Google 검색 ↗</a></div>';
     return;
   }
 
@@ -6620,6 +6613,7 @@ function injectTourHelpBtn() {
   // 카페 복기 양식 복원
   setTimeout(loadCafeMemo, 100);
 })();
+
 
 
 
