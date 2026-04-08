@@ -4330,34 +4330,41 @@ async function fetchMarketNews(date, codes, netLoss, cardId) {
     +'&mode=ArtList&startdatetime='+d+'000000&enddatetime='+dEnd
     +'&maxrecords=5&format=json';
 
-  // 시도할 URL 목록 — 직접 → 프록시 5개 순서
-  var attempts = [
+  // 프록시 목록 — corsproxy.io 우선 (가장 안정적)
+  var proxies = [
     gdeltUrl,
-    'https://api.allorigins.win/raw?url=' + encodeURIComponent(gdeltUrl),
     'https://corsproxy.io/?' + encodeURIComponent(gdeltUrl),
+    'https://api.allorigins.win/raw?url=' + encodeURIComponent(gdeltUrl),
     'https://thingproxy.freeboard.io/fetch/' + gdeltUrl,
-    'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(gdeltUrl),
   ];
 
   var arts = [];
-  for (var ai = 0; ai < attempts.length; ai++) {
+  for (var ai = 0; ai < proxies.length; ai++) {
     try {
-      var r = await fetch(attempts[ai], { signal: AbortSignal.timeout(7000) });
-      if (!r.ok) continue;
+      var controller = new AbortController();
+      var tid = setTimeout(function(){ controller.abort(); }, 8000);
+      var r = await fetch(proxies[ai], { signal: controller.signal });
+      clearTimeout(tid);
       var txt = await r.text();
-      if (txt.includes('"contents"')) {
-        try { txt = JSON.parse(txt).contents; } catch(e2){}
+      // allorigins {contents:'...'} 래퍼 처리
+      if (txt.indexOf('"contents"') !== -1 && txt.indexOf('"articles"') === -1) {
+        try { txt = JSON.parse(txt).contents || txt; } catch(e2){}
       }
-      var json = JSON.parse(txt.includes('"articles"') ? txt : '{}');
-      arts = json.articles || [];
+      if (txt.indexOf('"articles"') === -1) continue;
+      var json = JSON.parse(txt);
+      arts = (json && json.articles) ? json.articles : [];
       if (arts.length > 0) break;
-    } catch(e) { /* 다음 프록시 시도 */ }
+    } catch(e) { /* 다음 시도 */ }
   }
 
   if (!el) return;
 
   if (arts.length === 0) {
-    el.innerHTML = '<div style="font-size:10px;color:var(--t3);margin-top:4px;padding:6px 10px;background:rgba(0,0,0,.15);border-radius:4px">'      + '📰 ' + date + ' 날짜 뉴스를 불러오지 못했습니다.<br>'      + '<span style="opacity:.6">GDELT 서버 혼잡 또는 해당 날짜 기사 없음</span></div>';
+    el.innerHTML = '<div style="font-size:10px;color:var(--t3);margin-top:4px;padding:6px 10px;'
+      + 'background:rgba(0,0,0,.15);border-radius:4px">'
+      + '📰 ' + date + ' 뉴스 로드 실패 — <a href="https://www.google.com/search?q='
+      + encodeURIComponent(kwArr.join(' OR ') + ' ' + date)
+      + '" target="_blank" style="color:var(--cyan);text-decoration:none">Google 검색 ↗</a></div>';
     return;
   }
 
@@ -6613,6 +6620,7 @@ function injectTourHelpBtn() {
   // 카페 복기 양식 복원
   setTimeout(loadCafeMemo, 100);
 })();
+
 
 
 
