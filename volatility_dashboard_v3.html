@@ -2314,15 +2314,17 @@ function toggleOvGuidePanel() {
     if (src) {
       var clone = src.cloneNode(true);
       clone.style.padding = '16px 20px 8px';
-      // 내부 아코디언 토글 이벤트 재바인딩
+      // ① 모든 아코디언 섹션을 열린 상태로 초기화
+      clone.querySelectorAll('.toggle-bd').forEach(function(bd) {
+        bd.classList.add('show');
+      });
       clone.querySelectorAll('.toggle-hd').forEach(function(hd) {
+        hd.classList.add('open');
+        // ② 클릭 시 CSS 클래스 방식으로 토글 (기존 HTML inline onclick과 동일 방식)
         hd.onclick = function() {
-          var body  = this.nextElementSibling;
-          var ar    = this.querySelector('.toggle-arrow');
-          if (!body) return;
-          var nowOpen = body.style.display !== 'none';
-          body.style.display = nowOpen ? 'none' : '';
-          if (ar) ar.style.transform = nowOpen ? '' : 'rotate(180deg)';
+          this.classList.toggle('open');
+          var bd = this.nextElementSibling;
+          if (bd) bd.classList.toggle('show');
         };
       });
       panel.appendChild(clone);
