@@ -2452,6 +2452,44 @@ function switchPTTab(tab){
     if(e) e.textContent=C.close.toFixed(2);
   }
 }
+// ── PT 헬퍼 함수 (HTS 붙여넣기, 설정, 초기화) ─────────────────
+
+function parsePastedHTS() {
+  var text = document.getElementById('pt-paste').value;
+  if (!text.trim()) { alert('HTS 데이터를 붙여넣어 주세요.'); return; }
+  var parsed = parseHTS(text);
+  if (parsed.length === 0) { alert('데이터 읽기된 포지션이 없습니다. 탭 구분 데이터인지 확인해 주세요.'); return; }
+  ptPositions = parsed;
+  savePT();
+  document.getElementById('pt-paste').value = '';
+  document.getElementById('pt-paste-wrap').style.display = 'none';
+  renderPT();
+  alert(parsed.length + '개 포지션이 로드됐습니다.');
+}
+
+function clearPositions() {
+  if (!confirm('모든 포지션을 초기화할까요?')) return;
+  ptPositions = [];
+  savePT();
+  renderPT();
+}
+
+function updateSettings() {
+  ptSettings.depositKRW   = parseInt(document.getElementById('pt-deposit').value.replace(/,/g,'')) || 50000000;
+  ptSettings.exchangeRate = parseFloat(document.getElementById('pt-rate').value) || 1430;
+  ptSettings.marginTarget = parseFloat(document.getElementById('pt-target').value) / 100 || 0.60;
+  ptSettings.usedMargin   = parseInt(document.getElementById('pt-used').value.replace(/,/g,'')) || 0;
+  ptSettings.maintMargin  = parseInt(document.getElementById('pt-maint').value.replace(/,/g,'')) || 0;
+  savePT();
+  renderPT();
+}
+
+function togglePasteArea() {
+  var el = document.getElementById('pt-paste-wrap');
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+
 // ══════════════════════════════════════════════════════════════
 //  포지션 트래커 — 완전 통합 버전
 //  엑셀 복기파일 로직 + 생존경보 + 추정손실 + 진입시뮬레이션
