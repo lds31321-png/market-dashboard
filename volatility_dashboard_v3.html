@@ -3496,6 +3496,7 @@ function renderPTMasterTable() {
   // 합계 행 — 맨 하단 고정
   var totCallExp = 0, totPutExp = 0, totCallPL = 0, totPutPL = 0;
   var totCallEst = 0, totPutEst = 0, hasEst = false;
+  Object.keys(INST).forEach(function(ic) {
     var s = summary[ic];
     var _avp = parseAlertInput(ptAlertInputs[ic] || '');
     var _csg = _avp.callStage;
@@ -3506,6 +3507,7 @@ function renderPTMasterTable() {
     totPutPL   += s.putPL;
     if (_csg > 0) { totCallEst += calcEstLoss(s.callPLpct, s.callExp, _csg) * cap; hasEst = true; }
     if (_psg > 0) { totPutEst  += calcEstLoss(s.putPLpct,  s.putExp,  _psg) * cap; hasEst = true; }
+  });
   // ── 합계행 공통 스타일 ──
   var TOT_BASE = 'padding:12px 14px;font-size:13px;font-weight:800;border-top:2px solid rgba(99,120,180,.25)';
   var TOT_BG   = 'rgba(99,120,180,.07)';
