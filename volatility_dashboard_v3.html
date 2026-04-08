@@ -2993,83 +2993,32 @@ function renderPTSim() {
 }
 
 
+// ── parseAlertInput 헬퍼 — 레거시 문자열 & 신규 객체 양쪽 호환 ─
+function parseAlertInput(val) {
+  if (!val) return { callStage: 0, putStage: 0 };
+  if (typeof val === 'object') return { callStage: val.call || 0, putStage: val.put || 0 };
+  var stage = parseInt((val.split('/')[1]||'').replace('단계','')) || 0;
+  if (val.startsWith('콜')) return { callStage: stage, putStage: 0 };
+  if (val.startsWith('풋')) return { callStage: 0, putStage: stage };
+  return { callStage: stage, putStage: stage };
+}
+
 function setPTAlert(instCode, val) {
   ptAlertInputs[instCode] = val;
   savePT();
-  renderPTMasterTable(); // 추정손실 즉시 갱신
+  renderPTMasterTable();
 }
 
 // 생존경보 연동 추정손실
 
 
-function delSimRow(idx) {
-  ptSimRows.splice(idx, 1);
-  savePT();
-  renderPTSim();
-  renderPTMasterTable(); // C 마스터 테이블 "진입후" 열 갱신
-}
-
-function addSimRow() {
-  var inst = document.getElementById('sim-inst').value;
-  var opt  = document.getElementById('sim-opt').value;
-  var qty  = parseInt(document.getElementById('sim-qty').value) || 1;
-  var pr   = document.getElementById('sim-price').value;
-  if (!inst || !pr) { alert('종목과 진입가를 입력하세요'); return; }
-  ptSimRows.push({ instCode:inst, optType:opt, contracts:qty, price:pr });
-  savePT();
-  renderPTSim();
-  renderPTMasterTable(); // C 마스터 테이블 "진입후" 열 갱신
-  document.getElementById('sim-price').value = '';
-  document.getElementById('sim-qty').value = '1';
-}
-
-// HTS 붙여넣기 데이터 읽기
-function parsePastedHTS() {
-  var text = document.getElementById('pt-paste').value;
-  if (!text.trim()) { alert('HTS 데이터를 붙여넣어 주세요.'); return; }
-  var parsed = parseHTS(text);
-  if (parsed.length === 0) { alert('데이터 읽기된 포지션이 없습니다. 탭 구분 데이터인지 확인해 주세요.'); return; }
-  ptPositions = parsed;
-  savePT();
-  document.getElementById('pt-paste').value = '';
-  document.getElementById('pt-paste-wrap').style.display = 'none';
-  renderPT();
-  alert(parsed.length + '개 포지션이 로드됐습니다.');
-}
-
-function clearPositions() {
-  if (!confirm('모든 포지션을 초기화할까요?')) return;
-  ptPositions = [];
-  savePT();
-  renderPT();
-}
-
-function updateSettings() {
-  ptSettings.depositKRW   = parseInt(document.getElementById('pt-deposit').value.replace(/,/g,'')) || 50000000;
-  ptSettings.exchangeRate = parseFloat(document.getElementById('pt-rate').value) || 1430;
-  ptSettings.marginTarget = parseFloat(document.getElementById('pt-target').value) / 100 || 0.60;
-  ptSettings.usedMargin   = parseInt(document.getElementById('pt-used').value.replace(/,/g,'')) || 0;
-  ptSettings.maintMargin  = parseInt(document.getElementById('pt-maint').value.replace(/,/g,'')) || 0;
-  savePT();
-  renderPT();
-}
-
-function togglePasteArea() {
-  var el = document.getElementById('pt-paste-wrap');
-  el.style.display = el.style.display === 'none' ? 'block' : 'none';
-}
-
-
-
 // ── 전종목 생존경보 자동 연동 ─────────────────────────────────
-// C.alert_level 기준으로 보유 포지션이 있는 모든 종목에 자동 연동
-// 콜/풋 방향: 노출이 더 큰 방향(노출 동일하면 계약수 다수 방향)으로 결정
+// 콜/풋 방향별 분리: 각 방향에 포지션이 있으면 독립적으로 연동
 function autoLinkAllAlerts(summary) {
   var badge = document.getElementById('pt-ocl-alert-badge');
   var alertLv = C.alert_level;
 
   if (alertLv === 0) {
-    // 0단계: 모든 자동 연동 해제
     var changed = false;
     Object.keys(INST).forEach(function(ic) {
       if (ptAlertInputs[ic]) { delete ptAlertInputs[ic]; changed = true; }
@@ -3092,24 +3041,19 @@ function autoLinkAllAlerts(summary) {
 
   Object.keys(INST).forEach(function(ic) {
     var s = summary ? summary[ic] : null;
-    if (!s || s.positions.length === 0) return; // 포지션 없으면 스킵
+    if (!s || s.positions.length === 0) return;
 
-    // 더 큰 노출 방향 결정
-    var dir = '';
-    if (Math.abs(s.callExp) >= Math.abs(s.putExp) && Math.abs(s.callExp) > 0.0001) {
-      dir = '콜';
-    } else if (Math.abs(s.putExp) > 0.0001) {
-      dir = '풋';
-    } else {
-      // 노출이 거의 없어도 포지션이 있으면 계약수 기준
-      var callCnt = s.positions.filter(function(p){ return p.parsed && p.parsed.type === 'C'; }).length;
-      var putCnt  = s.positions.filter(function(p){ return p.parsed && p.parsed.type === 'P'; }).length;
-      dir = callCnt >= putCnt ? '콜' : '풋';
-    }
+    var hasCallPos = s.positions.some(function(p){ return p.parsed && p.parsed.type === 'C'; });
+    var hasPutPos  = s.positions.some(function(p){ return p.parsed && p.parsed.type === 'P'; });
+    if (!hasCallPos && !hasPutPos) return;
 
-    var newAlert = dir + '/' + alertLv + '단계';
-    ptAlertInputs[ic] = newAlert;
-    autoSetInst.push(INST[ic].name + '(' + dir + ')');
+    ptAlertInputs[ic] = { call: hasCallPos ? alertLv : 0, put: hasPutPos ? alertLv : 0 };
+
+    var tag = '';
+    if (hasCallPos) tag += '콜' + alertLv + '단계';
+    if (hasCallPos && hasPutPos) tag += '+';
+    if (hasPutPos)  tag += '풋' + alertLv + '단계';
+    autoSetInst.push(INST[ic].name + '(' + tag + ')');
   });
 
   if (autoSetInst.length > 0) savePT();
@@ -3132,6 +3076,8 @@ function autoLinkAllAlerts(summary) {
           : '');
   }
 }
+
+
 
 
 
@@ -3308,11 +3254,14 @@ function renderPTMasterTable() {
 
   function buildRow(ic, s, sim, isActive) {
     var inst = INST[ic];
-    var alertVal = ptAlertInputs[ic] || '';
-    var hasAlert = alertVal !== '';
-    var stage    = hasAlert ? parseInt(alertVal.split('/')[1]) || 0 : 0;
-    var isCallAl = alertVal.startsWith('콜');
-    var isPutAl  = alertVal.startsWith('풋');
+    var alertVal    = ptAlertInputs[ic] || '';
+    var hasAlert    = !!alertVal;
+    var _ap         = parseAlertInput(alertVal);
+    var callStage   = _ap.callStage;
+    var putStage    = _ap.putStage;
+    var stage       = Math.max(callStage, putStage);
+    var isCallAl    = callStage > 0;
+    var isPutAl     = putStage  > 0;
 
     // ━━━ 색상 체계 (엑셀 조건부서식 기반) ━━━━━━━━━━━━━━━━━━
     // 노출% 배경: 좌→우 그라데이션 (투명→위험도색)
@@ -3371,9 +3320,9 @@ function renderPTMasterTable() {
     var callPLpct = s.callPLpct * 100;
     var putPLpct  = s.putPLpct  * 100;
 
-    // 추정손실
-    var callEst = (hasAlert && stage > 0) ? calcEstLoss(s.callPLpct, s.callExp, stage) * 100 : null;
-    var putEst  = (hasAlert && stage > 0) ? calcEstLoss(s.putPLpct,  s.putExp,  stage) * 100 : null;
+    // 추정손실 — 방향별 stage 독립 적용
+    var callEst = (isCallAl && callStage > 0) ? calcEstLoss(s.callPLpct, s.callExp, callStage) * 100 : null;
+    var putEst  = (isPutAl  && putStage  > 0) ? calcEstLoss(s.putPLpct,  s.putExp,  putStage)  * 100 : null;
     var callEstUSD = callEst !== null ? callEst * cap / 100 : null;
     var putEstUSD  = putEst  !== null ? putEst  * cap / 100 : null;
 
@@ -3387,11 +3336,11 @@ function renderPTMasterTable() {
     var BORDER_R = 'border-right:1px solid rgba(99,120,180,.1)';
     var TDL = 'style="padding:11px 14px;vertical-align:middle;' + BORDER_R + ';position:sticky;left:0;z-index:1;background:var(--card2)"';
 
-    // ── 경보 셀 ──
+    // ── 경보 셀 (콜/풋 방향별 분리) ──
     var alertCell;
     if (!isActive) {
       alertCell = '<td style="padding:11px 12px;text-align:center;color:var(--t3);font-size:12px;' + BORDER_R + '">—</td>';
-    } else if (hasAlert) {
+    } else if (hasAlert && (isCallAl || isPutAl)) {
       var stageNum = stage;
       var stageColors = ['','rgba(251,191,100,.95)','rgba(252,129,129,.95)','rgba(239,68,68,1)'];
       var stageGrads  = [
@@ -3402,10 +3351,17 @@ function renderPTMasterTable() {
       ];
       var ac = stageColors[stageNum] || 'rgba(251,146,60,.95)';
       var ab = stageGrads[stageNum]  || stageGrads[1];
-      alertCell = '<td style="padding:11px 12px;text-align:center;' + BORDER_R + ';background:' + ab + '">'
-        + '<span style="display:inline-block;padding:5px 11px;border-radius:6px;font-size:12px;font-weight:800;'
-        + 'color:' + ac + ';letter-spacing:.03em">' + alertVal + '</span>'
-        + '<div style="font-size:11px;font-weight:600;color:' + ac + ';margin-top:5px">▶ 생존경보 연동</div>'
+      var tagSt = 'display:inline-block;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:800;letter-spacing:.03em;margin:2px;';
+      var callTag = isCallAl
+        ? '<span style="' + tagSt + 'color:rgba(252,129,129,.95);background:rgba(252,129,129,.10);border:1px solid rgba(252,129,129,.25)">콜/' + callStage + '단계</span>'
+        : '';
+      var putTag = isPutAl
+        ? '<span style="' + tagSt + 'color:rgba(96,165,250,.95);background:rgba(96,165,250,.10);border:1px solid rgba(96,165,250,.25)">풋/' + putStage + '단계</span>'
+        : '';
+      alertCell = '<td style="padding:9px 12px;text-align:center;' + BORDER_R + ';background:' + ab + '">'
+        + '<div style="display:flex;flex-direction:column;align-items:center;gap:3px">'
+        + callTag + putTag + '</div>'
+        + '<div style="font-size:10px;font-weight:600;color:' + ac + ';margin-top:5px">▶ 생존경보 연동</div>'
         + '</td>';
     } else {
       alertCell = '<td style="padding:11px 12px;text-align:center;' + BORDER_R + '">'
@@ -3413,7 +3369,6 @@ function renderPTMasterTable() {
         + '<div style="font-size:11px;color:var(--t3);margin-top:5px;line-height:1.6">생존경보 탭에서<br>설정하세요</div>'
         + '</td>';
     }
-
     // ── 노출 셀 ──────────────────────────────────────────────
     // 수치 색상도 위험도별로 변화 (배경+텍스트 동시)
     function expCell(bef, aft, simAdded, borderRight) {
@@ -3503,20 +3458,16 @@ function renderPTMasterTable() {
   // 합계 행 — 맨 하단 고정
   var totCallExp = 0, totPutExp = 0, totCallPL = 0, totPutPL = 0;
   var totCallEst = 0, totPutEst = 0, hasEst = false;
-  active.forEach(function(ic) {
     var s = summary[ic];
-    var av = ptAlertInputs[ic] || '';
-    var sg = av ? parseInt(av.split('/')[1]) || 0 : 0;
+    var _avp = parseAlertInput(ptAlertInputs[ic] || '');
+    var _csg = _avp.callStage;
+    var _psg = _avp.putStage;
     totCallExp += s.callExp;
     totPutExp  += s.putExp;
     totCallPL  += s.callPL;
     totPutPL   += s.putPL;
-    if (sg > 0) {
-      totCallEst += calcEstLoss(s.callPLpct, s.callExp, sg) * cap;
-      totPutEst  += calcEstLoss(s.putPLpct,  s.putExp,  sg) * cap;
-      hasEst = true;
-    }
-  });
+    if (_csg > 0) { totCallEst += calcEstLoss(s.callPLpct, s.callExp, _csg) * cap; hasEst = true; }
+    if (_psg > 0) { totPutEst  += calcEstLoss(s.putPLpct,  s.putExp,  _psg) * cap; hasEst = true; }
   // ── 합계행 공통 스타일 ──
   var TOT_BASE = 'padding:12px 14px;font-size:13px;font-weight:800;border-top:2px solid rgba(99,120,180,.25)';
   var TOT_BG   = 'rgba(99,120,180,.07)';
@@ -3781,6 +3732,8 @@ renderPT = function() {
 
 // 초기 렌더링
 document.getElementById('pt-capital').textContent = '$' + Math.round(getCapitalUSD()).toLocaleString();
+
+
 
 
 
@@ -5430,7 +5383,7 @@ function renderGuideCards(metrics, mdd, anomalies, convergenceRatio) {
     ? (function(){ var d=aggregateDaily(rvData); return d.length>0?d[d.length-1].date.slice(0,4):String(new Date().getFullYear()); })()
     : String(new Date().getFullYear());
   var cap = getCapitalForYear(lastYrG);
-  var stdDevPct = cap > 0 ? (metrics.stdDev / cap * 100) : 0;
+  var stdDevPct = (metrics && cap > 0) ? (metrics.stdDev / cap * 100) : 0;
   var hasData = metrics && metrics.total > 0;
 
   // 강조 행 생성 함수
@@ -6589,6 +6542,8 @@ function injectTourHelpBtn() {
   // 카페 복기 양식 복원
   setTimeout(loadCafeMemo, 100);
 })();
+
+
 
 
 
