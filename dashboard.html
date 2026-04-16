@@ -1,0 +1,2026 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>직트 무료 포지션 공유</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --profit:'#FF8080';
+  --profit-bg:rgba(255,200,200,.12);
+  --profit-border:rgba(255,150,150,.3);
+  --loss:'#5080CC';
+  --loss-bg:rgba(180,205,255,.12);
+  --loss-border:rgba(120,150,220,.3);
+
+  --bg:#0e1117;--bg2:#11161f;--card:#161b27;--card2:#1c2333;
+  --b1:rgba(99,120,180,0.13);--b2:rgba(120,140,200,0.22);
+  --t1:#e0e4ee;--t2:#a8b3c8;--t3:#6b7a95;
+  --cyan:#4dd8f0;--green:#3ecfaa;--yellow:#e8c96a;--orange:#e8956a;--red:#e06070;--purple:#8b97f0;
+  --cyan-a:rgba(77,216,240,.09);--green-a:rgba(62,207,170,.09);
+  --yellow-a:rgba(232,201,106,.09);--orange-a:rgba(232,149,106,.1);
+  --red-a:rgba(224,96,112,.1);--purple-a:rgba(139,151,240,.09);
+  --grad-title:linear-gradient(135deg,#8b97f0 0%,#4dd8f0 100%);
+  --grad-green:linear-gradient(135deg,#3ecfaa 0%,#4dd8f0 100%);
+  --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans KR','Noto Sans KR',sans-serif;--font-h:'Syne',sans-serif;--r:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);background-image:radial-gradient(ellipse at 15% 0%,rgba(139,151,240,.06) 0%,transparent 55%),radial-gradient(ellipse at 85% 100%,rgba(77,216,240,.04) 0%,transparent 55%);color:var(--t1);font-family:var(--sans);font-size:13px;min-height:100vh;}
+.hdr{padding:12px 28px;background:rgba(14,17,23,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--b1);position:sticky;top:0;z-index:200;}
+.hdr-inner{max-width:1156px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;}
+.hdr-l{display:flex;align-items:center;gap:12px;}
+.logo{width:34px;height:34px;border:1.5px solid var(--purple);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;background:var(--grad-title);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hdr-title{font-size:14px;font-weight:700;font-family:var(--font-h);background:var(--grad-title);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hdr-sub{font-size:12px;color:var(--t3);font-family:var(--mono);}
+.hdr-r{display:flex;align-items:center;gap:10px;}
+.hdr-meta{font-size:12px;color:var(--t3);font-family:var(--mono);text-align:right;line-height:1.6;}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 7px var(--green);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.nav{padding:0 28px;background:rgba(10,13,20,.98);border-bottom:1px solid rgba(255,255,255,.06);}
+.nav-inner{max-width:1156px;margin:0 auto;display:flex;}
+.nav-tab{padding:14px 22px;font-size:13px;font-weight:700;color:rgba(190,205,225,.55);cursor:pointer;border-bottom:2.5px solid transparent;transition:all .2s;font-family:var(--font-h);}
+.nav-tab:hover{color:rgba(200,215,235,.8);background:rgba(255,255,255,.02);}
+.nav-tab.t1{--tc:var(--cyan)}.nav-tab.t2{--tc:var(--purple)}.nav-tab.t3{--tc:var(--green)}
+.nav-tab.active{color:var(--tc);border-bottom-color:var(--tc);background:rgba(255,255,255,.03);}
+.page{padding:28px;display:none;max-width:1156px;margin:0 auto;width:100%;}
+.page.active{display:block;}
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;font-family:var(--mono);}
+.b-green{background:var(--profit-bg);color:var(--profit);border:1px solid var(--profit-border);}
+.b-orange{background:var(--orange-a);color:var(--orange);border:1px solid rgba(232,149,106,.2);}
+.b-red{background:var(--loss-bg);color:var(--loss);border:1px solid var(--loss-border);}
+.b-purple{background:var(--purple-a);color:var(--purple);border:1px solid rgba(139,151,240,.2);}
+.b-cyan{background:var(--cyan-a);color:var(--cyan);border:1px solid rgba(77,216,240,.2);}
+.b-gray{background:rgba(255,255,255,.04);color:var(--t3);border:1px solid var(--b1);}
+.mono{font-family:var(--mono);}
+
+/* 인트로 배너 */
+.intro-band{background:linear-gradient(135deg,rgba(139,151,240,.08),rgba(77,216,240,.05));border:1px solid rgba(139,151,240,.15);border-radius:var(--r);padding:20px 24px;margin-bottom:28px;}
+.intro-band h2{font-family:var(--font-h);font-size:18px;font-weight:700;background:var(--grad-title);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;}
+.intro-band p{font-size:13px;color:var(--t2);line-height:1.8;}
+.intro-band strong{color:var(--cyan);}
+
+/* ── 포지션 카드 재설계 v2 ── */
+.pos-card{background:linear-gradient(160deg,rgba(20,25,40,.98),rgba(14,18,30,.97));border:1px solid rgba(99,120,180,.18);border-radius:18px;padding:22px;cursor:pointer;transition:border-color .2s,transform .15s,box-shadow .2s;position:relative;overflow:hidden;}
+.pos-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.pos-card.col-green::before{background:linear-gradient(90deg,#3ecfaa,rgba(62,207,170,0));}
+.pos-card.col-orange::before{background:linear-gradient(90deg,#e8956a,rgba(232,149,106,0));}
+.pos-card.col-purple::before{background:linear-gradient(90deg,#8b97f0,rgba(139,151,240,0));}
+.pos-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.4);}
+.pos-card.col-green:hover{border-color:rgba(62,207,170,.35);}
+.pos-card.col-orange:hover{border-color:rgba(232,149,106,.35);}
+.pos-card.col-purple:hover{border-color:rgba(139,151,240,.35);}
+.pos-card.urgent{border-color:rgba(224,96,112,.5);}
+
+/* 카드 헤더 */
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;}
+.card-header-left{display:flex;align-items:center;gap:0;}
+.card-underlying{font-size:17px;font-weight:700;color:var(--t1);font-family:var(--font-h);}
+.card-date{font-size:13px;font-weight:500;color:var(--t2);font-family:var(--mono);margin-left:6px;}
+.card-sub-row{display:flex;align-items:center;gap:6px;margin-bottom:16px;}
+.card-dot{color:var(--t3);font-size:11px;}
+.card-num{font-size:12px;font-weight:600;color:var(--t3);font-family:var(--mono);}
+.card-strategy{font-size:12px;color:var(--t3);font-family:var(--mono);}
+
+/* 핵심 한 문장 */
+.card-headline{font-size:15px;font-weight:700;color:var(--t1);line-height:1.55;margin-bottom:16px;font-family:'IBM Plex Sans KR','Noto Sans KR',sans-serif;}
+.card-headline .hl-up{font-style:normal;color:#FF8080;font-family:'IBM Plex Sans KR','Noto Sans KR',sans-serif;font-weight:800;}
+.card-headline .hl-dn{font-style:normal;color:#5080CC;font-family:'IBM Plex Sans KR','Noto Sans KR',sans-serif;font-weight:800;}
+
+/* 안전거리 큰 수치 (퍼플) */
+.safety-big{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;}
+.safety-big-num{font-size:24px;font-weight:800;font-family:var(--mono);background:linear-gradient(135deg,#a78bfa,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+.safety-big-unit{font-size:13px;color:#a78bfa;font-family:var(--mono);font-weight:600;}
+.safety-big-label{font-size:12px;color:var(--t2);font-family:var(--mono);}
+
+/* 안전거리 바 */
+.safety-bar-outer{position:relative;height:24px;border-radius:6px;overflow:hidden;margin-bottom:6px;background:rgba(255,255,255,.04);}
+.sb-profit{position:absolute;top:0;left:0;height:100%;background:linear-gradient(90deg,rgba(255,80,80,.35),rgba(255,80,80,.62));border-radius:6px 0 0 6px;}
+.sb-loss-right{position:absolute;top:0;right:0;height:100%;background:linear-gradient(90deg,rgba(230,238,255,0.9),rgba(100,140,220,0.75));border-radius:0 6px 6px 0;}
+.sb-loss-left{position:absolute;top:0;left:0;height:100%;background:linear-gradient(90deg,rgba(100,140,220,0.75),rgba(230,238,255,0.9));}
+.sb-cursor{position:absolute;top:0;bottom:0;width:3px;background:linear-gradient(180deg,#c4b5fd,#7c3aed);border-radius:2px;transform:translateX(-50%);box-shadow:0 0 8px rgba(167,139,250,.7);}
+.sb-cursor-tip{position:absolute;top:-2px;left:50%;transform:translateX(-50%);width:7px;height:7px;border-radius:50%;background:#c4b5fd;box-shadow:0 0 8px rgba(196,181,253,.9);}
+.sb-cursor-label{position:absolute;top:50%;transform:translateY(-50%);font-size:10px;color:var(--t1);font-family:var(--mono);font-weight:600;white-space:nowrap;pointer-events:none;background:rgba(14,17,23,.8);padding:1px 5px;border-radius:3px;}
+.sb-strike-label{position:absolute;top:50%;transform:translateY(-50%);font-size:10px;font-family:var(--mono);font-weight:700;white-space:nowrap;}
+.sb-strike-label.right{right:5px;color:rgba(100,140,220,.95);}
+.sb-strike-label.left{left:5px;color:rgba(100,140,220,.95);}
+.safety-desc{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.sd-profit{font-size:11px;font-weight:600;color:rgba(255,160,160,.9);}
+.sd-loss{font-size:11px;font-weight:600;color:rgba(120,155,220,.9);}
+
+/* 3구간 안전거리 바 */
+.safety-track{position:relative;height:28px;border-radius:8px;overflow:hidden;margin-bottom:4px;background:rgba(15,15,30,.75);}
+.st-entry{position:absolute;top:0;left:0;height:100%;background:rgba(255,230,230,0.9);}
+.st-profit{position:absolute;top:0;height:100%;background:linear-gradient(90deg,rgba(255,240,240,0.9),rgba(255,160,155,0.75));}
+.st-loss{position:absolute;top:0;right:0;height:100%;background:linear-gradient(90deg,rgba(50,100,255,.5),rgba(50,100,255,.72));}
+.st-pin{position:absolute;top:0;bottom:0;width:3px;transform:translateX(-50%);}
+.st-pin.entry{background:rgba(255,255,255,.3);border-radius:2px;}
+.st-pin.current{background:linear-gradient(180deg,#c4b5fd,#7c3aed);border-radius:2px;box-shadow:0 0 8px rgba(167,139,250,.7);}
+.st-pin.strike{background:linear-gradient(180deg,#5080CC,#2563eb);border-radius:2px;box-shadow:0 0 6px rgba(100,140,220,0.75);}
+.st-dot{position:absolute;top:50%;transform:translate(-50%,-50%);width:9px;height:9px;border-radius:50%;}
+.st-dot.entry{background:rgba(255,255,255,.4);border:2px solid rgba(255,255,255,.6);}
+.st-dot.current{background:#c4b5fd;box-shadow:0 0 8px rgba(196,181,253,.8);}
+.st-dot.strike{background:#5080CC;box-shadow:0 0 6px rgba(100,140,220,0.75);}
+.st-label-row{display:grid;grid-template-columns:1fr 1fr 1fr;font-size:10px;font-family:var(--mono);margin-bottom:10px;gap:2px;}
+.st-lbl{display:flex;flex-direction:column;gap:2px;}
+.st-lbl.center{text-align:center;align-items:center;}
+.st-lbl.right{text-align:right;align-items:flex-end;}
+.st-lbl-name{color:var(--t3);font-size:9px;}
+.st-lbl-val{color:var(--t1);font-weight:600;font-size:11px;}
+.st-lbl-val.purple{color:#c4b5fd;}
+.st-lbl-val.blue{color:#5080CC;}
+
+/* 현재 평가손익 */
+.pnl-row{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-radius:10px;margin-bottom:14px;}
+.pnl-row.profit{background:var(--profit-bg);border:1px solid var(--profit-border);}
+.pnl-row.loss{background:var(--loss-bg);border:1px solid var(--loss-border);}
+.pnl-row.neutral{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);}
+.pnl-label{font-size:14px;color:var(--t2);font-family:var(--mono);}
+.pnl-val{font-size:18px;font-weight:800;font-family:var(--mono);}
+.pnl-val.profit{color:var(--profit);}
+.pnl-val.loss{color:var(--loss);}
+.pnl-val.neutral{color:var(--t3);}
+
+/* 3개 지표 */
+.card-metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin-bottom:14px;background:rgba(255,255,255,.025);border:1px solid var(--b1);border-radius:10px;overflow:hidden;}
+.card-metric{padding:11px 6px;text-align:center;min-width:0;}
+.cm-border{border-left:1px solid var(--b1);border-right:1px solid var(--b1);}
+.cm-val{font-size:14px;font-weight:700;font-family:var(--mono);margin-bottom:4px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;}
+.cm-val.green{color:#FF8080;}
+.cm-val.yellow{color:var(--yellow);}
+.cm-val.cyan{color:var(--cyan);}
+.cm-label{font-size:12px;color:var(--t2);font-family:var(--mono);white-space:nowrap;}
+
+/* 진행률 */
+.card-progress{margin-bottom:12px;}
+.prog-row{display:flex;justify-content:space-between;font-size:12px;color:var(--t2);font-family:var(--mono);margin-bottom:6px;}
+.prog-bar{height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:3px;}
+
+/* 하단 */
+.card-footer-row{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid var(--b1);}
+.footer-hint{font-size:13px;color:var(--t1);font-family:var(--mono);opacity:.65;}
+.footer-link{font-size:12px;color:var(--cyan);font-family:var(--mono);text-decoration:none;font-weight:600;}
+.footer-link:hover{opacity:.8;}
+
+/* 매매 내역 */
+.hist-hero{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px;}
+.metric{background:var(--card);border:1px solid var(--b1);border-radius:var(--r);padding:16px 18px;}
+.metric-label{font-size:14px;color:var(--t2);margin-bottom:6px;font-family:var(--mono);font-weight:500;}
+.metric-val{font-size:22px;font-weight:700;font-family:var(--mono);}
+.metric-sub{font-size:13px;color:var(--t2);margin-top:4px;}
+.mv-cyan{background:var(--grad-title);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.timeline-wrap{background:var(--card);border:1px solid var(--b1);border-radius:var(--r);padding:20px;margin-bottom:20px;}
+.timeline-title{font-family:var(--font-h);font-size:15px;font-weight:700;color:var(--t1);margin-bottom:8px;}
+.timeline-sub{font-size:14px;color:var(--t1);margin-bottom:16px;line-height:1.6;opacity:.8;}
+.timeline-dots{display:flex;flex-wrap:wrap;gap:4px;}
+.tdot{width:14px;height:14px;border-radius:3px;cursor:pointer;transition:transform .1s;}
+.tdot:hover{transform:scale(1.3);}
+.tdot.win{color:var(--profit);font-weight:600;}
+.tdot.loss{background:var(--loss);}
+.tdot.zero{background:var(--t3);}
+.timeline-legend{display:flex;gap:16px;margin-top:12px;font-size:13px;color:var(--t2);font-family:var(--mono);}
+.tleg{display:flex;align-items:center;gap:5px;}
+.tleg-dot{width:10px;height:10px;border-radius:2px;}
+.filter-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
+.filter-btn{padding:7px 16px;border-radius:20px;border:1px solid var(--b1);background:transparent;color:var(--t2);font-size:13px;cursor:pointer;font-family:var(--mono);transition:all .15s;}
+.filter-btn:hover,.filter-btn.active{border-color:var(--purple);color:var(--purple);background:var(--purple-a);}
+.filter-input{padding:7px 14px;border-radius:20px;border:1px solid var(--b1);background:var(--card);color:var(--t1);font-size:13px;font-family:var(--mono);outline:none;width:130px;}
+.filter-input:focus{border-color:var(--purple);}
+.tbl-wrap{border:1px solid var(--b1);border-radius:var(--r);overflow:hidden;}
+.tbl-scroll{overflow-x:auto;}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.tbl th{text-align:left;font-size:12px;font-weight:700;color:var(--t2);padding:12px 16px;border-bottom:1px solid var(--b1);font-family:var(--mono);letter-spacing:.04em;background:rgba(255,255,255,.02);}
+.tbl td{padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--t1);vertical-align:middle;font-size:13px;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:rgba(255,255,255,.02);}
+.win{color:#FF8080;font-weight:600;}
+.loss{color:#5080CC;font-weight:600;}
+.inline-bar{height:3px;border-radius:2px;margin-top:4px;}
+
+/* 수익 통계 */
+.cum-hero{background:linear-gradient(135deg,rgba(62,207,170,.08),rgba(77,216,240,.06));border:1px solid rgba(62,207,170,.2);border-radius:16px;padding:32px;margin-bottom:20px;text-align:center;}
+.cum-hero-eyebrow{font-size:12px;color:var(--t2);font-family:var(--mono);margin-bottom:10px;}
+.cum-hero-val{font-size:52px;font-weight:800;font-family:var(--font-h);background:var(--grad-green);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;}
+.cum-hero-label{font-size:13px;color:var(--t2);margin-top:10px;}
+.cum-hero-label strong{color:#FF8080;}
+.cum-hero-sub{font-size:11px;color:var(--t3);margin-top:6px;font-family:var(--mono);}
+.msg-boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+.msg-box{background:var(--card);border:1px solid var(--b1);border-radius:var(--r);padding:18px 20px;}
+.msg-box-icon{font-size:24px;margin-bottom:10px;}
+.msg-box-title{font-size:13px;font-weight:600;color:var(--t1);margin-bottom:6px;font-family:var(--font-h);}
+.msg-box-desc{font-size:12px;color:var(--t2);line-height:1.7;}
+.msg-box-desc strong{color:var(--cyan);}
+.chart-card{background:var(--card);border:1px solid var(--b1);border-radius:var(--r);padding:20px;margin-bottom:14px;}
+.chart-title{font-size:13px;font-weight:700;font-family:var(--font-h);background:var(--grad-title);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;}
+.chart-sub{font-size:11px;color:var(--t2);margin-bottom:16px;line-height:1.6;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+
+/* 모달 */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:1000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px);}
+.overlay.open{display:flex;}
+.modal{background:linear-gradient(145deg,#161b27,#11161f);border:1px solid var(--b2);border-radius:16px;width:100%;max-width:780px;max-height:92vh;overflow-y:auto;}
+.modal-head{padding:22px 24px 16px;border-bottom:1px solid var(--b1);position:sticky;top:0;background:#161b27;z-index:2;}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;font-size:18px;cursor:pointer;color:var(--t2);padding:4px 8px;border-radius:6px;line-height:1;font-family:inherit;}
+.modal-close:hover{background:var(--card2);color:var(--t1);}
+.modal-body{padding:22px 24px 30px;}
+.modal-badges{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;}
+.modal-title{font-size:20px;font-weight:700;font-family:var(--font-h);color:var(--t1);margin-bottom:4px;}
+.modal-date{font-size:13px;color:var(--t2);font-family:var(--mono);}
+.modal-headline{background:linear-gradient(135deg,rgba(62,207,170,.08),rgba(77,216,240,.05));border:1px solid rgba(62,207,170,.2);border-radius:10px;padding:16px 18px;margin:16px 0;font-size:15px;color:var(--t1);line-height:1.75;font-weight:500;}
+.modal-headline .hl{color:#FF8080;font-weight:700;}
+.modal-headline .hl-r{color:var(--red);font-weight:700;}
+
+/* 모달 차트 */
+.modal-chart-wrap{background:#f8f9fa;border:1px solid #dde1e7;border-radius:10px;padding:16px 16px 8px;margin:14px 0;}
+.modal-chart-title{font-size:11px;font-weight:600;color:var(--t2);font-family:var(--mono);margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
+.chart-legend{display:flex;gap:12px;flex-wrap:wrap;}
+.cleg{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--t2);}
+.cleg-line{width:16px;height:2px;border-radius:1px;}
+.cleg-dash{width:16px;height:0;border-top:2px dashed;}
+
+.msec-title{font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin:18px 0 10px;padding-bottom:8px;border-bottom:1px solid var(--b2);}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.mstat{background:var(--card2);border-radius:8px;padding:11px 14px;}
+.mstat .sl{font-size:11px;color:var(--t2);margin-bottom:4px;font-weight:500;}
+.mstat .sv{font-size:14px;font-weight:700;font-family:var(--mono);color:var(--t1);}
+.sc-box{border-radius:8px;padding:14px 16px;}
+.sc-win{background:var(--green-a);border:1px solid rgba(62,207,170,.2);}
+.sc-row{font-size:13px;font-family:var(--mono);padding:5px 0;font-weight:500;}
+.sc-row.w{color:#FF8080}.sc-row.l{color:#5080CC;}
+.risk-box{background:rgba(224,96,112,.06);border-left:3px solid var(--red);border-radius:0 8px 8px 0;padding:14px 16px;font-size:13px;color:var(--t1);line-height:1.75;opacity:.85;}
+.notion-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--cyan);text-decoration:none;margin-top:16px;padding:10px 16px;border:1px solid rgba(77,216,240,.35);border-radius:8px;transition:background .15s;font-family:var(--mono);font-weight:600;}
+.notion-btn:hover{background:var(--cyan-a);}
+.disclaimer{font-size:11px;color:var(--t2);margin-top:14px;line-height:1.6;}
+
+
+/* ── 워크플로우 스트립 ── */
+.wf-strip{display:flex;align-items:center;gap:0;margin-bottom:20px;background:rgba(255,255,255,.02);border:1px solid var(--b1);border-radius:var(--r);padding:10px 16px;overflow-x:auto;}
+.wf-step{display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:8px;cursor:pointer;transition:background .15s,color .15s;white-space:nowrap;}
+.wf-step:hover{background:rgba(255,255,255,.04);}
+.wf-step.active{background:rgba(77,216,240,.08);}
+.wf-step-num{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;font-family:var(--mono);background:rgba(255,255,255,.06);color:var(--t3);flex-shrink:0;transition:background .15s,color .15s;}
+.wf-step.active .wf-step-num{background:var(--cyan);color:var(--bg);}
+.wf-step-label{font-size:12px;font-weight:500;color:var(--t2);transition:color .15s;}
+.wf-step.active .wf-step-label{color:var(--cyan);font-weight:600;}
+.wf-arrow{color:var(--t3);font-size:11px;padding:0 4px;flex-shrink:0;}
+/* ── ? 가이드 버튼 ── */
+.guide-btn{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;border:1px solid var(--b2);background:transparent;color:var(--t2);font-size:10px;font-family:var(--mono);cursor:pointer;transition:all .15s;margin-left:6px;vertical-align:middle;flex-shrink:0;}
+.guide-btn:hover{border-color:var(--cyan);color:var(--cyan);background:var(--cyan-a);}
+.guide-panel{display:none;background:rgba(77,216,240,.05);border:1px solid rgba(77,216,240,.15);border-radius:8px;padding:12px 14px;margin-top:10px;font-size:12px;color:var(--t2);line-height:1.75;}
+.guide-panel.open{display:block;}
+.guide-panel strong{color:var(--cyan);}
+/* ── 온보딩 투어 ── */
+.tour-overlay{position:fixed;inset:0;z-index:9000;pointer-events:all;}
+.tour-bg{position:absolute;inset:0;background:rgba(0,0,0,.7);}
+.tour-box{position:absolute;z-index:9010;background:var(--card2);border:1.5px solid rgba(77,216,240,.4);border-radius:14px;padding:20px 22px 16px;max-width:360px;box-shadow:0 8px 40px rgba(0,0,0,.6);font-family:var(--sans);}
+.tour-step-ind{font-size:10px;color:var(--t3);font-family:var(--mono);margin-bottom:10px;}
+.tour-title{font-size:14px;font-weight:700;color:var(--cyan);margin-bottom:8px;font-family:var(--font-h);}
+.tour-body{font-size:12px;color:var(--t2);line-height:1.75;margin-bottom:16px;}
+.tour-body strong{color:var(--t1);}
+.tour-btns{display:flex;justify-content:space-between;align-items:center;}
+.tour-skip{background:none;border:none;font-size:11px;color:var(--t3);cursor:pointer;font-family:var(--mono);}
+.tour-skip:hover{color:var(--t2);}
+.tour-next{padding:6px 18px;border-radius:6px;border:1px solid rgba(77,216,240,.4);background:rgba(77,216,240,.12);color:var(--cyan);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--sans);}
+.tour-next:hover{background:rgba(77,216,240,.2);}
+.tour-hl{outline:2.5px solid rgba(77,216,240,.8)!important;outline-offset:4px!important;border-radius:8px;}
+
+.pos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px;}
+
+/* ── 매매 내역 토글 ── */
+.tbl tr.detail-row td{padding:0;border-bottom:1px solid rgba(255,255,255,.06);}
+.detail-wrap{display:none;padding:16px 18px;background:rgba(255,255,255,.02);border-top:1px solid rgba(255,255,255,.04);}
+.detail-wrap.open{display:block;}
+.detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
+.dg-box{background:var(--card2);border-radius:8px;padding:10px 14px;}
+.dg-label{font-size:12px;color:var(--t2);margin-bottom:4px;font-family:var(--mono);font-weight:500;}
+.dg-val{font-size:15px;font-weight:700;color:var(--t1);font-family:var(--mono);}
+.story-box{background:rgba(139,151,240,.06);border-left:3px solid var(--purple);border-radius:0 8px 8px 0;padding:14px 18px;font-size:14px;color:var(--t1);line-height:1.8;margin-bottom:12px;}
+.story-box .hl{color:var(--t1);font-weight:600;}
+.legs-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+.leg-tag{font-size:12px;font-family:var(--mono);padding:5px 10px;border-radius:5px;border:1px solid;}
+.leg-tag.sell-c{background:rgba(80,128,204,.12);border-color:rgba(80,128,204,.35);color:#5080CC;}
+.leg-tag.sell-p{background:rgba(80,128,204,.12);border-color:rgba(80,128,204,.35);color:#5080CC;}
+.leg-tag.buy{background:rgba(255,255,255,.04);border-color:var(--b1);color:var(--t2);}
+.tbl tr.main-row{cursor:pointer;}
+.tbl tr.main-row:hover td{background:rgba(255,255,255,.03);}
+.toggle-btn{font-size:12px;color:var(--t2);font-family:var(--mono);padding:4px 12px;border:1px solid var(--b1);border-radius:6px;background:transparent;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.toggle-btn:hover,.toggle-btn.open{border-color:var(--purple);color:var(--purple);background:var(--purple-a);}
+
+@media(max-width:900px){.hdr,.nav{padding-left:16px;padding-right:16px;}.page{padding:16px;}.hist-hero,.g4{grid-template-columns:1fr 1fr;}.g2,.msg-boxes{grid-template-columns:1fr;}
+@media(max-width:600px){.nav-tab{padding:12px 14px;font-size:12px;}.modal-grid{grid-template-columns:1fr 1fr;}.card-stats{grid-template-columns:1fr 1fr 1fr;}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-l">
+      <div class="logo">JT</div>
+      <div>
+        <div class="hdr-title">직트 무료 포지션 공유</div>
+        <div class="hdr-sub" id="headerSub">데이터 로딩 중...</div>
+      </div>
+    </div>
+    <div class="hdr-r">
+      <div class="hdr-meta" id="headerMeta">—</div>
+      <button onclick="localStorage.removeItem('jikt_tour_done');startTour()" style="background:none;border:1px solid var(--b1);border-radius:6px;padding:4px 10px;font-size:10px;color:var(--t3);cursor:pointer;font-family:var(--mono);transition:all .15s;" onmouseover="this.style.borderColor='var(--cyan)';this.style.color='var(--cyan)'" onmouseout="this.style.borderColor='var(--b1)';this.style.color='var(--t3)'">? 가이드</button>
+      <div class="dot"></div>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <div class="nav-inner">
+    <div class="nav-tab t1 active" onclick="switchTab('t1',this)">포지션 현황</div>
+    <div class="nav-tab t2" onclick="switchTab('t2',this)">매매 내역</div>
+    <div class="nav-tab t3" onclick="switchTab('t3',this)">수익 통계</div>
+  </div>
+</div>
+
+<!-- TAB 1 -->
+<div id="t1" class="page active">
+
+
+  <!-- 인트로 배너 -->
+  <div class="pos-grid" id="posGrid">
+    <div style="padding:40px;text-align:center;color:var(--t3);font-family:var(--mono);">로딩 중...</div>
+  </div>
+</div>
+
+<!-- TAB 2 -->
+<div id="t2" class="page">
+  <div class="hist-hero" id="histMetrics"></div>
+
+  <div class="filter-bar">
+    <span style="font-size:13px;color:var(--t2);font-family:var(--mono);font-weight:500">필터:</span>
+    <button class="filter-btn active" onclick="filterHistory('all',this)">전체</button>
+    <button class="filter-btn" onclick="filterHistory('win',this)">수익</button>
+    <button class="filter-btn" onclick="filterHistory('loss',this)">손실</button>
+    <input class="filter-input" type="text" id="searchInput" placeholder="전략 번호 검색" oninput="searchHistory()">
+    <span style="font-size:13px;color:var(--t2);font-family:var(--mono);margin-left:auto;" id="rowCount"></span>
+  </div>
+  <div class="tbl-scroll tbl-wrap">
+    <table class="tbl">
+      <thead><tr><th>전략</th><th>손익 (원)</th><th>누적 수익 (원)</th><th>누적 수익률</th><th>결과</th></tr></thead>
+      <tbody id="historyBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TAB 3: 수익 통계 -->
+<div id="t3" class="page">
+
+  <!-- 헤더 -->
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:14px 20px;
+    background:rgba(14,18,30,.6);border:1px solid rgba(99,120,180,.2);border-radius:12px;
+    border-left:3px solid transparent;border-image:linear-gradient(180deg,#8b97f0,#4dd8f0) 1">
+    <div>
+      <div style="font-size:17px;font-weight:800;font-family:var(--font-h);background:var(--grad-title);
+        -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.01em">수익 통계</div>
+      <div style="font-size:13px;color:rgba(185,197,220,.9);margin-top:3px;font-family:var(--mono)">143번 전략 · 전체 운용 기간 성과 분석</div>
+    </div>
+    <button onclick="switchTab('t1',document.querySelectorAll('.nav-tab')[0])"
+      style="margin-left:auto;padding:7px 20px;border-radius:8px;border:1px solid rgba(77,216,240,.3);
+      background:rgba(77,216,240,.06);color:var(--cyan);font-size:13px;font-weight:700;cursor:pointer;
+      font-family:var(--mono);letter-spacing:.02em;transition:all .2s"
+      onmouseover="this.style.background='rgba(77,216,240,.14)';this.style.borderColor='rgba(77,216,240,.6)'"
+      onmouseout="this.style.background='rgba(77,216,240,.06)';this.style.borderColor='rgba(77,216,240,.3)'">
+      포지션 현황 →
+    </button>
+  </div>
+
+  <!-- HERO -->
+  <div style="background:linear-gradient(135deg,rgba(22,27,46,.98) 0%,rgba(17,22,38,.98) 100%);
+    border:1px solid rgba(99,120,180,.2);border-radius:16px;padding:32px 36px;margin-bottom:16px;
+    display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;
+    position:relative;overflow:hidden;box-shadow:0 2px 40px rgba(0,0,0,.3)">
+    <!-- 글로우 -->
+    <div style="position:absolute;top:-80px;left:-40px;width:260px;height:260px;border-radius:50%;
+      background:radial-gradient(circle,rgba(77,216,240,.09) 0%,transparent 70%);pointer-events:none"></div>
+    <div style="position:absolute;bottom:-60px;right:160px;width:220px;height:220px;border-radius:50%;
+      background:radial-gradient(circle,rgba(139,151,240,.08) 0%,transparent 70%);pointer-events:none"></div>
+    <!-- 좌: 메인 수치 -->
+    <div style="position:relative">
+      <div style="font-size:13px;color:rgba(160,175,205,.8);font-family:var(--mono);margin-bottom:18px;letter-spacing:.04em">예탁금 5,000만원 · 143번 전략</div>
+      <div style="font-size:16px;font-weight:700;color:rgba(200,212,232,.95);margin-bottom:10px;letter-spacing:.02em">누적 수익률</div>
+      <div style="display:flex;align-items:baseline;gap:5px;margin-bottom:16px">
+        <span style="font-size:60px;font-weight:800;font-family:var(--mono);
+          background:linear-gradient(135deg,#FF8080 0%,#ff6060 100%);
+          -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+          background-clip:text;line-height:1;letter-spacing:-.02em">+56.92</span>
+        <span style="font-size:30px;font-weight:700;font-family:var(--mono);color:#FF8080;opacity:.85;line-height:1.8">%</span>
+      </div>
+      <div style="font-size:15px;color:rgba(185,197,220,.92);line-height:1.6">
+        누적 순수익
+        <span style="color:#FF8080;font-weight:700;font-family:var(--mono);margin:0 4px">+2,846만원</span>
+        <span style="color:rgba(170,183,210,.85);font-size:12px">· 시장 방향과 무관하게 꾸준히</span>
+      </div>
+    </div>
+    <!-- 우: 4개 지표 -->
+    <div style="display:flex;gap:0;position:relative;flex-shrink:0">
+      <div style="text-align:center;padding:0 28px;border-right:1px solid rgba(255,255,255,.07)">
+        <div style="font-size:16px;font-weight:600;color:rgba(200,210,230,.95);margin-bottom:12px">총 전략</div>
+        <div style="font-size:38px;font-weight:800;font-family:var(--mono);color:var(--cyan);line-height:1">143</div>
+      </div>
+      <div style="text-align:center;padding:0 28px;border-right:1px solid rgba(255,255,255,.07)">
+        <div style="font-size:16px;font-weight:600;color:rgba(200,210,230,.95);margin-bottom:12px">승률</div>
+        <div style="font-size:38px;font-weight:800;font-family:var(--mono);color:#FF8080;line-height:1" id="heroWinRate">—</div>
+      </div>
+      <div style="text-align:center;padding:0 28px;border-right:1px solid rgba(255,255,255,.07)">
+        <div style="font-size:16px;font-weight:600;color:rgba(200,210,230,.95);margin-bottom:12px">월평균 수익률</div>
+        <div style="font-size:38px;font-weight:800;font-family:var(--mono);color:var(--yellow);line-height:1">4.07<span style="font-size:22px;opacity:.8">%</span></div>
+      </div>
+      <div style="text-align:center;padding:0 0 0 28px">
+        <div style="font-size:16px;font-weight:600;color:rgba(200,210,230,.95);margin-bottom:12px">손익비</div>
+        <div style="font-size:38px;font-weight:800;font-family:var(--mono);color:var(--purple);line-height:1" id="heroPF">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI 5개 -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px" id="stat-kpi-row"></div>
+
+  <!-- 누적 수익 곡선 — 풀 width -->
+  <div style="background:rgba(17,22,38,.97);border:1px solid rgba(99,120,180,.18);border-radius:14px;
+    margin-bottom:16px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.2)">
+    <div style="display:flex;align-items:center;justify-content:space-between;
+      padding:16px 22px 12px;border-bottom:1px solid rgba(99,120,180,.12)">
+      <div>
+        <div style="font-size:15px;font-weight:700;color:var(--t1);font-family:var(--font-h);letter-spacing:-.01em">누적 수익 곡선</div>
+        <div style="font-size:13px;color:rgba(185,197,220,.9);margin-top:4px">1번~143번 전략 · 우상향 · 낙폭 · 회복속도</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+        <span style="font-size:12px;color:rgba(185,197,220,.9);font-family:var(--mono);display:flex;align-items:center;gap:7px">
+          <span style="display:inline-block;width:22px;height:2px;background:#4dd8f0;border-radius:1px;box-shadow:0 0 6px rgba(77,216,240,.5)"></span>누적 수익률
+        </span>
+        <span style="font-size:12px;color:rgba(185,197,220,.9);font-family:var(--mono);display:flex;align-items:center;gap:7px">
+          <span style="display:inline-block;width:20px;height:0;border-top:2px dashed rgba(232,201,106,.75)"></span>최고점
+        </span>
+      </div>
+    </div>
+    <div style="padding:16px 20px 12px;position:relative;height:300px"><canvas id="cumChart"></canvas></div>
+  </div>
+
+  <!-- 2열: 승패도넛 + 구간별 -->
+  <div style="display:grid;grid-template-columns:1fr 1.8fr;gap:12px;margin-bottom:16px">
+
+    <!-- 승패 도넛 -->
+    <div style="background:rgba(17,22,38,.97);border:1px solid rgba(99,120,180,.18);border-radius:14px;overflow:hidden">
+      <div style="padding:14px 20px 10px;border-bottom:1px solid rgba(99,120,180,.1)">
+        <div style="font-size:15px;font-weight:700;color:var(--t1);font-family:var(--font-h)">승패 비율</div>
+        <div style="font-size:13px;color:rgba(185,197,220,.9);margin-top:3px">143번 전략 결과 분포</div>
+      </div>
+      <div style="padding:16px;position:relative;height:220px"><canvas id="donutChart"></canvas></div>
+      <div id="donut-legend" style="padding:0 20px 16px;display:flex;justify-content:center;gap:24px"></div>
+    </div>
+
+    <!-- 구간별 승패 + 분포 쌓기 -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+
+      <!-- 구간별 승패 -->
+      <div style="flex:1;background:rgba(17,22,38,.97);border:1px solid rgba(99,120,180,.18);border-radius:14px;overflow:hidden">
+        <div style="padding:14px 20px 10px;border-bottom:1px solid rgba(99,120,180,.1)">
+          <div style="font-size:15px;font-weight:700;color:var(--t1);font-family:var(--font-h)">구간별 승패</div>
+          <div style="font-size:13px;color:rgba(185,197,220,.9);margin-top:3px">30번 단위 · 어떤 구간도 손실이 더 많지 않음</div>
+        </div>
+        <div style="padding:14px 16px 8px;position:relative;height:238px"><canvas id="barChart"></canvas></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 손익 크기 분포 — 풀 width -->
+  <div style="background:rgba(17,22,38,.97);border:1px solid rgba(99,120,180,.18);border-radius:14px;
+    margin-bottom:16px;overflow:hidden">
+    <div style="padding:14px 20px 10px;border-bottom:1px solid rgba(99,120,180,.1)">
+      <div style="font-size:15px;font-weight:700;color:var(--t1);font-family:var(--font-h)">손익 크기 분포</div>
+      <div style="font-size:13px;color:rgba(185,197,220,.9);margin-top:3px">수익·손실 규모별 발생 횟수</div>
+    </div>
+    <div style="padding:14px 20px 12px;position:relative;height:200px"><canvas id="distChart"></canvas></div>
+  </div>
+
+  <!-- 인사이트 3개 -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px" id="stat-insight-row"></div>
+
+</div>
+<!-- 모달 -->
+<div class="overlay" id="overlay" onclick="closeOut(event)">
+  <div class="modal">
+    <div class="modal-head">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-badges" id="mBadges"></div>
+      <div class="modal-title" id="mTitle"></div>
+      <div class="modal-date" id="mDate"></div>
+    </div>
+    <div class="modal-body" id="mBody"></div>
+  </div>
+</div>
+
+<script>
+// ── 누적 수익 데이터 ──
+const RAW=[[1,193344],[2,-90668],[3,418490],[4,325678],[5,253281],[6,160217],[7,78791],[8,137074],[9,219466],[10,1763780],[11,-759870],[12,386932],[13,198957],[14,249084],[15,115201],[16,161541],[17,309842],[18,177442],[19,1096457],[20,17212],[21,-346835],[22,-127078],[23,103325],[24,24494],[25,-73911],[26,1160604],[27,876894],[28,314148],[29,248611],[30,-122846],[31,194571],[32,-480929],[33,993543],[34,-27251],[35,-377866],[36,93757],[37,220064],[38,-190066],[39,632876],[40,812604],[41,-89799],[42,191407],[43,77482],[44,661468],[45,223374],[46,156240],[47,182497],[48,295917],[49,1063122],[50,29517],[51,337882],[52,480892],[53,279760],[54,145215],[55,868544],[56,165328],[57,58455],[58,101339],[59,34019],[60,158535],[61,79267],[62,62617],[63,306626],[64,96996],[65,341099],[66,363037],[67,77442],[68,242451],[69,63989],[70,-32581],[71,1857101],[72,-516603],[73,155205],[74,783269],[75,171961],[76,-56543],[77,263789],[78,862084],[79,296257],[80,397029],[81,372374],[82,29384],[83,285208],[84,367712],[85,151875],[86,-511448],[87,93280],[88,699367],[89,129757],[90,67972],[91,-591301],[92,-670955],[93,147959],[94,12148],[95,142244],[96,-53147],[97,107999],[98,-90496],[99,-1288577],[100,-282331],[101,-351541],[102,-661118],[103,10709],[104,129217],[105,-740565],[106,503549],[107,516869],[108,636749],[109,71275],[110,257129],[111,32128],[112,385001],[113,0],[114,125235],[115,79267],[116,285075],[117,448897],[118,719],[119,111915],[120,-216423],[121,151875],[122,682064],[123,797921],[124,587452],[125,178515],[126,79267],[127,175185],[128,961784],[129,222457],[130,79267],[131,71275],[132,338355],[133,519480],[134,263789],[135,333000],[136,166500],[137,516869],[138,159840],[139,66600],[140,108558],[141,62438],[142,516869],[143,99900]];
+let cum=0;
+const DATA=RAW.map(([n,pnl])=>{cum+=pnl;return{n,pnl,cum,pct:cum/50000000};});
+const WINS=DATA.filter(d=>d.pnl>0).length,LOSSES=DATA.filter(d=>d.pnl<0).length,ZEROS=DATA.filter(d=>d.pnl===0).length;
+const WIN_AVG=Math.round(DATA.filter(d=>d.pnl>0).reduce((s,d)=>s+d.pnl,0)/WINS);
+const LOSS_AVG=Math.round(DATA.filter(d=>d.pnl<0).reduce((s,d)=>s+d.pnl,0)/LOSSES);
+
+const SL={naked_call:'네이키드 콜 매도',naked_put:'네이키드 풋 매도',strangle:'양매도 (콜+풋)',ratio_spread:'변형 레이쇼 스프레드'};
+const BC={naked_call:'b-orange',naked_put:'b-cyan',strangle:'b-purple',ratio_spread:'b-green'};
+const CC={naked_call:'col-orange',naked_put:'col-cyan',strangle:'col-purple',ratio_spread:'col-green'};
+let allPos=[],meta={},chartsBuilt=false,curFilter='all';
+const posCharts={};
+
+function daysLeft(d){const t=new Date();t.setHours(0,0,0,0);return Math.round((new Date(d)-t)/86400000);}
+function progPct(s,e){const st=new Date(s),en=new Date(e),to=new Date();return Math.min(100,Math.max(0,Math.round((to-st)/(en-st)*100)));}
+function pColor(d){return d<=5?'#e06070':d<=20?'#e8956a':d<=45?'#8b97f0':'#3ecfaa';}
+function comma(n){return Math.round(n).toLocaleString('ko-KR');}
+function plabel(p){return '#'+p.number+(p.sub||'');}
+
+function switchTab(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='t2') renderHistory(curFilter);
+  if(id==='t3'&&!chartsBuilt)buildStatCharts();
+}
+
+// ── 핵심 메시지 생성 ──
+function getHeadline(p){
+  const d=daysLeft(p.expiry_date);
+  const cp=p.current_price;
+  if(p.strategy_type==='strangle'){
+    const cs=p.legs.find(l=>l.type==='call_sell');
+    const ps=p.legs.find(l=>l.type==='put_sell');
+    const cpct=cp?((cs.strike-cp)/cp*100).toFixed(0):null;
+    const ppct=cp?((cp-ps.strike)/cp*100).toFixed(0):null;
+    return `천연가스 현재가 <span class="hl-green">$${cp}</span><br>
+    콜 행사가 <span class="hl-red">$${cs.strike}</span>까지 <span class="hl-yellow">${cpct}% 상승</span>해야 손해<br>
+    풋 행사가 <span class="hl-red">$${ps.strike}</span>까지 <span class="hl-yellow">${ppct}% 하락</span>해야 손해`;
+  }
+  if(p.strategy_type==='ratio_spread'){
+    const maxS=Math.max(...p.legs.map(l=>l.strike));
+    const pct=cp?((maxS-cp)/cp*100).toFixed(0):null;
+    return `크루드 오일 현재가 <span class="hl-green">$${cp}</span><br>
+    최대 행사가 <span class="hl-red">$${maxS}</span>까지 <span class="hl-yellow">${pct}% 더 올라야</span> 손해<br>
+    최소 <span class="hl-green">$340</span> ~ 최대 <span class="hl-green">$5,340</span> 수익 구조`;
+  }
+  const leg=p.legs[0];
+  const pct=cp?Math.abs(((leg.strike-cp)/cp)*100).toFixed(0):null;
+  const dir=leg.type==='call_sell'?'더 올라야':'더 내려야';
+  return `${p.underlying} 현재가 <span class="hl-green">$${cp?.toLocaleString()}</span><br>
+  행사가 <span class="hl-red">$${leg.strike.toLocaleString()}</span>까지 <span class="hl-yellow">${pct}% ${dir}</span> 손해<br>
+  ${d}일 안에 그럴 가능성은 <span class="hl-green">극히 낮음</span>`;
+}
+
+// ── 안전 거리 바 ──
+function getSafetyBar(p){
+  if(p.strategy_type==='strangle'){
+    const cs=p.legs.find(l=>l.type==='call_sell');
+    const ps=p.legs.find(l=>l.type==='put_sell');
+    return `<div class="safety-wrap">
+      <div class="safety-label"><span style="color:#5080CC">$${ps.strike} ← 손실</span><span style="color:#FF8080">수익 구간</span><span style="color:#5080CC">손실 → $${cs.strike}</span></div>
+      <div class="safety-track">
+        <div style="position:absolute;left:0;width:12%;height:100%;background:rgba(80,128,204,.35)"></div>
+        <div style="position:absolute;left:12%;right:12%;height:100%;background:linear-gradient(90deg,rgba(255,240,240,.9),rgba(255,150,150,.75),rgba(255,240,240,.9))"></div>
+        <div style="position:absolute;right:0;width:12%;height:100%;background:rgba(80,128,204,.35)"></div>
+      </div>
+    </div>`;
+  }
+  const leg=p.legs.find(l=>l.type.includes('sell')&&l.type.includes('call'));
+  if(!leg)return'';
+  const cp=p.current_price||0;
+  const safeW=cp?Math.min(88,Math.max(15,(leg.strike-cp)/leg.strike*100)):75;
+  return `<div class="safety-wrap">
+    <div class="safety-label"><span style="color:#FF8080">현재 안전 구간 ($${cp?.toLocaleString()})</span><span style="color:#5080CC">$${leg.strike.toLocaleString()} 이상 손실</span></div>
+    <div class="safety-track">
+      <div style="width:${safeW}%;height:100%;background:linear-gradient(90deg,rgba(255,240,240,.7),rgba(255,150,150,.85));border-radius:4px"></div>
+    </div>
+  </div>`;
+}
+
+
+
+
+
+const STRATEGY_HIST = [{"num": 1, "commodity": "크루드 오일", "expiry_month": "10월물V", "entry_date": "2024-08-09", "strategy_type": "양매도", "legs": [{"date": "2024-08-09", "month": "10월물V", "type": "C 매도", "strike": "10C 103.5", "premium_usd": 100.0}, {"date": "2024-08-14", "month": "10월물V", "type": "C 매도", "strike": "10C 102", "premium_usd": 100.0}, {"date": "2024-08-14", "month": "10월물V", "type": "P 매도", "strike": "10P 60.5", "premium_usd": 100.0}, {"date": "2024-08-09", "month": "10월물V", "type": "P 매도", "strike": "10P 57", "premium_usd": 100.0}], "total_premium": 0, "margin": 0, "pnl": 193344.0, "result": "win"}, {"num": 2, "commodity": "천연가스", "expiry_month": "10월물V", "entry_date": "2024-08-07", "strategy_type": "양매도", "legs": [{"date": "2024-08-07", "month": "10월물V", "type": "C 매도", "strike": "10C 3.55", "premium_usd": 120.0}, {"date": "2024-08-21", "month": "10월물V", "type": "C 매도", "strike": "10C 3.35", "premium_usd": 80.0}, {"date": "2024-08-20", "month": "10월물V", "type": "P 매도", "strike": "10P 1.65", "premium_usd": 80.0}, {"date": "2024-08-14", "month": "10월물V", "type": "P 매도", "strike": "10P 1.55", "premium_usd": 110.0}], "total_premium": 0, "margin": 0, "pnl": -90668.0, "result": "loss"}, {"num": 3, "commodity": "골드", "expiry_month": "10월물V", "entry_date": "2024-08-15", "strategy_type": "양매도", "legs": [{"date": "2024-08-15", "month": "10월물V", "type": "C 매도", "strike": "10C 2975", "premium_usd": 120.0}, {"date": "2024-08-30", "month": "10월물V", "type": "P 매도", "strike": "10C 2850", "premium_usd": 120.0}, {"date": "2024-08-15", "month": "10월물V", "type": "P 매도", "strike": "10P 2260", "premium_usd": 120.0}, {"date": "2024-08-15", "month": "10월물V", "type": "P 매도", "strike": "10P 2180", "premium_usd": 130.0}], "total_premium": 0, "margin": 0, "pnl": 418490.0, "result": "win"}, {"num": 4, "commodity": "밀", "expiry_month": "10월물V", "entry_date": "2024-08-20", "strategy_type": "네이키드 콜 매도", "legs": [{"date": "2024-08-20", "month": "10월물V", "type": "C 매도", "strike": "10C 655", "premium_usd": 56.5}], "total_premium": 0, "margin": 0, "pnl": 325678.0, "result": "win"}, {"num": 5, "commodity": "호주달러", "expiry_month": "10월물V", "entry_date": "2024-08-21", "strategy_type": "양매도", "legs": [{"date": "2024-08-21", "month": "10월물V", "type": "C 매도", "strike": "10C 0.710", "premium_usd": 55.0}, {"date": "2024-09-05", "month": "10월물V", "type": "C 매도", "strike": "10C 0.705", "premium_usd": 50.0}, {"date": "2024-09-12", "month": "10월물V", "type": "P 매도", "strike": "10P 0.640", "premium_usd": 40.0}, {"date": "2024-09-05", "month": "10월물V", "type": "P 매도", "strike": "10P 0.640", "premium_usd": 60.0}], "total_premium": 0, "margin": 0, "pnl": 253281.0, "result": "win"}, {"num": 6, "commodity": "크루드 오일", "expiry_month": "11월물X", "entry_date": "2024-08-20", "strategy_type": "양매도", "legs": [{"date": "2024-08-20", "month": "11월물X", "type": "C 매도", "strike": "11C 101", "premium_usd": 130.0}, {"date": "2024-10-10", "month": "11월물X", "type": "C 매도", "strike": "11C 93.5", "premium_usd": 100.0}, {"date": "2024-09-03", "month": "11월물X", "type": "C 매도", "strike": "11C 90", "premium_usd": 100.0}, {"date": "2024-10-14", "month": "11월물X", "type": "C 매도", "strike": "11C 87", "premium_usd": 120.0}, {"date": "2024-09-19", "month": "11월물X", "type": "C 매도", "strike": "11C 86", "premium_usd": 90.0}, {"date": "2024-09-12", "month": "11월물X", "type": "C 매도", "strike": "11C 81", "premium_usd": 100.0}, {"date": "2024-09-03", "month": "11월물X", "type": "P 매도", "strike": "11P 55", "premium_usd": 220.0}, {"date": "2024-08-20", "month": "11월물X", "type": "P 매도", "strike": "11P 52", "premium_usd": 130.0}, {"date": "2024-09-12", "month": "11월물X", "type": "P 매도", "strike": "11P 49", "premium_usd": 90.0}], "total_premium": 0, "margin": 0, "pnl": 160217.0, "result": "win"}, {"num": 7, "commodity": "밀", "expiry_month": "11월물X", "entry_date": "2024-08-30", "strategy_type": "양매도", "legs": [{"date": "2024-09-16", "month": "11월물X", "type": "C 매도", "strike": "11C 725", "premium_usd": 56.5}, {"date": "2024-09-05", "month": "11월물X", "type": "C 매도", "strike": "11C 705", "premium_usd": 106.5}, {"date": "2024-08-30", "month": "11월물X", "type": "C 매도", "strike": "11C 705", "premium_usd": 69.0}, {"date": "2024-09-12", "month": "11월물X", "type": "P 매도", "strike": "11P 510", "premium_usd": 69.0}], "total_premium": 0, "margin": 0, "pnl": 78791.0, "result": "win"}, {"num": 8, "commodity": "대두", "expiry_month": "11월물X", "entry_date": "2024-09-03", "strategy_type": "양매도", "legs": [{"date": "2024-09-16", "month": "11월물X", "type": "C 매도", "strike": "11C 1120", "premium_usd": 62.5}, {"date": "2024-09-03", "month": "11월물X", "type": "P 매도", "strike": "11P 860", "premium_usd": 37.5}], "total_premium": 0, "margin": 0, "pnl": 137074.0, "result": "win"}, {"num": 9, "commodity": "10년채권", "expiry_month": "11월물X", "entry_date": "2024-09-03", "strategy_type": "네이키드 풋 매도", "legs": [{"date": "2024-09-03", "month": "11월물X", "type": "P 매도", "strike": "11P 109", "premium_usd": 62.5}], "total_premium": 0, "margin": 0, "pnl": 219466.0, "result": "win"}, {"num": 10, "commodity": "골드", "expiry_month": "11월물X", "entry_date": "2024-09-16", "strategy_type": "네이키드 콜 매도", "legs": [{"date": "2024-09-16", "month": "11월물X", "type": "C 매도", "strike": "11C 2900", "premium_usd": 340.0}], "total_premium": 0, "margin": 0, "pnl": 1763780.0, "result": "win"}, {"num": 11, "commodity": null, "expiry_month": "11월물X", "entry_date": "2024-09-19", "strategy_type": "양매도", "legs": [{"date": "2024-09-19", "month": "11월물X", "type": "C 매도", "strike": "11C 7900", "premium_usd": 75.0}, {"date": "2024-09-25", "month": "11월물X", "type": "C 매도", "strike": "11C 7800", "premium_usd": 62.5}, {"date": "2024-09-25", "month": "11월물X", "type": "P 매도", "strike": "11P 6500", "premium_usd": 62.5}], "total_premium": 0, "margin": 0, "pnl": -759870.0, "result": "loss"}, {"num": 12, "commodity": "호주달러", "expiry_month": "11월물X", "entry_date": "2024-09-19", "strategy_type": "네이키드 콜 매도", "legs": [{"date": "2024-09-19", "month": "11월물X", "type": "C 매도", "strike": "11C 0.730", "premium_usd": 40.0}, {"date": "2024-09-20", "month": "11월물X", "type": "C 매도", "strike": "11C 0.725", "premium_usd": 50.0}], "total_premium": 0, "margin": 0, "pnl": 386932.0, "result": "win"}, {"num": 13, "commodity": "천연가스", "expiry_month": "12월물Z", "entry_date": "2024-08-30", "strategy_type": "양매도", "legs": [{"date": "2024-09-25", "month": "12월물Z", "type": "C 매도", "strike": "12C 5.80", "premium_usd": 110.0}, {"date": "2024-09-12", "month": "12월물Z", "type": "C 매도", "strike": "12C 5.50", "premium_usd": 110.0}, {"date": "2024-08-30", "month": "12월물Z", "type": "C 매도", "strike": "12C 5.50", "premium_usd": 130.0}, {"date": "2024-09-25", "month": "12월물Z", "type": "P 매도", "strike": "12P 2.20", "premium_usd": 100.0}, {"date": "2024-10-31", "month": "12월물Z", "type": "P 매도", "strike": "12P 2.10", "premium_usd": 80.0}, {"date": "2024-08-30", "month": "12월물Z", "type": "P 매도", "strike": "12P 1.90", "premium_usd": 100.0}], "total_premium": 0, "margin": 0, "pnl": 198957.0, "result": "win"}, {"num": 14, "commodity": "10년채권", "expiry_month": "12월물Z", "entry_date": "2024-09-05", "strategy_type": "양매도", "legs": [{"date": "2024-09-25", "month": "12월물Z", "type": "C 매도", "strike": "12C 121", "premium_usd": 62.5}, {"date": "2024-09-05", "month": "12월물Z", "type": "P 매도", "strike": "12P 108", "premium_usd": 78.12}], "total_premium": 0, "margin": 0, "pnl": 249084.0, "result": "win"}, {"num": 15, "commodity": "대두", "expiry_month": "12월물Z", "entry_date": "2024-09-20", "strategy_type": "네이키드 콜 매도", "legs": [{"date": "2024-09-20", "month": "12월물Z", "type": "C 매도", "strike": "12C 1190", "premium_usd": 50.0}], "total_premium": 0, "margin": 0, "pnl": 115201.0, "result": "win"}, {"num": 16, "commodity": "밀", "expiry_month": "12월물Z", "entry_date": "2024-09-20", "strategy_type": "네이키드 콜 매도", "legs": [{"date": "2024-09-20", "month": "12월물Z", "type": "C 매도", "strike": "12C 750", "premium_usd": 50.0}, {"date": "2024-10-17", "month": "12월물Z", "type": "C 매도", "strike": "12C 690", "premium_usd": 69.0}], "total_premium": 0, "margin": 0, "pnl": 161541.0, "result": "win"}, {"num": 17, "commodity": "크루드 오일", "expiry_month": "12월물Z", "entry_date": "2024-09-25", "strategy_type": "네이키드 콜 매도", "legs": [{"date": "2024-10-08", "month": "12월물Z", "type": "C 매도", "strike": "12C 135", "premium_usd": 110.0}, {"date": "2024-10-16", "month": "12월물Z", "type": "C 매도", "strike": "12C 115", "premium_usd": 110.0}, {"date": "2024-09-25", "month": "12월물Z", "type": "C 매도", "strike": "12C 92", "premium_usd": 110.0}, {"date": "2024-10-17", "month": "12월물Z", "type": "C 매도", "strike": "12P 52", "premium_usd": 90.0}, {"date": "2024-10-16", "month": "12월물Z", "type": "C 매도", "strike": "12P 52", "premium_usd": 110.0}], "total_premium": 0, "margin": 0, "pnl": 309842.0, "result": "win"}, {"num": 18, "commodity": "골드", "expiry_month": "12월물Z", "entry_date": "2024-09-25", "strategy_type": "양매도", "legs": [{"date": "2024-10-21", "month": "12월물Z", "type": "C 매도", "strike": "12C 3050", "premium_usd": 280.0}, {"date": "2024-09-25", "month": "12월물Z", "type": "P 매도", "strike": "12P 2370", "premium_usd": 330.0}], "total_premium": 0, "margin": 0, "pnl": 177442.0, "result": "win"}, {"num": 19, "commodity": "호주달러", "expiry_month": "12월물Z", "entry_date": "2024-10-14", "strategy_type": "양매도", "legs": [{"date": "2024-10-14", "month": "12월물Z", "type": "C 매도", "strike": "12C 0.715", "premium_usd": 60.0}, {"date": "2024-11-05", "month": "12월물Z", "type": "P 매도", "strike": "12P 0.620", "premium_usd": 80.0}], "total_premium": 0, "margin": 0, "pnl": 1096457.0, "result": "win"}, {"num": 20, "commodity": null, "expiry_month": "12월물Z", "entry_date": "2024-10-14", "strategy_type": "네이키드 콜 매도", "legs": [{"date": "2024-10-14", "month": "12월물Z", "type": "C 매도", "strike": "12C 7450", "premium_usd": 62.5}], "total_premium": 0, "margin": 0, "pnl": 17212.0, "result": "win"}, {"num": 21, "commodity": "유로", "expiry_month": "12월물Z", "entry_date": "2024-10-21", "strategy_type": "네이키드 풋 매도", "legs": [{"date": "2024-10-31", "month": "12월물Z", "type": "P 매도", "strike": "12P 1.04", "premium_usd": 75.0}, {"date": "2024-10-21", "month": "12월물Z", "type": "P 매도", "strike": "12P 1.03", "premium_usd": 62.5}], "total_premium": 0, "margin": 0, "pnl": -346835.0, "result": "loss"}, {"num": 22, "commodity": "옥수수", "expiry_month": "5월물K", "entry_date": "2024-03-22", "strategy_type": "양매도", "legs": [{"date": "2024-03-22", "month": "5월물K", "type": "C 매도", "strike": "5C 510", "premium_usd": 37.5}, {"date": "2024-03-22", "month": "5월물K", "type": "P 매도", "strike": "5P 395", "premium_usd": 56.5}], "total_premium": 188.0, "margin": 683.0, "pnl": -127078.0, "result": "loss"}, {"num": 23, "commodity": "호주달러", "expiry_month": "5월물K", "entry_date": "2024-03-26", "strategy_type": "양매도", "legs": [{"date": "2024-03-26", "month": "5월물K", "type": "C 매도", "strike": "5C 0.680", "premium_usd": 60.0}, {"date": "2024-04-22", "month": "5월물K", "type": "P 매도", "strike": "5P 0.630", "premium_usd": 80.0}, {"date": "2024-03-26", "month": "5월물K", "type": "P 매도", "strike": "5P 0.630", "premium_usd": 60.0}], "total_premium": 140.0, "margin": 972.0, "pnl": 103325.0, "result": "win"}, {"num": 24, "commodity": "유로", "expiry_month": "5월물K", "entry_date": "2024-03-27", "strategy_type": "양매도", "legs": [{"date": "2024-03-27", "month": "5월물K", "type": "C 매도", "strike": "5C 1.115", "premium_usd": 50.0}, {"date": "2024-04-19", "month": "5월물K", "type": "P 매도", "strike": "5P 1.050", "premium_usd": 87.5}, {"date": "2024-03-27", "month": "5월물K", "type": "P 매도", "strike": "5P 1.050", "premium_usd": 50.0}], "total_premium": 137.5, "margin": 1453.0, "pnl": 24494.0, "result": "win"}, {"num": 25, "commodity": "크루드 오일", "expiry_month": "6월물M", "entry_date": "2024-03-19", "strategy_type": "변형 레이쇼 스프레드", "legs": [{"date": "2024-04-17", "month": "6월물M", "type": "C 매도", "strike": "6C 114", "premium_usd": 100.0}, {"date": "2024-04-11", "month": "6월물M", "type": "C 매도", "strike": "6C 114", "premium_usd": 100.0}, {"date": "2024-04-09", "month": "6월물M", "type": "C 매도", "strike": "6C 114", "premium_usd": 100.0}, {"date": "2024-03-19", "month": "6월물M", "type": "C 매도", "strike": "6C 112", "premium_usd": 130.0}, {"date": "2024-04-18", "month": "6월물M", "type": "C 매도", "strike": "6C 110.5", "premium_usd": 60.0}, {"date": "2024-03-20", "month": "6월물M", "type": "C 매도", "strike": "6C 108", "premium_usd": 110.0}, {"date": "2024-04-10", "month": "6월물M", "type": "C 매도", "strike": "6C 105.5", "premium_usd": 120.0}, {"date": "2024-04-11", "month": "6월물M", "type": "C 매수", "strike": "6C 104.5", "premium_usd": -230.0}, {"date": "2024-04-19", "month": "6월물M", "type": "C 매도", "strike": "6C 97", "premium_usd": 770.0}, {"date": "2024-04-11", "month": "6월물M", "type": "P 매수", "strike": "6P 72", "premium_usd": -140.0}, {"date": "2024-04-10", "month": "6월물M", "type": "P 매도", "strike": "6P 71", "premium_usd": 120.0}, {"date": "2024-04-18", "month": "6월물M", "type": "P 매도", "strike": "6P 68.5", "premium_usd": 11.0}, {"date": "2024-04-15", "month": "6월물M", "type": "P 매도", "strike": "6P 68", "premium_usd": 70.0}, {"date": "2024-04-11", "month": "6월물M", "type": "P 매도", "strike": "6P 68", "premium_usd": 70.0}, {"date": "2024-04-01", "month": "6월물M", "type": "P 매도", "strike": "6P 65", "premium_usd": 110.0}, {"date": "2024-03-22", "month": "6월물M", "type": "P 매도", "strike": "6P 64", "premium_usd": 160.0}], "total_premium": 1521.0, "margin": 6985.0, "pnl": -73911.0, "result": "loss"}, {"num": 26, "commodity": "천연가스", "expiry_month": "6월물M", "entry_date": "2024-03-27", "strategy_type": "양매도", "legs": [{"date": "2024-05-21", "month": "6월물M", "type": "C 매도", "strike": "6C 3.30", "premium_usd": 80.0}, {"date": "2024-04-09", "month": "6월물M", "type": "C 매도", "strike": "6C 3.20", "premium_usd": 60.0}, {"date": "2024-04-01", "month": "6월물M", "type": "C 매도", "strike": "6C 3.05", "premium_usd": 80.0}, {"date": "2024-05-17", "month": "6월물M", "type": "C 매도", "strike": "6C 2.90", "premium_usd": 280.0}, {"date": "2024-05-15", "month": "6월물M", "type": "C 매도", "strike": "6C 2.80", "premium_usd": 60.0}, {"date": "2024-05-03", "month": "6월물M", "type": "C 매도", "strike": "6C 2.80", "premium_usd": 50.0}, {"date": "2024-04-17", "month": "6월물M", "type": "C 매도", "strike": "6C 2.70", "premium_usd": 100.0}, {"date": "2024-05-03", "month": "6월물M", "type": "P 매도", "strike": "6P 1.50", "premium_usd": 50.0}, {"date": "2024-04-22", "month": "6월물M", "type": "P 매도", "strike": "6P 1.45", "premium_usd": 80.0}, {"date": "2024-04-10", "month": "6월물M", "type": "P 매도", "strike": "6P 1.35", "premium_usd": 70.0}, {"date": "2024-04-03", "month": "6월물M", "type": "P 매도", "strike": "6P 1.35", "premium_usd": 80.0}, {"date": "2024-03-27", "month": "6월물M", "type": "P 매도", "strike": "6P 1.25", "premium_usd": 110.0}], "total_premium": 610.0, "margin": 3610.0, "pnl": 1160604.0, "result": "win"}, {"num": 27, "commodity": "옥수수", "expiry_month": "6월물M", "entry_date": "2024-04-01", "strategy_type": "양매도", "legs": [{"date": "2024-04-01", "month": "6월물M", "type": "C 매도", "strike": "6C 535", "premium_usd": 62.5}, {"date": "2024-04-10", "month": "6월물M", "type": "P 매도", "strike": "6P 400", "premium_usd": 62.5}], "total_premium": 125.0, "margin": 513.0, "pnl": 876894.0, "result": "win"}, {"num": 28, "commodity": "골드", "expiry_month": "6월물M", "entry_date": "2024-04-01", "strategy_type": "양매도", "legs": [{"date": "2024-04-01", "month": "6월물M", "type": "C 매도", "strike": "6C 2850", "premium_usd": 150.0}, {"date": "2024-04-18", "month": "6월물M", "type": "C 매도", "strike": "6C 2800", "premium_usd": 180.0}, {"date": "2024-04-29", "month": "6월물M", "type": "C 매도", "strike": "6C 2610", "premium_usd": 150.0}, {"date": "2024-04-29", "month": "6월물M", "type": "P 매도", "strike": "6P 2155", "premium_usd": 120.0}], "total_premium": 600.0, "margin": 6955.0, "pnl": 314148.0, "result": "win"}, {"num": 29, "commodity": "밀", "expiry_month": "6월물M", "entry_date": "2024-04-09", "strategy_type": "양매도", "legs": [{"date": "2024-05-13", "month": "6월물M", "type": "C 매도", "strike": "6C 795", "premium_usd": 100.0}, {"date": "2024-05-15", "month": "6월물M", "type": "C 매도", "strike": "6C 780", "premium_usd": 62.5}, {"date": "2024-05-10", "month": "6월물M", "type": "C 매도", "strike": "6C 780", "premium_usd": 87.5}, {"date": "2024-05-06", "month": "6월물M", "type": "C 매도", "strike": "6C 745", "premium_usd": 119.0}, {"date": "2024-04-22", "month": "6월물M", "type": "C 매도", "strike": "6C 725", "premium_usd": 87.5}, {"date": "2024-04-09", "month": "6월물M", "type": "C 매도", "strike": "6C 725", "premium_usd": 87.5}, {"date": "2024-04-09", "month": "6월물M", "type": "P 매도", "strike": "6P 490", "premium_usd": 100.0}], "total_premium": 350.0, "margin": 1695.0, "pnl": 248611.0, "result": "win"}, {"num": 30, "commodity": "대두", "expiry_month": "6월물M", "entry_date": "2024-04-09", "strategy_type": "양매도", "legs": [{"date": "2024-05-08", "month": "6월물M", "type": "C 매도", "strike": "6C 1340", "premium_usd": 100.0}, {"date": "2024-04-09", "month": "6월물M", "type": "C 매도", "strike": "6C 1340", "premium_usd": 50.0}, {"date": "2024-05-03", "month": "6월물M", "type": "P 매도", "strike": "6P 1120", "premium_usd": 50.0}], "total_premium": 50.0, "margin": 986.0, "pnl": -122846.0, "result": "loss"}, {"num": 31, "commodity": "호주달러", "expiry_month": "6월물M", "entry_date": "2024-04-29", "strategy_type": "양매도", "legs": [{"date": "2024-05-07", "month": "6월물M", "type": "C 매도", "strike": "6C 0.690", "premium_usd": 40.0}, {"date": "2024-04-29", "month": "6월물M", "type": "C 매도", "strike": "6C 0.685", "premium_usd": 60.0}, {"date": "2024-05-03", "month": "6월물M", "type": "P 매도", "strike": "6P 0.635", "premium_usd": 70.0}, {"date": "2024-05-07", "month": "6월물M", "type": "P 매도", "strike": "6P 0.630", "premium_usd": 40.0}], "total_premium": 210.0, "margin": 1371.0, "pnl": 194571.0, "result": "win"}, {"num": 32, "commodity": "크루드 오일", "expiry_month": "7월물N", "entry_date": "2024-03-26", "strategy_type": "변형 레이쇼 스프레드", "legs": [{"date": "2024-04-17", "month": "7월물N", "type": "C 매도", "strike": "7C 127", "premium_usd": 120.0}, {"date": "2024-04-10", "month": "7월물N", "type": "C 매도", "strike": "7C 123.5", "premium_usd": 90.0}, {"date": "2024-04-18", "month": "7월물N", "type": "C 매도", "strike": "7C 122", "premium_usd": 90.0}, {"date": "2024-04-11", "month": "7월물N", "type": "C 매수", "strike": "7C 120", "premium_usd": -150.0}, {"date": "2024-04-22", "month": "7월물N", "type": "C 매도", "strike": "7C 115", "premium_usd": 90.0}, {"date": "2024-04-29", "month": "7월물N", "type": "C 매도", "strike": "7C 110", "premium_usd": 70.0}, {"date": "2024-03-26", "month": "7월물N", "type": "C 매도", "strike": "7C 105.5", "premium_usd": 170.0}, {"date": "2024-05-03", "month": "7월물N", "type": "C 매도", "strike": "7C 95", "premium_usd": 100.0}, {"date": "2024-05-15", "month": "7월물N", "type": "C 매도", "strike": "7C 91", "premium_usd": 90.0}, {"date": "2024-04-15", "month": "7월물N", "type": "P 매도", "strike": "7P 68", "premium_usd": -310.0}, {"date": "2024-05-10", "month": "7월물N", "type": "P 매도", "strike": "7P 60", "premium_usd": 60.0}, {"date": "2024-05-08", "month": "7월물N", "type": "P 매도", "strike": "7P 60", "premium_usd": 90.0}, {"date": "2024-05-03", "month": "7월물N", "type": "P 매도", "strike": "7P 60", "premium_usd": 90.0}, {"date": "2024-04-15", "month": "7월물N", "type": "P 매도", "strike": "7P 59", "premium_usd": 80.0}, {"date": "2024-03-26", "month": "7월물N", "type": "P 매도", "strike": "7P 59", "premium_usd": 160.0}, {"date": "2024-05-02", "month": "7월물N", "type": "P 매도", "strike": "7P 58", "premium_usd": 80.0}, {"date": "2024-04-22", "month": "7월물N", "type": "P 매도", "strike": "7P 58", "premium_usd": 90.0}], "total_premium": 1140.0, "margin": 13972.0, "pnl": -480929.0, "result": "loss"}, {"num": 33, "commodity": "10년채권", "expiry_month": "7월물N", "entry_date": "2024-05-02", "strategy_type": "양매도", "legs": [{"date": "2024-05-10", "month": "7월물N", "type": "C 매도", "strike": "7C 114", "premium_usd": 46.88}, {"date": "2024-05-07", "month": "7월물N", "type": "C 매도", "strike": "7C 114", "premium_usd": 62.5}, {"date": "2024-05-07", "month": "7월물N", "type": "P 매도", "strike": "7P 105", "premium_usd": 62.5}, {"date": "2024-05-02", "month": "7월물N", "type": "P 매도", "strike": "7P 103.5", "premium_usd": 62.5}], "total_premium": 234.38, "margin": 1563.0, "pnl": 993543.18, "result": "win"}, {"num": 34, "commodity": "밀", "expiry_month": "7월물N", "entry_date": "2024-05-02", "strategy_type": "변형 레이쇼 스프레드", "legs": [{"date": "2024-05-15", "month": "7월물N", "type": "C 매도", "strike": "7C 960", "premium_usd": 81.5}, {"date": "2024-05-10", "month": "7월물N", "type": "C 매도", "strike": "7C 900", "premium_usd": 100.0}, {"date": "2024-05-28", "month": "7월물N", "type": "C 매도", "strike": "7C 860", "premium_usd": 87.5}, {"date": "2024-05-08", "month": "7월물N", "type": "C 매도", "strike": "7C 810", "premium_usd": 175.0}, {"date": "2024-05-09", "month": "7월물N", "type": "C 매수", "strike": "7C 775", "premium_usd": -331.5}, {"date": "2024-05-16", "month": "7월물N", "type": "P 매도", "strike": "7P 570", "premium_usd": 106.5}, {"date": "2024-05-02", "month": "7월물N", "type": "P 매도", "strike": "7P 500", "premium_usd": 100.0}], "total_premium": 319.0, "margin": 1566.0, "pnl": -27250.860000000084, "result": "loss"}, {"num": 35, "commodity": "대두", "expiry_month": "7월물N", "entry_date": "2024-05-03", "strategy_type": "변형 레이쇼 스프레드", "legs": [{"date": "2024-05-10", "month": "7월물N", "type": "C 매도", "strike": "7C 1410", "premium_usd": 81.5}, {"date": "2024-05-08", "month": "7월물N", "type": "C 매도", "strike": "7C 1410", "premium_usd": 175.0}, {"date": "2024-05-09", "month": "7월물N", "type": "C 매수", "strike": "7C 1360", "premium_usd": -269.0}, {"date": "2024-05-21", "month": "7월물N", "type": "P 매도", "strike": "7P 1140", "premium_usd": 100.0}, {"date": "2024-05-06", "month": "7월물N", "type": "P 매도", "strike": "7P 1100", "premium_usd": 100.0}, {"date": "2024-05-03", "month": "7월물N", "type": "P 매도", "strike": "7P 1090", "premium_usd": 110.0}], "total_premium": 297.5, "margin": 4092.0, "pnl": -377866.44000000006, "result": "loss"}, {"num": 36, "commodity": "골드", "expiry_month": "7월물N", "entry_date": "2024-05-15", "strategy_type": "양매도", "legs": [{"date": "2024-05-20", "month": "7월물N", "type": "C 매도", "strike": "7C 2750", "premium_usd": 220.0}, {"date": "2024-05-15", "month": "7월물N", "type": "C 매도", "strike": "7C 2690", "premium_usd": 220.0}, {"date": "2024-05-27", "month": "7월물N", "type": "P 매도", "strike": "7P 2230", "premium_usd": 270.0}], "total_premium": 490.0, "margin": 7259.0, "pnl": 93757.02, "result": "win"}, {"num": 37, "commodity": "천연가스", "expiry_month": "7월물N", "entry_date": "2024-05-15", "strategy_type": "양매도", "legs": [{"date": "2024-06-06", "month": "7월물N", "type": "C 매도", "strike": "7C 4.40", "premium_usd": 90.0}, {"date": "2024-05-28", "month": "7월물N", "type": "C 매도", "strike": "7C 4.00", "premium_usd": 80.0}, {"date": "2024-05-21", "month": "7월물N", "type": "C 매도", "strike": "7C 4.00", "premium_usd": 100.0}, {"date": "2024-05-15", "month": "7월물N", "type": "C 매도", "strike": "7C 3.40", "premium_usd": 90.0}, {"date": "2024-06-05", "month": "7월물N", "type": "P 매도", "strike": "7P 2.05", "premium_usd": 80.0}, {"date": "2024-05-15", "month": "7월물N", "type": "P 매도", "strike": "7P 1.90", "premium_usd": 90.0}], "total_premium": 440.0, "margin": 2475.0, "pnl": 220064.04, "result": "win"}, {"num": 38, "commodity": "옥수수", "expiry_month": "7월물N", "entry_date": "2024-05-16", "strategy_type": "양매도", "legs": [{"date": "2024-05-28", "month": "7월물N", "type": "C 매도", "strike": "7C 510", "premium_usd": 81.5}, {"date": "2024-05-21", "month": "7월물N", "type": "C 매도", "strike": "7C 510", "premium_usd": 112.5}, {"date": "2024-05-29", "month": "7월물N", "type": "P 매도", "strike": "7P 430", "premium_usd": 62.5}, {"date": "2024-06-04", "month": "7월물N", "type": "P 매도", "strike": "7P 425", "premium_usd": 100.0}, {"date": "2024-05-16", "month": "7월물N", "type": "P 매도", "strike": "7P 425", "premium_usd": 112.5}], "total_premium": 406.5, "margin": 1907.0, "pnl": -190065.96, "result": "loss"}, {"num": 39, "commodity": "호주달러", "expiry_month": "7월물N", "entry_date": "2024-05-28", "strategy_type": "양매도", "legs": [{"date": "2024-05-28", "month": "7월물N", "type": "C 매도", "strike": "7C 0.695", "premium_usd": 60.0}, {"date": "2024-05-28", "month": "7월물N", "type": "P 매도", "strike": "7P 0.640", "premium_usd": 60.0}], "total_premium": 120.0, "margin": 624.0, "pnl": 632876.1599999999, "result": "win"}, {"num": 40, "commodity": "유로", "expiry_month": "7월물N", "entry_date": "2024-05-31", "strategy_type": "양매도", "legs": [{"date": "2024-05-31", "month": "7월물N", "type": "C 매도", "strike": "7C 1.115", "premium_usd": 112.5}, {"date": "2024-05-31", "month": "7월물N", "type": "P 매도", "strike": "7P 1.065", "premium_usd": 100.0}], "total_premium": 112.5, "margin": 568.0, "pnl": 812604.2399999999, "result": "win"}, {"num": 41, "commodity": "대두", "expiry_month": "8월물Q", "entry_date": "2024-05-16", "strategy_type": "양매도", "legs": [{"date": "2024-05-16", "month": "8월물Q", "type": "C 매도", "strike": "8C 1510", "premium_usd": 112.5}, {"date": "2024-05-16", "month": "8월물Q", "type": "P 매도", "strike": "8P 1050", "premium_usd": 106.5}], "total_premium": 112.5, "margin": 13.0, "pnl": -89798.93999999997, "result": "loss"}, {"num": 42, "commodity": "크루드 오일", "expiry_month": "8월물Q", "entry_date": "2024-05-22", "strategy_type": "양매도", "legs": [{"date": "2024-05-22", "month": "8월물Q", "type": "C 매도", "strike": "8C 97", "premium_usd": 100.0}, {"date": "2024-05-28", "month": "8월물Q", "type": "C 매도", "strike": "8C 95", "premium_usd": 120.0}, {"date": "2024-05-27", "month": "8월물Q", "type": "P 매도", "strike": "8P 58", "premium_usd": 130.0}, {"date": "2024-05-22", "month": "8월물Q", "type": "P 매도", "strike": "8P 55.5", "premium_usd": 100.0}, {"date": "2024-06-04", "month": "8월물Q", "type": "P 매도", "strike": "8P 52", "premium_usd": 90.0}], "total_premium": 540.0, "margin": 7288.0, "pnl": 191407.02, "result": "win"}, {"num": 43, "commodity": "10년채권", "expiry_month": "8월물Q", "entry_date": "2024-06-04", "strategy_type": "양매도", "legs": [{"date": "2024-06-04", "month": "8월물Q", "type": "C 매도", "strike": "8C 116", "premium_usd": 46.88}, {"date": "2024-06-19", "month": "8월물Q", "type": "C 매도", "strike": "8C 114.5", "premium_usd": 62.5}, {"date": "2024-06-19", "month": "8월물Q", "type": "P 매도", "strike": "8P 107.5", "premium_usd": 78.12}], "total_premium": 140.62, "margin": 1082.0, "pnl": 77482.02, "result": "win"}, {"num": 44, "commodity": "밀", "expiry_month": "8월물Q", "entry_date": "2024-06-05", "strategy_type": "양매도", "legs": [{"date": "2024-06-05", "month": "8월물Q", "type": "C 매도", "strike": "8C 1000", "premium_usd": 50.0}, {"date": "2024-06-24", "month": "8월물Q", "type": "P 매도", "strike": "8P 490", "premium_usd": 55.0}], "total_premium": 50.0, "margin": 13.0, "pnl": 661468.0800000001, "result": "win"}, {"num": 45, "commodity": "천연가스", "expiry_month": "8월물Q", "entry_date": "2024-06-17", "strategy_type": "양매도", "legs": [{"date": "2024-06-24", "month": "8월물Q", "type": "C 매도", "strike": "8C 4.20", "premium_usd": 100.0}, {"date": "2024-06-17", "month": "8월물Q", "type": "C 매도", "strike": "8C 4.20", "premium_usd": 130.0}, {"date": "2024-06-17", "month": "8월물Q", "type": "P 매도", "strike": "8P 2.15", "premium_usd": 120.0}, {"date": "2024-06-24", "month": "8월물Q", "type": "P 매도", "strike": "8P 2.15", "premium_usd": 70.0}, {"date": "2024-07-12", "month": "8월물Q", "type": "P 매도", "strike": "8P 2.00", "premium_usd": 90.0}], "total_premium": 230.0, "margin": 66.0, "pnl": 223374.375, "result": "win"}, {"num": 46, "commodity": "호주달러", "expiry_month": "8월물Q", "entry_date": "2024-06-20", "strategy_type": "양매도", "legs": [{"date": "2024-06-20", "month": "8월물Q", "type": "C 매도", "strike": "8C 0.730", "premium_usd": 45.0}, {"date": "2024-06-28", "month": "8월물Q", "type": "C 매도", "strike": "8C 0.700", "premium_usd": 40.0}, {"date": "2024-06-28", "month": "8월물Q", "type": "P 매도", "strike": "8P 0.625", "premium_usd": 40.0}, {"date": "2024-06-20", "month": "8월물Q", "type": "P 매도", "strike": "8P 0.625", "premium_usd": 50.0}], "total_premium": 175.0, "margin": 879.0, "pnl": 156240.0, "result": "win"}, {"num": 47, "commodity": "유로", "expiry_month": "8월물Q", "entry_date": "2024-06-24", "strategy_type": "양매도", "legs": [{"date": "2024-06-24", "month": "8월물Q", "type": "C 매도", "strike": "8C 1.115", "premium_usd": 75.0}, {"date": "2024-06-24", "month": "8월물Q", "type": "P 매도", "strike": "8P 1.020", "premium_usd": 75.0}], "total_premium": 150.0, "margin": 1036.0, "pnl": 182497.31999999998, "result": "win"}, {"num": 48, "commodity": "크루드 오일", "expiry_month": "9월물U", "entry_date": "2024-06-19", "strategy_type": "양매도", "legs": [{"date": "2024-07-11", "month": "9월물U", "type": "C 매도", "strike": "9C 104", "premium_usd": 40.0}, {"date": "2024-06-28", "month": "9월물U", "type": "C 매도", "strike": "9C 100", "premium_usd": 150.0}, {"date": "2024-06-24", "month": "9월물U", "type": "C 매도", "strike": "9C 100", "premium_usd": 110.0}, {"date": "2024-08-01", "month": "9월물U", "type": "C 매도", "strike": "9C 98", "premium_usd": 100.0}, {"date": "2024-06-19", "month": "9월물U", "type": "C 매도", "strike": "9C 95", "premium_usd": 150.0}, {"date": "2024-07-10", "month": "9월물U", "type": "C 매도", "strike": "9C 94.5", "premium_usd": 90.0}, {"date": "2024-07-18", "month": "9월물U", "type": "C 매도", "strike": "9C 92", "premium_usd": 130.0}, {"date": "2024-07-04", "month": "9월물U", "type": "P 매도", "strike": "9P 70", "premium_usd": 150.0}, {"date": "2024-08-01", "month": "9월물U", "type": "P 매도", "strike": "9P 69", "premium_usd": 100.0}, {"date": "2024-07-10", "month": "9월물U", "type": "P 매도", "strike": "9P 68", "premium_usd": 110.0}, {"date": "2024-07-31", "month": "9월물U", "type": "P 매도", "strike": "9P 66.5", "premium_usd": 100.0}, {"date": "2024-07-26", "month": "9월물U", "type": "P 매도", "strike": "9P 65", "premium_usd": 100.0}, {"date": "2024-06-28", "month": "9월물U", "type": "P 매도", "strike": "9P 64.5", "premium_usd": 140.0}, {"date": "2024-06-19", "month": "9월물U", "type": "P 매도", "strike": "9P 63", "premium_usd": 140.0}], "total_premium": 1460.0, "margin": 20409.0, "pnl": 295917.11999999994, "result": "win"}, {"num": 49, "commodity": "옥수수", "expiry_month": "9월물U", "entry_date": "2024-06-20", "strategy_type": "양매도", "legs": [{"date": "2024-06-20", "month": "9월물U", "type": "C 매도", "strike": "9C 560", "premium_usd": 155.0}, {"date": "2024-07-11", "month": "9월물U", "type": "C 매도", "strike": "9C 485", "premium_usd": 55.0}, {"date": "2024-08-01", "month": "9월물U", "type": "C 매도", "strike": "9C 420", "premium_usd": 55.0}, {"date": "2024-07-23", "month": "9월물U", "type": "P 매도", "strike": "9P 365", "premium_usd": 60.0}, {"date": "2024-06-27", "month": "9월물U", "type": "P 매도", "strike": "9P 360", "premium_usd": 55.0}, {"date": "2024-07-11", "month": "9월물U", "type": "P 매도", "strike": "9P 355", "premium_usd": 50.0}], "total_premium": 325.0, "margin": 878.0, "pnl": 1063122.48, "result": "win"}, {"num": 50, "commodity": "천연가스", "expiry_month": "9월물U", "entry_date": "2024-06-28", "strategy_type": "양매도", "legs": [{"date": "2024-06-28", "month": "9월물U", "type": "C 매도", "strike": "9C 4.15", "premium_usd": 140.0}, {"date": "2024-07-11", "month": "9월물U", "type": "C 매도", "strike": "9C 3.45", "premium_usd": 90.0}, {"date": "2024-06-28", "month": "9월물U", "type": "P 매도", "strike": "9P 1.70", "premium_usd": 140.0}, {"date": "2024-07-04", "month": "9월물U", "type": "P 매도", "strike": "9P 1.60", "premium_usd": 120.0}, {"date": "2024-07-22", "month": "9월물U", "type": "P 매도", "strike": "9P 1.50", "premium_usd": 110.0}], "total_premium": 340.0, "margin": 706.0, "pnl": 29517.1199999999, "result": "win"}, {"num": 51, "commodity": "밀", "expiry_month": "9월물U", "entry_date": "2024-06-28", "strategy_type": "양매도", "legs": [{"date": "2024-06-28", "month": "9월물U", "type": "C 매도", "strike": "9C 730", "premium_usd": 135.0}, {"date": "2024-08-01", "month": "9월물U", "type": "C 매도", "strike": "9C 635", "premium_usd": 55.0}, {"date": "2024-07-23", "month": "9월물U", "type": "P 매도", "strike": "9P 480", "premium_usd": 60.0}, {"date": "2024-06-28", "month": "9월물U", "type": "P 매도", "strike": "9P 470", "premium_usd": 55.0}], "total_premium": 250.0, "margin": 989.0, "pnl": 337881.77999999997, "result": "win"}, {"num": 52, "commodity": "골드", "expiry_month": "9월물U", "entry_date": "2024-07-04", "strategy_type": "양매도", "legs": [{"date": "2024-07-04", "month": "9월물U", "type": "C 매도", "strike": "9C 2750", "premium_usd": 250.0}, {"date": "2024-07-22", "month": "9월물U", "type": "C 매도", "strike": "9C 2730", "premium_usd": 120.0}, {"date": "2024-07-04", "month": "9월물U", "type": "P 매도", "strike": "9P 2200", "premium_usd": 240.0}], "total_premium": 360.0, "margin": 3561.0, "pnl": 480891.95999999996, "result": "win"}, {"num": 53, "commodity": null, "expiry_month": "9월물U", "entry_date": "2024-07-25", "strategy_type": "네이키드 콜 매도", "legs": [{"date": "2024-08-01", "month": "9월물U", "type": "C 매도", "strike": "9C 7250", "premium_usd": 43.75}, {"date": "2024-07-25", "month": "9월물U", "type": "C 매도", "strike": "9C 7200", "premium_usd": 37.5}], "total_premium": 81.25, "margin": 3106.0, "pnl": 279759.96, "result": "win"}, {"num": 54, "commodity": "크루드 오일", "expiry_month": "10월물V", "entry_date": "2024-08-01", "strategy_type": "양매도", "legs": [{"date": "2024-08-01", "month": "10월물V", "type": "C 매도", "strike": "10C 109.5", "premium_usd": 100.0}, {"date": "2024-08-01", "month": "10월물V", "type": "P 매도", "strike": "10P 56.5", "premium_usd": 100.0}], "total_premium": 200.0, "margin": 1462.0, "pnl": 145214.63999999998, "result": "win"}, {"num": 55, "commodity": "대두", "expiry_month": "9월물U", "entry_date": "2024-07-10", "strategy_type": "양매도", "legs": [{"date": "2024-07-10", "month": "9월물U", "type": "C 매도", "strike": "9C 1300", "premium_usd": 30.0}, {"date": "2024-07-22", "month": "9월물U", "type": "C 매도", "strike": "9C 1200", "premium_usd": 55.0}, {"date": "2024-07-23", "month": "9월물U", "type": "P 매도", "strike": "9P 960", "premium_usd": 55.0}, {"date": "2024-07-22", "month": "9월물U", "type": "P 매도", "strike": "9P 950", "premium_usd": 65.0}], "total_premium": 85.0, "margin": 598.0, "pnl": 868543.92, "result": "win"}, {"num": 56, "commodity": "크루드 오일", "expiry_month": "1월물", "entry_date": "2024-11-01", "strategy_type": "양매도", "legs": [{"date": "2024-11-01", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 88.0, "margin": 0, "pnl": 165327.83999999994, "result": "win", "estimated": true}, {"num": 57, "commodity": "크루드 오일", "expiry_month": "1월물", "entry_date": "2024-11-07", "strategy_type": "양매도", "legs": [{"date": "2024-11-07", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 31.0, "margin": 0, "pnl": 58454.82, "result": "win", "estimated": true}, {"num": 58, "commodity": "대두", "expiry_month": "1월물", "entry_date": "2024-11-13", "strategy_type": "양매도", "legs": [{"date": "2024-11-13", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2024-11-13", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2024-11-13", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2024-11-13", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 54.0, "margin": 0, "pnl": 101338.56, "result": "win", "estimated": true}, {"num": 59, "commodity": "크루드 오일", "expiry_month": "1월물", "entry_date": "2024-11-18", "strategy_type": "양매도", "legs": [{"date": "2024-11-18", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2024-11-18", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 18.0, "margin": 0, "pnl": 34019.280000000006, "result": "win", "estimated": true}, {"num": 60, "commodity": "크루드 오일", "expiry_month": "1월물", "entry_date": "2024-11-24", "strategy_type": "양매도", "legs": [{"date": "2024-11-24", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2024-11-24", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 85.0, "margin": 0, "pnl": 158534.63999999998, "result": "win", "estimated": true}, {"num": 61, "commodity": "대두", "expiry_month": "1월물", "entry_date": "2024-11-29", "strategy_type": "양매도", "legs": [{"date": "2024-11-29", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2024-11-29", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 42.0, "margin": 0, "pnl": 79267.31999999999, "result": "win", "estimated": true}, {"num": 62, "commodity": "크루드 오일", "expiry_month": "2월물", "entry_date": "2024-12-05", "strategy_type": "양매도", "legs": [{"date": "2024-12-05", "month": "2월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 33.0, "margin": 0, "pnl": 62617.32, "result": "win", "estimated": true}, {"num": 63, "commodity": "크루드 오일", "expiry_month": "2월물", "entry_date": "2024-12-10", "strategy_type": "양매도", "legs": [{"date": "2024-12-10", "month": "2월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2024-12-10", "month": "2월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 164.0, "margin": 0, "pnl": 306626.3999999999, "result": "win", "estimated": true}, {"num": 64, "commodity": "대두", "expiry_month": "2월물", "entry_date": "2024-12-16", "strategy_type": "양매도", "legs": [{"date": "2024-12-16", "month": "2월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 52.0, "margin": 0, "pnl": 96996.24, "result": "win", "estimated": true}, {"num": 65, "commodity": "크루드 오일", "expiry_month": "2월물", "entry_date": "2024-12-22", "strategy_type": "양매도", "legs": [{"date": "2024-12-22", "month": "2월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2024-12-22", "month": "2월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 182.0, "margin": 0, "pnl": 341098.56, "result": "win", "estimated": true}, {"num": 66, "commodity": "크루드 오일", "expiry_month": "2월물", "entry_date": "2024-12-27", "strategy_type": "양매도", "legs": [{"date": "2024-12-27", "month": "2월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2024-12-27", "month": "2월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 194.0, "margin": 0, "pnl": 363036.60000000003, "result": "win", "estimated": true}, {"num": 67, "commodity": "대두", "expiry_month": "3월물", "entry_date": "2025-01-02", "strategy_type": "양매도", "legs": [{"date": "2025-01-02", "month": "3월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-01-02", "month": "3월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-01-02", "month": "3월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-01-02", "month": "3월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 41.0, "margin": 0, "pnl": 77442.47999999986, "result": "win", "estimated": true}, {"num": 68, "commodity": "크루드 오일", "expiry_month": "3월물", "entry_date": "2025-01-07", "strategy_type": "양매도", "legs": [{"date": "2025-01-07", "month": "3월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-01-07", "month": "3월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 129.0, "margin": 0, "pnl": 242450.63999999998, "result": "win", "estimated": true}, {"num": 69, "commodity": "크루드 오일", "expiry_month": "3월물", "entry_date": "2025-01-13", "strategy_type": "양매도", "legs": [{"date": "2025-01-13", "month": "3월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 34.0, "margin": 0, "pnl": 63989.27999999997, "result": "win", "estimated": true}, {"num": 70, "commodity": "대두", "expiry_month": "3월물", "entry_date": "2025-01-18", "strategy_type": "양매도", "legs": [{"date": "2025-01-18", "month": "3월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 0, "margin": 0, "pnl": -32580.719999999972, "result": "loss", "estimated": true}, {"num": 71, "commodity": "크루드 오일", "expiry_month": "3월물", "entry_date": "2025-01-24", "strategy_type": "양매도", "legs": [{"date": "2025-01-24", "month": "3월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 990.0, "margin": 0, "pnl": 1857101.0399999998, "result": "win", "estimated": true}, {"num": 72, "commodity": "크루드 오일", "expiry_month": "3월물", "entry_date": "2025-01-30", "strategy_type": "양매도", "legs": [{"date": "2025-01-30", "month": "3월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 0, "margin": 0, "pnl": -516602.8799999999, "result": "loss", "estimated": true}, {"num": 73, "commodity": "대두", "expiry_month": "4월물", "entry_date": "2025-02-04", "strategy_type": "양매도", "legs": [{"date": "2025-02-04", "month": "4월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 83.0, "margin": 0, "pnl": 155204.63999999998, "result": "win", "estimated": true}, {"num": 74, "commodity": "크루드 오일", "expiry_month": "4월물", "entry_date": "2025-02-10", "strategy_type": "양매도", "legs": [{"date": "2025-02-10", "month": "4월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 418.0, "margin": 0, "pnl": 783269.2799999999, "result": "win", "estimated": true}, {"num": 75, "commodity": "크루드 오일", "expiry_month": "4월물", "entry_date": "2025-02-15", "strategy_type": "양매도", "legs": [{"date": "2025-02-15", "month": "4월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-02-15", "month": "4월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 92.0, "margin": 0, "pnl": 171961.20000000004, "result": "win", "estimated": true}, {"num": 76, "commodity": "대두", "expiry_month": "4월물", "entry_date": "2025-02-21", "strategy_type": "양매도", "legs": [{"date": "2025-02-21", "month": "4월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-02-21", "month": "4월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 0, "margin": 0, "pnl": -56543.400000000016, "result": "loss", "estimated": true}, {"num": 77, "commodity": "크루드 오일", "expiry_month": "4월물", "entry_date": "2025-02-26", "strategy_type": "양매도", "legs": [{"date": "2025-02-26", "month": "4월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-02-26", "month": "4월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 141.0, "margin": 0, "pnl": 263789.27999999997, "result": "win", "estimated": true}, {"num": 78, "commodity": "크루드 오일", "expiry_month": "5월물", "entry_date": "2025-03-04", "strategy_type": "양매도", "legs": [{"date": "2025-03-04", "month": "5월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 460.0, "margin": 0, "pnl": 862083.7200000001, "result": "win", "estimated": true}, {"num": 79, "commodity": "대두", "expiry_month": "5월물", "entry_date": "2025-03-09", "strategy_type": "양매도", "legs": [{"date": "2025-03-09", "month": "5월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-03-09", "month": "5월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 158.0, "margin": 0, "pnl": 296256.77999999997, "result": "win", "estimated": true}, {"num": 80, "commodity": "크루드 오일", "expiry_month": "5월물", "entry_date": "2025-03-15", "strategy_type": "양매도", "legs": [{"date": "2025-03-15", "month": "5월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-03-15", "month": "5월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 212.0, "margin": 0, "pnl": 397029.24, "result": "win", "estimated": true}, {"num": 81, "commodity": "크루드 오일", "expiry_month": "5월물", "entry_date": "2025-03-21", "strategy_type": "양매도", "legs": [{"date": "2025-03-21", "month": "5월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-03-21", "month": "5월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 199.0, "margin": 0, "pnl": 372373.92, "result": "win", "estimated": true}, {"num": 82, "commodity": "대두", "expiry_month": "5월물", "entry_date": "2025-03-26", "strategy_type": "양매도", "legs": [{"date": "2025-03-26", "month": "5월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 16.0, "margin": 0, "pnl": 29383.919999999966, "result": "win", "estimated": true}, {"num": 83, "commodity": "크루드 오일", "expiry_month": "6월물", "entry_date": "2025-04-01", "strategy_type": "양매도", "legs": [{"date": "2025-04-01", "month": "6월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-04-01", "month": "6월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 152.0, "margin": 0, "pnl": 285207.8399999999, "result": "win", "estimated": true}, {"num": 84, "commodity": "크루드 오일", "expiry_month": "6월물", "entry_date": "2025-04-06", "strategy_type": "양매도", "legs": [{"date": "2025-04-06", "month": "6월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-04-06", "month": "6월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 196.0, "margin": 0, "pnl": 367711.92, "result": "win", "estimated": true}, {"num": 85, "commodity": "대두", "expiry_month": "6월물", "entry_date": "2025-04-12", "strategy_type": "양매도", "legs": [{"date": "2025-04-12", "month": "6월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-04-12", "month": "6월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 81.0, "margin": 0, "pnl": 151874.63999999998, "result": "win", "estimated": true}, {"num": 86, "commodity": "크루드 오일", "expiry_month": "6월물", "entry_date": "2025-04-17", "strategy_type": "양매도", "legs": [{"date": "2025-04-17", "month": "6월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 0, "margin": 0, "pnl": -511448.04000000004, "result": "loss", "estimated": true}, {"num": 87, "commodity": "크루드 오일", "expiry_month": "6월물", "entry_date": "2025-04-23", "strategy_type": "양매도", "legs": [{"date": "2025-04-23", "month": "6월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-04-23", "month": "6월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-04-23", "month": "6월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-04-23", "month": "6월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 50.0, "margin": 0, "pnl": 93279.96, "result": "win", "estimated": true}, {"num": 88, "commodity": "대두", "expiry_month": "6월물", "entry_date": "2025-04-29", "strategy_type": "양매도", "legs": [{"date": "2025-04-29", "month": "6월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 373.0, "margin": 0, "pnl": 699366.6000000001, "result": "win", "estimated": true}, {"num": 89, "commodity": "크루드 오일", "expiry_month": "7월물", "entry_date": "2025-05-04", "strategy_type": "양매도", "legs": [{"date": "2025-05-04", "month": "7월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-05-04", "month": "7월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 69.0, "margin": 0, "pnl": 129756.77999999998, "result": "win", "estimated": true}, {"num": 90, "commodity": "크루드 오일", "expiry_month": "7월물", "entry_date": "2025-05-10", "strategy_type": "양매도", "legs": [{"date": "2025-05-10", "month": "7월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-05-10", "month": "7월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-05-10", "month": "7월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-05-10", "month": "7월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 36.0, "margin": 0, "pnl": 67971.96, "result": "win", "estimated": true}, {"num": 91, "commodity": "대두", "expiry_month": "7월물", "entry_date": "2025-05-15", "strategy_type": "양매도", "legs": [{"date": "2025-05-15", "month": "7월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 0, "margin": 0, "pnl": -591301.44, "result": "loss", "estimated": true}, {"num": 92, "commodity": "크루드 오일", "expiry_month": "7월물", "entry_date": "2025-05-21", "strategy_type": "양매도", "legs": [{"date": "2025-05-21", "month": "7월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 0, "margin": 0, "pnl": -670955.0400000002, "result": "loss", "estimated": true}, {"num": 93, "commodity": "크루드 오일", "expiry_month": "7월물", "entry_date": "2025-05-26", "strategy_type": "양매도", "legs": [{"date": "2025-05-26", "month": "7월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-05-26", "month": "7월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-05-26", "month": "7월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-05-26", "month": "7월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 79.0, "margin": 0, "pnl": 147958.56, "result": "win", "estimated": true}, {"num": 94, "commodity": "대두", "expiry_month": "8월물", "entry_date": "2025-06-01", "strategy_type": "양매도", "legs": [{"date": "2025-06-01", "month": "8월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 6.0, "margin": 0, "pnl": 12147.840000000006, "result": "win", "estimated": true}, {"num": 95, "commodity": "크루드 오일", "expiry_month": "8월물", "entry_date": "2025-06-06", "strategy_type": "양매도", "legs": [{"date": "2025-06-06", "month": "8월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-06-06", "month": "8월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 76.0, "margin": 0, "pnl": 142244.27999999997, "result": "win", "estimated": true}, {"num": 96, "commodity": "크루드 오일", "expiry_month": "8월물", "entry_date": "2025-06-12", "strategy_type": "양매도", "legs": [{"date": "2025-06-12", "month": "8월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-06-12", "month": "8월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-06-12", "month": "8월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-06-12", "month": "8월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 0, "margin": 0, "pnl": -53146.80000000001, "result": "loss", "estimated": true}, {"num": 97, "commodity": "대두", "expiry_month": "8월물", "entry_date": "2025-06-18", "strategy_type": "양매도", "legs": [{"date": "2025-06-18", "month": "8월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-06-18", "month": "8월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-06-18", "month": "8월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-06-18", "month": "8월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 58.0, "margin": 0, "pnl": 107998.55999999998, "result": "win", "estimated": true}, {"num": 98, "commodity": "크루드 오일", "expiry_month": "8월물", "entry_date": "2025-06-23", "strategy_type": "양매도", "legs": [{"date": "2025-06-23", "month": "8월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-06-23", "month": "8월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-06-23", "month": "8월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-06-23", "month": "8월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 0, "margin": 0, "pnl": -90496.08, "result": "loss", "estimated": true}, {"num": 99, "commodity": "크루드 오일", "expiry_month": "8월물", "entry_date": "2025-06-29", "strategy_type": "양매도", "legs": [{"date": "2025-06-29", "month": "8월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 0, "margin": 0, "pnl": -1288576.8, "result": "loss", "estimated": true}, {"num": 100, "commodity": "대두", "expiry_month": "9월물", "entry_date": "2025-07-04", "strategy_type": "양매도", "legs": [{"date": "2025-07-04", "month": "9월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-07-04", "month": "9월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 0, "margin": 0, "pnl": -282330.72, "result": "loss", "estimated": true}, {"num": 101, "commodity": "크루드 오일", "expiry_month": "9월물", "entry_date": "2025-07-10", "strategy_type": "양매도", "legs": [{"date": "2025-07-10", "month": "9월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-07-10", "month": "9월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 0, "margin": 0, "pnl": -351541.43999999994, "result": "loss", "estimated": true}, {"num": 102, "commodity": "크루드 오일", "expiry_month": "9월물", "entry_date": "2025-07-15", "strategy_type": "양매도", "legs": [{"date": "2025-07-15", "month": "9월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 0, "margin": 0, "pnl": -661118.22, "result": "loss", "estimated": true}, {"num": 103, "commodity": "대두", "expiry_month": "9월물", "entry_date": "2025-07-21", "strategy_type": "양매도", "legs": [{"date": "2025-07-21", "month": "9월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-07-21", "month": "9월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 6.0, "margin": 0, "pnl": 10709.28, "result": "win", "estimated": true}, {"num": 104, "commodity": "크루드 오일", "expiry_month": "9월물", "entry_date": "2025-07-27", "strategy_type": "양매도", "legs": [{"date": "2025-07-27", "month": "9월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-07-27", "month": "9월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 69.0, "margin": 0, "pnl": 129217.32, "result": "win", "estimated": true}, {"num": 105, "commodity": "크루드 오일", "expiry_month": "10월물", "entry_date": "2025-08-01", "strategy_type": "양매도", "legs": [{"date": "2025-08-01", "month": "10월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 0, "margin": 0, "pnl": -740565.36, "result": "loss", "estimated": true}, {"num": 106, "commodity": "대두", "expiry_month": "10월물", "entry_date": "2025-08-07", "strategy_type": "양매도", "legs": [{"date": "2025-08-07", "month": "10월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 269.0, "margin": 0, "pnl": 503549.28, "result": "win", "estimated": true}, {"num": 107, "commodity": "크루드 오일", "expiry_month": "10월물", "entry_date": "2025-08-12", "strategy_type": "양매도", "legs": [{"date": "2025-08-12", "month": "10월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 276.0, "margin": 0, "pnl": 516869.28, "result": "win", "estimated": true}, {"num": 108, "commodity": "크루드 오일", "expiry_month": "10월물", "entry_date": "2025-08-18", "strategy_type": "양매도", "legs": [{"date": "2025-08-18", "month": "10월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 340.0, "margin": 0, "pnl": 636749.2799999999, "result": "win", "estimated": true}, {"num": 109, "commodity": "대두", "expiry_month": "10월물", "entry_date": "2025-08-23", "strategy_type": "양매도", "legs": [{"date": "2025-08-23", "month": "10월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-08-23", "month": "10월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-08-23", "month": "10월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-08-23", "month": "10월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 38.0, "margin": 0, "pnl": 71275.31999999999, "result": "win", "estimated": true}, {"num": 110, "commodity": "크루드 오일", "expiry_month": "10월물", "entry_date": "2025-08-29", "strategy_type": "양매도", "legs": [{"date": "2025-08-29", "month": "10월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-08-29", "month": "10월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 137.0, "margin": 0, "pnl": 257129.28, "result": "win", "estimated": true}, {"num": 111, "commodity": "크루드 오일", "expiry_month": "11월물", "entry_date": "2025-09-03", "strategy_type": "양매도", "legs": [{"date": "2025-09-03", "month": "11월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 17.0, "margin": 0, "pnl": 32127.840000000044, "result": "win", "estimated": true}, {"num": 112, "commodity": "대두", "expiry_month": "11월물", "entry_date": "2025-09-09", "strategy_type": "양매도", "legs": [{"date": "2025-09-09", "month": "11월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-09-09", "month": "11월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 205.0, "margin": 0, "pnl": 385001.27999999997, "result": "win", "estimated": true}, {"num": 113, "commodity": "크루드 오일", "expiry_month": "11월물", "entry_date": "2025-09-15", "strategy_type": "양매도", "legs": [{"date": "2025-09-15", "month": "11월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 0, "margin": 0, "pnl": 0.0, "result": "zero", "estimated": true}, {"num": 114, "commodity": "크루드 오일", "expiry_month": "11월물", "entry_date": "2025-09-20", "strategy_type": "양매도", "legs": [{"date": "2025-09-20", "month": "11월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-09-20", "month": "11월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-09-20", "month": "11월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-09-20", "month": "11월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 67.0, "margin": 0, "pnl": 125234.64, "result": "win", "estimated": true}, {"num": 115, "commodity": "대두", "expiry_month": "11월물", "entry_date": "2025-09-26", "strategy_type": "양매도", "legs": [{"date": "2025-09-26", "month": "11월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 42.0, "margin": 0, "pnl": 79267.31999999999, "result": "win", "estimated": true}, {"num": 116, "commodity": "크루드 오일", "expiry_month": "12월물", "entry_date": "2025-10-01", "strategy_type": "양매도", "legs": [{"date": "2025-10-01", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-10-01", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 152.0, "margin": 0, "pnl": 285074.64, "result": "win", "estimated": true}, {"num": 117, "commodity": "크루드 오일", "expiry_month": "12월물", "entry_date": "2025-10-07", "strategy_type": "양매도", "legs": [{"date": "2025-10-07", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-10-07", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 239.0, "margin": 0, "pnl": 448897.32, "result": "win", "estimated": true}, {"num": 118, "commodity": "대두", "expiry_month": "12월물", "entry_date": "2025-10-12", "strategy_type": "양매도", "legs": [{"date": "2025-10-12", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-10-12", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-10-12", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-10-12", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 0.0, "margin": 0, "pnl": 719.2800000000273, "result": "win", "estimated": true}, {"num": 119, "commodity": "크루드 오일", "expiry_month": "12월물", "entry_date": "2025-10-18", "strategy_type": "양매도", "legs": [{"date": "2025-10-18", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-10-18", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-10-18", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-10-18", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 60.0, "margin": 0, "pnl": 111914.64, "result": "win", "estimated": true}, {"num": 120, "commodity": "크루드 오일", "expiry_month": "12월물", "entry_date": "2025-10-24", "strategy_type": "양매도", "legs": [{"date": "2025-10-24", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-10-24", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 0, "margin": 0, "pnl": -216423.36, "result": "loss", "estimated": true}, {"num": 121, "commodity": "대두", "expiry_month": "12월물", "entry_date": "2025-10-29", "strategy_type": "양매도", "legs": [{"date": "2025-10-29", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-10-29", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-10-29", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-10-29", "month": "12월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 81.0, "margin": 0, "pnl": 151874.64, "result": "win", "estimated": true}, {"num": 122, "commodity": "크루드 오일", "expiry_month": "1월물", "entry_date": "2025-11-04", "strategy_type": "양매도", "legs": [{"date": "2025-11-04", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 364.0, "margin": 0, "pnl": 682063.9199999999, "result": "win", "estimated": true}, {"num": 123, "commodity": "크루드 오일", "expiry_month": "1월물", "entry_date": "2025-11-09", "strategy_type": "양매도", "legs": [{"date": "2025-11-09", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 426.0, "margin": 0, "pnl": 797921.2799999998, "result": "win", "estimated": true}, {"num": 124, "commodity": "대두", "expiry_month": "1월물", "entry_date": "2025-11-15", "strategy_type": "양매도", "legs": [{"date": "2025-11-15", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 313.0, "margin": 0, "pnl": 587451.96, "result": "win", "estimated": true}, {"num": 125, "commodity": "크루드 오일", "expiry_month": "1월물", "entry_date": "2025-11-20", "strategy_type": "양매도", "legs": [{"date": "2025-11-20", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 95.0, "margin": 0, "pnl": 178514.63999999998, "result": "win", "estimated": true}, {"num": 126, "commodity": "크루드 오일", "expiry_month": "1월물", "entry_date": "2025-11-26", "strategy_type": "양매도", "legs": [{"date": "2025-11-26", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-11-26", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-11-26", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2025-11-26", "month": "1월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 42.0, "margin": 0, "pnl": 79267.31999999999, "result": "win", "estimated": true}, {"num": 127, "commodity": "천연가스", "expiry_month": "01월물", "entry_date": "2024-10-10", "strategy_type": "양매도", "legs": [{"date": "2024-10-21", "month": "01월물", "type": "C 매도", "strike": "7", "premium_usd": 130.0}, {"date": "2024-10-10", "month": "01월물", "type": "C 매도", "strike": "7", "premium_usd": 210.0}, {"date": "2024-11-15", "month": "01월물", "type": "P 매도", "strike": "2.1", "premium_usd": 110.0}], "total_premium": 0, "margin": 0, "pnl": 175184.64, "result": "win"}, {"num": 128, "commodity": "크루드 오일", "expiry_month": "01월물", "entry_date": "2024-10-21", "strategy_type": "양매도", "legs": [{"date": "2024-10-21", "month": "01월물", "type": "C 매도", "strike": "116", "premium_usd": 150.0}, {"date": "2024-11-06", "month": "01월물", "type": "C 매도", "strike": "110", "premium_usd": 150.0}, {"date": "2024-10-31", "month": "01월물", "type": "C 매도", "strike": "107", "premium_usd": 110.0}, {"date": "2024-11-12", "month": "01월물", "type": "P 매도", "strike": "53.5", "premium_usd": 100.0}, {"date": "2024-10-31", "month": "01월물", "type": "P 매도", "strike": "49.5", "premium_usd": 100.0}, {"date": "2024-10-21", "month": "01월물", "type": "P 매도", "strike": "47", "premium_usd": 130.0}], "total_premium": 0, "margin": 0, "pnl": 961783.9199999999, "result": "win"}, {"num": 129, "commodity": "골드", "expiry_month": "01월물", "entry_date": "2024-11-05", "strategy_type": "네이키드 콜 매도", "legs": [{"date": "2024-11-05", "month": "01월물", "type": "C 매도", "strike": "3250", "premium_usd": 170.0}], "total_premium": 0, "margin": 0, "pnl": 222457.31999999998, "result": "win"}, {"num": 130, "commodity": "밀", "expiry_month": "01월물", "entry_date": "2024-11-06", "strategy_type": "네이키드 콜 매도", "legs": [{"date": "2024-11-06", "month": "01월물", "type": "C 매도", "strike": "730", "premium_usd": 62.5}], "total_premium": 0, "margin": 0, "pnl": 79267.31999999999, "result": "win"}, {"num": 131, "commodity": "대두", "expiry_month": "1월물", "entry_date": "2024-11-12", "strategy_type": "양매도", "legs": [{"date": "2024-11-12", "month": "1월물", "type": "C 매도", "strike": "1150", "premium_usd": 56.5}, {"date": "2024-11-12", "month": "1월물", "type": "P 매도", "strike": "870", "premium_usd": 50.0}], "total_premium": 0, "margin": 0, "pnl": 71275.31999999999, "result": "win"}, {"num": 132, "commodity": "크루드 오일", "expiry_month": "02월물", "entry_date": "2024-11-15", "strategy_type": "양매도", "legs": [{"date": "2024-11-15", "month": "02월물", "type": "C 매도", "strike": "110", "premium_usd": 130.0}, {"date": "2024-11-15", "month": "02월물", "type": "P 매도", "strike": "48", "premium_usd": 130.0}], "total_premium": 0, "margin": 0, "pnl": 338354.64, "result": "win"}, {"num": 133, "commodity": "크루드 오일", "expiry_month": "03월물", "entry_date": "2024-12-13", "strategy_type": "양매도", "legs": [{"date": "2024-12-13", "month": "03월물", "type": "C 매도", "strike": "105.5", "premium_usd": 160.0}, {"date": "2024-12-17", "month": "03월물", "type": "P 매도", "strike": "50", "premium_usd": 120.0}, {"date": "2025-01-06", "month": "03월물", "type": "C 매도", "strike": "96", "premium_usd": 110.0}], "total_premium": 0, "margin": 0, "pnl": 519480.0, "result": "win"}, {"num": 134, "commodity": "천연가스", "expiry_month": "02월물", "entry_date": "2024-12-13", "strategy_type": "양매도", "legs": [{"date": "2024-12-13", "month": "02월물", "type": "P 매도", "strike": "2.25", "premium_usd": 110.0}, {"date": "2024-12-27", "month": "02월물", "type": "C 매도", "strike": "7.5", "premium_usd": 140.0}, {"date": "2025-01-02", "month": "02월물", "type": "C 매도", "strike": "7", "premium_usd": 110.0}, {"date": "2025-01-06", "month": "02월물", "type": "C 매도", "strike": "6", "premium_usd": 260.0}], "total_premium": 0, "margin": 0, "pnl": 263789.27999999985, "result": "win"}, {"num": 135, "commodity": "골드", "expiry_month": "03월물", "entry_date": "2024-12-17", "strategy_type": "네이키드 콜 매도", "legs": [{"date": "2024-12-17", "month": "03월물", "type": "C 매도", "strike": "3250", "premium_usd": 140.0}, {"date": "2024-12-20", "month": "03월물", "type": "C 매도", "strike": "3300", "premium_usd": 100.0}], "total_premium": 0, "margin": 0, "pnl": 332999.99999999994, "result": "win"}, {"num": 136, "commodity": "밀", "expiry_month": "03월물", "entry_date": "2024-12-18", "strategy_type": "네이키드 콜 매도", "legs": [{"date": "2024-12-18", "month": "03월물", "type": "C 매도", "strike": "720", "premium_usd": 125.0}], "total_premium": 0, "margin": 0, "pnl": 166500.0, "result": "win"}, {"num": 137, "commodity": "크루드 오일", "expiry_month": "04월물J", "entry_date": "2024-12-20", "strategy_type": "양매도", "legs": [{"date": "2024-12-20", "month": "04월물J", "type": "P 매도", "strike": "4P 41.5", "premium_usd": 120.0}, {"date": "2024-12-20", "month": "04월물J", "type": "P 매도", "strike": "4P 60.5", "premium_usd": 90.0}, {"date": "2025-02-05", "month": "04월물J", "type": "C 매도", "strike": "4C 82", "premium_usd": 90.0}, {"date": "2025-02-05", "month": "04월물J", "type": "C 매도", "strike": "4C 89", "premium_usd": 100.0}], "total_premium": 0, "margin": 0, "pnl": 516869.28, "result": "win"}, {"num": 138, "commodity": "천연가스", "expiry_month": "03월물", "entry_date": "2025-01-06", "strategy_type": "네이키드 콜 매도", "legs": [{"date": "2025-01-06", "month": "03월물", "type": "C 매도", "strike": "6", "premium_usd": 120.0}, {"date": "2025-02-06", "month": "03월물", "type": "C 매도", "strike": "4.8", "premium_usd": 100.0}], "total_premium": 0, "margin": 0, "pnl": 159840.0, "result": "win"}, {"num": 139, "commodity": "호주달러", "expiry_month": "3월물", "entry_date": "2025-02-05", "strategy_type": "네이키드 콜 매도", "legs": [{"date": "2025-02-05", "month": "3월물", "type": "C 매도", "strike": "0.65500000000000003", "premium_usd": 50.0}], "total_premium": 0, "margin": 0, "pnl": 66600.0, "result": "win"}, {"num": 140, "commodity": "크루드 오일", "expiry_month": "4월물", "entry_date": "2026-02-12", "strategy_type": "양매도", "legs": [{"date": "2026-02-12", "month": "4월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 58.0, "margin": 0, "pnl": 108558.0, "result": "win", "estimated": true}, {"num": 141, "commodity": "천연가스", "expiry_month": "4월물", "entry_date": "2026-02-17", "strategy_type": "양매도", "legs": [{"date": "2026-02-17", "month": "4월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2026-02-17", "month": "4월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2026-02-17", "month": "4월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}, {"date": "2026-02-17", "month": "4월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 33.0, "margin": 0, "pnl": 62437.5, "result": "win", "estimated": true}, {"num": 142, "commodity": "호주달러", "expiry_month": "4월물", "entry_date": "2026-02-23", "strategy_type": "양매도", "legs": [{"date": "2026-02-23", "month": "4월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 276.0, "margin": 0, "pnl": 516869.28, "result": "win", "estimated": true}, {"num": 143, "commodity": "크루드 오일", "expiry_month": "5월물", "entry_date": "2026-03-01", "strategy_type": "양매도", "legs": [{"date": "2026-03-01", "month": "5월물", "type": "C 매도", "strike": "추정", "premium_usd": 0}], "total_premium": 53.0, "margin": 0, "pnl": 99900.0, "result": "win", "estimated": true}];
+
+// ── 한국어 조사 선택 ──
+function josa(word,has,no){
+  const code=word.charCodeAt(word.length-1)-0xAC00;
+  if(code<0||code>11171)return no;
+  return code%28===0?no:has;
+}
+function iGa(word){return josa(word,'이','가');}
+
+// ── 안전거리 바 (단방향: 콜매도/풋매도 단일 행사가) ──
+function buildSafetyBar(entry, current, strike, type){
+  const maxVal    = strike * 1.12;
+  const range     = maxVal;
+  const toPct     = v => Math.max(3, Math.min(93, (v / range) * 100));
+
+  const strikePct  = toPct(strike);
+  const currentPct = current != null ? toPct(current) : null;
+  const entryPct   = entry   != null ? toPct(entry)   : null;
+  const curLabelPos = currentPct != null
+    ? (currentPct < 55 ? `left:${currentPct + 2}%` : `right:${100 - currentPct + 2}%`)
+    : '';
+
+  return `
+    <div style="position:relative;height:28px;background:rgba(30,36,56,.6);border-radius:8px;overflow:hidden;margin-bottom:4px;border:1px solid rgba(99,120,180,.15);">
+      <!-- 현재가 핀 (퍼플) -->
+      ${currentPct != null ? `
+        <div style="position:absolute;top:0;bottom:0;left:${currentPct}%;width:2.5px;background:linear-gradient(180deg,#c4b5fd,#7c3aed);transform:translateX(-50%);border-radius:2px;box-shadow:0 0 8px rgba(167,139,250,.7);"></div>
+        <div style="position:absolute;top:50%;left:${currentPct}%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:#c4b5fd;box-shadow:0 0 10px rgba(196,181,253,.9);"></div>
+        <div style="position:absolute;top:50%;${curLabelPos};transform:translateY(-50%);font-size:10px;color:var(--t1);font-family:var(--mono);font-weight:600;white-space:nowrap;background:rgba(14,17,23,.88);padding:1px 6px;border-radius:3px;">$${current != null ? current.toLocaleString() : ''}</div>
+      ` : ''}
+      <!-- 행사가 핀 (파랑) -->
+      <div style="position:absolute;top:0;bottom:0;left:${strikePct}%;width:2.5px;background:linear-gradient(180deg,#93c5fd,#2563eb);transform:translateX(-50%);border-radius:2px;box-shadow:0 0 6px rgba(96,165,250,.6);"></div>
+      <div style="position:absolute;top:50%;left:${strikePct}%;transform:translate(-50%,-50%);width:9px;height:9px;border-radius:50%;background:#60a5fa;box-shadow:0 0 7px rgba(96,165,250,.7);"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;font-size:10px;font-family:var(--mono);margin-bottom:12px;margin-top:4px;">
+      <div>
+        ${entryPct != null
+          ? `<div style="color:var(--t3);font-size:9px;">진입가</div><div style="color:rgba(255,255,255,.55);font-weight:600;">$${entry != null ? entry.toLocaleString() : ''}</div>`
+          : '<div style="color:rgba(255,150,150,.8);font-size:10px;font-weight:600;">← 수익구간</div>'}
+      </div>
+      <div style="text-align:center;">
+        ${currentPct != null ? `<div style="color:var(--t3);font-size:9px;">현재가</div><div style="color:#c4b5fd;font-weight:700;">$${current != null ? current.toLocaleString() : ''}</div>` : ''}
+      </div>
+      <div style="text-align:right;">
+        <div style="color:var(--t3);font-size:9px;">행사가 (손실)</div>
+        <div style="color:#60a5fa;font-weight:700;">$${strike != null ? strike.toLocaleString() : ''}</div>
+      </div>
+    </div>`;
+}
+
+// ── 안전거리 바 (스트랭글: 풋/콜 양쪽 행사가) ──
+function buildStrangleBar(entry, current, putStrike, callStrike){
+  const minVal  = putStrike  * 0.7;
+  const maxVal  = callStrike * 1.15;
+  const range   = maxVal - minVal;
+  const toPct   = v => Math.max(3, Math.min(93, ((v - minVal) / range) * 100));
+
+  const putPct     = toPct(putStrike);
+  const callPct    = toPct(callStrike);
+  const currentPct = current != null ? toPct(current) : null;
+  const profitW    = callPct - putPct;
+  const curLabelPos = currentPct != null
+    ? (currentPct < 55 ? `left:${currentPct + 2}%` : `right:${100 - currentPct + 2}%`)
+    : '';
+
+  return `
+    <div style="position:relative;height:28px;background:rgba(10,10,25,.7);border-radius:8px;overflow:hidden;margin-bottom:4px;">
+      <!-- 왼쪽 손실 구간 -->
+      <div style="position:absolute;top:0;left:0;width:${putPct}%;height:100%;background:linear-gradient(90deg,rgba(235,240,255,1),rgba(110,145,220,.85));"></div>
+      <!-- 수익 구간 (풋 ~ 콜 사이) -->
+      <div style="position:absolute;top:0;left:${putPct}%;width:${profitW}%;height:100%;background:linear-gradient(90deg,rgba(255,240,240,1),rgba(255,150,150,.85),rgba(255,240,240,1));"></div>
+      <!-- 오른쪽 손실 구간 -->
+      <div style="position:absolute;top:0;left:${callPct}%;right:0;height:100%;background:linear-gradient(90deg,rgba(235,240,255,1),rgba(110,145,220,.85));"></div>
+      <!-- 풋 행사가 핀 (파랑) -->
+      <div style="position:absolute;top:0;bottom:0;left:${putPct}%;width:3px;background:linear-gradient(180deg,#93c5fd,#2563eb);transform:translateX(-50%);border-radius:2px;box-shadow:0 0 6px rgba(96,165,250,.6);"></div>
+      <div style="position:absolute;top:50%;left:${putPct}%;transform:translate(-50%,-50%);width:9px;height:9px;border-radius:50%;background:#60a5fa;box-shadow:0 0 7px rgba(96,165,250,.7);"></div>
+      <!-- 현재가 핀 (퍼플) -->
+      ${currentPct != null ? `
+        <div style="position:absolute;top:0;bottom:0;left:${currentPct}%;width:3px;background:linear-gradient(180deg,#c4b5fd,#7c3aed);transform:translateX(-50%);border-radius:2px;box-shadow:0 0 8px rgba(167,139,250,.7);"></div>
+        <div style="position:absolute;top:50%;left:${currentPct}%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:#c4b5fd;box-shadow:0 0 10px rgba(196,181,253,.9);"></div>
+        <div style="position:absolute;top:50%;${curLabelPos};transform:translateY(-50%);font-size:10px;color:var(--t1);font-family:var(--mono);font-weight:600;white-space:nowrap;background:rgba(14,17,23,.82);padding:1px 5px;border-radius:3px;">$${current}</div>
+      ` : ''}
+      <!-- 콜 행사가 핀 (파랑) -->
+      <div style="position:absolute;top:0;bottom:0;left:${callPct}%;width:3px;background:linear-gradient(180deg,#93c5fd,#2563eb);transform:translateX(-50%);border-radius:2px;box-shadow:0 0 6px rgba(96,165,250,.6);"></div>
+      <div style="position:absolute;top:50%;left:${callPct}%;transform:translate(-50%,-50%);width:9px;height:9px;border-radius:50%;background:#60a5fa;box-shadow:0 0 7px rgba(96,165,250,.7);"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;font-size:10px;font-family:var(--mono);margin-bottom:12px;margin-top:4px;">
+      <div><div style="color:var(--t3);font-size:9px;">풋 행사가 (손실)</div><div style="color:#60a5fa;font-weight:700;">$${putStrike}</div></div>
+      <div style="text-align:center;"><div style="color:var(--t3);font-size:9px;">현재가</div><div style="color:#c4b5fd;font-weight:700;">$${current}</div></div>
+      <div style="text-align:right;"><div style="color:var(--t3);font-size:9px;">콜 행사가 (손실)</div><div style="color:#60a5fa;font-weight:700;">$${callStrike}</div></div>
+    </div>`;
+}
+
+
+function renderCards(pos){
+  const g=document.getElementById('posGrid');
+  const ac=pos.filter(p=>p.status==='active');
+  if(!ac.length){
+    g.innerHTML='<div style="padding:60px;text-align:center;color:var(--t2);font-size:14px">현재 공유 중인 포지션이 없습니다.<br><span style="font-size:12px;color:var(--t3);margin-top:8px;display:block">다음 포지션 공유 예정</span></div>';
+    return;
+  }
+  ac.sort((a,b)=>new Date(b.shared_date)-new Date(a.shared_date));
+
+  g.innerHTML=ac.map(p=>{
+    const d=daysLeft(p.expiry_date);
+    const pc=progPct(p.shared_date,p.expiry_date);
+    const cp=p.current_price;
+    const ep=p.entry_price||null;
+    const rate=meta.exchange_rate||1500;
+    const urg=d<=5?'urgent':'';
+    const cc=CC[p.strategy_type]||'col-green';
+    const progGrad=d<=5?'linear-gradient(90deg,#e06070,#e8956a)':d<=20?'linear-gradient(90deg,#e8956a,#e8c96a)':'linear-gradient(90deg,#3ecfaa,#4dd8f0)';
+
+    let headline='', safetyBig='', safetySection='';
+
+    if(p.strategy_type==='strangle'){
+      const cs=p.legs.find(l=>l.type==='call_sell');
+      const ps=p.legs.find(l=>l.type==='put_sell');
+      const upPct=cp?((cs.strike-cp)/cp*100).toFixed(0):'?';
+      const dnPct=cp?((cp-ps.strike)/cp*100).toFixed(0):'?';
+      const minPct=Math.min(parseInt(upPct)||0,parseInt(dnPct)||0);
+      headline=`${p.underlying}${iGa(p.underlying)} <em class="hl-up">${upPct}% 급등</em> 또는 <em class="hl-dn">${dnPct}% 급락</em>해야 손해`;
+      safetyBig='';
+      safetySection='';
+
+    } else {
+      const leg=p.legs.find(l=>l.type==='call_sell')||p.legs[0];
+      const pct=cp?Math.abs(((leg.strike-cp)/cp)*100).toFixed(0):'?';
+      const dir=leg.type==='call_sell'?'급등':'급락';
+      headline=`${p.underlying}${iGa(p.underlying)} 지금보다 <em class="hl-up">${pct}% ${dir}</em>해야 손해`;
+      safetyBig='';
+      safetySection='';
+    }
+
+    // 현재 평가손익
+    let pnlHtml='';
+    if(p.current_pnl!=null&&p.current_pnl!==0){
+      const pnlKrw=Math.round(Math.abs(p.current_pnl)*rate/10000);
+      const cls=p.current_pnl>0?'profit':'loss';
+      const sign=p.current_pnl>0?'+':'';
+      pnlHtml=`<div class="pnl-row ${cls}"><span class="pnl-label">현재 평가손익</span><span class="pnl-val ${cls}">${sign}$${Math.abs(p.current_pnl).toLocaleString()} (${sign}${pnlKrw}만원)</span></div>`;
+    } else {
+      pnlHtml=`<div class="pnl-row neutral"><span class="pnl-label">현재 평가손익</span><span class="pnl-val neutral" style="font-size:12px">업데이트 예정</span></div>`;
+    }
+
+    const rs=p.expected_return_max_pct?`${p.expected_return_pct}~${p.expected_return_max_pct}%`:`${p.expected_return_pct}%`;
+    const profitKrw=Math.round(p.total_premium*rate/10000);
+    const ex=p.expiry_date.slice(5).replace('-','/');
+
+    return `<div class="pos-card ${urg} ${cc}" onclick="openModal('${p.id}')">
+      <div class="card-header">
+        <div class="card-header-left">
+          <span class="card-underlying">${p.underlying}</span>
+          <span class="card-date">(${p.shared_date.slice(5).replace('-','/')})</span>
+        </div>
+        ${d<=5?`<span class="badge b-red">만기 D-${d}</span>`:''}
+      </div>
+      <div class="card-sub-row">
+        ${p.strategy_num?`<span class="card-num" style="color:var(--purple);font-weight:700">#${p.strategy_num}번 전략</span><span class="card-dot">·</span>`:''}
+        <span class="card-num">${plabel(p)}</span>
+        <span class="card-dot">·</span>
+        <span class="card-strategy">${SL[p.strategy_type]||''}</span>
+      </div>
+      <div class="card-headline">${headline}</div>
+      ${safetyBig}
+      ${safetySection}
+      ${pnlHtml}
+      <div class="card-metrics">
+        <div class="card-metric">
+          <div class="cm-val green" style="${rs.length>8?'font-size:12px':''}">${rs}</div>
+          <div class="cm-label">기대수익률</div>
+        </div>
+        <div class="card-metric cm-border">
+          <div class="cm-val green">+${profitKrw}만원</div>
+          <div class="cm-label">기대수익</div>
+        </div>
+        <div class="card-metric">
+          <div class="cm-val cyan">${d}일</div>
+          <div class="cm-label">잔존일</div>
+        </div>
+      </div>
+      <div class="card-progress">
+        <div class="prog-row"><span>${p.expiry_month}</span><span>만기 ${ex}</span></div>
+        <div class="prog-bar"><div class="prog-fill" style="width:${pc}%;background:${progGrad}"></div></div>
+      </div>
+      <div class="card-footer-row">
+        <span class="footer-hint">클릭하면 차트 포함 상세 보기</span>
+        <a href="${p.notion_url}" target="_blank" onclick="event.stopPropagation()" class="footer-link">노션 →</a>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── 포지션 차트 그리기 ──
+function buildPositionChart(p, canvasId){
+  const cd=p.chart_data;
+  if(!cd||!cd.dates||!cd.closes)return;
+  const canvas=document.getElementById(canvasId);
+  if(!canvas)return;
+  if(posCharts[canvasId]){posCharts[canvasId].destroy();}
+
+  // 날짜 포맷 헬퍼
+  const fmtLabel=s=>s.replace(/-/g,'/').replace(/\d{4}\//,'');
+  const addDays=(d,n)=>{const r=new Date(d);r.setDate(r.getDate()+n);return r;};
+  const toStr=d=>`${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`;
+
+  // 과거 데이터 라벨
+  const histLabels=cd.dates.map(d=>fmtLabel(d));
+  const histCloses=[...cd.closes];
+
+  // 마지막 데이터 날짜부터 만기일까지 빈 날짜 생성
+  const lastDateStr=cd.dates[cd.dates.length-1];
+  const expiryDate=new Date(cd.expiry_date);
+  let cursor=new Date(lastDateStr.replace(/\//g,'-'));
+  cursor.setDate(cursor.getDate()+1);
+
+  const futureLabels=[],futureCloses=[];
+  let expiryIdx=-1,safetyCount=0;
+  while(cursor<=expiryDate&&safetyCount<200){
+    const dow=cursor.getDay();
+    if(dow!==0&&dow!==6){
+      futureLabels.push(toStr(cursor));
+      futureCloses.push(null);
+      if(cursor.toISOString().slice(0,10)===cd.expiry_date){
+        expiryIdx=histLabels.length+futureLabels.length-1;
+      }
+    }
+    cursor=addDays(cursor,1);safetyCount++;
+  }
+  if(expiryIdx<0&&futureLabels.length>0) expiryIdx=histLabels.length+futureLabels.length-1;
+
+  const labels=[...histLabels,...futureLabels];
+  const closes=[...histCloses,...futureCloses];
+  const daysLeft=futureLabels.length;
+
+  // y축 범위: 행사가 포함해서 넉넉하게
+  const allPrices=[...histCloses,...cd.strike_lines.map(sl=>sl.price)];
+  const mn=Math.min(...allPrices), mx=Math.max(...allPrices);
+  const pad=(mx-mn)*0.12;
+  const yMin=mn-pad, yMax=mx+pad;
+
+  // ── 커스텀 드로잉 플러그인 (흰 배경 + 정확한 구간 계산) ──
+  const customPlugin={
+    id:'customDraw',
+    beforeDraw(chart){
+      // 흰 배경 채우기
+      const {ctx:c,chartArea:{left,right,top,bottom}}=chart;
+      c.save();
+      c.fillStyle='#ffffff';
+      c.fillRect(left,top,right-left,bottom-top);
+      c.restore();
+    },
+    afterDraw(chart){
+      const {ctx:c,chartArea:{left,right,top,bottom},scales:{x,y}}=chart;
+
+      // profit_zone 기반 정확한 구간 계산
+      const pMin=cd.profit_zone?.min??0;
+      const pMax=cd.profit_zone?.max??yMax;
+
+      const yPx=val=>{
+        const ratio=(val-yMin)/(yMax-yMin);
+        return bottom-ratio*(bottom-top);
+      };
+      const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+      // ── 구간 배경 ──
+      // 손실구간 위 (pMax 이상)
+      if(pMax<yMax){
+        const y1=Math.max(top,yPx(pMax));
+        c.fillStyle='rgba(50,100,220,0.07)';
+        c.fillRect(left,top,right-left,y1-top);
+      }
+      // 수익구간
+      {
+        const y1=clamp(yPx(pMax),top,bottom);
+        const y2=clamp(yPx(Math.max(pMin,yMin)),top,bottom);
+        if(y2>y1){
+          c.fillStyle='rgba(210,30,30,0.05)';
+          c.fillRect(left,y1,right-left,y2-y1);
+        }
+      }
+      // 손실구간 아래 (pMin 이하)
+      if(pMin>yMin){
+        const y1=clamp(yPx(pMin),top,bottom);
+        c.fillStyle='rgba(50,100,220,0.07)';
+        c.fillRect(left,y1,right-left,bottom-y1);
+      }
+
+      // ── 행사가 수평선 ──
+      cd.strike_lines.forEach(sl=>{
+        if(sl.price<yMin*0.98||sl.price>yMax*1.02)return;
+        const yp=clamp(yPx(sl.price),top,bottom);
+
+        c.save();
+        c.setLineDash([8,5]);
+        c.strokeStyle='#cc2222';
+        c.lineWidth=1.5;
+        c.globalAlpha=0.9;
+        c.beginPath();c.moveTo(left,yp);c.lineTo(right,yp);c.stroke();
+        c.setLineDash([]);c.globalAlpha=1;
+
+        // 오른쪽 가격 라벨
+        const priceStr='$'+sl.price.toLocaleString();
+        c.font='bold 10px IBM Plex Mono,monospace';
+        const tw=c.measureText(priceStr).width+12;
+        c.fillStyle='#cc2222';
+        c.fillRect(right-tw-2,yp-9,tw,17);
+        c.fillStyle='#fff';
+        c.textAlign='right';c.textBaseline='middle';
+        c.fillText(priceStr,right-5,yp);
+        c.restore();
+      });
+
+      // ── 구간 텍스트 (profit_zone 기반) ──
+      c.save();
+      c.font='bold 14px IBM Plex Sans KR,Noto Sans KR,sans-serif';
+      c.textAlign='center';c.textBaseline='middle';
+
+      // 수익구간 텍스트
+      {
+        const y1=clamp(yPx(pMax),top,bottom);
+        const y2=clamp(yPx(Math.max(pMin,yMin)),top,bottom);
+        const midY=(y1+y2)/2;
+        if(midY>top&&midY<bottom&&y2-y1>30){
+          c.fillStyle='rgba(200,30,30,0.6)';
+          c.fillText('수익구간',(left+right)*0.38,midY);
+        }
+      }
+      // 손실구간 위
+      if(pMax<yMax){
+        const y1=yPx(pMax);
+        const midY=(top+Math.min(y1,bottom))/2;
+        if(midY>top&&midY<bottom){
+          c.fillStyle='rgba(40,80,200,0.55)';
+          c.fillText('손실구간',(left+right)*0.5,midY);
+        }
+      }
+      // 손실구간 아래
+      if(pMin>yMin){
+        const y1=clamp(yPx(pMin),top,bottom);
+        const midY=(y1+bottom)/2;
+        if(midY>top&&midY<bottom){
+          c.fillStyle='rgba(40,80,200,0.55)';
+          c.fillText('손실구간',(left+right)*0.5,midY);
+        }
+      }
+      c.restore();
+
+      // ── 만기일 수직선 ──
+      if(expiryIdx>=0&&expiryIdx<labels.length){
+        const xp=x.getPixelForValue(expiryIdx);
+        c.save();
+        // 굵은 검정 실선
+        c.strokeStyle='rgba(10,10,10,0.88)';
+        c.lineWidth=2.5;
+        c.setLineDash([]);
+        c.beginPath();c.moveTo(xp,top);c.lineTo(xp,bottom+30);c.stroke();
+
+        // 만기일 배지 — 최하단
+        c.font='bold 11px IBM Plex Sans KR,Noto Sans KR,sans-serif';
+        c.textAlign='center';c.textBaseline='middle';
+        const lbl='만기일';
+        const lw=c.measureText(lbl).width+16;
+        c.fillStyle='rgba(10,10,10,0.92)';
+        c.beginPath();
+        c.roundRect?c.roundRect(xp-lw/2,bottom+10,lw,20,4):c.rect(xp-lw/2,bottom+10,lw,20);
+        c.fill();
+        c.fillStyle='#fff';
+        c.fillText(lbl,xp,bottom+20);
+
+        // 잔존일 화살표 (→ N일) — 중간 하단
+        const lastXp=x.getPixelForValue(histLabels.length-1);
+        const midX=(lastXp+xp)/2;
+        const arrowY=bottom-14;
+
+        // 화살표 선
+        c.strokeStyle='rgba(10,10,10,0.4)';
+        c.lineWidth=1.2;
+        c.setLineDash([4,3]);
+        c.beginPath();c.moveTo(lastXp+6,arrowY);c.lineTo(xp-4,arrowY);c.stroke();
+        c.setLineDash([]);
+
+        // 화살표 머리
+        c.fillStyle='rgba(10,10,10,0.45)';
+        c.beginPath();c.moveTo(xp-4,arrowY);c.lineTo(xp-10,arrowY-4);c.lineTo(xp-10,arrowY+4);c.closePath();c.fill();
+
+        // 잔존일 텍스트
+        c.fillStyle='rgba(10,10,10,0.7)';
+        c.font='bold 12px IBM Plex Sans KR,Noto Sans KR,sans-serif';
+        c.textAlign='center';c.textBaseline='bottom';
+        c.fillText('→ '+daysLeft+'일',midX,arrowY-3);
+        c.restore();
+      }
+
+      // ── 진입일 수직선 ──
+      {
+        const enStr=cd.entry_date.replace(/-/g,'/').replace(/\d{4}\//,'');
+        let enIdx=histLabels.indexOf(enStr);
+        if(enIdx<0){
+          const enD=new Date(cd.entry_date);let minDiff=Infinity;
+          histLabels.forEach((lb,i)=>{
+            const pts=lb.split('/');
+            const yr=enD.getFullYear();
+            const d2=new Date(yr,parseInt(pts[0])-1,parseInt(pts[1]));
+            const diff=Math.abs(d2-enD);
+            if(diff<minDiff){minDiff=diff;enIdx=i;}
+          });
+        }
+        if(enIdx>=0){
+          const xp=x.getPixelForValue(enIdx);
+          c.save();
+          // 진입일: 검정 점선, 뚜렷하게
+          c.strokeStyle='rgba(10,10,10,0.6)';
+          c.lineWidth=1.5;
+          c.setLineDash([5,4]);
+          c.beginPath();c.moveTo(xp,top);c.lineTo(xp,bottom);c.stroke();
+          c.setLineDash([]);
+
+          // 진입 배지
+          c.font='bold 10px IBM Plex Sans KR,sans-serif';
+          c.textAlign='center';c.textBaseline='middle';
+          const lbl2='진입';
+          const lw2=c.measureText(lbl2).width+12;
+          c.fillStyle='rgba(10,10,10,0.75)';
+          c.fillRect(xp-lw2/2,top+24,lw2,17);
+          c.fillStyle='#fff';
+          c.fillText(lbl2,xp,top+32.5);
+          c.restore();
+        }
+      }
+
+      // ── 현재가 점 ──
+      if(p.current_price&&p.current_price>=yMin&&p.current_price<=yMax){
+        const yp=yPx(p.current_price);
+        const xp=x.getPixelForValue(histLabels.length-1);
+        c.save();
+        c.beginPath();c.arc(xp,yp,5,0,Math.PI*2);
+        c.fillStyle='#0088cc';c.fill();
+        c.strokeStyle='#fff';c.lineWidth=1.5;c.stroke();
+        c.fillStyle='#0088cc';
+        c.font='bold 10px IBM Plex Mono,monospace';
+        c.textAlign='left';c.textBaseline='bottom';
+        c.fillText('현재 $'+p.current_price.toLocaleString(),xp+8,yp+2);
+        c.restore();
+      }
+    }
+  };
+
+    posCharts[canvasId]=new Chart(canvas,{
+    type:'line',
+    data:{
+      labels,
+      datasets:[{
+        label:'종가',data:closes,borderColor:'#0077cc',borderWidth:2,
+        pointRadius:0,pointHoverRadius:4,
+        fill:false,tension:.2
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:'rgba(20,20,20,.88)',borderColor:'rgba(0,0,0,.15)',borderWidth:1,
+          titleColor:'#aaa',titleFont:{size:10,family:'IBM Plex Mono'},
+          bodyColor:'#fff',bodyFont:{size:11,family:'IBM Plex Mono'},
+          callbacks:{title:t=>`${t[0].label}`,label:c=>`  종가: $${c.parsed.y.toLocaleString()}`}
+        }
+      },
+      layout:{padding:{right:65,left:4,top:8,bottom:36}},
+      scales:{
+        x:{ticks:{color:'#888',font:{size:9,family:'IBM Plex Mono'},maxTicksLimit:10},grid:{color:'rgba(0,0,0,.06)',drawBorder:false}},
+        y:{ticks:{color:'#888',font:{size:9,family:'IBM Plex Mono'},callback:v=>'$'+v.toLocaleString()},
+          grid:{color:'rgba(0,0,0,.06)',drawBorder:false},min:yMin,max:yMax}
+      }
+    },
+    plugins:[customPlugin]
+  });
+}
+
+// ── 모달 ──
+function openModal(id){
+  const p=allPos.find(x=>x.id===id); if(!p) return;
+  const d=daysLeft(p.expiry_date);
+  const pc=progPct(p.shared_date,p.expiry_date);
+  const col=pColor(d);
+  const cp=p.current_price;
+  const ep=p.entry_price||null;
+  const rate=meta.exchange_rate||1500;
+
+  // 헤더
+  document.getElementById('mBadges').innerHTML='';
+  document.getElementById('mTitle').textContent=`${p.underlying} — ${SL[p.strategy_type]||p.strategy_type}`;
+  document.getElementById('mDate').textContent=`공유일: ${p.shared_date.replace(/-/g,'.')}`;
+
+  // 진행률 그라데이션
+  const progGrad=d<=5?'linear-gradient(90deg,#e06070,#e8956a)':d<=20?'linear-gradient(90deg,#e8956a,#e8c96a)':'linear-gradient(90deg,#3ecfaa,#4dd8f0)';
+
+  // ── 핵심 한 문장 ──
+  let keyMsg='';
+  let safeBar='';
+  if(p.strategy_type==='strangle'){
+    const cs=p.legs.find(l=>l.type==='call_sell');
+    const ps=p.legs.find(l=>l.type==='put_sell');
+    const upPct=cp?((cs.strike-cp)/cp*100).toFixed(0):'?';
+    const dnPct=cp?((cp-ps.strike)/cp*100).toFixed(0):'?';
+    keyMsg=`${p.underlying}가 <span style="color:#FF8080;font-weight:800">${upPct}% 급등</span> 또는 <span style="color:#5080CC;font-weight:800">${dnPct}% 급락</span>하지 않으면 수익이 확정돼요`;
+    safeBar='';
+  } else {
+    const leg=p.legs.find(l=>l.type==='call_sell')||p.legs[0];
+    const pct=cp?Math.abs(((leg.strike-cp)/cp)*100).toFixed(0):'?';
+    const dir=leg.type==='call_sell'?'급등':'급락';
+    keyMsg=`${p.underlying}${iGa(p.underlying)} 지금보다 <span style="color:#FF8080;font-weight:800">${pct}% ${dir}</span>하지 않으면 수익이 확정돼요`;
+    safeBar='';
+  }
+
+  // ── 계약 구조 (평이한 언어) ──
+  const profitKrw=Math.round(p.total_premium*rate/10000);
+  const marginKrw=Math.round(p.margin*rate/10000);
+  const legsHtml=p.legs.map(l=>{
+    const typeMap={call_sell:'콜 매도 (가격 오를 때 위험)',put_sell:'풋 매도 (가격 내릴 때 위험)',call_buy:'콜 매수 (손실 방어)',put_buy:'풋 매수 (손실 방어)'};
+    const sign=l.type.includes('buy')?'-':'+';
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+      <span style="font-size:12px;color:var(--t2)">${typeMap[l.type]||l.type}</span>
+      <span style="font-size:12px;font-family:var(--mono);color:var(--t1);font-weight:600">$${l.strike.toLocaleString()} × ${l.contracts}계약 (${sign}$${Math.abs(l.premium)})</span>
+    </div>`;
+  }).join('');
+
+  // ── 수익 시나리오 ──
+  const scenHtml=p.profit_scenarios.map(s=>{
+    const isW=s.type.startsWith('win');
+    const bg=isW?'rgba(255,200,200,.12)':'rgba(180,205,255,.12)';
+    const border=isW?'rgba(255,150,150,.3)':'rgba(120,150,220,.3)';
+    const color=isW?'#FF8080':'#5080CC';
+    const icon=isW?'●':'○';
+    const result=s.profit!=null
+      ?`<span style="color:${color};font-weight:700">+$${s.profit.toLocaleString()} 수익 확정 (${s.return_pct}%)</span>`
+      :`<span style="color:#5080CC;font-weight:700">손실 발생 — 즉시 대응 필요</span>`;
+    return `<div style="background:${bg};border:1px solid ${border};border-radius:8px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px;">
+      <span style="font-size:13px;color:var(--t2)">${icon} ${s.label}</span>
+      <span style="font-size:14px;font-family:var(--mono);font-weight:700">${result}</span>
+    </div>`;
+  }).join('');
+
+  // ── 현재 평가손익 ──
+  let pnlBlock='';
+  if(p.current_pnl!=null&&p.current_pnl!==0){
+    const isProfit=p.current_pnl>0;
+    const sign=isProfit?'+':'';
+    const pnlKrw=Math.round(Math.abs(p.current_pnl)*rate/10000);
+    const bg=isProfit?'rgba(255,220,220,.12)':'rgba(200,220,255,.12)';
+    const border=isProfit?'rgba(255,170,170,.35)':'rgba(140,170,230,.35)';
+    const color=isProfit?'#FF8080':'#5080CC';
+    pnlBlock=`<div style="background:${bg};border:1px solid ${border};border-radius:10px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-size:12px;color:var(--t2)">현재 평가손익</span>
+      <span style="font-size:18px;font-weight:800;font-family:var(--mono);color:${color}">${sign}$${Math.abs(p.current_pnl).toLocaleString()} <span style="font-size:13px">(${sign}${pnlKrw}만원)</span></span>
+    </div>`;
+  } else {
+    pnlBlock=`<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-size:12px;color:var(--t2)">현재 평가손익</span>
+      <span style="font-size:13px;color:var(--t3);font-family:var(--mono)">업데이트 예정</span>
+    </div>`;
+  }
+
+  // ── 주의사항 ──
+  const riskMap={
+    strangle:'양쪽 경계선 중 어느 쪽이라도 가격이 넘어가면 손실 시작. 특히 콜 방향은 이론적으로 손실 한도 없음. 행사가 근처 접근 시 즉각 청산.',
+    ratio_spread:'3개 다리로 이루어진 복합 전략이에요. 최대 수익 구간과 손실 시작 지점을 항상 체크하고, 최고 행사가 돌파 시 즉각 대응.',
+    naked_call:'가격이 위로 무한정 오를 수 있어서, 행사가 돌파 시 손실 무제한. 행사가 근처 접근 시 즉각 손절.',
+    naked_put:'가격이 아래로 떨어지면 손실이 커져요. 행사가 근처 접근 시 즉각 대응.'
+  };
+  const riskText=riskMap[p.strategy_type]||riskMap.naked_call;
+
+  // ── 차트 범례 ──
+  const strikeLabelShort=p.chart_data?.strike_lines?.map(sl=>'$'+sl.price.toLocaleString()).join(' / ')||'';
+  const legendHtml=p.chart_data?`<div class="chart-legend">
+    <span class="cleg"><span style="display:inline-block;width:18px;height:2px;background:#0077cc;vertical-align:middle"></span> 가격</span>
+    <span class="cleg"><span style="display:inline-block;width:18px;height:0;border-top:2px dashed #cc2222;vertical-align:middle"></span> 행사가 ${strikeLabelShort}</span>
+    <span class="cleg"><span style="display:inline-block;width:18px;height:2px;background:rgba(10,10,10,.75);vertical-align:middle"></span> 만기일</span>
+    <span class="cleg"><span style="display:inline-block;width:18px;height:0;border-top:2px dashed rgba(10,10,10,.55);vertical-align:middle"></span> 진입일</span>
+    <span class="cleg"><span style="display:inline-block;width:12px;height:10px;background:rgba(210,30,30,.12);border:1px solid rgba(210,30,30,.3);vertical-align:middle;border-radius:2px"></span> 수익</span>
+    <span class="cleg"><span style="display:inline-block;width:12px;height:10px;background:rgba(50,100,220,.12);border:1px solid rgba(50,100,220,.3);vertical-align:middle;border-radius:2px"></span> 손실</span>
+  </div>`:'';
+
+  // ── 모달 본문 조립 ──
+  document.getElementById('mBody').innerHTML=`
+
+    <!-- ① 핵심 문장 -->
+    <div style="background:linear-gradient(135deg,rgba(139,151,240,.08),rgba(77,216,240,.05));border:1px solid rgba(139,151,240,.2);border-radius:10px;padding:16px 18px;margin-bottom:16px;font-size:15px;color:var(--t1);line-height:1.75;font-weight:500;">
+      ${keyMsg}
+    </div>
+
+    <!-- ② 안전거리 바 -->
+    ${safeBar}
+
+
+
+    <!-- ⑧ 선물 가격 차트 -->
+    ${p.chart_data?`
+    <div style="margin-bottom:20px;">
+      <div style="font-size:13px;font-weight:700;color:var(--t2);margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--b2);">선물 가격 차트 (${p.expiry_month})</div>
+      <div style="background:#f5f6fa;border:1px solid #d8dce6;border-radius:12px;padding:16px 16px 10px;">
+        <div style="margin-bottom:12px;">${legendHtml}</div>
+        <div style="position:relative;width:100%;height:400px;"><canvas id="posChart_${p.id}" role="img" aria-label="${p.underlying} 선물 가격 차트"></canvas></div>
+      </div>
+    </div>`:``}
+
+    <!-- ③ 현재 평가손익 (위로 이동) -->
+    <div style="margin-bottom:16px;">${pnlBlock}</div>
+
+        <!-- ⑤ 수익 시나리오 -->
+    <div style="margin-bottom:16px;">
+      <div style="font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--b2);font-size:12px;">수익 시나리오</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">${scenHtml}</div>
+    </div>
+
+    <!-- ⑥ 이 포지션의 구조 -->
+    <div style="margin-bottom:16px;">
+      <div style="font-size:11px;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--b2);font-size:12px;">이 포지션의 구조</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div style="background:rgba(255,200,200,.12);border:1px solid rgba(255,150,150,.3);border-radius:10px;padding:16px 18px;">
+          <div style="font-size:12px;color:var(--t2);margin-bottom:6px;font-weight:500;">최대 수익</div>
+          <div style="font-size:22px;font-weight:800;font-family:var(--mono);color:#FF8080;line-height:1.1;">+$${p.total_premium.toLocaleString()}</div>
+          <div style="font-size:13px;color:rgba(255,160,155,0.75);font-family:var(--mono);margin-top:4px;font-weight:600;">약 ${profitKrw}만원</div>
+        </div>
+        <div style="background:rgba(255,255,255,.04);border:1px solid var(--b1);border-radius:10px;padding:16px 18px;">
+          <div style="font-size:12px;color:var(--t2);margin-bottom:6px;font-weight:500;">투자금 (증거금)</div>
+          <div style="font-size:22px;font-weight:800;font-family:var(--mono);color:var(--t1);line-height:1.1;">$${p.margin.toLocaleString()}</div>
+          <div style="font-size:13px;color:var(--t2);font-family:var(--mono);margin-top:4px;">약 ${marginKrw}만원</div>
+        </div>
+      </div>
+    </div>
+
+        <!-- ⑨ 꼭 알아야 할 것 (앞으로 이동) -->
+    <div style="background:rgba(224,96,112,.06);border-left:3px solid var(--red);border-radius:0 8px 8px 0;padding:14px 16px;margin-bottom:16px;font-size:13px;color:var(--t1);line-height:1.75;opacity:.9;">
+      <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:8px;letter-spacing:.02em;">꼭 알아야 할 것</div>
+      ${riskText}
+    </div>
+
+    <!-- ⑩ 노션 링크 -->
+    <div style="display:flex;gap:10px;align-items:center;">
+      <a href="${p.notion_url}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--cyan);text-decoration:none;padding:10px 16px;border:1px solid rgba(77,216,240,.35);border-radius:8px;font-family:var(--mono);font-weight:600;transition:background .15s;" onmouseover="this.style.background='rgba(77,216,240,.08)'" onmouseout="this.style.background='transparent'">노션에서 시황 분석 전체 보기 →</a>
+    </div>
+    <div style="font-size:12px;color:var(--t2);margin-top:12px;line-height:1.6;padding-top:12px;border-top:1px solid var(--b1);">본 내용은 교육 목적의 전략 공유입니다. 투자 권유가 아니며, 파생상품 거래의 모든 책임은 투자자 본인에게 있습니다.</div>
+  `;
+
+  document.getElementById('overlay').classList.add('open');
+
+  // 도넛 차트
+  setTimeout(()=>{
+    const dc=document.getElementById(`mDonut_${p.id}`);
+    if(dc){
+      // 도넛 차트 그라데이션
+      const dCtx=dc.getContext('2d');
+      const gRed=dCtx.createLinearGradient(0,0,72,72);
+      gRed.addColorStop(0,'rgba(255,160,155,0.75)');
+      gRed.addColorStop(1,'rgba(255,160,155,0.75)');
+      const gBlue=dCtx.createLinearGradient(0,0,72,72);
+      gBlue.addColorStop(0,'rgba(220,232,255,0.85)');
+      gBlue.addColorStop(1,'rgba(100,140,220,0.75)');
+      new Chart(dc,{type:'doughnut',data:{
+        labels:['수익','손실'],
+        datasets:[{data:[118,25],backgroundColor:[gRed,gBlue],borderColor:['rgba(255,170,170,.35)','rgba(140,170,230,.35)'],borderWidth:1,hoverOffset:5}]
+      },options:{responsive:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed}번 (${(c.parsed/143*100).toFixed(1)}%)`}}},cutout:'62%'}});
+    }
+    // 가격 차트
+    if(p.chart_data) buildPositionChart(p,`posChart_${p.id}`);
+  },50);
+}
+
+function closeModal(){
+  document.getElementById('overlay').classList.remove('open');
+}
+function closeOut(e){if(e.target===document.getElementById('overlay'))closeModal();}
+
+// ── 매매 내역 ──
+function renderHistMetrics(){
+  const tw=DATA.filter(d=>d.pnl>0).reduce((s,d)=>s+d.pnl,0);
+  const tl=Math.abs(DATA.filter(d=>d.pnl<0).reduce((s,d)=>s+d.pnl,0));
+  const activeCount = (allPos||[]).filter(p=>p.status==='active').length;
+  const totalCount = 143 + activeCount;
+  document.getElementById('histMetrics').innerHTML=`
+    <div class="metric"><div class="metric-label">총 전략 수</div><div class="metric-val mv-cyan">${totalCount}</div><div class="metric-sub">1번~${totalCount}번 (${activeCount}개 진행 중)</div></div>
+    <div class="metric"><div class="metric-label">승률</div><div class="metric-val" style="color:#FF8080">${(WINS/143*100).toFixed(1)}%</div><div class="metric-sub">${WINS}승 ${LOSSES}패${ZEROS?` ${ZEROS}무`:''}</div></div>
+    <div class="metric"><div class="metric-label">총 수익 합계</div><div class="metric-val" style="font-size:18px;color:#FF8080">+${Math.round(tw/10000)}만원</div><div class="metric-sub">수익 전략 합산</div></div>
+    <div class="metric"><div class="metric-label">총 손실 합계</div><div class="metric-val" style="font-size:18px;color:#5080CC">-${Math.round(tl/10000)}만원</div><div class="metric-sub">손실 전략 합산</div></div>
+  `;
+}
+function renderTimeline(){
+  const wrap=document.getElementById('timelineDots');
+  wrap.innerHTML=DATA.map(d=>{
+    const cls=d.pnl>0?'win':d.pnl<0?'loss':'zero';
+    return `<div class="tdot ${cls}" onmouseenter="showDotTip(${d.n},${d.pnl})" onmouseleave="hideDotTip()"></div>`;
+  }).join('');
+}
+function showDotTip(n,pnl){
+  const el=document.getElementById('dotTooltip');
+  const sign=pnl>0?'+':'';
+  const color=pnl>0?'#FF8080':pnl<0?'#5080CC':'var(--t3)';
+  el.innerHTML=`<span style="color:var(--t2)">${n}번 전략:</span> <strong style="color:${color}">${sign}${comma(pnl)}원</strong>`;
+}
+function hideDotTip(){document.getElementById('dotTooltip').innerHTML='';}
+function getStory(s){
+  const n=s.legs.length, r=s.result, com=s.commodity||'?';
+  const strikes=s.legs.filter(l=>l.type&&l.type.includes('매도')).map(l=>l.strike).join(', ');
+  if(n===0) return {text:'상세 데이터를 준비 중이에요.',color:'var(--t3)'};
+  if(r==='loss'){
+    if(n>=7) return {text:`<span class="hl">${n}번의 계약 조정</span>으로 방어했으나 결국 손절 마감. 가격이 예상 범위를 크게 벗어난 전략.`,color:'#5080CC'};
+    if(n>=4) return {text:`진입 후 <span class="hl">${n}번의 추가 주문</span>으로 방어했으나 결국 손절 마감.`,color:'#5080CC'};
+    return {text:`진입 후 가격이 예상 범위를 벗어나 손절 마감.`,color:'#5080CC'};
+  }
+  if(n===1) return {text:`단 <span class="hl">1번의 주문</span>만으로 만기까지 수익 구간 유지. 가장 깔끔한 패턴.`,color:'#FF8080'};
+  if(n===2) return {text:`<span class="hl">2개 주문</span>으로 양방향 커버하며 만기 수익 확정.`,color:'#FF8080'};
+  if(n>=7) return {text:`<span class="hl">${n}개 주문</span>을 복합 운용하며 끝까지 수익 구간 유지. 고난도 전략.`,color:'#FF8080'};
+  return {text:`진입 후 <span class="hl">${n}개 주문</span>으로 운용하며 만기 수익 확정.`,color:'#FF8080'};
+}
+
+function buildDetailRow(s, pnl, pct){
+  const hist = STRATEGY_HIST.find(h=>h.num===s.n);
+  const hasData = hist && (hist.commodity || hist.legs.length > 0);
+  if(!hist || !hasData) {
+    // 데이터 없는 전략: P&L만 있는 경우 간결하게
+    const sign = s.pnl>0?'+':'';
+    const resultText = s.pnl>0
+      ? `만기까지 수익 구간 유지 <span class="hl">${sign}${comma(Math.round(s.pnl))}원</span> 수익 마감.`
+      : s.pnl<0
+      ? `가격이 예상 범위를 벗어나 <span class="hl" style="color:#5080CC">${comma(Math.round(s.pnl))}원</span> 손실 마감.`
+      : '손익 없이 마감한 전략이에요.';
+    const bg = s.pnl>0?'rgba(255,200,200,.12)':'rgba(180,205,255,.12)';
+    const border = s.pnl>0?'rgba(255,150,150,.3)':'rgba(120,150,220,.3)';
+    return `<tr class="detail-row" id="detail_${s.n}"><td colspan="5" style="padding:0;">
+      <div class="detail-wrap" id="wrap_${s.n}">
+        <div style="background:${bg};border:1px solid ${border};border-radius:8px;padding:12px 16px;font-size:12px;color:var(--t2);line-height:1.7;">${resultText}</div>
+        <div style="font-size:10px;color:var(--t3);font-family:var(--mono);margin-top:8px;">* 상세 운용 기록은 추후 업데이트 예정.</div>
+      </div>
+    </td></tr>`;
+  }
+  
+  const story = getStory(hist);
+  const legs = hist.legs||[];
+  const legsHtml = legs.length ? legs.map(l=>{
+    const isSell = l.type&&l.type.includes('매도');
+    const isCall = l.type&&(l.type.includes('C')||l.type.includes('콜'));
+    const cls = !isSell?'buy':isCall?'sell-c':'sell-p';
+    const label = l.type||'';
+    return `<span class="leg-tag ${cls}">${l.strike} (${label})</span>`;
+  }).join('') : '<span style="font-size:11px;color:var(--t3)">주문 데이터 없음</span>';
+
+  // 수취 프리미엄 — 실제 or 추정
+  const marginMap = {'크루드 오일':4000,'천연가스':2000,'골드':5000,'대두':2500,'밀':1800,'10년채권':2000,'호주달러':1500,'유로':2000,'옥수수':1500};
+  let premium, margin;
+
+  // 수취 프리미엄
+  if(hist.total_premium && hist.total_premium > 0){
+    premium = `$${Math.round(hist.total_premium).toLocaleString()}`;
+  } else {
+    // P&L 기반 역산: 수익이면 프리미엄 ≈ PnL/환율×0.9, 손실이면 증거금 대비 추정
+    const estP = hist.pnl > 0
+      ? Math.max(50, Math.round(hist.pnl / 1500 * 0.85))
+      : Math.max(30, Math.round(Math.abs(hist.pnl) / 1500 * 0.4));
+    premium = `~$${estP.toLocaleString()} <span style="font-size:10px;color:var(--t3);font-family:var(--mono)">(추정)</span>`;
+  }
+
+  // 증거금
+  if(hist.margin && hist.margin > 0){
+    margin = `$${Math.round(hist.margin).toLocaleString()}`;
+  } else {
+    const estM = marginMap[hist.commodity] || 3000;
+    margin = `~$${estM.toLocaleString()} <span style="font-size:10px;color:var(--t3);font-family:var(--mono)">(추정)</span>`;
+  }
+  const entryDate = hist.entry_date ? hist.entry_date.slice(0,7) : '—';
+  const comText = hist.commodity||'—';
+  const stType = hist.strategy_type||'—';
+  const month = hist.expiry_month||'—';
+
+  return `<tr class="detail-row" id="detail_${s.n}">
+    <td colspan="5" style="padding:0;">
+      <div class="detail-wrap" id="wrap_${s.n}">
+        <div class="detail-grid">
+          <div class="dg-box"><div class="dg-label">종목</div><div class="dg-val">${comText}</div></div>
+          <div class="dg-box"><div class="dg-label">전략 유형</div><div class="dg-val" style="font-size:12px">${stType}</div></div>
+          <div class="dg-box"><div class="dg-label">진입 월물</div><div class="dg-val">${month}</div></div>
+          <div class="dg-box"><div class="dg-label">진입 시점</div><div class="dg-val">${entryDate}</div></div>
+          <div class="dg-box"><div class="dg-label">받은 프리미엄</div><div class="dg-val" style="color:#FF8080">${premium}</div></div>
+          <div class="dg-box"><div class="dg-label">투자금 (증거금)</div><div class="dg-val">${margin}</div></div>
+          <div class="dg-box" style="grid-column:span 3;background:${hist.result==='win'?'rgba(255,200,200,.12)':'rgba(180,205,255,.12)'};border:1px solid ${hist.result==='win'?'rgba(255,150,150,.3)':'rgba(120,150,220,.3)'};border-radius:8px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;">
+            <div><div class="dg-label">청산 손익</div><div class="dg-val" style="font-size:18px;color:${hist.result==='win'?'#FF8080':'#5080CC'}">${hist.pnl>0?'+':''}${Math.round(hist.pnl).toLocaleString()}원</div></div>
+            <div style="text-align:right"><div class="dg-label">결과</div><div class="dg-val" style="font-size:15px;color:${hist.result==='win'?'#FF8080':'#5080CC'}">${hist.result==='win'?'수익 청산':hist.result==='loss'?'손절 청산':'만기 무손익'}</div></div>
+          </div>
+        </div>
+        <div class="story-box">${story.text}</div>
+        ${legs.length ? `<div style="font-size:12px;color:var(--t2);font-family:var(--mono);margin-bottom:8px;font-weight:600;">매도/매수 주문 내역 (${legs.length}개 주문)</div><div class="legs-wrap">${legsHtml}</div>` : ''}
+      </div>
+    </td>
+  </tr>`;
+}
+
+function toggleDetail(n){
+  const wrap = document.getElementById('wrap_'+n);
+  const btn  = document.getElementById('tbtn_'+n);
+  if(!wrap) return;
+  const isOpen = wrap.classList.contains('open');
+  wrap.classList.toggle('open', !isOpen);
+  if(btn) {
+    btn.textContent = isOpen ? '자세히 보기 ▾' : '닫기 ▴';
+    btn.classList.toggle('open', !isOpen);
+  }
+}
+
+function renderHistory(filter){
+  // 현재 진행 중 포지션을 144~번으로 추가
+  const activePositions = (allPos||[]).filter(p=>p.status==='active')
+    .sort((a,b)=>new Date(a.shared_date)-new Date(b.shared_date))
+    .map((p,i)=>({
+      n: 143+(i+1),
+      pnl: p.current_pnl||0,
+      pct: 0,
+      cum: 0,
+      isActive: true,
+      pos: p
+    }));
+
+  let d=[...DATA].reverse();
+  if(filter==='win')d=d.filter(x=>x.pnl>0);
+  if(filter==='loss')d=d.filter(x=>x.pnl<0);
+  const s=document.getElementById('searchInput').value.trim();
+  if(s)d=d.filter(x=>String(x.n).includes(s));
+  document.getElementById('rowCount').textContent=d.length+'건';
+  
+  // 진행중 포지션은 필터/검색 시 제외 (전체 필터일 때만 상단 표시)
+  const activeRows = (filter==='all' && !document.getElementById('searchInput').value.trim())
+    ? activePositions.map(x=>{
+        const rate=meta.exchange_rate||1500;
+        const d2=daysLeft(x.pos.expiry_date);
+        const pnl=x.pos.current_pnl;
+        const hasPnl=pnl!=null&&pnl!==0;
+        const pnlText=hasPnl?(pnl>0?`<span style="color:#FF8080">+$${Math.abs(pnl).toLocaleString()} (약 ${Math.round(Math.abs(pnl)*rate/10000)}만원)</span>`:`<span style="color:#5080CC">-$${Math.abs(pnl).toLocaleString()}</span>`):`<span style="color:var(--t3);font-size:11px">업데이트 예정</span>`;
+        return `<tr style="background:rgba(139,151,240,.05);border-left:3px solid rgba(139,151,240,.4);">
+          <td class="mono" style="color:var(--purple);font-weight:700">${x.n}번 <span style="font-size:10px;color:var(--t3)">(진행 중)</span></td>
+          <td class="mono">${pnlText}<div style="font-size:10px;color:var(--t3);margin-top:3px">${x.pos.underlying} · 잔존 ${d2}일</div></td>
+          <td class="mono" style="color:var(--t3)">—</td>
+          <td class="mono" style="color:var(--t3)">—</td>
+          <td><span class="badge b-purple">진행 중</span></td>
+        </tr>`;
+      }).join('')
+    : '';
+
+  document.getElementById('historyBody').innerHTML=activeRows+d.map(x=>{
+    const cls=x.pnl>0?'win':x.pnl<0?'loss':'';
+    const sign=x.pnl>0?'+':'';
+    const pill=x.pnl>0?'<span class="badge b-green">수익</span>':x.pnl<0?'<span class="badge b-red">손실</span>':'<span class="badge b-gray">무손익</span>';
+    const bw=Math.min(100,Math.abs(x.pnl)/2000000*100);
+    const bc=x.pnl>0?'rgba(255,150,150,0.7)':'rgba(100,140,220,0.7)';
+    const hist=STRATEGY_HIST.find(h=>h.num===x.n);
+    const hasDetail=hist&&(hist.commodity||hist.legs.length>0);
+    const mainRow = `<tr class="main-row" onclick="toggleDetail(${x.n})">
+      <td class="mono">${x.n}번</td>
+      <td class="mono ${cls}">${sign}${comma(x.pnl)}원<div class="inline-bar" style="width:${bw}%;background:${bc};height:3px;border-radius:2px;margin-top:4px;"></div></td>
+      <td class="mono">${comma(x.cum)}원</td>
+      <td class="mono" style="color:${x.pct>=0?'#FF8080':'#5080CC'}">${(x.pct*100).toFixed(2)}%</td>
+      <td style="display:flex;align-items:center;gap:8px;">${pill}<button class="toggle-btn" id="tbtn_${x.n}" onclick="event.stopPropagation();toggleDetail(${x.n})">자세히 보기 ▾</button></td>
+    </tr>`;
+    return mainRow + buildDetailRow(x, x.pnl, x.pct);
+  }).join('');
+}
+
+function filterHistory(f,btn){curFilter=f;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderHistory(f);}
+function searchHistory(){renderHistory(curFilter);}
+
+// ── 수익 통계 차트 ──
+function buildStatCharts(){
+  chartsBuilt=true;
+  const tc='rgba(185,197,218,.88)', gc='rgba(99,120,180,.1)';
+
+  // Chart.js 전역 기본 색상 오버라이드
+  Chart.defaults.color          = 'rgba(185,197,218,.88)';
+  Chart.defaults.borderColor    = 'rgba(99,120,180,.12)';
+  Chart.defaults.font.family    = 'IBM Plex Mono,monospace';
+  Chart.defaults.font.size      = 11;
+
+  // ── 지표 계산 ──
+  const wins   = DATA.filter(d=>d.pnl>0);
+  const losses = DATA.filter(d=>d.pnl<0);
+  const totalWin  = wins.reduce((s,d)=>s+d.pnl,0);
+  const totalLoss = Math.abs(losses.reduce((s,d)=>s+d.pnl,0));
+  const winAvg    = totalWin  / wins.length;
+  const lossAvg   = totalLoss / losses.length;
+  const pf        = totalLoss>0 ? (totalWin/totalLoss) : 99;
+
+  let maxWS=0,maxLS=0,cW=0,cL=0;
+  DATA.forEach(d=>{
+    if(d.pnl>0){cW++;cL=0;if(cW>maxWS)maxWS=cW;}
+    else if(d.pnl<0){cL++;cW=0;if(cL>maxLS)maxLS=cL;}
+    else{cW=0;cL=0;}
+  });
+  let peak=0,mdd=0;
+  DATA.forEach(d=>{
+    if(d.cum>peak)peak=d.cum;
+    const dd=peak>0?(peak-d.cum)/peak*100:0;
+    if(dd>mdd)mdd=dd;
+  });
+  const best  = Math.max(...DATA.map(d=>d.pnl));
+  const worst = Math.min(...DATA.map(d=>d.pnl));
+
+  // Hero
+  document.getElementById('heroWinRate').textContent=(WINS/143*100).toFixed(1)+'%';
+  document.getElementById('heroPF').textContent=pf.toFixed(2)+'x';
+
+  // ── KPI 5개 ──
+  const kpis=[
+    {label:'총 전략 수', val:'143',   unit:'번',
+     sub:'1번~143번', color:'var(--cyan)', bg:'rgba(77,216,240,.06)', bd:'rgba(77,216,240,.18)'},
+    {label:'승률',      val:(WINS/143*100).toFixed(1), unit:'%',
+     sub:WINS+'승 '+LOSSES+'패', color:'#FF8080', bg:'rgba(255,128,128,.07)', bd:'rgba(255,128,128,.2)'},
+    {label:'평균 수익', val:'+'+Math.round(winAvg/10000), unit:'만원',
+     sub:'수익 전략 1회 평균', color:'#FF8080', bg:'rgba(255,128,128,.05)', bd:'rgba(255,128,128,.15)'},
+    {label:'평균 손실', val:'-'+Math.round(lossAvg/10000), unit:'만원',
+     sub:'손실 전략 1회 평균', color:'#5080CC', bg:'rgba(80,128,204,.07)', bd:'rgba(80,128,204,.2)'},
+    {label:'손익비',    val:pf.toFixed(2), unit:'x',
+     sub:'수익합 ÷ 손실합', color:'var(--yellow)', bg:'rgba(232,201,106,.07)', bd:'rgba(232,201,106,.2)'},
+  ];
+  document.getElementById('stat-kpi-row').innerHTML=kpis.map(k=>`
+    <div style="background:rgba(17,22,38,.97);border:1px solid ${k.bd};border-radius:12px;padding:16px 18px;position:relative;overflow:hidden">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:${k.bd};opacity:.8"></div>
+      <div style="font-size:15px;color:var(--t2);font-weight:600;margin-bottom:12px">${k.label}</div>
+      <div style="display:flex;align-items:baseline;gap:3px;margin-bottom:8px;line-height:1">
+        <span style="font-size:28px;font-weight:800;font-family:var(--mono);color:${k.color}">${k.val}</span>
+        <span style="font-size:14px;font-weight:700;font-family:var(--mono);color:${k.color};opacity:.75">${k.unit}</span>
+      </div>
+      <div style="font-size:13px;color:rgba(185,197,220,.9)">${k.sub}</div>
+    </div>`).join('');
+
+  // ── 누적 수익 곡선 ──
+  const cumVals = DATA.map(d=>+(d.pct*100).toFixed(2));
+  const peakVal = Math.max(...cumVals);
+
+  // 피크 점선 플러그인
+  const peakLinePlugin = {
+    id:'peakLine',
+    afterDatasetsDraw(chart){
+      const {ctx, chartArea:{left,right,top,bottom}, scales:{y}} = chart;
+      const peakY = y.getPixelForValue(peakVal);
+      if(peakY < top || peakY > bottom) return;
+      ctx.save();
+      ctx.strokeStyle='rgba(232,201,106,.65)';
+      ctx.lineWidth=1.5;
+      ctx.setLineDash([7,4]);
+      ctx.beginPath();
+      ctx.moveTo(left, peakY);
+      ctx.lineTo(right, peakY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.font='bold 12px IBM Plex Mono,monospace';
+      ctx.fillStyle='rgba(232,201,106,.85)';
+      ctx.textAlign='right';
+      ctx.textBaseline='bottom';
+      ctx.fillText('최고 '+peakVal.toFixed(2)+'%', right-4, peakY-3);
+      ctx.restore();
+    }
+  };
+
+  new Chart(document.getElementById('cumChart'),{
+    type:'line',
+    data:{
+      labels:DATA.map(d=>d.n+'번'),
+      datasets:[{
+        label:'누적 수익률',
+        data:cumVals,
+        borderColor:'#4dd8f0',
+        borderWidth:2,
+        pointRadius:0,
+        pointHoverRadius:5,
+        pointHoverBackgroundColor:'#4dd8f0',
+        pointHoverBorderColor:'rgba(255,255,255,.8)',
+        pointHoverBorderWidth:2,
+        fill:true,
+        backgroundColor:ctx=>{
+          const g=ctx.chart.ctx.createLinearGradient(0,0,0,300);
+          g.addColorStop(0,  'rgba(139,151,240,.22)');
+          g.addColorStop(0.5,'rgba(77,216,240,.10)');
+          g.addColorStop(1,  'rgba(77,216,240,.01)');
+          return g;
+        },
+        tension:.32
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:'rgba(13,16,28,.96)',
+          borderColor:'rgba(139,151,240,.3)', borderWidth:1,
+          titleColor:'rgba(200,215,235,.9)', titleFont:{size:12,family:'IBM Plex Mono'},
+          bodyColor:'rgba(185,200,225,.88)', bodyFont:{size:12,family:'IBM Plex Mono'},
+          padding:12, cornerRadius:8,
+          callbacks:{
+            title:t=>`${t[0].label} 전략`,
+            label:c=>{
+              const d=DATA[c.dataIndex];
+              const sign=d.pnl>=0?'+':'';
+              return [
+                ` 누적  ${c.parsed.y>=0?'+':''}${c.parsed.y.toFixed(2)}%`,
+                ` ${d.pnl>=0?'수익':'손실'}  ${sign}${comma(Math.round(d.pnl))}원`
+              ];
+            }
+          }
+        }
+      },
+      scales:{
+        x:{
+          ticks:{color:tc, font:{size:12,family:'IBM Plex Mono'}, maxTicksLimit:16},
+          grid:{color:'rgba(99,120,180,.06)'}, border:{display:false}
+        },
+        y:{
+          position:'right',
+          ticks:{color:tc, font:{size:12,family:'IBM Plex Mono'}, callback:v=>(v>=0?'+':'')+v.toFixed(1)+'%'},
+          grid:{color:'rgba(99,120,180,.08)'}, border:{display:false}
+        }
+      }
+    },
+    plugins:[peakLinePlugin]
+  });
+
+  // ── 승패 도넛 ──
+  new Chart(document.getElementById('donutChart'),{
+    type:'doughnut',
+    data:{
+      labels:[`수익 (${WINS}번)`,`손실 (${LOSSES}번)`,...(ZEROS?[`무손익 (${ZEROS}번)`]:[])],
+      datasets:[{
+        data:[WINS,LOSSES,...(ZEROS?[ZEROS]:[])],
+        backgroundColor:[
+          'rgba(255,128,128,.55)',
+          'rgba(80,128,204,.55)',
+          ...(ZEROS?['rgba(122,132,153,.3)']:[])
+        ],
+        borderColor:['#FF8080','#5080CC',...(ZEROS?['rgba(122,132,153,.5)']:[])],
+        borderWidth:1.5,
+        hoverOffset:8
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:'rgba(13,16,28,.96)',
+          borderColor:'rgba(99,120,180,.25)',borderWidth:1,
+          bodyColor:'rgba(190,205,225,.85)',bodyFont:{size:12,family:'IBM Plex Mono'},
+          padding:10,cornerRadius:8,
+          callbacks:{label:c=>` ${c.label}  ${(c.parsed/143*100).toFixed(1)}%`}
+        }
+      },
+      cutout:'70%'
+    },
+    plugins:[{
+      id:'centerStat',
+      afterDraw(chart){
+        const {ctx,chartArea:{top,bottom,left,right}}=chart;
+        const cx=(left+right)/2, cy=(top+bottom)/2;
+        ctx.save();
+        ctx.textAlign='center';
+        ctx.textBaseline='middle';
+        // 승률
+        ctx.font='bold 26px IBM Plex Mono,monospace';
+        ctx.fillStyle='#FF8080';
+        ctx.fillText((WINS/143*100).toFixed(1)+'%',cx,cy-10);
+        // 라벨
+        ctx.font='14px IBM Plex Sans KR,Noto Sans KR,sans-serif';
+        ctx.fillStyle='rgba(160,172,196,.85)';
+        ctx.fillText('승률',cx,cy+14);
+        ctx.restore();
+      }
+    }]
+  });
+  document.getElementById('donut-legend').innerHTML=[
+    {label:`수익 ${WINS}번`,color:'#FF8080'},
+    {label:`손실 ${LOSSES}번`,color:'#5080CC'},
+    ...(ZEROS?[{label:`무손익 ${ZEROS}번`,color:'rgba(122,132,153,.7)'}]:[])
+  ].map(l=>`
+    <span style="font-size:13px;color:${l.color};font-family:var(--mono);display:flex;align-items:center;gap:6px">
+      <span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:${l.color}"></span>${l.label}
+    </span>`).join('');
+
+  // ── 그라데이션 바 플러그인 (각 바 개별 그라데이션) ──
+  // ── 그라데이션 바 + 레이블 플러그인 ──
+  const gradBarPlugin = {
+    id:'gradBar',
+    afterDraw(chart){
+      const {ctx} = chart;
+      // 그라데이션 덧그리기
+      chart.data.datasets.forEach((ds, di)=>{
+        const meta = chart.getDatasetMeta(di);
+        const isWin = di===0;
+        meta.data.forEach((bar, i)=>{
+          const v = ds.data[i];
+          if(!v) return;
+          const {x, y, base, width} = bar;
+          const barTop = Math.min(y, base);
+          const barBot = Math.max(y, base);
+          const barH   = barBot - barTop;
+          if(barH < 1) return;
+          const bx = x - width/2;
+          const r  = 5;
+          const g  = ctx.createLinearGradient(0, barTop, 0, barBot);
+          if(isWin){
+            g.addColorStop(0,   'rgba(255,215,210,.95)');
+            g.addColorStop(0.4, 'rgba(255,168,160,.85)');
+            g.addColorStop(1,   'rgba(215,80,92,.70)');
+          } else {
+            g.addColorStop(0,   'rgba(195,220,255,.95)');
+            g.addColorStop(0.4, 'rgba(148,182,248,.85)');
+            g.addColorStop(1,   'rgba(68,108,198,.70)');
+          }
+          ctx.save();
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.moveTo(bx+r, barTop);
+          ctx.lineTo(bx+width-r, barTop);
+          ctx.arcTo(bx+width, barTop, bx+width, barTop+r, r);
+          ctx.lineTo(bx+width, barBot);
+          ctx.lineTo(bx, barBot);
+          ctx.lineTo(bx, barTop+r);
+          ctx.arcTo(bx, barTop, bx+r, barTop, r);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+          // 레이블
+          ctx.save();
+          ctx.textAlign='center';
+          ctx.textBaseline='bottom';
+          ctx.font='bold 13px IBM Plex Mono,monospace';
+          ctx.fillStyle = isWin ? 'rgba(255,195,188,.95)' : 'rgba(165,195,245,.95)';
+          ctx.fillText(v+'번', x, barTop-5);
+          ctx.restore();
+        });
+      });
+    }
+  };
+
+  // ── 구간별 승패 ──
+  const segs=['1~30','31~60','61~90','91~120','121~143'];
+  const sw=segs.map((_,i)=>{const s=i*30,e=i===4?143:s+30;return DATA.slice(s,e).filter(d=>d.pnl>0).length;});
+  const sl=segs.map((_,i)=>{const s=i*30,e=i===4?143:s+30;return DATA.slice(s,e).filter(d=>d.pnl<0).length;});
+  new Chart(document.getElementById('barChart'),{
+    type:'bar',
+    data:{
+      labels:segs,
+      datasets:[
+        {label:'수익', data:sw, backgroundColor:'rgba(17,22,38,1)', borderWidth:0, borderRadius:5},
+        {label:'손실', data:sl, backgroundColor:'rgba(17,22,38,1)', borderWidth:0, borderRadius:5}
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      animation:{duration:600},
+      layout:{padding:{top:28}},
+      plugins:{
+        legend:{display:true, position:'bottom', labels:{
+          color:tc, font:{size:13,family:'IBM Plex Mono'}, padding:14,
+          generateLabels:()=>[
+            {text:'수익', fillStyle:'rgba(255,175,168,.85)', strokeStyle:'transparent', lineWidth:0, datasetIndex:0, fontColor:tc},
+            {text:'손실', fillStyle:'rgba(130,168,235,.85)', strokeStyle:'transparent', lineWidth:0, datasetIndex:1, fontColor:tc}
+          ]
+        }},
+        tooltip:{mode:'index', intersect:false,
+          backgroundColor:'rgba(13,16,28,.96)', borderColor:'rgba(99,120,180,.25)', borderWidth:1,
+          titleColor:'rgba(200,215,235,.9)', bodyColor:'rgba(185,200,225,.88)',
+          bodyFont:{size:12,family:'IBM Plex Mono'}, padding:10, cornerRadius:8}
+      },
+      scales:{
+        x:{ticks:{color:tc, font:{size:13,family:'IBM Plex Mono'}}, grid:{display:false}, border:{display:false}},
+        y:{ticks:{color:tc, font:{size:12,family:'IBM Plex Mono'}, stepSize:5},
+           grid:{color:'rgba(99,120,180,.08)'}, border:{display:false}, min:0, max:30}
+      }
+    },
+    plugins:[gradBarPlugin]
+  });
+
+  // ── 손익 크기 분포 ──
+  const distLabels=['~50만','50~100만','100~200만','200~500만','500만+'];
+  const wB=[0,0,0,0,0], lB=[0,0,0,0,0];
+  DATA.forEach(d=>{
+    const v=Math.abs(d.pnl)/10000;
+    const idx=v<50?0:v<100?1:v<200?2:v<500?3:4;
+    if(d.pnl>0)wB[idx]++; else if(d.pnl<0)lB[idx]++;
+  });
+  new Chart(document.getElementById('distChart'),{
+    type:'bar',
+    data:{
+      labels:distLabels,
+      datasets:[
+        {label:'수익', data:wB, backgroundColor:'rgba(17,22,38,1)', borderWidth:0, borderRadius:5},
+        {label:'손실', data:lB, backgroundColor:'rgba(17,22,38,1)', borderWidth:0, borderRadius:5}
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      animation:{duration:600},
+      layout:{padding:{top:28}},
+      plugins:{
+        legend:{display:true, position:'right', labels:{
+          color:tc, font:{size:13,family:'IBM Plex Mono'}, padding:14,
+          generateLabels:()=>[
+            {text:'수익', fillStyle:'rgba(255,175,168,.85)', strokeStyle:'transparent', lineWidth:0, datasetIndex:0, fontColor:tc},
+            {text:'손실', fillStyle:'rgba(130,168,235,.85)', strokeStyle:'transparent', lineWidth:0, datasetIndex:1, fontColor:tc}
+          ]
+        }},
+        tooltip:{mode:'index', intersect:false,
+          backgroundColor:'rgba(13,16,28,.96)', borderColor:'rgba(99,120,180,.25)', borderWidth:1,
+          titleColor:'rgba(200,215,235,.9)', bodyColor:'rgba(185,200,225,.88)',
+          bodyFont:{size:12,family:'IBM Plex Mono'}, padding:10, cornerRadius:8}
+      },
+      scales:{
+        x:{ticks:{color:tc, font:{size:12,family:'IBM Plex Mono'}}, grid:{display:false}, border:{display:false}},
+        y:{ticks:{color:tc, font:{size:12,family:'IBM Plex Mono'}, stepSize:5},
+           grid:{color:'rgba(99,120,180,.08)'}, border:{display:false}, min:0}
+      }
+    },
+    plugins:[gradBarPlugin]
+  });
+
+  // ── 인사이트 카드 ──
+  const insights=[
+    {
+      label:'최대 연속 수익',
+      val:String(maxWS), unit:'연속',
+      sub:'수익이 가장 길게 이어진 구간',
+      foot:'최대 연속 손실  '+maxLS+'번',
+      color:'#FF8080',bd:'rgba(255,128,128,.2)',
+      line:'linear-gradient(90deg,rgba(255,128,128,.5),rgba(255,128,128,.08))'
+    },
+    {
+      label:'최대 낙폭 (MDD)',
+      val:'-'+mdd.toFixed(1), unit:'%',
+      sub:'누적 손익 기준 최대 하락폭',
+      foot:'최고 1회  +'+Math.round(best/10000)+'만원  /  최대 1회 손실  '+Math.round(worst/10000)+'만원',
+      color:'#5080CC',bd:'rgba(80,128,204,.2)',
+      line:'linear-gradient(90deg,rgba(80,128,204,.5),rgba(80,128,204,.08))'
+    },
+    {
+      label:'손익비 (Profit Factor)',
+      val:pf.toFixed(2), unit:'배',
+      sub:'수익 합계 ÷ 손실 합계',
+      foot:'평균 수익  +'+Math.round(winAvg/10000)+'만원  /  평균 손실  -'+Math.round(lossAvg/10000)+'만원',
+      color:'var(--yellow)',bd:'rgba(232,201,106,.2)',
+      line:'linear-gradient(90deg,rgba(232,201,106,.5),rgba(232,201,106,.08))'
+    }
+  ];
+  document.getElementById('stat-insight-row').innerHTML=insights.map(k=>`
+    <div style="background:rgba(17,22,38,.97);border:1px solid ${k.bd};border-radius:14px;
+      overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.2)">
+      <div style="height:3px;background:${k.line}"></div>
+      <div style="padding:22px 24px">
+        <div style="font-size:12px;color:var(--t3);font-weight:600;letter-spacing:.06em;margin-bottom:14px">${k.label}</div>
+        <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:12px;line-height:1">
+          <span style="font-size:36px;font-weight:800;font-family:var(--mono);color:${k.color}">${k.val}</span>
+          <span style="font-size:18px;font-weight:700;font-family:var(--mono);color:${k.color};opacity:.75">${k.unit}</span>
+        </div>
+        <div style="font-size:14px;color:var(--t2);line-height:1.6;margin-bottom:14px">${k.sub}</div>
+        <div style="font-size:12px;color:var(--t3);font-family:var(--mono);
+          padding-top:12px;border-top:1px solid rgba(99,120,180,.12);line-height:1.7">${k.foot}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ── 가이드 패널 토글 ──
+function toggleGuide(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.classList.toggle('open');
+}
+
+// ── 워크플로우 스크롤 ──
+function wfScroll(targetId, stripId, activeId){
+  const target=document.getElementById(targetId);
+  if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+  // 스트립 활성화
+  const strip=document.getElementById(stripId);
+  if(strip) strip.querySelectorAll('.wf-step').forEach(s=>s.classList.remove('active'));
+  const activeBtn=document.getElementById(activeId);
+  if(activeBtn) activeBtn.classList.add('active');
+}
+
+// ── 온보딩 투어 ──
+const TOUR_STEPS=[
+  {
+    target:'wf-intro-area',
+    title:'직트 무료 포지션 공유에 오신 걸 환영해요!',
+    body:'이 대시보드는 <strong>시장 방향 예측 없이</strong> 수익이 나는 옵션 매도 전략을 공유하는 공간.',
+    pos:'bottom'
+  },
+  {
+    target:'posGrid',
+    title:'① 포지션 현황',
+    body:'현재 공유 중인 포지션. <strong>카드 클릭</strong>으로 선물 가격 차트와 수익 구조 확인.',
+    pos:'bottom'
+  },
+  {
+    target:'wf1-2',
+    title:'② 수익 구조 이해',
+    body:'각 카드의 <strong>? 버튼</strong>을 클릭하면 용어 설명 확인 가능.',
+    pos:'bottom'
+  },
+  {
+    target:'wfStrip2',
+    title:'③ 매매 내역 탭',
+    body:'143번의 실제 매매 기록. <strong>143번 중 118번</strong> 수익.',
+    pos:'bottom'
+  }
+];
+
+let tourIdx=0;
+let tourEl=null;
+
+function startTour(){
+  if(document.getElementById('tourOverlay'))return;
+  tourIdx=0;
+  const overlay=document.createElement('div');
+  overlay.id='tourOverlay';
+  overlay.className='tour-overlay';
+  overlay.innerHTML='<div class="tour-bg" id="tourBg"></div>';
+  document.body.appendChild(overlay);
+  tourEl=overlay;
+  showTourStep(0);
+}
+
+function showTourStep(idx){
+  if(!tourEl)return;
+  const step=TOUR_STEPS[idx];
+  const target=step.target?document.getElementById(step.target):null;
+
+  // 기존 박스 제거
+  const oldBox=document.getElementById('tourBox');
+  if(oldBox)oldBox.remove();
+  // 기존 하이라이트 제거
+  document.querySelectorAll('.tour-hl').forEach(el=>el.classList.remove('tour-hl'));
+
+  // 하이라이트
+  if(target){
+    target.classList.add('tour-hl');
+    target.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+
+  const box=document.createElement('div');
+  box.id='tourBox';
+  box.className='tour-box';
+
+  const isLast=idx===TOUR_STEPS.length-1;
+  box.innerHTML=`
+    <div class="tour-step-ind">${idx+1} / ${TOUR_STEPS.length}</div>
+    <div class="tour-title">${step.title}</div>
+    <div class="tour-body">${step.body}</div>
+    <div class="tour-btns">
+      <button class="tour-skip" onclick="endTour()">건너뛰기</button>
+      <button class="tour-next" onclick="${isLast?'endTour()':'showTourStep('+(idx+1)+')'}">
+        ${isLast?'시작하기 →':'다음 →'}
+      </button>
+    </div>
+  `;
+
+  // 위치 계산
+  if(target){
+    const rect=target.getBoundingClientRect();
+    const scrollY=window.scrollY;
+    const boxTop=step.pos==='bottom'
+      ?scrollY+rect.bottom+16
+      :Math.max(scrollY+rect.top-220,scrollY+80);
+    const boxLeft=Math.max(16,Math.min(window.innerWidth-380,rect.left));
+    box.style.top=boxTop+'px';
+    box.style.left=boxLeft+'px';
+  } else {
+    box.style.top='50%';box.style.left='50%';
+    box.style.transform='translate(-50%,-50%)';
+  }
+  tourEl.appendChild(box);
+}
+
+function endTour(){
+  document.querySelectorAll('.tour-hl').forEach(el=>el.classList.remove('tour-hl'));
+  const overlay=document.getElementById('tourOverlay');
+  if(overlay)overlay.remove();
+  tourEl=null;
+  localStorage.setItem('jikt_tour_done','1');
+}
+
+// ── 데이터 로드 ──
+async function loadData(){
+  try{
+    const res=await fetch('./positions.json?t='+Date.now());
+    if(!res.ok)throw new Error();
+    const data=await res.json();
+    meta=data.meta||{};allPos=data.positions||[];
+    const today=new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
+    const ac=allPos.filter(p=>p.status==='active').length;
+    document.getElementById('headerSub').textContent=`${today} 기준 · ${ac}개 포지션 공유 중`;
+    document.getElementById('headerMeta').textContent=`업데이트: ${meta.last_updated||'—'}`;
+    renderCards(allPos);
+    // 첫 방문 시 온보딩 투어
+    if(!localStorage.getItem('jikt_tour_done')){
+      setTimeout(startTour,800);
+    }
+  }catch(e){
+    document.getElementById('posGrid').innerHTML='<div style="padding:40px;text-align:center;color:var(--red);font-size:12px;font-family:var(--mono)">positions.json을 불러오지 못했습니다.</div>';
+  }
+  renderHistMetrics();
+  renderTimeline();
+  renderHistory('all');
+  document.getElementById('rowCount').textContent='143건';
+}
+loadData();
+</script>
+</body>
+</html>
