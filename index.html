@@ -104,7 +104,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 .vol-table-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--border)}
 .vol-table{width:100%;border-collapse:collapse;font-size:14px}
 .vol-table thead tr{background:var(--bg3);border-bottom:1px solid var(--border2)}
-.vol-table th{padding:14px 16px;text-align:left;font-family:var(--font-h);font-size:14px;color:#d8d4cc;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap;font-weight:700}
+.vol-table th{padding:14px 16px;text-align:left;font-family:var(--font-h);font-size:14px;color:#d8d4cc;letter-spacing:0.04em;text-transform:uppercase;font-weight:700;white-space:normal;word-break:keep-all}
 .vol-table tbody tr{border-bottom:1px solid var(--border);transition:background 0.15s}
 .vol-table tbody tr:last-child{border-bottom:none}
 .vol-table tbody tr:hover{background:var(--bg3)}
@@ -125,7 +125,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 .vt-basis strong{color:#d8d4cc;font-weight:600}
 .vt-basis-row td{padding:0 16px 14px;border-bottom:1px solid var(--border)}
 .vt-basis-row:last-child td{border-bottom:none}
-.vt-basis-expanded{background:rgba(255,255,255,0.02);border-radius:0 0 6px 6px;padding:12px 16px;font-size:13px;color:rgba(200,196,188,0.88);line-height:1.75;display:flex;flex-wrap:wrap;gap:6px 24px}
+.vt-basis-expanded{background:rgba(255,255,255,0.02);border-radius:0 0 6px 6px;padding:12px 16px;font-size:13px;color:rgba(200,196,188,0.88);line-height:1.75;display:flex;flex-wrap:wrap;gap:6px 24px;overflow-wrap:break-word}
 .vt-basis-expanded strong{color:#d8d4cc;font-weight:600}
 .vt-schedule{color:rgba(190,186,178,0.85);font-size:13px;font-family:var(--font-n);line-height:2;max-width:220px}
 .vt-schedule strong{color:var(--text3);font-size:11px}
@@ -592,19 +592,20 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
       <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.07)">
         <div style="font-family:var(--font-n);font-size:14px;color:var(--text2);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;font-weight:600">출처 · 중요도 순</div>
         <div style="display:flex;flex-direction:column;gap:6px;font-family:var(--font-n);font-size:12px">
-          <div style="display:flex;align-items:baseline;gap:8px"><span style="color:var(--red2);font-weight:700;min-width:18px">①</span><span style="color:var(--text2)">인텔 +23% 폭등·반도체 ETF 18일 연속 상승 — S&amp;P500 7,165·나스닥 24,837 역대 최고 동반 경신 —</span><a href="https://www.cnbc.com/2026/04/24/stock-market-today-live-updates.html" target="_blank" style="color:var(--blue2);text-decoration:none">CNBC →</a></div>
-          <div style="display:flex;align-items:baseline;gap:8px"><span style="color:var(--red2);font-weight:700;min-width:18px">②</span><span style="color:var(--text2)">WTI $94.40 마감 — 이란 협상 기대에 주간 +13% 후 차익실현, 호르무즈 여전히 봉쇄 —</span><a href="https://tradingeconomics.com/commodity/crude-oil" target="_blank" style="color:var(--blue2);text-decoration:none">TradingEcon →</a></div>
-          <div style="display:flex;align-items:baseline;gap:8px"><span style="color:var(--accent1);font-weight:700;min-width:18px">③</span><span style="color:var(--text2)">천연가스 $2.52 — 온화한 날씨·재고 8% 초과로 1.5년 저점, 주간 -5.8% —</span><a href="https://tradingeconomics.com/commodity/natural-gas" target="_blank" style="color:var(--blue2);text-decoration:none">TradingEcon →</a></div>
-          <div style="display:flex;align-items:baseline;gap:8px"><span style="color:var(--accent1);font-weight:700;min-width:18px">④</span><span style="color:var(--text2)">금 $4,710 — 에너지 인플레·금리인상 우려 지속, 전쟁 개시 후 고점 대비 -10% —</span><a href="https://www.kitco.com/price/precious-metals" target="_blank" style="color:var(--blue2);text-decoration:none">Kitco →</a></div>
-          <div style="display:flex;align-items:baseline;gap:8px"><span style="color:var(--accent1);font-weight:700;min-width:18px">⑤</span><span style="color:var(--text2)">10년 국채 4.31% — FOMC 동결 컨센서스 100%, BOJ·GDP·PCE 이번 주 연속 발표 —</span><a href="https://www.advisorperspectives.com/dshort/updates/2026/04/24/treasury-yields-snapshot-april-24-2026" target="_blank" style="color:var(--blue2);text-decoration:none">AdvisorPersp →</a></div>
-          <div style="display:flex;align-items:baseline;gap:8px"><span style="color:var(--gold);font-weight:700;min-width:18px">⑥</span><span style="color:var(--text2)">EUR/USD 1.1720·USD/JPY 159.4·AUD/USD 0.715 — FOMC 전 달러 소폭 강세 —</span><a href="https://tradingeconomics.com/japan/currency" target="_blank" style="color:var(--blue2);text-decoration:none">TradingEcon →</a></div>
-          <div style="display:flex;align-items:baseline;gap:8px"><span style="color:var(--gold);font-weight:700;min-width:18px">⑦</span><span style="color:var(--text2)">이번 주: BOJ(4/28)·FOMC(4/29~30)·GDP속보·PCE(4/30)·빅테크 Q1 실적 — 시장 최대 변수 집중 —</span><a href="https://equalsmoney.com/economic-calendar/events/fomc-meeting" target="_blank" style="color:var(--blue2);text-decoration:none">FOMC Calendar →</a></div>
-        </div>
+          <div style="display:flex;align-items:baseline;gap:8px"><span style="color:var(--red2);font-weight:700;min-width:18px">①</span><span style="color:var(--text2)">이란 협상 결렬·WTI $95.6 급반등 — 이란 측 새 제안(봉쇄 해제 우선) 전달, 트럼프 협상 중단 지시 —</span><a href="https://tradingeconomics.com/commodity/crude-oil" target="_blank" style="color:var(--blue2);text-decoration:none">TradingEcon →</a></div>
+          <div style="display:flex;align-items:baseline;gap:8px"><span style="color:var(--red2);font-weight:700;min-width:18px">②</span><span style="color:var(--text2)">S&amp;P500 7,165·나스닥 24,837 역대 최고 — 인텔 +23%, AMD +13%, Nvidia +4% 빅테크 랠리 — 이번 주 Alphabet·Meta·Amazon·Microsoft(4/29)·Apple(4/30) 실적 —</span><a href="https://www.cnbc.com/2026/04/26/stock-market-today-live-updates.html" target="_blank" style="color:var(--blue2);text-decoration:none">CNBC →</a></div>
+          <div style="display:flex;align-items:baseline;gap:8px"><span style="color:var(--accent1);font-weight:700;min-width:18px">③</span><span style="color:var(--text2)">천연가스 $2.56 — 온화한 날씨·재고 8% 초과 유지, 4월 누적 -12% — 생산업체 감산 시작 —</span><a href="https://tradingeconomics.com/commodity/natural-gas" target="_blank" style="color:var(--blue2);text-decoration:none">TradingEcon →</a></div>
+          <div style="display:flex;align-items:baseline;gap:8px"><span style="color:var(--accent1);font-weight:700;min-width:18px">④</span><span style="color:var(--text2)">금 $4,690 ▼ — 에너지발 인플레·실질금리 2%대, 연내 Fed 금리인하 확률 0% —</span><a href="https://tradingeconomics.com/commodity/gold" target="_blank" style="color:var(--blue2);text-decoration:none">TradingEcon →</a></div>
+          <div style="display:flex;align-items:baseline;gap:8px"><span style="color:var(--accent1);font-weight:700;min-width:18px">⑤</span><span style="color:var(--text2)">10년 국채 4.32% — FOMC(4/30) 동결 100%, 이란 리스크로 인플레 부담 지속 —</span><a href="https://tradingeconomics.com/united-states/government-bond-yield" target="_blank" style="color:var(--blue2);text-decoration:none">TradingEcon →</a></div>
+          <div style="display:flex;align-items:baseline;gap:8px"><span style="color:var(--gold);font-weight:700;min-width:18px">⑥</span><span style="color:var(--text2)">EUR/USD 1.1791·USD/JPY 158.3 ▼·AUD/USD 0.7179 — 달러 약세, 엔·유로 강세 — BOJ(4/28) 현상유지 전망 —</span><a href="https://tradingeconomics.com/japan/currency" target="_blank" style="color:var(--blue2);text-decoration:none">TradingEcon →</a></div>
+          <div style="display:flex;align-items:baseline;gap:8px"><span style="color:var(--gold);font-weight:700;min-width:18px">⑦</span><span style="color:var(--text2)">이번 주 초대형 이벤트 집중 — FOMC 금리결정(4/30)·빅테크 Q1 실적(4/29~30)·GDP 속보+PCE(4/30)·NFP(5/1) —</span><a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" target="_blank" style="color:var(--blue2);text-decoration:none">Fed Calendar →</a></div>        </div>
       </div>
     </div>
-    </div>
+  </div>
+</div>
 
-    <!-- 향후 30일 변동성 전망 헤더 -->
+<!-- 향후 30일 변동성 전망 헤더 -->
+<div class="page" style="padding-top:0;padding-bottom:24px">
     <div class="sec-lbl" style="margin-top:24px">향후 30일 변동성 전망</div>
 
     <!-- 1순위 종목 -->
@@ -783,8 +784,6 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
         </tbody>
       </table>
     </div>
-
-  </div>
 </div>
 <!-- ══ ASSET TABS ══ -->
 <div class="asset-nav">
