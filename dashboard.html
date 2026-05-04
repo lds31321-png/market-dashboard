@@ -299,18 +299,18 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 .guide-panel strong{color:var(--accent);}
 
 /* 온보딩 투어 */
-.tour-overlay{position:fixed;inset:0;z-index:9000;pointer-events:none;}.tour-box{pointer-events:auto;}
-.tour-bg{position:absolute;inset:0;background:rgba(0,0,0,.5);}
-.tour-box{position:absolute;z-index:9010;background:var(--card);border:1px solid var(--b2);border-radius:12px;padding:18px 20px 14px;max-width:340px;box-shadow:0 8px 40px rgba(0,0,0,.2);font-family:var(--sans);}
-.tour-step-ind{font-size:10px;color:var(--t3);font-family:var(--mono);margin-bottom:8px;}
-.tour-title{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:7px;}
-.tour-body{font-size:12px;color:var(--t2);line-height:1.7;margin-bottom:14px;}
+
+
+
+
+
+
 .tour-body strong{color:var(--t1);}
-.tour-btns{display:flex;justify-content:space-between;align-items:center;}
-.tour-skip{background:none;border:none;font-size:11px;color:var(--t3);cursor:pointer;font-family:var(--mono);}
-.tour-next{padding:6px 16px;border-radius:5px;border:none;background:var(--accent);color:#fff;font-size:12px;font-weight:600;cursor:pointer;}
+
+
+
 .tour-next:hover{opacity:.85;}
-.tour-hl{outline:2px solid rgba(217,102,74,.6)!important;outline-offset:4px!important;border-radius:8px;}
+
 
 /* 요약 */
 .posSummary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
@@ -346,7 +346,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
     </div>
     <div class="hdr-r">
       <div class="hdr-meta" id="headerMeta">—</div>
-      <button onclick="localStorage.removeItem('jikt_tour_done');startTour()" style="background:none;border:1px solid var(--b1);border-radius:5px;padding:3px 9px;font-size:10px;color:var(--t3);cursor:pointer;font-family:var(--mono);transition:all .15s;" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--b1)';this.style.color='var(--t3)'">? 가이드</button>
+
       <div class="dot"></div>
     </div>
   </div>
@@ -1975,106 +1975,11 @@ function wfScroll(targetId, stripId, activeId){
 }
 
 // ── 온보딩 투어 ──
-const TOUR_STEPS=[
-  {
-    target:'wf-intro-area',
-    title:'직트 무료 포지션 공유에 오신 걸 환영해요!',
-    body:'이 대시보드는 <strong>시장 방향 예측 없이</strong> 수익이 나는 옵션 매도 전략을 공유하는 공간.',
-    pos:'bottom'
-  },
-  {
-    target:'posGrid',
-    title:'① 포지션 현황',
-    body:'현재 공유 중인 포지션. <strong>카드 클릭</strong>으로 선물 가격 차트와 수익 구조 확인.',
-    pos:'bottom'
-  },
-  {
-    target:'wf1-2',
-    title:'② 수익 구조 이해',
-    body:'각 카드의 <strong>? 버튼</strong>을 클릭하면 용어 설명 확인 가능.',
-    pos:'bottom'
-  },
-  {
-    target:'wfStrip2',
-    title:'③ 매매 내역 탭',
-    body:'143번의 실제 매매 기록. <strong>143번 중 118번</strong> 수익.',
-    pos:'bottom'
-  }
-];
 
-let tourIdx=0;
-let tourEl=null;
 
-function startTour(){
-  if(document.getElementById('tourOverlay'))return;
-  tourIdx=0;
-  const overlay=document.createElement('div');
-  overlay.id='tourOverlay';
-  overlay.className='tour-overlay';
-  overlay.innerHTML='<div class="tour-bg" id="tourBg"></div>';
-  document.body.appendChild(overlay);
-  tourEl=overlay;
-  showTourStep(0);
-}
 
-function showTourStep(idx){
-  if(!tourEl)return;
-  const step=TOUR_STEPS[idx];
-  const target=step.target?document.getElementById(step.target):null;
 
-  // 기존 박스 제거
-  const oldBox=document.getElementById('tourBox');
-  if(oldBox)oldBox.remove();
-  // 기존 하이라이트 제거
-  document.querySelectorAll('.tour-hl').forEach(el=>el.classList.remove('tour-hl'));
 
-  // 하이라이트
-  if(target){
-    target.classList.add('tour-hl');
-    target.scrollIntoView({behavior:'smooth',block:'center'});
-  }
-
-  const box=document.createElement('div');
-  box.id='tourBox';
-  box.className='tour-box';
-
-  const isLast=idx===TOUR_STEPS.length-1;
-  box.innerHTML=`
-    <div class="tour-step-ind">${idx+1} / ${TOUR_STEPS.length}</div>
-    <div class="tour-title">${step.title}</div>
-    <div class="tour-body">${step.body}</div>
-    <div class="tour-btns">
-      <button class="tour-skip" onclick="endTour()">건너뛰기</button>
-      <button class="tour-next" onclick="${isLast?'endTour()':'showTourStep('+(idx+1)+')'}">
-        ${isLast?'시작하기 →':'다음 →'}
-      </button>
-    </div>
-  `;
-
-  // 위치 계산
-  if(target){
-    const rect=target.getBoundingClientRect();
-    const scrollY=window.scrollY;
-    const boxTop=step.pos==='bottom'
-      ?scrollY+rect.bottom+16
-      :Math.max(scrollY+rect.top-220,scrollY+80);
-    const boxLeft=Math.max(16,Math.min(window.innerWidth-380,rect.left));
-    box.style.top=boxTop+'px';
-    box.style.left=boxLeft+'px';
-  } else {
-    box.style.top='50%';box.style.left='50%';
-    box.style.transform='translate(-50%,-50%)';
-  }
-  tourEl.appendChild(box);
-}
-
-function endTour(){
-  document.querySelectorAll('.tour-hl').forEach(el=>el.classList.remove('tour-hl'));
-  const overlay=document.getElementById('tourOverlay');
-  if(overlay)overlay.remove();
-  tourEl=null;
-  localStorage.setItem('jikt_tour_done','1');
-}
 
 // ── 저장 신호 수신 → 전체 재렌더 ──
 async function reloadFromAdmin(){
@@ -2103,10 +2008,7 @@ async function loadData(){
     document.getElementById('headerSub').textContent=`${today} 기준 · ${ac}개 포지션 공유 중`;
     document.getElementById('headerMeta').textContent=`업데이트: ${meta.last_updated||'—'}`;
     renderCards(allPos);
-    // 첫 방문 시 온보딩 투어
-    if(!localStorage.getItem('jikt_tour_done')){
-      setTimeout(startTour,800);
-    }
+    
   }catch(e){
     // _EMBEDDED 폴백
     const data=_EMBEDDED;
