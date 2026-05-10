@@ -22006,18 +22006,29 @@ window._t14GetInstPhaseLimit = function(code) {
       return null;
     }
 
-    /* [Phase 2-4-2] lp select 연동 — 사용자가 lp 직접 선택했으면 그 lp로 콜·풋 매칭. 자동(빈값)이면 calcFinalEntry 사용 */
+    /* [48ch_session4 3단계] lp 모드 분기 — C-5 차트 드롭다운과 연동
+       · 'recommend'  : 추세 추천 lp만 사용 (시장국면 무시)        → admin row 직접 매칭
+       · 'with_phase' : 시장국면 반영 결과                          → calcFinalEntry
+       · 숫자 lp      : 옛 호환 (수동 lp 직접 선택)                → admin row 직접 매칭
+       · 빈값         : 기본(시장국면 반영)                        → calcFinalEntry */
     var lpSel65 = document.getElementById('uvp-chart1-lp');
-    var manualLp = (lpSel65 && lpSel65.value !== '') ? parseFloat(lpSel65.value) : null;
+    var lpVal65 = (lpSel65 && lpSel65.value != null) ? String(lpSel65.value) : '';
+    var manualLp = (lpVal65 !== '' && lpVal65 !== 'recommend' && lpVal65 !== 'with_phase') ? parseFloat(lpVal65) : null;
     var rC = null, rP = null;
-    if (manualLp !== null && !isNaN(manualLp)) {
-      /* 수동 lp 선택 모드 — admin row 직접 매칭 (시트에 그 lp 없는 방향은 null) */
+    if (lpVal65 === 'recommend') {
+      /* 추세 추천 lp 직접 매칭 */
+      var rcR = _findStrikeFromAdmin('콜', recoLpCall);
+      var rpR = _findStrikeFromAdmin('풋', recoLpPut);
+      if (rcR) rC = rcR;
+      if (rpR) rP = rpR;
+    } else if (manualLp !== null && !isNaN(manualLp)) {
+      /* 옛 숫자 lp 호환 */
       var rcManual = _findStrikeFromAdmin('콜', manualLp);
       var rpManual = _findStrikeFromAdmin('풋', manualLp);
       if (rcManual) rC = rcManual;
       if (rpManual) rP = rpManual;
     } else if (typeof window.calcFinalEntry === 'function' && monthLabel) {
-      /* 자동 모드 — calcFinalEntry로 시장국면+꼬리위험+추세 반영 lp */
+      /* 'with_phase' 또는 빈값 — 시장국면 반영 */
       try {
         var fC = window.calcFinalEntry(code, monthLabel, 'call');
         var fP = window.calcFinalEntry(code, monthLabel, 'put');
