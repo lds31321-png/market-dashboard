@@ -6,6 +6,7 @@
 <script>
 (function(){
   try {
+    /* 1) 개인/세션 데이터 강제 청소 */
     var prefixes = ['st_guide_','rv_','tr_','pt_'];
     var exact = ['wf_mode'];
     for (var i = localStorage.length - 1; i >= 0; i--) {
@@ -14,6 +15,7 @@
       var hit = exact.indexOf(k) >= 0 || prefixes.some(function(p){ return k.indexOf(p) === 0; });
       if (hit) { try { localStorage.removeItem(k); } catch(e){} }
     }
+    /* 2) admin_data.json 동기 fetch + 4개 키 주입 */
     var x = new XMLHttpRequest();
     x.open('GET', 'admin_data.json?t=' + Date.now(), false);
     try {
@@ -28,6 +30,7 @@
         }
       }
     } catch(e) { console.warn('admin_data.json error:', e); }
+    /* 3) 투어/가이드 팝업 비활성화 */
     ['ov_tour_done','rv_tour_done','tr_tour_done','pt_tour_done','st_tour_done'].forEach(function(k){
       try { localStorage.setItem(k, '1'); } catch(e){}
     });
@@ -2013,7 +2016,9 @@ input[type=range] { background: transparent !important; border: none !important;
             </select>
             <span class="uxc-cap">손실확률</span>
             <select id="uvp-chart1-lp" style="background:var(--card);border:1px solid var(--b1);border-radius:var(--r);padding:6px 12px;font-size:13px;cursor:pointer" onchange="window.uvpRenderChart1()">
-              <option value="">자동 (가장 안전)</option>
+              <!-- [48ch_session4 1단계] 옵션 2개로 단순화 (recommend / with_phase). uvpRenderChart1은 NaN fallback으로 자동 모드 동작. -->
+              <option value="recommend">손실확률</option>
+              <option value="with_phase">손실확률 (시장국면 반영)</option>
             </select>
           </div>
         </div>
@@ -20474,39 +20479,77 @@ window._t14GetInstPhaseLimit = function(code) {
     }
   }
 
-  /* LP 옵션 동적 채움 */
+  /* [48ch_session4 2단계] 시장국면 반영 산출 함수 3개
+     · _uvpTrendToRecLp(추세, 콜풋) — 추세에 따른 추천 손실확률 (레이님 원칙)
+     · _uvpFindSafestLp(rows, 콜풋, 목표lp) — 시트의 가용 lp 중 가장 안전한(외가) 행 선택
+     · _uvpCalcWithMarketPhase(rows, 콜풋, 추세, 종목코드) — 시장국면(NORMAL/WARNING/CRISIS) + 꼬리위험 추가 가산 */
+  function _uvpTrendToRecLp(trend, type) {
+    var map = {
+      '상승':   { '콜': 3,  '풋': 20 },
+      '강보합': { '콜': 3,  '풋': 10 },
+      '보합':   { '콜': 10, '풋': 10 },
+      '약보합': { '콜': 10, '풋': 3 },
+      '하락':   { '콜': 20, '풋': 3 }
+    };
+    return (map[trend] || map['보합'])[type] || 10;
+  }
+  function _uvpFindSafestLp(rows, type, targetLp) {
+    function _lp(r){ return parseFloat((r.lossPct||r.lossProb||r.lossP||'0').toString().replace(/%/g,'').trim()) || 0; }
+    var typed = rows.filter(function(r){ return r.type === type && _lp(r) > 0; });
+    if (!typed.length) return null;
+    /* 1) 정확 일치 */
+    for (var i = 0; i < typed.length; i++) { if (Math.abs(_lp(typed[i]) - targetLp) < 0.01) return typed[i]; }
+    /* 2) 더 작은 lp 중 가장 큰 (= 가장 가까운 더 안전한 외가) */
+    var smaller = typed.filter(function(r){ return _lp(r) < targetLp; });
+    if (smaller.length) {
+      smaller.sort(function(a, b){ return _lp(b) - _lp(a); });
+      return smaller[0];
+    }
+    /* 3) 그래도 없으면 type의 가장 작은 lp (가장 외가) */
+    typed.sort(function(a, b){ return _lp(a) - _lp(b); });
+    return typed[0];
+  }
+  function _uvpCalcWithMarketPhase(rows, type, trend, code) {
+    function _lp(r){ return parseFloat((r.lossPct||r.lossProb||r.lossP||'0').toString().replace(/%/g,'').trim()) || 0; }
+    var baseLp = _uvpTrendToRecLp(trend, type);
+    var rmData = {};
+    try { rmData = JSON.parse(localStorage.getItem('sv_rm_data') || '{}'); } catch(e){}
+    var rm = rmData[code] || {};
+    var phase = rm.phase_admin || 'NORMAL';
+    var tail = (type === '콜') ? !!rm.tailCall_admin : !!rm.tailPut_admin;
+    if (!tail) tail = !!rm.tail;
+    var steps = 0;
+    if (phase === 'WARNING') steps = 1;
+    else if (phase === 'CRISIS') steps = 2;
+    if (tail) steps += 1;
+    var typeLps = rows.filter(function(r){ return r.type === type && _lp(r) > 0; })
+                      .map(_lp)
+                      .sort(function(a, b){ return a - b; });
+    if (!typeLps.length) return null;
+    var startIdx = -1;
+    for (var i = typeLps.length - 1; i >= 0; i--) {
+      if (typeLps[i] <= baseLp + 0.01) { startIdx = i; break; }
+    }
+    if (startIdx < 0) startIdx = 0;
+    var finalIdx = Math.max(0, startIdx - steps);
+    var finalLp = typeLps[finalIdx];
+    var picked = null;
+    rows.forEach(function(r){
+      if (r.type === type && Math.abs(_lp(r) - finalLp) < 0.01 && !picked) picked = r;
+    });
+    return picked;
+  }
+
+  /* [48ch_session4 1단계] LP 옵션 정비 — 두 모드 고정 (시트 가용 lp 동적 추가 폐기)
+     1단계는 라벨만 분리. 실제 분기(추세 추천 vs 시장국면 반영)는 2단계에서 추가. */
   function _uvpFillLps() {
     var lpSel = document.getElementById('uvp-chart1-lp');
-    var monthSel = document.getElementById('uvp-chart1-month');
-    if (!lpSel || !monthSel || !_uvpCtx.item) return;
-    var mIdx = parseInt(monthSel.value || '0');
-    var m = _uvpCtx.item.months[mIdx];
-    if (!m) { lpSel.innerHTML = '<option value="">자동 (가장 안전)</option>'; return; }
-    var rows = m.rows || [];
-    var callLps = {}, putLps = {};
-    rows.forEach(function(r){
-      var lp = parseFloat((r.lossPct || r.lossProb || r.lossP || '0').toString().replace(/%/g,'').trim()) || 0;
-      if (lp <= 0) return;
-      if (r.type === '콜') callLps[lp] = true;
-      if (r.type === '풋') putLps[lp] = true;
-    });
-    var union = {};
-    Object.keys(callLps).forEach(function(k){ union[k] = true; });
-    Object.keys(putLps).forEach(function(k){ union[k] = true; });
-    var sorted = Object.keys(union).map(parseFloat).sort(function(a,b){ return a - b; });
+    if (!lpSel) return;
     var prev = lpSel.value;
-    lpSel.innerHTML = '<option value="">자동 (가장 안전)</option>';
-    sorted.forEach(function(lp){
-      var opt = document.createElement('option');
-      opt.value = String(lp);
-      var marks = [];
-      if (callLps[lp]) marks.push('콜');
-      if (putLps[lp]) marks.push('풋');
-      opt.textContent = lp + '% (' + marks.join('·') + ')';
-      lpSel.appendChild(opt);
-    });
-    if (prev && Array.prototype.some.call(lpSel.options, function(o){ return o.value === prev; })) lpSel.value = prev;
-    else lpSel.value = '';
+    lpSel.innerHTML = '<option value="recommend">손실확률</option>'
+                    + '<option value="with_phase">손실확률 (시장국면 반영)</option>';
+    if (prev === 'with_phase') lpSel.value = 'with_phase';
+    else lpSel.value = 'recommend';
   }
 
   window.uvpRenderChart1 = function() {
@@ -20533,20 +20576,50 @@ window._t14GetInstPhaseLimit = function(code) {
         if (r.type === '풋' && !pickedPut)  pickedPut  = { price:s, lossProb:lp, type:'풋', dash:true };
       });
     } else {
-      /* [47차 5-65] 자동 모드 — calcFinalEntry로 시장국면+꼬리위험+추세 반영 lp 선택 (카드 V2와 동일). fallback 가장 작은 lp */
-      if (typeof window.calcFinalEntry === 'function' && _uvpCtx && _uvpCtx.code) {
+      /* [48ch_session4 2단계] 새 분기 — 드롭다운 값 'recommend' 또는 'with_phase' 모드 분리
+         · recommend: 추세별 추천 lp만 (시장국면 무시)
+         · with_phase: 추세 추천 + 시장국면(WARNING=+1단계, CRISIS=+2단계) + 꼬리위험(+1단계) 적용 */
+      var lpVal = (lpSel && lpSel.value) ? lpSel.value : 'recommend';
+      var mode = (lpVal === 'with_phase') ? 'with_phase' : 'recommend';
+
+      /* 종목 추세는 rows 첫 행에서 (콜·풋 각각 다를 수 있음) */
+      var _callR0 = null, _putR0 = null;
+      rows.forEach(function(r){
+        if (r.type === '콜' && !_callR0) _callR0 = r;
+        if (r.type === '풋' && !_putR0) _putR0 = r;
+      });
+      var callTrend = (_callR0 && _callR0.trend) || '보합';
+      var putTrend  = (_putR0  && _putR0.trend)  || '보합';
+
+      var rowCall = null, rowPut = null;
+      if (mode === 'with_phase') {
+        rowCall = _uvpCalcWithMarketPhase(rows, '콜', callTrend, _uvpCtx.code);
+        rowPut  = _uvpCalcWithMarketPhase(rows, '풋', putTrend,  _uvpCtx.code);
+      } else {
+        rowCall = _uvpFindSafestLp(rows, '콜', _uvpTrendToRecLp(callTrend, '콜'));
+        rowPut  = _uvpFindSafestLp(rows, '풋', _uvpTrendToRecLp(putTrend,  '풋'));
+      }
+      if (rowCall) pickedCall = { price: _parseStr(rowCall), lossProb: _parseLp(rowCall), type:'콜', dash:true };
+      if (rowPut)  pickedPut  = { price: _parseStr(rowPut),  lossProb: _parseLp(rowPut),  type:'풋', dash:true };
+
+      /* 대비책 1 — 새 함수 결과가 비면 기존 calcFinalEntry로 채움 (카드 V2와 동일 흐름) */
+      if ((!pickedCall || !pickedPut) && typeof window.calcFinalEntry === 'function' && _uvpCtx && _uvpCtx.code) {
         try {
-          var rC65 = window.calcFinalEntry(_uvpCtx.code, monthLabel, 'call');
-          var rP65 = window.calcFinalEntry(_uvpCtx.code, monthLabel, 'put');
-          if (rC65 && !rC65.blocked && rC65.final_strike != null && rC65.final_lp != null) {
-            pickedCall = { price: parseFloat(rC65.final_strike) || 0, lossProb: rC65.final_lp, type:'콜', dash:true };
+          if (!pickedCall) {
+            var rC65 = window.calcFinalEntry(_uvpCtx.code, monthLabel, 'call');
+            if (rC65 && !rC65.blocked && rC65.final_strike != null && rC65.final_lp != null) {
+              pickedCall = { price: parseFloat(rC65.final_strike) || 0, lossProb: rC65.final_lp, type:'콜', dash:true };
+            }
           }
-          if (rP65 && !rP65.blocked && rP65.final_strike != null && rP65.final_lp != null) {
-            pickedPut = { price: parseFloat(rP65.final_strike) || 0, lossProb: rP65.final_lp, type:'풋', dash:true };
+          if (!pickedPut) {
+            var rP65 = window.calcFinalEntry(_uvpCtx.code, monthLabel, 'put');
+            if (rP65 && !rP65.blocked && rP65.final_strike != null && rP65.final_lp != null) {
+              pickedPut = { price: parseFloat(rP65.final_strike) || 0, lossProb: rP65.final_lp, type:'풋', dash:true };
+            }
           }
         } catch(e){}
       }
-      /* fallback — calcFinalEntry 결과 없으면 가장 작은 lp */
+      /* 대비책 2 — 그래도 비면 가장 작은 lp (가장 외가) */
       if (!pickedCall || !pickedPut) {
         var minCall = Infinity, minPut = Infinity;
         rows.forEach(function(r){
@@ -20566,7 +20639,7 @@ window._t14GetInstPhaseLimit = function(code) {
 
     var infoEl = document.getElementById('uvp-chart1-info');
     if (infoEl) {
-      var lpDesc = (selectedLp !== null && !isNaN(selectedLp)) ? ('손실확률 ' + selectedLp + '%') : '자동(가장 안전)';
+      var lpDesc = (lpSel && lpSel.value === 'with_phase') ? '손실확률 (시장국면 반영)' : '손실확률'; /* [48ch_session4 1단계] */
       var fr = (typeof window._codeToFriendly === 'function') ? window._codeToFriendly(_uvpCtx.code) : _uvpCtx.name;
       infoEl.textContent = '📅 ' + fr + ' · ' + monthLabel + ' · 만기 ' + (expiry||'미상') + ' · ' + lpDesc + ' · 행사가 ' + strikes.length + '개';
     }
