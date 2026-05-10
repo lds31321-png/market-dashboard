@@ -1,42 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-
-<!-- === [교육생 모드 부팅 스크립트] === -->
-<script>
-(function(){
-  try {
-    /* 1) 개인/세션 데이터 강제 청소 */
-    var prefixes = ['st_guide_','rv_','tr_','pt_'];
-    var exact = ['wf_mode'];
-    for (var i = localStorage.length - 1; i >= 0; i--) {
-      var k = localStorage.key(i);
-      if (!k) continue;
-      var hit = exact.indexOf(k) >= 0 || prefixes.some(function(p){ return k.indexOf(p) === 0; });
-      if (hit) { try { localStorage.removeItem(k); } catch(e){} }
-    }
-    /* 2) admin_data.json 동기 fetch + 4개 키 주입 */
-    var x = new XMLHttpRequest();
-    x.open('GET', 'admin_data.json?t=' + Date.now(), false);
-    try {
-      x.send();
-      if (x.status === 200) {
-        var pkg = JSON.parse(x.responseText);
-        ['sv_admin_alerts','sv_rm_data','st_rank_v3','st_detail_v3'].forEach(function(k){
-          if (pkg && pkg[k] != null) { try { localStorage.setItem(k, JSON.stringify(pkg[k])); } catch(e){} }
-        });
-        if (pkg && pkg._meta && pkg._meta.exported_at) {
-          try { localStorage.setItem('_jikt_admin_exported_at', pkg._meta.exported_at); } catch(e){}
-        }
-      }
-    } catch(e) { console.warn('admin_data.json error:', e); }
-    /* 3) 투어/가이드 팝업 비활성화 */
-    ['ov_tour_done','rv_tour_done','tr_tour_done','pt_tour_done','st_tour_done'].forEach(function(k){
-      try { localStorage.setItem(k, '1'); } catch(e){}
-    });
-  } catch(e) { console.error('부팅 오류:', e); }
-})();
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>종합 옵션 대시보드 v3</title>
@@ -20331,6 +20295,9 @@ window._t14GetInstPhaseLimit = function(code) {
   }
   function _uvpInstMult(code) {
     try {
+      /* [48차 SESSION 5] INST 객체 우선 — RM_INSTS에 mult 필드 없어서 항상 1 반환되던 버그 fix */
+      if (typeof INST !== 'undefined' && INST[code] && INST[code].mult) return INST[code].mult;
+      /* RM_INSTS 대비책 */
       if (typeof RM_INSTS !== 'undefined')
         for (var i = 0; i < RM_INSTS.length; i++)
           if (RM_INSTS[i].code === code) return RM_INSTS[i].mult || 1;
@@ -21896,25 +21863,139 @@ window._t14GetInstPhaseLimit = function(code) {
     if (elSingleAmt)  elSingleAmt.textContent  = fmtKRW(singleKRW);
     if (elSingleHint) elSingleHint.textContent = '자본 ' + fmtKRW(capKRW) + ' 기준 — 한 번 진입 시 최대 금액';
 
-    /* ③ 현재 보유 vs 한도 (매매 현황 연동) */
-    var agg = (typeof _uvpAggregatePositions === 'function') ? _uvpAggregatePositions(code) : { totalCall: 0, totalPut: 0 };
+    /* ③ 현재 보유 vs 한도 (매매 현황 연동) — [48차 SESSION 5 v2] 받은 프리미엄 합 ÷ 자본 한도 비율
+       산식: 노출 KRW = 보유 계약수 × 평균 진입 프리미엄 × 승수 × 환율
+              한도 KRW = 자본 × capCallPct (또는 capPutPct)
+              비율(%) = 노출 ÷ 한도 × 100  (게이지는 100% 캡, 텍스트는 실제 비율) */
+    var agg = (typeof _uvpAggregatePositions === 'function') ? _uvpAggregatePositions(code) : { totalCall: 0, totalPut: 0, totalCallPrem: 0, totalPutPrem: 0 };
     var totalCall = agg.totalCall || 0;
     var totalPut  = agg.totalPut  || 0;
     var elCaT = document.getElementById('uvp-info-step2-call-txt');
     var elCaB = document.getElementById('uvp-info-step2-call-bar');
     var elPuT = document.getElementById('uvp-info-step2-put-txt');
     var elPuB = document.getElementById('uvp-info-step2-put-bar');
-    if (elCaT) elCaT.textContent = '보유 ' + totalCall + '계약 / 한도 ' + capCallPct.toFixed(2) + '%';
-    if (elCaB) elCaB.style.width = totalCall > 0 ? '50%' : '0%';
-    if (elPuT) elPuT.textContent = '보유 ' + totalPut + '계약 / 한도 ' + capPutPct.toFixed(2) + '%';
-    if (elPuB) elPuB.style.width = totalPut > 0 ? '50%' : '0%';
+    /* 보유 옵션 프리미엄 합 KRW = (계약수 × 평균 프리미엄 합 USD) × 승수 × 환율
+       _uvpAggregatePositions의 totalCallPrem은 단위 프리미엄의 합(USD)이라 mult 추가 필요 */
+    var instMult = (typeof _uvpInstMult === 'function') ? _uvpInstMult(code) : 1;
+    var premCallKRW = (agg.totalCallPrem || 0) * instMult * fxRate;
+    var premPutKRW  = (agg.totalPutPrem  || 0) * instMult * fxRate;
+    var ratioCall = (capCallKRW > 0) ? (premCallKRW / capCallKRW * 100) : 0;
+    var ratioPut  = (capPutKRW  > 0) ? (premPutKRW  / capPutKRW  * 100) : 0;
+    var ratioCallCap = Math.min(100, ratioCall);
+    var ratioPutCap  = Math.min(100, ratioPut);
+    /* 한도 초과 표시 — 텍스트 빨강 + 게이지 빨강 */
+    var overCall = ratioCall > 100;
+    var overPut  = ratioPut  > 100;
+    if (elCaT) {
+      elCaT.textContent = '보유 ' + totalCall + '계약 / 한도 ' + ratioCall.toFixed(1) + '%' + (overCall ? ' (초과)' : '');
+      elCaT.style.color = overCall ? '#c83030' : 'var(--t1)';
+      elCaT.style.fontWeight = overCall ? '800' : '700';
+    }
+    if (elCaB) {
+      elCaB.style.width = ratioCallCap.toFixed(1) + '%';
+      elCaB.style.background = overCall
+        ? 'linear-gradient(90deg,rgba(200,48,48,.7),rgba(200,48,48,1))'
+        : 'linear-gradient(90deg,rgba(217,102,74,.4),rgba(217,102,74,.7))';
+    }
+    if (elPuT) {
+      elPuT.textContent = '보유 ' + totalPut + '계약 / 한도 ' + ratioPut.toFixed(1) + '%' + (overPut ? ' (초과)' : '');
+      elPuT.style.color = overPut ? '#c83030' : 'var(--t1)';
+      elPuT.style.fontWeight = overPut ? '800' : '700';
+    }
+    if (elPuB) {
+      elPuB.style.width = ratioPutCap.toFixed(1) + '%';
+      elPuB.style.background = overPut
+        ? 'linear-gradient(90deg,rgba(200,48,48,.7),rgba(200,48,48,1))'
+        : 'linear-gradient(90deg,rgba(42,95,168,.4),rgba(42,95,168,.7))';
+    }
 
-    /* ④ 권장 계약수 + 진입 강도·거리 통합 표시 */
-    var elCoT = document.getElementById('uvp-info-step2-contract-txt');
-    if (elCoT) elCoT.textContent = '1 계약';
-    /* 진입 강도 (콜·풋 통합) */
+    /* ④ 권장 계약수 — [48차 SESSION 5] 시장국면 sizing 반영 동적 산출 */
+    /* 진입 강도 (콜·풋 통합) — 먼저 계산 */
     var sCall = m ? (m.sizingCall != null ? m.sizingCall : (m.sizing != null ? m.sizing : 1)) : 1;
     var sPut  = m ? (m.sizingPut  != null ? m.sizingPut  : (m.sizing != null ? m.sizing : 1)) : 1;
+    /* admin rows에서 1계약 증거금(USD) 최소값 추출 — 외가 멀수록 작음 = 추천 lp 가까움 */
+    function _b4MinSpanUSD(dirCode) {
+      try {
+        var detail = JSON.parse(localStorage.getItem('st_detail_v3') || 'null');
+        var arr = Array.isArray(detail) ? detail
+                : (detail && Array.isArray(detail.items)) ? detail.items : [];
+        var nameMap = {'OES':'S&P500','ENQ':'NASDAQ100','OEUU':'유로FX','OADU':'호주달러','OJPU':'엔화','OZN':'10년국채','OGC':'골드','OCL':'크루드 오일','ONG':'천연가스','OZS':'대두','OZW':'밀','OZC':'옥수수'};
+        var aliases = {'크루드 오일':['크루드 오일','원유','크로드 오일'],'엔화':['엔화','엔'],'유로FX':['유로FX','유로','유로 FX'],'NASDAQ100':['NASDAQ100','NAQ100','나스닥100']};
+        var korName = nameMap[code] || code;
+        var nameList = aliases[korName] || [korName];
+        /* 콜·풋 다양한 표기 모두 인식 — 직트 관리자 데이터 형식 호환 */
+        var dirSet = (dirCode === '콜')
+          ? ['콜', 'CALL', 'Call', 'call', 'C', 'c']
+          : ['풋', 'PUT', 'Put', 'put', 'P', 'p'];
+        var minSp = 0;
+        /* (1순위) 직트 관리자 입력 데이터 검색 */
+        for (var i = 0; i < arr.length; i++) {
+          if (nameList.indexOf(arr[i].name) < 0) continue;
+          var months = arr[i].months || [];
+          for (var mi = 0; mi < months.length; mi++) {
+            var rows = months[mi].rows || [];
+            for (var ri = 0; ri < rows.length; ri++) {
+              var r = rows[ri];
+              var rt = (r.type || r.option || r.cp || '').toString();
+              if (dirSet.indexOf(rt) < 0) continue;
+              var sp = parseFloat(r.span || r.spanMargin || r.margin || 0) || 0;
+              if (sp > 0 && (minSp === 0 || sp < minSp)) minSp = sp;
+            }
+          }
+        }
+        /* (2순위 대비책) 1순위에서 못 찾으면 정적 LOSS_PROB_TABLE에서 시도 — 화면 코드 안에 박혀 있는 손실확률 표 */
+        if (minSp === 0 && typeof LOSS_PROB_TABLE !== 'undefined' && LOSS_PROB_TABLE && Array.isArray(LOSS_PROB_TABLE.data)) {
+          var rows2 = LOSS_PROB_TABLE.data;
+          for (var ri2 = 0; ri2 < rows2.length; ri2++) {
+            var r2 = rows2[ri2];
+            if (!r2 || nameList.indexOf(r2.instrument) < 0) continue;
+            var rt2 = (r2.option || r2.type || '').toString();
+            if (dirSet.indexOf(rt2) < 0) continue;
+            var sp2 = parseFloat(r2.spanMargin || r2.span || r2.margin || 0) || 0;
+            if (sp2 > 0 && (minSp === 0 || sp2 < minSp)) minSp = sp2;
+          }
+        }
+        return minSp;
+      } catch(e) { return 0; }
+    }
+    var spanCallUSD = _b4MinSpanUSD('콜');
+    var spanPutUSD  = _b4MinSpanUSD('풋');
+    var singleUSD = (fxRate > 0) ? (singleKRW / fxRate) : 0;
+    var qCallBase = (spanCallUSD > 0) ? Math.floor(singleUSD / spanCallUSD) : 0;
+    var qPutBase  = (spanPutUSD  > 0) ? Math.floor(singleUSD / spanPutUSD)  : 0;
+    /* [48차 SESSION 5 — A안] sizing 1계약 보장 — 기본 1계약 가능하면 sizing 후에도 최소 1계약 권장 */
+    var qCall = qCallBase > 0 ? Math.max(1, Math.floor(qCallBase * sCall)) : 0;
+    var qPut  = qPutBase  > 0 ? Math.max(1, Math.floor(qPutBase  * sPut))  : 0;
+    var elCoT = document.getElementById('uvp-info-step2-contract-txt');
+    if (elCoT) {
+      if (qCall > 0 && qPut > 0) {
+        if (qCall === qPut) {
+          elCoT.textContent = qCall + ' 계약';
+          elCoT.style.fontSize = '24px';
+        } else {
+          elCoT.textContent = '콜 ' + qCall + ' · 풋 ' + qPut;
+          elCoT.style.fontSize = '20px';
+        }
+        elCoT.style.lineHeight = '1';
+      } else if (qCall > 0) {
+        elCoT.textContent = '콜 ' + qCall + '계약';
+        elCoT.style.fontSize = '22px';
+        elCoT.style.lineHeight = '1';
+      } else if (qPut > 0) {
+        elCoT.textContent = '풋 ' + qPut + '계약';
+        elCoT.style.fontSize = '22px';
+        elCoT.style.lineHeight = '1';
+      } else {
+        /* 한도 부족 — 1계약 필요 USD 정확히 안내 (두 줄) */
+        var needCallTxt = spanCallUSD > 0 ? ('콜 $' + Math.round(spanCallUSD).toLocaleString()) : '';
+        var needPutTxt  = spanPutUSD  > 0 ? ('풋 $' + Math.round(spanPutUSD ).toLocaleString()) : '';
+        var needLine = [needCallTxt, needPutTxt].filter(function(s){return s;}).join(' · ');
+        elCoT.innerHTML = '<span style="font-size:16px;color:#c83030;font-weight:800">한도 부족</span>' +
+                          (needLine ? '<br><span style="font-size:11px;color:var(--t3);font-weight:500;letter-spacing:0">1계약 ' + needLine + '</span>' : '');
+        elCoT.style.fontSize = '';
+        elCoT.style.lineHeight = '1.4';
+      }
+    }
     var elSizing = document.getElementById('uvp-info-step2-sizing-combined');
     if (elSizing) elSizing.textContent = Math.round(sCall * 100) + '% / ' + Math.round(sPut * 100) + '%';
     /* 행사가 거리 (콜·풋 통합) */
@@ -22006,18 +22087,29 @@ window._t14GetInstPhaseLimit = function(code) {
       return null;
     }
 
-    /* [Phase 2-4-2] lp select 연동 — 사용자가 lp 직접 선택했으면 그 lp로 콜·풋 매칭. 자동(빈값)이면 calcFinalEntry 사용 */
+    /* [48ch_session4 3단계] lp 모드 분기 — C-5 차트 드롭다운과 연동
+       · 'recommend'  : 추세 추천 lp만 사용 (시장국면 무시)        → admin row 직접 매칭
+       · 'with_phase' : 시장국면 반영 결과                          → calcFinalEntry
+       · 숫자 lp      : 옛 호환 (수동 lp 직접 선택)                → admin row 직접 매칭
+       · 빈값         : 기본(시장국면 반영)                        → calcFinalEntry */
     var lpSel65 = document.getElementById('uvp-chart1-lp');
-    var manualLp = (lpSel65 && lpSel65.value !== '') ? parseFloat(lpSel65.value) : null;
+    var lpVal65 = (lpSel65 && lpSel65.value != null) ? String(lpSel65.value) : '';
+    var manualLp = (lpVal65 !== '' && lpVal65 !== 'recommend' && lpVal65 !== 'with_phase') ? parseFloat(lpVal65) : null;
     var rC = null, rP = null;
-    if (manualLp !== null && !isNaN(manualLp)) {
-      /* 수동 lp 선택 모드 — admin row 직접 매칭 (시트에 그 lp 없는 방향은 null) */
+    if (lpVal65 === 'recommend') {
+      /* 추세 추천 lp 직접 매칭 */
+      var rcR = _findStrikeFromAdmin('콜', recoLpCall);
+      var rpR = _findStrikeFromAdmin('풋', recoLpPut);
+      if (rcR) rC = rcR;
+      if (rpR) rP = rpR;
+    } else if (manualLp !== null && !isNaN(manualLp)) {
+      /* 옛 숫자 lp 호환 */
       var rcManual = _findStrikeFromAdmin('콜', manualLp);
       var rpManual = _findStrikeFromAdmin('풋', manualLp);
       if (rcManual) rC = rcManual;
       if (rpManual) rP = rpManual;
     } else if (typeof window.calcFinalEntry === 'function' && monthLabel) {
-      /* 자동 모드 — calcFinalEntry로 시장국면+꼬리위험+추세 반영 lp */
+      /* 'with_phase' 또는 빈값 — 시장국면 반영 */
       try {
         var fC = window.calcFinalEntry(code, monthLabel, 'call');
         var fP = window.calcFinalEntry(code, monthLabel, 'put');
@@ -22367,6 +22459,17 @@ window._t14GetInstPhaseLimit = function(code) {
     try { _uvpApplyStep3Info(code); } catch(e) { console.error('[Step3Info]', e); }
     try { _uvpApplyStep4Info(code); } catch(e) { console.error('[Step4Info]', e); }
   };
+
+  /* [48차 SESSION 5] window.uvpShow 정의 — 옛 호출 자리(updateSettings/parsePastedHTS/clearPositions 등)에서
+     "현재 활성 종목" B/D 자동 재렌더가 안 되던 문제 fix.
+     A-1 자본·환율·증거금 변경 또는 A-2 HTS 데이터 갱신 즉시 시장 현황 카드의 진입 한도·축소율 다시 그려준다. */
+  window.uvpShow = function(code) {
+    var c = code || (typeof _uvpCtx !== 'undefined' && _uvpCtx && _uvpCtx.code) || '';
+    if (c && typeof window.uvpRenderStepConclusions === 'function') {
+      window.uvpRenderStepConclusions(c);
+    }
+  };
+
 
   /* [2026-05-09 v3] 누락된 _uvpGetCapitalUSD 함수 — pt_settings에서 자본금 USD 환산 */
   function _uvpGetCapitalUSD() {
