@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 
-<!-- === [교육생 모드 부팅 스크립트] - admin_data.json 자동 주입 + 개인 데이터 초기화 + 투어 비활성화 === -->
+<!-- === [교육생 모드 부팅 스크립트] === -->
 <script>
 (function(){
   try {
@@ -26,16 +26,12 @@
         if (pkg && pkg._meta && pkg._meta.exported_at) {
           try { localStorage.setItem('_jikt_admin_exported_at', pkg._meta.exported_at); } catch(e){}
         }
-      } else {
-        console.warn('[교육생 모드] admin_data.json fetch failed: HTTP ' + x.status);
       }
-    } catch(e) {
-      console.warn('[교육생 모드] admin_data.json error:', e);
-    }
+    } catch(e) { console.warn('admin_data.json error:', e); }
     ['ov_tour_done','rv_tour_done','tr_tour_done','pt_tour_done','st_tour_done'].forEach(function(k){
       try { localStorage.setItem(k, '1'); } catch(e){}
     });
-  } catch(e) { console.error('[교육생 모드] 부팅 오류:', e); }
+  } catch(e) { console.error('부팅 오류:', e); }
 })();
 </script>
 <meta charset="UTF-8">
@@ -18682,6 +18678,11 @@ window._t14GetInstPhaseLimit = function(code) {
     return picked;
   }
 
+    /* [C-5 구조변경] 새 함수 3개를 window 노출 - 어느 IIFE에서든 접근 가능 */
+  if (typeof _uvpTrendToRecLp === 'function') window._uvpTrendToRecLp = _uvpTrendToRecLp;
+  if (typeof _uvpFindSafestLp === 'function') window._uvpFindSafestLp = _uvpFindSafestLp;
+  if (typeof _uvpCalcWithMarketPhase === 'function') window._uvpCalcWithMarketPhase = _uvpCalcWithMarketPhase;
+
   window.uvpRenderChart1 = function() {
     if (!_uvpCtx.code || !_uvpCtx.item || !_uvpCtx.basePos) return;
     var monthSel = document.getElementById('uvp-chart1-month');
@@ -20515,7 +20516,9 @@ window._t14GetInstPhaseLimit = function(code) {
     else lpSel.value = 'recommend';
   }
 
-  window.uvpRenderChart1 = function() {
+  /* [C-5 구조변경] fallback - 첫 번째 정의가 새 함수들과 함께 살아 있으면 덮어쓰지 않음 */
+  if (typeof window._uvpCalcWithMarketPhase !== 'function') {
+    window.uvpRenderChart1 = function() {
     if (!_uvpCtx.code || !_uvpCtx.item || !_uvpCtx.basePos) return;
     var monthSel = document.getElementById('uvp-chart1-month');
     var lpSel = document.getElementById('uvp-chart1-lp');
@@ -20529,39 +20532,28 @@ window._t14GetInstPhaseLimit = function(code) {
     function _parseLp(r){ return parseFloat((r.lossPct||r.lossProb||r.lossP||'0').toString().replace(/%/g,'').trim())||0; }
     function _parseStr(r){ return parseFloat((r.strike||'').toString().replace(/[^0-9.\-]/g,''))||0; }
 
+    /* [C-5 구조변경] 모드 결정 — 'recommend' 또는 'with_phase' */
+    var mode = (lpSel && lpSel.value) ? lpSel.value : 'recommend';
+    if (mode !== 'recommend' && mode !== 'with_phase') mode = 'recommend';
     var pickedCall = null, pickedPut = null;
-    if (selectedLp !== null && !isNaN(selectedLp)) {
-      rows.forEach(function(r){
-        var s = _parseStr(r), lp = _parseLp(r);
-        if (s <= 0 || lp <= 0) return;
-        if (Math.abs(lp - selectedLp) > 0.001) return;
-        if (r.type === '콜' && !pickedCall) pickedCall = { price:s, lossProb:lp, type:'콜', dash:true };
-        if (r.type === '풋' && !pickedPut)  pickedPut  = { price:s, lossProb:lp, type:'풋', dash:true };
-      });
-    } else {
-      /* [47차 5-65] 자동 모드 — calcFinalEntry로 시장국면+꼬리위험+추세 반영 lp 선택 (카드 V2와 동일). fallback 가장 작은 lp */
-      if (typeof window.calcFinalEntry === 'function' && _uvpCtx && _uvpCtx.code) {
-        try {
-          var rC65 = window.calcFinalEntry(_uvpCtx.code, monthLabel, 'call');
-          var rP65 = window.calcFinalEntry(_uvpCtx.code, monthLabel, 'put');
-          if (rC65 && !rC65.blocked && rC65.final_strike != null && rC65.final_lp != null) {
-            pickedCall = { price: parseFloat(rC65.final_strike) || 0, lossProb: rC65.final_lp, type:'콜', dash:true };
-          }
-          if (rP65 && !rP65.blocked && rP65.final_strike != null && rP65.final_lp != null) {
-            pickedPut = { price: parseFloat(rP65.final_strike) || 0, lossProb: rP65.final_lp, type:'풋', dash:true };
-          }
-        } catch(e){}
+    var _callR0 = null, _putR0 = null;
+    rows.forEach(function(r){ if (r.type === '콜' && !_callR0) _callR0 = r; if (r.type === '풋' && !_putR0) _putR0 = r; });
+    var callTrend = (_callR0 && _callR0.trend) || '보합';
+    var putTrend  = (_putR0  && _putR0.trend)  || '보합';
+    var rowCall = null, rowPut = null;
+    var fnTr  = (typeof window._uvpTrendToRecLp === 'function')      ? window._uvpTrendToRecLp      : (typeof _uvpTrendToRecLp === 'function' ? _uvpTrendToRecLp : null);
+    var fnSf  = (typeof window._uvpFindSafestLp === 'function')      ? window._uvpFindSafestLp      : (typeof _uvpFindSafestLp === 'function' ? _uvpFindSafestLp : null);
+    var fnPh  = (typeof window._uvpCalcWithMarketPhase === 'function') ? window._uvpCalcWithMarketPhase : (typeof _uvpCalcWithMarketPhase === 'function' ? _uvpCalcWithMarketPhase : null);
+    if (fnTr && fnSf && fnPh) {
+      if (mode === 'with_phase') {
+        rowCall = fnPh(rows, '콜', callTrend, _uvpCtx.code);
+        rowPut  = fnPh(rows, '풋', putTrend,  _uvpCtx.code);
+      } else {
+        rowCall = fnSf(rows, '콜', fnTr(callTrend, '콜'));
+        rowPut  = fnSf(rows, '풋', fnTr(putTrend,  '풋'));
       }
-      /* fallback — calcFinalEntry 결과 없으면 가장 작은 lp */
-      if (!pickedCall || !pickedPut) {
-        var minCall = Infinity, minPut = Infinity;
-        rows.forEach(function(r){
-          var s = _parseStr(r), lp = _parseLp(r);
-          if (s <= 0 || lp <= 0) return;
-          if (!pickedCall && r.type === '콜' && lp < minCall) { minCall = lp; pickedCall = { price:s, lossProb:lp, type:'콜', dash:true }; }
-          if (!pickedPut && r.type === '풋' && lp < minPut)  { minPut  = lp; pickedPut  = { price:s, lossProb:lp, type:'풋', dash:true }; }
-        });
-      }
+      if (rowCall) pickedCall = { price: _parseStr(rowCall), lossProb: _parseLp(rowCall), type:'콜', dash:true };
+      if (rowPut)  pickedPut  = { price: _parseStr(rowPut),  lossProb: _parseLp(rowPut),  type:'풋', dash:true };
     }
     var strikes = [];
     if (pickedCall) strikes.push(pickedCall);
@@ -20602,6 +20594,7 @@ window._t14GetInstPhaseLimit = function(code) {
       try { _uvpApplyStep3Info(_uvpCtx.code); } catch(e){}
     }
   };
+  }
 
   /* (Step 2-A) 매크로 미니 수평바 */
   function uvpRenderMacroMini(code) {
