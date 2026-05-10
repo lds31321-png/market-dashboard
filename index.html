@@ -20516,7 +20516,9 @@ window._t14GetInstPhaseLimit = function(code) {
     else lpSel.value = 'recommend';
   }
 
-  window.uvpRenderChart1 = function() {
+  /* [C-5 구조변경] fallback - 첫 번째 정의가 새 함수들과 함께 살아 있으면 덮어쓰지 않음 */
+  if (typeof window._uvpCalcWithMarketPhase !== 'function') {
+    window.uvpRenderChart1 = function() {
     if (!_uvpCtx.code || !_uvpCtx.item || !_uvpCtx.basePos) return;
     var monthSel = document.getElementById('uvp-chart1-month');
     var lpSel = document.getElementById('uvp-chart1-lp');
@@ -20592,6 +20594,7 @@ window._t14GetInstPhaseLimit = function(code) {
       try { _uvpApplyStep3Info(_uvpCtx.code); } catch(e){}
     }
   };
+  }
 
   /* (Step 2-A) 매크로 미니 수평바 */
   function uvpRenderMacroMini(code) {
