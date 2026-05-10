@@ -6,7 +6,6 @@
 <script>
 (function(){
   try {
-    /* 1) 개인/세션 데이터 강제 청소 */
     var prefixes = ['st_guide_','rv_','tr_','pt_'];
     var exact = ['wf_mode'];
     for (var i = localStorage.length - 1; i >= 0; i--) {
@@ -15,7 +14,6 @@
       var hit = exact.indexOf(k) >= 0 || prefixes.some(function(p){ return k.indexOf(p) === 0; });
       if (hit) { try { localStorage.removeItem(k); } catch(e){} }
     }
-    /* 2) admin_data.json 동기 fetch + 4개 키 주입 */
     var x = new XMLHttpRequest();
     x.open('GET', 'admin_data.json?t=' + Date.now(), false);
     try {
@@ -23,9 +21,7 @@
       if (x.status === 200) {
         var pkg = JSON.parse(x.responseText);
         ['sv_admin_alerts','sv_rm_data','st_rank_v3','st_detail_v3'].forEach(function(k){
-          if (pkg && pkg[k] != null) {
-            try { localStorage.setItem(k, JSON.stringify(pkg[k])); } catch(e){}
-          }
+          if (pkg && pkg[k] != null) { try { localStorage.setItem(k, JSON.stringify(pkg[k])); } catch(e){} }
         });
         if (pkg && pkg._meta && pkg._meta.exported_at) {
           try { localStorage.setItem('_jikt_admin_exported_at', pkg._meta.exported_at); } catch(e){}
@@ -34,15 +30,12 @@
         console.warn('[교육생 모드] admin_data.json fetch failed: HTTP ' + x.status);
       }
     } catch(e) {
-      console.warn('[교육생 모드] admin_data.json fetch error:', e);
+      console.warn('[교육생 모드] admin_data.json error:', e);
     }
-    /* 3) 투어/가이드 팝업 비활성화 */
     ['ov_tour_done','rv_tour_done','tr_tour_done','pt_tour_done','st_tour_done'].forEach(function(k){
       try { localStorage.setItem(k, '1'); } catch(e){}
     });
-  } catch(e) {
-    console.error('[교육생 모드] 부팅 스크립트 오류:', e);
-  }
+  } catch(e) { console.error('[교육생 모드] 부팅 오류:', e); }
 })();
 </script>
 <meta charset="UTF-8">
@@ -20579,7 +20572,11 @@ window._t14GetInstPhaseLimit = function(code) {
 
     var infoEl = document.getElementById('uvp-chart1-info');
     if (infoEl) {
-      var lpDesc = (selectedLp !== null && !isNaN(selectedLp)) ? ('손실확률 ' + selectedLp + '%') : '자동(가장 안전)';
+      var lpDesc = (function(){
+        var lpSel2 = document.getElementById('uvp-chart1-lp');
+        var mode2 = (lpSel2 && lpSel2.value) ? lpSel2.value : 'recommend';
+        return (mode2 === 'with_phase') ? '손실확률 (시장국면 반영)' : '손실확률';
+      })();
       var fr = (typeof window._codeToFriendly === 'function') ? window._codeToFriendly(_uvpCtx.code) : _uvpCtx.name;
       infoEl.textContent = '📅 ' + fr + ' · ' + monthLabel + ' · 만기 ' + (expiry||'미상') + ' · ' + lpDesc + ' · 행사가 ' + strikes.length + '개';
     }
