@@ -422,6 +422,10 @@ body{
   50% { box-shadow: 0 0 0 3px rgba(192,112,48,.28), 0 0 10px rgba(192,112,48,.15); }
 }
 /* [47차 다듬기] 결론 박스 색상별 펄스 — 텍스트·배경색과 통일 */
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(26,122,74,0); }
+  50% { box-shadow: 0 0 0 3px rgba(26,122,74,.28), 0 0 10px rgba(26,122,74,.14); }
+}
 @keyframes pulse-blue {
   0%, 100% { box-shadow: 0 0 0 0 rgba(30,90,160,0); }
   50% { box-shadow: 0 0 0 3px rgba(30,90,160,.28), 0 0 10px rgba(30,90,160,.14); }
@@ -5075,7 +5079,7 @@ input[type=range] { background: transparent !important; border: none !important;
       <span style="color:var(--t3)">100%</span>
     </div>
     <div style="height:16px;background:rgba(0,0,0,.1);border-radius:8px;overflow:visible;position:relative;margin-bottom:8px">
-      <div id="tr-mg-bar" style="height:100%;width:0%;border-radius:8px;transition:width .8s;background:linear-gradient(90deg,rgba(217,102,74,.65),#1a7a4a)"></div>
+      <div id="tr-mg-bar" style="height:100%;width:0%;border-radius:8px;transition:width .8s;background:linear-gradient(90deg,rgba(217,102,74,.4),rgba(217,102,74,.7))"></div>
       <div id="tr-mg-target-line" style="position:absolute;top:-4px;bottom:-4px;left:60%;width:2px;background:#d9664a;border-radius:1px"></div>
       <div style="position:absolute;top:-4px;bottom:-4px;left:85%;width:2px;background:#d9664a;border-radius:1px"></div>
     </div>
@@ -6887,7 +6891,7 @@ function renderPTMargin() {
     ? 'linear-gradient(90deg,rgba(217,102,74,.6),#d9664a)'
     : rate > target
       ? 'linear-gradient(90deg,rgba(217,102,74,.3),rgba(217,102,74,.7))'
-      : 'linear-gradient(90deg,rgba(26,122,74,.5),rgba(217,102,74,.7))';
+      : 'linear-gradient(90deg,rgba(217,102,74,.2),rgba(217,102,74,.5))';
 
   // 잔여 진입 여력 (₩)
   var remainKRW = Math.max(0, cap * target - used);
@@ -11951,6 +11955,9 @@ function renderReview() {
   // 통계 업데이트
   document.getElementById('rv-stat-tag').textContent =
     daily.length + '거래일 · ' + rvData.length + '건';
+  /* [3번 fix] 매매 현황 탭 A-1 헤더 동기화 */
+  var _tr1310_a = document.getElementById('tr-1310-status-tag');
+  if (_tr1310_a) _tr1310_a.textContent = daily.length + '거래일 · ' + rvData.length + '건';
 }
 
 function renderReviewEmpty() {
@@ -13105,6 +13112,9 @@ function parseReviewHTS() {
   localStorage.setItem('rv_data', JSON.stringify(rvData));
   document.getElementById('rv-paste-wrap').style.display = 'none';
   document.getElementById('rv-stat-tag').textContent = rvData.length + '건 로드됨';
+  /* [3번 fix] 매매 현황 탭 A-1 헤더 동기화 */
+  var _tr1310_b = document.getElementById('tr-1310-status-tag');
+  if (_tr1310_b) _tr1310_b.textContent = rvData.length + '건 로드됨';
   renderReview();
   renderCumulativeChart(aggregateDaily(rvData));
   alert(rvData.length + '건 로드 완료!');
@@ -13115,6 +13125,9 @@ function clearReviewData() {
   rvData = null;
   localStorage.removeItem('rv_data');
   document.getElementById('rv-stat-tag').textContent = '데이터 없음';
+  /* [3번 fix] 매매 현황 탭 A-1 헤더 동기화 */
+  var _tr1310_c = document.getElementById('tr-1310-status-tag');
+  if (_tr1310_c) _tr1310_c.textContent = '데이터 없음';
   // 시작 가이드 다시 표시
   var g = document.getElementById('rv-start-guide');
   if (g) g.style.display = '';
@@ -14371,6 +14384,9 @@ function injectTourHelpBtn() {
     try {
       rvData = JSON.parse(savedData);
       document.getElementById('rv-stat-tag').textContent = rvData.length + '건 (저장됨)';
+      /* [3번 fix] 매매 현황 탭 A-1 헤더 동기화 */
+      var _tr1310_d = document.getElementById('tr-1310-status-tag');
+      if (_tr1310_d) _tr1310_d.textContent = rvData.length + '건 (저장됨)';
       /* [2026-05-09] 새로고침 후 데이터 복원 시 화면 갱신 누락 — renderReview 호출 추가 */
       var pasteWrap = document.getElementById('rv-paste-wrap');
       if (pasteWrap) pasteWrap.style.display = 'none';  // 입력창 숨김
@@ -21552,7 +21568,7 @@ window._t14GetInstPhaseLimit = function(code) {
 
     /* 펄스 적용 — 강도별 + 색상별 분기 (47차 다듬기: 결론 색상에 매칭되는 펄스 톤 적용 — 텍스트·배경색과 통일감) */
     var pulseColorMap = {
-      'green':  'pulse-t3',     /* 다크그린 펄스 (기존 키프레임 재사용) */
+      'green':  'pulse-green',  /* 다크 그린 펄스 — 초록 결론(진입 적합) 통일 */
       'orange': 'pulse-orange', /* 주황 펄스 */
       'red':    'pulse-t2',     /* 살몬 펄스 (기존) */
       'blue':   'pulse-blue',   /* 파랑 펄스 (단계 3 행사가 결정) */
