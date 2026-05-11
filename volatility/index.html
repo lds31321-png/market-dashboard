@@ -9458,6 +9458,103 @@ window._stNormInst = function(name) {
   return ALIAS[s] || s;
 };
 
+/* [SESSION 5] stEnrichAdminDetail — 직트 관리자 raw 데이터로 7가지 평가 자동 계산
+   admin 출력에 strike·lossProb·price·margin·trend·expiry 만 있어도
+   잔존일·비중·잠재수익률·순위·평가점수·추천·계약수 자동 보충 */
+function stEnrichAdminDetail(cData) {
+  if (!Array.isArray(cData)) return cData;
+  var defaultSettings = (typeof LOSS_PROB_TABLE !== 'undefined' && LOSS_PROB_TABLE.settings) ? LOSS_PROB_TABLE.settings : {};
+  var pt = {};
+  try { pt = JSON.parse(localStorage.getItem('pt_settings') || '{}'); } catch(e){}
+  var exRate = parseFloat(pt.exchangeRate) || defaultSettings.exchangeRate || 1430;
+  var depositKRW = parseFloat(pt.depositKRW) || defaultSettings.krwPrincipal || 50000000;
+  var depositUSD = depositKRW / exRate;
+
+  /* 종목명 → 코드 매핑 (multiplier 조회용) */
+  var nameToCode = {
+    'S&P500':'OES','NASDAQ100':'ENQ','유로':'OEUU','유로FX':'OEUU',
+    '호주달러':'OADU','엔':'OJPU','엔화':'OJPU','10년국채':'OZN','골드':'OGC',
+    '크루드 오일':'OCL','원유':'OCL','천연가스':'ONG',
+    '대두':'OZS','밀':'OZW','옥수수':'OZC'
+  };
+  var ST_DIV2 = {
+    '상승':{call:'X',put:'O'}, '강보합':{call:'',put:'O'},
+    '보합':{call:'O',put:'O'},
+    '약보합':{call:'O',put:''}, '하락':{call:'O',put:'X'},
+    '-':{call:'-',put:'-'}
+  };
+
+  cData.forEach(function(inst) {
+    var nm = inst.name || '';
+    var code = nameToCode[nm] || nameToCode[(typeof window._stNormInst === 'function' ? window._stNormInst(nm) : nm)];
+    var mult = (typeof INST !== 'undefined' && code && INST[code] && INST[code].mult) ? INST[code].mult : 50;
+
+    (inst.months || []).forEach(function(m) {
+      var expiry = m.expiry;
+      var daysLeft = (typeof stCalcDaysLeft === 'function' && expiry) ? stCalcDaysLeft(expiry) : 0;
+
+      /* 같은 방향 잠재수익률 사전 계산 → 순위 결정 */
+      var calls = [], puts = [];
+      (m.rows || []).forEach(function(r) {
+        var price = parseFloat(r.price) || 0;
+        var margin = parseFloat(r.margin) || 0;
+        var yieldPct = (daysLeft > 0 && margin > 0) ? (price * mult / margin / daysLeft * 30 * 100) : 0;
+        r._yc = yieldPct;
+        if (r.type === '콜') calls.push(r);
+        else if (r.type === '풋') puts.push(r);
+      });
+      function _rk(arr) {
+        arr.sort(function(a,b){ return (b._yc||0) - (a._yc||0); });
+        arr.forEach(function(r, idx){ r._mr = idx + 1; });
+      }
+      _rk(calls); _rk(puts);
+
+      (m.rows || []).forEach(function(r) {
+        var margin = parseFloat(r.margin) || 0;
+        var yieldPct = r._yc || 0;
+        var weight = (depositUSD > 0 && margin > 0) ? (margin / depositUSD * 100) : 0;
+        var monthRank = r._mr || 999;
+        var trend = r.trend || '-';
+        var divM = ST_DIV2[trend] || {call:'-',put:'-'};
+        var divSig = r.type === '콜' ? divM.call : divM.put;
+
+        if (r.daysLeft == null) r.daysLeft = daysLeft;
+        if (r.daysSig == null) r.daysSig = daysLeft > 15 ? 'O' : 'X';
+        if (r.weight == null) r.weight = weight > 0 ? (weight.toFixed(2) + '%') : '—';
+        if (r.weightSig == null) r.weightSig = weight === 0 ? '-' : weight < 1 ? 'O' : weight <= 1.5 ? '' : 'X';
+        if (r.yieldPct == null) r.yieldPct = yieldPct > 0 ? (yieldPct.toFixed(2) + '%') : '—';
+        if (r.yieldSig == null) r.yieldSig = yieldPct === 0 ? '-' : yieldPct >= 5 ? 'O' : yieldPct >= 2.5 ? '' : 'X';
+        if (r.monthRank == null) r.monthRank = (monthRank < 999) ? monthRank : '—';
+        if (r.rankSig == null) r.rankSig = monthRank === 1 ? 'O' : monthRank === 2 ? '' : monthRank === 3 ? 'X' : '-';
+
+        /* 평가점수: 5가지 sig 합산. X 하나라도 있으면 0점 */
+        if (r.evalScore == null) {
+          var sigs = [divSig, r.daysSig, r.weightSig, r.yieldSig, r.rankSig];
+          var hasX = sigs.some(function(s){ return s === 'X'; });
+          r.evalScore = hasX ? 0 : sigs.reduce(function(acc, s) {
+            return acc + (s === 'O' ? 4 : s === '' ? 2 : 0);
+          }, 0);
+        }
+        /* 추천: 1순위 + 평가점수 18+ + 추세 부합 */
+        if (r.recommended !== true) {
+          r.recommended = (monthRank === 1 && (r.evalScore || 0) >= 18 && divSig !== 'X');
+        }
+        /* 권장 계약수: 자본 1.5% 한도 ÷ 1계약 증거금 */
+        if (r.qty == null) {
+          var limitUSD = depositUSD * 0.015;
+          var n = (margin > 0) ? Math.floor(limitUSD / margin) : 0;
+          r.qty = '(' + n + ')';
+        }
+        /* lossPct 호환 — 표에서 r.lossPct 사용 시 r.lossProb 매핑 */
+        if (r.lossPct == null && r.lossProb != null) r.lossPct = r.lossProb;
+
+        delete r._yc; delete r._mr;
+      });
+    });
+  });
+  return cData;
+}
+
 function stEnrichAndSortCData(cData) {
   var rRaw = localStorage.getItem(ST_KEY_RANK);
   if (rRaw) {
@@ -9480,6 +9577,8 @@ function stEnrichAndSortCData(cData) {
       });
     } catch(e){}
   }
+  /* [SESSION 5] admin raw 데이터 → 7가지 평가 자동 계산 보충 */
+  try { cData = stEnrichAdminDetail(cData); } catch(e) { console.error('[stEnrichAdminDetail]', e); }
   // rank 순 정렬 (0은 맨 뒤로)
   cData.sort(function(a, b){
     var ar = a.rank || 999, br = b.rank || 999;
