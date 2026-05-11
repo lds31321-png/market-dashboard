@@ -17745,13 +17745,16 @@ window._t14GetInstPhaseLimit = function(code) {
 
   /* === 미래 평일 자동 생성 === */
   function _s10FillWeekdays(lastDateStr, expiryStr) {
-    /* 마지막 데이터 날짜 + 1일부터 expiry까지 평일 추가 */
+    /* 마지막 데이터 날짜 + 1일부터 expiry + 20일까지 평일 추가
+       [SESSION 5] 만기일 우측 여백 — 만기일 이후 20일(달력 기준)까지 더 채움. 만기일 마커는 정확 위치에 표시 */
     var future = [];
     var d1 = new Date(lastDateStr.replace(/\//g, '-'));
     var d2 = new Date(expiryStr);
+    var d2padded = new Date(d2);
+    d2padded.setDate(d2padded.getDate() + 20);
     var cur = new Date(d1);
     cur.setDate(cur.getDate() + 1);
-    while (cur <= d2) {
+    while (cur <= d2padded) {
       var dow = cur.getDay();
       if (dow !== 0 && dow !== 6) {
         var y = cur.getFullYear(), m = String(cur.getMonth()+1).padStart(2,'0'), dd = String(cur.getDate()).padStart(2,'0');
@@ -19616,13 +19619,16 @@ window._t14GetInstPhaseLimit = function(code) {
 
   /* === 미래 평일 자동 생성 === */
   function _s10FillWeekdays(lastDateStr, expiryStr) {
-    /* 마지막 데이터 날짜 + 1일부터 expiry까지 평일 추가 */
+    /* 마지막 데이터 날짜 + 1일부터 expiry + 20일까지 평일 추가
+       [SESSION 5] 만기일 우측 여백 — 만기일 이후 20일(달력 기준)까지 더 채움. 만기일 마커는 정확 위치에 표시 */
     var future = [];
     var d1 = new Date(lastDateStr.replace(/\//g, '-'));
     var d2 = new Date(expiryStr);
+    var d2padded = new Date(d2);
+    d2padded.setDate(d2padded.getDate() + 20);
     var cur = new Date(d1);
     cur.setDate(cur.getDate() + 1);
-    while (cur <= d2) {
+    while (cur <= d2padded) {
       var dow = cur.getDay();
       if (dow !== 0 && dow !== 6) {
         var y = cur.getFullYear(), m = String(cur.getMonth()+1).padStart(2,'0'), dd = String(cur.getDate()).padStart(2,'0');
