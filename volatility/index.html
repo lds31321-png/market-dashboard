@@ -3177,10 +3177,31 @@ input[type=range] { background: transparent !important; border: none !important;
   };
 
   /* ── DOMContentLoaded ── */
+  /* [SESSION 5] admin_data.json 자동 로드 — 교육생 브라우저에도 직트 관리자 데이터 채움
+     깃허브의 admin_data.json을 받아 브라우저 저장소에 sv_rm_data·sv_admin_alerts·st_rank_v3·st_detail_v3 채워넣고
+     완료 후 ovBuildGrid 호출. 실패하면 빈 저장소 상태 그대로 카드 그림 (이전 동작과 동일) */
+  function _bootstrapAdminAndBuild() {
+    fetch('admin_data.json?t=' + Date.now())
+      .then(function(r) { return r.ok ? r.json() : null; })
+      .catch(function() { return null; })
+      .then(function(d) {
+        if (d && typeof d === 'object') {
+          try {
+            if (d.sv_rm_data) localStorage.setItem('sv_rm_data', JSON.stringify(d.sv_rm_data));
+            if (d.sv_admin_alerts) localStorage.setItem('sv_admin_alerts', JSON.stringify(d.sv_admin_alerts));
+            if (d.st_rank_v3) localStorage.setItem('st_rank_v3', JSON.stringify(d.st_rank_v3));
+            if (d.st_detail_v3) localStorage.setItem('st_detail_v3', JSON.stringify(d.st_detail_v3));
+            /* 갱신 알림 — 다른 탭의 storage 이벤트 리스너 트리거 */
+            try { localStorage.setItem('sv_admin_loaded_at', new Date().toISOString()); } catch(e){}
+          } catch(e) { console.error('[admin_data 로드 실패]', e); }
+        }
+        ovBuildGrid();
+      });
+  }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', ovBuildGrid);
+    document.addEventListener('DOMContentLoaded', _bootstrapAdminAndBuild);
   } else {
-    ovBuildGrid();
+    _bootstrapAdminAndBuild();
   }
 
 })();
