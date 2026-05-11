@@ -9518,14 +9518,15 @@ function stEnrichAdminDetail(cData) {
         var divM = ST_DIV2[trend] || {call:'-',put:'-'};
         var divSig = r.type === '콜' ? divM.call : divM.put;
 
-        if (r.daysLeft == null) r.daysLeft = daysLeft;
-        if (r.daysSig == null) r.daysSig = daysLeft > 15 ? 'O' : 'X';
-        if (r.weight == null) r.weight = weight > 0 ? (weight.toFixed(2) + '%') : '—';
-        if (r.weightSig == null) r.weightSig = weight === 0 ? '-' : weight < 1 ? 'O' : weight <= 1.5 ? '' : 'X';
-        if (r.yieldPct == null) r.yieldPct = yieldPct > 0 ? (yieldPct.toFixed(2) + '%') : '—';
-        if (r.yieldSig == null) r.yieldSig = yieldPct === 0 ? '-' : yieldPct >= 5 ? 'O' : yieldPct >= 2.5 ? '' : 'X';
-        if (r.monthRank == null) r.monthRank = (monthRank < 999) ? monthRank : '—';
-        if (r.rankSig == null) r.rankSig = monthRank === 1 ? 'O' : monthRank === 2 ? '' : monthRank === 3 ? 'X' : '-';
+        /* [SESSION 5] 빈 문자열·0·null 모두 덮어쓰기 — admin이 빈값 저장한 경우 보충 */
+        if (!r.daysLeft) r.daysLeft = daysLeft;
+        if (!r.daysSig) r.daysSig = daysLeft > 15 ? 'O' : 'X';
+        if (!r.weight) r.weight = weight > 0 ? (weight.toFixed(2) + '%') : '—';
+        if (!r.weightSig) r.weightSig = weight === 0 ? '-' : weight < 1 ? 'O' : weight <= 1.5 ? '' : 'X';
+        if (!r.yieldPct) r.yieldPct = yieldPct > 0 ? (yieldPct.toFixed(2) + '%') : '—';
+        if (!r.yieldSig) r.yieldSig = yieldPct === 0 ? '-' : yieldPct >= 5 ? 'O' : yieldPct >= 2.5 ? '' : 'X';
+        if (!r.monthRank) r.monthRank = (monthRank < 999) ? monthRank : '—';
+        if (!r.rankSig) r.rankSig = monthRank === 1 ? 'O' : monthRank === 2 ? '' : monthRank === 3 ? 'X' : '-';
 
         /* 평가점수: 5가지 sig 합산. X 하나라도 있으면 0점 */
         if (r.evalScore == null) {
