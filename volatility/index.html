@@ -20566,57 +20566,19 @@ window._t14GetInstPhaseLimit = function(code) {
     }
   }
 
-  /* [SESSION 6] 옵션 월물 → 기초자산 선물 월물 매핑 (직트 표 기준) */
-  var _UVP_OPT_TO_UND = {
-    "OES":  {6:6, 9:9, 12:12},
-    "OEUU": {6:6, 7:9, 8:9},
-    "OADU": {6:6, 7:9, 8:9},
-    "OJPU": {6:6, 7:9, 8:9},
-    "OJY":  {6:6, 7:9, 8:9},
-    "OZN":  {6:6, 7:9, 8:9},
-    "OGC":  {6:6, 7:8, 8:8},
-    "OCL":  {6:6, 7:7, 8:8},
-    "ONG":  {6:6, 7:7, 8:8},
-    "OZS":  {6:7, 7:7, 8:8},
-    "OZW":  {6:7, 7:7, 8:9},
-    "OZC":  {6:7, 7:7, 8:9},
-    "ONQ":  {6:6, 9:9, 12:12}
-  };
-  /* [SESSION 6] 옵션 월물별 옵션 만기일 매핑 (직트 표 기준) */
-  var _UVP_OPT_EXPIRY = {
-    "OES":  {6:"2026-06-18", 9:"2026-09-18", 12:"2026-12-18"},
-    "OEUU": {6:"2026-06-05", 7:"2026-07-02", 8:"2026-08-07"},
-    "OADU": {6:"2026-06-05", 7:"2026-07-02", 8:"2026-08-07"},
-    "OJPU": {6:"2026-06-05", 7:"2026-07-02", 8:"2026-08-07"},
-    "OJY":  {6:"2026-06-05", 7:"2026-07-02", 8:"2026-08-07"},
-    "OZN":  {6:"2026-05-22", 7:"2026-06-26", 8:"2026-07-24"},
-    "OGC":  {6:"2026-05-26", 7:"2026-06-25", 8:"2026-07-28"},
-    "OCL":  {6:"2026-05-14", 7:"2026-06-16", 8:"2026-07-16"},
-    "ONG":  {6:"2026-05-26", 7:"2026-06-25", 8:"2026-07-28"},
-    "OZS":  {6:"2026-05-22", 7:"2026-06-26", 8:"2026-07-24"},
-    "OZW":  {6:"2026-05-22", 7:"2026-06-26", 8:"2026-07-24"},
-    "OZC":  {6:"2026-05-22", 7:"2026-06-26", 8:"2026-07-24"},
-    "ONQ":  {6:"2026-06-18", 9:"2026-09-18", 12:"2026-12-18"}
-  };
+  /* [SESSION 7] 옵션 → 기초자산·만기일 매핑은 admin 데이터(st_detail_v3)의 m.underlying_month·m.expiry·m.label에서 직접 추출.
+     하드코딩된 매핑 표(_UVP_OPT_TO_UND·_UVP_OPT_EXPIRY)는 제거됨 — 직트 raw text가 단일 진실 출처. */
   function _uvpUnderlyingLabel(code, monthLabel) {
+    /* admin 데이터의 라벨에서 (기초자산 XX월물) 부분 직접 추출. 호환성 위해 함수 시그니처 유지. */
     try {
-      var mm = (monthLabel || '').match(/(\d{2})월물/);
-      if (!mm) return null;
-      var optM = parseInt(mm[1], 10);
-      var map = _UVP_OPT_TO_UND[code];
-      if (!map || !map[optM]) return null;
-      return ('0' + map[optM]).slice(-2) + '월물';
+      var m = (monthLabel || '').match(/\(기초자산\s*(\d{1,2}월물)\)/);
+      if (m) return m[1];
+      return null;
     } catch(e) { return null; }
   }
   function _uvpCorrectExpiry(code, monthLabel) {
-    try {
-      var mm = (monthLabel || '').match(/(\d{2})월물/);
-      if (!mm) return null;
-      var optM = parseInt(mm[1], 10);
-      var map = _UVP_OPT_EXPIRY[code];
-      if (!map || !map[optM]) return null;
-      return map[optM];
-    } catch(e) { return null; }
+    /* m.expiry는 admin 데이터에 직접 박혀 있음 (1번 작업 결과). 이 함수는 호출자 호환성 위해 유지하되 항상 null 반환 — 호출자가 m.expiry 우선 쓰도록 유도. */
+    return null;
   }
 
   /* (2) Chart 1 — 월물 채움 */
@@ -20634,20 +20596,20 @@ window._t14GetInstPhaseLimit = function(code) {
         var opt = document.createElement('option');
         opt.value = String(mIdx);
         var lbl = m.label || ('월물' + (mIdx+1));
-        /* [SESSION 6] 라벨 + 만기일 정정 — m 객체 자체에 박아 후속 함수도 정정값 사용 */
+        /* [SESSION 7] admin 데이터의 m.underlying_month·m.expiry 직접 사용 (1번 작업에서 박힘). 라벨에 기초자산 정보 없으면 m.underlying_month 우선 추가. */
         try {
-          var und = _uvpUnderlyingLabel(code, lbl);
+          var und = m.underlying_month || _uvpUnderlyingLabel(code, lbl);
           if (und) {
-            if (/\(기초자산\s*\d{2}월물\)/.test(lbl)) {
-              lbl = lbl.replace(/\(기초자산\s*\d{2}월물\)/, '(기초자산 ' + und + ')');
+            if (/\(기초자산\s*\d{1,2}월물\)/.test(lbl)) {
+              lbl = lbl.replace(/\(기초자산\s*\d{1,2}월물\)/, '(기초자산 ' + und + ')');
             } else {
-              var optMm = (lbl.match(/(\d{2}월물)/) || [])[1];
+              var optMm = (lbl.match(/(\d{1,2}월물)/) || [])[1];
               if (optMm) lbl = lbl + ' (기초자산 ' + und + ')';
             }
             m.label = lbl;
+            m.underlying_month = und;
           }
-          var correctExpiry = _uvpCorrectExpiry(code, lbl);
-          if (correctExpiry) m.expiry = correctExpiry;
+          /* m.expiry는 admin 데이터에 박혀 있음 — 별도 정정 불필요 */
         } catch(e) {}
         opt.textContent = lbl;
         monthSel.appendChild(opt);
@@ -22865,20 +22827,20 @@ window._t14GetInstPhaseLimit = function(code) {
                 var opt = document.createElement('option');
                 opt.value = String(mIdx);
                 var lbl_fb = m.label || ('월물' + (mIdx+1));
-                /* [SESSION 6] fallback 경로에서도 라벨/만기 정정 (유로FX 등 name 정확 매칭 실패 시) */
+                /* [SESSION 7] 대비책 경로 — admin 데이터의 m.underlying_month·m.expiry 직접 사용 */
                 try {
-                  var und_fb = (typeof _uvpUnderlyingLabel === 'function') ? _uvpUnderlyingLabel(code, lbl_fb) : null;
+                  var und_fb = m.underlying_month || ((typeof _uvpUnderlyingLabel === 'function') ? _uvpUnderlyingLabel(code, lbl_fb) : null);
                   if (und_fb) {
-                    if (/\(기초자산\s*\d{2}월물\)/.test(lbl_fb)) {
-                      lbl_fb = lbl_fb.replace(/\(기초자산\s*\d{2}월물\)/, '(기초자산 ' + und_fb + ')');
+                    if (/\(기초자산\s*\d{1,2}월물\)/.test(lbl_fb)) {
+                      lbl_fb = lbl_fb.replace(/\(기초자산\s*\d{1,2}월물\)/, '(기초자산 ' + und_fb + ')');
                     } else {
-                      var optMm_fb = (lbl_fb.match(/(\d{2}월물)/) || [])[1];
+                      var optMm_fb = (lbl_fb.match(/(\d{1,2}월물)/) || [])[1];
                       if (optMm_fb) lbl_fb = lbl_fb + ' (기초자산 ' + und_fb + ')';
                     }
                     m.label = lbl_fb;
+                    m.underlying_month = und_fb;
                   }
-                  var ce_fb = (typeof _uvpCorrectExpiry === 'function') ? _uvpCorrectExpiry(code, lbl_fb) : null;
-                  if (ce_fb) m.expiry = ce_fb;
+                  /* m.expiry는 admin 데이터에 박혀 있음 */
                 } catch(e_fb) {}
                 opt.textContent = lbl_fb;
                 monthSel.appendChild(opt);
