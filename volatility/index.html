@@ -20566,6 +20566,59 @@ window._t14GetInstPhaseLimit = function(code) {
     }
   }
 
+  /* [SESSION 6] 옵션 월물 → 기초자산 선물 월물 매핑 (직트 표 기준) */
+  var _UVP_OPT_TO_UND = {
+    "OES":  {6:6, 9:9, 12:12},
+    "OEUU": {6:6, 7:9, 8:9},
+    "OADU": {6:6, 7:9, 8:9},
+    "OJPU": {6:6, 7:9, 8:9},
+    "OJY":  {6:6, 7:9, 8:9},
+    "OZN":  {6:6, 7:9, 8:9},
+    "OGC":  {6:6, 7:8, 8:8},
+    "OCL":  {6:6, 7:7, 8:8},
+    "ONG":  {6:6, 7:7, 8:8},
+    "OZS":  {6:7, 7:7, 8:8},
+    "OZW":  {6:7, 7:7, 8:9},
+    "OZC":  {6:7, 7:7, 8:9},
+    "ONQ":  {6:6, 9:9, 12:12}
+  };
+  /* [SESSION 6] 옵션 월물별 옵션 만기일 매핑 (직트 표 기준) */
+  var _UVP_OPT_EXPIRY = {
+    "OES":  {6:"2026-06-18", 9:"2026-09-18", 12:"2026-12-18"},
+    "OEUU": {6:"2026-06-05", 7:"2026-07-02", 8:"2026-08-07"},
+    "OADU": {6:"2026-06-05", 7:"2026-07-02", 8:"2026-08-07"},
+    "OJPU": {6:"2026-06-05", 7:"2026-07-02", 8:"2026-08-07"},
+    "OJY":  {6:"2026-06-05", 7:"2026-07-02", 8:"2026-08-07"},
+    "OZN":  {6:"2026-05-22", 7:"2026-06-26", 8:"2026-07-24"},
+    "OGC":  {6:"2026-05-26", 7:"2026-06-25", 8:"2026-07-28"},
+    "OCL":  {6:"2026-05-14", 7:"2026-06-16", 8:"2026-07-16"},
+    "ONG":  {6:"2026-05-26", 7:"2026-06-25", 8:"2026-07-28"},
+    "OZS":  {6:"2026-05-22", 7:"2026-06-26", 8:"2026-07-24"},
+    "OZW":  {6:"2026-05-22", 7:"2026-06-26", 8:"2026-07-24"},
+    "OZC":  {6:"2026-05-22", 7:"2026-06-26", 8:"2026-07-24"},
+    "ONQ":  {6:"2026-06-18", 9:"2026-09-18", 12:"2026-12-18"}
+  };
+  function _uvpUnderlyingLabel(code, monthLabel) {
+    try {
+      var mm = (monthLabel || '').match(/(\d{2})월물/);
+      if (!mm) return null;
+      var optM = parseInt(mm[1], 10);
+      var map = _UVP_OPT_TO_UND[code];
+      if (!map || !map[optM]) return null;
+      return ('0' + map[optM]).slice(-2) + '월물';
+    } catch(e) { return null; }
+  }
+  function _uvpCorrectExpiry(code, monthLabel) {
+    try {
+      var mm = (monthLabel || '').match(/(\d{2})월물/);
+      if (!mm) return null;
+      var optM = parseInt(mm[1], 10);
+      var map = _UVP_OPT_EXPIRY[code];
+      if (!map || !map[optM]) return null;
+      return map[optM];
+    } catch(e) { return null; }
+  }
+
   /* (2) Chart 1 — 월물 채움 */
   function _uvpFillMonths(code) {
     var monthSel = document.getElementById('uvp-chart1-month');
@@ -20580,7 +20633,23 @@ window._t14GetInstPhaseLimit = function(code) {
       item.months.forEach(function(m, mIdx){
         var opt = document.createElement('option');
         opt.value = String(mIdx);
-        opt.textContent = m.label || ('월물' + (mIdx+1));
+        var lbl = m.label || ('월물' + (mIdx+1));
+        /* [SESSION 6] 라벨 + 만기일 정정 — m 객체 자체에 박아 후속 함수도 정정값 사용 */
+        try {
+          var und = _uvpUnderlyingLabel(code, lbl);
+          if (und) {
+            if (/\(기초자산\s*\d{2}월물\)/.test(lbl)) {
+              lbl = lbl.replace(/\(기초자산\s*\d{2}월물\)/, '(기초자산 ' + und + ')');
+            } else {
+              var optMm = (lbl.match(/(\d{2}월물)/) || [])[1];
+              if (optMm) lbl = lbl + ' (기초자산 ' + und + ')';
+            }
+            m.label = lbl;
+          }
+          var correctExpiry = _uvpCorrectExpiry(code, lbl);
+          if (correctExpiry) m.expiry = correctExpiry;
+        } catch(e) {}
+        opt.textContent = lbl;
         monthSel.appendChild(opt);
       });
       monthSel.value = '0';
@@ -20756,6 +20825,25 @@ window._t14GetInstPhaseLimit = function(code) {
 
     var pCopy = JSON.parse(JSON.stringify(_uvpCtx.basePos));
     pCopy.id = 'uvpChart1_' + _uvpCtx.code + '_' + mIdx + '_' + (selectedLp != null ? selectedLp : 'auto');
+
+    /* [SESSION 6] 옵션 월물별 기초자산 선물 차트 교체 */
+    try {
+      var _optM6 = (monthLabel || '').match(/(\d{2}월물)/);
+      var _optKey6 = _optM6 ? _optM6[1] : null;
+      if (_optKey6 && pCopy.option_charts && pCopy.option_charts[_optKey6]) {
+        var _oc6 = pCopy.option_charts[_optKey6];
+        if (_oc6.dates && _oc6.closes) {
+          pCopy.chart_data.dates = _oc6.dates;
+          pCopy.chart_data.closes = _oc6.closes;
+        }
+        if (_oc6.current_price != null) pCopy.current_price = _oc6.current_price;
+        if (_oc6.expiry_date) {
+          expiry = _oc6.expiry_date;
+          pCopy.expiry_date = _oc6.expiry_date;
+        }
+      }
+    } catch(e6) {}
+
     pCopy.expiry_date = expiry;
     pCopy.chart_data.expiry_date = expiry;
     pCopy.chart_data.strike_lines = strikes;
@@ -22415,7 +22503,16 @@ window._t14GetInstPhaseLimit = function(code) {
     var curPrice = 0;
     try {
       if (_uvpCtx && _uvpCtx.basePos) {
-        curPrice = _uvpCtx.basePos.current_price || (_uvpCtx.basePos.chart_data && _uvpCtx.basePos.chart_data.closes ? _uvpCtx.basePos.chart_data.closes[_uvpCtx.basePos.chart_data.closes.length-1] : 0) || 0;
+        /* [SESSION 6] 옵션 월물별 기초자산 선물 가격 우선 사용 — option_charts.current_price */
+        var _ml6 = monthLabel || '';
+        var _mm6 = _ml6.match(/(\d{2}월물)/);
+        var _ok6 = _mm6 ? _mm6[1] : null;
+        var _bp6 = _uvpCtx.basePos;
+        if (_ok6 && _bp6.option_charts && _bp6.option_charts[_ok6] && _bp6.option_charts[_ok6].current_price != null) {
+          curPrice = _bp6.option_charts[_ok6].current_price;
+        } else {
+          curPrice = _bp6.current_price || (_bp6.chart_data && _bp6.chart_data.closes ? _bp6.chart_data.closes[_bp6.chart_data.closes.length-1] : 0) || 0;
+        }
       }
     } catch(e) {}
     var sCall = (rC && rC.strike != null) ? (parseFloat(rC.strike) || 0) : 0;
@@ -22767,7 +22864,23 @@ window._t14GetInstPhaseLimit = function(code) {
               _uvpCtx.item.months.forEach(function(m, mIdx){
                 var opt = document.createElement('option');
                 opt.value = String(mIdx);
-                opt.textContent = m.label || ('월물' + (mIdx+1));
+                var lbl_fb = m.label || ('월물' + (mIdx+1));
+                /* [SESSION 6] fallback 경로에서도 라벨/만기 정정 (유로FX 등 name 정확 매칭 실패 시) */
+                try {
+                  var und_fb = (typeof _uvpUnderlyingLabel === 'function') ? _uvpUnderlyingLabel(code, lbl_fb) : null;
+                  if (und_fb) {
+                    if (/\(기초자산\s*\d{2}월물\)/.test(lbl_fb)) {
+                      lbl_fb = lbl_fb.replace(/\(기초자산\s*\d{2}월물\)/, '(기초자산 ' + und_fb + ')');
+                    } else {
+                      var optMm_fb = (lbl_fb.match(/(\d{2}월물)/) || [])[1];
+                      if (optMm_fb) lbl_fb = lbl_fb + ' (기초자산 ' + und_fb + ')';
+                    }
+                    m.label = lbl_fb;
+                  }
+                  var ce_fb = (typeof _uvpCorrectExpiry === 'function') ? _uvpCorrectExpiry(code, lbl_fb) : null;
+                  if (ce_fb) m.expiry = ce_fb;
+                } catch(e_fb) {}
+                opt.textContent = lbl_fb;
                 monthSel.appendChild(opt);
               });
               monthSel.value = '0';
@@ -22785,6 +22898,8 @@ window._t14GetInstPhaseLimit = function(code) {
             if (!pjPos || !pjPos.chart_data) return;
             _uvpCtx.basePos = _uvpCtx.basePos || {};
             _uvpCtx.basePos.chart_data = pjPos.chart_data;
+            /* [SESSION 6] option_charts(옵션 월물별 기초자산 차트) 복사 — 누락 시 화면이 옛 chart_data 사용 */
+            if (pjPos.option_charts) _uvpCtx.basePos.option_charts = pjPos.option_charts;
             _uvpCtx.basePos.current_price = pjPos.current_price || _uvpCtx.basePos.current_price;
             _uvpCtx.basePos.expiry_date = pjPos.expiry_date || _uvpCtx.basePos.expiry_date;
             var canvas = document.getElementById('uvp-chart1-canvas');
