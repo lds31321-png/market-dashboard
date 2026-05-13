@@ -1945,9 +1945,16 @@ input[type=range] { background: transparent !important; border: none !important;
               <span style="font-size:11px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">C-4</span>
               <span style="font-size:13px;color:var(--t3);font-weight:700">1계약 필요 증거금 + 행사가 거리</span>
             </div>
-            <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-              <span id="uvp-info-step3-span" style="font-size:22px;font-weight:900;color:var(--t1);font-family:var(--mono);line-height:1">─</span>
-              <span style="font-size:13px;color:var(--t3);font-weight:500">1계약 (콜·풋 평균)</span>
+            <!-- [SESSION 8 3번] 1계약 필요 증거금 콜·풋 분리 표시 (통화 합의 2026-05-11) -->
+            <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:8px">
+              <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;padding:8px 10px;background:rgba(217,102,74,.06);border-radius:6px;border:1px solid rgba(217,102,74,.18)">
+                <span style="color:var(--t2);font-weight:600">콜 매도</span>
+                <span id="uvp-info-step3-span-call" style="color:var(--t1);font-weight:800;font-family:var(--mono);font-size:15px">─</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;padding:8px 10px;background:rgba(42,95,168,.05);border-radius:6px;border:1px solid rgba(42,95,168,.18)">
+                <span style="color:var(--t2);font-weight:600">풋 매도</span>
+                <span id="uvp-info-step3-span-put" style="color:var(--t1);font-weight:800;font-family:var(--mono);font-size:15px">─</span>
+              </div>
             </div>
             <div style="display:flex;flex-direction:column;gap:5px;margin-top:8px">
               <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;padding:6px 10px;background:rgba(0,0,0,.025);border-radius:5px">
@@ -2135,7 +2142,8 @@ input[type=range] { background: transparent !important; border: none !important;
 
       <!-- [47차 5-76] 잔존 학습 카드 / 매크로 미니 모두 제거 완료 — 단계 4는 인포그래픽 카드 4개만 유지 -->
 
-      <div id="uvp-legacy-toggle" style="margin-top:18px;text-align:center">
+      <!-- [SESSION 8 숨김 #13] D 영역 변동성 점수 (옛 OCL 변동성 지표) — 통화 합의 2026-05-11. 복원 시 display:none 제거 -->
+      <div id="uvp-legacy-toggle" style="margin-top:18px;text-align:center;display:none">
         <button id="uvp-legacy-btn" type="button"
           style="padding:8px 18px;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.12);border-radius:8px;font-size:11px;color:var(--t2);cursor:pointer;font-family:var(--font-n);transition:all .2s"
           onmouseover="this.style.background='rgba(0,0,0,.08)'"
@@ -2149,7 +2157,8 @@ input[type=range] { background: transparent !important; border: none !important;
     <!-- /ov-univ-panel -->
 
     <!-- OCL(원유) 실제 데이터 패널 -->
-    <div id="ov-ocl-panel">
+    <!-- [SESSION 8 숨김 #13] D 영역 변동성 점수 — 옛 원유(OCL) 전용 변동성 지표 (~465줄). 통화 합의로 숨김. 복원 시 display:none 제거 -->
+    <div id="ov-ocl-panel" style="display:none">
 
 
   <!-- [2026-05-09] 활용 안내 배너 — 살몬 단일톤 + 폰트 업 + EFG 라벨 -->
@@ -2203,7 +2212,7 @@ input[type=range] { background: transparent !important; border: none !important;
     <div style="font-size:12px;color:var(--t2);line-height:2.0">
       5개 지표를 왼쪽부터 순서대로 확인하세요.<br>
       <b style="color:var(--t1)">현재가</b> — 오늘 원유 종가. ATR(평균 일일 변동폭)도 함께 표시돼요.<br>
-      <b style="color:var(--t1)">변동성 총점</b> — 0~100점. <span style="color:var(--green)">30점↓</span> 안전 / <span style="color:var(--yellow)">30~70</span> 주의 / <span style="color:var(--red)">70점↑</span> 신규 진입 금지.<br>
+      <b style="color:var(--t1)">변동성 총점</b> — 0~100점. <span style="color:var(--green)">30점↓</span> 안전 / <span style="color:var(--yellow)">30~70</span> 주의 / <span style="color:var(--red)">70점↑</span> 신규 진입 비권장.<br>
       <b style="color:var(--t1)">경보 단계</b> — 생존경보 필터 몇 개가 켜졌는지. 2단계↑이면 포지션 축소 검토.<br>
       <b style="color:var(--t1)">변동성 레짐</b> — 현재 시장이 LOW·MID·HIGH 중 어느 상태인지.<br>
       <b style="color:var(--t1)">Z-Score</b> — 현재 가격이 20일 평균에서 얼마나 벗어났는지. ±2 이상이면 극단 구간.
@@ -2259,9 +2268,9 @@ input[type=range] { background: transparent !important; border: none !important;
     <b style="color:var(--t1)">막대 색상으로 바로 파악하세요</b><br>
     <span style="color:#d9664a">■ 연시안(낮은 바)</span> = 안정 (30점↓) → 진입 검토 가능<br>
     <span style="color:#4a4440">■ 블루(중간 바)</span> = 주의 (30~70점) → 신중하게<br>
-    <span style="color:rgba(217,102,74,1)">■ 진퍼플(높은 바)</span> = 위험 (70점↑) → 신규 진입 금지<br><br>
+    <span style="color:rgba(217,102,74,1)">■ 진퍼플(높은 바)</span> = 위험 (70점↑) → 신규 진입 비권장<br><br>
     <b style="color:var(--t1)">운용 원칙</b><br>
-    → 70점 초과: 신규 포지션 절대 금지<br>
+    → 70점 초과: 신규 포지션 비권장<br>
     → 30점 이하: 진입 검토 가능 (프리미엄 낮을 수 있음)
   </div></div><div class="chart-w" style="height:240px"><canvas id="cVol"></canvas></div></div>
 
@@ -2479,7 +2488,7 @@ input[type=range] { background: transparent !important; border: none !important;
             <div class="res-text">필터 <b style="color:var(--t1)">4개 이상</b> 작동</div>
             <div class="res-arrow">→</div>
             <div class="res-badge" style="background:rgba(217,102,74,.55);color:#5a1a00;"> 3단계 위기비상</div>
-            <div style="font-size:11px;color:var(--t3);margin-left:auto;">즉각 대응 — 위기 프로토콜 가동</div>
+            <div style="font-size:11px;color:var(--t3);margin-left:auto;">즉각 대응 — 위기 단계 — 점검 권장</div>
           </div>
         </div>
       </div>
@@ -2593,7 +2602,7 @@ input[type=range] { background: transparent !important; border: none !important;
       <div class="res-flow" style="margin-top:0;">
         <div class="res-row">
           <div class="res-num" style="background:rgba(217,102,74,.15);color:#d9664a;font-size:12px;font-weight:900;">A</div>
-          <div class="res-text"><b style="color:var(--t1)">오늘 시황 요약</b> — 진입 가능 / 신중 / 금지 확인 → <b style="color:var(--red);">진입 금지면 여기서 종료</b></div>
+          <div class="res-text"><b style="color:var(--t1)">오늘 시황 요약</b> — 진입 가능 / 신중 / 금지 확인 → <b style="color:var(--red);">진입 비권장면 여기서 종료</b></div>
         </div>
         <div class="res-row">
           <div class="res-num" style="background:rgba(0,0,0,.1);color:var(--cyan);font-size:12px;font-weight:900;">B</div>
@@ -2608,7 +2617,7 @@ input[type=range] { background: transparent !important; border: none !important;
           <div class="res-text"><b style="color:var(--t1)">행사가 계산기</b> — 추세 선택 → 만기 선택 → 권장 행사가 확인</div>
         </div>
       </div>
-      <div class="g-warn" style="margin-top:12px;"><b>▲ 2단계 이상이면</b> 신규 진입 절대 금지. 기존 포지션 헤지 또는 청산 검토하세요.</div>
+      <div class="g-warn" style="margin-top:12px;"><b>▲ 2단계 이상이면</b> 신규 진입 비권장. 기존 포지션 헤지 또는 청산 검토하세요.</div>
     </div>
   </div>
 
@@ -4615,7 +4624,7 @@ input[type=range] { background: transparent !important; border: none !important;
       <div class="card-b" style="background:rgba(0,0,0,.03)">
         <div style="display:flex;flex-direction:column;gap:8px">
           <div style="padding:8px 12px;background:rgba(26,122,74,.07);border-radius:6px;border-left:3px solid var(--green);font-size:12px;color:var(--t2)"><b style="color:var(--green)">목표 활용률 60%</b> — 이 수준으로 유지하는 것이 목표</div>
-          <div style="padding:8px 12px;background:rgba(192,112,48,.07);border-radius:6px;border-left:3px solid var(--orange);font-size:12px;color:var(--t2)"><b style="color:var(--orange)">최대 70%</b> — 초과 시 추가 진입 금지</div>
+          <div style="padding:8px 12px;background:rgba(192,112,48,.07);border-radius:6px;border-left:3px solid var(--orange);font-size:12px;color:var(--t2)"><b style="color:var(--orange)">최대 70%</b> — 초과 시 추가 진입 비권장</div>
           <div style="padding:8px 12px;background:rgba(217,102,74,.07);border-radius:6px;border-left:3px solid var(--purple);font-size:12px;color:var(--t2)"><b style="color:var(--purple)">월 기준 원금 5천만 원</b> — 월말 실현손익 정산 후 재조정</div>
           <div style="padding:8px 12px;background:rgba(217,102,74,.07);border-radius:6px;border-left:3px solid var(--cyan);font-size:12px;color:var(--t2)"><b style="color:var(--cyan)">복리 적용</b> — 이익을 주기적으로 원금에 포함해 운용</div>
           <div style="padding:8px 12px;background:rgba(217,102,74,.08);border-radius:6px;border-left:3px solid var(--cyan);font-size:12px;color:var(--t2)"><b style="color:var(--cyan)">진입 시간</b> — 매주 화요일 21:00~24:00</div>
@@ -4696,7 +4705,7 @@ input[type=range] { background: transparent !important; border: none !important;
         <div style="font-size:12px;color:var(--t2);line-height:1.9;padding:10px 14px;background:rgba(192,112,48,.06);border-radius:8px;border-left:3px solid rgba(192,112,48,.4)">
           옵션 매도는 <b style="color:var(--t1)">시장이 안정적일 때 유리하고, 시장이 요동칠 때 매우 위험</b>합니다.<br>
           이 섹션은 지금 시장이 얼마나 위험한 상태인지를 종목별로 보여주는 <b style="color:var(--orange)">위험 신호등</b>입니다.<br>
-          <span style="color:var(--t3);font-size:11px"> 안전 = 마음 편히 진입 /  주의 = 줄여서 진입 /  위험 = 신규 진입 금지</span>
+          <span style="color:var(--t3);font-size:11px"> 안전 = 마음 편히 진입 /  주의 = 줄여서 진입 /  위험 = 신규 진입 비권장</span>
         </div>
       </div>
 
@@ -4717,7 +4726,7 @@ input[type=range] { background: transparent !important; border: none !important;
           </div>
           <div style="padding:10px 12px;background:rgba(200,48,48,.07);border-radius:8px;border:1px solid rgba(200,48,48,.22)">
             <div style="font-size:11px;font-weight:800;color:#c83030;margin-bottom:4px"> 1.5 초과 — 위험</div>
-            <div style="font-size:12px;color:var(--t2);line-height:1.65">시장이 비정상적으로 급변하는 상태. 신규 진입 금지, 기존 포지션 축소.</div>
+            <div style="font-size:12px;color:var(--t2);line-height:1.65">시장이 비정상적으로 급변하는 상태. 신규 진입 비권장, 기존 포지션 축소.</div>
           </div>
           <!-- 정보성 안내 박스 — 살몬 액센트 (매트릭스 §6 정보 알파) -->
           <div style="padding:10px 12px;background:rgba(217,102,74,.04);border-radius:8px;border:1px solid rgba(217,102,74,.20)">
@@ -4738,8 +4747,8 @@ input[type=range] { background: transparent !important; border: none !important;
             <span style="font-size:12px;color:var(--t2);line-height:1.65">최근 가격이 얼마나 빠르게 오르내리는지. 숫자가 클수록 가격이 날뛰고 있다는 뜻. <span style="color:var(--t3)">(PSR)</span></span>
           </div>
           <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 12px;background:rgba(0,0,0,.02);border-radius:7px">
-            <span style="font-size:10px;font-weight:800;background:rgba(0,0,0,.1);color:var(--cyan);border-radius:4px;padding:2px 8px;flex-shrink:0;white-space:nowrap;line-height:1.8">변동성 상승 속도</span>
-            <span style="font-size:12px;color:var(--t2);line-height:1.65">시장 참여자들의 공포심이 얼마나 빠르게 커지는지. 높을수록 시장 불안이 확산 중. <span style="color:var(--t3)">(ISR)</span></span>
+            <span style="font-size:10px;font-weight:800;background:rgba(0,0,0,.1);color:var(--cyan);border-radius:4px;padding:2px 8px;flex-shrink:0;white-space:nowrap;line-height:1.8">변동성 변화 속도</span>
+            <span style="font-size:12px;color:var(--t2);line-height:1.65">시장 공포가 얼마나 빠르게 변화하는지(오르락내리락). 높을수록 시장이 한 방향으로 정해지지 않은 상태. <span style="color:var(--t3)">(ISR)</span></span>
           </div>
           <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 12px;background:rgba(0,0,0,.02);border-radius:7px">
             <span style="font-size:10px;font-weight:800;background:rgba(0,0,0,.1);color:var(--cyan);border-radius:4px;padding:2px 8px;flex-shrink:0;white-space:nowrap;line-height:1.8">증거금 증가 속도</span>
@@ -4773,7 +4782,7 @@ input[type=range] { background: transparent !important; border: none !important;
           </div>
           <div style="padding:12px;background:rgba(200,48,48,.07);border-radius:8px;border:1px solid rgba(200,48,48,.22)">
             <div style="font-size:13px;font-weight:800;color:#c83030;margin-bottom:6px"> 위험 국면</div>
-            <div style="font-size:12px;color:var(--t2);line-height:1.8"> 신규 진입 금지<br> 기존 30~50% 축소<br> 관망 또는 청산</div>
+            <div style="font-size:12px;color:var(--t2);line-height:1.8"> 신규 진입 비권장<br> 기존 30~50% 축소<br> 관망 또는 청산</div>
           </div>
         </div>
       </div>
@@ -5108,7 +5117,7 @@ input[type=range] { background: transparent !important; border: none !important;
     <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
       <span style="font-size:13px;color:rgba(217,102,74,.6);font-weight:700">0~60% 진입 가능</span>
       <span style="font-size:13px;color:rgba(217,102,74,.85);font-weight:700">60~85% 신중</span>
-      <span style="font-size:13px;color:#d9664a;font-weight:800">85%↑ 진입 금지</span>
+      <span style="font-size:13px;color:#d9664a;font-weight:800">85%↑ 진입 비권장</span>
       <span style="font-size:13px;color:#d9664a;font-weight:700" id="tr-mg-deposit-lbl">원금($) $—</span>
       <!-- 사용률 실시간 표시 -->
       <span style="margin-left:auto;font-size:13px;font-weight:900;font-family:var(--mono)" id="tr-margin-signal-txt">—</span>
@@ -5491,7 +5500,7 @@ input[type=range] { background: transparent !important; border: none !important;
             <div class="res-text">필터 <b style="color:var(--t1)">4개 이상</b> 작동</div>
             <div class="res-arrow">→</div>
             <div class="res-badge" style="background:rgba(217,102,74,.55);color:#5a1a00;"> 3단계 위기비상</div>
-            <div style="font-size:11px;color:var(--t3);margin-left:auto;">즉각 대응 — 위기 프로토콜 가동</div>
+            <div style="font-size:11px;color:var(--t3);margin-left:auto;">즉각 대응 — 위기 단계 — 점검 권장</div>
           </div>
         </div>
       </div>
@@ -5605,7 +5614,7 @@ input[type=range] { background: transparent !important; border: none !important;
       <div class="res-flow" style="margin-top:0;">
         <div class="res-row">
           <div class="res-num" style="background:rgba(217,102,74,.15);color:#d9664a;font-size:12px;font-weight:900;">A</div>
-          <div class="res-text"><b style="color:var(--t1)">오늘 시황 요약</b> — 진입 가능 / 신중 / 금지 확인 → <b style="color:var(--red);">진입 금지면 여기서 종료</b></div>
+          <div class="res-text"><b style="color:var(--t1)">오늘 시황 요약</b> — 진입 가능 / 신중 / 금지 확인 → <b style="color:var(--red);">진입 비권장면 여기서 종료</b></div>
         </div>
         <div class="res-row">
           <div class="res-num" style="background:rgba(0,0,0,.1);color:var(--cyan);font-size:12px;font-weight:900;">B</div>
@@ -5620,7 +5629,7 @@ input[type=range] { background: transparent !important; border: none !important;
           <div class="res-text"><b style="color:var(--t1)">행사가 계산기</b> — 추세 선택 → 만기 선택 → 권장 행사가 확인</div>
         </div>
       </div>
-      <div class="g-warn" style="margin-top:12px;"><b>▲ 2단계 이상이면</b> 신규 진입 절대 금지. 기존 포지션 헤지 또는 청산 검토하세요.</div>
+      <div class="g-warn" style="margin-top:12px;"><b>▲ 2단계 이상이면</b> 신규 진입 비권장. 기존 포지션 헤지 또는 청산 검토하세요.</div>
     </div>
   </div>
 
@@ -5700,7 +5709,7 @@ var lv=C.alert_level;
 
 document.getElementById('alertBand').className='alert-band lv'+lv;
 document.getElementById('aBadge').textContent=ALE[lv]+' '+lv+'단계 · '+C.alert_label;
-document.getElementById('aMsg').textContent=['모든 필터 정상 — 정상 운용 가능','포지션 노출 현황 점검 권고','헤지 또는 포지션 축소 검토','즉각 대응 — 위기 프로토콜 가동'][lv];
+document.getElementById('aMsg').textContent=['모든 필터 정상 — 정상 운용 가능','포지션 노출 현황 점검 권고','헤지 또는 포지션 축소 검토','즉각 대응 — 위기 단계 — 점검 권장'][lv];
 document.getElementById('aRight').textContent='필터 '+C.n_triggered+'/6 충족 · 변동성 총점 '+C.vol_score+'점 · 레짐 '+C.regime;
 
 const vs=C.vol_score;
@@ -5808,7 +5817,7 @@ const regimeLbl=C.regime==='HIGH'?'고변동성':C.regime==='MID'?'중간 변동
     fmt(vs, 1),
     vsC,
     vs, vsC,
-    vs >= 70 ? '신규 진입 금지' : vs >= 30 ? '신중 확인 후 진입' : '진입 검토 가능',
+    vs >= 70 ? '신규 진입 비권장' : vs >= 30 ? '신중 확인 후 진입' : '진입 검토 가능',
     vsBadge,
     '역대 상위 '+volTop+'%  ·  '+(vs>=70?'위험구간 (70점 초과)':vs>=30?'주의구간':'안정구간')
   ));
@@ -5818,8 +5827,8 @@ const regimeLbl=C.regime==='HIGH'?'고변동성':C.regime==='MID'?'중간 변동
   var alertBadgeC   = ['var(--green)','var(--yellow)','var(--orange)','var(--red)'][lv];
   var alertBadgeBg  = ['rgba(26,122,74,.12)','rgba(176,128,64,.12)','rgba(192,112,48,.12)','rgba(42,95,168,.14)'][lv];
   var alertBadge = '<span style="display:inline-block;font-family:var(--mono);font-size:9px;font-weight:800;padding:2px 7px;border-radius:4px;background:' + alertBadgeBg + ';color:' + alertBadgeC + ';border:1px solid ' + alertBadgeC.replace(')',',0.3)').replace('var(','rgba(') + ';margin-bottom:5px">' + alertBadgeTxt + '</span>';
-  var alertActions=['정상 매매 가능','보유 포지션 즉시 점검','신규 진입 금지','즉각 포지션 전체 점검'];
-  var alertDetail=['정상 매매 환경','포지션 손실 확인 필요 · 추가 진입 자제','신규 포지션 절대 금지 · 기존 포지션 축소 검토','즉각 포지션 전체 점검 · 신규 진입 절대 금지'];
+  var alertActions=['정상 매매 가능','보유 포지션 즉시 점검','신규 진입 비권장','즉각 포지션 전체 점검'];
+  var alertDetail=['정상 매매 환경','포지션 손실 확인 필요 · 추가 진입 자제','신규 포지션 비권장 · 기존 포지션 축소 검토','즉각 포지션 전체 점검 · 신규 진입 비권장'];
   var alertCtx=alertDetail[lv]+(alertDays>0?' · 최근 1년 '+alertDays+'일('+alertDaysPct+'%)':'')+(streak>1?' · '+streak+'일 연속':'');
   kr.appendChild(makeKPI(
     ['c-green','c-yellow','c-orange','c-red'][lv],
@@ -5917,12 +5926,12 @@ const regimeLbl=C.regime==='HIGH'?'고변동성':C.regime==='MID'?'중간 변동
 
   var signal, sigColor, sigBg, sigBd, sigText, sigSub;
   if (_total >= 6) {
-    signal   = '진입 금지';
+    signal   = '진입 비권장';
     sigColor = 'var(--red)';
     sigBg    = 'rgba(42,95,168,.07)';
     sigBd    = 'rgba(42,95,168,.30)';
     sigText  = _vsTag + ' · ' + _lvTag + ' · ' + _rgTag;
-    sigSub   = '종합점수 ' + _total + '/7 — 신규 진입 완전 중단 · 기존 포지션 헤지 검토';
+    sigSub   = '종합점수 ' + _total + '/7 — 신규 진입 운용 자제 권장 · 기존 포지션 헤지 검토';
   } else if (_total >= 4) {
     signal   = '신중 진입';
     sigColor = 'var(--orange)';
@@ -6000,7 +6009,7 @@ const regimeLbl=C.regime==='HIGH'?'고변동성':C.regime==='MID'?'중간 변동
   function riskCard(icon, label, risk, sub) {
     // 위험도별 직관적 표현
     var lvMap = {
-      'EXTREME': {emoji:'',txt:'매우 위험',    hint:'방향+변동성 모두 불리 — 신규 진입 금지'},
+      'EXTREME': {emoji:'',txt:'매우 위험',    hint:'방향+변동성 모두 불리 — 신규 진입 비권장'},
       'HIGH':    {emoji:'',txt:'위험',         hint:'행사가 훨씬 멀리 잡거나 진입 자제'},
       'MID':     {emoji:'',txt:'변동성 주의',  hint:'방향 유리해도 변동성 자체가 위험'},
       'CAUTION': {emoji:'',txt:'신중',         hint:'소극적 접근 권고'},
@@ -6180,8 +6189,8 @@ document.getElementById('actionLv').textContent=ALE[lv]+' '+lv+'단계';
 var acts=[
   ['모든 지표 정상 범위','현재 포지션 정상 운용 가능','신규 진입 시 변동성 총점 재확인'],
   ['1개 필터 충족 → 경계','보유 포지션 노출 현황 점검','추가 진입 자제 권고'],
-  ['2~3개 충족 → 위험 증가','포지션 축소 또는 헤지 검토','신규 진입 금지'],
-  ['4개↑ 동시 충족 → 극단','즉각 포지션 전체 점검','위기 3단계 프로토콜 가동','헤지 또는 청산 즉각 검토'],
+  ['2~3개 충족 → 위험 증가','포지션 축소 또는 헤지 검토','신규 진입 비권장'],
+  ['4개↑ 동시 충족 → 극단','즉각 포지션 전체 점검','위기 3단계 — 점검 권장','헤지 또는 청산 즉각 검토'],
 ][lv];
 document.getElementById('actionPanel').innerHTML=acts.map(function(a){
   return '<div style="display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--b1)"><span style="color:'+ALC[lv]+';flex-shrink:0">→</span><span style="font-size:12px">'+a+'</span></div>';
@@ -6202,7 +6211,7 @@ document.getElementById('alertGuide').innerHTML=[
    tip:'이 구간에서 새 포지션을 여는 건 매우 위험해요. 기존 포지션 점검 후 축소를 먼저 검토하세요'},
   {lv:3,e:'',l:'위기 비상',c:'var(--red)',    bc:'rgba(42,95,168,.12)',
    d:'지표 4개 이상 동시 작동. 시장이 극단적으로 불안정해요.',
-   action:' 즉각 포지션 전체 점검 — 신규 진입 절대 금지',
+   action:' 즉각 포지션 전체 점검 — 신규 진입 비권장',
    tip:'즉각 보유 포지션 손실 확인 → 헤지 또는 청산 검토. 시장이 안정될 때까지 대기'},
 ].map(function(g){
   var isEmergency = g.lv === 3;
@@ -6900,7 +6909,7 @@ function renderPTMargin() {
   // 신호 판정
   var signal, sigColor, sigBg, sigBd;
   if (rate > 0.85) {
-    signal = 'Ｘ 진입 금지'; sigColor = '#d9664a'; sigBg = 'rgba(217,102,74,.10)'; sigBd = 'rgba(217,102,74,.35)';
+    signal = 'Ｘ 진입 비권장'; sigColor = '#d9664a'; sigBg = 'rgba(217,102,74,.10)'; sigBd = 'rgba(217,102,74,.35)';
   } else if (rate > target) {
     signal = '신중 진입'; sigColor = '#b8501e'; sigBg = 'rgba(217,102,74,.08)'; sigBd = 'rgba(217,102,74,.28)';
   } else {
@@ -6968,7 +6977,7 @@ function renderPTMargin() {
       + '<div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:8px">'
         + '<span style="font-size:13px;color:rgba(217,102,74,.6);font-weight:700">0~' + (target*100).toFixed(0) + '% 진입 가능</span>'
         + '<span style="font-size:13px;color:rgba(217,102,74,.85);font-weight:700">' + (target*100).toFixed(0) + '~85% 신중</span>'
-        + '<span style="font-size:13px;color:#d9664a;font-weight:800">85%↑ 진입 금지</span>'
+        + '<span style="font-size:13px;color:#d9664a;font-weight:800">85%↑ 진입 비권장</span>'
         + '<span style="font-size:13px;color:#d9664a;font-weight:700">원금($) $' + Math.round(getCapitalUSD()).toLocaleString() + '</span>'
       + '</div>'
     + '</div>'
@@ -8032,7 +8041,7 @@ function initPTOnce() {
         + 'background:var(--card2);border:1px solid rgba(217,102,74,.3);border-radius:8px;padding:12px 14px;'
         + 'box-shadow:0 8px 24px rgba(0,0,0,.18);font-size:13px;color:var(--t2);line-height:1.9">'
         + '<div style="font-size:13px;font-weight:800;color:#d9664a;margin-bottom:8px">리스크 관리 기준</div>'
-        + '<div><b style="color:#c83030">■ 위험 (≥1.5%)</b> — 즉시 포지션 축소 또는 헤지 검토</div>'
+        + '<div><b style="color:#c83030">■ 위험 (≥1.5%)</b> — 포지션 축소 권장 또는 헤지 검토</div>'
         + '<div><b style="color:#c8803a">■ 주의 (1~1.5%)</b> — 신규 진입 자제, 경계 모니터링</div>'
         + '<div><b style="color:#1a7a4a">■ 안전 (<1%)</b> — 정상 운영 범위</div>'
         + '<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--b1);color:var(--t2);font-size:13px;font-weight:500">'
@@ -8469,7 +8478,7 @@ function rmRenderCards() {
   if (!grid) return;
   var labels = {
     psr: ['가격 변동 속도',    'PSR — 최근 가격이 얼마나 빠르게 움직이나'],
-    isr: ['변동성 상승 속도',  'ISR — 시장 공포가 얼마나 빠르게 커지나'],
+    isr: ['변동성 변화 속도',  'ISR — 시장 공포가 얼마나 빠르게 움직이나'],
     lmr: ['증거금 증가 속도',  'LMR — 브로커 요구 담보가 얼마나 늘었나'],
     ivl: ['현재 변동성 수준',  'IVL — 과거 대비 지금이 얼마나 위험한가 (0.75 초과 시 주의)'],
   };
@@ -9208,7 +9217,7 @@ function stUpdateSignalBox(pct) {
     box.style.background='rgba(217,102,74,.08)'; box.style.borderColor='rgba(217,102,74,.3)';
     sym.textContent='X'; sym.style.color='var(--purple)';
     title.textContent='진입 제한 상태'; title.style.color='var(--purple)';
-    desc.textContent='증거금 사용률 70% 이상 — 추가 진입 금지, 기존 포지션 축소 또는 자금 여유 확보가 필요합니다';
+    desc.textContent='증거금 사용률 70% 이상 — 추가 진입 비권장, 기존 포지션 축소 또는 자금 여유 확보가 필요합니다';
     if(gauge) gauge.style.background='var(--red)';
   } else if (pct >= 60) {
     box.style.background='rgba(192,112,48,.08)'; box.style.borderColor='rgba(192,112,48,.3)';
@@ -10072,7 +10081,7 @@ window.ovStartTour = function() {
     {target:'ov-summary-card', title:'A. 오늘 시황 요약 — 진입 판단',
      body:'<b style="color:#d9664a">진입 가능 / 신중 / 금지</b> 3단계로 오늘 진입 여부를 즉시 알 수 있어요.<br>'
        +'콜 매도·풋 매도 방향별 위험도와 ATR 기반 내일 예상 이동폭도 표시돼요.<br>'
-       +'<b style="color:#2a5fa8">진입 금지</b>면 아래 B·C를 볼 필요 없이 바로 종료하세요.',
+       +'<b style="color:#2a5fa8">진입 비권장</b>면 아래 B·C를 볼 필요 없이 바로 종료하세요.',
      pos:'bottom'},
     {target:'kpiRow', title:'B. 핵심 지표 5개',
      body:'<b style="color:#d9664a">현재가</b> · <b style="color:#d9664a">변동성 총점</b> · <b style="color:#d9664a">경보 단계</b> · <b style="color:#d9664a">변동성 레짐</b> · <b style="color:#d9664a">Z-Score</b><br>'
@@ -10091,7 +10100,7 @@ window.ovStartTour = function() {
      pos:'top'},
     {target:'cVol', title:'C-3. 변동성 총점 차트',
      body:'과거 변동성 흐름을 날짜별로 보여줘요.<br>'
-       +'<b style="color:#d9664a">70점 기준선</b> 위 = 신규 진입 금지<br>'
+       +'<b style="color:#d9664a">70점 기준선</b> 위 = 신규 진입 비권장<br>'
        +'<b style="color:#d9664a">30점 기준선</b> 아래 = 진입 검토 가능 (단, 프리미엄 낮을 수 있음)',
      pos:'top'},
     {target:'ov-guide-btn', title:'지표 구성 가이드',
@@ -10123,8 +10132,8 @@ window.ptStartTour = function() {
      pos:'bottom'},
     {target:'pt-sec-c', title:'C. 증거금 현황 — 사용률 확인',
      body:'현재 증거금이 얼마나 사용 중인지 보여줘요.<br>'
-       +'<b style="color:#1a7a4a">60%↓ 안전</b> | <b style="color:#b08040">60~85% 신중</b> | <b style="color:#2a5fa8">85%↑ 진입 금지</b><br>'
-       +'85%를 넘으면 신규 진입 절대 금지, 기존 포지션 축소를 검토하세요.',
+       +'<b style="color:#1a7a4a">60%↓ 안전</b> | <b style="color:#b08040">60~85% 신중</b> | <b style="color:#2a5fa8">85%↑ 진입 비권장</b><br>'
+       +'85%를 넘으면 신규 진입 비권장, 기존 포지션 축소를 검토하세요.',
      pos:'bottom'},
     {target:'pt-sec-d', title:'D. 포지션 현황 — 종목별 노출',
      body:'보유 포지션의 종목별 노출%(프리미엄/원금)를 보여줘요.<br>'
@@ -10289,7 +10298,7 @@ function trRenderMarginGauge(d) {
   // 신호 판정 — [2026-05-08] 게이지 살몬 통일 (사용률 높을수록 진해지는 살몬 그라데이션)
   var sigTxt, sigColor, sigBg, sigBd, barColor;
   if (rate > 0.85) {
-    sigTxt='Ｘ 진입 금지'; sigColor='#d9664a'; sigBg='rgba(217,102,74,.12)'; sigBd='rgba(217,102,74,.5)';
+    sigTxt='Ｘ 진입 비권장'; sigColor='#d9664a'; sigBg='rgba(217,102,74,.12)'; sigBd='rgba(217,102,74,.5)';
     barColor='linear-gradient(90deg,rgba(217,102,74,.55),rgba(217,102,74,1))';
   } else if (rate > target) {
     sigTxt=' 신중 진입'; sigColor='#d9664a'; sigBg='rgba(217,102,74,.08)'; sigBd='rgba(217,102,74,.4)';
@@ -13930,7 +13939,7 @@ function renderPTSummary() {
   if (usedRate > RISK_LINE) {
     stage = 2; stageSymbol = 'Ｘ'; stageColor = '#d9664a';
     stageBg = 'rgba(217,102,74,.18)'; stageBorder = 'rgba(217,102,74,.55)';
-    stageDesc = '진입 금지';
+    stageDesc = '진입 비권장';
   } else if (usedRate > target) {
     stage = 1; stageSymbol = '◇'; stageColor = '#d9664a';
     stageBg = 'rgba(217,102,74,.10)'; stageBorder = 'rgba(217,102,74,.40)';
@@ -13946,7 +13955,7 @@ function renderPTSummary() {
   var stageRanges = [
     { sym:'○', range:'0~'+targetPct+'%',    color:'#d9664a', desc:'진입 가능', active: stage===0 },
     { sym:'◇', range:targetPct+'~85%',      color:'#d9664a', desc:'신중 진입', active: stage===1 },
-    { sym:'Ｘ', range:'85%↑',              color:'#d9664a', desc:'진입 금지', active: stage===2 },
+    { sym:'Ｘ', range:'85%↑',              color:'#d9664a', desc:'진입 비권장', active: stage===2 },
   ];
 
   var targetPct = (target * 100).toFixed(0);
@@ -14826,7 +14835,7 @@ window.ovRenderMultiPanel=function(D){
     var isPeaking=vs>=vsPeak*0.97;
     var _tot=(vs>=70?2:vs>=30?1:0)+lv+(C.regime==='HIGH'?2:C.regime==='MID'?1:0);
     var sig,sc,sb,sd,st;
-    if(_tot>=6){sig='진입 금지';sc='var(--red)';sb='rgba(42,95,168,.07)';sd='rgba(42,95,168,.30)';st='종합점수 '+_tot+'/7 — 신규 진입 완전 중단';}
+    if(_tot>=6){sig='진입 비권장';sc='var(--red)';sb='rgba(42,95,168,.07)';sd='rgba(42,95,168,.30)';st='종합점수 '+_tot+'/7 — 신규 진입 운용 자제 권장';}
     else if(_tot>=4){sig='신중 진입';sc='var(--orange)';sb='rgba(192,112,48,.07)';sd='rgba(192,112,48,.28)';st='종합점수 '+_tot+'/7 — 소량만 허용';}
     else if(_tot>=2){sig='점검 후 진입';sc='var(--yellow)';sb='rgba(176,128,64,.07)';sd='rgba(176,128,64,.25)';st='종합점수 '+_tot+'/7 — 재확인 필요';}
     else{sig='정상 진입';sc='var(--green)';sb='rgba(26,122,74,.07)';sd='rgba(26,122,74,.25)';st='종합점수 '+_tot+'/7 — 정상 운용 가능';}
@@ -16150,7 +16159,7 @@ window.rmCalcMacros = function(d) {
    출력: { blocked, final_strike, final_contracts, final_lp, base_lp, extraSteps, outOfRange, macros, reason, base_strike, base_premium }
    알고리즘:
      1. sv_rm_data → rmCalcMacros() → 시장국면 매크로
-     2. sizing<=0 또는 생존경보 2단계+ → 진입 금지
+     2. sizing<=0 또는 생존경보 2단계+ → 진입 비권장
      3. st_detail_v3에서 추세 반영 baseRow 찾기 (lossPct OR lossProb)
      4. 시장국면 외가 단계: NORMAL=0, WARNING=1, CRISIS=2 (꼬리위험 +1)
      5. 손실확률 단계 [20,10,3,1]에서 baseIdx + extraSteps만큼 외가 이동
@@ -16373,7 +16382,8 @@ window.calcFinalEntry = function(code, monthLabel, direction) {
     h += '<div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--t2)">신규 진입 한도 <span style="font-size:11px;color:var(--t3)">(콜 · 풋, 총 자본 대비)</span></span><span id="ovv2-cap-' + code + '" style="color:var(--t1);font-weight:600">─</span></div>';
     h += '</div>';
 
-    h += '<div style="display:flex;align-items:center;font-size:12px;color:var(--t2);margin-bottom:10px;gap:8px"><span style="min-width:64px" id="ovv2-vol-txt-' + code + '">변동성 ─</span><div style="flex:1;height:4px;background:rgba(148,163,184,.18);border-radius:2px;overflow:hidden"><div id="ovv2-vol-bar-' + code + '" style="width:0;height:100%;background:#97C459"></div></div></div>';
+    /* [SESSION 8 숨김 #13] 카드 안 변동성 N점 영역 — D 영역 변동성 점수와 동일 데이터(vol_score). 통화 합의로 숨김. 복원 시 display:none → display:flex */
+    h += '<div style="display:none;align-items:center;font-size:12px;color:var(--t2);margin-bottom:10px;gap:8px"><span style="min-width:64px" id="ovv2-vol-txt-' + code + '">변동성 ─</span><div style="flex:1;height:4px;background:rgba(148,163,184,.18);border-radius:2px;overflow:hidden"><div id="ovv2-vol-bar-' + code + '" style="width:0;height:100%;background:#97C459"></div></div></div>';
 
     h += '<div id="ovv2-action-' + code + '" style="background:rgba(122,115,110,.06);color:var(--t3);padding:11px 14px;border-radius:8px;text-align:center;font-size:13px;font-weight:600;letter-spacing:.03em;border:0.5px solid rgba(122,115,110,.20)">데이터 대기</div>';
 
@@ -16977,8 +16987,8 @@ window._t14GetInstPhaseLimit = function(code) {
         }
       });
       if (posCall > 0 || posPut > 0) {
-        var dCall = Math.round(posCall * (m.decelCall||0) / 100);
-        var dPut  = Math.round(posPut  * (m.decelPut ||0) / 100);
+        var dCall = Math.floor(posCall * (m.decelCall||0) / 100);
+        var dPut  = Math.floor(posPut  * (m.decelPut ||0) / 100);
         if (dCall > 0 || dPut > 0) reduceCount++;
         if (capUSD > 0) {
           var mult = _uxcInstMult(d.code);
@@ -17041,8 +17051,8 @@ window._t14GetInstPhaseLimit = function(code) {
         }
       });
       var hasPos = (posCall > 0 || posPut > 0);
-      var dCall = Math.round(posCall * (m.decelCall||0) / 100);
-      var dPut  = Math.round(posPut  * (m.decelPut ||0) / 100);
+      var dCall = Math.floor(posCall * (m.decelCall||0) / 100);
+      var dPut  = Math.floor(posPut  * (m.decelPut ||0) / 100);
       var mult = _uxcInstMult(d.code);
       var price = parseFloat(d.price) || 0;
       var capPctN = (m.capPct||0.015) * 100;
@@ -17054,7 +17064,7 @@ window._t14GetInstPhaseLimit = function(code) {
 
       var actionTxt = '', actionCls = '';
       if (anyBreach) {
-        actionTxt = '한도 넘음 - 즉시 축소';
+        actionTxt = '한도 넘음 - 축소 권장';
         actionCls = 'uxc-action-close';
       } else if (dCall > 0 || dPut > 0) {
         var parts = [];
@@ -17226,7 +17236,7 @@ window._t14GetInstPhaseLimit = function(code) {
           '</div>' +
           '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--b1)">' +
             _r5MakeIndic('가격 변동 속도 (PSR)', d.psr, 1.2, 1.5) +
-            _r5MakeIndic('변동성 상승 속도 (ISR)', d.isr, 1.2, 1.5) +
+            _r5MakeIndic('변동성 변화 속도 (ISR)', d.isr, 1.2, 1.5) +
             _r5MakeIndic('증거금 증가 속도 (LMR)', d.lmr, 1.2, 1.5) +
             _r5MakeIndic('현재 변동성 수준 (IVL)', d.ivl, 0.50, 0.75) +
             _r5MakeIndic('방향성 변동 속도 (DSR)', Math.abs(parseFloat(d.dsr)||0), 1.0, 1.5) +
@@ -17336,8 +17346,8 @@ window._t14GetInstPhaseLimit = function(code) {
       var cBreach = capUSD > 0 && cExp > capPctN;
       var pBreach = capUSD > 0 && pExp > capPctN;
 
-      var dCall = Math.round(posCall * (m.decelCall||0) / 100);
-      var dPut  = Math.round(posPut  * (m.decelPut ||0) / 100);
+      var dCall = Math.floor(posCall * (m.decelCall||0) / 100);
+      var dPut  = Math.floor(posPut  * (m.decelPut ||0) / 100);
 
       /* 4매크로 표시 — 콜/풋 다르면 분리 */
       var sizeRow = (Math.abs(m.sizingCall - m.sizingPut) < 0.01)
@@ -17386,7 +17396,7 @@ window._t14GetInstPhaseLimit = function(code) {
             '<div class="uxc-stat-block"><div class="uxc-stat-cap">최대 허용 비중</div><div style="font-family:var(--mono);font-weight:700;color:var(--t1)">' + capPctN.toFixed(2) + '%</div></div>' +
           '</div>' +
           posSection +
-          '<div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--b1);font-size:12px;color:var(--t3);font-family:var(--mono)" title="PSR=가격 변동 속도, ISR=변동성 상승 속도, LMR=증거금 증가 속도, IVL=현재 변동성 수준, DSR=방향성 변동 속도">PSR ' + (parseFloat(d.psr)||0).toFixed(2) + ' · ISR ' + (parseFloat(d.isr)||0).toFixed(2) + ' · LMR ' + (parseFloat(d.lmr)||0).toFixed(2) + ' · IVL ' + (parseFloat(d.ivl)||0).toFixed(2) + ' · DSR ' + (parseFloat(d.dsr)||0).toFixed(2) + '</div>' +
+          '<div style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--b1);font-size:12px;color:var(--t3);font-family:var(--mono)" title="PSR=가격 변동 속도, ISR=변동성 변화 속도, LMR=증거금 증가 속도, IVL=현재 변동성 수준, DSR=방향성 변동 속도">PSR ' + (parseFloat(d.psr)||0).toFixed(2) + ' · ISR ' + (parseFloat(d.isr)||0).toFixed(2) + ' · LMR ' + (parseFloat(d.lmr)||0).toFixed(2) + ' · IVL ' + (parseFloat(d.ivl)||0).toFixed(2) + ' · DSR ' + (parseFloat(d.dsr)||0).toFixed(2) + '</div>' +
         '</div>';
     });
     grid.innerHTML = html;
@@ -18646,7 +18656,7 @@ window._t14GetInstPhaseLimit = function(code) {
       var dCall = Math.round(posCall * (m.decelCall||0) / 100);
       var dPut  = Math.round(posPut  * (m.decelPut ||0) / 100);
       if (anyBreach) {
-        actionTxt = '한도 넘음 — 즉시 축소'; actionColor = 'var(--cyan)';
+        actionTxt = '한도 넘음 — 축소 권장'; actionColor = 'var(--cyan)';
         actionBg = 'rgba(217,102,74,.12)'; actionBorder = 'rgba(217,102,74,.40)';
       } else if (dCall > 0 || dPut > 0) {
         var parts = [];
@@ -18945,7 +18955,7 @@ window._t14GetInstPhaseLimit = function(code) {
       }
       detail.innerHTML =
         bar5('가격 변동 속도',   'PSR', psr, 1.2, 1.5, '최근 가격이 얼마나 빠르게 움직이나') +
-        bar5('변동성 상승 속도', 'ISR', isr, 1.2, 1.5, '시장 공포가 얼마나 빠르게 커지나') +
+        bar5('변동성 변화 속도', 'ISR', isr, 1.2, 1.5, '시장 공포가 얼마나 빠르게 움직이나') +
         bar5('증거금 증가 속도', 'LMR', lmr, 1.2, 1.5, '브로커 요구 담보가 얼마나 늘었나') +
         bar5('현재 변동성 수준', 'IVL', ivl, 0.50, 0.75, '과거 대비 지금이 얼마나 위험한가') +
         bar5('방향성 변동 속도', 'DSR', dsr, 1.0, 1.5, '한 방향으로 얼마나 빠르게 쏠리나');
@@ -18958,7 +18968,7 @@ window._t14GetInstPhaseLimit = function(code) {
     _uvpRadarChart = new Chart(ctx, {
       type: 'radar',
       data: {
-        labels: ['가격 변동\n(PSR)', '변동성 상승\n(ISR)', '증거금 증가\n(LMR)', '현재 변동성\n(IVL)', '방향성 변동\n(DSR)'],
+        labels: ['가격 변동\n(PSR)', '변동성 변화\n(ISR)', '증거금 증가\n(LMR)', '현재 변동성\n(IVL)', '방향성 변동\n(DSR)'],
         datasets: [{
           label: '현재 값',
           data: [psr, isr, lmr, ivl, dsr],
@@ -19179,7 +19189,7 @@ window._t14GetInstPhaseLimit = function(code) {
       var color = breach ? 'linear-gradient(90deg,#c83030,#d9664a)' :
                   pct >= 70 ? 'linear-gradient(90deg,#b08040,#c8803a)' :
                   'linear-gradient(90deg,#1a7a4a,#3a9e6a)';
-      var status = breach ? '<span style="color:var(--cyan);font-weight:700">⚠ 한도 넘음 — 즉시 축소</span>' :
+      var status = breach ? '<span style="color:var(--cyan);font-weight:700">⚠ 한도 넘음 — 축소 권장</span>' :
                    decel > 0 ? '<span style="color:var(--yellow);font-weight:700">권장 축소 ' + decel + '계약</span>' :
                    '<span style="color:var(--green);font-weight:700">유지</span>';
       return '<div style="margin-bottom:14px">' +
@@ -20523,7 +20533,7 @@ window._t14GetInstPhaseLimit = function(code) {
       var dCall = Math.round(posCall * (m.decelCall||0) / 100);
       var dPut  = Math.round(posPut  * (m.decelPut ||0) / 100);
       if (anyBreach) {
-        actionTxt = '한도 넘음 — 즉시 축소'; actionColor = 'var(--cyan)';
+        actionTxt = '한도 넘음 — 축소 권장'; actionColor = 'var(--cyan)';
         actionBg = 'rgba(217,102,74,.12)'; actionBorder = 'rgba(217,102,74,.40)';
       } else if (dCall > 0 || dPut > 0) {
         var parts = [];
@@ -20940,7 +20950,7 @@ window._t14GetInstPhaseLimit = function(code) {
       }
       detail.innerHTML =
         bar5('가격 변동 속도',   'PSR', psr, 1.2, 1.5, '최근 가격이 얼마나 빠르게 움직이나') +
-        bar5('변동성 상승 속도', 'ISR', isr, 1.2, 1.5, '시장 공포가 얼마나 빠르게 커지나') +
+        bar5('변동성 변화 속도', 'ISR', isr, 1.2, 1.5, '시장 공포가 얼마나 빠르게 움직이나') +
         bar5('증거금 증가 속도', 'LMR', lmr, 1.2, 1.5, '브로커 요구 담보가 얼마나 늘었나') +
         bar5('현재 변동성 수준', 'IVL', ivl, 0.50, 0.75, '과거 대비 지금이 얼마나 위험한가') +
         bar5('방향성 변동 속도', 'DSR', dsr, 1.0, 1.5, '한 방향으로 얼마나 빠르게 쏠리나');
@@ -20953,7 +20963,7 @@ window._t14GetInstPhaseLimit = function(code) {
     _uvpRadarChart = new Chart(ctx, {
       type: 'radar',
       data: {
-        labels: ['가격 변동\n(PSR)', '변동성 상승\n(ISR)', '증거금 증가\n(LMR)', '현재 변동성\n(IVL)', '방향성 변동\n(DSR)'],
+        labels: ['가격 변동\n(PSR)', '변동성 변화\n(ISR)', '증거금 증가\n(LMR)', '현재 변동성\n(IVL)', '방향성 변동\n(DSR)'],
         datasets: [{
           label: '현재 값',
           data: [psr, isr, lmr, ivl, dsr],
@@ -21174,7 +21184,7 @@ window._t14GetInstPhaseLimit = function(code) {
       var color = breach ? 'linear-gradient(90deg,#c83030,#d9664a)' :
                   pct >= 70 ? 'linear-gradient(90deg,#b08040,#c8803a)' :
                   'linear-gradient(90deg,#1a7a4a,#3a9e6a)';
-      var status = breach ? '<span style="color:var(--cyan);font-weight:700">⚠ 한도 넘음 — 즉시 축소</span>' :
+      var status = breach ? '<span style="color:var(--cyan);font-weight:700">⚠ 한도 넘음 — 축소 권장</span>' :
                    decel > 0 ? '<span style="color:var(--yellow);font-weight:700">권장 축소 ' + decel + '계약</span>' :
                    '<span style="color:var(--green);font-weight:700">유지</span>';
       return '<div style="margin-bottom:14px">' +
@@ -21505,13 +21515,13 @@ window._t14GetInstPhaseLimit = function(code) {
     hintParts.push('1회 한도 자본의 ' + capSingle + '%');
     var hint = hintParts.join(' · ');
 
-    /* 1순위: 생존경보 (절대 차단) */
+    /* 1순위: 생존경보 (비권장) */
     if (alertLv >= 1) {
       return {
-        label: '신규 진입 절대 금지',
+        label: '신규 진입 비권장',
         action: '변동성 경보 ' + alertLv + '단계 발동',
         hint: '즉시 점검 필요',
-        sub: '변동성 경보 ' + alertLv + '단계 (절대 차단기)',
+        sub: '변동성 경보 ' + alertLv + '단계 (비권장기)',
         color: 'red',
         pulse: 'strong'
       };
@@ -21524,7 +21534,7 @@ window._t14GetInstPhaseLimit = function(code) {
     /* 2순위: 시장국면 위기 또는 주의+꼬리위험 → 진입 제한 */
     if (ph === 'CRISIS' || (ph === 'WARNING' && tail)) {
       return {
-        label: '신규 진입 절대 금지',
+        label: '신규 진입 비권장',
         action: ph === 'CRISIS' ? '시장 위기 국면' : '주의 국면 + 꼬리위험 활성',
         hint: tail ? '예상 못한 급변동 가능' : '추가 변동성 확대 가능',
         sub: ph === 'CRISIS' ? ('시장국면 위기' + (tail ? ' + 꼬리위험' : '')) : '주의 + 꼬리위험 (한 단계 상향)',
@@ -21695,7 +21705,7 @@ window._t14GetInstPhaseLimit = function(code) {
       return { label: '해당 없음', sub: '보유 포지션이 없어요. 신규 진입은 단계 1·2·3 참고', color: 'gray' };
     }
     /* 생존경보 우선순위 */
-    if (alertLv >= 3) return { label: '즉시 청산', sub: '생존경보 3단계 — 위기비상', color: 'red', pulse: 'strong' };
+    if (alertLv >= 3) return { label: '청산 검토', sub: '생존경보 3단계 — 위기비상', color: 'red', pulse: 'strong' };
     if (alertLv >= 2) return { label: '콜·풋 50% 축소 + 헤지', sub: '생존경보 2단계 — 위험방어', color: 'red', pulse: 'strong' };
     if (alertLv >= 1) return { label: '즉시 점검 필요', sub: '생존경보 1단계 — 노출점검', color: 'red', pulse: 'subtle' };
     var m = _uvpReadMacros(code);
@@ -21891,7 +21901,7 @@ window._t14GetInstPhaseLimit = function(code) {
     var elAlertAction = document.getElementById('uvp-info-alert-action');
     if (elAlertAction) {
       if (alertLv >= 3) {
-        elAlertAction.textContent = '전량 또는 대폭 축소 · 신규 진입 금지';
+        elAlertAction.textContent = '전량 또는 대폭 축소 · 신규 진입 비권장';
         elAlertAction.style.background = 'rgba(200,48,48,.12)';
         elAlertAction.style.color = '#c83030';
       } else if (alertLv >= 2) {
@@ -22489,7 +22499,9 @@ window._t14GetInstPhaseLimit = function(code) {
     if (elDistP) elDistP.textContent = (sPut > 0 && curPrice > 0) ? ('-' + distPut.toFixed(1) + '% 아래') : '─';
 
     /* [47차 다듬기 11차] 1계약 필요 증거금 — admin row 정확 매칭 시에만 표시. 매칭 안 되면 "HTS에서 직접 확인" */
-    var elSpan = document.getElementById('uvp-info-step3-span');
+    /* [SESSION 8 3번] 콜·풋 분리 — 옛 elSpan (uvp-info-step3-span) 한 ID → 두 ID로 분리 */
+    var elSpanCall = document.getElementById('uvp-info-step3-span-call');
+    var elSpanPut  = document.getElementById('uvp-info-step3-span-put');
     function _fmtSpan(v) {
       if (v == null || v === '' || v === 0) return null;
       var s = String(v).trim();
@@ -22498,30 +22510,29 @@ window._t14GetInstPhaseLimit = function(code) {
       var n = parseFloat(s.replace(/[,\s$₩]/g,''));
       return isFinite(n) && n > 0 ? ('$' + n.toLocaleString()) : null;
     }
-    if (elSpan) {
-      var spStrC = _fmtSpan(rC && rC.span);
-      var spStrP = _fmtSpan(rP && rP.span);
-      if (spStrC && spStrP) {
-        if (spStrC === spStrP) elSpan.textContent = spStrC;
-        else elSpan.textContent = spStrC + ' / ' + spStrP;
-        elSpan.style.color = 'var(--t1)';
-        elSpan.style.fontStyle = '';
-        elSpan.style.fontSize = '22px';
-      } else if (spStrC) {
-        elSpan.textContent = spStrC;
-        elSpan.style.color = 'var(--t1)';
-        elSpan.style.fontStyle = '';
-        elSpan.style.fontSize = '22px';
-      } else if (spStrP) {
-        elSpan.textContent = spStrP;
-        elSpan.style.color = 'var(--t1)';
-        elSpan.style.fontStyle = '';
-        elSpan.style.fontSize = '22px';
+    /* [SESSION 8 3번] 콜·풋 각각 채우기 — 옛 평균/슬래시 분기 제거 */
+    var spStrC = _fmtSpan(rC && rC.span);
+    var spStrP = _fmtSpan(rP && rP.span);
+    if (elSpanCall) {
+      if (spStrC) {
+        elSpanCall.textContent = spStrC;
+        elSpanCall.style.color = 'var(--t1)';
+        elSpanCall.style.fontStyle = '';
       } else {
-        elSpan.textContent = 'HTS에서 직접 확인';
-        elSpan.style.color = 'var(--t3)';
-        elSpan.style.fontStyle = 'italic';
-        elSpan.style.fontSize = '14px';
+        elSpanCall.textContent = 'HTS 확인';
+        elSpanCall.style.color = 'var(--t3)';
+        elSpanCall.style.fontStyle = 'italic';
+      }
+    }
+    if (elSpanPut) {
+      if (spStrP) {
+        elSpanPut.textContent = spStrP;
+        elSpanPut.style.color = 'var(--t1)';
+        elSpanPut.style.fontStyle = '';
+      } else {
+        elSpanPut.textContent = 'HTS 확인';
+        elSpanPut.style.color = 'var(--t3)';
+        elSpanPut.style.fontStyle = 'italic';
       }
     }
   }
@@ -22570,8 +22581,9 @@ window._t14GetInstPhaseLimit = function(code) {
       if (pct <= 0) return null;
       if (holding > 0) {
         var raw = holding * pct / 100;
-        var cut = Math.round(raw);
-        if (cut < 1 && raw > 0) cut = 1;  /* 0.5 미만이라도 축소 권장이면 최소 1계약 */
+        var cut = Math.floor(raw);
+        /* [SESSION 8] 1계약 강제 보장 제거 — 0계약 청산이 자연스러움 (레이님 통화 합의 2026-05-11) */
+        if (cut === 0) return null;  /* [SESSION 8] 0계약이면 "축소 불필요" 표시 (A안) */
         return { real: true, cut: cut, holding: holding };
       }
       return { real: false, cut: 1, holding: 10 };  /* 가상 예시: 10계약 보유 가정 */
