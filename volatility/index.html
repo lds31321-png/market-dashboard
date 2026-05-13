@@ -1883,11 +1883,11 @@ input[type=range] { background: transparent !important; border: none !important;
                 <span id="uvp-info-step3-trend" style="color:var(--t1);font-weight:700">─</span>
               </div>
               <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px;padding:8px 12px;background:rgba(217,102,74,.06);border-radius:6px;border:1px solid rgba(217,102,74,.18)">
-                <span style="color:var(--t2);font-weight:500">콜 매도 권장 손실확률</span>
+                <span id="uvp-c1-lbl-call" style="color:var(--t2);font-weight:500">콜 매도 권장 손실확률</span>
                 <span id="uvp-info-step3-lp-call" style="color:var(--t1);font-weight:800">─</span>
               </div>
               <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px;padding:8px 12px;background:rgba(42,95,168,.05);border-radius:6px;border:1px solid rgba(42,95,168,.18)">
-                <span style="color:var(--t2);font-weight:500">풋 매도 권장 손실확률</span>
+                <span id="uvp-c1-lbl-put" style="color:var(--t2);font-weight:500">풋 매도 권장 손실확률</span>
                 <span id="uvp-info-step3-lp-put" style="color:var(--t1);font-weight:800">─</span>
               </div>
             </div>
@@ -1900,7 +1900,7 @@ input[type=range] { background: transparent !important; border: none !important;
               <span style="font-size:13px;color:var(--t3);font-weight:700">권장 행사가 + 받을 옵션가격</span>
             </div>
             <div style="display:flex;flex-direction:column;gap:8px">
-              <div style="padding:12px 14px;background:rgba(217,102,74,.08);border-radius:8px;border:1.5px solid rgba(217,102,74,.25)">
+              <div id="uvp-c2-call-box" style="padding:12px 14px;background:rgba(217,102,74,.08);border-radius:8px;border:1.5px solid rgba(217,102,74,.25)">
                 <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px">
                   <span style="color:var(--t2);font-weight:500;font-size:13px">콜 매도 행사가</span>
                   <span id="uvp-info-step3-strike-call" style="color:var(--t1);font-weight:900;font-family:var(--mono);font-size:22px;line-height:1">─</span>
@@ -1910,7 +1910,7 @@ input[type=range] { background: transparent !important; border: none !important;
                   <span id="uvp-info-step3-prem-call" style="color:var(--t2);font-weight:700;font-family:var(--mono)">─</span>
                 </div>
               </div>
-              <div style="padding:12px 14px;background:rgba(42,95,168,.06);border-radius:8px;border:1.5px solid rgba(42,95,168,.22)">
+              <div id="uvp-c2-put-box" style="padding:12px 14px;background:rgba(42,95,168,.06);border-radius:8px;border:1.5px solid rgba(42,95,168,.22)">
                 <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px">
                   <span style="color:var(--t2);font-weight:500;font-size:13px">풋 매도 행사가</span>
                   <span id="uvp-info-step3-strike-put" style="color:var(--t1);font-weight:900;font-family:var(--mono);font-size:22px;line-height:1">─</span>
@@ -1991,9 +1991,9 @@ input[type=range] { background: transparent !important; border: none !important;
             </select>
             <span class="uxc-cap">손실확률</span>
             <select id="uvp-chart1-lp" style="background:var(--card);border:1px solid var(--b1);border-radius:var(--r);padding:6px 12px;font-size:13px;cursor:pointer" onchange="window.uvpRenderChart1()">
-              <!-- [48ch_session4 1단계] 옵션 2개로 단순화 (recommend / with_phase). uvpRenderChart1은 NaN fallback으로 자동 모드 동작. -->
-              <option value="recommend">손실확률</option>
-              <option value="with_phase">손실확률 (시장국면 반영)</option>
+              <!-- [SESSION 9 §4 v3] 권장 + 가장 외가 2개로 단순화 -->
+              <option value="recommend">권장 행사가</option>
+              <option value="most_otm">가장 외가</option>
             </select>
           </div>
         </div>
@@ -3706,17 +3706,39 @@ input[type=range] { background: transparent !important; border: none !important;
     </div>
   </div>
 
-  <!-- ─── F. 개별 포지션 카드 ───────────────────────────── -->
+  <!-- ─── [SESSION 9 §10] F. 위험 포지션 카드 (옛 명: 개별 포지션 카드) ───────────────────────────── -->
   <div id="pt-sec-f" style="margin:24px 0 16px">
     <div style="display:flex;align-items:center;gap:12px">
       <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite 1.2s;">F</div>
       <div>
-        <div style="font-size:23px;font-weight:800;color:var(--t1)">개별 포지션 카드</div>
-        <div style="font-size:13px;color:var(--t2);margin-top:3px;font-weight:500">위험도 순 정렬 — 빨간 카드부터 우선 확인</div>
+        <div style="font-size:23px;font-weight:800;color:var(--t1)">위험 포지션 카드</div>
+        <div style="font-size:13px;color:var(--t2);margin-top:3px;font-weight:500">위험 단계 카드만 표시 (필터로 조정)</div>
       </div>
     </div>
     <div style="height:2px;background:linear-gradient(90deg,rgba(217,102,74,.6),transparent);margin-top:12px;border-radius:1px"></div>
   </div>
+
+  <!-- [SESSION 9 §10] 필터 바 — 조회 버튼 (살몬 펄스) -->
+  <div id="pt-pos-filter" style="margin-bottom:14px;padding:12px 16px;background:var(--card2);border:1px solid rgba(0,0,0,.08);border-radius:10px;display:flex;flex-direction:column;gap:10px">
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <span style="font-size:12px;color:var(--t2);font-weight:700;min-width:64px">표시 모드</span>
+      <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;color:var(--t1)"><input type="radio" name="pt-pos-mode" value="risk" checked style="margin:0"> 위험 경보만</label>
+      <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;color:var(--t1)"><input type="radio" name="pt-pos-mode" value="loss" style="margin:0"> 손익 마이너스만</label>
+      <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;color:var(--t1)"><input type="radio" name="pt-pos-mode" value="all" style="margin:0"> 전체 보기</label>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <span style="font-size:12px;color:var(--t2);font-weight:700;min-width:64px">세부</span>
+      <span style="font-size:12px;color:var(--t2)">종목</span>
+      <select id="pt-pos-filter-inst" style="padding:4px 10px;font-size:12px;border:1px solid rgba(0,0,0,.18);border-radius:6px;background:#fff;color:var(--t1);cursor:pointer"><option value="">전체</option></select>
+      <span style="font-size:12px;color:var(--t2)">월물</span>
+      <select id="pt-pos-filter-month" style="padding:4px 10px;font-size:12px;border:1px solid rgba(0,0,0,.18);border-radius:6px;background:#fff;color:var(--t1);cursor:pointer"><option value="">전체</option></select>
+      <span style="font-size:12px;color:var(--t2)">구분</span>
+      <select id="pt-pos-filter-type" style="padding:4px 10px;font-size:12px;border:1px solid rgba(0,0,0,.18);border-radius:6px;background:#fff;color:var(--t1);cursor:pointer"><option value="">전체</option><option value="C">콜 매도</option><option value="P">풋 매도</option></select>
+      <button id="pt-pos-search-btn" onclick="renderPTPositions()" style="margin-left:auto;padding:8px 22px;background:rgba(217,102,74,.10);border:2px solid #d9664a;border-radius:8px;color:#d9664a;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;animation:pulse-t2 2.4s ease-in-out infinite;letter-spacing:.04em;display:inline-flex;align-items:center;gap:6px" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">조회</button>
+      <span id="pt-pos-filter-count" style="font-size:11px;color:var(--t3);font-weight:600;margin-left:10px">— 표시 중</span>
+    </div>
+  </div>
+
   <div id="pt-pos-list">
     <div style="text-align:center;padding:30px;color:var(--t3);font-size:12px;line-height:2.2">
       HTS 데이터를 붙여넣으면<br>포지션이 자동으로 표시됩니다.
@@ -6987,16 +7009,65 @@ function renderPTMargin() {
 // 종목별 노출 현황
 
 
-// 개별 포지션 카드
+// [SESSION 9 §10] 위험 포지션 카드 — 필터 기능 추가 (표시 모드 + 종목/월물/콜풋)
 function renderPTPositions() {
   var el = document.getElementById('pt-pos-list');
   var countEl = document.getElementById('pos-count-tag');
   if (countEl) countEl.textContent = ptPositions.length > 0 ? ptPositions.length + '개 포지션' : '포지션 없음';
+
+  /* [SESSION 9 §10] 필터 드롭다운 옵션 채우기 — 현재 보유 종목·월물 자동 추출 */
+  (function _fillFilterOptions(){
+    var instSel  = document.getElementById('pt-pos-filter-inst');
+    var monthSel = document.getElementById('pt-pos-filter-month');
+    if (!instSel || !monthSel) return;
+    var instSet = {}, monthSet = {};
+    ptPositions.forEach(function(p){
+      if (p.parsed) {
+        if (p.parsed.instCode)  instSet[p.parsed.instCode] = (typeof INST !== 'undefined' && INST[p.parsed.instCode] ? INST[p.parsed.instCode].name : p.parsed.instCode);
+        if (p.parsed.monthName) monthSet[p.parsed.monthName] = true;
+      }
+    });
+    var curInst = instSel.value, curMonth = monthSel.value;
+    instSel.innerHTML = '<option value="">전체</option>' + Object.keys(instSet).sort().map(function(k){ return '<option value="' + k + '">' + instSet[k] + '</option>'; }).join('');
+    instSel.value = curInst;
+    monthSel.innerHTML = '<option value="">전체</option>' + Object.keys(monthSet).sort().map(function(k){ return '<option value="' + k + '">' + k + '</option>'; }).join('');
+    monthSel.value = curMonth;
+  })();
+
   if (ptPositions.length === 0) {
     el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--t3);font-size:12px;line-height:2.2">HTS 데이터를 붙여넣으면<br>포지션이 자동으로 표시됩니다.</div>';
+    var cntEl0 = document.getElementById('pt-pos-filter-count');
+    if (cntEl0) cntEl0.textContent = '— 표시 중';
     return;
   }
-  var sorted = ptPositions.slice().sort(function(a, b) {
+
+  /* [SESSION 9 §10] 필터 조건 읽기 */
+  var modeR = document.querySelector('input[name="pt-pos-mode"]:checked');
+  var mode  = modeR ? modeR.value : 'risk';
+  var fInst  = (document.getElementById('pt-pos-filter-inst')  || {}).value || '';
+  var fMonth = (document.getElementById('pt-pos-filter-month') || {}).value || '';
+  var fType  = (document.getElementById('pt-pos-filter-type')  || {}).value || '';
+
+  var filtered = ptPositions.filter(function(p){
+    if (!p.parsed) return false;
+    var rk = posRisk(p);
+    if (mode === 'risk' && rk.cls === 'safe') return false;
+    if (mode === 'loss' && !(p.optionPL < 0)) return false;
+    if (fInst  && p.parsed.instCode !== fInst)   return false;
+    if (fMonth && p.parsed.monthName !== fMonth) return false;
+    if (fType  && p.parsed.type      !== fType)  return false;
+    return true;
+  });
+
+  var cntEl = document.getElementById('pt-pos-filter-count');
+  if (cntEl) cntEl.textContent = filtered.length + '개 표시 중 (전체 ' + ptPositions.length + '개)';
+
+  if (filtered.length === 0) {
+    el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--t3);font-size:12px;line-height:2.2">필터 조건에 해당하는 포지션이 없습니다.<br>필터를 "전체 보기"로 바꿔보세요.</div>';
+    return;
+  }
+
+  var sorted = filtered.slice().sort(function(a, b) {
     var ra = posRisk(a), rb = posRisk(b);
     var order = {'danger-3':0,'danger-2':1,'danger-1':2,'safe':3};
     return (order[ra.cls]||3) - (order[rb.cls]||3);
@@ -20648,13 +20719,28 @@ window._t14GetInstPhaseLimit = function(code) {
   /* [48ch_session4 1단계] LP 옵션 정비 — 두 모드 고정 (시트 가용 lp 동적 추가 폐기)
      1단계는 라벨만 분리. 실제 분기(추세 추천 vs 시장국면 반영)는 2단계에서 추가. */
   function _uvpFillLps() {
+    /* [SESSION 9 §4 v3b] 가장 외가 옵션 라벨 — raw 데이터에서 콜·풋 가장 작은 lp 동적 추출 */
     var lpSel = document.getElementById('uvp-chart1-lp');
     if (!lpSel) return;
+    var minCallLp = Infinity, minPutLp = Infinity;
+    try {
+      var item = _uvpCtx && _uvpCtx.item;
+      var rows = (item && item.months && item.months[0] && item.months[0].rows) || [];
+      rows.forEach(function(r){
+        var lp = parseFloat(String(r.lossPct||r.lossProb||r.lossP||'0').replace(/%/g,'').trim()) || 0;
+        if (lp <= 0) return;
+        if (r.type === '콜' && lp < minCallLp) minCallLp = lp;
+        if (r.type === '풋' && lp < minPutLp)  minPutLp  = lp;
+      });
+    } catch(e){}
+    var _cTxt = (minCallLp < Infinity) ? minCallLp + '%' : '─';
+    var _pTxt = (minPutLp  < Infinity) ? minPutLp + '%'  : '─';
+    var otmLabel = '콜 ' + _cTxt + ' · 풋 ' + _pTxt + ' 손실확률';
     var prev = lpSel.value;
-    lpSel.innerHTML = '<option value="recommend">손실확률</option>'
-                    + '<option value="with_phase">손실확률 (시장국면 반영)</option>';
-    if (prev === 'with_phase') lpSel.value = 'with_phase';
-    else lpSel.value = 'recommend';
+    lpSel.innerHTML = '<option value="recommend">권장 행사가</option>'
+                    + '<option value="most_otm">' + otmLabel + '</option>';
+    /* [SESSION 9 §4 v3d] 종목 전환 시 항상 기본값 '권장 행사가'로 초기화 — prev 보존 제거 */
+    lpSel.value = 'recommend';
   }
 
   window.uvpRenderChart1 = function() {
@@ -20666,28 +20752,23 @@ window._t14GetInstPhaseLimit = function(code) {
     if (!m) return;
     var monthLabel = m.label || ('월물' + (mIdx+1));
     var rows = m.rows || [];
-    var selectedLp = (lpSel && lpSel.value !== '') ? parseFloat(lpSel.value) : null;
+    var lpValChart = (lpSel && lpSel.value) ? lpSel.value : 'recommend';
 
     function _parseLp(r){ return parseFloat((r.lossPct||r.lossProb||r.lossP||'0').toString().replace(/%/g,'').trim())||0; }
     function _parseStr(r){ return parseFloat((r.strike||'').toString().replace(/[^0-9.\-]/g,''))||0; }
 
     var pickedCall = null, pickedPut = null;
-    if (selectedLp !== null && !isNaN(selectedLp)) {
+    if (lpValChart === 'most_otm') {
+      /* [SESSION 9 §4 v3] 가장 외가 — 콜·풋 각각 가장 작은 lp row */
+      var minCallLp = Infinity, minPutLp = Infinity;
       rows.forEach(function(r){
         var s = _parseStr(r), lp = _parseLp(r);
         if (s <= 0 || lp <= 0) return;
-        if (Math.abs(lp - selectedLp) > 0.001) return;
-        if (r.type === '콜' && !pickedCall) pickedCall = { price:s, lossProb:lp, type:'콜', dash:true };
-        if (r.type === '풋' && !pickedPut)  pickedPut  = { price:s, lossProb:lp, type:'풋', dash:true };
+        if (r.type === '콜' && lp < minCallLp) { minCallLp = lp; pickedCall = { price:s, lossProb:lp, type:'콜', dash:true }; }
+        if (r.type === '풋' && lp < minPutLp)  { minPutLp  = lp; pickedPut  = { price:s, lossProb:lp, type:'풋', dash:true }; }
       });
     } else {
-      /* [48ch_session4 2단계] 새 분기 — 드롭다운 값 'recommend' 또는 'with_phase' 모드 분리
-         · recommend: 추세별 추천 lp만 (시장국면 무시)
-         · with_phase: 추세 추천 + 시장국면(WARNING=+1단계, CRISIS=+2단계) + 꼬리위험(+1단계) 적용 */
-      var lpVal = (lpSel && lpSel.value) ? lpSel.value : 'recommend';
-      var mode = (lpVal === 'with_phase') ? 'with_phase' : 'recommend';
-
-      /* 종목 추세는 rows 첫 행에서 (콜·풋 각각 다를 수 있음) */
+      /* [SESSION 9 §4 v3] 권장 행사가 (recommend) — 추세별 추천 lp */
       var _callR0 = null, _putR0 = null;
       rows.forEach(function(r){
         if (r.type === '콜' && !_callR0) _callR0 = r;
@@ -20696,14 +20777,8 @@ window._t14GetInstPhaseLimit = function(code) {
       var callTrend = (_callR0 && _callR0.trend) || '보합';
       var putTrend  = (_putR0  && _putR0.trend)  || '보합';
 
-      var rowCall = null, rowPut = null;
-      if (mode === 'with_phase') {
-        rowCall = _uvpCalcWithMarketPhase(rows, '콜', callTrend, _uvpCtx.code);
-        rowPut  = _uvpCalcWithMarketPhase(rows, '풋', putTrend,  _uvpCtx.code);
-      } else {
-        rowCall = _uvpFindSafestLp(rows, '콜', _uvpTrendToRecLp(callTrend, '콜'));
-        rowPut  = _uvpFindSafestLp(rows, '풋', _uvpTrendToRecLp(putTrend,  '풋'));
-      }
+      var rowCall = _uvpFindSafestLp(rows, '콜', _uvpTrendToRecLp(callTrend, '콜'));
+      var rowPut  = _uvpFindSafestLp(rows, '풋', _uvpTrendToRecLp(putTrend,  '풋'));
       if (rowCall) pickedCall = { price: _parseStr(rowCall), lossProb: _parseLp(rowCall), type:'콜', dash:true };
       if (rowPut)  pickedPut  = { price: _parseStr(rowPut),  lossProb: _parseLp(rowPut),  type:'풋', dash:true };
 
@@ -20744,13 +20819,27 @@ window._t14GetInstPhaseLimit = function(code) {
 
     var infoEl = document.getElementById('uvp-chart1-info');
     if (infoEl) {
-      var lpDesc = (lpSel && lpSel.value === 'with_phase') ? '손실확률 (시장국면 반영)' : '손실확률'; /* [48ch_session4 1단계] */
+      /* [SESSION 9 §4 v3b] lp 라벨 — recommend는 "권장 행사가", most_otm은 "콜 N% · 풋 M% 손실확률" */
+      var _lpV = (lpSel && lpSel.value) ? lpSel.value : 'recommend';
+      var lpDesc = '권장 행사가';
+      if (_lpV === 'most_otm') {
+        var _mcLp = Infinity, _mpLp = Infinity;
+        rows.forEach(function(r){
+          var lp = parseFloat(String(r.lossPct||r.lossProb||r.lossP||'0').replace(/%/g,'').trim()) || 0;
+          if (lp <= 0) return;
+          if (r.type === '콜' && lp < _mcLp) _mcLp = lp;
+          if (r.type === '풋' && lp < _mpLp) _mpLp = lp;
+        });
+        var _mcTxt = (_mcLp < Infinity) ? _mcLp + '%' : '─';
+        var _mpTxt = (_mpLp < Infinity) ? _mpLp + '%' : '─';
+        lpDesc = '콜 ' + _mcTxt + ' · 풋 ' + _mpTxt + ' 손실확률';
+      }
       var fr = (typeof window._codeToFriendly === 'function') ? window._codeToFriendly(_uvpCtx.code) : _uvpCtx.name;
       infoEl.textContent = '📅 ' + fr + ' · ' + monthLabel + ' · 만기 ' + (expiry||'미상') + ' · ' + lpDesc + ' · 행사가 ' + strikes.length + '개';
     }
 
     var pCopy = JSON.parse(JSON.stringify(_uvpCtx.basePos));
-    pCopy.id = 'uvpChart1_' + _uvpCtx.code + '_' + mIdx + '_' + (selectedLp != null ? selectedLp : 'auto');
+    pCopy.id = 'uvpChart1_' + _uvpCtx.code + '_' + mIdx + '_' + lpValChart;
 
     /* [SESSION 6] 옵션 월물별 기초자산 선물 차트 교체 */
     try {
@@ -22244,35 +22333,43 @@ window._t14GetInstPhaseLimit = function(code) {
       return null;
     }
 
-    /* [48ch_session4 3단계] lp 모드 분기 — C-5 차트 드롭다운과 연동
-       · 'recommend'  : 추세 추천 lp만 사용 (시장국면 무시)        → admin row 직접 매칭
-       · 'with_phase' : 시장국면 반영 결과                          → calcFinalEntry
-       · 숫자 lp      : 옛 호환 (수동 lp 직접 선택)                → admin row 직접 매칭
-       · 빈값         : 기본(시장국면 반영)                        → calcFinalEntry */
-    var lpSel65 = document.getElementById('uvp-chart1-lp');
-    var lpVal65 = (lpSel65 && lpSel65.value != null) ? String(lpSel65.value) : '';
-    var manualLp = (lpVal65 !== '' && lpVal65 !== 'recommend' && lpVal65 !== 'with_phase') ? parseFloat(lpVal65) : null;
+    /* [SESSION 9 §4 v3] C-1·C-2·C-4 lp 모드 분기 — 드롭다운 값 따라 변경
+       · 'recommend' : 추세 추천 lp (기본, C-2 살몬 펄스로 강조)
+       · 'most_otm'  : 가장 외가 (raw에서 가장 작은 lp = 가장 외가 행사가) */
+    var lpSelC2 = document.getElementById('uvp-chart1-lp');
+    var lpValC2 = (lpSelC2 && lpSelC2.value) ? lpSelC2.value : 'recommend';
     var rC = null, rP = null;
-    if (lpVal65 === 'recommend') {
-      /* 추세 추천 lp 직접 매칭 */
-      var rcR = _findStrikeFromAdmin('콜', recoLpCall);
-      var rpR = _findStrikeFromAdmin('풋', recoLpPut);
-      if (rcR) rC = rcR;
-      if (rpR) rP = rpR;
-    } else if (manualLp !== null && !isNaN(manualLp)) {
-      /* 옛 숫자 lp 호환 */
-      var rcManual = _findStrikeFromAdmin('콜', manualLp);
-      var rpManual = _findStrikeFromAdmin('풋', manualLp);
-      if (rcManual) rC = rcManual;
-      if (rpManual) rP = rpManual;
-    } else if (typeof window.calcFinalEntry === 'function' && monthLabel) {
-      /* 'with_phase' 또는 빈값 — 시장국면 반영 */
-      try {
-        var fC = window.calcFinalEntry(code, monthLabel, 'call');
-        var fP = window.calcFinalEntry(code, monthLabel, 'put');
-        if (fC && !fC.blocked && fC.final_strike != null) rC = { strike: fC.final_strike, lp: fC.final_lp, price: fC.base_premium };
-        if (fP && !fP.blocked && fP.final_strike != null) rP = { strike: fP.final_strike, lp: fP.final_lp, price: fP.base_premium };
-      } catch(e){}
+    if (lpValC2 === 'most_otm') {
+      /* 가장 외가 — targetLp=-1로 호출하면 _findStrikeFromAdmin의 폴백 로직(direction에서 가장 작은 lp)이 가장 외가 row 반환 */
+      rC = _findStrikeFromAdmin('콜', -1);
+      rP = _findStrikeFromAdmin('풋', -1);
+      /* 가장 외가는 의도된 동작이라 "대체" 라벨 표시 안 함 */
+      if (rC) rC.fallback = false;
+      if (rP) rP.fallback = false;
+    } else {
+      /* 권장 행사가 (기본) */
+      rC = _findStrikeFromAdmin('콜', recoLpCall);
+      rP = _findStrikeFromAdmin('풋', recoLpPut);
+    }
+    /* [SESSION 9 §4 v3] C-2 콜·풋 박스 살몬·파랑 펄스 — 권장 모드일 때만 ON */
+    var _c2Call = document.getElementById('uvp-c2-call-box');
+    var _c2Put  = document.getElementById('uvp-c2-put-box');
+    if (lpValC2 === 'recommend') {
+      if (_c2Call) _c2Call.style.animation = 'pulse-t2 2.4s ease-in-out infinite';
+      if (_c2Put)  _c2Put.style.animation  = 'pulse-blue 2.4s ease-in-out infinite';
+    } else {
+      if (_c2Call) _c2Call.style.animation = '';
+      if (_c2Put)  _c2Put.style.animation  = '';
+    }
+    /* [SESSION 9 §4 v3c] C-1 라벨 동적 변경 — 모드 따라 "권장" / "외가" */
+    var _c1LblCall = document.getElementById('uvp-c1-lbl-call');
+    var _c1LblPut  = document.getElementById('uvp-c1-lbl-put');
+    if (lpValC2 === 'most_otm') {
+      if (_c1LblCall) _c1LblCall.textContent = '콜 매도 외가 손실확률';
+      if (_c1LblPut)  _c1LblPut.textContent  = '풋 매도 외가 손실확률';
+    } else {
+      if (_c1LblCall) _c1LblCall.textContent = '콜 매도 권장 손실확률';
+      if (_c1LblPut)  _c1LblPut.textContent  = '풋 매도 권장 손실확률';
     }
     /* 프리미엄·스팬증거금 보강 — admin row 정밀 조회 */
     var rcAdmin = (rC && rC.lp != null) ? _findStrikeFromAdmin('콜', rC.lp) : null;
@@ -22356,9 +22453,10 @@ window._t14GetInstPhaseLimit = function(code) {
         el.style.color = 'var(--t2)';
         el.style.fontStyle = '';
       } else {
+        /* [SESSION 9 §4 수정] italic 제거 — 다른 폰트와 통일 */
         el.textContent = 'HTS에서 직접 확인';
         el.style.color = 'var(--t3)';
-        el.style.fontStyle = 'italic';
+        el.style.fontStyle = '';
       }
     }
     _setPremText(elPremC, rC && rC.price);
