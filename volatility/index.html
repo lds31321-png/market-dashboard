@@ -22693,16 +22693,39 @@ window._t14GetInstPhaseLimit = function(code) {
       else { elRoll.textContent = '자유 (40~50%)'; elRoll.style.color = 'var(--green)'; }
     }
     if (elExp) {
+      /* [SESSION 9 D-4 fix] C-3와 동일 흐름으로 통일 — expiryFromCtx + st_detail_v3 직접 조회 폴백 추가 */
       var monthSel = document.getElementById('uvp-chart1-month');
-      var monthLabel4 = '', expiry4 = '';
+      var monthLabel4 = '', expiry4 = (typeof expiryFromCtx !== 'undefined' && expiryFromCtx) ? expiryFromCtx : '';
       try {
         var mIdx4 = monthSel ? parseInt(monthSel.value || '0') : 0;
         if (_uvpCtx && _uvpCtx.item && _uvpCtx.item.months && _uvpCtx.item.months[mIdx4]) {
           monthLabel4 = _uvpCtx.item.months[mIdx4].label || '';
-          expiry4 = _uvpCtx.item.months[mIdx4].expiry || '';
+          if (!expiry4) expiry4 = _uvpCtx.item.months[mIdx4].expiry || '';
         }
       } catch(e){}
       if (!expiry4 && _uvpCtx && _uvpCtx.basePos && _uvpCtx.basePos.expiry_date) expiry4 = _uvpCtx.basePos.expiry_date;
+      /* fallback — st_detail_v3 직접 조회 (C-3와 동일) */
+      if (!expiry4 && monthLabel4 && _uvpCtx && _uvpCtx.code) {
+        try {
+          var d4 = JSON.parse(localStorage.getItem('st_detail_v3') || 'null');
+          var dArr4 = Array.isArray(d4) ? d4 : (d4 && Array.isArray(d4.items)) ? d4.items : [];
+          var nm4 = {'OES':'S&P500','ENQ':'NASDAQ100','OEUU':'유로FX','OADU':'호주달러','OJPU':'엔화','OZN':'10년국채','OGC':'골드','OCL':'크루드 오일','ONG':'천연가스','OZS':'대두','OZW':'밀','OZC':'옥수수'};
+          var al4 = {'크루드 오일':['크루드 오일','원유','크로드 오일'],'엔화':['엔화','엔'],'유로FX':['유로FX','유로']};
+          var kn4 = nm4[_uvpCtx.code] || _uvpCtx.code;
+          var nl4 = al4[kn4] || [kn4];
+          for (var di4 = 0; di4 < dArr4.length; di4++) {
+            if (nl4.indexOf(dArr4[di4].name) < 0) continue;
+            var ms4 = dArr4[di4].months || [];
+            for (var mi4 = 0; mi4 < ms4.length; mi4++) {
+              var ml4 = ms4[mi4].label || '';
+              if (ml4 === monthLabel4 || (monthLabel4 && ml4.indexOf(monthLabel4) >= 0) || (ml4 && monthLabel4.indexOf(ml4) >= 0)) {
+                if (ms4[mi4].expiry) { expiry4 = ms4[mi4].expiry; break; }
+              }
+            }
+            if (expiry4) break;
+          }
+        } catch(e){}
+      }
       var daysLeft = 0;
       if (expiry4) {
         try { daysLeft = Math.max(0, Math.ceil((new Date(expiry4) - new Date()) / 86400000)); } catch(e){}
