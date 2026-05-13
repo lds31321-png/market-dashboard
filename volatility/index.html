@@ -16592,86 +16592,40 @@ window.calcFinalEntry = function(code, monthLabel, direction) {
         }
       }
 
-      var inner = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="color:var(--t2);font-size:10px;font-weight:500">권장 행사가 — 시장국면 반영 <span style="font-size:11px;color:var(--t3)">(1계약)</span></span></div>';
-      if (__month) {
-        var monthLabel = __month.replace(/\(.+\)/, '').trim() || __month;
-        var resultCall = window.calcFinalEntry(code, monthLabel, 'call');
-        var resultPut  = window.calcFinalEntry(code, monthLabel, 'put');
+      /* [SESSION 9 §2] 권장 행사가 — 종합 순위표(st_rank_v3) 데이터 기반. AI 추정 모드 제거 */
+      var inner = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="color:var(--t2);font-size:10px;font-weight:500">권장 행사가 <span style="font-size:11px;color:var(--t3)">(1계약)</span></span></div>';
 
-        /* admin row에서 옵션가격 정밀 조회 (calcFinalEntry는 base_premium만 옴) — 47차 다듬기 10차: rankItem 폴백 추가 */
-        function _findPrice(direction, lp) {
-          try {
-            var dArr = JSON.parse(localStorage.getItem('st_detail_v3') || '[]');
-            var _mkM = function(label) {
-              if (!label || !monthLabel) return false;
-              if (label === monthLabel) return true;
-              if (label.indexOf(monthLabel) >= 0 || monthLabel.indexOf(label) >= 0) return true;
-              var m1 = (label.match(/(\d{2}월물)/) || [])[1];
-              var m2 = (monthLabel.match(/(\d{2}월물)/) || [])[1];
-              return !!(m1 && m2 && m1 === m2);
-            };
-            for (var di = 0; di < dArr.length; di++) {
-              if (nameList.indexOf(dArr[di].name) < 0) continue;
-              var mss = dArr[di].months || [];
-              for (var mii = 0; mii < mss.length; mii++) {
-                if (!_mkM(mss[mii].label)) continue;
-                var rrs = mss[mii].rows || [];
-                for (var rri = 0; rri < rrs.length; rri++) {
-                  var rrr = rrs[rri];
-                  var rlp = parseFloat((rrr.lossPct||rrr.lossProb||rrr.lossP||'0').toString().replace(/%/g,'')) || 0;
-                  if (rrr.type === direction && Math.abs(rlp - lp) < 0.01) {
-                    if (rrr.price) return rrr.price;
-                  }
-                }
-              }
-            }
-          } catch(e) {}
-          /* [47차 다듬기 11차] 옵션 1 — rankItem 폴백 제거 (시장국면 반영 행사가와 다를 수 있어 부정확). admin row 정확 매칭 시에만 가격 사용 */
-          return null;
+      var __rankItem = null;
+      try {
+        var __rArr = JSON.parse(localStorage.getItem('st_rank_v3') || '[]');
+        for (var __ri = 0; __ri < __rArr.length; __ri++) {
+          if (nameList.indexOf(__rArr[__ri].name) >= 0) { __rankItem = __rArr[__ri]; break; }
         }
-        function _fmtPrice(v) {
-          if (v == null || v === '') return '';
-          var s = String(v).trim();
-          if (s.indexOf('$') === 0) return s;
-          var n = parseFloat(s);
-          if (!isFinite(n)) return '';
-          var a = Math.abs(n);
-          var dec = a >= 1 ? 2 : a >= 0.01 ? 3 : a >= 0.001 ? 4 : a >= 0.0001 ? 5 : 6;
-          return '$' + n.toFixed(dec);
-        }
+      } catch(e) {}
 
-        /* [47차 다듬기 11차] 콜 매도 — 시장국면 반영 행사가의 정확 옵션가격만 표시. 매칭 실패 시 "HTS 확인" 안내 */
-        if (resultCall.blocked) {
-          inner += '<div style="font-size:12px;margin-bottom:5px"><span style="color:var(--t2);font-weight:700">콜 매도</span> · <span style="color:var(--cyan);font-weight:600">' + (resultCall.reason || '진입 제한') + '</span></div>';
-        } else if (resultCall.final_strike) {
-          var __pCall = _fmtPrice(_findPrice('콜', resultCall.final_lp));
-          inner += '<div style="font-size:12px;margin-bottom:5px"><span style="color:var(--t2);font-weight:700">콜 매도</span> · <span style="color:var(--cyan);font-weight:600">' + resultCall.final_lp + '% 손실확률</span> · <span style="font-family:var(--mono);font-weight:700;color:var(--t1);font-size:13px">' + resultCall.final_strike + '</span>';
-          if (__pCall) inner += ' <span style="font-size:12px;color:var(--t3);font-family:var(--mono)">(' + __pCall + ')</span>';
-          else inner += ' <span style="font-size:9px;color:var(--t3);font-style:italic">(HTS 확인)</span>';
-          if (resultCall.outOfRange) inner += ' <span style="font-size:9px;color:var(--cyan)">· 외가 한계</span>';
-          inner += '</div>';
-        } else {
-          inner += '<div style="font-size:12px;margin-bottom:5px"><span style="color:var(--t2);font-weight:700">콜 매도</span> · <span style="color:var(--t3)">' + (resultCall.reason || '데이터 대기') + '</span></div>';
+      function _rankLine(side, label) {
+        var s = __rankItem ? __rankItem[side] : null;
+        if (!__rankItem) {
+          return '<div style="font-size:12px;margin-bottom:5px"><span style="color:var(--t2);font-weight:700">' + label + '</span> · <span style="color:var(--t3)">데이터 대기</span></div>';
         }
-
-        /* 풋 매도 */
-        if (resultPut.blocked) {
-          inner += '<div style="font-size:12px"><span style="color:var(--t2);font-weight:700">풋 매도</span> · <span style="color:var(--cyan);font-weight:600">' + (resultPut.reason || '진입 제한') + '</span></div>';
-        } else if (resultPut.final_strike) {
-          var __pPut = _fmtPrice(_findPrice('풋', resultPut.final_lp));
-          inner += '<div style="font-size:12px"><span style="color:var(--t2);font-weight:700">풋 매도</span> · <span style="color:var(--cyan);font-weight:600">' + resultPut.final_lp + '% 손실확률</span> · <span style="font-family:var(--mono);font-weight:700;color:var(--t1);font-size:13px">' + resultPut.final_strike + '</span>';
-          if (__pPut) inner += ' <span style="font-size:12px;color:var(--t3);font-family:var(--mono)">(' + __pPut + ')</span>';
-          else inner += ' <span style="font-size:9px;color:var(--t3);font-style:italic">(HTS 확인)</span>';
-          if (resultPut.outOfRange) inner += ' <span style="font-size:9px;color:var(--cyan)">· 외가 한계</span>';
-          inner += '</div>';
-        } else {
-          inner += '<div style="font-size:12px"><span style="color:var(--t2);font-weight:700">풋 매도</span> · <span style="color:var(--t3)">' + (resultPut.reason || '데이터 대기') + '</span></div>';
+        if (!s || !s.month) {
+          return '<div style="font-size:12px;margin-bottom:5px"><span style="color:var(--t2);font-weight:700">' + label + '</span> · <span style="color:var(--cyan);font-weight:600">추세 비부합 (권장하지 않음)</span></div>';
         }
-
-        entryFinal.innerHTML = inner;
-      } else {
-        entryFinal.innerHTML = inner + '<div style="color:var(--t3);font-size:11px;font-weight:500;text-align:center">진입 데이터 입력 대기</div>';
+        /* [SESSION 9 §2 A1] 행사가 0/미입력 케이스 — admin 데이터 누락 안내 */
+        var strikeNum = parseFloat(String(s.strike || '').replace(/,/g,'')) || 0;
+        if (!s.strike || strikeNum <= 0) {
+          return '<div style="font-size:12px;margin-bottom:5px"><span style="color:var(--t2);font-weight:700">' + label + '</span> · <span style="color:var(--cyan);font-weight:600">' + s.month + '</span> · <span style="color:#d9664a;font-style:italic;font-size:11px">행사가 미입력 (관리자 확인)</span></div>';
+        }
+        var strikeHTML = '<span style="font-family:var(--mono);font-weight:700;color:var(--t1);font-size:13px">' + s.strike + '</span>';
+        var priceHTML  = (s.price && String(s.price).trim()) ? ' · <span style="font-size:12px;color:var(--t3);font-family:var(--mono)">옵션가 ' + s.price + '</span>' : ' <span style="font-size:9px;color:var(--t3);font-style:italic">(HTS 확인)</span>';
+        var marginHTML = (s.margin && s.margin > 0) ? ' · <span style="font-size:11px;color:var(--t3);font-family:var(--mono)">1계약 $' + s.margin.toLocaleString() + '</span>' : '';
+        return '<div style="font-size:12px;margin-bottom:5px"><span style="color:var(--t2);font-weight:700">' + label + '</span> · <span style="color:var(--cyan);font-weight:600">' + s.month + '</span> · ' + strikeHTML + priceHTML + marginHTML + '</div>';
       }
+
+      inner += _rankLine('call', '콜 매도');
+      inner += _rankLine('put',  '풋 매도');
+
+      entryFinal.innerHTML = inner;
     }
 
     var alertLevel = 0;
