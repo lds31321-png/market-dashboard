@@ -176,7 +176,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 .hist-hero{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
 .pos-hero{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
 /* ── 액션 버튼 박스 ── */
-.action-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.action-row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px;}
 .action-btn{display:flex;align-items:center;justify-content:center;padding:14px 20px;border-radius:var(--r);background:var(--card);text-decoration:none;font-size:14px;font-weight:600;font-family:var(--mono);color:var(--t1);cursor:pointer;border:1.5px solid;transition:all .2s;box-shadow:var(--shadow-sm);}
 .action-btn:hover{transform:translateY(-1px);}
 .action-btn.btn-cyan{border-color:#2a5fa8;color:#2a5fa8;animation:pulse-cyan 2.5s ease-in-out infinite;}
@@ -185,6 +185,8 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 @keyframes pulse-cyan{0%,100%{box-shadow:0 0 0 0 rgba(42,95,168,.35);}50%{box-shadow:0 0 0 6px rgba(42,95,168,0);}}
 @keyframes pulse-green{0%,100%{box-shadow:0 0 0 0 rgba(26,122,74,.35);}50%{box-shadow:0 0 0 6px rgba(26,122,74,0);}}
 @keyframes pulse-purple{0%,100%{box-shadow:0 0 0 0 rgba(122,95,168,.35);}50%{box-shadow:0 0 0 6px rgba(122,95,168,0);}}
+.action-btn.btn-orange{border-color:#d9664a;color:#d9664a;animation:pulse-orange 2.5s ease-in-out infinite;}
+@keyframes pulse-orange{0%,100%{box-shadow:0 0 0 0 rgba(217,102,74,.35);}50%{box-shadow:0 0 0 6px rgba(217,102,74,0);}}
 
 /* ── 브리핑 모달 ── */
 .br-modal{background:var(--card);border:1px solid var(--b1);border-radius:16px;width:100%;max-width:640px;max-height:88vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.18);}
@@ -377,9 +379,10 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 
   <!-- 액션 버튼 박스 -->
   <div class="action-row">
-    <a class="action-btn btn-cyan" href="https://bramble-gardenia-301.notion.site/334df6df17a280788263f467bfbd57aa?source=copy_link" target="_blank" rel="noopener">노션</a>
-    <a class="action-btn btn-green" href="https://naver.me/5nheicte" target="_blank" rel="noopener">거래 시작하기</a>
-    <button class="action-btn btn-purple" onclick="openBriefingModal()">전략 브리핑</button>
+    <a class="action-btn btn-orange" href="https://bramble-gardenia-301.notion.site/334df6df17a280788263f467bfbd57aa?source=copy_link" target="_blank" rel="noopener">노션 (전략 자세히 보기)</a>
+    <a class="action-btn btn-orange" href="https://naver.me/5nheicte" target="_blank" rel="noopener">거래 시작하기</a>
+    <button class="action-btn btn-orange" onclick="openBriefingModal()">전략 브리핑</button>
+    <a class="action-btn btn-orange" href="https://lds31321-png.github.io/market-dashboard/" target="_blank" rel="noopener">글로벌 시장 현황</a>
   </div>
 
   <!-- 인트로 배너 -->
