@@ -3567,6 +3567,11 @@ input[type=range] { background: transparent !important; border: none !important;
     <div style="height:2px;background:linear-gradient(90deg,rgba(217,102,74,.6),transparent);margin-top:12px;border-radius:1px"></div>
   </div>
   <div class="card" style="border:1.5px solid rgba(217,102,74,.25)">
+    <div style="padding:14px 16px 10px;border-bottom:1px solid rgba(217,102,74,.2);display:flex;align-items:center;gap:10px">
+      <span style="font-size:13px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">B-1</span>
+      <span style="font-size:14px;font-weight:700;color:var(--t1)">종목별 노출 통합</span>
+      <span style="font-size:13px;color:var(--t2);font-weight:500;margin-left:6px">매매 비중 · 위험노출 · 경보단계 추정손실</span>
+    </div>
     <div style="padding:10px 16px;border-bottom:1px solid rgba(0,0,0,.08);display:flex;align-items:center;gap:10px;flex-wrap:wrap">
       <div id="pt-ocl-alert-badge" style="display:flex;align-items:center;gap:6px;padding:5px 12px;flex-wrap:wrap;background:rgba(192,112,48,.1);border:1px solid rgba(192,112,48,.3);border-radius:6px;font-size:10px;color:var(--orange);flex-shrink:0">
         <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--orange);flex-shrink:0"></span>
@@ -3642,7 +3647,7 @@ input[type=range] { background: transparent !important; border: none !important;
     <div style="padding:14px 16px 10px;border-bottom:1px solid rgba(176,128,64,.15)">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px">
         <div style="display:flex;align-items:center;gap:10px">
-          <span style="font-size:13px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">B-1</span>
+          <span style="font-size:13px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">C-1</span>
           <span style="font-size:14px;font-weight:700;color:var(--t1)">진입 예정 포지션</span>
         </div>
         <span style="font-size:13px;color:var(--t2);font-weight:500">원금: <span id="sim-capital-disp" style="font-family:var(--mono);color:var(--yellow);font-weight:700">—</span></span>
@@ -3742,6 +3747,12 @@ input[type=range] { background: transparent !important; border: none !important;
     <div style="height:2px;background:linear-gradient(90deg,rgba(217,102,74,.6),transparent);margin-top:12px;border-radius:1px"></div>
   </div>
 
+  <!-- [SESSION 10 디테일] D-1 배지 헤더 -->
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+    <span style="font-size:13px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">D-1</span>
+    <span style="font-size:14px;font-weight:700;color:var(--t1)">위험 포지션 표시</span>
+    <span style="font-size:13px;color:var(--t2);font-weight:500;margin-left:6px">필터 조건으로 단계별 카드 조회</span>
+  </div>
   <!-- [SESSION 9 §10] 필터 바 — 조회 버튼 (살몬 펄스) / [SESSION 10 디테일] 살몬 통일 -->
   <div id="pt-pos-filter" style="margin-bottom:14px;padding:12px 16px;background:#fff;border:1px solid rgba(217,102,74,.25);border-radius:10px;display:flex;flex-direction:column;gap:10px">
     <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
@@ -5103,9 +5114,13 @@ input[type=range] { background: transparent !important; border: none !important;
 
     <!-- 좌: 종목별 평가손익 리스트 -->
     <div class="card" style="border:1.5px solid rgba(148,163,184,.2);overflow:hidden;display:flex;flex-direction:column">
-      <div style="padding:11px 14px 9px;border-bottom:1px solid rgba(217,102,74,.15);display:flex;justify-content:space-between">
-        <span style="font-size:13px;color:var(--t3);font-weight:700">종목</span>
-        <span style="font-size:13px;color:var(--t3);font-weight:700">평가손익</span>
+      <div style="padding:11px 14px 9px;border-bottom:1px solid rgba(217,102,74,.15);display:flex;align-items:center;gap:8px">
+        <span style="font-size:13px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">A-1</span>
+        <span style="font-size:13px;color:var(--t1);font-weight:700">종목별 평가손익</span>
+      </div>
+      <div style="padding:8px 14px;border-bottom:1px solid rgba(217,102,74,.10);display:flex;justify-content:space-between">
+        <span style="font-size:12px;color:var(--t3);font-weight:600">종목</span>
+        <span style="font-size:12px;color:var(--t3);font-weight:600">평가손익</span>
       </div>
       <div id="tr-inst-list" style="flex:1;overflow-y:auto">
         <div style="padding:18px;text-align:center;color:var(--t3);font-size:13px">데이터 없음</div>
