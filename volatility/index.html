@@ -4739,7 +4739,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <!-- ═════════════════════════════════════════════════════════════ -->
   <!-- [47차 1-1] 시장 위험 단계 판정 영역 — 위험·자금 관리 탭에서 이동 -->
   <!-- ═════════════════════════════════════════════════════════════ -->
-  <div data-47차-목적="시장위험단계판정-매매전략탭이동" style="margin-top:24px">
+  <div data-47차-목적="시장위험단계판정-매매전략탭이동" style="margin-top:24px;background:#fff;padding:16px 18px;border-radius:10px;border:1px solid rgba(217,102,74,.18)">
 
   <!-- ─── E. 시장 위험 단계 판정 ───────────────────────────── -->
   <div id="pt-sec-b" style="margin:0 0 16px">
@@ -9040,7 +9040,7 @@ function rmRenderCards() {
     var alertInfo = LV_ALERT_MAP[adminAlertLv] || LV_ALERT_MAP[0];
 
     html += [
-      '<div class="card'+(d.tail?' rm-tail-on':'')+'" style="border:1.5px solid ',info.border,';',
+      '<div class="card '+(d.tail?'rm-tail-on ':'')+(ep==="NORMAL"?'hint-glow-green':ep==="WARNING"?'hint-glow-yellow':'hint-glow-red')+'" style="border:1.5px solid ',info.border,';',
         'background:linear-gradient(160deg,',info.bg,',rgba(0,0,0,.04));padding:0;overflow:hidden">',
 
         // ── 카드 헤더
