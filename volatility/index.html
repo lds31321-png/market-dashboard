@@ -5329,26 +5329,26 @@ input[type=range] { background: transparent !important; border: none !important;
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
         <div class="pos-field">
           <div class="pos-lbl" style="color:var(--t1);font-weight:700">예탁금 <span style="font-size:13px;font-weight:500;color:var(--t3)">(오늘 실제 계좌 잔고)</span></div>
-          <input class="pos-inp" id="in-deposit" type="text" value="50,000,000" onchange="inUpdateSettings()">
+          <input class="pos-inp" id="in-deposit" type="text" value="50,000,000" onchange="inUpdateSettings()" style="background:#fff;border:2px solid rgba(217,102,74,.55)">
         </div>
         <div class="pos-field">
           <div class="pos-lbl" style="color:var(--t1);font-weight:700">환율 (원/$)</div>
-          <input class="pos-inp" id="in-rate" type="number" value="1430" onchange="inUpdateSettings()">
+          <input class="pos-inp" id="in-rate" type="number" value="1430" onchange="inUpdateSettings()" style="background:#fff;border:2px solid rgba(217,102,74,.55)">
         </div>
       </div>
       <div style="height:1px;background:var(--b1);margin-bottom:10px"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
         <div class="pos-field">
           <div class="pos-lbl">관리목표(%)</div>
-          <input class="pos-inp" id="in-target" type="number" value="60" onchange="inUpdateSettings()">
+          <input class="pos-inp" id="in-target" type="number" value="60" onchange="inUpdateSettings()" style="background:#fff;border:2px solid rgba(217,102,74,.55)">
         </div>
         <div class="pos-field">
           <div class="pos-lbl">위탁증거금</div>
-          <input class="pos-inp" id="in-used" type="text" value="" placeholder="예: 35,000,000" onchange="inUpdateSettings()">
+          <input class="pos-inp" id="in-used" type="text" value="" placeholder="예: 35,000,000" onchange="inUpdateSettings()" style="background:#fff;border:2px solid rgba(217,102,74,.55)">
         </div>
         <div class="pos-field">
           <div class="pos-lbl">유지증거금</div>
-          <input class="pos-inp" id="in-maint" type="text" value="" placeholder="예: 32,000,000" onchange="inUpdateSettings()">
+          <input class="pos-inp" id="in-maint" type="text" value="" placeholder="예: 32,000,000" onchange="inUpdateSettings()" style="background:#fff;border:2px solid rgba(217,102,74,.55)">
         </div>
       </div>
       <div style="margin-top:10px;padding:10px 14px;background:rgba(0,0,0,.025);border-radius:6px;border:1px solid var(--b1);font-size:13px;color:var(--t2);line-height:1.7">
@@ -5371,15 +5371,15 @@ input[type=range] { background: transparent !important; border: none !important;
         DB금융투자 <b style="color:var(--t1)">1316창</b> → 예탁잔고현황 → 당일미결제약정 → <b style="color:#2a5fa8">우측 상단 [엑셀 저장]</b> → 엑셀에서 Ctrl+A → Ctrl+C → 붙여넣기
       </div>
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
-        <button onclick="inToggle1316Paste()" class="btn-primary" style="display:inline-flex;align-items:center;justify-content:center;padding:0 18px;height:34px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s" onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'">+ 데이터 붙여넣기</button>
+        <button onclick="inToggle1316Paste()" class="btn-primary hint-glow-salmon" style="display:inline-flex;align-items:center;justify-content:center;padding:0 18px;height:34px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s" onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'">+ 데이터 붙여넣기</button>
         <button onclick="inClear1316()" class="btn-danger" style="display:inline-flex;align-items:center;justify-content:center;height:34px;padding:0 14px;border-radius:7px;font-size:13px;cursor:pointer;transition:all .15s">초기화</button>
         <span id="in-1316-status" style="font-size:13px;color:var(--t3);margin-left:6px"></span>
       </div>
       <div id="in-1316-paste-wrap" style="display:none">
         <div style="font-size:13px;color:var(--t2);margin-bottom:6px;font-family:var(--mono);line-height:1.6">컬럼: 종목코드 · 통화 · 매매 · 미결제 · 평균가 · 현재가 · 옵션시장가치 · 옵션평가손익 · 청산가능</div>
-        <textarea id="in-1316-paste" style="width:100%;height:140px;background:var(--bg);border:1px solid rgba(217,102,74,.35);border-radius:6px;color:var(--t1);font-family:var(--mono);font-size:13px;padding:10px;resize:vertical;outline:none;box-sizing:border-box" placeholder="여기에 HTS 1316창 데이터를 붙여넣으세요 (Ctrl+V)..."></textarea>
+        <textarea id="in-1316-paste" style="width:100%;height:140px;background:#fff;border:2px solid rgba(217,102,74,.55);border-radius:6px;color:var(--t1);font-family:var(--mono);font-size:13px;padding:10px;resize:vertical;outline:none;box-sizing:border-box" placeholder="여기에 HTS 1316창 데이터를 붙여넣으세요 (Ctrl+V)..."></textarea>
         <div style="display:flex;gap:8px;margin-top:8px">
-          <button onclick="inParse1316()" style="display:inline-flex;align-items:center;justify-content:center;padding:0 20px;height:32px;border-radius:6px;border:1px solid rgba(217,102,74,.35);background:#d9664a;color:#fff;font-size:13px;font-weight:700;cursor:pointer">읽기 &amp; 적용</button>
+          <button onclick="inParse1316()" class="hint-glow-salmon" style="display:inline-flex;align-items:center;justify-content:center;padding:0 20px;height:32px;border-radius:6px;border:1px solid rgba(217,102,74,.35);background:#d9664a;color:#fff;font-size:13px;font-weight:700;cursor:pointer">읽기 &amp; 적용</button>
           <button onclick="inToggle1316Paste()" style="display:inline-flex;align-items:center;justify-content:center;height:32px;padding:0 14px;border-radius:6px;border:1px solid rgba(0,0,0,.1);background:transparent;color:var(--t2);font-size:13px;cursor:pointer">취소</button>
         </div>
       </div>
@@ -5400,15 +5400,15 @@ input[type=range] { background: transparent !important; border: none !important;
         DB금융투자 <b style="color:var(--t1)">1310창</b> → 기간별 누적손익 → 비밀번호 → 조회 일자 → <b style="color:#2a5fa8">우측 상단 [엑셀 저장]</b> → 엑셀에서 Ctrl+A → Ctrl+C → 붙여넣기
       </div>
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
-        <button onclick="inToggle1310Paste()" class="btn-primary" style="display:inline-flex;align-items:center;justify-content:center;padding:0 18px;height:34px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s" onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'">+ 데이터 붙여넣기</button>
+        <button onclick="inToggle1310Paste()" class="btn-primary hint-glow-salmon" style="display:inline-flex;align-items:center;justify-content:center;padding:0 18px;height:34px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s" onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'">+ 데이터 붙여넣기</button>
         <button onclick="inClear1310()" class="btn-danger" style="display:inline-flex;align-items:center;justify-content:center;height:34px;padding:0 14px;border-radius:7px;font-size:13px;cursor:pointer;transition:all .15s">초기화</button>
         <span id="in-1310-status" style="font-size:13px;color:var(--t3);margin-left:6px"></span>
       </div>
       <div id="in-1310-paste-wrap" style="display:none">
         <div style="font-size:13px;color:var(--t2);margin-bottom:6px;font-family:var(--mono);line-height:1.6">컬럼: 거래일자 · 상품코드 · 종목코드 · 종목명 · 통화코드 · 청산손익 · 평가증감 · 수수료 · 순손익</div>
-        <textarea id="in-1310-paste" style="width:100%;height:140px;background:var(--bg);border:1px solid rgba(217,102,74,.35);border-radius:6px;color:var(--t1);font-family:var(--mono);font-size:13px;padding:10px;resize:vertical;outline:none;box-sizing:border-box" placeholder="여기에 HTS 1310창 데이터를 붙여넣으세요 (Ctrl+V)..."></textarea>
+        <textarea id="in-1310-paste" style="width:100%;height:140px;background:#fff;border:2px solid rgba(217,102,74,.55);border-radius:6px;color:var(--t1);font-family:var(--mono);font-size:13px;padding:10px;resize:vertical;outline:none;box-sizing:border-box" placeholder="여기에 HTS 1310창 데이터를 붙여넣으세요 (Ctrl+V)..."></textarea>
         <div style="display:flex;gap:8px;margin-top:8px">
-          <button onclick="inParse1310()" style="display:inline-flex;align-items:center;justify-content:center;padding:0 20px;height:32px;border-radius:6px;border:1px solid rgba(217,102,74,.35);background:#d9664a;color:#fff;font-size:13px;font-weight:700;cursor:pointer">읽기 &amp; 적용</button>
+          <button onclick="inParse1310()" class="hint-glow-salmon" style="display:inline-flex;align-items:center;justify-content:center;padding:0 20px;height:32px;border-radius:6px;border:1px solid rgba(217,102,74,.35);background:#d9664a;color:#fff;font-size:13px;font-weight:700;cursor:pointer">읽기 &amp; 적용</button>
           <button onclick="inToggle1310Paste()" style="display:inline-flex;align-items:center;justify-content:center;height:32px;padding:0 14px;border-radius:6px;border:1px solid rgba(0,0,0,.1);background:transparent;color:var(--t2);font-size:13px;cursor:pointer">취소</button>
         </div>
       </div>
