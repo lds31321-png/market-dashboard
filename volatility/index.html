@@ -1922,6 +1922,10 @@ input[type=range] { background: transparent !important; border: none !important;
               <span style="font-size:11px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">C-2</span>
               <span style="font-size:14px;color:var(--t1);font-weight:700">권장 행사가 + 받을 옵션가격</span>
             </div>
+            <!-- [SESSION 10] 1계약 미만 시 캡 프리 권장 안내 박스 (raw < 1) -->
+            <div id="uvp-info-step3-cap-hint" style="display:none;margin-bottom:8px;padding:10px 12px;background:rgba(176,128,64,.10);border:1px solid rgba(176,128,64,.35);border-radius:8px;font-size:13px;color:var(--t1);line-height:1.6">
+              <b style="color:#c8803a">자본 캡 적용</b> — 1회 진입 한도(자본 0.5%)를 초과해 <b id="uvp-info-step3-cap-prem-call">─</b>(콜) / <b id="uvp-info-step3-cap-prem-put">─</b>(풋) 프리미엄에 해당하는 더 외가 행사가로 진입 권장. 실제 행사가는 진입 시점 시세에 따라 직접 선택하세요.
+            </div>
             <div style="display:flex;flex-direction:column;gap:8px">
               <div id="uvp-c2-call-box" style="padding:12px 14px;background:rgba(217,102,74,.08);border-radius:8px;border:1.5px solid rgba(217,102,74,.25)">
                 <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px">
@@ -22771,6 +22775,23 @@ window._t14GetInstPhaseLimit = function(code) {
       if (rawPut >= 1) { qPut = Math.floor(rawPut); pricePutFinal = putInfo.priceMain; }
       else             { qPut = 1;                  pricePutFinal = putInfo.priceCap;  }
     } else { qPut = 0; pricePutFinal = 0; }
+    /* [SESSION 10] C-2 캡 프리 안내 박스 표시 — raw < 1 (1계약 미만) 시 캡 프리 권장 */
+    try {
+      var capHintEl = document.getElementById('uvp-info-step3-cap-hint');
+      if (capHintEl) {
+        var capCallShown = callInfo.qty > 0 && rawCall < 1;
+        var capPutShown  = putInfo.qty > 0 && rawPut < 1;
+        if (capCallShown || capPutShown) {
+          capHintEl.style.display = 'block';
+          var elCapPremC = document.getElementById('uvp-info-step3-cap-prem-call');
+          var elCapPremP = document.getElementById('uvp-info-step3-cap-prem-put');
+          if (elCapPremC) elCapPremC.textContent = capCallShown ? callInfo.priceCap.toFixed(3) : '─';
+          if (elCapPremP) elCapPremP.textContent = capPutShown  ? putInfo.priceCap.toFixed(3)  : '─';
+        } else {
+          capHintEl.style.display = 'none';
+        }
+      }
+    } catch(e){}
     var elCoT = document.getElementById('uvp-info-step2-contract-txt');
     if (elCoT) {
       if (qCall > 0 && qPut > 0) {
@@ -23252,16 +23273,38 @@ window._t14GetInstPhaseLimit = function(code) {
       else { elRoll.textContent = '자유 (40~50%)'; elRoll.style.color = 'var(--green)'; }
     }
     if (elExp) {
-      /* [SESSION 9 D-4 fix] C-3와 동일 흐름으로 통일 — expiryFromCtx + st_detail_v3 직접 조회 폴백 추가 */
-      var monthSel = document.getElementById('uvp-chart1-month');
-      var monthLabel4 = '', expiry4 = (typeof expiryFromCtx !== 'undefined' && expiryFromCtx) ? expiryFromCtx : '';
+      /* [SESSION 10 D-4 fix] 권장 행사가(recommended=true)의 월물 expiry 우선 — C-2 권장 행사가와 동일 월물 */
+      var monthLabel4 = '', expiry4 = '';
       try {
-        var mIdx4 = monthSel ? parseInt(monthSel.value || '0') : 0;
-        if (_uvpCtx && _uvpCtx.item && _uvpCtx.item.months && _uvpCtx.item.months[mIdx4]) {
-          monthLabel4 = _uvpCtx.item.months[mIdx4].label || '';
-          if (!expiry4) expiry4 = _uvpCtx.item.months[mIdx4].expiry || '';
+        if (_uvpCtx && _uvpCtx.item && _uvpCtx.item.months) {
+          var _ms4 = _uvpCtx.item.months;
+          /* 1순위: recommended=true 행 있는 월물 */
+          for (var _mi4 = 0; _mi4 < _ms4.length; _mi4++) {
+            var _rows4 = _ms4[_mi4].rows || [];
+            for (var _ri4 = 0; _ri4 < _rows4.length; _ri4++) {
+              if (_rows4[_ri4].recommended) {
+                monthLabel4 = _ms4[_mi4].label || '';
+                expiry4 = _ms4[_mi4].expiry || '';
+                break;
+              }
+            }
+            if (expiry4) break;
+          }
         }
       } catch(e){}
+      /* 2순위 폴백 — 드롭다운 선택 월물 */
+      if (!expiry4) {
+        var monthSel = document.getElementById('uvp-chart1-month');
+        try {
+          var mIdx4 = monthSel ? parseInt(monthSel.value || '0') : 0;
+          if (_uvpCtx && _uvpCtx.item && _uvpCtx.item.months && _uvpCtx.item.months[mIdx4]) {
+            monthLabel4 = _uvpCtx.item.months[mIdx4].label || '';
+            if (!expiry4) expiry4 = _uvpCtx.item.months[mIdx4].expiry || '';
+          }
+        } catch(e){}
+      }
+      /* 3순위 폴백 — expiryFromCtx */
+      if (!expiry4 && typeof expiryFromCtx !== 'undefined' && expiryFromCtx) expiry4 = expiryFromCtx;
       if (!expiry4 && _uvpCtx && _uvpCtx.basePos && _uvpCtx.basePos.expiry_date) expiry4 = _uvpCtx.basePos.expiry_date;
       /* fallback — st_detail_v3 직접 조회 (C-3와 동일) */
       if (!expiry4 && monthLabel4 && _uvpCtx && _uvpCtx.code) {
