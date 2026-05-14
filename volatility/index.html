@@ -6788,6 +6788,37 @@ window.addEventListener('load', function(){
   setTimeout(inSyncFromOld, 600);
   setTimeout(inSync1316CountFromOld, 700);
   setTimeout(inSync1310CountFromOld, 700);
+  // [11번] 1316 raw 자동 복원 + 재파싱 (alert 회피용 silent)
+  setTimeout(function(){
+    try {
+      var r1316 = localStorage.getItem('in_1316_raw');
+      if (r1316 && r1316.trim()) {
+        var ta = document.getElementById('in-1316-paste');
+        if (ta) {
+          ta.value = r1316;
+          var origAlert = window.alert;
+          window.alert = function(){};
+          try { if (typeof inParse1316 === 'function') inParse1316(); } catch(e){}
+          window.alert = origAlert;
+        }
+      }
+    } catch(e){}
+  }, 1200);
+  setTimeout(function(){
+    try {
+      var r1310 = localStorage.getItem('in_1310_raw');
+      if (r1310 && r1310.trim()) {
+        var ta = document.getElementById('in-1310-paste');
+        if (ta) {
+          ta.value = r1310;
+          var origAlert = window.alert;
+          window.alert = function(){};
+          try { if (typeof inParse1310 === 'function') inParse1310(); } catch(e){}
+          window.alert = origAlert;
+        }
+      }
+    } catch(e){}
+  }, 2000);
 });
 
 // ────────────────────────────────────────────────────────────────
@@ -6825,6 +6856,8 @@ function inClear1316() {
     if (window._tr1316Positions) window._tr1316Positions = [];
     if (typeof trData !== 'undefined' && trData) { try { delete trData.positions1316; } catch(e){} }
   } } catch(e){}
+  // raw 영구 저장 키도 정리
+  try { localStorage.removeItem('in_1316_raw'); } catch(e){}
   // 카운트 갱신
   var ic = document.getElementById('in-1316-count'); if (ic) ic.textContent='포지션 없음';
   // 시장 현황 카드 재렌더
@@ -6864,15 +6897,13 @@ function inParse1316() {
 
   // 카운트 갱신 (옛 pos-count-tag 값 따라가기)
   setTimeout(inSync1316CountFromOld, 300);
-  // [11번] 매매 현황 trData 영구 저장 — trParse1316이 window.trData만 메모리에 두므로 명시 저장
-  // setTimeout 500ms — window.trParse1316 안 setTimeout(200ms) 이후 보장
+  // [11번] 매매 현황 trData 영구 저장 — 1316 raw도 별도 저장 (페이지 로드 시 자동 재파싱)
+  try { localStorage.setItem('in_1316_raw', raw); } catch(e){}
   setTimeout(function(){
     try {
       if (typeof TR_KEY_DATA === 'undefined') return;
       if (window.trData && Object.keys(window.trData).length > 0) {
-        // trData(local) 갱신
         if (typeof trData !== 'undefined' && trData) Object.assign(trData, window.trData);
-        else { try { window.trData = window.trData; } catch(e){} }
         localStorage.setItem(TR_KEY_DATA, JSON.stringify(window.trData));
       }
     } catch(e){ console.error('trData 저장 오류:', e); }
@@ -6927,6 +6958,8 @@ function inClear1310() {
     var cumE = document.getElementById('tr-cum-empty'); if (cumE) cumE.style.display='flex';
     var monE = document.getElementById('tr-monthly-empty'); if (monE) monE.style.display='block';
   } catch(e){ console.error('1310 매매 현황 초기화 오류:', e); }
+  // raw 영구 저장 키도 정리
+  try { localStorage.removeItem('in_1310_raw'); } catch(e){}
   // 카운트 갱신
   var ic = document.getElementById('in-1310-count'); if (ic) ic.textContent='데이터 없음';
   // [11번 안전망] 시장 현황 카드 재렌더
@@ -6970,7 +7003,8 @@ function inParse1310() {
   setTimeout(inSync1310CountFromOld, 300);
   // [11번 안전망] 시장 현황 카드 재렌더
   try { if (typeof window.uvpShow === 'function') window.uvpShow(); } catch(e){}
-  // [11번] 매매 현황 trData 영구 저장 — setTimeout 500ms (trParseHTS 안 setTimeout 150ms 이후)
+  // [11번] 1310 raw 저장
+  try { localStorage.setItem('in_1310_raw', raw); } catch(e){}
   setTimeout(function(){
     try {
       if (typeof TR_KEY_DATA === 'undefined') return;
@@ -8639,8 +8673,9 @@ renderPT = function() {
   // 잠금 적용 (포지션 없으면 B~E 흐리기)
   var noPos = ptPositions.length === 0;
   setPTLock(noPos);
-  // ④ 처음 접속 or 포지션 없을 때 "여기서 시작" 가이드 주입
+  // ④ "여기서 시작하세요" 안내 박스 — [SESSION 10 디테일] 직트 요청으로 비활성화
   setTimeout(function() {
+    return; // [SESSION 10] 안내 박스 통째 비활성화
     var guideId = 'pt-start-guide';
     var pasteBtn = document.getElementById('pt-paste-btn') || document.querySelector('[id*="paste"]');
     // A-2 카드 하단 안정적 앵커 탐색
