@@ -1447,11 +1447,25 @@ input[type=range] { background: transparent !important; border: none !important;
   font-size: 17px !important; font-weight: 600 !important; }
 .nav-tab.active { color: var(--t1) !important; border-bottom-color: #d9664a !important; font-weight: 700 !important; }
 .nav-tab:hover { background: rgba(217,102,74,.04) !important; color: var(--t2) !important; }
+
+/* [11번 디테일] 데이터 입력 nav-tab 펄스 — 활성 상태가 아닐 때만 천천히 살몬 펄스 */
+@keyframes pulse-input-tab {
+  0%, 100% { color: #d9664a; text-shadow: 0 0 0 transparent; }
+  50%      { color: rgba(217,102,74,.55); text-shadow: 0 0 12px rgba(217,102,74,.35); }
+}
+.nav-tab.nav-tab-input-pulse:not(.active) {
+  color: #d9664a !important;
+  font-weight: 700 !important;
+  animation: pulse-input-tab 3s ease-in-out infinite;
+}
+.nav-tab.nav-tab-input-pulse.active {
+  animation: none;
+}
 </style></head><body>
 <div class="hdr"><div class="hdr-l"><div class="logo">CL</div><div><div class="hdr-title">종합 옵션 대시보드</div><div class="hdr-sub" data-47차-목적="부제-버전만">v3.0</div></div></div><div class="hdr-r"><div class="hdr-meta" id="hdrMeta">로딩 중...</div><div class="dot"></div></div></div>
 <div class="nav">
-  <div class="nav-tab active" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:none;');document.getElementById('page-input').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});">데이터 입력</div>
-  <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:none;');document.getElementById('page-input').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});">시장 현황</div>
+  <div class="nav-tab nav-tab-input-pulse" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:none;');document.getElementById('page-input').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});">데이터 입력</div>
+  <div class="nav-tab active" onclick="document.getElementById('page-overview').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:none;');document.getElementById('page-input').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});">시장 현황</div>
   <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.getElementById('page-strategy').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-trade').setAttribute('style','display:none;');document.getElementById('page-input').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});stOnTabEnter()">매매 전략</div>
   <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:none;');document.getElementById('page-input').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});renderPT()">위험·자금 관리</div>
   <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-input').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});trOnTabEnter()">매매 현황</div>
@@ -1460,7 +1474,7 @@ input[type=range] { background: transparent !important; border: none !important;
 
 <!-- [47차 4-18] alert-band 통째 숨김 — "2단계·위험방어/헤지 또는 포지션 축소 검토" + "필터 3/6 충족·변동성 총점·레짐" 모두 사라짐. ID는 유지 (JS가 ID로 채울 때 에러 방지) -->
 <div class="alert-band lv0" id="alertBand" data-47차-목적="alert-band-숨김" style="display:none"><span class="a-badge" id="aBadge">로딩중</span><span class="a-msg" id="aMsg"></span><span class="a-right" id="aRight"></span></div>
-<div class="page" id="page-overview">
+<div class="page active" id="page-overview">
 
   <!-- ─── 그리드 뷰 ─────────────────────────────────────── -->
   <div id="ov-grid-view">
@@ -3201,6 +3215,8 @@ input[type=range] { background: transparent !important; border: none !important;
             if (d.sv_admin_alerts) localStorage.setItem('sv_admin_alerts', JSON.stringify(d.sv_admin_alerts));
             if (d.st_rank_v3) localStorage.setItem('st_rank_v3', JSON.stringify(d.st_rank_v3));
             if (d.st_detail_v3) localStorage.setItem('st_detail_v3', JSON.stringify(d.st_detail_v3));
+            if (d.sv_phase_note) localStorage.setItem('sv_phase_note', d.sv_phase_note);
+            if (d.sv_phase_note_updated) localStorage.setItem('sv_phase_note_updated', d.sv_phase_note_updated);
             /* 갱신 알림 — 다른 탭의 storage 이벤트 리스너 트리거 */
             try { localStorage.setItem('sv_admin_loaded_at', new Date().toISOString()); } catch(e){}
           } catch(e) { console.error('[admin_data 로드 실패]', e); }
@@ -3346,9 +3362,8 @@ input[type=range] { background: transparent !important; border: none !important;
 
   <!-- ─── A. 데이터 입력 (옛 영역 — 데이터 입력 탭으로 이동, 입력 필드는 동기화 위해 보존) ──────────────────────────────────── -->
   <!-- [11번 5-A] 안내 박스 — 사용자 안내 -->
-  <div style="margin:0 0 16px;padding:16px 20px;background:rgba(217,102,74,.08);border:1px solid rgba(217,102,74,.30);border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+  <div style="margin:0 0 16px;padding:16px 20px;background:#fff;border:1px solid rgba(217,102,74,.30);border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
     <div style="flex:1;min-width:200px">
-      <div style="font-size:15px;font-weight:800;color:var(--t1);margin-bottom:4px">데이터 입력 위치가 옮겨졌습니다</div>
       <div style="font-size:13px;color:var(--t2);line-height:1.6">자금 설정 · HTS 1316 · HTS 1310 모두 <b style="color:#d9664a">데이터 입력 탭</b>에서 한 번에 입력합니다.</div>
     </div>
     <button onclick="document.querySelectorAll('.nav-tab')[0].click()" style="display:inline-flex;align-items:center;justify-content:center;padding:0 18px;height:38px;border-radius:7px;border:1px solid rgba(217,102,74,.55);background:#d9664a;color:#fff;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .15s" onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'">데이터 입력 탭 →</button>
@@ -3487,7 +3502,7 @@ input[type=range] { background: transparent !important; border: none !important;
 
   <div id="pt-sec-c" style="margin:24px 0 16px">
     <div style="display:flex;align-items:center;gap:12px">
-      <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .3s;">B</div>
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .3s;">A</div>
       <div>
         <div style="font-size:22px;font-weight:800;color:var(--t1)">증거금 현황</div>
         <div style="font-size:13px;color:var(--t2);margin-top:3px;font-weight:500">위탁증거금 사용률 기준 신규 진입 가능 여부 판단</div>
@@ -3498,7 +3513,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <div class="card" style="border:1.5px solid rgba(26,122,74,.3)">
     <div style="padding:14px 16px 10px;border-bottom:1px solid rgba(26,122,74,.15)">
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:13px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">B-1</span>
+        <span style="font-size:13px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">A-1</span>
         <span style="font-size:14px;font-weight:700;color:var(--t1)">증거금 사용률</span>
         <span style="font-size:13px;color:var(--t2);font-weight:500">목표 사용률 이하일 때 신규 진입 가능</span>
       </div>
@@ -3535,7 +3550,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <!-- ─── C. 포지션 종합 현황 ─────────────────────────────── -->
   <div id="pt-sec-d" style="margin:24px 0 16px">
     <div style="display:flex;align-items:center;gap:12px">
-      <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .6s;">C</div>
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .6s;">B</div>
       <div>
         <div style="font-size:22px;font-weight:800;color:var(--t1)">포지션 종합 현황</div>
         <!-- [2026-05-07] 한 줄로 통합 + 배지 배경/테두리 삭제 -->
@@ -3603,7 +3618,7 @@ input[type=range] { background: transparent !important; border: none !important;
     </div>
     <div style="overflow-x:auto" id="pt-master-body">
       <div style="text-align:center;padding:40px 20px;color:var(--t3);font-size:12px;line-height:2.2">
-        A-2에서 HTS 1316창 데이터를 붙여넣으면<br>
+        데이터 입력 탭에서 HTS 1316창 데이터를 붙여넣으면<br>
         <b style="color:var(--t2)">종목별 노출 · 손익 · 추정손실</b>이 자동으로 계산됩니다.
       </div>
     </div>
@@ -3615,7 +3630,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <!-- ─── E. 진입 시뮬레이션 ─────────────────────────────── -->
   <div id="pt-sec-e" style="margin:24px 0 16px">
     <div style="display:flex;align-items:center;gap:12px">
-      <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .9s;">E</div>
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .9s;">C</div>
       <div>
         <div style="font-size:22px;font-weight:800;color:var(--t1)">진입 시뮬레이션</div>
         <div style="font-size:13px;color:var(--t2);margin-top:3px;font-weight:500">진입 예정 포지션 추가 → C 테이블 "진입후" 열 자동 갱신</div>
@@ -3627,7 +3642,7 @@ input[type=range] { background: transparent !important; border: none !important;
     <div style="padding:14px 16px 10px;border-bottom:1px solid rgba(176,128,64,.15)">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px">
         <div style="display:flex;align-items:center;gap:10px">
-          <span style="font-size:13px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">C-1</span>
+          <span style="font-size:13px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">B-1</span>
           <span style="font-size:14px;font-weight:700;color:var(--t1)">진입 예정 포지션</span>
         </div>
         <span style="font-size:13px;color:var(--t2);font-weight:500">원금: <span id="sim-capital-disp" style="font-family:var(--mono);color:var(--yellow);font-weight:700">—</span></span>
@@ -3718,7 +3733,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <!-- ─── [SESSION 9 §10] F. 위험 포지션 카드 (옛 명: 개별 포지션 카드) ───────────────────────────── -->
   <div id="pt-sec-f" style="margin:24px 0 16px">
     <div style="display:flex;align-items:center;gap:12px">
-      <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite 1.2s;">F</div>
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite 1.2s;">D</div>
       <div>
         <div style="font-size:23px;font-weight:800;color:var(--t1)">위험 포지션 카드</div>
         <div style="font-size:13px;color:var(--t2);margin-top:3px;font-weight:500">위험 단계 카드만 표시 (필터로 조정)</div>
@@ -3727,22 +3742,22 @@ input[type=range] { background: transparent !important; border: none !important;
     <div style="height:2px;background:linear-gradient(90deg,rgba(217,102,74,.6),transparent);margin-top:12px;border-radius:1px"></div>
   </div>
 
-  <!-- [SESSION 9 §10] 필터 바 — 조회 버튼 (살몬 펄스) -->
-  <div id="pt-pos-filter" style="margin-bottom:14px;padding:12px 16px;background:var(--card2);border:1px solid rgba(0,0,0,.08);border-radius:10px;display:flex;flex-direction:column;gap:10px">
+  <!-- [SESSION 9 §10] 필터 바 — 조회 버튼 (살몬 펄스) / [SESSION 10 디테일] 살몬 통일 -->
+  <div id="pt-pos-filter" style="margin-bottom:14px;padding:12px 16px;background:#fff;border:1px solid rgba(217,102,74,.25);border-radius:10px;display:flex;flex-direction:column;gap:10px">
     <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-      <span style="font-size:12px;color:var(--t2);font-weight:700;min-width:64px">표시 모드</span>
-      <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;color:var(--t1)"><input type="radio" name="pt-pos-mode" value="risk" checked style="margin:0"> 위험 경보만</label>
-      <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;color:var(--t1)"><input type="radio" name="pt-pos-mode" value="loss" style="margin:0"> 손익 마이너스만</label>
-      <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;color:var(--t1)"><input type="radio" name="pt-pos-mode" value="all" style="margin:0"> 전체 보기</label>
+      <span style="font-size:12px;color:#d9664a;font-weight:800;min-width:64px">표시 모드</span>
+      <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;color:var(--t1)"><input type="radio" name="pt-pos-mode" value="risk" checked style="margin:0;accent-color:#d9664a"> 위험 경보만</label>
+      <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;color:var(--t1)"><input type="radio" name="pt-pos-mode" value="loss" style="margin:0;accent-color:#d9664a"> 손익 마이너스만</label>
+      <label style="display:flex;align-items:center;gap:5px;cursor:pointer;font-size:13px;color:var(--t1)"><input type="radio" name="pt-pos-mode" value="all" style="margin:0;accent-color:#d9664a"> 전체 보기</label>
     </div>
     <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-      <span style="font-size:12px;color:var(--t2);font-weight:700;min-width:64px">세부</span>
-      <span style="font-size:12px;color:var(--t2)">종목</span>
-      <select id="pt-pos-filter-inst" style="padding:4px 10px;font-size:12px;border:1px solid rgba(0,0,0,.18);border-radius:6px;background:#fff;color:var(--t1);cursor:pointer"><option value="">전체</option></select>
-      <span style="font-size:12px;color:var(--t2)">월물</span>
-      <select id="pt-pos-filter-month" style="padding:4px 10px;font-size:12px;border:1px solid rgba(0,0,0,.18);border-radius:6px;background:#fff;color:var(--t1);cursor:pointer"><option value="">전체</option></select>
-      <span style="font-size:12px;color:var(--t2)">구분</span>
-      <select id="pt-pos-filter-type" style="padding:4px 10px;font-size:12px;border:1px solid rgba(0,0,0,.18);border-radius:6px;background:#fff;color:var(--t1);cursor:pointer"><option value="">전체</option><option value="C">콜 매도</option><option value="P">풋 매도</option></select>
+      <span style="font-size:12px;color:#d9664a;font-weight:800;min-width:64px">세부</span>
+      <span style="font-size:12px;color:rgba(217,102,74,.85);font-weight:700">종목</span>
+      <select id="pt-pos-filter-inst" style="padding:4px 10px;font-size:12px;border:1px solid rgba(217,102,74,.40);border-radius:6px;background:rgba(217,102,74,.05);color:var(--t1);cursor:pointer"><option value="">전체</option></select>
+      <span style="font-size:12px;color:rgba(217,102,74,.85);font-weight:700">월물</span>
+      <select id="pt-pos-filter-month" style="padding:4px 10px;font-size:12px;border:1px solid rgba(217,102,74,.40);border-radius:6px;background:rgba(217,102,74,.05);color:var(--t1);cursor:pointer"><option value="">전체</option></select>
+      <span style="font-size:12px;color:rgba(217,102,74,.85);font-weight:700">구분</span>
+      <select id="pt-pos-filter-type" style="padding:4px 10px;font-size:12px;border:1px solid rgba(217,102,74,.40);border-radius:6px;background:rgba(217,102,74,.05);color:var(--t1);cursor:pointer"><option value="">전체</option><option value="C">콜 매도</option><option value="P">풋 매도</option></select>
       <button id="pt-pos-search-btn" onclick="renderPTPositions()" style="margin-left:auto;padding:8px 22px;background:rgba(217,102,74,.10);border:2px solid #d9664a;border-radius:8px;color:#d9664a;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;animation:pulse-t2 2.4s ease-in-out infinite;letter-spacing:.04em;display:inline-flex;align-items:center;gap:6px" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">조회</button>
       <span id="pt-pos-filter-count" style="font-size:11px;color:var(--t3);font-weight:600;margin-left:10px">— 표시 중</span>
     </div>
@@ -3770,9 +3785,8 @@ input[type=range] { background: transparent !important; border: none !important;
 
   <!-- A. 데이터 입력 (옛 영역 — 데이터 입력 탭으로 이동) -->
   <!-- [11번 5-C] 안내 박스 -->
-  <div style="margin:0 0 16px;padding:16px 20px;background:rgba(217,102,74,.08);border:1px solid rgba(217,102,74,.30);border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+  <div style="margin:0 0 16px;padding:16px 20px;background:#fff;border:1px solid rgba(217,102,74,.30);border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
     <div style="flex:1;min-width:200px">
-      <div style="font-size:15px;font-weight:800;color:var(--t1);margin-bottom:4px">데이터 입력 위치가 옮겨졌습니다</div>
       <div style="font-size:13px;color:var(--t2);line-height:1.6">자금 설정 · HTS 1316 · HTS 1310 모두 <b style="color:#d9664a">데이터 입력 탭</b>에서 한 번에 입력합니다.</div>
     </div>
     <button onclick="document.querySelectorAll('.nav-tab')[0].click()" style="display:inline-flex;align-items:center;justify-content:center;padding:0 18px;height:38px;border-radius:7px;border:1px solid rgba(217,102,74,.55);background:#d9664a;color:#fff;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .15s" onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'">데이터 입력 탭 →</button>
@@ -3897,7 +3911,7 @@ input[type=range] { background: transparent !important; border: none !important;
     <div style="display:flex;align-items:center;gap:12px">
       <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);
         display:flex;align-items:center;justify-content:center;
-        font-size:13px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .35s">B</div>
+        font-size:13px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .35s">A</div>
       <div>
         <div style="font-size:22px;font-weight:800;color:var(--t1)">결과 확인</div>
         <div style="font-size:12px;color:var(--t2);margin-top:3px;font-weight:500">이번 달 전체 성과를 숫자와 차트로 파악</div>
@@ -3910,7 +3924,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <div class="card">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--b1)">
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:11px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">B-1</span>
+        <span style="font-size:11px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">A-1</span>
         <span style="font-size:14px;font-weight:700;color:var(--t1)">핵심 성과 지표</span>
       </div>
       <span style="font-size:12px;color:var(--t2);font-weight:500">옵션 매도 전용 기준 적용</span>
@@ -3932,7 +3946,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <div class="card" style="margin-top:12px">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--b1)">
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:11px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">B-2</span>
+        <span style="font-size:11px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">A-2</span>
         <span style="font-size:14px;font-weight:700;color:var(--t1)">누적 손익 곡선</span>
       </div>
       <span style="font-size:12px;color:var(--t2);font-weight:500">우상향 · 낙폭 · 회복속도</span>
@@ -3948,7 +3962,7 @@ input[type=range] { background: transparent !important; border: none !important;
     <div class="card">
       <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--b1)">
         <div style="display:flex;align-items:center;gap:10px">
-          <span style="font-size:11px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">B-3</span>
+          <span style="font-size:11px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">A-3</span>
           <span style="font-size:14px;font-weight:700;color:var(--t1)">월별 성과표</span>
         </div>
         <span style="font-size:12px;color:var(--t2);font-weight:500">수익 빈도 · 등락 패턴</span>
@@ -3961,7 +3975,7 @@ input[type=range] { background: transparent !important; border: none !important;
     <div class="card">
       <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--b1)">
         <div style="display:flex;align-items:center;gap:10px">
-          <span style="font-size:11px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">B-4</span>
+          <span style="font-size:11px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">A-4</span>
           <span style="font-size:14px;font-weight:700;color:var(--t1)">손익 수렴 구조</span>
         </div>
         <span style="font-size:12px;color:var(--t2);font-weight:500">일 → 주 → 월 안정화 여부</span>
@@ -3977,7 +3991,7 @@ input[type=range] { background: transparent !important; border: none !important;
     <div style="display:flex;align-items:center;gap:12px">
       <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);
         display:flex;align-items:center;justify-content:center;
-        font-size:13px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .7s">C</div>
+        font-size:13px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .7s">B</div>
       <div>
         <div style="font-size:22px;font-weight:800;color:var(--t1)">원인 분석</div>
         <div style="font-size:11px;color:var(--t3);margin-top:2px">손절 미준수 · 종목 집중 · 거래 패턴 점검</div>
@@ -3990,7 +4004,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <div class="card">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--b1)">
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:12px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">C-1</span>
+        <span style="font-size:12px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">B-1</span>
         <span style="font-size:15px;font-weight:700;color:var(--t1)">손절 원칙 점검</span>
       </div>
       <span style="font-size:13px;color:var(--t3)">평균 손실 3배 초과 = 위반 의심</span>
@@ -4004,7 +4018,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <div class="card" style="margin-top:12px">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--b1)">
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:12px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">C-2</span>
+        <span style="font-size:12px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">B-2</span>
         <span style="font-size:15px;font-weight:700;color:var(--t1)">종목별 손익 기여도</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px">
@@ -4026,7 +4040,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <div class="card" style="margin-top:12px">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--b1)">
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:12px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">C-3</span>
+        <span style="font-size:12px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">B-3</span>
         <span style="font-size:15px;font-weight:700;color:var(--t1)">자금관리 분석</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px">
@@ -4053,7 +4067,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <!-- D. 진단 -->
   <div style="margin:28px 0 16px">
     <div style="display:flex;align-items:center;gap:12px">
-      <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite 1.05s">D</div>
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite 1.05s">C</div>
       <div>
         <div style="font-size:22px;font-weight:800;color:var(--t1)">진단</div>
         <div style="font-size:11px;color:var(--t3);margin-top:2px">데이터 기반 자동 진단 · 지표 해석 가이드</div>
@@ -4066,7 +4080,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <div class="card">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--b1)">
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:12px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">D-1</span>
+        <span style="font-size:12px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">C-1</span>
         <span style="font-size:15px;font-weight:700;color:var(--t1)">매매 자동 진단</span>
       </div>
       <span style="font-size:13px;color:var(--t3)">개선 우선순위 자동 정렬</span>
@@ -4091,7 +4105,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <div class="card" style="margin-top:12px">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--b1)">
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:12px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">D-2</span>
+        <span style="font-size:12px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">C-2</span>
         <span style="font-size:15px;font-weight:700;color:var(--t1)">지표 해석 가이드</span>
       </div>
       <span style="font-size:13px;color:var(--t3)">옵션 매도 전용 · 내 수치 자동 강조</span>
@@ -4104,7 +4118,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <!-- E. 복기 작성 -->
   <div style="margin:28px 0 16px">
     <div style="display:flex;align-items:center;gap:12px">
-      <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite 1.4s">E</div>
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite 1.4s">D</div>
       <div>
         <div style="font-size:22px;font-weight:800;color:var(--t1)">복기 작성 & 출력</div>
         <div style="font-size:11px;color:var(--t3);margin-top:2px">카페 양식 작성 후 이미지로 저장해 업로드</div>
@@ -4117,7 +4131,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <div class="card">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--b1)">
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:12px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">E-1</span>
+        <span style="font-size:12px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">D-1</span>
         <span style="font-size:15px;font-weight:700;color:var(--t1)">카페 복기 양식</span>
       </div>
       <span id="rv-period-tag" style="font-size:13px;color:var(--t3)">기간 자동 산출</span>
@@ -4286,7 +4300,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <div class="card" style="margin-top:12px">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--b1)">
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:12px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">E-2</span>
+        <span style="font-size:12px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">D-2</span>
         <span style="font-size:15px;font-weight:700;color:var(--t1)">카페 업로드용 이미지 저장</span>
           <span style="font-size:11px;font-weight:700;color:#d9664a;background:rgba(217,102,74,.12);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30);font-family:var(--mono)">마지막 단계</span>
       </div>
@@ -4900,7 +4914,7 @@ input[type=range] { background: transparent !important; border: none !important;
       <span id="uxc-phase-note-date" style="font-size:13px;color:var(--t3);font-family:var(--mono)">데이터 없음</span>
     </div>
     <div id="uxc-phase-note-body" style="margin-top:6px;font-size:13px;color:var(--t2);line-height:1.7;white-space:pre-wrap">
-      <div style="color:var(--t3);font-size:13px">admin에 변동 사유 입력 시 표시됩니다</div>
+      <div style="color:var(--t3);font-size:13px">직트 관리자에 변동 사유 입력 시 표시됩니다</div>
     </div>
   </section>
 
@@ -4925,9 +4939,8 @@ input[type=range] { background: transparent !important; border: none !important;
 
   <!-- A. 데이터 입력 (옛 영역 — 데이터 입력 탭으로 이동, 입력 필드는 동기화 위해 보존) -->
   <!-- [11번 5-B] 안내 박스 -->
-  <div style="margin:0 0 16px;padding:16px 20px;background:rgba(217,102,74,.08);border:1px solid rgba(217,102,74,.30);border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+  <div style="margin:0 0 16px;padding:16px 20px;background:#fff;border:1px solid rgba(217,102,74,.30);border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
     <div style="flex:1;min-width:200px">
-      <div style="font-size:15px;font-weight:800;color:var(--t1);margin-bottom:4px">데이터 입력 위치가 옮겨졌습니다</div>
       <div style="font-size:13px;color:var(--t2);line-height:1.6">자금 설정 · HTS 1316 · HTS 1310 모두 <b style="color:#d9664a">데이터 입력 탭</b>에서 한 번에 입력합니다.</div>
     </div>
     <button onclick="document.querySelectorAll('.nav-tab')[0].click()" style="display:inline-flex;align-items:center;justify-content:center;padding:0 18px;height:38px;border-radius:7px;border:1px solid rgba(217,102,74,.55);background:#d9664a;color:#fff;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .15s" onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'">데이터 입력 탭 →</button>
@@ -5076,7 +5089,7 @@ input[type=range] { background: transparent !important; border: none !important;
   </div>
   <div id="tr-sec-b" style="margin:0 0 16px;padding:0">
     <div style="display:flex;align-items:center;gap:12px">
-      <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .35s;">B</div>
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .35s;">A</div>
       <div>
         <div style="font-size:22px;font-weight:800;color:var(--t1)">현황판</div>
         <div style="font-size:11px;color:var(--t3);margin-top:2px">종목별 손익 · KPI · 누적 손익 곡선 · 포트폴리오 차트</div>
@@ -5220,7 +5233,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <!-- D섹션: 월물별 포지션 테이블 (전체 탭 추가) -->
   <div id="tr-sec-c" style="margin:0 0 16px;padding:0">
     <div style="display:flex;align-items:center;gap:12px">
-      <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .7s;">C</div>
+      <div style="width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .7s;">B</div>
       <div>
         <div style="font-size:22px;font-weight:800;color:var(--t1)">월물별 포지션 현황</div>
         <div style="font-size:11px;color:var(--t3);margin-top:2px">종목·월물별 포지션 전체 조회</div>
@@ -5233,7 +5246,7 @@ input[type=range] { background: transparent !important; border: none !important;
     <!-- [2026-05-08] C-1 라벨 위쪽으로 + 탭은 별도 줄 (탭 많아도 안 밀림) -->
     <div style="padding:12px 16px 10px;border-bottom:1px solid rgba(0,0,0,.08)">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-        <span style="font-size:13px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">C-1</span>
+        <span style="font-size:13px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">B-1</span>
         <span style="font-size:14px;font-weight:700;color:var(--t1)">포지션 테이블</span>
       </div>
       <!-- 월물·종목 탭 — 동적 생성 (전체 폭 사용) -->
@@ -5278,7 +5291,7 @@ input[type=range] { background: transparent !important; border: none !important;
 
 </div><!-- /page-trade -->
 
-<div class="page active" id="page-input">
+<div class="page" id="page-input" style="display:none">
 
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:10px 16px;background:linear-gradient(90deg,rgba(217,102,74,.06),rgba(217,102,74,.01));border:1px solid rgba(217,102,74,.18);border-radius:10px;flex-wrap:wrap">
     <div style="flex:1;min-width:0">
@@ -6852,14 +6865,18 @@ function inParse1316() {
   // 카운트 갱신 (옛 pos-count-tag 값 따라가기)
   setTimeout(inSync1316CountFromOld, 300);
   // [11번] 매매 현황 trData 영구 저장 — trParse1316이 window.trData만 메모리에 두므로 명시 저장
-  try {
-    if (typeof trData !== 'undefined' && trData && typeof TR_KEY_DATA !== 'undefined') {
-      if (window.trData) Object.assign(trData, window.trData);
-      localStorage.setItem(TR_KEY_DATA, JSON.stringify(trData));
-    } else if (window.trData && typeof TR_KEY_DATA !== 'undefined') {
-      localStorage.setItem(TR_KEY_DATA, JSON.stringify(window.trData));
-    }
-  } catch(e){ console.error('trData 저장 오류:', e); }
+  // setTimeout 500ms — window.trParse1316 안 setTimeout(200ms) 이후 보장
+  setTimeout(function(){
+    try {
+      if (typeof TR_KEY_DATA === 'undefined') return;
+      if (window.trData && Object.keys(window.trData).length > 0) {
+        // trData(local) 갱신
+        if (typeof trData !== 'undefined' && trData) Object.assign(trData, window.trData);
+        else { try { window.trData = window.trData; } catch(e){} }
+        localStorage.setItem(TR_KEY_DATA, JSON.stringify(window.trData));
+      }
+    } catch(e){ console.error('trData 저장 오류:', e); }
+  }, 500);
 }
 
 // 페이지 로드 / 갱신 후 옛 카운트 → 새 카운트 동기화
@@ -6953,15 +6970,16 @@ function inParse1310() {
   setTimeout(inSync1310CountFromOld, 300);
   // [11번 안전망] 시장 현황 카드 재렌더
   try { if (typeof window.uvpShow === 'function') window.uvpShow(); } catch(e){}
-  // [11번] 매매 현황 trData 영구 저장
-  try {
-    if (typeof trData !== 'undefined' && trData && typeof TR_KEY_DATA !== 'undefined') {
-      if (window.trData) Object.assign(trData, window.trData);
-      localStorage.setItem(TR_KEY_DATA, JSON.stringify(trData));
-    } else if (window.trData && typeof TR_KEY_DATA !== 'undefined') {
-      localStorage.setItem(TR_KEY_DATA, JSON.stringify(window.trData));
-    }
-  } catch(e){ console.error('trData 저장 오류:', e); }
+  // [11번] 매매 현황 trData 영구 저장 — setTimeout 500ms (trParseHTS 안 setTimeout 150ms 이후)
+  setTimeout(function(){
+    try {
+      if (typeof TR_KEY_DATA === 'undefined') return;
+      if (window.trData && Object.keys(window.trData).length > 0) {
+        if (typeof trData !== 'undefined' && trData) Object.assign(trData, window.trData);
+        localStorage.setItem(TR_KEY_DATA, JSON.stringify(window.trData));
+      }
+    } catch(e){ console.error('trData 저장 오류:', e); }
+  }, 500);
 }
 
 // 페이지 로드 / 갱신 후 rv-stat-tag → 새 카운트 동기화
@@ -7892,7 +7910,7 @@ function renderPTMasterTable() {
 
   if (active.length === 0) {
     el.innerHTML = '<div style="text-align:center;padding:40px 20px;color:var(--t3);font-size:12px;line-height:2.2">'
-      + 'A-2에서 HTS 1316창 데이터를 붙여넣으면<br>'
+      + '데이터 입력 탭에서 HTS 1316창 데이터를 붙여넣으면<br>'
       + '<b style="color:var(--t2)">종목별 노출 · 손익 · 추정손실</b>이 자동으로 계산됩니다.</div>';
     return;
   }
@@ -8519,11 +8537,10 @@ function initPTOnce() {
   if (!document.getElementById('pt-sticky-nav') && page) {
     /* [2026-05-07] 시장위험 항목 삭제(매매 전략 탭으로 이동) + ABCDE 재매핑 본문 헤더와 일치 */
     var ptSteps = [
-      { id:'A', label:'데이터 입력',  color:'#d9664a', anchor:'pt-sec-a' },
-      { id:'B', label:'증거금',      color:'#d9664a', anchor:'pt-sec-c' },
-      { id:'C', label:'종합 현황',   color:'#d9664a', anchor:'pt-sec-d' },
-      { id:'D', label:'진입 시뮬',   color:'#d9664a', anchor:'pt-sec-e' },
-      { id:'E', label:'포지션 카드', color:'#d9664a', anchor:'pt-sec-f' },
+      { id:'A', label:'증거금',      color:'#d9664a', anchor:'pt-sec-c' },
+      { id:'B', label:'종합 현황',   color:'#d9664a', anchor:'pt-sec-d' },
+      { id:'C', label:'진입 시뮬',   color:'#d9664a', anchor:'pt-sec-e' },
+      { id:'D', label:'포지션 카드', color:'#d9664a', anchor:'pt-sec-f' },
     ];
     var ptCBMap = { '#d9664a': 'rgba(217,102,74,.15)' };
     var nav = document.createElement('div');
@@ -8891,7 +8908,7 @@ var RM_PHASE_MAP = {
   },
   CRISIS:  {
     emoji:'', label:'위험 국면',
-    bg:'rgba(42,95,168,.09)',   border:'rgba(42,95,168,.26)',  color:'var(--red)',
+    bg:'rgba(200,48,48,.09)',   border:'rgba(200,48,48,.30)',  color:'#c83030',
     sizing:'금지 ', dist:'금지 ', decel:'30~50% 축소', cap:'0.5%', tailCap:'0.25%',
   },
 };
@@ -9093,10 +9110,10 @@ function rmRenderSummary() {
   );
   if (groups.CRISIS.length) html.push(
     '<div style="display:flex;align-items:center;gap:8px;padding:7px 14px;border-radius:9px;',
-      'background:rgba(42,95,168,.09);border:1px solid rgba(42,95,168,.24)">',
+      'background:rgba(200,48,48,.09);border:1px solid rgba(200,48,48,.28)">',
       '<span style="font-size:14px"></span>',
       '<div>',
-        '<div style="font-size:11px;font-weight:800;color:var(--red)">위험 국면</div>',
+        '<div style="font-size:11px;font-weight:800;color:#c83030">위험 국면</div>',
         '<div style="font-size:12px;color:var(--t3);margin-top:1px">'+groups.CRISIS.join(' · ')+'</div>',
       '</div>',
     '</div>'
@@ -9136,7 +9153,7 @@ function rmRenderActionTable() {
         '</td>',
         '<td style="padding:10px 16px;text-align:center;color:#1a7a4a;font-weight:700;font-size:12px;font-family:var(--mono)">'+n+'</td>',
         '<td style="padding:10px 16px;text-align:center;color:var(--yellow);font-weight:700;font-size:12px;font-family:var(--mono)">'+w+'</td>',
-        '<td style="padding:10px 16px;text-align:center;color:var(--red);font-weight:700;font-size:12px;font-family:var(--mono)">'+c+'</td>',
+        '<td style="padding:10px 16px;text-align:center;color:#c83030;font-weight:700;font-size:12px;font-family:var(--mono)">'+c+'</td>',
       '</tr>',
     ].join('');
   }
@@ -9152,7 +9169,7 @@ function rmRenderActionTable() {
             '<th style="padding:10px 16px;text-align:left;color:var(--t3);font-size:11px;font-weight:700;border-bottom:1px solid rgba(0,0,0,.05)">행동 기준</th>',
             '<th style="padding:10px 16px;text-align:center;color:#1a7a4a;font-size:12px;font-weight:800;border-bottom:1px solid rgba(0,0,0,.05)">안전 국면</th>',
             '<th style="padding:10px 16px;text-align:center;color:var(--yellow);font-size:12px;font-weight:800;border-bottom:1px solid rgba(0,0,0,.05)">주의 국면</th>',
-            '<th style="padding:10px 16px;text-align:center;color:var(--red);font-size:12px;font-weight:800;border-bottom:1px solid rgba(0,0,0,.05)">위험 국면</th>',
+            '<th style="padding:10px 16px;text-align:center;color:#c83030;font-size:12px;font-weight:800;border-bottom:1px solid rgba(0,0,0,.05)">위험 국면</th>',
           '</tr></thead>',
           '<tbody>',
             row('진입 계약 수','사이징(Sizing)','기준 1배','0.7배 ↓','금지'),
@@ -12197,9 +12214,8 @@ function trInjectStickyNav() {
   var page = document.getElementById('page-trade');
   if (!page) return;
   var trSteps = [
-    { id:'A', label:'데이터 입력', color:'#d9664a', anchor:'tr-sec-a' },
-    { id:'B', label:'포트폴리오',  color:'#d9664a', anchor:'tr-sec-b' },
-    { id:'C', label:'포지션',      color:'#d9664a', anchor:'tr-sec-c' },
+    { id:'A', label:'포트폴리오',  color:'#d9664a', anchor:'tr-sec-b' },
+    { id:'B', label:'포지션',      color:'#d9664a', anchor:'tr-sec-c' },
   ];
   var nav = document.createElement('div');
   nav.id = 'tr-sticky-nav';
@@ -15077,11 +15093,10 @@ function injectTourHelpBtn() {
         ].join('');
 
         var steps = [
-          { id:'A', label:'입력',      color:'#d9664a', anchor:'rv-paste-wrap' },
-          { id:'B', label:'결과 확인', color:'#d9664a', anchor:'rv-kpi' },
-          { id:'C', label:'원인 분석', color:'#d9664a', anchor:'rv-stop-alert' },
-          { id:'D', label:'진단',      color:'#d9664a', anchor:'rv-diagnosis-toggle-btn' },
-          { id:'E', label:'복기 작성', color:'#d9664a', anchor:'rv-period-tag' },
+          { id:'A', label:'결과 확인', color:'#d9664a', anchor:'rv-kpi' },
+          { id:'B', label:'원인 분석', color:'#d9664a', anchor:'rv-stop-alert' },
+          { id:'C', label:'진단',      color:'#d9664a', anchor:'rv-diagnosis-toggle-btn' },
+          { id:'D', label:'복기 작성', color:'#d9664a', anchor:'rv-period-tag' },
         ];
 
         nav.innerHTML = '<span style="font-size:15px !important;color:var(--t3);font-weight:700;letter-spacing:.04em;margin-right:6px;flex-shrink:0">복기</span>'
@@ -17920,7 +17935,7 @@ window._t14GetInstPhaseLimit = function(code) {
     var note = _s6GetText('sv_phase_note');
     var noteUpdated = _s6GetText('sv_phase_note_updated');
     if (!note || note.trim() === '') {
-      body.innerHTML = '<div class="uxc-empty">admin에 변동 사유 입력 시 표시됩니다</div>';
+      body.innerHTML = '<div class="uxc-empty">직트 관리자에 변동 사유 입력 시 표시됩니다</div>';
       if (dateEl) dateEl.textContent = '데이터 없음';
     } else {
       body.textContent = note;
