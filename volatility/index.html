@@ -22757,7 +22757,7 @@ window._t14GetInstPhaseLimit = function(code) {
     var putInfo  = _b4QtyAndPrice('풋');
     /* 자본 비율 (사용자 자본 / 5천만 원) */
     var baseCap = 50000000;
-    var capitalRatio = (capitalKRW > 0) ? (capitalKRW / baseCap) : 1;
+    var capitalRatio = (capKRW > 0) ? (capKRW / baseCap) : 1;
     /* 자본 비례 raw × 시장국면 진입 강도 */
     var rawCall = callInfo.qty * capitalRatio * sCall;
     var rawPut  = putInfo.qty  * capitalRatio * sPut;
