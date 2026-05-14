@@ -3747,11 +3747,13 @@ input[type=range] { background: transparent !important; border: none !important;
     <div style="height:2px;background:linear-gradient(90deg,rgba(217,102,74,.6),transparent);margin-top:12px;border-radius:1px"></div>
   </div>
 
-  <!-- [SESSION 10 디테일] D-1 배지 헤더 -->
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-    <span style="font-size:13px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">D-1</span>
-    <span style="font-size:14px;font-weight:700;color:var(--t1)">위험 포지션 표시</span>
-    <span style="font-size:13px;color:var(--t2);font-weight:500;margin-left:6px">필터 조건으로 단계별 카드 조회</span>
+  <!-- [SESSION 10 디테일] D-1 배지 헤더 — 흰 카드 박스 안 -->
+  <div class="card" style="border:1.5px solid rgba(217,102,74,.25);margin-bottom:10px;background:#fff">
+    <div style="padding:14px 16px 12px;display:flex;align-items:center;gap:10px">
+      <span style="font-size:13px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:3px 10px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">D-1</span>
+      <span style="font-size:14px;font-weight:700;color:var(--t1)">위험 포지션 표시</span>
+      <span style="font-size:13px;color:var(--t2);font-weight:500;margin-left:6px">필터 조건으로 단계별 카드 조회</span>
+    </div>
   </div>
   <!-- [SESSION 9 §10] 필터 바 — 조회 버튼 (살몬 펄스) / [SESSION 10 디테일] 살몬 통일 -->
   <div id="pt-pos-filter" style="margin-bottom:14px;padding:12px 16px;background:#fff;border:1px solid rgba(217,102,74,.25);border-radius:10px;display:flex;flex-direction:column;gap:10px">
