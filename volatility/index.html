@@ -1461,6 +1461,12 @@ input[type=range] { background: transparent !important; border: none !important;
 .nav-tab.nav-tab-input-pulse.active {
   animation: none;
 }
+
+/* [SESSION 10] 외부 대시보드 버튼 연한 살몬 펄스 — 테두리 색과 동일 톤 */
+@keyframes pulse-ext-btn {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(217,102,74,.18); border-color: rgba(217,102,74,.45); }
+  50%      { box-shadow: 0 0 0 4px rgba(217,102,74,.22); border-color: rgba(217,102,74,.65); }
+}
 </style></head><body>
 <div class="hdr"><div class="hdr-l"><div class="logo">CL</div><div><div class="hdr-title">종합 옵션 대시보드</div><div class="hdr-sub" data-47차-목적="부제-버전만">v3.0</div></div></div><div class="hdr-r"><div class="hdr-meta" id="hdrMeta">로딩 중...</div><div class="dot"></div></div></div>
 <div class="nav">
@@ -1507,19 +1513,30 @@ input[type=range] { background: transparent !important; border: none !important;
     <!-- 섹션 헤더 -->
     <!-- [47차 4-2] 머리글 확대 (15px → 22px) + 서브 텍스트 단축 ("카드 클릭 →"만) -->
     <div class="ov-grid-header" data-47차-목적="머리글확대-서브단축" style="margin-top:8px">
-      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;width:100%">
         <div>
           <div class="ov-grid-title" style="font-size:22px">전체 종목 현황</div>
           <div class="ov-grid-subtitle" style="font-size:12px;">카드 클릭 →</div>
         </div>
-        <a href="https://lds31321-png.github.io/market-dashboard/" target="_blank" rel="noopener noreferrer"
-          style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;background:rgba(217,102,74,.08);border:1.5px solid rgba(217,102,74,.45);color:#d9664a;font-size:13px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .18s;white-space:nowrap"
-          onmouseover="this.style.background='rgba(217,102,74,.18)';this.style.borderColor='#d9664a'"
-          onmouseout="this.style.background='rgba(217,102,74,.08)';this.style.borderColor='rgba(217,102,74,.45)'">
-          글로벌 시장 현황 (외부 대시보드) ↗
-        </a>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+          <a href="https://lds31321-png.github.io/market-dashboard/" target="_blank" rel="noopener noreferrer"
+            style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;background:rgba(217,102,74,.08);border:1.5px solid rgba(217,102,74,.45);color:#d9664a;font-size:13px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .18s;white-space:nowrap;animation:pulse-ext-btn 2.4s ease-in-out infinite"
+            onmouseover="this.style.background='rgba(217,102,74,.18)';this.style.borderColor='#d9664a'"
+            onmouseout="this.style.background='rgba(217,102,74,.08)';this.style.borderColor='rgba(217,102,74,.45)'">
+            글로벌 시장 현황 (외부 대시보드)
+          </a>
+          <button onclick="var b=document.getElementById('ov-ext-dashboard-help');b.style.display=b.style.display==='none'?'block':'none'"
+            style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:rgba(217,102,74,.08);border:1.5px solid rgba(217,102,74,.45);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .18s;animation:pulse-ext-btn 2.4s ease-in-out infinite"
+            onmouseover="this.style.background='rgba(217,102,74,.18)';this.style.borderColor='#d9664a'"
+            onmouseout="this.style.background='rgba(217,102,74,.08)';this.style.borderColor='rgba(217,102,74,.45)'">?</button>
+          <div class="ov-data-stamp" id="ov-data-stamp" style="margin-left:6px">로딩 중...</div>
+        </div>
       </div>
-      <div class="ov-data-stamp" id="ov-data-stamp">로딩 중...</div>
+      <!-- [SESSION 10] 외부 대시보드 안내 토글 -->
+      <div id="ov-ext-dashboard-help" style="display:none;margin-top:10px;padding:14px 18px;background:#fff;border:1.5px solid rgba(217,102,74,.30);border-radius:10px;font-size:13px;color:var(--t2);line-height:1.8">
+        WTI 원유, 금, S&amp;P500, 나스닥, 국채금리, 환율, 농산물 등 <b style="color:var(--t1)">12개 종목</b>의 가격 현황과 시나리오 분석을 확인하실 수 있습니다.<br>
+        <b style="color:#d9664a">Bloomberg, EIA, FRED, IMF</b> 등 공신력 있는 기관 데이터를 기반으로 AI가 종합 분석한 자료입니다.
+      </div>
     </div>
 
     <!-- 카드 그리드 (JS로 렌더) -->
