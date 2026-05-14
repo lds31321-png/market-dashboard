@@ -1938,10 +1938,23 @@ input[type=range] { background: transparent !important; border: none !important;
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
               <span style="font-size:11px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">C-2</span>
               <span style="font-size:14px;color:var(--t1);font-weight:700">권장 행사가 + 받을 옵션가격</span>
+              <button id="uvp-info-step3-cap-help-btn" onclick="var b=document.getElementById('uvp-info-step3-cap-hint');b.style.display=b.style.display==='none'?'block':'none'"
+                style="display:none;align-items:center;justify-content:center;width:26px;height:26px;border-radius:6px;background:rgba(176,128,64,.12);border:1.5px solid rgba(176,128,64,.45);color:#c8803a;font-size:13px;font-weight:800;cursor:pointer;margin-left:4px;transition:all .18s"
+                onmouseover="this.style.background='rgba(176,128,64,.22)'"
+                onmouseout="this.style.background='rgba(176,128,64,.12)'">?</button>
             </div>
-            <!-- [SESSION 10] 1계약 미만 시 캡 프리 권장 안내 박스 (raw < 1) -->
-            <div id="uvp-info-step3-cap-hint" style="display:none;margin-bottom:8px;padding:10px 12px;background:rgba(176,128,64,.10);border:1px solid rgba(176,128,64,.35);border-radius:8px;font-size:13px;color:var(--t1);line-height:1.6">
-              <b style="color:#c8803a">자본 캡 적용</b> — 1회 진입 한도(자본 0.5%)를 초과해 <b id="uvp-info-step3-cap-prem-call">─</b>(콜) / <b id="uvp-info-step3-cap-prem-put">─</b>(풋) 프리미엄에 해당하는 더 외가 행사가로 진입 권장. 실제 행사가는 진입 시점 시세에 따라 직접 선택하세요.
+            <!-- [SESSION 10] 1계약 미만 시 캡 프리 권장 안내 박스 — ? 버튼 클릭 시 토글 -->
+            <div id="uvp-info-step3-cap-hint" style="display:none;margin-bottom:8px;padding:12px 14px;background:rgba(176,128,64,.08);border:1px solid rgba(176,128,64,.35);border-radius:8px;font-size:13px;color:var(--t1);line-height:1.85">
+              <div style="font-weight:800;color:#c8803a;margin-bottom:6px">자본 한도 초과 — 더 외가 행사가 진입을 권장합니다</div>
+              <div style="color:var(--t2)">
+                현재 자본 기준 1회 진입 가능 금액(자본의 0.5%)이 권장 행사가의 옵션가격을 초과합니다.<br>
+                <b style="color:var(--t1)">현재가에서 더 먼 외가 행사가</b>로 진입하시면 한도를 초과하지 않습니다.
+                <div style="margin-top:8px;padding:8px 12px;background:#fff;border-radius:6px;border:1px solid rgba(176,128,64,.30)">
+                  콜 매도 — 받는 옵션가격이 약 <b id="uvp-info-step3-cap-prem-call" style="color:#d9664a">─</b> 수준인 외가 행사가 선택<br>
+                  풋 매도 — 받는 옵션가격이 약 <b id="uvp-info-step3-cap-prem-put" style="color:#d9664a">─</b> 수준인 외가 행사가 선택
+                </div>
+                <div style="margin-top:8px;font-size:12px;color:var(--t3)">정확한 행사가는 거래 시점 시세에 따라 변동되므로, HTS에서 직접 확인 후 진입하시기 바랍니다.</div>
+              </div>
             </div>
             <div style="display:flex;flex-direction:column;gap:8px">
               <div id="uvp-c2-call-box" style="padding:12px 14px;background:rgba(217,102,74,.08);border-radius:8px;border:1.5px solid rgba(217,102,74,.25)">
@@ -22792,21 +22805,22 @@ window._t14GetInstPhaseLimit = function(code) {
       if (rawPut >= 1) { qPut = Math.floor(rawPut); pricePutFinal = putInfo.priceMain; }
       else             { qPut = 1;                  pricePutFinal = putInfo.priceCap;  }
     } else { qPut = 0; pricePutFinal = 0; }
-    /* [SESSION 10] C-2 캡 프리 안내 박스 표시 — raw < 1 (1계약 미만) 시 캡 프리 권장 */
+    /* [SESSION 10] C-2 캡 프리 안내 — raw < 1 (1계약 미만) 시 ? 버튼 표시. 본문은 ? 클릭 시 토글 */
     try {
       var capHintEl = document.getElementById('uvp-info-step3-cap-hint');
-      if (capHintEl) {
-        var capCallShown = callInfo.qty > 0 && rawCall < 1;
-        var capPutShown  = putInfo.qty > 0 && rawPut < 1;
-        if (capCallShown || capPutShown) {
-          capHintEl.style.display = 'block';
-          var elCapPremC = document.getElementById('uvp-info-step3-cap-prem-call');
-          var elCapPremP = document.getElementById('uvp-info-step3-cap-prem-put');
-          if (elCapPremC) elCapPremC.textContent = capCallShown ? callInfo.priceCap.toFixed(3) : '─';
-          if (elCapPremP) elCapPremP.textContent = capPutShown  ? putInfo.priceCap.toFixed(3)  : '─';
-        } else {
-          capHintEl.style.display = 'none';
-        }
+      var capBtnEl  = document.getElementById('uvp-info-step3-cap-help-btn');
+      var capCallShown = callInfo.qty > 0 && rawCall < 1;
+      var capPutShown  = putInfo.qty > 0 && rawPut < 1;
+      if (capCallShown || capPutShown) {
+        /* ? 버튼만 표시. 안내 본문은 ? 클릭 시 사용자가 직접 펼침 */
+        if (capBtnEl) capBtnEl.style.display = 'inline-flex';
+        var elCapPremC = document.getElementById('uvp-info-step3-cap-prem-call');
+        var elCapPremP = document.getElementById('uvp-info-step3-cap-prem-put');
+        if (elCapPremC) elCapPremC.textContent = capCallShown ? callInfo.priceCap.toFixed(3) : '─';
+        if (elCapPremP) elCapPremP.textContent = capPutShown  ? putInfo.priceCap.toFixed(3)  : '─';
+      } else {
+        if (capBtnEl)  capBtnEl.style.display  = 'none';
+        if (capHintEl) capHintEl.style.display = 'none';
       }
     } catch(e){}
     var elCoT = document.getElementById('uvp-info-step2-contract-txt');
