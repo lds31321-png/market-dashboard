@@ -23273,55 +23273,42 @@ window._t14GetInstPhaseLimit = function(code) {
       else { elRoll.textContent = '자유 (40~50%)'; elRoll.style.color = 'var(--green)'; }
     }
     if (elExp) {
-      /* [SESSION 10 D-4 fix v2] admin row의 daysLeft 우선 (admin이 직접 입력) → 행사가 월물 expiry → 폴백 순서
-         row.daysLeft가 있으면 그대로 잔존일로 사용 (admin에 입력된 가장 정확한 값) */
-      var monthLabel4 = '', expiry4 = '', daysLeftDirect = 0;
+      /* [SESSION 10 D-4 fix v3] C-3와 동일 룰 기반 자동 계산 — _s10MonthToExpiry 룰까지 폴백 추가
+         시간 흐름에 따라 만기일이 자동으로 다음 월물로 교체 */
+      var monthLabel4 = '', expiry4 = '';
       try {
         if (_uvpCtx && _uvpCtx.item && _uvpCtx.item.months) {
           var _ms4 = _uvpCtx.item.months;
-          /* 1순위: recommended=true 행 있는 월물 + daysLeft */
+          /* 1순위: recommended=true 행 있는 월물 */
           for (var _mi4 = 0; _mi4 < _ms4.length; _mi4++) {
             var _rows4 = _ms4[_mi4].rows || [];
             for (var _ri4 = 0; _ri4 < _rows4.length; _ri4++) {
               if (_rows4[_ri4].recommended) {
                 monthLabel4 = _ms4[_mi4].label || '';
                 expiry4 = _ms4[_mi4].expiry || '';
-                if (_rows4[_ri4].daysLeft) daysLeftDirect = parseInt(_rows4[_ri4].daysLeft) || 0;
                 break;
               }
             }
-            if (expiry4 || daysLeftDirect) break;
+            if (monthLabel4) break;
           }
-          /* 2순위: 어떤 행이든 daysLeft 있는 첫 행 사용 (admin에 recommended 표시 누락된 경우) */
-          if (!daysLeftDirect && !expiry4) {
+          /* 2순위: recommended 없으면 행 있는 첫 월물 */
+          if (!monthLabel4) {
             for (var _mi5 = 0; _mi5 < _ms4.length; _mi5++) {
-              var _rows5 = _ms4[_mi5].rows || [];
-              for (var _ri5 = 0; _ri5 < _rows5.length; _ri5++) {
-                if (_rows5[_ri5].daysLeft) {
-                  monthLabel4 = _ms4[_mi5].label || '';
-                  daysLeftDirect = parseInt(_rows5[_ri5].daysLeft) || 0;
-                  expiry4 = _ms4[_mi5].expiry || '';
-                  break;
-                }
+              if ((_ms4[_mi5].rows || []).length > 0) {
+                monthLabel4 = _ms4[_mi5].label || '';
+                expiry4 = _ms4[_mi5].expiry || '';
+                break;
               }
-              if (daysLeftDirect) break;
             }
           }
         }
       } catch(e){}
-      /* 3순위 폴백 — 드롭다운 선택 월물 */
-      if (!expiry4 && !daysLeftDirect) {
-        var monthSel = document.getElementById('uvp-chart1-month');
-        try {
-          var mIdx4 = monthSel ? parseInt(monthSel.value || '0') : 0;
-          if (_uvpCtx && _uvpCtx.item && _uvpCtx.item.months && _uvpCtx.item.months[mIdx4]) {
-            monthLabel4 = _uvpCtx.item.months[mIdx4].label || '';
-            if (!expiry4) expiry4 = _uvpCtx.item.months[mIdx4].expiry || '';
-          }
-        } catch(e){}
+      /* 3순위 폴백 — _s10MonthToExpiry 룰 기반 (C-3와 동일 흐름, 시간 자동 흐름) */
+      if (!expiry4 && monthLabel4 && typeof window._s10MonthToExpiry === 'function' && _uvpCtx && _uvpCtx.code) {
+        try { expiry4 = window._s10MonthToExpiry(monthLabel4, _uvpCtx.code) || ''; } catch(e){}
       }
       /* 4순위 폴백 — expiryFromCtx */
-      if (!expiry4 && !daysLeftDirect && typeof expiryFromCtx !== 'undefined' && expiryFromCtx) expiry4 = expiryFromCtx;
+      if (!expiry4 && typeof expiryFromCtx !== 'undefined' && expiryFromCtx) expiry4 = expiryFromCtx;
       if (!expiry4 && _uvpCtx && _uvpCtx.basePos && _uvpCtx.basePos.expiry_date) expiry4 = _uvpCtx.basePos.expiry_date;
       /* fallback — st_detail_v3 직접 조회 (C-3와 동일) */
       if (!expiry4 && monthLabel4 && _uvpCtx && _uvpCtx.code) {
@@ -23345,19 +23332,12 @@ window._t14GetInstPhaseLimit = function(code) {
           }
         } catch(e){}
       }
-      /* [SESSION 10] daysLeftDirect 우선 — admin 행에 직접 입력된 잔존일이 있으면 그대로 사용 */
-      var daysLeft = daysLeftDirect > 0 ? daysLeftDirect : 0;
-      if (!daysLeftDirect && expiry4) {
+      /* [SESSION 10 v3] C-3와 동일 — expiry에서 일수 자동 계산 (시간 흐름) */
+      var daysLeft = 0;
+      if (expiry4) {
         try { daysLeft = Math.max(0, Math.ceil((new Date(expiry4) - new Date()) / 86400000)); } catch(e){}
       }
-      if (daysLeft > 0 && !expiry4) {
-        /* expiry 없으면 daysLeft만 표시 */
-        elExp.textContent = daysLeft + '일';
-      } else if (expiry4) {
-        elExp.textContent = daysLeft + '일 (' + expiry4 + ')';
-      } else {
-        elExp.textContent = '─';
-      }
+      elExp.textContent = expiry4 ? (daysLeft + '일 (' + expiry4 + ')') : '─';
       elExp.style.color = daysLeft > 0 && daysLeft <= 7 ? '#c83030' : daysLeft > 0 && daysLeft <= 21 ? '#c07030' : 'var(--t1)';
     }
   }
