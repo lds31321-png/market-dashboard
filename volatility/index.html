@@ -22705,8 +22705,13 @@ window._t14GetInstPhaseLimit = function(code) {
     /* 진입 강도 (콜·풋 통합) — 먼저 계산 */
     var sCall = m ? (m.sizingCall != null ? m.sizingCall : (m.sizing != null ? m.sizing : 1)) : 1;
     var sPut  = m ? (m.sizingPut  != null ? m.sizingPut  : (m.sizing != null ? m.sizing : 1)) : 1;
-    /* admin rows에서 1계약 증거금(USD) 최소값 추출 — 외가 멀수록 작음 = 추천 lp 가까움 */
-    function _b4MinSpanUSD(dirCode) {
+    /* [SESSION 10] admin 매매수량(1회) 컬럼 기반 4단계 계산 (레이님 안내)
+       1) 5천만 기준 계약수 = admin qty 첫 값 (예: "0.36(1)" → 0.36)
+       2) 자본 비례 raw = 5천만 기준 × (사용자 자본 / 5천만) × 시장국면 진입 강도
+       3) raw >= 1 → floor(raw), price 첫 값 사용
+          raw <  1 → 1계약, price 둘째 값(0.5% 캡 적용 프리) 사용
+       4) 최종 표시 */
+    function _b4QtyAndPrice(dirCode) {
       try {
         var detail = JSON.parse(localStorage.getItem('st_detail_v3') || 'null');
         var arr = Array.isArray(detail) ? detail
@@ -22715,12 +22720,11 @@ window._t14GetInstPhaseLimit = function(code) {
         var aliases = {'크루드 오일':['크루드 오일','원유','크로드 오일'],'엔화':['엔화','엔'],'유로FX':['유로FX','유로','유로 FX'],'NASDAQ100':['NASDAQ100','NAQ100','나스닥100']};
         var korName = nameMap[code] || code;
         var nameList = aliases[korName] || [korName];
-        /* 콜·풋 다양한 표기 모두 인식 — 직트 관리자 데이터 형식 호환 */
         var dirSet = (dirCode === '콜')
           ? ['콜', 'CALL', 'Call', 'call', 'C', 'c']
           : ['풋', 'PUT', 'Put', 'put', 'P', 'p'];
-        var minSp = 0;
-        /* (1순위) 직트 관리자 입력 데이터 검색 */
+        /* 추천 행(recommended=true) 우선, 없으면 qty 있는 첫 행 */
+        var foundRec = null, foundAny = null;
         for (var i = 0; i < arr.length; i++) {
           if (nameList.indexOf(arr[i].name) < 0) continue;
           var months = arr[i].months || [];
@@ -22730,34 +22734,43 @@ window._t14GetInstPhaseLimit = function(code) {
               var r = rows[ri];
               var rt = (r.type || r.option || r.cp || '').toString();
               if (dirSet.indexOf(rt) < 0) continue;
-              var sp = parseFloat(r.span || r.spanMargin || r.margin || 0) || 0;
-              if (sp > 0 && (minSp === 0 || sp < minSp)) minSp = sp;
+              if (!r.qty) continue;
+              if (r.recommended && !foundRec) foundRec = r;
+              if (!foundAny) foundAny = r;
             }
           }
         }
-        /* (2순위 대비책) 1순위에서 못 찾으면 정적 LOSS_PROB_TABLE에서 시도 — 화면 코드 안에 박혀 있는 손실확률 표 */
-        if (minSp === 0 && typeof LOSS_PROB_TABLE !== 'undefined' && LOSS_PROB_TABLE && Array.isArray(LOSS_PROB_TABLE.data)) {
-          var rows2 = LOSS_PROB_TABLE.data;
-          for (var ri2 = 0; ri2 < rows2.length; ri2++) {
-            var r2 = rows2[ri2];
-            if (!r2 || nameList.indexOf(r2.instrument) < 0) continue;
-            var rt2 = (r2.option || r2.type || '').toString();
-            if (dirSet.indexOf(rt2) < 0) continue;
-            var sp2 = parseFloat(r2.spanMargin || r2.span || r2.margin || 0) || 0;
-            if (sp2 > 0 && (minSp === 0 || sp2 < minSp)) minSp = sp2;
-          }
-        }
-        return minSp;
-      } catch(e) { return 0; }
+        var pick = foundRec || foundAny;
+        if (!pick) return { qty: 0, priceMain: 0, priceCap: 0 };
+        /* "0.36(1)" → 첫 값 0.36 */
+        var qtyMatch = String(pick.qty || '').match(/^([0-9.]+)/);
+        var qty = qtyMatch ? parseFloat(qtyMatch[1]) : 0;
+        /* "1.035(0.14)" → 첫 값 1.035 / 둘째 값 0.14 */
+        var pStr = String(pick.price || '');
+        var pMain = parseFloat((pStr.match(/^([0-9.]+)/)||[])[1]) || 0;
+        var pCapMatch = pStr.match(/\(([0-9.]+)\)/);
+        var pCap  = pCapMatch ? parseFloat(pCapMatch[1]) : pMain;
+        return { qty: qty, priceMain: pMain, priceCap: pCap };
+      } catch(e) { return { qty: 0, priceMain: 0, priceCap: 0 }; }
     }
-    var spanCallUSD = _b4MinSpanUSD('콜');
-    var spanPutUSD  = _b4MinSpanUSD('풋');
-    var singleUSD = (fxRate > 0) ? (singleKRW / fxRate) : 0;
-    var qCallBase = (spanCallUSD > 0) ? Math.floor(singleUSD / spanCallUSD) : 0;
-    var qPutBase  = (spanPutUSD  > 0) ? Math.floor(singleUSD / spanPutUSD)  : 0;
-    /* [48차 SESSION 5 — A안] sizing 1계약 보장 — 기본 1계약 가능하면 sizing 후에도 최소 1계약 권장 */
-    var qCall = qCallBase > 0 ? Math.max(1, Math.floor(qCallBase * sCall)) : 0;
-    var qPut  = qPutBase  > 0 ? Math.max(1, Math.floor(qPutBase  * sPut))  : 0;
+    var callInfo = _b4QtyAndPrice('콜');
+    var putInfo  = _b4QtyAndPrice('풋');
+    /* 자본 비율 (사용자 자본 / 5천만 원) */
+    var baseCap = 50000000;
+    var capitalRatio = (capitalKRW > 0) ? (capitalKRW / baseCap) : 1;
+    /* 자본 비례 raw × 시장국면 진입 강도 */
+    var rawCall = callInfo.qty * capitalRatio * sCall;
+    var rawPut  = putInfo.qty  * capitalRatio * sPut;
+    var qCall, qPut, priceCallFinal, pricePutFinal;
+    /* 콜: raw>=1 floor / raw<1 1계약 + 캡 프리 */
+    if (callInfo.qty > 0) {
+      if (rawCall >= 1) { qCall = Math.floor(rawCall); priceCallFinal = callInfo.priceMain; }
+      else              { qCall = 1;                    priceCallFinal = callInfo.priceCap;  }
+    } else { qCall = 0; priceCallFinal = 0; }
+    if (putInfo.qty > 0) {
+      if (rawPut >= 1) { qPut = Math.floor(rawPut); pricePutFinal = putInfo.priceMain; }
+      else             { qPut = 1;                  pricePutFinal = putInfo.priceCap;  }
+    } else { qPut = 0; pricePutFinal = 0; }
     var elCoT = document.getElementById('uvp-info-step2-contract-txt');
     if (elCoT) {
       if (qCall > 0 && qPut > 0) {
