@@ -1507,9 +1507,17 @@ input[type=range] { background: transparent !important; border: none !important;
     <!-- 섹션 헤더 -->
     <!-- [47차 4-2] 머리글 확대 (15px → 22px) + 서브 텍스트 단축 ("카드 클릭 →"만) -->
     <div class="ov-grid-header" data-47차-목적="머리글확대-서브단축" style="margin-top:8px">
-      <div>
-        <div class="ov-grid-title" style="font-size:22px">전체 종목 현황</div>
-        <div class="ov-grid-subtitle" style="font-size:12px;">카드 클릭 →</div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <div>
+          <div class="ov-grid-title" style="font-size:22px">전체 종목 현황</div>
+          <div class="ov-grid-subtitle" style="font-size:12px;">카드 클릭 →</div>
+        </div>
+        <a href="https://lds31321-png.github.io/market-dashboard/" target="_blank" rel="noopener noreferrer"
+          style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;background:rgba(217,102,74,.08);border:1.5px solid rgba(217,102,74,.45);color:#d9664a;font-size:13px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .18s;white-space:nowrap"
+          onmouseover="this.style.background='rgba(217,102,74,.18)';this.style.borderColor='#d9664a'"
+          onmouseout="this.style.background='rgba(217,102,74,.08)';this.style.borderColor='rgba(217,102,74,.45)'">
+          글로벌 시장 현황 (외부 대시보드) ↗
+        </a>
       </div>
       <div class="ov-data-stamp" id="ov-data-stamp">로딩 중...</div>
     </div>
