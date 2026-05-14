@@ -6851,6 +6851,15 @@ function inParse1316() {
 
   // 카운트 갱신 (옛 pos-count-tag 값 따라가기)
   setTimeout(inSync1316CountFromOld, 300);
+  // [11번] 매매 현황 trData 영구 저장 — trParse1316이 window.trData만 메모리에 두므로 명시 저장
+  try {
+    if (typeof trData !== 'undefined' && trData && typeof TR_KEY_DATA !== 'undefined') {
+      if (window.trData) Object.assign(trData, window.trData);
+      localStorage.setItem(TR_KEY_DATA, JSON.stringify(trData));
+    } else if (window.trData && typeof TR_KEY_DATA !== 'undefined') {
+      localStorage.setItem(TR_KEY_DATA, JSON.stringify(window.trData));
+    }
+  } catch(e){ console.error('trData 저장 오류:', e); }
 }
 
 // 페이지 로드 / 갱신 후 옛 카운트 → 새 카운트 동기화
@@ -6944,6 +6953,15 @@ function inParse1310() {
   setTimeout(inSync1310CountFromOld, 300);
   // [11번 안전망] 시장 현황 카드 재렌더
   try { if (typeof window.uvpShow === 'function') window.uvpShow(); } catch(e){}
+  // [11번] 매매 현황 trData 영구 저장
+  try {
+    if (typeof trData !== 'undefined' && trData && typeof TR_KEY_DATA !== 'undefined') {
+      if (window.trData) Object.assign(trData, window.trData);
+      localStorage.setItem(TR_KEY_DATA, JSON.stringify(trData));
+    } else if (window.trData && typeof TR_KEY_DATA !== 'undefined') {
+      localStorage.setItem(TR_KEY_DATA, JSON.stringify(window.trData));
+    }
+  } catch(e){ console.error('trData 저장 오류:', e); }
 }
 
 // 페이지 로드 / 갱신 후 rv-stat-tag → 새 카운트 동기화
