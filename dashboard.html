@@ -1703,7 +1703,7 @@ function renderHistory(filter){
   
   // 진행중 포지션은 필터/검색 시 제외 (전체 필터일 때만 상단 표시)
   const activeRows = (filter==='all' && !document.getElementById('searchInput').value.trim())
-    ? activePositions.map(x=>{
+    ? [...activePositions].reverse().map(x=>{
         const rate=meta.exchange_rate||1500;
         const d2=daysLeft(x.pos.expiry_date);
         const isExp=x.pos.status==='expired'||d2<0;
