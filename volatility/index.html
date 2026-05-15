@@ -1939,21 +1939,33 @@ input[type=range] { background: transparent !important; border: none !important;
               <span style="font-size:11px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">C-2</span>
               <span style="font-size:14px;color:var(--t1);font-weight:700">권장 행사가 + 받을 옵션가격</span>
               <button id="uvp-info-step3-cap-help-btn" onclick="var b=document.getElementById('uvp-info-step3-cap-hint');b.style.display=b.style.display==='none'?'block':'none'"
-                style="display:none;align-items:center;justify-content:center;width:26px;height:26px;border-radius:6px;background:rgba(176,128,64,.12);border:1.5px solid rgba(176,128,64,.45);color:#c8803a;font-size:13px;font-weight:800;cursor:pointer;margin-left:4px;transition:all .18s"
+                style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:6px;background:rgba(176,128,64,.12);border:1.5px solid rgba(176,128,64,.45);color:#c8803a;font-size:13px;font-weight:800;cursor:pointer;margin-left:4px;transition:all .18s"
                 onmouseover="this.style.background='rgba(176,128,64,.22)'"
                 onmouseout="this.style.background='rgba(176,128,64,.12)'">?</button>
             </div>
-            <!-- [SESSION 10] 1계약 미만 시 캡 프리 권장 안내 박스 — ? 버튼 클릭 시 토글 -->
+            <!-- [SESSION 10] C-2 안내 박스 — ? 버튼 클릭 시 토글. 상황별 본문 (캡 초과 vs 정상) -->
             <div id="uvp-info-step3-cap-hint" style="display:none;margin-bottom:8px;padding:12px 14px;background:rgba(176,128,64,.08);border:1px solid rgba(176,128,64,.35);border-radius:8px;font-size:13px;color:var(--t1);line-height:1.85">
-              <div style="font-weight:800;color:#c8803a;margin-bottom:6px">자본 한도 초과 — 더 외가 행사가 진입을 권장합니다</div>
-              <div style="color:var(--t2)">
-                현재 자본 기준 1회 진입 가능 금액(자본의 0.5%)이 권장 행사가의 옵션가격을 초과합니다.<br>
-                <b style="color:var(--t1)">현재가에서 더 먼 외가 행사가</b>로 진입하시면 한도를 초과하지 않습니다.
-                <div style="margin-top:8px;padding:8px 12px;background:#fff;border-radius:6px;border:1px solid rgba(176,128,64,.30)">
-                  콜 매도 — 받는 옵션가격이 약 <b id="uvp-info-step3-cap-prem-call" style="color:#d9664a">─</b> 수준인 외가 행사가 선택<br>
-                  풋 매도 — 받는 옵션가격이 약 <b id="uvp-info-step3-cap-prem-put" style="color:#d9664a">─</b> 수준인 외가 행사가 선택
+              <!-- 캡 초과 본문 (1계약 미만 시) -->
+              <div id="uvp-info-step3-cap-over" style="display:none">
+                <div style="font-weight:800;color:#c8803a;margin-bottom:6px">자본 한도 초과 — 더 외가 행사가 진입을 권장합니다</div>
+                <div style="color:var(--t2)">
+                  현재 자본 기준 1회 진입 가능 금액(자본의 0.5%)이 권장 행사가의 옵션가격을 초과합니다.<br>
+                  <b style="color:var(--t1)">현재가에서 더 먼 외가 행사가</b>로 진입하시면 한도를 초과하지 않습니다.
+                  <div style="margin-top:8px;padding:8px 12px;background:#fff;border-radius:6px;border:1px solid rgba(176,128,64,.30)">
+                    콜 매도 — 받는 옵션가격이 약 <b id="uvp-info-step3-cap-prem-call" style="color:#d9664a">─</b> 수준인 외가 행사가 선택<br>
+                    풋 매도 — 받는 옵션가격이 약 <b id="uvp-info-step3-cap-prem-put" style="color:#d9664a">─</b> 수준인 외가 행사가 선택
+                  </div>
+                  <div style="margin-top:8px;font-size:12px;color:var(--t3)">정확한 행사가는 거래 시점 시세에 따라 변동되므로, HTS에서 직접 확인 후 진입하시기 바랍니다.</div>
                 </div>
-                <div style="margin-top:8px;font-size:12px;color:var(--t3)">정확한 행사가는 거래 시점 시세에 따라 변동되므로, HTS에서 직접 확인 후 진입하시기 바랍니다.</div>
+              </div>
+              <!-- 정상 본문 (1계약 이상 가능 시) -->
+              <div id="uvp-info-step3-cap-ok" style="display:none">
+                <div style="font-weight:800;color:#1a7a4a;margin-bottom:6px">권장 행사가로 진입 가능합니다</div>
+                <div style="color:var(--t2)">
+                  현재 자본 기준 1회 진입 가능 금액(자본의 0.5%) 안에서 권장 행사가 그대로 진입하실 수 있습니다.<br>
+                  계약 수는 B-4 권장 진입 단위 영역에 표시된 값을 참고하시기 바랍니다.
+                </div>
+                <div style="margin-top:8px;font-size:12px;color:var(--t3)">실제 행사가와 옵션가격은 거래 시점 시세에 따라 변동되므로, HTS에서 직접 확인 후 진입하시기 바랍니다.</div>
               </div>
             </div>
             <div style="display:flex;flex-direction:column;gap:8px">
@@ -9121,6 +9133,31 @@ function rmRenderCards() {
     var info  = RM_PHASE_MAP[ep];
     var dsrColor = Math.abs(d.dsr) >= 1.5 ? 'rgba(42,95,168,.9)'
                  : Math.abs(d.dsr) >= 1.2 ? 'rgba(176,128,64,.9)' : 'var(--t2)';
+    /* [콜풋분리 패치 2 — 2026-05-15] admin 콜·풋 분리값 우선 표시, 없으면 info 폴백 */
+    var _dispSizing = (function(){
+      var sc=d.sizingCall_admin, sp=d.sizingPut_admin;
+      function f(v){ return v===0?'금지':v.toFixed(2)+'배'; }
+      if (sc!=null && sp!=null) { return Math.abs(sc-sp)<0.001 ? f(sc) : '콜 '+f(sc)+' / 풋 '+f(sp); }
+      return info.sizing;
+    })();
+    var _dispDist = (function(){
+      var dc=d.distCall_admin, dp=d.distPut_admin;
+      function f(v){ return v===0?'금지':v.toFixed(2)+'배'; }
+      if (dc!=null && dp!=null) { return Math.abs(dc-dp)<0.001 ? f(dc) : '콜 '+f(dc)+' / 풋 '+f(dp); }
+      return info.dist;
+    })();
+    var _dispDecel = (function(){
+      var dc=d.decelCall_admin, dp=d.decelPut_admin;
+      function f(v){ return v===0?'없음':v.toFixed(0)+'%'; }
+      if (dc!=null && dp!=null) { return Math.abs(dc-dp)<0.5 ? f(dc) : '콜 '+f(dc)+' / 풋 '+f(dp); }
+      return info.decel;
+    })();
+    var _dispCap = (function(){
+      var cc=d.capCall_admin, cp=d.capPut_admin;
+      function f(v){ return (v*100).toFixed(2)+'%'; }
+      if (cc!=null && cp!=null) { return Math.abs(cc-cp)<0.0001 ? f(cc) : '콜 '+f(cc)+' / 풋 '+f(cp); }
+      return d.tail?info.tailCap:info.cap;
+    })();
 
     // ── 생존경보 연동: ptAlertInputs (admin.html과 동기화된 변수)
     var LV_ALERT_MAP = {
@@ -9179,15 +9216,15 @@ function rmRenderCards() {
         '<div style="margin:0 14px 12px;padding:10px 12px;border-radius:8px;',
           'background:',info.bg,';border:1px solid ',info.border,'">',
           '<div style="font-size:10px;font-weight:700;color:',info.color,';margin-bottom:7px"> 내가 해야 할 것</div>',
-          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:10px;line-height:1.7">',
-            '<span style="color:var(--t3)">진입 계약 수</span>',
-            '<span style="color:var(--t1);font-weight:700;font-family:var(--mono)">',info.sizing,'</span>',
-            '<span style="color:var(--t3)">행사가 거리</span>',
-            '<span style="color:var(--t1);font-weight:700;font-family:var(--mono)">',info.dist,'</span>',
-            '<span style="color:var(--t3)">포지션 축소</span>',
-            '<span style="color:var(--t1);font-weight:700">',info.decel,'</span>',
-            '<span style="color:var(--t3)">최대 허용 비중</span>',
-            '<span style="color:var(--t1);font-weight:700;font-family:var(--mono)">',d.tail?info.tailCap:info.cap,'</span>',
+          '<div style="display:grid;grid-template-columns:max-content 1fr;gap:5px 10px;font-size:10px;line-height:1.6">',
+            '<span style="color:var(--t3);white-space:nowrap">진입 계약 수</span>',
+            '<span style="color:var(--t1);font-weight:700;font-family:var(--mono);white-space:nowrap;text-align:right">',_dispSizing,'</span>',
+            '<span style="color:var(--t3);white-space:nowrap">행사가 거리</span>',
+            '<span style="color:var(--t1);font-weight:700;font-family:var(--mono);white-space:nowrap;text-align:right">',_dispDist,'</span>',
+            '<span style="color:var(--t3);white-space:nowrap">포지션 축소</span>',
+            '<span style="color:var(--t1);font-weight:700;white-space:nowrap;text-align:right">',_dispDecel,'</span>',
+            '<span style="color:var(--t3);white-space:nowrap">최대 허용 비중</span>',
+            '<span style="color:var(--t1);font-weight:700;font-family:var(--mono);white-space:nowrap;text-align:right">',_dispCap,'</span>',
           '</div>',
         '</div>',
 
@@ -16773,11 +16810,15 @@ window.rmCalcMacros = function(d) {
      자동 계산은 fallback 역할.
   */
   if (d.phase_admin) phase = d.phase_admin;
-  if (d.sizing_admin != null) {
-    sizing = d.sizing_admin;
-    sizingCall = d.sizing_admin;
-    sizingPut = d.sizing_admin;
-  }
+  /* [콜풋분리 패치 2026-05-15] 사이징 콜·풋 분리 우선, 옛 단일값 대비책 */
+  if (d.sizingCall_admin != null) sizingCall = d.sizingCall_admin;
+  else if (d.sizing_admin != null) sizingCall = d.sizing_admin;
+  if (d.sizingPut_admin != null) sizingPut = d.sizingPut_admin;
+  else if (d.sizing_admin != null) sizingPut = d.sizing_admin;
+  if (d.sizing_admin != null) sizing = d.sizing_admin;
+  /* [콜풋분리 패치 2026-05-15] 거리 콜·풋 분리 — 별도 변수 생성 + 옛 단일값 대비책 */
+  var distCall = (d.distCall_admin != null) ? d.distCall_admin : ((d.dist_admin != null) ? d.dist_admin : dist);
+  var distPut  = (d.distPut_admin  != null) ? d.distPut_admin  : ((d.dist_admin != null) ? d.dist_admin : dist);
   if (d.dist_admin != null) dist = d.dist_admin;
   if (d.decelCall_admin != null) decelCall = d.decelCall_admin;
   if (d.decelPut_admin != null) decelPut = d.decelPut_admin;
@@ -16796,7 +16837,7 @@ window.rmCalcMacros = function(d) {
     phaseRaw: phaseRaw, phase: phase, tail: tail,
     tailCall: tailCall, tailPut: tailPut,
     sizing: sizing, sizingCall: sizingCall, sizingPut: sizingPut,
-    dist: dist,
+    dist: dist, distCall: distCall, distPut: distPut,
     decel: decel, decelCall: decelCall, decelPut: decelPut,
     capPct: capPct, capCall: capCall, capPut: capPut,
     avgIndic: avgIndic, maxIndic: maxIndic,
@@ -22805,22 +22846,22 @@ window._t14GetInstPhaseLimit = function(code) {
       if (rawPut >= 1) { qPut = Math.floor(rawPut); pricePutFinal = putInfo.priceMain; }
       else             { qPut = 1;                  pricePutFinal = putInfo.priceCap;  }
     } else { qPut = 0; pricePutFinal = 0; }
-    /* [SESSION 10] C-2 캡 프리 안내 — raw < 1 (1계약 미만) 시 ? 버튼 표시. 본문은 ? 클릭 시 토글 */
+    /* [SESSION 10 B안] C-2 안내 — ? 버튼 항상 표시. 본문은 상황별 (캡 초과 vs 정상) */
     try {
-      var capHintEl = document.getElementById('uvp-info-step3-cap-hint');
-      var capBtnEl  = document.getElementById('uvp-info-step3-cap-help-btn');
       var capCallShown = callInfo.qty > 0 && rawCall < 1;
       var capPutShown  = putInfo.qty > 0 && rawPut < 1;
+      var capOverEl = document.getElementById('uvp-info-step3-cap-over');
+      var capOkEl   = document.getElementById('uvp-info-step3-cap-ok');
       if (capCallShown || capPutShown) {
-        /* ? 버튼만 표시. 안내 본문은 ? 클릭 시 사용자가 직접 펼침 */
-        if (capBtnEl) capBtnEl.style.display = 'inline-flex';
+        if (capOverEl) capOverEl.style.display = 'block';
+        if (capOkEl)   capOkEl.style.display   = 'none';
         var elCapPremC = document.getElementById('uvp-info-step3-cap-prem-call');
         var elCapPremP = document.getElementById('uvp-info-step3-cap-prem-put');
         if (elCapPremC) elCapPremC.textContent = capCallShown ? callInfo.priceCap.toFixed(3) : '─';
         if (elCapPremP) elCapPremP.textContent = capPutShown  ? putInfo.priceCap.toFixed(3)  : '─';
       } else {
-        if (capBtnEl)  capBtnEl.style.display  = 'none';
-        if (capHintEl) capHintEl.style.display = 'none';
+        if (capOverEl) capOverEl.style.display = 'none';
+        if (capOkEl)   capOkEl.style.display   = 'block';
       }
     } catch(e){}
     var elCoT = document.getElementById('uvp-info-step2-contract-txt');
