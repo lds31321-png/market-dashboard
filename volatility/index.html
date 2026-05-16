@@ -9242,13 +9242,19 @@ function rmRenderCards() {
         '</div>',
 
         // ── 극단위험 표시 (읽기전용 — 입력은 상단 테이블에서)
-        '<div style="border-top:1px solid ',info.border,';padding:9px 14px;display:flex;align-items:center;justify-content:space-between">',
-          '<span style="font-size:12px;color:var(--t2)">극단 위험',
-            '<span style="color:var(--t2);font-size:11px;font-weight:500"> (Tail Risk)</span></span>',
-          '<span style="font-size:12px;font-weight:800;color:'+(d.tail?'var(--red)':'var(--t3)')+'">',
-            d.tail ? ' ON' : ' OFF',
-          '</span>',
-        '</div>',
+        // [꼬리위험 가시성 패치 2026-05-16] ON일 때 텍스트 강조 + 위험 국면 색 펄스 (시장 현황 카드와 동일 패턴)
+        (d.tail
+          ? '<div style="border-top:1px solid '+info.border+';padding:10px 14px;background:'+info.bg+';animation:pulse 1.4s ease-in-out infinite">'
+              + '<div style="font-size:12px;font-weight:800;color:'+info.color+';line-height:1.5">'
+              +   '⚠ 꼬리위험 활성'
+              +   '<span style="font-weight:500;font-size:11px"> · 예상치 못한 급변동 가능성</span>'
+              + '</div>'
+            + '</div>'
+          : '<div style="border-top:1px solid '+info.border+';padding:9px 14px;display:flex;align-items:center;justify-content:space-between">'
+              + '<span style="font-size:12px;color:var(--t2)">극단 위험'
+              +   '<span style="color:var(--t2);font-size:11px;font-weight:500"> (Tail Risk)</span></span>'
+              + '<span style="font-size:12px;font-weight:800;color:var(--t3)"> OFF</span>'
+            + '</div>'),
       '</div>',
     ].join('');
   });
