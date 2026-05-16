@@ -10222,9 +10222,9 @@ function stEnrichAdminDetail(cData) {
             return acc + (s === 'O' ? 4 : s === '' ? 2 : 0);
           }, 0);
         }
-        /* 추천: 1순위 + 평가점수 18+ + 추세 부합 */
+        /* 추천: 1순위 + 평가점수 16+ + 추세 부합 (2026-05-16 max 16 만점에 맞춰 조정) */
         if (r.recommended !== true) {
-          r.recommended = (monthRank === 1 && (r.evalScore || 0) >= 18 && divSig !== 'X');
+          r.recommended = (monthRank === 1 && (r.evalScore || 0) >= 16 && divSig !== 'X');
         }
         /* 권장 계약수: 자본 1.5% 한도 ÷ 1계약 증거금 */
         if (r.qty == null) {
