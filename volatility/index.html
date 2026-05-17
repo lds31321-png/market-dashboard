@@ -1692,26 +1692,32 @@ input[type=range] { background: transparent !important; border: none !important;
             </div>
           </div>
 
-          <!-- ③ 잠재수익률 콜·풋 분리 (순위표 기준) -->
+          <!-- ③ 잠재수익률 — [v4 2026-05-17 동업자 피드백] 평균 + 콜·풋 평균 + 추천 행사가 표 -->
           <div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
               <span style="font-size:11px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">A-3</span>
-              <span style="font-size:14px;color:var(--t1);font-weight:700">잠재수익률 (콜·풋 분리)</span>
+              <span style="font-size:14px;color:var(--t1);font-weight:700">평균 잠재수익률</span>
             </div>
-            <div style="display:flex;flex-direction:column;gap:6px">
-              <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px;padding:8px 12px;background:rgba(217,102,74,.06);border-radius:6px;border:1px solid rgba(217,102,74,.18)">
-                <span style="color:var(--t2);font-weight:500">콜 매도</span>
-                <span id="uvp-info-step1-pot-call" style="color:var(--t1);font-weight:800;font-family:var(--mono)">─</span>
+            <!-- 평균잠재수익률 (기존 유지) -->
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:18px;padding:14px 16px;background:rgba(217,102,74,.07);border-radius:8px;border:1px solid rgba(217,102,74,.22)">
+              <span style="color:var(--t2);font-weight:600;font-size:13px">순위표 기준</span>
+              <span id="uvp-info-step1-pot-avg" style="color:#d9664a;font-weight:900;font-family:var(--mono);font-size:20px">─</span>
+            </div>
+            <!-- 콜·풋 평균 2칸 (신규 v4) -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+              <div style="padding:10px 12px;background:rgba(217,102,74,.05);border-radius:6px;border:1px solid rgba(217,102,74,.16)">
+                <div style="font-size:11px;color:var(--t2);font-weight:600;margin-bottom:4px">콜 매도 평균</div>
+                <div id="uvp-info-step1-pot-call-avg" style="font-family:var(--mono);font-size:14px;font-weight:800;color:var(--t1)">─</div>
               </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px;padding:8px 12px;background:rgba(42,95,168,.05);border-radius:6px;border:1px solid rgba(42,95,168,.18)">
-                <span style="color:var(--t2);font-weight:500">풋 매도</span>
-                <span id="uvp-info-step1-pot-put" style="color:var(--t1);font-weight:800;font-family:var(--mono)">─</span>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;padding:6px 10px;background:rgba(0,0,0,.025);border-radius:5px">
-                <span style="color:var(--t3);font-weight:500">평균 (순위)</span>
-                <span id="uvp-info-step1-pot-avg" style="color:var(--t2);font-weight:700">─</span>
+              <div style="padding:10px 12px;background:rgba(42,95,168,.04);border-radius:6px;border:1px solid rgba(42,95,168,.16)">
+                <div style="font-size:11px;color:var(--t2);font-weight:600;margin-bottom:4px">풋 매도 평균</div>
+                <div id="uvp-info-step1-pot-put-avg" style="font-family:var(--mono);font-size:14px;font-weight:800;color:var(--t1)">─</div>
               </div>
             </div>
+            <!-- [v5 2026-05-17] 추천 행사가 표 영역 통째 제거 — 콜·풋 평균 박스만 유지 -->
+            <!-- 호환성 — 옛 콜·풋 span 유지 (display:none, 함수가 if(el) 안전 종료) -->
+            <span id="uvp-info-step1-pot-call" style="display:none">─</span>
+            <span id="uvp-info-step1-pot-put" style="display:none">─</span>
           </div>
 
         </div>
@@ -1938,10 +1944,9 @@ input[type=range] { background: transparent !important; border: none !important;
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
               <span style="font-size:11px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">C-2</span>
               <span style="font-size:14px;color:var(--t1);font-weight:700">권장 행사가 + 받을 옵션가격</span>
+              <!-- [v16] btn-q 클래스로 통일 — 살몬톤 + B-1·D-4와 동일 디자인 -->
               <button id="uvp-info-step3-cap-help-btn" onclick="var b=document.getElementById('uvp-info-step3-cap-hint');b.style.display=b.style.display==='none'?'block':'none'"
-                style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:6px;background:rgba(176,128,64,.12);border:1.5px solid rgba(176,128,64,.45);color:#c8803a;font-size:13px;font-weight:800;cursor:pointer;margin-left:4px;transition:all .18s"
-                onmouseover="this.style.background='rgba(176,128,64,.22)'"
-                onmouseout="this.style.background='rgba(176,128,64,.12)'">?</button>
+                class="btn-q" style="margin-left:4px">?</button>
             </div>
             <!-- [SESSION 10] C-2 안내 박스 — ? 버튼 클릭 시 토글. 상황별 본문 (캡 초과 vs 정상) -->
             <div id="uvp-info-step3-cap-hint" style="display:none;margin-bottom:8px;padding:12px 14px;background:rgba(176,128,64,.08);border:1px solid rgba(176,128,64,.35);border-radius:8px;font-size:13px;color:var(--t1);line-height:1.85">
@@ -2184,19 +2189,30 @@ input[type=range] { background: transparent !important; border: none !important;
             </div>
           </div>
 
-          <!-- ④ 재진입·롤오버 가능성 -->
+          <!-- ④ [v16] 다시 진입 · 월물 갈아타기 — btn-q ? 아이콘 + 격식체 상세 설명 -->
           <div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
               <span style="font-size:11px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">D-4</span>
-              <span style="font-size:14px;color:var(--t1);font-weight:700">재진입·롤오버</span>
+              <span style="font-size:14px;color:var(--t1);font-weight:700">청산 후 재진입 · 다음 월물로 교체</span>
+              <!-- [v16] btn-q 클래스 통일 (B-1·C-2와 동일 살몬 ? 디자인) + 펄스 -->
+              <button type="button" id="uvp-d4-help-btn" onclick="window._uvpToggleD4Help()" title="자세한 설명 보기"
+                class="btn-q" style="margin-left:auto;animation:pulse-t2 2.4s ease-in-out infinite">?</button>
+            </div>
+            <!-- [v17] 상세 설명 — 운영 원칙 표현 완화 적용 (권장/비권장 중립) -->
+            <div id="uvp-d4-help-panel" style="display:none;margin-bottom:10px;padding:12px 14px;background:rgba(217,102,74,.05);border:1px solid rgba(217,102,74,.22);border-radius:8px;font-size:13px;line-height:1.85;color:var(--t2)">
+              <div style="font-size:13px;font-weight:800;color:#d9664a;margin-bottom:8px">이 영역의 정보 안내</div>
+              <div style="margin-bottom:8px"><b style="color:var(--t1)">청산 후 재진입</b> — 보유 포지션을 모두 청산한 이후, 같은 종목으로 <b>다시 진입할 때의 진입 규모 기준</b>을 안내드립니다. 시장이 위험할수록 평소보다 작은 규모로 시작하시는 방향이 권장되며, 안정될수록 단계적으로 평소 규모로 복귀하시는 방향이 권장됩니다.</div>
+              <div style="margin-bottom:8px"><b style="color:var(--t1)">다음 월물로 교체</b> — 만기가 가까워진 옵션을 청산한 후 <b>다음 달 옵션(다음 월물)으로 포지션을 옮기는 행동</b>을 말씀드립니다. 예를 들어 7월물 옵션을 청산한 후 8월물 옵션으로 옮기는 경우입니다. 시장 상황에 따라 교체 시점과 규모가 달라집니다.</div>
+              <div><b style="color:var(--t1)">만기 잔존</b> — 현재 보유 중인 옵션의 만기까지 남은 날짜와 정확한 만기일을 함께 안내드립니다.</div>
+              <div style="margin-top:10px;padding-top:8px;border-top:1px dashed rgba(217,102,74,.25);font-size:11px;color:var(--t3)">※ 본 영역은 판단 기준 안내이며, 실제 매매 결정은 본인이 직접 하시기 바랍니다. 단계별 안내 기준은 운영 가이드를 따르며, 정확한 수치는 추후 정정될 수 있습니다.</div>
             </div>
             <div style="display:flex;flex-direction:column;gap:6px">
               <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px;padding:8px 12px;background:rgba(0,0,0,.025);border-radius:6px">
-                <span style="color:var(--t2);font-weight:500">재진입 단계</span>
+                <span style="color:var(--t2);font-weight:500">청산 후 재진입</span>
                 <span id="uvp-info-step4-reentry-txt" style="color:var(--t1);font-weight:700">─</span>
               </div>
               <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px;padding:8px 12px;background:rgba(0,0,0,.025);border-radius:6px">
-                <span style="color:var(--t2);font-weight:500">롤오버</span>
+                <span style="color:var(--t2);font-weight:500">다음 월물로 교체</span>
                 <span id="uvp-info-step4-rollover-txt" style="color:var(--t1);font-weight:700">─</span>
               </div>
               <div style="display:flex;align-items:center;justify-content:space-between;font-size:11px;padding:6px 11px;background:rgba(217,102,74,.05);border-radius:6px;border:1px dashed rgba(217,102,74,.25)">
@@ -5252,7 +5268,7 @@ input[type=range] { background: transparent !important; border: none !important;
       <span style="font-size:13px;color:rgba(217,102,74,.6);font-weight:700">0~60% 진입 가능</span>
       <span style="font-size:13px;color:rgba(217,102,74,.85);font-weight:700">60~85% 신중</span>
       <span style="font-size:13px;color:#d9664a;font-weight:800">85%↑ 진입 비권장</span>
-      <span style="font-size:13px;color:#d9664a;font-weight:700" id="tr-mg-deposit-lbl">원금($) $—</span>
+      <span style="font-size:13px;color:#d9664a;font-weight:700" id="tr-mg-deposit-lbl">원금 $—</span>
       <!-- 사용률 실시간 표시 -->
       <span style="margin-left:auto;font-size:13px;font-weight:900;font-family:var(--mono)" id="tr-margin-signal-txt">—</span>
       <span style="font-size:11px;color:var(--t3)" id="tr-margin-rate-txt"></span>
@@ -5382,11 +5398,27 @@ input[type=range] { background: transparent !important; border: none !important;
     <div class="card-b" style="padding:14px 16px">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
         <div class="pos-field">
-          <div class="pos-lbl" style="color:var(--t1);font-weight:700">예탁금 <span style="font-size:13px;font-weight:500;color:var(--t3)">(오늘 실제 계좌 잔고)</span></div>
-          <input class="pos-inp" id="in-deposit" type="text" value="50,000,000" onchange="inUpdateSettings()" style="background:#fff;border:2px solid rgba(217,102,74,.55)">
+          <div class="pos-lbl" style="color:var(--t1);font-weight:700;display:flex;align-items:center;gap:10px;justify-content:space-between">
+            <span>예탁금 <span style="font-size:13px;font-weight:500;color:var(--t3)">(오늘 실제 계좌 잔고)</span></span>
+            <!-- [v12 2026-05-17] 통화 선택 라디오 — 원화 / 달러 -->
+            <span style="display:inline-flex;gap:8px;font-size:12px;font-weight:600">
+              <label style="display:inline-flex;align-items:center;gap:3px;cursor:pointer;color:var(--t2)">
+                <input type="radio" name="in-currency" value="KRW" checked onchange="inSwitchCurrency(this.value)" style="margin:0;cursor:pointer">
+                <span>원화</span>
+              </label>
+              <label style="display:inline-flex;align-items:center;gap:3px;cursor:pointer;color:var(--t2)">
+                <input type="radio" name="in-currency" value="USD" onchange="inSwitchCurrency(this.value)" style="margin:0;cursor:pointer">
+                <span>달러</span>
+              </label>
+            </span>
+          </div>
+          <div style="position:relative">
+            <input class="pos-inp" id="in-deposit" type="text" value="50,000,000" onchange="inUpdateSettings()" onblur="inFormatComma(this)" style="background:#fff;border:2px solid rgba(217,102,74,.55);padding-right:50px">
+            <span id="in-deposit-unit" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--t3);font-size:13px;font-weight:600">원</span>
+          </div>
         </div>
         <div class="pos-field">
-          <div class="pos-lbl" style="color:var(--t1);font-weight:700">환율 (원/$)</div>
+          <div class="pos-lbl" style="color:var(--t1);font-weight:700"><span id="in-rate-lbl">환율 (원/$)</span></div>
           <input class="pos-inp" id="in-rate" type="number" value="1430" onchange="inUpdateSettings()" style="background:#fff;border:2px solid rgba(217,102,74,.55)">
         </div>
       </div>
@@ -5394,15 +5426,24 @@ input[type=range] { background: transparent !important; border: none !important;
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
         <div class="pos-field">
           <div class="pos-lbl">관리목표(%)</div>
-          <input class="pos-inp" id="in-target" type="number" value="60" onchange="inUpdateSettings()" style="background:#fff;border:2px solid rgba(217,102,74,.55)">
+          <div style="position:relative">
+            <input class="pos-inp" id="in-target" type="number" value="60" onchange="inUpdateSettings()" style="background:#fff;border:2px solid rgba(217,102,74,.55);padding-right:34px">
+            <span style="position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--t3);font-size:13px;font-weight:600">%</span>
+          </div>
         </div>
         <div class="pos-field">
           <div class="pos-lbl">위탁증거금</div>
-          <input class="pos-inp" id="in-used" type="text" value="" placeholder="예: 35,000,000" onchange="inUpdateSettings()" style="background:#fff;border:2px solid rgba(217,102,74,.55)">
+          <div style="position:relative">
+            <input class="pos-inp" id="in-used" type="text" value="" placeholder="예: 35,000,000" onchange="inUpdateSettings()" onblur="inFormatComma(this)" style="background:#fff;border:2px solid rgba(217,102,74,.55);padding-right:50px">
+            <span id="in-used-unit" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--t3);font-size:13px;font-weight:600">원</span>
+          </div>
         </div>
         <div class="pos-field">
           <div class="pos-lbl">유지증거금</div>
-          <input class="pos-inp" id="in-maint" type="text" value="" placeholder="예: 32,000,000" onchange="inUpdateSettings()" style="background:#fff;border:2px solid rgba(217,102,74,.55)">
+          <div style="position:relative">
+            <input class="pos-inp" id="in-maint" type="text" value="" placeholder="예: 32,000,000" onchange="inUpdateSettings()" onblur="inFormatComma(this)" style="background:#fff;border:2px solid rgba(217,102,74,.55);padding-right:50px">
+            <span id="in-maint-unit" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--t3);font-size:13px;font-weight:600">원</span>
+          </div>
         </div>
       </div>
       <div style="margin-top:10px;padding:10px 14px;background:rgba(0,0,0,.025);border-radius:6px;border:1px solid var(--b1);font-size:13px;color:var(--t2);line-height:1.7">
@@ -6098,7 +6139,7 @@ const regimeLbl=C.regime==='HIGH'?'고변동성':C.regime==='MID'?'중간 변동
   // 1. 현재가
   kr.appendChild(makeKPI(
     'c-cyan', '현재가',
-    '$' + C.close,
+    C.close + '달러',
     'var(--cyan)',
     null, null,
     '일평균 ±$'+fmt(C.atr,2)+'  /  오늘 $'+fmt(C.today_range,2),
@@ -6353,12 +6394,12 @@ const regimeLbl=C.regime==='HIGH'?'고변동성':C.regime==='MID'?'중간 변동
     // 변동성 추세 배지
     + '<div style="display:flex;align-items:center;gap:8px;margin:0 16px 8px;flex-wrap:wrap">'      + '<span style="font-size:10px;font-weight:700;color:rgba(148,163,184,.55);letter-spacing:.07em;text-transform:uppercase">변동성 추세</span>'      + (volTrend==='falling'        ? '<span style="font-size:11px;font-weight:700;background:rgba(26,122,74,.15);color:#1a7a4a;padding:3px 10px;border-radius:12px;border:1px solid rgba(26,122,74,.3)"> 완화 중 (' + hvDelta.toFixed(1) + '%p)</span><span style="font-size:12px;color:var(--t2)">→ 진입 타이밍 모니터링</span>'        : volTrend==='rising'        ? '<span style="font-size:11px;font-weight:700;background:rgba(42,95,168,.14);color:var(--red);padding:3px 10px;border-radius:12px;border:1px solid rgba(42,95,168,.3)"> 상승 중 (+' + hvDelta.toFixed(1) + '%p)</span><span style="font-size:12px;color:var(--t2)">→ 진입 더 기다리세요</span>'        : '<span style="font-size:11px;font-weight:700;background:rgba(148,163,184,.1);color:rgba(148,163,184,.8);padding:3px 10px;border-radius:12px;border:1px solid rgba(148,163,184,.2)">→ 횡보 중</span>'      )      + (!isPeaking ? '<span style="font-size:11px;font-weight:700;background:rgba(26,122,74,.12);color:#1a7a4a;padding:2px 8px;border-radius:8px"> 피크 통과 신호</span>' : '')    + '</div>'    // ATR 예상 바
     + '<div style="margin:0 16px 14px;background:rgba(176,128,64,.04);border:1px solid rgba(176,128,64,.18);border-radius:8px;padding:12px 16px">'      + '<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">'        + '<span style="font-size:10px;font-weight:800;color:rgba(148,163,184,.6);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">ATR 내일 예상 이동</span>'
-        + '<span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--cyan)">±$' + atr.toFixed(2) + ' (' + atrPct + '%)</span>'
+        + '<span style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--cyan)">±' + atr.toFixed(2) + '달러' + ' (' + atrPct + '%)</span>'
         + '<span style="flex:1;height:1px;background:rgba(0,0,0,.1)"></span>'
         + '<div style="display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px">'
           + '<span style="color:var(--red);font-weight:600"> $' + atrDown + '</span>'
           + '<span style="color:var(--t3);font-size:11px">←  하단</span>'
-          + '<span style="font-weight:800;color:var(--cyan);font-size:13px;padding:0 4px">현재 $' + pr.toFixed(2) + '</span>'
+          + '<span style="font-weight:800;color:var(--cyan);font-size:13px;padding:0 4px">현재 ' + pr.toFixed(2) + '달러' + '</span>'
           + '<span style="color:var(--t3);font-size:11px">상단  →</span>'
           + '<span style="color:#1a7a4a;font-weight:600"> $' + atrUp + '</span>'
         + '</div>'
@@ -6675,11 +6716,11 @@ function renderCalc(){
   const rc=data.rec_call,rp=data.rec_put;
   document.getElementById('recBox').innerHTML=
     '<div class="rec-card rec-call"><div class="rec-type call">콜 매도 SHORT CALL</div>'
-    +'<div class="rec-strike call">$'+adjS(rc?rc.strike:0)+'</div>'
+    +'<div class="rec-strike call">'+adjS(rc?rc.strike:0)+'달러</div>'
     +'<div class="rec-detail">'+pl+' 대비 +'+(rc?rc.move:0)+'% 위</div>'
     +'<div class="rec-badge call">손실확률 '+(rc?rc.prob:0)+'% (추천 구간)</div></div>'
     +'<div class="rec-card rec-put"><div class="rec-type put">풋 매도 SHORT PUT</div>'
-    +'<div class="rec-strike put">$'+adjS(rp?rp.strike:0)+'</div>'
+    +'<div class="rec-strike put">'+adjS(rp?rp.strike:0)+'달러</div>'
     +'<div class="rec-detail">'+pl+' 대비 -'+(rp?rp.move:0)+'% 아래</div>'
     +'<div class="rec-badge put">손실확률 '+(rp?rp.prob:0)+'% (추천 구간)</div></div>';
   const tb=document.getElementById('tblBody');tb.innerHTML='';
@@ -6687,8 +6728,8 @@ function renderCalc(){
     const isR=row.call_rec||row.put_rec;
     const tr2=document.createElement('tr');if(isR)tr2.className='rec';
     tr2.innerHTML='<td style="font-family:var(--mono);color:'+(isR?'var(--cyan)':'var(--t2)')+';font-weight:'+(isR?700:400)+'">'+row.prob+'%'+(isR?'<span class="tr-b">추천</span>':'')+'</td>'
-      +'<td class="tc">$'+adjS(row.call_strike)+'</td><td class="tm">+'+row.call_move+'%</td>'
-      +'<td class="tp">$'+adjS(row.put_strike)+'</td><td class="tm">-'+row.put_move+'%</td>'
+      +'<td class="tc">'+adjS(row.call_strike)+'달러</td><td class="tm">+'+row.call_move+'%</td>'
+      +'<td class="tp">'+adjS(row.put_strike)+'달러</td><td class="tm">-'+row.put_move+'%</td>'
       +'<td style="font-size:12px;color:var(--t3)">'+(row.call_rec?'콜 권장('+curTrend+')':row.put_rec?'풋 권장('+curTrend+')':'')+'</td>';
     tb.appendChild(tr2);
   });
@@ -6699,8 +6740,8 @@ function renderCalc(){
     const bp={};dr.table.forEach(function(r){bp[r.prob]=r;});
     const ic=d===curDays;
     mh+='<tr style="'+(ic?'background:var(--card2)':'')+'"><td style="font-family:var(--mono);font-weight:'+(ic?700:400)+';color:'+(ic?'var(--cyan)':'var(--t2)')+'">'+d+'일'+(ic?' ':'')+'</td>';
-    [3,10,20].forEach(function(p){const r=bp[p];const isR=dr.rec_call_prob===p;mh+='<td class="tc" style="'+(isR?'background:#d9664a':'')+'">$'+adjS(r?r.call_strike:0)+(isR?'<span class="tr-b"></span>':'')+'</td>';});
-    [3,10,20].forEach(function(p){const r=bp[p];const isR=dr.rec_put_prob===p;mh+='<td class="tp" style="'+(isR?'background:rgba(26,122,74,.08)':'')+'">$'+adjS(r?r.put_strike:0)+(isR?'<span class="tr-b"></span>':'')+'</td>';});
+    [3,10,20].forEach(function(p){const r=bp[p];const isR=dr.rec_call_prob===p;mh+='<td class="tc" style="'+(isR?'background:#d9664a':'')+'">'+adjS(r?r.call_strike:0)+'달러'+(isR?'<span class="tr-b"></span>':'')+'</td>';});
+    [3,10,20].forEach(function(p){const r=bp[p];const isR=dr.rec_put_prob===p;mh+='<td class="tp" style="'+(isR?'background:rgba(26,122,74,.08)':'')+'">'+adjS(r?r.put_strike:0)+'달러'+(isR?'<span class="tr-b"></span>':'')+'</td>';});
     mh+='</tr>';
   });
   document.getElementById('matPanel').innerHTML=mh+'</tbody></table>';
@@ -6720,7 +6761,7 @@ function renderAI(){
   }).join('');
   const ind=TA.indicators;
   document.getElementById('aiInds').innerHTML=[
-    {l:'EMA5',v:'$'+ind.ema5},{l:'EMA20',v:'$'+ind.ema20},{l:'EMA60',v:'$'+ind.ema60},
+    {l:'EMA5',v:ind.ema5+'달러'},{l:'EMA20',v:ind.ema20+'달러'},{l:'EMA60',v:ind.ema60+'달러'},
     {l:'RSI',v:ind.rsi.toFixed(1)},{l:'ADX',v:ind.adx.toFixed(1)},
     {l:'DI+',v:ind.di_plus.toFixed(1)},{l:'DI-',v:ind.di_minus.toFixed(1)},
     {l:'20일 수익률',v:(ind.mom20>0?'+':'')+ind.mom20.toFixed(1)+'%'},
@@ -6861,7 +6902,53 @@ function updateSettings() {
 // ────────────────────────────────────────────────────────────────
 // [11번 3-A] 데이터 입력 탭 — 자금 설정 핸들러
 //   새 ID(in-*) → 옛 ID(pt-*, rv-*) 동기화 → 옛 함수 호출
+// [v12 2026-05-17] 통화 모드 라디오 + 자동 콤마 추가
 // ────────────────────────────────────────────────────────────────
+
+/* [v12] 통화 모드 읽기 — KRW(기본) / USD */
+function inGetCurrency() {
+  try {
+    var v = localStorage.getItem('in_currency') || 'KRW';
+    return (v === 'USD') ? 'USD' : 'KRW';
+  } catch(e) { return 'KRW'; }
+}
+
+/* [v12] 통화 모드 전환 — 라디오 onchange / [v14] 칸 안 단위 span 동기화 추가 */
+function inSwitchCurrency(mode) {
+  try { localStorage.setItem('in_currency', mode); } catch(e) {}
+  /* 환율 칸 활성/비활성 */
+  var rateEl = document.getElementById('in-rate');
+  var rateLbl = document.getElementById('in-rate-lbl');
+  if (mode === 'USD') {
+    if (rateEl) { rateEl.disabled = true; rateEl.style.background = 'rgba(0,0,0,.04)'; rateEl.style.color = 'var(--t3)'; }
+    if (rateLbl) rateLbl.textContent = '환율 (달러 모드 — 미적용)';
+  } else {
+    if (rateEl) { rateEl.disabled = false; rateEl.style.background = '#fff'; rateEl.style.color = ''; }
+    if (rateLbl) rateLbl.textContent = '환율 (원/$)';
+  }
+  /* [v14] 예탁금/위탁/유지 단위 span 동기화 */
+  var unitText = (mode === 'USD') ? '달러' : '원';
+  var unitIds = ['in-deposit-unit', 'in-used-unit', 'in-maint-unit'];
+  for (var i = 0; i < unitIds.length; i++) {
+    var el = document.getElementById(unitIds[i]);
+    if (el) el.textContent = unitText;
+  }
+  /* 예탁금 라벨도 통화 표기 동기화 */
+  inUpdateSettings();
+}
+
+/* [v12] 자동 콤마 — 칸 벗어날 때(onblur) 적용 */
+function inFormatComma(el) {
+  if (!el) return;
+  var raw = String(el.value || '').replace(/,/g, '').trim();
+  if (raw === '') return;
+  var n = parseFloat(raw);
+  if (!isFinite(n)) return;
+  el.value = Math.round(n).toLocaleString();
+  /* 값이 콤마 포맷됐으니 onchange 한 번 더 호출 (저장 반영) */
+  if (typeof inUpdateSettings === 'function') inUpdateSettings();
+}
+
 function inUpdateSettings() {
   var dep   = document.getElementById('in-deposit'); var depV   = dep   ? dep.value   : '';
   var rate  = document.getElementById('in-rate');    var rateV  = rate  ? rate.value  : '';
@@ -6869,28 +6956,91 @@ function inUpdateSettings() {
   var used  = document.getElementById('in-used');    var usedV  = used  ? used.value  : '';
   var maint = document.getElementById('in-maint');   var maintV = maint ? maint.value : '';
 
-  // 옛 pt-* ID에 동기화
-  var _e;
-  _e = document.getElementById('pt-deposit'); if (_e) _e.value = depV;
-  _e = document.getElementById('pt-rate');    if (_e) _e.value = rateV;
-  _e = document.getElementById('pt-target');  if (_e) _e.value = tgtV;
-  _e = document.getElementById('pt-used');    if (_e) _e.value = usedV;
-  _e = document.getElementById('pt-maint');   if (_e) _e.value = maintV;
+  /* [v12] 통화 모드 — USD면 환율 변환 안 함 (예탁금이 달러 단위) */
+  var currency = inGetCurrency();
+  var depN  = parseInt(String(depV).replace(/,/g,''))||0;
+  var rateN = parseFloat(rateV)||1430;
+  var capUSD;
+  if (currency === 'USD') {
+    /* 달러 모드: 예탁금이 이미 달러 단위 */
+    capUSD = depN;
+    /* 옛 pt-* 와 rv-* 는 원화 기준이라 USD × rate로 환산 (호환성) */
+    var depKRWequiv = capUSD * rateN;
+    var _e;
+    _e = document.getElementById('pt-deposit'); if (_e) _e.value = depKRWequiv.toLocaleString();
+    _e = document.getElementById('pt-rate');    if (_e) _e.value = rateV;
+    _e = document.getElementById('pt-target');  if (_e) _e.value = tgtV;
+    _e = document.getElementById('pt-used');    if (_e) _e.value = usedV;
+    _e = document.getElementById('pt-maint');   if (_e) _e.value = maintV;
+    _e = document.getElementById('rv-capital-input'); if (_e) _e.value = depKRWequiv.toLocaleString();
+    _e = document.getElementById('rv-rate-input');    if (_e) _e.value = rateV;
+  } else {
+    /* 원화 모드 (기본) */
+    capUSD = rateN > 0 ? Math.round(depN / rateN) : 0;
+    var _e;
+    _e = document.getElementById('pt-deposit'); if (_e) _e.value = depV;
+    _e = document.getElementById('pt-rate');    if (_e) _e.value = rateV;
+    _e = document.getElementById('pt-target');  if (_e) _e.value = tgtV;
+    _e = document.getElementById('pt-used');    if (_e) _e.value = usedV;
+    _e = document.getElementById('pt-maint');   if (_e) _e.value = maintV;
+    _e = document.getElementById('rv-capital-input'); if (_e) _e.value = depV;
+    _e = document.getElementById('rv-rate-input');    if (_e) _e.value = rateV;
+  }
 
-  // 옛 rv-* ID 동기화 (자본·환율만)
-  _e = document.getElementById('rv-capital-input'); if (_e) _e.value = depV;
-  _e = document.getElementById('rv-rate-input');    if (_e) _e.value = rateV;
-
-  // 옛 함수 호출 (pt_settings·rv_settings 저장 + 모든 탭 재렌더)
+  // 옛 함수 호출
   try { if (typeof updateSettings   === 'function') updateSettings();   } catch(e){}
   try { if (typeof updateRVSettings === 'function') updateRVSettings(); } catch(e){}
 
-  // in-capital 표시 갱신
-  var depN  = parseInt(String(depV).replace(/,/g,''))||0;
-  var rateN = parseFloat(rateV)||1430;
-  var capUSD = rateN > 0 ? Math.round(depN / rateN) : 0;
+  // in-capital 표시
   var inCap = document.getElementById('in-capital');
-  if (inCap) inCap.textContent = '$' + capUSD.toLocaleString();
+  if (inCap) inCap.textContent = capUSD.toLocaleString() + '달러';
+}
+
+/* [v15 2026-05-17] D-4 재진입·롤오버 영역 상세 설명 토글 */
+window._uvpToggleD4Help = function() {
+  var panel = document.getElementById('uvp-d4-help-panel');
+  var btn = document.getElementById('uvp-d4-help-btn');
+  if (!panel) return;
+  var open = panel.style.display !== 'none';
+  panel.style.display = open ? 'none' : 'block';
+  if (btn) {
+    /* 펼친 상태에서는 펄스 정지 (이미 봤다는 신호) */
+    btn.style.animation = open ? 'pulse-t2 2.4s ease-in-out infinite' : 'none';
+    btn.style.background = open ? 'rgba(217,102,74,.14)' : 'rgba(217,102,74,.28)';
+  }
+};
+
+/* [v13 2026-05-17] 12종목 현재가 한 번에 fetch → window._uvpCloseMap 채움
+   posRisk(p) 함수가 _uvpCloseMap[ic]를 우선 사용 → 모든 종목 행사가 거리 계산 */
+function _uvpLoadInstClosePrices() {
+  window._uvpCloseMap = window._uvpCloseMap || {};
+  var codes = ['OCL','OGC','ONG','OES','ONQ','OEUU','OADU','OJPU','OZN','OZS','OZW','OZC'];
+  var promises = codes.map(function(code) {
+    return fetch('data/' + code + '_data.json?t=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(d) {
+        if (d && d.current && typeof d.current.close === 'number') {
+          window._uvpCloseMap[code] = d.current.close;
+        }
+        return code;
+      })
+      .catch(function(){ return code; });
+  });
+  return Promise.all(promises).then(function(){
+    /* 로드 완료 후 위험·자금 D 카드 + 시장 현황 카드 재렌더 */
+    try { if (typeof renderPTPositions === 'function') renderPTPositions(); } catch(e){}
+    try { if (typeof window.uvpShow === 'function') window.uvpShow(); } catch(e){}
+  });
+}
+
+/* [v12] 페이지 로드 시 통화 모드 복원 */
+function inRestoreCurrency() {
+  var mode = inGetCurrency();
+  var radios = document.querySelectorAll('input[name="in-currency"]');
+  for (var i = 0; i < radios.length; i++) {
+    if (radios[i].value === mode) radios[i].checked = true;
+  }
+  inSwitchCurrency(mode);
 }
 
 // 페이지 로드 시 옛 ID 값을 새 ID로 한 번 복사 (옛 영역 → 새 영역 초기 동기화)
@@ -6914,6 +7064,10 @@ function inSyncFromOld() {
 }
 window.addEventListener('load', function(){
   setTimeout(inSyncFromOld, 600);
+  /* [v12] 통화 모드 복원 (라디오 + 환율 칸 활성/비활성) */
+  setTimeout(function(){ try { if (typeof inRestoreCurrency === 'function') inRestoreCurrency(); } catch(e){} }, 700);
+  /* [v13] 12종목 현재가 fetch + 렌더 갱신 */
+  setTimeout(function(){ try { if (typeof _uvpLoadInstClosePrices === 'function') _uvpLoadInstClosePrices(); } catch(e){} }, 900);
   setTimeout(inSync1316CountFromOld, 700);
   setTimeout(inSync1310CountFromOld, 700);
   // [11번] 1316 raw 자동 복원 + 재파싱 (alert 회피용 silent)
@@ -7366,7 +7520,7 @@ function parseHTS(text) {
   return result;
 }
 
-// 원금($) 계산
+// 원금 계산
 function getCapitalUSD() {
   return ptSettings.depositKRW / ptSettings.exchangeRate;
 }
@@ -7425,17 +7579,23 @@ function calcEstLoss(plPct, expPct, stage) {
 }
 
 // 개별 포지션 위험도
+// [v13 2026-05-17] 12종목 모두 행사가까지 거리 계산 — window._uvpCloseMap 사용
 function posRisk(p) {
   var ic = p.parsed ? p.parsed.instCode : '';
 
-  // OCL(원유) 외 종목: 기초자산 현재가 정보 없음 → 프리미엄 배수 기반 위험도
-  if (ic !== 'OCL') {
+  /* [v13] 종목 현재가 결정 — OCL은 C.close(인라인 데이터), 다른 종목은 _uvpCloseMap[ic] */
+  var instClose = null;
+  if (ic === 'OCL' && typeof C !== 'undefined' && C && typeof C.close === 'number') {
+    instClose = C.close;
+  } else if (typeof window._uvpCloseMap === 'object' && window._uvpCloseMap && typeof window._uvpCloseMap[ic] === 'number') {
+    instClose = window._uvpCloseMap[ic];
+  }
+
+  /* [v13] 현재가 데이터 없으면 — 프리미엄 배수 기반 fallback (옛 동작 유지) */
+  if (instClose == null || !p.parsed) {
     var ratio = p.avgPrice > 0 ? p.currentPrice / p.avgPrice : 1;
-    var priceDir = p.parsed && p.parsed.type === 'C'
-      ? (p.currentPrice > p.avgPrice ? '상승' : '하락')   // 콜: 현재가↑ = 손실방향
-      : (p.currentPrice < p.avgPrice ? '하락' : '상승');  // 풋: 현재가↓ = 손실방향
-    var isLoss = (p.parsed.type === 'C' && p.currentPrice > p.avgPrice)
-              || (p.parsed.type === 'P' && p.currentPrice > p.avgPrice);
+    var isLoss = (p.parsed && p.parsed.type === 'C' && p.currentPrice > p.avgPrice)
+              || (p.parsed && p.parsed.type === 'P' && p.currentPrice > p.avgPrice);
     if (ratio > 3 || (isLoss && ratio > 2.5))
       return { cls:'danger-3', lbl:'프리미엄 3배↑ 손실', col:'var(--red)',    distPct:null };
     if (ratio > 2 || (isLoss && ratio > 1.5))
@@ -7445,12 +7605,12 @@ function posRisk(p) {
     return { cls:'safe', lbl:'이익 방향',                 col:'var(--green)',  distPct:null };
   }
 
-  // OCL: 행사가까지 거리 기반 (C.close = 원유 선물 현재가)
-  var currentPrice = C.close;
-  var strike = p.parsed.strike;
+  /* [v13] 모든 종목 공통 — 행사가까지 거리 계산 */
+  var currentPrice = instClose;
+  var strike = parseFloat(p.parsed.strike) || 0;
   var type   = p.parsed.type;
   var dist   = type === 'C' ? strike - currentPrice : currentPrice - strike;
-  var distPct = (dist / currentPrice * 100);
+  var distPct = currentPrice > 0 ? (dist / currentPrice * 100) : 0;
   var isBeyond = dist < 0;
   if (isBeyond)    return { cls:'danger-3', lbl:'️ 행사가 돌파', col:'var(--red)',    distPct:distPct };
   if (distPct < 5) return { cls:'danger-3', lbl:' 위험 5% 이내', col:'var(--red)',    distPct:distPct };
@@ -7478,7 +7638,7 @@ function renderPTSettings() {
   // [2026-05-09 48차] null/0이면 빈 문자열로 (placeholder 표시 유지)
   document.getElementById('pt-used').value      = (ptSettings.usedMargin)  ? ptSettings.usedMargin.toLocaleString()  : '';
   document.getElementById('pt-maint').value     = (ptSettings.maintMargin) ? ptSettings.maintMargin.toLocaleString() : '';
-  document.getElementById('pt-capital').textContent = '$' + Math.round(getCapitalUSD()).toLocaleString();
+  document.getElementById('pt-capital').textContent = Math.round(getCapitalUSD()).toLocaleString() + '달러';
 }
 
 // 증거금 현황
@@ -7544,13 +7704,13 @@ function renderPTMargin() {
       + kpiCard('증거금 사용률', barPct.toFixed(1) + '%',
           '목표 ' + (target*100).toFixed(0) + '% · 위험 85%',
           sigColor, sigBg)
-      + kpiCard('잔여 진입 여력', '₩' + Math.round(remainKRW/1e4).toLocaleString() + '만',
-          '$' + Math.round(remainUSD).toLocaleString() + ' (목표기준)',
+      + kpiCard('잔여 진입 여력', Math.round(remainKRW/1e4).toLocaleString() + '만원',
+          Math.round(remainUSD).toLocaleString() + '달러' + ' (목표기준)',
           '#1a7a4a', 'rgba(26,122,74,.06)')
-      + kpiCard('위탁증거금', '₩' + Math.round(used/1e4).toLocaleString() + '만',
-          '예탁금 ₩' + Math.round(cap/1e4).toLocaleString() + '만',
+      + kpiCard('위탁증거금', Math.round(used/1e4).toLocaleString() + '만원',
+          '예탁금 ' + Math.round(cap/1e4).toLocaleString() + '만원',
           '#d9664a', 'rgba(217,102,74,.06)')
-      + (maint > 0 ? kpiCard('유지증거금', '₩' + Math.round(maint/1e4).toLocaleString() + '만',
+      + (maint > 0 ? kpiCard('유지증거금', Math.round(maint/1e4).toLocaleString() + '만원',
           '위탁 대비 ' + (used > 0 ? (maint/used*100).toFixed(1) : '—') + '%',
           'var(--t1)', 'rgba(0,0,0,.03)') : '')
     + '</div>'
@@ -7571,7 +7731,7 @@ function renderPTMargin() {
         + '<span style="font-size:13px;color:rgba(217,102,74,.6);font-weight:700">0~' + (target*100).toFixed(0) + '% 진입 가능</span>'
         + '<span style="font-size:13px;color:rgba(217,102,74,.85);font-weight:700">' + (target*100).toFixed(0) + '~85% 신중</span>'
         + '<span style="font-size:13px;color:#d9664a;font-weight:800">85%↑ 진입 비권장</span>'
-        + '<span style="font-size:13px;color:#d9664a;font-weight:700">원금($) $' + Math.round(getCapitalUSD()).toLocaleString() + '</span>'
+        + '<span style="font-size:13px;color:#d9664a;font-weight:700">원금 ' + Math.round(getCapitalUSD()).toLocaleString() + '달러' + '</span>'
       + '</div>'
     + '</div>'
   + '</div>';
@@ -7678,17 +7838,27 @@ function renderPTPositions() {
       ? '<div class="pos-stat-val" style="font-size:16px;font-weight:700;color:'+risk.col+'">—</div>'
         + '<div class="pos-stat-sub" style="font-size:13px;color:var(--t2)">원유 전용 지표</div>'
       : '<div class="pos-stat-val" style="font-size:16px;font-weight:700;color:'+risk.col+'">'+(risk.distPct<0?'돌파':risk.distPct.toFixed(1)+'%')+'</div>'
-        + '<div class="pos-stat-sub" style="font-size:12px;font-weight:600;color:'+(risk.distPct<0?'#d9664a':'var(--t2)')+'">'+(risk.distPct<0?'️ 위험':'현재가 $'+C.close.toFixed(2))+'</div>';
+        + '<div class="pos-stat-sub" style="font-size:12px;font-weight:600;color:'+(risk.distPct<0?'#d9664a':'var(--t2)')+'">'+
+          (function(){
+            /* [v13] 종목별 현재가 표시 — OCL은 C.close, 다른 종목은 window._uvpCloseMap[ic] */
+            var _ic = p.parsed ? p.parsed.instCode : '';
+            var _cur = null;
+            if (_ic === 'OCL' && typeof C !== 'undefined' && C && typeof C.close === 'number') _cur = C.close;
+            else if (typeof window._uvpCloseMap === 'object' && window._uvpCloseMap && typeof window._uvpCloseMap[_ic] === 'number') _cur = window._uvpCloseMap[_ic];
+            if (risk.distPct < 0) return '️ 위험';
+            return (_cur != null) ? ('현재가 ' + _cur.toFixed(2) + '달러') : '현재가 미수집';
+          })()
+        +'</div>';
 
     return '<div class="pos-card '+risk.cls+'" style="margin-bottom:10px;background:'+cardGrad+'">'
       + '<div class="pos-card-top" style="background:#fff;border-bottom:2px solid rgba(217,102,74,.18)">'
         + '<div class="pos-card-accent" style="width:4px;align-self:stretch;flex-shrink:0;background:linear-gradient(to bottom,#d9664a,rgba(217,102,74,.3))"></div>'
         + '<div class="pos-card-head">'
           + '<span style="font-size:14px;font-weight:800;padding:5px 13px;border-radius:5px;font-family:var(--mono);'
-            + +(p.parsed.type==='C'
-              ? 'background:rgba(217,102,74,.15);color:#d9664a;border:1px solid rgba(217,102,74,.35)'
-              : 'background:rgba(26,122,74,.12);color:#1a7a4a;border:1px solid rgba(26,122,74,.28)')+';letter-spacing:.04em">'
-            + (p.parsed.type==='C'?'C 콜매도':'P 풋매도')+'</span>'
+            + (p.side === '매수'
+              ? 'background:rgba(200,48,48,.10);color:#c83030;border:1px solid rgba(200,48,48,.30)'
+              : 'background:rgba(42,95,168,.10);color:#2a5fa8;border:1px solid rgba(42,95,168,.30)')+';letter-spacing:.04em">'
+            + (function(){var _isBuyD = (p.side === '매수');var _cp = (p.parsed.type==='C') ? '콜' : '풋';return _cp + (_isBuyD ? ' 매수' : ' 매도');})()+'</span>'
           + '<div>'
             + '<div style="font-family:var(--mono);font-size:18px;font-weight:700;color:#d9664a">'+(INST[p.parsed.instCode]?INST[p.parsed.instCode].name:p.parsed.instName)+' $'+p.parsed.strike+'</div>'
             + '<div style="font-size:13px;color:var(--t2);font-family:var(--mono);margin-top:3px">'+p.parsed.monthName+' 20'+p.parsed.yearCode+' &nbsp;·&nbsp; '+p.contracts+'계약 &nbsp;·&nbsp; '+p.code+'</div>'
@@ -7706,20 +7876,20 @@ function renderPTPositions() {
         // 매도 옵션가격 — 배경 없음 (기준값)
         + '<div class="pos-stat">'
           + '<div pos-stat-lbl>매도 옵션가격</div>'
-          + '<div class="pos-stat-val">$'+p.avgPrice.toFixed(p.avgPrice<1?3:2)+'</div>'
+          + '<div class="pos-stat-val">'+p.avgPrice.toFixed(p.avgPrice<1?3:2)+'달러</div>'
           + '<div class="pos-stat-sub" style="font-size:13px;color:var(--t2)">계약수 '+p.contracts+'</div>'
         + '</div>'
         // 현재 옵션가격 — 방향별 그라데이션
         + '<div class="pos-stat" style="background:'+premGrad+'">'
           + '<div pos-stat-lbl>현재 옵션가격</div>'
-          + '<div class="pos-stat-val" style="font-size:16px;font-weight:700;color:'+premColor+'">$'+p.currentPrice.toFixed(p.currentPrice<1?3:2)+'</div>'
+          + '<div class="pos-stat-val" style="font-size:16px;font-weight:700;color:'+premColor+'">'+p.currentPrice.toFixed(p.currentPrice<1?3:2)+'달러</div>'
           + '<div class="pos-stat-sub" style="font-size:12px;font-weight:600;color:'+premDirColor+'">'+premDir+'</div>'
         + '</div>'
         // 포지션노출 — 위험도별 그라데이션
         + '<div class="pos-stat" style="background:'+expGrad+'">'
           + '<div pos-stat-lbl>포지션노출</div>'
           + '<div class="pos-stat-val" style="font-size:16px;font-weight:700;color:'+expColor(expPct/100)+'">'+(expPct>=0?'+':'')+expPct.toFixed(2)+'%</div>'
-          + '<div class="pos-stat-sub" style="font-size:13px;color:var(--t2)">$'+Math.abs(p.marketValue).toFixed(0)+'</div>'
+          + '<div class="pos-stat-sub" style="font-size:13px;color:var(--t2)">' + Math.round(Math.abs(p.marketValue)).toLocaleString() + '달러'+'</div>'
           + (function(){
               var ic2 = p.parsed ? p.parsed.instCode : '';
               var summ = getInstSummary();
@@ -7821,7 +7991,7 @@ function renderPTSim() {
       + '<td style="' + TD + ';text-align:right;font-size:14px;font-weight:700;color:var(--t1)">' + row.contracts + '</td>'
       + '<td style="' + TD + ';text-align:right;font-size:14px;font-weight:700;color:var(--t1)">' + row.price + '</td>'
       + '<td style="' + TD + ';text-align:right">'
-        + '<div style="font-size:14px;font-weight:700;color:#1a7a4a">$' + expUSD.toFixed(2) + '</div>'
+        + '<div style="font-size:14px;font-weight:700;color:#1a7a4a">' + Math.round(expUSD).toLocaleString() + '달러' + '</div>'
       + '</td>'
       + '<td style="' + TD + ';text-align:right">'
         + '<div style="font-size:14px;font-weight:700;color:' + (afterExp*100>=1.5?'#d9664a':afterExp*100>=1.0?'#d9664a':'#1a7a4a') + '">' + (expPct*100).toFixed(2) + '%</div>'
@@ -7846,7 +8016,7 @@ function renderPTSim() {
                      : 'transparent';
           return '<td style="' + TD + ';text-align:right;background:' + estBg2 + '">'
             + '<div style="font-size:13px;font-weight:800;color:' + estColor + '">' + (estPct>=0?'+':'') + estPct.toFixed(2) + '%</div>'
-            + '<div style="font-size:13px;color:' + estColor + ';opacity:.8;margin-top:2px">' + (estUSD>=0?'+':'-') + '$' + Math.abs(estUSD).toFixed(0) + '</div>'
+            + '<div style="font-size:13px;color:' + estColor + ';opacity:.8;margin-top:2px">' + (estUSD>=0?'+':'-') + Math.round(Math.abs(estUSD)).toLocaleString() + '달러' + '</div>'
             + '<div style="font-size:13px;color:var(--t2);margin-top:2px;font-weight:500">' + stage + '단계 기준</div>'
             + '</td>';
         })()
@@ -8364,7 +8534,7 @@ function renderPTMasterTable() {
         : '';
       return '<td style="padding:10px 12px;text-align:right;background:' + plBg(pl) + ';' + br + '">'
         + '<div style="font-size:14px;font-weight:700;color:' + c + '">' + pSign(pct) + pct.toFixed(2) + '%</div>'
-        + '<div style="font-size:11px;color:' + c + ';opacity:.8;margin-top:3px">' + (pl>=0?'+':'-') + '$' + Math.abs(pl).toFixed(0) + '</div>'
+        + '<div style="font-size:11px;color:' + c + ';opacity:.8;margin-top:3px">' + (pl>=0?'+':'-') + Math.round(Math.abs(pl)).toLocaleString() + '달러' + '</div>'
         + zeroLine
         + '</td>';
     }
@@ -8387,7 +8557,7 @@ function renderPTMasterTable() {
         : '<div style="font-size:12px;color:var(--t2);margin-top:3px;font-weight:500">참고값</div>';
       return '<td style="padding:10px 12px;text-align:right;background:' + bg + ';' + BORDER_R + '">'
         + '<div style="font-size:15px;font-weight:' + weight + ';color:' + tc + '">' + pSign(estPct) + estPct.toFixed(2) + '%</div>'
-        + '<div style="font-size:11px;color:' + tc + ';opacity:.8;margin-top:2px">' + (estUSD>=0?'+':'-') + '$' + Math.abs(estUSD).toFixed(0) + '</div>'
+        + '<div style="font-size:11px;color:' + tc + ';opacity:.8;margin-top:2px">' + (estUSD>=0?'+':'-') + Math.round(Math.abs(estUSD)).toLocaleString() + '달러' + '</div>'
         + dirLabel
         + '</td>';
     }
@@ -8482,13 +8652,13 @@ function renderPTMasterTable() {
     + '<td style="' + TOT_BASE + ';text-align:right;background:' + totExpBg(totCallExp) + ';color:' + totExpColor(totCallExp) + '">' + (totCallExp*100).toFixed(2) + '%</td>'
     + '<td style="' + TOT_BASE + ';text-align:right;background:' + totExpBg(totPutExp) + ';color:' + totExpColor(totPutExp) + ';border-right:1px solid rgba(217,102,74,.20)">' + (totPutExp*100).toFixed(2) + '%</td>'
     // 손익 — 이익/손실 그라데이션 + 색상
-    + '<td style="' + TOT_BASE + ';text-align:right;background:' + totPlBg(totCallPL) + ';color:' + (totCallPL>=0?'#1a7a4a':'#d9664a') + '">' + (totCallPL>=0?'+':'-') + '$' + Math.abs(totCallPL).toFixed(0) + '</td>'
-    + '<td style="' + TOT_BASE + ';text-align:right;background:' + totPlBg(totPutPL) + ';color:' + (totPutPL>=0?'#1a7a4a':'#d9664a') + ';border-right:1px solid rgba(217,102,74,.22)">' + (totPutPL>=0?'+':'-') + '$' + Math.abs(totPutPL).toFixed(0) + '</td>'
+    + '<td style="' + TOT_BASE + ';text-align:right;background:' + totPlBg(totCallPL) + ';color:' + (totCallPL>=0?'#1a7a4a':'#d9664a') + '">' + (totCallPL>=0?'+':'-') + Math.round(Math.abs(totCallPL)).toLocaleString() + '달러' + '</td>'
+    + '<td style="' + TOT_BASE + ';text-align:right;background:' + totPlBg(totPutPL) + ';color:' + (totPutPL>=0?'#1a7a4a':'#d9664a') + ';border-right:1px solid rgba(217,102,74,.22)">' + (totPutPL>=0?'+':'-') + Math.round(Math.abs(totPutPL)).toLocaleString() + '달러' + '</td>'
     // 생존경보 — 활성 종목 수
     + '<td style="' + TOT_BASE + ';text-align:center;font-size:14px !important;color:var(--t1);background:' + TOT_BG + ';border-right:1px solid rgba(217,102,74,.15)">' + active.length + ' / 12 종목</td>'
     // 추정손실 — 그라데이션 + 색상
-    + '<td style="' + TOT_BASE + ';text-align:right;background:' + totEstBg(totCallEst) + ';color:' + (totCallEst>=0?'#1a7a4a':'#d9664a') + '">' + (hasEst ? (totCallEst>=0?'+':'-')+'$'+Math.abs(totCallEst).toFixed(0) : '—') + '</td>'
-    + '<td style="' + TOT_BASE + ';text-align:right;background:' + totEstBg(totPutEst) + ';color:' + (totPutEst>=0?'#1a7a4a':'#d9664a') + '">' + (hasEst ? (totPutEst>=0?'+':'-')+'$'+Math.abs(totPutEst).toFixed(0) : '—') + '</td>'
+    + '<td style="' + TOT_BASE + ';text-align:right;background:' + totEstBg(totCallEst) + ';color:' + (totCallEst>=0?'#1a7a4a':'#d9664a') + '">' + (hasEst ? (totCallEst>=0?'+':'-')+Math.round(Math.abs(totCallEst)).toLocaleString() + '달러' : '—') + '</td>'
+    + '<td style="' + TOT_BASE + ';text-align:right;background:' + totEstBg(totPutEst) + ';color:' + (totPutEst>=0?'#1a7a4a':'#d9664a') + '">' + (hasEst ? (totPutEst>=0?'+':'-')+Math.round(Math.abs(totPutEst)).toLocaleString() + '달러' : '—') + '</td>'
     + '</tr>';
 
   // ── 콜+풋 합산 행 ──
@@ -8521,7 +8691,7 @@ function renderPTMasterTable() {
     + '</td>'
     // 현재평가손익 합산 (colspan=2) — 우측 구분선 추가
     + '<td colspan="2" style="' + SUM_BASE + ';text-align:center;color:' + sumPlColorKR + ';border-right:2px solid rgba(251,146,60,.3)">'
-      + '<div style="font-size:16px;font-weight:900">' + (totPL>=0?'+':'-') + '$' + Math.abs(totPL).toFixed(0) + '</div>'
+      + '<div style="font-size:16px;font-weight:900">' + (totPL>=0?'+':'-') + Math.round(Math.abs(totPL)).toLocaleString() + '달러' + '</div>'
       + '<div style="font-size:11px;margin-top:3px;opacity:.85">' + (totPLpct>=0?'+':'') + totPLpct.toFixed(2) + '%</div>'
     + '</td>'
     // 생존경보
@@ -8529,7 +8699,7 @@ function renderPTMasterTable() {
     // 추정손실 합산 (colspan=2)
     + '<td colspan="2" style="' + SUM_BASE + ';text-align:center;color:' + sumEstColorKR + '">'
       + (totEst !== null
-        ? '<div style="font-size:16px;font-weight:900">' + (totEst>=0?'+':'-') + '$' + Math.abs(totEst).toFixed(0) + '</div>'
+        ? '<div style="font-size:16px;font-weight:900">' + (totEst>=0?'+':'-') + Math.round(Math.abs(totEst)).toLocaleString() + '달러' + '</div>'
           + '<div style="font-size:11px;margin-top:3px;color:var(--red)">권고 미이행 시</div>'
         : '—')
     + '</td>'
@@ -8587,7 +8757,7 @@ function initPTOnce() {
     var rate = parseFloat((document.getElementById('pt-rate')||{}).value||'');
     var capEl = document.getElementById('pt-capital');
     if (!isNaN(dep) && dep > 0 && !isNaN(rate) && rate > 0 && capEl) {
-      capEl.textContent = '$' + Math.round(dep/rate).toLocaleString();
+      capEl.textContent = Math.round(dep/rate).toLocaleString() + '달러';
     }
     // 300ms 디바운스 후 전체 설정 저장·갱신
     clearTimeout(ptTimer);
@@ -8797,7 +8967,7 @@ renderPT = function() {
   renderPTMasterTable();
   // sim-capital-disp 업데이트
   var simCapEl = document.getElementById('sim-capital-disp');
-  if (simCapEl) simCapEl.textContent = '$' + Math.round(getCapitalUSD()).toLocaleString();
+  if (simCapEl) simCapEl.textContent = Math.round(getCapitalUSD()).toLocaleString() + '달러';
   // 잠금 적용 (포지션 없으면 B~E 흐리기)
   var noPos = ptPositions.length === 0;
   setPTLock(noPos);
@@ -8849,7 +9019,7 @@ renderPT = function() {
 };
 
 // 초기 렌더링
-document.getElementById('pt-capital').textContent = '$' + Math.round(getCapitalUSD()).toLocaleString();
+document.getElementById('pt-capital').textContent = Math.round(getCapitalUSD()).toLocaleString() + '달러';
 
 // ═══════════════════════════════════════════════════════════════
 // F섹션 — 시장 위험 단계 판정 (국면전환 리스크관리 시스템)
@@ -9503,19 +9673,19 @@ new Chart(document.getElementById('cPrice'),{type:'line',data:{labels:CH.dates,d
       // 현재가 수평 기준선
       priceLine:{type:'line',yMin:priceNow,yMax:priceNow,
         borderColor:'rgba(217,102,74,.55)',borderWidth:1,borderDash:[3,4],
-        label:{content:'현재 $'+priceNow.toFixed(2),display:true,position:'end',
+        label:{content:'현재 ' + priceNow.toFixed(2) + '달러',display:true,position:'end',
           backgroundColor:'rgba(217,102,74,.18)',color:'#d9664a',
           font:{size:10,weight:'bold'},padding:{x:6,y:3},borderRadius:4}},
       // BB 상단 레이블
       bbUpLine:{type:'line',yMin:bbUNow,yMax:bbUNow,
         borderColor:'rgba(217,102,74,.20)',borderWidth:1,borderDash:[2,4],
-        label:{content:'BB상단 $'+bbUNow.toFixed(2),display:true,position:'start',
+        label:{content:'BB상단 ' + bbUNow.toFixed(2) + '달러',display:true,position:'start',
           backgroundColor:'rgba(217,102,74,.10)',color:'#d9664a',
           font:{size:9},padding:{x:5,y:2},borderRadius:3}},
       // BB 하단 레이블
       bbDownLine:{type:'line',yMin:bbLNow,yMax:bbLNow,
         borderColor:'rgba(217,102,74,.20)',borderWidth:1,borderDash:[2,4],
-        label:{content:'BB하단 $'+bbLNow.toFixed(2),display:true,position:'start',
+        label:{content:'BB하단 ' + bbLNow.toFixed(2) + '달러',display:true,position:'start',
           backgroundColor:'rgba(217,102,74,.10)',color:'#d9664a',
           font:{size:9},padding:{x:5,y:2},borderRadius:3}},
     }}
@@ -9916,8 +10086,8 @@ function stUpdateSignalBox(pct) {
 function stRenderMargin(d) {
   if (!d) return;
   var rate = d.rate || 1332;
-  var fmtU = function(v){ return '$'+(v||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); };
-  var fmtK = function(v){ return '₩'+Math.round((v||0)*rate).toLocaleString(); };
+  var fmtU = function(v){ return (v||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}) + '달러'; };
+  var fmtK = function(v){ return Math.round((v||0)*rate).toLocaleString() + '원'; };
   var el = function(id){ return document.getElementById(id); };
   if(el('st-deposit-usd')) el('st-deposit-usd').textContent = fmtU(d.deposit);
   if(el('st-deposit-krw')) el('st-deposit-krw').textContent = fmtK(d.deposit);
@@ -10106,9 +10276,9 @@ function stRenderRank(data) {
         h += '<td style="padding:8px 12px;text-align:center;color:var(--t1);font-size:11px">'+(d.price||'—')+'</td>';
         h += '<td style="padding:8px 12px;text-align:center;color:var(--t1);font-size:11px">'+(d.qty||'—')+'</td>';
         // [48차] 스팬증거금 — 파랑(BLUE) 통일
-        h += '<td style="padding:8px 12px;text-align:center;color:'+BLUE+';font-weight:700;font-size:11px;font-family:var(--mono)">$'+(d.margin||0).toLocaleString()+'</td>';
+        h += '<td style="padding:8px 12px;text-align:center;color:'+BLUE+';font-weight:700;font-size:11px;font-family:var(--mono)">' + (d.margin||0).toLocaleString() + '달러'+'</td>';
         // [48차] 잠재이익 — 연한 빨강(YIELD_RED) 통일
-        h += '<td style="padding:8px 12px;text-align:right;color:'+YIELD_RED+';font-weight:700;font-size:11px;white-space:nowrap">₩'+(d.profit||0).toLocaleString()+'</td>';
+        h += '<td style="padding:8px 12px;text-align:right;color:'+YIELD_RED+';font-weight:700;font-size:11px;white-space:nowrap">' + (d.profit||0).toLocaleString() + '원'+'</td>';
       } else {
         h += '<td colspan="7" style="padding:8px 12px;text-align:center;color:var(--t3);font-size:11px">—</td>';
       }
@@ -10378,19 +10548,18 @@ function renderDetailRows(rows) {
     // 옵션가격
     h += '<td style="padding:6px 8px;text-align:center;color:var(--t2);font-family:var(--mono);font-size:11px;white-space:nowrap">'+(r.price||'—')+'</td>';
 
-    // 계약수 (괄호 안 반올림 수치만 표기)
+    // 계약수 — [2026-05-17 동업자 피드백] 옵션가격처럼 원본(기준(조정)) 그대로 표기
     var qtyRaw = r.qty || '';
-    var qtyMatch = qtyRaw.match(/\((\d+(?:\.\d+)?)\)/);
-    var qtyDisp = qtyMatch ? Math.round(parseFloat(qtyMatch[1])) : (qtyRaw ? qtyRaw : '—');
-    h += '<td style="padding:6px 8px;text-align:center;color:var(--cyan);font-weight:700;font-family:var(--mono);font-size:12px">'+ qtyDisp + (qtyDisp !== '—' ? '계약' : '') +'</td>';
+    var qtyDisp = qtyRaw ? qtyRaw : '—';
+    h += '<td style="padding:6px 8px;text-align:center;color:var(--cyan);font-weight:700;font-family:var(--mono);font-size:12px;white-space:nowrap">'+ qtyDisp + (qtyDisp !== '—' ? ' 계약' : '') +'</td>';
 
     // 스팬증거금 — [48차] 파랑 통일
     h += '<td style="padding:6px 8px;text-align:center;font-family:var(--mono);font-size:11px">';
-    h += '<span style="color:'+TYPE_BLUE+';font-weight:700">$'+(r.margin||0).toLocaleString()+'</span></td>';
+    h += '<span style="color:'+TYPE_BLUE+';font-weight:700">' + (r.margin||0).toLocaleString() + '달러'+'</span></td>';
 
     // 잠재이익 — [48차] 연한 빨강 통일
     h += '<td style="padding:6px 8px;text-align:right;font-family:var(--mono);font-size:11px">';
-    h += '<span style="color:'+YIELD_RED2+';font-weight:700">₩'+(r.profit||0).toLocaleString()+'</span></td>';
+    h += '<span style="color:'+YIELD_RED2+';font-weight:700">' + (r.profit||0).toLocaleString() + '원'+'</span></td>';
 
     // 손실확률
     h += '<td style="padding:6px 8px;text-align:center;color:var(--t3);font-size:10px;white-space:nowrap">'+(r.lossPct||'—')+'</td>';
@@ -10924,8 +11093,8 @@ function toKr(name) {
   if (!name) return '—';
   return KR_NAME[name] || KR_NAME[name.trim()] || name;
 }
-function fmtK(v) { return '₩' + Math.abs(v||0).toLocaleString(); }
-function fmtU(v) { return '$' + (v||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fmtK(v) { return Math.abs(v||0).toLocaleString() + '원'; }
+function fmtU(v) { return (v||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}) + '달러'; }
 
 // ── KPI 렌더 ─────────────────────────────────────────────────
 function trRenderKPI(d) {
@@ -10993,12 +11162,12 @@ function trRenderMarginGauge(d) {
   var pctKpi = document.getElementById('tr-mg-pct-kpi');
   if (pctKpi) { pctKpi.textContent=pct.toFixed(1)+'%'; pctKpi.style.color=sigColor; }
   var usedKpi = document.getElementById('tr-mg-used-kpi');
-  if (usedKpi) usedKpi.textContent = '$'+used.toLocaleString('en-US',{maximumFractionDigits:0});
+  if (usedKpi) usedKpi.textContent = used.toLocaleString('en-US',{maximumFractionDigits:0}) + '달러';
   var usedSub = document.getElementById('tr-mg-used-sub');
-  if (usedSub) usedSub.textContent = '예탁금 $'+deposit.toLocaleString('en-US',{maximumFractionDigits:0});
+  if (usedSub) usedSub.textContent = '예탁금 ' + deposit.toLocaleString('en-US',{maximumFractionDigits:0}) + '달러';
   var remainUSD = Math.max(0, deposit * target - used);
   var remainKpi = document.getElementById('tr-mg-remain-kpi');
-  if (remainKpi) remainKpi.textContent = '$'+Math.round(remainUSD).toLocaleString();
+  if (remainKpi) remainKpi.textContent = Math.round(remainUSD).toLocaleString() + '달러';
 
   // 평가 수익률 카드 업데이트
   var pnl     = (window._trCurrentData && window._trCurrentData.pnl) || 0;
@@ -11022,7 +11191,7 @@ function trRenderMarginGauge(d) {
 
   // 원금 라벨
   var depLbl = document.getElementById('tr-mg-deposit-lbl');
-  if (depLbl) depLbl.textContent = '원금($) $'+deposit.toLocaleString('en-US',{maximumFractionDigits:0});
+  if (depLbl) depLbl.textContent = '원금 ' + deposit.toLocaleString('en-US',{maximumFractionDigits:0}) + '달러';
 }
 
 // ── 종목별 손익 리스트 렌더 ───────────────────────────────────
@@ -11109,10 +11278,10 @@ function trRenderPosTable(month) {
     h += '<td style="padding:8px 12px;text-align:center;color:var(--t3);font-size:11px">'+(p._month||'—')+'</td>';
     h += '<td style="padding:8px 12px;text-align:center;color:'+typeColor+';font-weight:700">'+(p.type==='C'?'<span style="font-size:10px;opacity:.7">C</span> 콜':'<span style="font-size:10px;opacity:.7">P</span> 풋')+'</td>';
     h += '<td style="padding:8px 12px;text-align:center;color:var(--t2)">'+(p.qty||1)+'계약</td>';
-    h += '<td style="padding:8px 12px;text-align:right;color:'+priceColor+';font-weight:600">₩'+(p.price||0).toLocaleString()+'</td>';
-    h += '<td style="padding:8px 12px;text-align:right;color:'+pnlColor+';font-weight:700">₩'+(p.pnl||0).toLocaleString()+'</td>';
+    h += '<td style="padding:8px 12px;text-align:right;color:'+priceColor+';font-weight:600">' + (p.price||0).toLocaleString() + '원'+'</td>';
+    h += '<td style="padding:8px 12px;text-align:right;color:'+pnlColor+';font-weight:700">' + (p.pnl||0).toLocaleString() + '원'+'</td>';
     h += '<td style="padding:8px 12px;text-align:center;color:var(--t2)">'+(p.daysLeft||'—')+'일</td>';
-    h += '<td style="padding:8px 12px;text-align:right;color:var(--cyan);font-family:var(--mono)">$'+(p.margin||0).toLocaleString()+'</td>';
+    h += '<td style="padding:8px 12px;text-align:right;color:var(--cyan);font-family:var(--mono)">' + (p.margin||0).toLocaleString() + '달러'+'</td>';
     h += '</tr>';
   });
   // 합계 행
@@ -11122,10 +11291,10 @@ function trRenderPosTable(month) {
   h += '<td style="padding:8px 12px;text-align:center;color:var(--t2);font-size:11px;font-weight:500">'+positions.length+'종목</td>';
   h += '<td style="padding:8px 12px;text-align:center;color:var(--red);font-size:10px">C/P</td>';
   h += '<td style="padding:8px 12px;text-align:center;font-weight:800;color:rgba(203,213,225,.9);font-family:var(--mono)">'+totalQty+'계약</td>';
-  h += '<td style="padding:8px 12px;text-align:right;font-weight:800;color:#1a1816;font-family:var(--mono)">₩'+totalPrice.toLocaleString()+'</td>';
-  h += '<td style="padding:8px 12px;text-align:right;font-weight:900;color:'+totalPnlColor+';font-family:var(--mono)">'+(totalPnl>=0?'+':'')+'₩'+Math.abs(totalPnl).toLocaleString()+'</td>';
+  h += '<td style="padding:8px 12px;text-align:right;font-weight:800;color:#1a1816;font-family:var(--mono)">' + totalPrice.toLocaleString() + '원'+'</td>';
+  h += '<td style="padding:8px 12px;text-align:right;font-weight:900;color:'+totalPnlColor+';font-family:var(--mono)">'+(totalPnl>=0?'+':'')+Math.abs(totalPnl).toLocaleString() + '원'+'</td>';
   h += '<td style="padding:8px 12px;text-align:center;color:var(--t3)">—</td>';
-  h += '<td style="padding:8px 12px;text-align:right;font-weight:900;color:var(--cyan);font-family:var(--mono)">$'+totalMargin.toLocaleString()+'</td>';
+  h += '<td style="padding:8px 12px;text-align:right;font-weight:900;color:var(--cyan);font-family:var(--mono)">' + totalMargin.toLocaleString() + '달러'+'</td>';
   h += '</tr>';
   tbody.innerHTML = h;
 }
@@ -11859,6 +12028,8 @@ window.trParse1316 = function() {
       curCol = cols[5];
       mktCol = cols[7]; // 옵션평가금액
       pnlCol = cols[8]; // 옵션평가손익
+      /* [v10 2026-05-17] 유안타 — cols[1] 매수/매도 추출 */
+      var sideCol_v10 = (cols[1] || '매도').trim();
     } else {
       if (cols.length < 8) return;
       var m = code.match(/^([A-Z]+)([A-Z])(\d{2})_([CP])([\d.]+)$/);
@@ -11872,6 +12043,8 @@ window.trParse1316 = function() {
       curCol = cols[5];
       mktCol = cols[7];
       pnlCol = cols[8];
+      /* [v10 2026-05-17] DB — cols[2] 매수/매도 추출 */
+      var sideCol_v10 = (cols[2] || '매도').trim();
     }
 
     var month = MONTH_MAP[monthChar] || '??';
@@ -11891,6 +12064,7 @@ window.trParse1316 = function() {
       instCode: instCode,
       month: monthLabel,
       cp: cp==='C'?'콜':'풋',
+      side: (sideCol_v10 === '매수') ? '매수' : '매도',  /* [v10] 매수/매도 구분 */
       strike: strike,
       contracts: contracts,
       avgPrice: avgPrice,
@@ -12090,8 +12264,11 @@ window.trRenderPosTable1316 = function(positions, filter) {
     /* [2026-05-08] 행 디자인 정갈하게 — 폰트 13/14, 양수=빨강 음수=파랑 톤 다운, 콜·풋=살몬 동일 */
     var pnlColor = evalKRW > 0 ? 'rgba(200,48,48,.85)' : evalKRW < 0 ? 'rgba(42,95,168,.85)' : 'var(--t3)';
     var mktColor = mktKRW < 0 ? 'rgba(42,95,168,.85)' : mktKRW > 0 ? 'rgba(200,48,48,.85)' : 'var(--t3)';
-    var cpColor = '#d9664a';
-    var cpLabel = p.cp === '콜' ? 'C콜' : 'P풋';
+    /* [v10 2026-05-17] 매수/매도 구분 + 색상
+       매도 = 파란 계열 #2a5fa8 / 매수 = 빨간 계열 #c83030 */
+    var _isBuy = (p.side === '매수');
+    var cpColor = _isBuy ? '#c83030' : '#2a5fa8';
+    var cpLabel = p.cp + ' ' + (_isBuy ? '매수' : '매도');
     var instKR = POS_CODE_KR[p.instCode] || p.instCode;
 
     function fmt(v) { return Math.abs(v) >= 1 ? v.toFixed(2) : v.toFixed(3); }
@@ -12905,7 +13082,24 @@ function renderReviewKPI(m, mdd, daily) {
   var summaryHtml = '<div style="margin-bottom:14px;padding:16px 18px;background:#ffffff;border-radius:12px;border:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between">'
     + '<div>'
       + '<div style="font-size:13px;font-weight:600;color:var(--t2);margin-bottom:6px;letter-spacing:.02em">총 누적 손익</div>'
-      + '<div style="font-family:var(--mono);font-size:28px;font-weight:800;color:'+netColor+'">'+( m.totalNet>=0?'+':'')+' $'+m.totalNet.toFixed(0)+'</div>'
+      /* [v6 2026-05-17] 원화·달러 위치 교체 — 원화를 큰 글자(28px), 달러를 작은 글자(14px) 보조 표시 */
+      + (function(){
+          var _fxRate = 1430;
+          try {
+            var _rvs = JSON.parse(localStorage.getItem('rv_settings') || '{}');
+            if (_rvs.rate && parseFloat(_rvs.rate) > 0) _fxRate = parseFloat(_rvs.rate);
+            else {
+              var _pts = JSON.parse(localStorage.getItem('pt_settings') || '{}');
+              if (_pts.exchangeRate && _pts.exchangeRate > 0) _fxRate = _pts.exchangeRate;
+            }
+          } catch(e) {}
+          var _net = m.totalNet || 0;
+          var _krw = Math.round(_net * _fxRate);
+          var _signKRW = _krw >= 0 ? '+' : '-';
+          var _signUSD = _net >= 0 ? '+' : '-';
+          return '<div style="font-family:var(--mono);font-size:28px;font-weight:800;color:'+netColor+'">'+_signKRW+' ' + Math.abs(_krw).toLocaleString() + '원'+'</div>'
+            + '<div style="font-family:var(--mono);font-size:14px;font-weight:600;color:'+netColor+';opacity:.78;margin-top:4px">≈ '+_signUSD+' ' + Math.round(Math.abs(_net)).toLocaleString() + '달러'+' (환율 '+_fxRate.toLocaleString()+'원/$)</div>';
+        })()
     + '</div>'
     + '<div style="text-align:right">'
       + '<div style="font-size:13px;font-weight:600;color:var(--t2);margin-bottom:6px;letter-spacing:.02em">원금 대비 수익률</div>'
@@ -13099,7 +13293,7 @@ function renderStopLossAlert(anomalies, metrics, daily) {
   /* [2026-05-09] 살몬 단일톤 + 이모지 삭제 + 폰트 한 단계 업 */
   var html = '<div style="margin-bottom:12px;padding:14px 18px;background:rgba(217,102,74,.06);border-radius:8px;border:1.5px solid rgba(217,102,74,.40);display:flex;align-items:center;gap:12px">'
     + '<div><div style="font-size:14px;font-weight:800;color:#d9664a">손절 원칙 미준수 의심 구간 발견 — '+anomalies.length+'건</div>'
-    + '<div style="font-size:12px;color:var(--t3);margin-top:4px">일별 평균 손실($'+dailyAvgLoss.toFixed(0)+')의 3배 초과 손실일을 표시합니다</div></div></div>';
+    + '<div style="font-size:12px;color:var(--t3);margin-top:4px">일별 평균 손실(' + Math.round(dailyAvgLoss).toLocaleString() + '달러'+')의 3배 초과 손실일을 표시합니다</div></div></div>';
 
   /* [2026-05-09] 펼쳐보기 버튼 제거 — 항상 펼쳐 표시 */
 
@@ -13119,10 +13313,10 @@ function renderStopLossAlert(anomalies, metrics, daily) {
       + '<div style="display:flex;align-items:center;gap:12px">'
         + '<div style="font-family:var(--mono);font-size:15px;font-weight:700;color:'+severity+';width:80px;flex-shrink:0">'+d.date.slice(5)+'</div>'
         + '<div style="flex:1">'
-          + '<div style="font-size:13px;font-weight:600;color:'+severity+'">당일 손실: $'+Math.abs(d.net).toFixed(0)+'&nbsp;&nbsp;<span style="font-weight:400;font-size:12px;color:var(--t3)">(평균의 '+ratio.toFixed(1)+'배)</span></div>'
+          + '<div style="font-size:13px;font-weight:600;color:'+severity+'">당일 손실: ' + Math.round(Math.abs(d.net)).toLocaleString() + '달러'+'&nbsp;&nbsp;<span style="font-weight:400;font-size:12px;color:var(--t3)">(평균의 '+ratio.toFixed(1)+'배)</span></div>'
           + '<div style="font-size:12px;color:var(--t3);margin-top:3px">'+formatLossCodes(lossCodes)+'</div>'
         + '</div>'
-        + '<div style="font-family:var(--mono);font-size:17px;font-weight:800;color:'+severity+'">-$'+Math.abs(d.net).toFixed(0)+'</div>'
+        + '<div style="font-family:var(--mono);font-size:17px;font-weight:800;color:'+severity+'">-' + Math.round(Math.abs(d.net)).toLocaleString() + '달러'+'</div>'
       + '</div>'
     + '</div>';
   });
@@ -13345,7 +13539,7 @@ function renderConvergenceChart(daily, weekly, monthly) {
                 + '<span style="font-size:15px;font-weight:700;color:var(--t1)">'+row.label+' 변동폭 <span style="font-size:13px;color:var(--t3);font-weight:500">(1일 기준 환산)</span></span>'
                 + '<div>'
                   + '<span style="font-family:var(--mono);font-size:16px;font-weight:800;color:'+textColor+'">±'+row.pctVal.toFixed(2)+'%</span>'
-                  + '<span style="font-size:14px;color:var(--t2);margin-left:6px">(±$'+row.normVal.toFixed(0)+')</span>'
+                  + '<span style="font-size:14px;color:var(--t2);margin-left:6px">(±' + Math.round(row.normVal).toLocaleString() + '달러'+')</span>'
                 + '</div>'
               + '</div>'
               + '<div style="background:rgba(217,102,74,.06);border-radius:6px;height:14px;overflow:hidden;position:relative;width:100%;box-sizing:border-box">'
@@ -13507,7 +13701,7 @@ function renderDiagnosis(metrics, anomalies, mdd, daily, weekly, monthly, rows) 
     var worst = anomalies[0];
     items.push({ level: 'red', icon: '🔴', title: '손절 원칙 미준수 반복 ('+anomalies.length+'건)',
       body: '일별 평균 손실의 3배를 초과한 날이 '+anomalies.length+'건 발견됐습니다. '
-        + '가장 큰 손실일은 '+worst.date.slice(5)+' ($'+Math.abs(worst.net).toFixed(0)+', 일평균의 '+(dailyAvgLoss>0?(Math.abs(worst.net)/dailyAvgLoss).toFixed(1):'-')+'배)입니다.',
+        + '가장 큰 손실일은 '+worst.date.slice(5)+' (' + Math.round(Math.abs(worst.net)).toLocaleString() + '달러'+', 일평균의 '+(dailyAvgLoss>0?(Math.abs(worst.net)/dailyAvgLoss).toFixed(1):'-')+'배)입니다.',
       action: '→ 손절선을 사전 가격 알람으로 설정하고 도달 즉시 청산하는 루틴을 만드세요.',
       frame: '위험관리' });
   } else if (anomalies.length > 0) {
@@ -13540,12 +13734,12 @@ function renderDiagnosis(metrics, anomalies, mdd, daily, weekly, monthly, rows) 
   var jPL = judgeMetric('plRatio', metrics.plRatio);
   if (jPL.color === 'var(--red)') {
     items.push({ level: 'red', icon: '🔴', title: '손익비 위험 수준 ('+metrics.plRatio.toFixed(2)+')',
-      body: '평균 손실($'+metrics.avgLoss.toFixed(0)+')이 평균 이익($'+metrics.avgWin.toFixed(0)+')의 '+(metrics.avgLoss>0&&metrics.avgWin>0?(metrics.avgLoss/metrics.avgWin).toFixed(1):'-')+'배입니다.',
+      body: '평균 손실(' + Math.round(metrics.avgLoss).toLocaleString() + '달러'+')이 평균 이익(' + Math.round(metrics.avgWin).toLocaleString() + '달러'+')의 '+(metrics.avgLoss>0&&metrics.avgWin>0?(metrics.avgLoss/metrics.avgWin).toFixed(1):'-')+'배입니다.',
       action: '→ 활용가 2배 이하에서 즉시 청산하는 기준을 만드세요.',
       frame: '매매 전략' });
   } else if (jPL.color === 'var(--yellow)') {
     items.push({ level: 'yellow', icon: '🟡', title: '손익비 개선 여지 ('+metrics.plRatio.toFixed(2)+')',
-      body: '평균 이익 $'+metrics.avgWin.toFixed(0)+', 평균 손실 $'+metrics.avgLoss.toFixed(0)+'. 목표 0.4 이상입니다.',
+      body: '평균 이익 ' + Math.round(metrics.avgWin).toLocaleString() + '달러'+', 평균 손실 ' + Math.round(metrics.avgLoss).toLocaleString() + '달러'+'. 목표 0.4 이상입니다.',
       action: '→ 손실이 커지기 전에 더 빠른 청산 루틴을 만드세요.',
       frame: '매매 전략' });
   }
@@ -13565,12 +13759,12 @@ function renderDiagnosis(metrics, anomalies, mdd, daily, weekly, monthly, rows) 
   // ── 5. MDD ───────────────────────────────────────────────
   if (mdd >= 15) {
     items.push({ level: 'red', icon: '🔴', title: '최대 낙폭 과다 ('+mdd.toFixed(1)+'%)',
-      body: '자본금 대비 '+mdd.toFixed(1)+'% 낙폭. 금액으로 약 $'+(capital*mdd/100).toFixed(0)+'입니다.',
+      body: '자본금 대비 '+mdd.toFixed(1)+'% 낙폭. 금액으로 약 ' + Math.round(capital*mdd/100).toLocaleString() + '달러'+'입니다.',
       action: '→ 증거금 사용률을 낮추고 단일 종목 비중을 1% 이하로 제한하세요.',
       frame: '위험관리' });
   } else if (mdd >= 5) {
     items.push({ level: 'yellow', icon: '🟡', title: '낙폭 관리 필요 ('+mdd.toFixed(1)+'%)',
-      body: '기준치(5%) 대비 낙폭 발생. 약 $'+(capital*mdd/100).toFixed(0)+'에 해당합니다.',
+      body: '기준치(5%) 대비 낙폭 발생. 약 ' + Math.round(capital*mdd/100).toLocaleString() + '달러'+'에 해당합니다.',
       action: '→ 생존경보 2단계 이상 시 신규 진입 중단, 포지션 크기를 줄이세요.',
       frame: '위험관리' });
   }
@@ -13596,12 +13790,12 @@ function renderDiagnosis(metrics, anomalies, mdd, daily, weekly, monthly, rows) 
       var share = totalLoss !== 0 ? (instGroups[name] / totalLoss * 100) : 0;
       if (share >= 60) {
         items.push({ level: 'red', icon: '🔴', title: '종목 집중 손실 — '+name+' (손실의 '+share.toFixed(0)+'%)',
-          body: '전체 손실 중 '+name+' 종목에서 '+share.toFixed(0)+'%가 발생했습니다($'+Math.abs(instGroups[name]).toFixed(0)+'). 한 종목에 과도하게 의존하고 있습니다.',
+          body: '전체 손실 중 '+name+' 종목에서 '+share.toFixed(0)+'%가 발생했습니다(' + Math.round(Math.abs(instGroups[name])).toLocaleString() + '달러'+'). 한 종목에 과도하게 의존하고 있습니다.',
           action: '→ '+name+' 비중을 줄이고 손실이 적은 종목으로 분산하세요.',
           frame: '위험관리' });
       } else if (share >= 40) {
         items.push({ level: 'yellow', icon: '🟡', title: '종목 집중도 주의 — '+name+' (손실의 '+share.toFixed(0)+'%)',
-          body: name+' 종목에서 전체 손실의 '+share.toFixed(0)+'%가 발생했습니다($'+Math.abs(instGroups[name]).toFixed(0)+').',
+          body: name+' 종목에서 전체 손실의 '+share.toFixed(0)+'%가 발생했습니다(' + Math.round(Math.abs(instGroups[name])).toLocaleString() + '달러'+').',
           action: '→ '+name+' 포지션 크기를 점검하고 분산 구조를 재검토하세요.',
           frame: '위험관리' });
       }
@@ -13616,12 +13810,12 @@ function renderDiagnosis(metrics, anomalies, mdd, daily, weekly, monthly, rows) 
     });
     if (callNet < 0 && putNet > 0 && Math.abs(callNet) > Math.abs(putNet) * 0.5) {
       items.push({ level: 'yellow', icon: '🟡', title: '콜 매도에서 손실 집중',
-        body: '콜 매도 손익: $'+callNet.toFixed(0)+', 풋 매도 손익: +$'+putNet.toFixed(0)+'. 상승 방향 리스크가 크게 작용했습니다.',
+        body: '콜 매도 손익: ' + Math.round(callNet).toLocaleString() + '달러'+', 풋 매도 손익: +' + Math.round(putNet).toLocaleString() + '달러'+'. 상승 방향 리스크가 크게 작용했습니다.',
         action: '→ 콜 행사가 선정 기준을 점검하고, 상승 추세 구간에서 콜 매도 비중을 줄이세요.',
         frame: '매매 전략' });
     } else if (putNet < 0 && callNet > 0 && Math.abs(putNet) > Math.abs(callNet) * 0.5) {
       items.push({ level: 'yellow', icon: '🟡', title: '풋 매도에서 손실 집중',
-        body: '풋 매도 손익: $'+putNet.toFixed(0)+', 콜 매도 손익: +$'+callNet.toFixed(0)+'. 하락 방향 리스크가 크게 작용했습니다.',
+        body: '풋 매도 손익: ' + Math.round(putNet).toLocaleString() + '달러'+', 콜 매도 손익: +' + Math.round(callNet).toLocaleString() + '달러'+'. 하락 방향 리스크가 크게 작용했습니다.',
         action: '→ 풋 행사가 선정 기준을 점검하고, 하락 추세 구간에서 풋 매도 비중을 줄이세요.',
         frame: '매매 전략' });
     }
@@ -13665,7 +13859,7 @@ function renderDiagnosis(metrics, anomalies, mdd, daily, weekly, monthly, rows) 
     var worstMonth  = monthly.reduce(function(a,b){ return a.net < b.net ? a : b; });
     if (losingMonths.length > monthly.length * 0.4) {
       items.push({ level: 'red', icon: '🔴', title: '월별 손실 빈도 과다 ('+losingMonths.length+'/'+monthly.length+'개월)',
-        body: '전체 '+monthly.length+'개월 중 '+losingMonths.length+'개월 손실마감. 가장 큰 손실: '+worstMonth.key+'($'+worstMonth.net.toFixed(0)+').',
+        body: '전체 '+monthly.length+'개월 중 '+losingMonths.length+'개월 손실마감. 가장 큰 손실: '+worstMonth.key+'(' + Math.round(worstMonth.net).toLocaleString() + '달러'+').',
         action: '→ 손실 달의 공통 원인을 분석하고 해당 시장 조건에서 포지션을 줄이세요.',
         frame: '자금관리' });
     } else if (losingMonths.length > 0) {
@@ -13886,7 +14080,7 @@ function renderMonthlyTable(monthly, daily) {
       var mddColor = mdd < 5 ? '#1a7a4a' : mdd < 15 ? '#c8803a' : '#c83030';
       html += '<tr style="border-bottom:1px solid rgba(217,102,74,.08)">'
         + '<td style="padding:13px 10px;font-weight:600;color:var(--t1);font-size:14px;white-space:nowrap">'+m.key+'</td>'
-        + '<td style="padding:13px 10px;text-align:right;color:'+color+';font-weight:700;font-size:15px;white-space:nowrap">'+(m.net>=0?'+':'')+m.net.toFixed(0)+'</td>'
+        + '<td style="padding:13px 10px;text-align:right;color:'+color+';font-weight:700;font-size:15px;white-space:nowrap">'+(m.net>=0?'+':'-')+Math.round(Math.abs(m.net)).toLocaleString()+'</td>'
         + '<td style="padding:13px 10px;text-align:right;color:'+color+';font-size:14px;white-space:nowrap">'+(pct>=0?'+':'')+pct.toFixed(2)+'%</td>'
         + '<td style="padding:13px 10px;text-align:right;color:'+mddColor+';font-weight:600;font-size:14px;white-space:nowrap">-'+mdd.toFixed(1)+'%</td>'
         + '<td style="padding:13px 10px;text-align:right;color:var(--t3);font-size:14px;white-space:nowrap">'+m.days+'일</td>'
@@ -13907,7 +14101,7 @@ function renderMonthlyTable(monthly, daily) {
     var yrPct2 = capYr > 0 ? (yrNet / capYr * 100) : 0;
     html += '<tr style="border-bottom:2px solid rgba(217,102,74,.30);background:rgba(217,102,74,.04)">'
       + '<td style="padding:13px 10px;font-weight:800;color:#d9664a;font-size:14px;white-space:nowrap">'+yr+'년 합계</td>'
-      + '<td style="padding:13px 10px;text-align:right;color:'+yrColor2+';font-weight:800;font-size:15px;white-space:nowrap">'+(yrNet>=0?'+':'')+yrNet.toFixed(0)+'</td>'
+      + '<td style="padding:13px 10px;text-align:right;color:'+yrColor2+';font-weight:800;font-size:15px;white-space:nowrap">'+(yrNet>=0?'+':'-')+Math.round(Math.abs(yrNet)).toLocaleString()+'</td>'
       + '<td style="padding:13px 10px;text-align:right;color:'+yrColor2+';font-weight:800;font-size:14px;white-space:nowrap">'+(yrPct2>=0?'+':'')+yrPct2.toFixed(2)+'%</td>'
       + '<td style="padding:13px 10px;text-align:right;color:var(--t3);font-size:14px;white-space:nowrap">—</td>'
       + '<td style="padding:13px 10px;text-align:right;color:var(--t3);font-size:14px;white-space:nowrap">'+yrDays+'일</td>'
@@ -14003,7 +14197,7 @@ function renderYearCapitalUI() {
       + '  style="flex:1;padding:5px 10px;background:rgba(217,102,74,.08);border:1px solid rgba(217,102,74,.3);'
       + '  border-radius:5px;color:var(--t1);font-size:11px;font-family:var(--mono)">'
       + '<div style="font-size:12px;color:var(--t3);width:80px;text-align:right;flex-shrink:0" id="rv-yr-cap-disp-'+yr+'">'
-      + (rvYearlyCapital[yr] ? '$' + Math.round(rvYearlyCapital[yr]/rvRate).toLocaleString() : '—')
+      + (rvYearlyCapital[yr] ? Math.round(rvYearlyCapital[yr]/rvRate).toLocaleString() + '달러' : '—')
       + '</div>'
     + '</div>';
   }).join('');
@@ -14040,7 +14234,7 @@ window.updateYearCapital = function(yr) {
   if (!isNaN(val) && val > 0) {
     rvYearlyCapital[yr] = val;
     var dispEl = document.getElementById('rv-yr-cap-disp-'+yr);
-    if (dispEl) dispEl.textContent = '$' + Math.round(val/rvRate).toLocaleString();
+    if (dispEl) dispEl.textContent = Math.round(val/rvRate).toLocaleString() + '달러';
   } else {
     delete rvYearlyCapital[yr];
     var dispEl2 = document.getElementById('rv-yr-cap-disp-'+yr);
@@ -14063,7 +14257,7 @@ function updateRVSettings() {
   localStorage.setItem('rv_settings', JSON.stringify({ capital: rvCapital, rate: rvRate, yearlyCapital: rvYearlyCapital }));
   var capEl = document.getElementById('rv-capital-disp');
   if (capEl) {
-    capEl.textContent = '자본금: ₩' + rvCapital.toLocaleString() + ' ÷ ' + rvRate + ' = $' + Math.round(rvCapital/rvRate).toLocaleString() + ' (수익률 기준)';
+    capEl.textContent = '자본금: ' + rvCapital.toLocaleString() + '원 ÷ ' + rvRate + ' = ' + Math.round(rvCapital/rvRate).toLocaleString() + '달러' + ' (수익률 기준)';
   }
   renderYearCapitalUI();
   if (rvData) renderReview();
@@ -14190,7 +14384,7 @@ function renderInstrumentAnalysis(rows) {
                 : '#2a5fa8';
         return '<div style="padding:13px 14px;background:var(--card2);border-radius:8px;border:1px solid var(--b1);text-align:center">'
           + '<div style="font-size:13px;font-weight:600;color:var(--t2);margin-bottom:7px">'+label+'</div>'
-          + '<div style="font-family:var(--mono);font-size:16px;font-weight:800;color:'+col+'">'+(val>=0?'+':'')+' $'+val.toFixed(0)+'</div>'
+          + '<div style="font-family:var(--mono);font-size:16px;font-weight:800;color:'+col+'">'+(val>=0?'+':'-')+' ' + Math.round(Math.abs(val)).toLocaleString() + '달러'+'</div>'
         + '</div>';
       }).join('')
   + '</div>';
@@ -14209,7 +14403,7 @@ function renderInstrumentAnalysis(rows) {
         + '<span style="font-size:14px;font-weight:700;color:var(--t1)">'+e.name+'</span>'
         + '<div style="display:flex;align-items:center;gap:14px">'
           + '<span style="font-size:12px;font-weight:600;color:var(--t2)">승률 '+winRate+'% · '+e.count+'건</span>'
-          + '<span style="font-family:var(--mono);font-size:15px;font-weight:800;color:'+color+'">'+(e.net>=0?'+':'')+' $'+e.net.toFixed(0)+'</span>'
+          + '<span style="font-family:var(--mono);font-size:15px;font-weight:800;color:'+color+'">'+(e.net>=0?'+':'-')+' ' + Math.round(Math.abs(e.net)).toLocaleString() + '달러'+'</span>'
         + '</div>'
       + '</div>'
       // 기여도 바 — 단일톤 그라데이션 (수익=연빨강 / 손실=연파랑)
@@ -14596,14 +14790,14 @@ window.syncFromPT = function() {
   var dispEl = document.getElementById('rv-capital-disp');
   if (capEl)  capEl.value  = rvCapital.toLocaleString();
   if (rateEl) rateEl.value = rvRate;
-  if (dispEl) dispEl.textContent = '자본금: ₩' + rvCapital.toLocaleString() + ' ÷ ' + rvRate
-    + ' = $' + Math.round(rvCapital/rvRate).toLocaleString() + ' (수익률 기준)';
+  if (dispEl) dispEl.textContent = '자본금: ' + rvCapital.toLocaleString() + '원 ÷ ' + rvRate
+    + ' = ' + Math.round(rvCapital/rvRate).toLocaleString() + '달러' + ' (수익률 기준)';
 
   renderYearCapitalUI();
   renderPTSummary();
 
   if (rvData && rvData.length > 0) renderReview();
-  alert('✅ 동기화 완료!\n원금: ₩' + rvCapital.toLocaleString() + '\n환율: ' + rvRate + '원/$');
+  alert('✅ 동기화 완료!\n원금: ' + rvCapital.toLocaleString() + '원' + '\n환율: ' + rvRate + '원/$');
 };
 
 // 포지션 트래커 증거금 현황 → 자금관리 분석 상단 표시
@@ -14692,9 +14886,9 @@ function renderPTSummary() {
     // ── 하단: 3개 수치 카드 ───────────────────────────────────
     + '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">'
       + [
-          { label:'위탁증거금',   val:'₩'+Math.round(used/10000).toLocaleString()+'만',   sub:'현재 사용', color:'var(--t1)' },
-          { label:'유지증거금',   val:'₩'+Math.round(maint/10000).toLocaleString()+'만',  sub:'유지 필요', color:'var(--t1)' },
-          { label:'잔여 여력',    val:'₩'+Math.round(remain/10000).toLocaleString()+'만', sub:'추가 가능',  color:'#d9664a' },
+          { label:'위탁증거금',   val:Math.round(used/10000).toLocaleString() + '만원',   sub:'현재 사용', color:'var(--t1)' },
+          { label:'유지증거금',   val:Math.round(maint/10000).toLocaleString() + '만원',  sub:'유지 필요', color:'var(--t1)' },
+          { label:'잔여 여력',    val:Math.round(remain/10000).toLocaleString() + '만원', sub:'추가 가능',  color:'#d9664a' },
         ].map(function(k) {
           /* [2026-05-09 v2] 폰트 2pt 더 업 + 라벨 살몬 — 라벨 14→16 살몬, 값 17→19, sub 14→16 */
           return '<div style="padding:14px 17px;background:var(--bg);border-radius:6px;border:1px solid var(--b1);text-align:center">'
@@ -14791,7 +14985,7 @@ window.generateDraftMemo = function() {
     var worst = anomalies[0];
     var dAvgL = anomalies.dailyAvgLoss || 0;
     var ratio = dAvgL > 0 ? (Math.abs(worst.net)/dAvgL).toFixed(1) : '-';
-    memo1 = '이번 기간(' + period + ') 손절 원칙 미준수 의심 구간이 ' + anomalies.length + '건 발견됐습니다. 가장 큰 손실은 ' + worst.date.slice(5) + '($' + Math.abs(worst.net).toFixed(0) + ', 평균의 ' + ratio + '배)였습니다. ' + (selfScore >= 70 ? '전반적으로는 원칙을 지키려 노력했으나 일부 상황에서 버티는 심리가 작동했습니다. ' : '손절선 도달 후 버티는 패턴이 반복됐습니다. ') + '다음 달부터 손절 가격 알람을 사전 설정하고 도달 즉시 청산하는 루틴을 만들겠습니다.';
+    memo1 = '이번 기간(' + period + ') 손절 원칙 미준수 의심 구간이 ' + anomalies.length + '건 발견됐습니다. 가장 큰 손실은 ' + worst.date.slice(5) + '(' + Math.round(Math.abs(worst.net)).toLocaleString() + '달러' + ', 평균의 ' + ratio + '배)였습니다. ' + (selfScore >= 70 ? '전반적으로는 원칙을 지키려 노력했으나 일부 상황에서 버티는 심리가 작동했습니다. ' : '손절선 도달 후 버티는 패턴이 반복됐습니다. ') + '다음 달부터 손절 가격 알람을 사전 설정하고 도달 즉시 청산하는 루틴을 만들겠습니다.';
   }
 
   // 5-2
@@ -14801,7 +14995,7 @@ window.generateDraftMemo = function() {
   if (mdd >= 5) needsImprove.push('낙폭 관리(' + mdd.toFixed(1) + '%)');
   var memo2 = needsImprove.length === 0
     ? '이번 기간 기존 원칙이 대부분의 시장 상황을 잘 커버했습니다. 특별히 원칙이 커버하지 못한 흐름은 없었습니다. 현재 원칙을 유지하면서 지속적으로 점검하겠습니다.'
-    : '이번 기간 원칙이 커버하지 못한 상황이 있었습니다: ' + needsImprove.join(', ') + '. ' + (worstInst ? worstInst[0] + '($' + Math.abs(worstInst[1]).toFixed(0) + ' 손실)에 편중된 포지션 구조를 개선할 필요가 있습니다. ' : '') + '다음 달부터 단일 종목 비중을 1.5% 이하로 제한하는 원칙을 적용하겠습니다.';
+    : '이번 기간 원칙이 커버하지 못한 상황이 있었습니다: ' + needsImprove.join(', ') + '. ' + (worstInst ? worstInst[0] + '(' + Math.round(Math.abs(worstInst[1])).toLocaleString() + '달러' + ' 손실)에 편중된 포지션 구조를 개선할 필요가 있습니다. ' : '') + '다음 달부터 단일 종목 비중을 1.5% 이하로 제한하는 원칙을 적용하겠습니다.';
 
   // 5-3
   var psychIssues = [];
@@ -14818,7 +15012,7 @@ window.generateDraftMemo = function() {
     : '이번 기간 ' + (!wrOk ? '승률(' + metrics.winRate.toFixed(1) + '%, 기준 70%) ' : '') + (!plOk ? '손익비(' + metrics.plRatio.toFixed(2) + ', 기준 0.4) ' : '') + '에서 기준 미달이 있었습니다. 이는 ' + (anomalies.length >= 3 ? '손절 미준수가 반복된 구조적 문제' : '진입 기준이 느슨해진 결과') + '로 보입니다. 다음 달에는 진입 전 체크리스트(손실확률, 변동성, 비중)를 반드시 확인하겠습니다.';
 
   // 5-5
-  var memo5 = '이번 기간 누적 손익은 $' + metrics.totalNet.toFixed(0) + '(원금 대비 ' + (totalPct>=0?'+':'') + totalPct.toFixed(2) + '%)였습니다. ' + (bestInst.length > 0 ? bestInst[0][0] + '($' + bestInst[0][1].toFixed(0) + ')에서 가장 안정적인 수익이 났습니다. ' : '') + (lossMonths.length === 0 ? '모든 달 흑자 마감에 성공했습니다. ' : lossMonths.length + '개월 손실 마감이 있었습니다. ') + '다음 달 목표는 승률 70% 이상, 손절 원칙 100% 준수입니다. 꾸준한 복기로 성장하겠습니다.';
+  var memo5 = '이번 기간 누적 손익은 ' + Math.round(metrics.totalNet).toLocaleString() + '달러' + '(원금 대비 ' + (totalPct>=0?'+':'') + totalPct.toFixed(2) + '%)였습니다. ' + (bestInst.length > 0 ? bestInst[0][0] + '(' + Math.round(bestInst[0][1]).toLocaleString() + '달러' + ')에서 가장 안정적인 수익이 났습니다. ' : '') + (lossMonths.length === 0 ? '모든 달 흑자 마감에 성공했습니다. ' : lossMonths.length + '개월 손실 마감이 있었습니다. ') + '다음 달 목표는 승률 70% 이상, 손절 원칙 100% 준수입니다. 꾸준한 복기로 성장하겠습니다.';
 
   var filled = 0;
   [['rv-memo-1',memo1],['rv-memo-2',memo2],['rv-memo-3',memo3],['rv-memo-4',memo4],['rv-memo-5',memo5]].forEach(function(p) {
@@ -15013,7 +15207,7 @@ function renderMoneyMgmt(rows, monthly) {
         + '('+d.positions+'건'+flag+')'
       + '</div>'
       + '<div style="width:100px;text-align:right;font-family:var(--mono);font-size:14px;font-weight:800;color:'+netColor+';flex-shrink:0">'
-        + (d.net>=0?'+':'')+' $'+d.net.toFixed(0)
+        + (d.net>=0?'+':'')+' ' + Math.round(Math.abs(d.net)).toLocaleString() + '달러'
       + '</div>'
     + '</div>';
   });
@@ -15238,8 +15432,8 @@ function injectTourHelpBtn() {
     var dispEl = document.getElementById('rv-capital-disp');
     if (capEl)  capEl.value  = rvCapital.toLocaleString();
     if (rateEl) rateEl.value = rvRate;
-    if (dispEl) dispEl.textContent = '자본금: ₩' + rvCapital.toLocaleString() + ' ÷ ' + rvRate
-      + ' = $' + Math.round(rvCapital/rvRate).toLocaleString() + ' (수익률 기준)';
+    if (dispEl) dispEl.textContent = '자본금: ' + rvCapital.toLocaleString() + '원 ÷ ' + rvRate
+      + ' = ' + Math.round(rvCapital/rvRate).toLocaleString() + '달러' + ' (수익률 기준)';
 
     // ── onchange → oninput 디바운스 교체 ──────────────────────
     // HTML이 read-only라 JS에서 이벤트 리스너를 직접 교체
@@ -15249,8 +15443,8 @@ function injectTourHelpBtn() {
       var dep  = parseInt(String(capEl ? capEl.value : '').replace(/,/g,''));
       var rate = parseFloat(rateEl ? rateEl.value : '');
       if (!isNaN(dep) && dep > 0 && !isNaN(rate) && rate > 0 && dispEl) {
-        dispEl.textContent = '자본금: ₩' + dep.toLocaleString() + ' ÷ ' + rate
-          + ' = $' + Math.round(dep/rate).toLocaleString() + ' (수익률 기준)';
+        dispEl.textContent = '자본금: ' + dep.toLocaleString() + '원 ÷ ' + rate
+          + ' = ' + Math.round(dep/rate).toLocaleString() + '달러' + ' (수익률 기준)';
       }
       // 300ms 후 전체 설정 저장 + 재렌더 (디바운스)
       clearTimeout(rvInputTimer);
@@ -17173,7 +17367,7 @@ window.calcFinalEntry = function(code, monthLabel, direction) {
     if (priceEl && dataParam) {
       var cur = dataParam.current || dataParam.latest || dataParam;
       var closeVal = cur && cur.close;
-      priceEl.textContent = (typeof closeVal === 'number') ? ('$' + closeVal.toFixed(2)) : (closeVal || '─');
+      priceEl.textContent = (typeof closeVal === 'number') ? (closeVal.toFixed(2) + '달러') : (closeVal || '─');
     }
 
     var tailEl = document.getElementById('ovv2-tail-' + code);
@@ -17316,7 +17510,7 @@ window.calcFinalEntry = function(code, monthLabel, direction) {
         }
         var strikeHTML = '<span style="font-family:var(--mono);font-weight:700;color:var(--t1);font-size:13px">' + s.strike + '</span>';
         var priceHTML  = (s.price && String(s.price).trim()) ? ' · <span style="font-size:12px;color:var(--t3);font-family:var(--mono)">옵션가 ' + s.price + '</span>' : ' <span style="font-size:9px;color:var(--t3);font-style:italic">(HTS 확인)</span>';
-        var marginHTML = (s.margin && s.margin > 0) ? ' · <span style="font-size:11px;color:var(--t3);font-family:var(--mono)">1계약 $' + s.margin.toLocaleString() + '</span>' : '';
+        var marginHTML = (s.margin && s.margin > 0) ? ' · <span style="font-size:11px;color:var(--t3);font-family:var(--mono)">1계약 ' + s.margin.toLocaleString() + '달러' + '</span>' : '';
         return '<div style="font-size:12px;margin-bottom:5px"><span style="color:var(--t2);font-weight:700">' + label + '</span> · <span style="color:var(--cyan);font-weight:600">' + s.month + '</span> · ' + strikeHTML + priceHTML + marginHTML + '</div>';
       }
 
@@ -18222,10 +18416,10 @@ window._t14GetInstPhaseLimit = function(code) {
       html += '<tr style="border-bottom:1px solid var(--b1)">' +
               '<td style="padding:10px 10px;color:var(--t1);font-weight:600">' + nameCell + '</td>' +
               '<td style="padding:10px 10px;text-align:center;color:var(--t2)">' + b.qty + '</td>' +
-              '<td style="padding:10px 10px;text-align:center;color:var(--green)">$' + prMul.toFixed(0) + '</td>' +
-              '<td style="padding:10px 10px;text-align:center;color:var(--yellow)">$' + (prMul*3).toFixed(0) + '</td>' +
-              '<td style="padding:10px 10px;text-align:center;color:var(--orange)">$' + (prMul*5).toFixed(0) + '</td>' +
-              '<td style="padding:10px 10px;text-align:center;color:var(--cyan);font-weight:700">$' + (prMul*10).toFixed(0) + '</td>' +
+              '<td style="padding:10px 10px;text-align:center;color:var(--green)">' + Math.round(prMul).toLocaleString() + '달러' + '</td>' +
+              '<td style="padding:10px 10px;text-align:center;color:var(--yellow)">' + Math.round(prMul*3).toLocaleString() + '달러' + '</td>' +
+              '<td style="padding:10px 10px;text-align:center;color:var(--orange)">' + Math.round(prMul*5).toLocaleString() + '달러' + '</td>' +
+              '<td style="padding:10px 10px;text-align:center;color:var(--cyan);font-weight:700">' + Math.round(prMul*10).toLocaleString() + '달러' + '</td>' +
               '</tr>';
     });
     html += '</tbody></table>';
@@ -19933,14 +20127,14 @@ window._t14GetInstPhaseLimit = function(code) {
         '<td style="padding:10px;text-align:center;color:var(--t1);font-weight:700">' + best.strike + '</td>' +
         '<td style="padding:10px;text-align:center;color:var(--t1);font-family:var(--mono)">' + sizing.toFixed(2) + '배</td>' +
         '<td style="padding:10px;text-align:center;color:var(--t1);font-family:var(--mono);font-weight:700">' + qty + '계약</td>' +
-        '<td style="padding:10px;text-align:center;color:var(--green);font-family:var(--mono)">$' + Math.round(receivedPrem).toLocaleString() + '</td>' +
+        '<td style="padding:10px;text-align:center;color:var(--green);font-family:var(--mono)">' + Math.round(receivedPrem).toLocaleString() + '달러' + '</td>' +
         '<td style="padding:10px;text-align:center;color:var(--t2);font-family:var(--mono)">' + actualExp.toFixed(2) + '%</td>' +
       '</tr>';
     }
 
     var html =
       '<div style="margin-bottom:10px;padding:10px 12px;background:rgba(0,0,0,.025);border-radius:6px;font-size:11px;color:var(--t2);line-height:1.6">' +
-        '<b>기준</b>: 자본 $' + Math.round(capUSD).toLocaleString() + ' · 최대 허용 비중 ' + capPctN.toFixed(2) + '% · ' + monthLabel + ' 추천 행사가 (가장 안전 lp) · 매크로 진입 계약 수' +
+        '<b>기준</b>: 자본 ' + Math.round(capUSD).toLocaleString() + '달러' + ' · 최대 허용 비중 ' + capPctN.toFixed(2) + '% · ' + monthLabel + ' 추천 행사가 (가장 안전 lp) · 매크로 진입 계약 수' +
       '</div>' +
       '<table style="width:100%;border-collapse:collapse;font-size:12px">' +
       '<thead><tr style="border-bottom:1.5px solid var(--b1);background:rgba(0,0,0,.03)">' +
@@ -20096,10 +20290,10 @@ window._t14GetInstPhaseLimit = function(code) {
       html += '<tr style="border-bottom:1px solid var(--b1)">' +
         '<td style="padding:8px 10px;color:var(--t1);font-weight:600">' + fr + ' <span style="font-size:9px;color:var(--t3);font-weight:500">(' + oc + ')</span></td>' +
         '<td style="padding:8px 10px;text-align:center;color:var(--t2)">' + qty + '</td>' +
-        '<td style="padding:8px 10px;text-align:center;color:var(--green)">$' + Math.round(prMul).toLocaleString() + '</td>' +
-        '<td style="padding:8px 10px;text-align:center;color:var(--yellow)">$' + Math.round(prMul*3).toLocaleString() + '</td>' +
-        '<td style="padding:8px 10px;text-align:center;color:#c8803a">$' + Math.round(prMul*5).toLocaleString() + '</td>' +
-        '<td style="padding:8px 10px;text-align:center;color:var(--cyan);font-weight:700">$' + Math.round(prMul*10).toLocaleString() + '</td>' +
+        '<td style="padding:8px 10px;text-align:center;color:var(--green)">' + Math.round(prMul).toLocaleString() + '달러' + '</td>' +
+        '<td style="padding:8px 10px;text-align:center;color:var(--yellow)">' + Math.round(prMul*3).toLocaleString() + '달러' + '</td>' +
+        '<td style="padding:8px 10px;text-align:center;color:#c8803a">' + Math.round(prMul*5).toLocaleString() + '달러' + '</td>' +
+        '<td style="padding:8px 10px;text-align:center;color:var(--cyan);font-weight:700">' + Math.round(prMul*10).toLocaleString() + '달러' + '</td>' +
       '</tr>';
     });
     html += '</tbody></table>' +
@@ -21946,14 +22140,14 @@ window._t14GetInstPhaseLimit = function(code) {
         '<td style="padding:10px;text-align:center;color:var(--t1);font-weight:700">' + best.strike + '</td>' +
         '<td style="padding:10px;text-align:center;color:var(--t1);font-family:var(--mono)">' + sizing.toFixed(2) + '배</td>' +
         '<td style="padding:10px;text-align:center;color:var(--t1);font-family:var(--mono);font-weight:700">' + qty + '계약</td>' +
-        '<td style="padding:10px;text-align:center;color:var(--green);font-family:var(--mono)">$' + Math.round(receivedPrem).toLocaleString() + '</td>' +
+        '<td style="padding:10px;text-align:center;color:var(--green);font-family:var(--mono)">' + Math.round(receivedPrem).toLocaleString() + '달러' + '</td>' +
         '<td style="padding:10px;text-align:center;color:var(--t2);font-family:var(--mono)">' + actualExp.toFixed(2) + '%</td>' +
       '</tr>';
     }
 
     var html =
       '<div style="margin-bottom:10px;padding:10px 12px;background:rgba(0,0,0,.025);border-radius:6px;font-size:11px;color:var(--t2);line-height:1.6">' +
-        '<b>기준</b>: 자본 $' + Math.round(capUSD).toLocaleString() + ' · 최대 허용 비중 ' + capPctN.toFixed(2) + '% · ' + monthLabel + ' 추천 행사가 (가장 안전 lp) · 매크로 진입 계약 수' +
+        '<b>기준</b>: 자본 ' + Math.round(capUSD).toLocaleString() + '달러' + ' · 최대 허용 비중 ' + capPctN.toFixed(2) + '% · ' + monthLabel + ' 추천 행사가 (가장 안전 lp) · 매크로 진입 계약 수' +
       '</div>' +
       '<table style="width:100%;border-collapse:collapse;font-size:12px">' +
       '<thead><tr style="border-bottom:1.5px solid var(--b1);background:rgba(0,0,0,.03)">' +
@@ -22109,10 +22303,10 @@ window._t14GetInstPhaseLimit = function(code) {
       html += '<tr style="border-bottom:1px solid var(--b1)">' +
         '<td style="padding:8px 10px;color:var(--t1);font-weight:600">' + fr + ' <span style="font-size:9px;color:var(--t3);font-weight:500">(' + oc + ')</span></td>' +
         '<td style="padding:8px 10px;text-align:center;color:var(--t2)">' + qty + '</td>' +
-        '<td style="padding:8px 10px;text-align:center;color:var(--green)">$' + Math.round(prMul).toLocaleString() + '</td>' +
-        '<td style="padding:8px 10px;text-align:center;color:var(--yellow)">$' + Math.round(prMul*3).toLocaleString() + '</td>' +
-        '<td style="padding:8px 10px;text-align:center;color:#c8803a">$' + Math.round(prMul*5).toLocaleString() + '</td>' +
-        '<td style="padding:8px 10px;text-align:center;color:var(--cyan);font-weight:700">$' + Math.round(prMul*10).toLocaleString() + '</td>' +
+        '<td style="padding:8px 10px;text-align:center;color:var(--green)">' + Math.round(prMul).toLocaleString() + '달러' + '</td>' +
+        '<td style="padding:8px 10px;text-align:center;color:var(--yellow)">' + Math.round(prMul*3).toLocaleString() + '달러' + '</td>' +
+        '<td style="padding:8px 10px;text-align:center;color:#c8803a">' + Math.round(prMul*5).toLocaleString() + '달러' + '</td>' +
+        '<td style="padding:8px 10px;text-align:center;color:var(--cyan);font-weight:700">' + Math.round(prMul*10).toLocaleString() + '달러' + '</td>' +
       '</tr>';
     });
     html += '</tbody></table>' +
@@ -22680,13 +22874,37 @@ window._t14GetInstPhaseLimit = function(code) {
         if (putPct == null && rankItem.put && rankItem.put.pct != null) putPct = rankItem.put.pct;
       }
 
-      if (elPotC) elPotC.textContent = (callPct != null) ? (callPct.toFixed(2) + '%') : '─';
-      if (elPotP) elPotP.textContent = (putPct != null) ? (putPct.toFixed(2) + '%') : '─';
+      /* [2026-05-17 동업자 피드백] 평균잠재수익률(rankItem.avgPct) 하나만 표시
+         — 순위표 기준 평균값(예: 천연가스 18.2% 2위) */
+      if (elPotC) elPotC.textContent = '';  /* 호환용 hidden span */
+      if (elPotP) elPotP.textContent = '';  /* 호환용 hidden span */
       if (elPotAvg) {
-        var avg = (callPct != null && putPct != null) ? ((callPct + putPct) / 2) : null;
-        var rkTxt = rankItem ? (' (' + rankItem.rank + '위)') : '';
-        elPotAvg.textContent = (avg != null) ? (avg.toFixed(2) + '%' + rkTxt) : '─';
+        var avgRank = rankItem && rankItem.avgPct != null ? rankItem.avgPct : null;
+        var rkTxt = rankItem && rankItem.rank ? (' (' + rankItem.rank + '위)') : '';
+        elPotAvg.textContent = (avgRank != null) ? (avgRank.toFixed(2) + '%' + rkTxt) : '─';
       }
+
+      /* [v4 2026-05-17] 콜·풋 평균 + 추천 행사가 표 채움 — rankItem.call/put 구조 사용 */
+      var elPotCallAvg = document.getElementById('uvp-info-step1-pot-call-avg');
+      var elPotPutAvg  = document.getElementById('uvp-info-step1-pot-put-avg');
+
+      function _v4FmtSide(side) {
+        if (!side || !(side.pct > 0)) return null;
+        return side.pct.toFixed(2) + '% (' + (side.month || '─') + ')';
+      }
+      if (elPotCallAvg) {
+        var _ca = rankItem ? _v4FmtSide(rankItem.call) : null;
+        elPotCallAvg.textContent = _ca || '비권장';
+        elPotCallAvg.style.color = _ca ? '#c83030' : '#2a5fa8';
+        elPotCallAvg.style.fontStyle = 'normal';  /* [v5] 이탤릭 제거 — 폰트 통일 */
+      }
+      if (elPotPutAvg) {
+        var _pa = rankItem ? _v4FmtSide(rankItem.put) : null;
+        elPotPutAvg.textContent = _pa || '비권장';
+        elPotPutAvg.style.color = _pa ? '#c83030' : '#2a5fa8';
+        elPotPutAvg.style.fontStyle = 'normal';  /* [v5] 이탤릭 제거 — 폰트 통일 */
+      }
+      /* [v5 2026-05-17] 추천 행사가 표 채움 블록 제거 — 콜·풋 평균 박스만 유지 */
 
     } catch(e) {
       if (elPotC) elPotC.textContent = '─';
@@ -22891,8 +23109,8 @@ window._t14GetInstPhaseLimit = function(code) {
         elCoT.style.lineHeight = '1';
       } else {
         /* 한도 부족 — 1계약 필요 USD 정확히 안내 (두 줄) */
-        var needCallTxt = spanCallUSD > 0 ? ('콜 $' + Math.round(spanCallUSD).toLocaleString()) : '';
-        var needPutTxt  = spanPutUSD  > 0 ? ('풋 $' + Math.round(spanPutUSD ).toLocaleString()) : '';
+        var needCallTxt = spanCallUSD > 0 ? ('콜 ' + Math.round(spanCallUSD).toLocaleString() + '달러') : '';
+        var needPutTxt  = spanPutUSD  > 0 ? ('풋 ' + Math.round(spanPutUSD ).toLocaleString() + '달러') : '';
         var needLine = [needCallTxt, needPutTxt].filter(function(s){return s;}).join(' · ');
         elCoT.innerHTML = '<span style="font-size:16px;color:#c83030;font-weight:800">한도 부족</span>' +
                           (needLine ? '<br><span style="font-size:11px;color:var(--t3);font-weight:500;letter-spacing:0">1계약 ' + needLine + '</span>' : '');
@@ -23101,7 +23319,7 @@ window._t14GetInstPhaseLimit = function(code) {
       if (!isFinite(n)) return s;
       var a = Math.abs(n);
       var dec = a >= 1 ? 2 : a >= 0.01 ? 3 : a >= 0.001 ? 4 : a >= 0.0001 ? 5 : 6;
-      return '$' + n.toFixed(dec);
+      return n.toFixed(dec) + '달러';
     }
     function _setPremText(el, val) {
       if (!el) return;
@@ -23218,7 +23436,7 @@ window._t14GetInstPhaseLimit = function(code) {
       if (!s || s === '0') return null;
       if (s.indexOf('$') === 0 || s.indexOf('₩') === 0) return s;
       var n = parseFloat(s.replace(/[,\s$₩]/g,''));
-      return isFinite(n) && n > 0 ? ('$' + n.toLocaleString()) : null;
+      return isFinite(n) && n > 0 ? (n.toLocaleString() + '달러') : null;
     }
     /* [SESSION 8 3번] 콜·풋 각각 채우기 — 옛 평균/슬래시 분기 제거 */
     var spStrC = _fmtSpan(rC && rC.span);
@@ -23296,7 +23514,10 @@ window._t14GetInstPhaseLimit = function(code) {
         if (cut === 0) return null;  /* [SESSION 8] 0계약이면 "축소 불필요" 표시 (A안) */
         return { real: true, cut: cut, holding: holding };
       }
-      return { real: false, cut: 1, holding: 10 };  /* 가상 예시: 10계약 보유 가정 */
+      /* [2026-05-17 동업자 피드백] 가상 예시 cut=1 고정 버그 fix — 축소율 반영 */
+      var _exHolding = 10;
+      var _exCut = Math.max(1, Math.floor(_exHolding * pct / 100));
+      return { real: false, cut: _exCut, holding: _exHolding };
     }
     function _formatCutText(info, dirLabel) {
       if (!info) return '축소 불필요';
@@ -23339,16 +23560,17 @@ window._t14GetInstPhaseLimit = function(code) {
     var elRoll = document.getElementById('uvp-info-step4-rollover-txt');
     var elExp  = document.getElementById('uvp-info-step4-expiry-txt');
     var ph2 = m ? (m.phase || 'NORMAL') : 'NORMAL';
+    /* [v17 2026-05-17] 운영 원칙 ③ 표현 완화 — 명령조 제거, 권장/비권장 중립 표현 */
     if (elRe) {
-      if (alertLv >= 2 || ph2 === 'CRISIS') { elRe.textContent = '금지 (위기)'; elRe.style.color = '#c83030'; }
-      else if (alertLv >= 1 || ph2 === 'WARNING') { elRe.textContent = '1차 30% (조건부)'; elRe.style.color = '#c07030'; }
-      else if (dC > 0 || dP > 0) { elRe.textContent = '단계적 회복 가능'; elRe.style.color = 'var(--yellow)'; }
-      else { elRe.textContent = '정상 운용'; elRe.style.color = 'var(--green)'; }
+      if (alertLv >= 2 || ph2 === 'CRISIS') { elRe.textContent = '재진입 비권장'; elRe.style.color = '#c83030'; }
+      else if (alertLv >= 1 || ph2 === 'WARNING') { elRe.textContent = '평소 30% 규모 권장 (조건 충족 시)'; elRe.style.color = '#c07030'; }
+      else if (dC > 0 || dP > 0) { elRe.textContent = '단계적 복귀 권장'; elRe.style.color = 'var(--yellow)'; }
+      else { elRe.textContent = '평소 규모 진입 권장'; elRe.style.color = 'var(--green)'; }
     }
     if (elRoll) {
-      if (alertLv >= 2 || ph2 === 'CRISIS') { elRoll.textContent = '금지'; elRoll.style.color = '#c83030'; }
-      else if (alertLv >= 1 || ph2 === 'WARNING') { elRoll.textContent = '조건부 (20~30%)'; elRoll.style.color = '#c07030'; }
-      else { elRoll.textContent = '자유 (40~50%)'; elRoll.style.color = 'var(--green)'; }
+      if (alertLv >= 2 || ph2 === 'CRISIS') { elRoll.textContent = '교체 비권장'; elRoll.style.color = '#c83030'; }
+      else if (alertLv >= 1 || ph2 === 'WARNING') { elRoll.textContent = '만기 임박 시점 신중 교체 권장'; elRoll.style.color = '#c07030'; }
+      else { elRoll.textContent = '만기 40~50일 남은 시점 교체 권장'; elRoll.style.color = 'var(--green)'; }
     }
     if (elExp) {
       /* [SESSION 10 D-4 fix v3] C-3와 동일 룰 기반 자동 계산 — _s10MonthToExpiry 룰까지 폴백 추가
