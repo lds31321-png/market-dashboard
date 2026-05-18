@@ -1233,10 +1233,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .nav-btn-purple:hover,.nav-btn-green:hover { animation:none!important; }
 
 .btn-q {
-  width:28px; height:28px; border-radius:50%;
+  width:32px; height:32px; border-radius:50%;
   border:2px solid #c83030;
   background:rgba(200,48,48,.12);
-  color:#c83030; font-size:15px; font-weight:900;
+  color:#c83030; font-size:17px; font-weight:900;
   cursor:pointer; line-height:1; flex-shrink:0;
   display:inline-flex; align-items:center; justify-content:center;
   animation: hint-glow-red 2s ease-in-out infinite;
@@ -4856,13 +4856,22 @@ input[type=range] { background: transparent !important; border: none !important;
       </div>
       <span style="font-family:var(--mono);font-size:14px;font-weight:800;color:var(--cyan)" id="in-capital">$35,000</span>
     </div>
-    <div id="desc-in-a1" style="display:none;margin:0 16px 14px;padding:14px 18px;background:rgba(217,102,74,.05);border:1px solid rgba(217,102,74,.22);border-left:3px solid #d9664a;border-radius:8px;font-size:13px;color:var(--t1);line-height:1.75">
-      <div style="font-weight:800;color:#d9664a;margin-bottom:8px;font-size:14px">A-1 자금 설정 안내</div>
-      <div style="margin-bottom:6px"><b>시작 영역</b> — 본인 계좌 정보를 한 곳에 입력하여 모든 탭에 자동 반영하는 첫 단계입니다.</div>
-      <div style="margin-bottom:6px"><b>입력</b> — 오늘 HTS 계좌의 예탁금, 환율, 위탁·유지증거금을 입력해 주시기 바랍니다. 사용하시는 통화에 맞게 원화 또는 달러 모드를 선택하실 수 있습니다.</div>
-      <div style="margin-bottom:6px"><b>출력</b> — 입력하신 자금 정보가 시장 현황·매매 전략·위험·자금·매매 현황·매매 복기 다섯 탭에 즉시 반영되어, 종목별 노출%·증거금 사용률·1계약 필요 자본이 자동 계산됩니다.</div>
-      <div style="margin-bottom:6px"><b>활용</b> — 다음 영역(B 당일 보유 포지션, C 기간별 거래 데이터)의 데이터와 결합되어 정확한 위험 비율과 의사결정 기준이 만들어집니다.</div>
-      <div><b>이점</b> — 한 곳에 한 번만 입력하시면 모든 탭의 계산이 자동으로 일치하여, 중복 입력이나 계산 오류 없이 일관된 분석 환경을 유지하실 수 있습니다.</div>
+    <div id="desc-in-a1" style="display:none;margin:0 16px 14px;padding:16px 20px;background:rgba(217,102,74,.05);border:1px solid rgba(217,102,74,.22);border-left:3px solid #d9664a;border-radius:8px;font-size:14px;color:var(--t1);line-height:1.7">
+      <div style="font-weight:800;color:#d9664a;margin-bottom:12px;font-size:15px">1단계 — 시작</div>
+
+      <div style="margin-bottom:10px;font-size:14px;color:var(--t1)"><b style="color:#d9664a">본인 계좌 정보</b>를 한 곳에 입력 → <b style="color:#d9664a">모든 탭 자동 반영</b></div>
+
+      <div style="margin-bottom:4px;font-weight:700;color:var(--t1)">입력 항목</div>
+      <div style="margin-bottom:10px;padding-left:10px;color:var(--t2);font-size:13px">· <b style="color:#d9664a">예탁금</b> (오늘 HTS 잔고) &nbsp;·&nbsp; <b style="color:#d9664a">환율</b> &nbsp;·&nbsp; <b style="color:#d9664a">위탁/유지증거금</b></div>
+
+      <div style="margin-bottom:4px;font-weight:700;color:var(--t1)">자동 출력</div>
+      <div style="margin-bottom:10px;padding-left:10px;color:var(--t2);font-size:13px">· 종목별 <b style="color:#d9664a">노출%</b> &nbsp;·&nbsp; <b style="color:#d9664a">증거금 사용률</b> &nbsp;·&nbsp; <b style="color:#d9664a">1계약 필요 자본</b></div>
+
+      <div style="margin-bottom:4px;font-weight:700;color:var(--t1)">다음 단계</div>
+      <div style="margin-bottom:10px;padding-left:10px;color:var(--t2);font-size:13px">→ <b style="color:#d9664a">B 당일 보유 포지션</b> → <b style="color:#d9664a">C 기간별 거래 데이터</b></div>
+
+      <div style="margin-bottom:4px;font-weight:700;color:var(--t1)">활용 이점</div>
+      <div style="padding-left:10px;color:var(--t2);font-size:13px">· 한 번 입력 → <b style="color:#d9664a">모든 탭 자동 일치</b><br>· 중복 입력 / 계산 오류 <b style="color:#d9664a">제거</b></div>
     </div>
     <div class="card-b" style="padding:14px 16px">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
