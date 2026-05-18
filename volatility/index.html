@@ -4847,8 +4847,17 @@ input[type=range] { background: transparent !important; border: none !important;
         <div style="width:40px;height:40px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite 0s;">A</div>
         <span style="font-size:24px;font-weight:800;color:var(--t1)">자금 설정</span>
         <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">A-1</span>
+        <button onclick="(function(){var b=document.getElementById('desc-in-a1');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q" title="이 영역 안내 펼치기" style="margin-left:2px">①</button>
       </div>
       <span style="font-family:var(--mono);font-size:14px;font-weight:800;color:var(--cyan)" id="in-capital">$35,000</span>
+    </div>
+    <div id="desc-in-a1" style="display:none;margin:0 16px 14px;padding:14px 18px;background:rgba(217,102,74,.05);border:1px solid rgba(217,102,74,.22);border-left:3px solid #d9664a;border-radius:8px;font-size:13px;color:var(--t1);line-height:1.75">
+      <div style="font-weight:800;color:#d9664a;margin-bottom:8px;font-size:14px">A-1 자금 설정 안내</div>
+      <div style="margin-bottom:6px"><b>시작 영역</b> — 본인 계좌 정보를 한 곳에 입력하여 모든 탭에 자동 반영하는 첫 단계입니다.</div>
+      <div style="margin-bottom:6px"><b>입력</b> — 오늘 HTS 계좌의 예탁금, 환율, 위탁·유지증거금을 입력해 주시기 바랍니다. 사용하시는 통화에 맞게 원화 또는 달러 모드를 선택하실 수 있습니다.</div>
+      <div style="margin-bottom:6px"><b>출력</b> — 입력하신 자금 정보가 시장 현황·매매 전략·위험·자금·매매 현황·매매 복기 다섯 탭에 즉시 반영되어, 종목별 노출%·증거금 사용률·1계약 필요 자본이 자동 계산됩니다.</div>
+      <div style="margin-bottom:6px"><b>활용</b> — 다음 영역(B 당일 보유 포지션, C 기간별 거래 데이터)의 데이터와 결합되어 정확한 위험 비율과 의사결정 기준이 만들어집니다.</div>
+      <div><b>이점</b> — 한 곳에 한 번만 입력하시면 모든 탭의 계산이 자동으로 일치하여, 중복 입력이나 계산 오류 없이 일관된 분석 환경을 유지하실 수 있습니다.</div>
     </div>
     <div class="card-b" style="padding:14px 16px">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
