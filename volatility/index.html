@@ -4258,12 +4258,18 @@ input[type=range] { background: transparent !important; border: none !important;
       <div style="width:40px;height:40px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .7s;">D</div>
       <div>
         <div style="font-size:24px;font-weight:800;color:var(--t1)">시장 위험 단계 판정</div>
-        <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">D-1</span>
         <div style="font-size:12px;color:var(--t2);margin-top:3px;font-weight:500">지금 들어가도 되는 시장인가요? — 종목별 위험 수준을 한눈에 확인하세요</div>
       </div>
     </div>
     <div style="height:2px;background:linear-gradient(90deg,rgba(217,102,74,.6),transparent);margin-top:12px;border-radius:1px"></div>
   </div>
+
+  <!-- D 영역 본문 카드 (D-1 서브 배지 + 가이드 + 본문) -->
+  <div class="card" style="background:#fff;border:1px solid rgba(217,102,74,.18);border-radius:10px;padding:16px 18px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">D-1</span>
+      <span style="font-size:15px;font-weight:700;color:var(--t1)">시장 위험 단계 카드</span>
+    </div>
 
   <!-- F-0: 초보자 가이드 토글 -->
   <div style="margin-bottom:14px;border-radius:10px;border:1px solid rgba(192,112,48,.25);overflow:hidden">
@@ -4402,6 +4408,8 @@ input[type=range] { background: transparent !important; border: none !important;
   <div id="rm-action-table" style="margin-bottom:16px"></div>
 
   </div>
+
+  </div>
   <!-- ═════════════════════════════════════════════════════════════ -->
   <!-- [47차 1-1] 끝 -->
   <!-- ═════════════════════════════════════════════════════════════ -->
@@ -4435,8 +4443,8 @@ input[type=range] { background: transparent !important; border: none !important;
   <!-- ═════════════════════════════════════════════════════════════ -->
   <section id="uxcPhaseNoteSection" data-47차-목적="시장국면변동사유-매매전략탭하단" style="margin:24px 0 16px;background:var(--card);border:1px solid rgba(217,102,74,.18);border-radius:12px;padding:14px 18px">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:10px;flex-wrap:wrap">
-      <span style="font-size:15px;font-weight:800;color:var(--t1)">📝 시장국면 변동 사유</span>
       <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">D-2</span>
+      <span style="font-size:15px;font-weight:800;color:var(--t1)">📝 시장국면 변동 사유</span>
       <span id="uxc-phase-note-date" style="font-size:13px;color:var(--t3);font-family:var(--mono)">데이터 없음</span>
     </div>
     <div id="uxc-phase-note-body" style="margin-top:6px;font-size:13px;color:var(--t2);line-height:1.7;white-space:pre-wrap">
@@ -4444,7 +4452,8 @@ input[type=range] { background: transparent !important; border: none !important;
     </div>
   </section>
 
-</div><!-- /page-strategy -->
+    </div>
+  </div><!-- /page-strategy -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!--  매매 현황 탭                                                  -->
 <!-- ══════════════════════════════════════════════════════════════ -->
