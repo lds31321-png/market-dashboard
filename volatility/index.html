@@ -1519,9 +1519,16 @@ input[type=range] { background: transparent !important; border: none !important;
     <!-- [47차 4-2] 머리글 확대 (15px → 22px) + 서브 텍스트 단축 ("카드 클릭 →"만) -->
     <div class="ov-grid-header" data-47차-목적="머리글확대-서브단축" style="margin-top:8px">
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;width:100%">
-        <div>
-          <div class="ov-grid-title" style="font-size:22px">전체 종목 현황</div>
-          <div class="ov-grid-subtitle" style="font-size:12px;">카드 클릭 →</div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:40px;height:40px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite 0s;">A</div>
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+              <div class="ov-grid-title" style="font-size:24px;font-weight:800;color:var(--t1)">전체 종목 현황</div>
+              <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">A-1</span>
+              <button onclick="(function(){var b=document.getElementById('desc-ov-a1');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q" title="이 영역 안내 펼치기" style="margin-left:2px">1</button>
+            </div>
+            <div class="ov-grid-subtitle" style="font-size:12px;">카드 클릭 →</div>
+          </div>
         </div>
         <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
           <a href="https://lds31321-png.github.io/market-dashboard/" target="_blank" rel="noopener noreferrer"
@@ -1543,6 +1550,8 @@ input[type=range] { background: transparent !important; border: none !important;
         <b style="color:#d9664a">Bloomberg, EIA, FRED, IMF</b> 등 공신력 있는 기관 데이터를 기반으로 AI가 종합 분석한 자료입니다.
       </div>
     </div>
+
+    <div id="desc-ov-a1" style="display:none;position:relative;margin:14px 0 0;padding:24px 28px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-ov-a1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">페이지 닫기</button><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">1단계 — 매매 의사결정 직관 카드</div><div style="margin-bottom:18px;font-size:15px;color:var(--t1);line-height:1.7">이 영역은 12종목 카드 한 장 안에 <b style="color:#d9664a">시장 국면·순위·권장 행사가·기존 포지션·신규 진입 한도</b>를 응축하여 <b style="color:#d9664a">매매 의사결정을 직관적으로 판단</b>할 수 있게 만든 영역입니다.<br>종합 옵션 대시보드의 방대한 정보가 카드에 요약되어 표시되며, 카드 안의 <b style="color:#d9664a">세 박스(신규 진입 검토 → 기존 포지션 점검 → 지금 행동)</b>를 위에서 아래로 따라가시면 <b style="color:#d9664a">신규 진입 권장 여부</b>를 곧바로 확인하실 수 있습니다.</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">카드 안 영역 보는 순서</div><div style="margin-bottom:14px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85"><div style="margin-bottom:4px"><b style="color:#d9664a">[1] 헤더</b> — 종목 한눈 파악</div><div style="margin:6px 0 10px;padding-left:28px;color:var(--t2);font-size:13px;line-height:1.85">· 종목명 + 종목 코드<br>· 추세 배지 (강보합·약보합·상승·하락·보합) — 추세 부합 시 권장 행사가 표시<br>· <b style="color:#d9664a">잠재수익률 순위 배지 (1~11위)</b> — 자본 효율 비교</div><div style="margin:4px 0 0;padding-left:42px;color:var(--t2);font-size:13px;line-height:1.85">· <b style="color:#d9664a">1~4위</b> — 우선검토 권장<br>· 5~8위 — 차선검토 권장<br>· 9~11위 — 후순위검토 권장</div></div><div style="margin-bottom:14px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85"><div style="margin-bottom:4px"><b style="color:#d9664a">[2] 현재가 + 꼬리위험</b></div><div style="margin:6px 0 10px;padding-left:28px;color:var(--t2);font-size:13px;line-height:1.85">· 당일 종가 표시<br>· <b style="color:#d9664a">꼬리위험 활성 시</b> — 예상치 못한 급변동 가능성 안내 (신규 진입 시 비중 축소 권장)</div></div><div style="margin-bottom:14px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85"><div style="margin-bottom:4px"><b style="color:#d9664a">[3] "신규 진입 검토" 박스</b></div><div style="margin:6px 0 10px;padding-left:28px;color:var(--t2);font-size:13px;line-height:1.85">· <b style="color:#d9664a">시장 국면</b> — 안전 · 주의 · 비상</div><div style="margin:-4px 0 6px;padding-left:42px;color:var(--t2);font-size:13px;line-height:1.85">· <b style="color:#d9664a">안전</b> — 신규 진입 권장<br>· <b style="color:#d9664a">주의</b> — 신규 진입 비중 축소 권장<br>· <b style="color:#d9664a">비상</b> — 신규 진입 비권장 (보류 권장)</div><div style="margin:6px 0 10px;padding-left:28px;color:var(--t2);font-size:13px;line-height:1.85">· 잠재수익률 순위 + 평균 % — 종목 효율 비교 기준<br>· <b style="color:#d9664a">권장 행사가</b> — 시장국면 반영 (1계약 기준) + 만기일</div></div><div style="margin-bottom:14px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85"><div style="margin-bottom:4px"><b style="color:#d9664a">[4] "기존 포지션 점검" 박스</b></div><div style="margin:6px 0 10px;padding-left:28px;color:var(--t2);font-size:13px;line-height:1.85">· <b style="color:#d9664a">생존 경보 단계</b> — 정상 · 노출점검 · 위험방어 · 위기비상</div><div style="margin:-4px 0 6px;padding-left:42px;color:var(--t2);font-size:13px;line-height:1.85">· <b style="color:#d9664a">정상</b> — 유지 권장<br>· <b style="color:#d9664a">노출점검</b> — 점검 권장<br>· <b style="color:#d9664a">위험방어</b> — 헤지 검토 권장<br>· <b style="color:#d9664a">위기비상</b> — 축소·청산 권장</div><div style="margin:6px 0 10px;padding-left:28px;color:var(--t2);font-size:13px;line-height:1.85">· <b style="color:#d9664a">보유 포지션 축소율 (콜 · 풋)</b> — 시장 국면별 자동 권장 축소율<br>· <b style="color:#d9664a">신규 진입 한도 (콜 · 풋, 총 자본 대비)</b> — 시장 국면별 권장 진입 한도</div></div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85"><div style="margin-bottom:4px"><b style="color:#d9664a">[5] "지금 행동" 박스 — 최종 판정</b></div><div style="margin:6px 0 10px;padding-left:28px;color:var(--t2);font-size:13px;line-height:1.85">· 카드 한 장에서 종합 판정 결과 즉시 확인<br>· <b style="color:#d9664a">신규 진입 권장 / 보류 / 비권장</b> 중 하나로 안내</div></div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">12종목</b>을 한 화면에서 매일 같은 자리에서 확인하여 시장 변화 추세 인지<br>· <b style="color:#d9664a">위험 관리(시장 국면·생존 경보)</b>를 먼저 보아 부적절한 진입 사전 회피<br>· 카드 클릭 시 <b style="color:#d9664a">종목 상세 페이지</b>(A 진입 검토 → B 한도 점검 → C 권장 행사가 → D 포지션 축소)로 자연스럽게 이어집니다</div></div>
 
     <!-- 카드 그리드 (JS로 렌더) -->
     <div class="ov-inst-grid" id="ov-inst-grid"></div>
@@ -3031,36 +3040,14 @@ input[type=range] { background: transparent !important; border: none !important;
       <div style="display:flex;align-items:center;gap:10px">
         <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">A-1</span>
         <span style="font-size:14px;font-weight:700;color:var(--t1)">증거금 사용률</span>
+        <button onclick="(function(){var b=document.getElementById('desc-pt-a1');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q" title="이 영역 안내 펼치기" style="margin-left:2px">1</button>
         <span style="font-size:13px;color:var(--t2);font-weight:500">목표 사용률 이하일 때 신규 진입 가능</span>
       </div>
     </div>
     <div class="card-b" id="pt-margin-status">
       <div style="text-align:center;padding:20px;color:var(--t3);font-size:11px">자금 설정 후 자동 계산됩니다.</div>
     </div>
-    <!-- 증거금 설계 논리 토글 -->
-    <div style="border-top:1px solid rgba(26,122,74,.12);padding:0">
-      <div onclick="(function(){var b=document.getElementById('pt-margin-logic-body');var open=b.style.display!=='none';b.style.display=open?'none':'block';this.querySelector('span').textContent=open?' 증거금 설계 논리':' 닫기';}).call(this)"
-        style="padding:9px 16px;display:flex;align-items:center;gap:6px;cursor:pointer;background:rgba(26,122,74,.03);transition:background .15s"
-        onmouseover="this.style.background='rgba(26,122,74,.07)'" onmouseout="this.style.background='rgba(26,122,74,.03)'">
-        <span style="font-size:12px;font-weight:600;color:var(--green)"> 증거금 설계 논리</span>
-      </div>
-      <div id="pt-margin-logic-body" style="display:none;padding:14px 16px">
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-          <div style="padding:10px 12px;background:rgba(26,122,74,.06);border-radius:7px;border:1px solid rgba(26,122,74,.2)">
-            <div style="font-size:10px;font-weight:800;color:#1a7a4a;margin-bottom:5px">수익률 설계 기준</div>
-            <div style="font-size:10px;color:var(--t2);line-height:1.7">증거금 활용률 <b style="color:var(--t1)">20%</b>당<br>월 목표수익률 <b style="color:var(--green)">1%</b><br><span style="color:var(--t3)">예: 60% 활용 → 월 3%</span></div>
-          </div>
-          <div style="padding:10px 12px;background:rgba(26,122,74,.06);border-radius:7px;border:1px solid rgba(26,122,74,.2)">
-            <div style="font-size:10px;font-weight:800;color:#1a7a4a;margin-bottom:5px">단일 종목 제한</div>
-            <div style="font-size:10px;color:var(--t2);line-height:1.7">종목별 손실 한도 =<br>월 목표수익률의 <b style="color:var(--t1)">50%</b> 수준<br><span style="color:var(--t3)">월 3% 목표 → 종목 1.5%</span></div>
-          </div>
-          <div style="padding:10px 12px;background:rgba(26,122,74,.06);border-radius:7px;border:1px solid rgba(26,122,74,.2)">
-            <div style="font-size:10px;font-weight:800;color:#1a7a4a;margin-bottom:5px">회복 원칙</div>
-            <div style="font-size:10px;color:var(--t2);line-height:1.7">단일 종목 손실 →<br><b style="color:var(--t1)">2~3개월 내</b> 회복<br><span style="color:var(--t3)">가능한 수준으로 설계</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="desc-pt-a1" style="display:none;position:relative;margin:0;padding:24px 28px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-pt-a1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">페이지 닫기</button><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">1단계 — 증거금 현황 (신규 진입 가능 여부 판단)</div><div style="margin-bottom:14px;padding:12px 16px;background:rgba(217,102,74,.06);border:1px solid rgba(217,102,74,.30);border-radius:8px;font-size:14px;color:var(--t1);line-height:1.7"><span style="font-weight:800;color:#d9664a">[핵심 효용]</span> 본인 <b style="color:#d9664a">위탁증거금 사용률</b>을 한눈에 확인하여 → 지금 <b style="color:#d9664a">신규 진입이 가능한 상태</b>인지 곧바로 결정할 수 있습니다.</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">이 영역에서 얻는 것</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· 현재 <b style="color:#d9664a">위탁증거금 사용률 (%)</b><br>· 목표 사용률 대비 <b style="color:#d9664a">여유 / 초과 상태</b><br>· <b style="color:#d9664a">증거금 설계 논리</b> (수익률 설계 기준 · 단일 종목 제한 · 회복 원칙)</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">교육생 판단·실행 흐름</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85"><b style="color:#d9664a">1.</b> 증거금 사용률 확인 — 게이지로 현재 사용률 직관 파악<br><b style="color:#1a7a4a">2. 60% 이하</b> — 신규 진입 고려 권장<br><b style="color:#c8803a">3. 60~70%</b> — 신규 진입 신중 권장<br><b style="color:#c83030">4. 70% 초과</b> — 신규 진입 비권장 (보류 권장)<br><b style="color:#d9664a">5.</b> 매매 전략 탭 추천 종목 → 사용률 한도 안에서 매매 진행</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">증거금 설계 논리 (운영 기준)</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">수익률 설계 기준</b> — 증거금 활용률 20%당 월 목표수익률 1% (예: 60% 활용 → 월 3%)<br>· <b style="color:#d9664a">단일 종목 제한</b> — 종목별 손실 한도 = 월 목표수익률의 50% (월 3% 목표 → 종목 1.5%)<br>· <b style="color:#d9664a">회복 원칙</b> — 단일 종목 손실 → 2~3개월 내 회복 가능한 수준으로 설계</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="margin-bottom:0;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· 신규 진입 전 <b style="color:#d9664a">증거금 여력 즉시 확인</b> → 무리한 진입 사전 방지<br>· <b style="color:#d9664a">종목별 손실 한도</b>(월 목표수익률의 50%)로 분산 효과 확보<br>· <b style="color:#d9664a">자금 설정 탭(Tab1 A-1)</b> 입력값 변경 시 자동 갱신</div></div>
   </div>
 
   <!-- ─── C. 포지션 종합 현황 ─────────────────────────────── -->
@@ -3086,6 +3073,7 @@ input[type=range] { background: transparent !important; border: none !important;
     <div style="padding:14px 16px 10px;border-bottom:1px solid rgba(217,102,74,.2);display:flex;align-items:center;gap:10px">
       <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">B-1</span>
       <span style="font-size:14px;font-weight:700;color:var(--t1)">종목별 노출 통합</span>
+      <button onclick="(function(){var b=document.getElementById('desc-pt-b1');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q" title="이 영역 안내 펼치기" style="margin-left:2px">2</button>
       <span style="font-size:13px;color:var(--t2);font-weight:500;margin-left:6px">매매 비중 · 위험노출 · 경보단계 추정손실</span>
     </div>
     <div style="padding:10px 16px;border-bottom:1px solid rgba(0,0,0,.08);display:flex;align-items:center;gap:10px;flex-wrap:wrap">
@@ -3101,42 +3089,10 @@ input[type=range] { background: transparent !important; border: none !important;
         <span style="font-size:13px;color:#1a7a4a;font-weight:700">&lt;1% 안전</span>
       </div>
     </div>
-    <!-- [2026-05-07] 정적 "이 표 보는 법" 통합 — JS 동적 가이드(line 7119)와 중복되어 정적 토글 제거. id 보존(다른 JS가 참조 시) -->
+    <!-- pt-guide-toggle/body 통폐합 → desc-pt-b1 -->
     <div id="pt-guide-toggle" style="display:none"></div>
-    <div id="pt-guide-body" style="display:none;padding:16px 18px;background:rgba(217,102,74,.025);border-bottom:1px solid rgba(217,102,74,.08)">
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;font-size:12px;color:var(--t2);line-height:1.7">
-        <div><b style="color:var(--cyan);font-size:13px">매매 비중 (노출%)</b><br>내 자본금 대비 옵션 시장가치 비율.<br>낮을수록 안전. 1.5% 초과 시 위험.<br><span style="color:var(--t3);font-size:11px">(엑셀 열15~16)</span></div>
-        <div><b style="color:var(--cyan);font-size:13px">진입전 → 진입후</b><br>진입전은 현재 상태,<br>진입후는 D섹션 시뮬 포지션 포함.<br><span style="color:var(--t3);font-size:11px">(엑셀 열17~18)</span></div>
-        <div><b style="color:var(--cyan);font-size:13px">현재 평가손익</b><br>옵션 평가손익 ÷ 자본금.<br>+이면 이익, -이면 손실 방향.<br><span style="color:var(--t3);font-size:11px">(엑셀 열23~24)</span></div>
-        <div><b style="color:var(--orange);font-size:13px">경보단계별 추정손실</b><br>경보 발령 중 손절 안 하고 버텼을 때<br>명일 추정 손실.<br><span style="color:var(--t3);font-size:11px">(엑셀 열25~26) = 현재손익% - 노출%×단계×1.5</span></div>
-      </div>
-      <!-- 추정손실 5단계 사용 절차 -->
-      <div style="margin-top:14px;padding:12px 14px;background:rgba(251,146,60,.06);border-radius:8px;border:1px solid rgba(251,146,60,.2)">
-        <div style="font-size:11px;font-weight:800;color:var(--orange);margin-bottom:10px;letter-spacing:.04em">️ 경보단계별 추정손실 — 5단계 사용 절차</div>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <div style="display:flex;gap:8px;align-items:flex-start">
-            <span style="font-size:10px;font-weight:800;background:var(--orange);color:#fff;border-radius:4px;padding:1px 7px;flex-shrink:0;line-height:1.8">1</span>
-            <span style="font-size:12px;color:var(--t2);line-height:1.65">생존경보 알림 수신 → 시장 상황 확인</span>
-          </div>
-          <div style="display:flex;gap:8px;align-items:flex-start">
-            <span style="font-size:10px;font-weight:800;background:var(--orange);color:#fff;border-radius:4px;padding:1px 7px;flex-shrink:0;line-height:1.8">2</span>
-            <span style="font-size:12px;color:var(--t2);line-height:1.65">C 테이블 <b style="color:var(--t1)">현재 평가손익</b> 열 확인 — 현재 얼마나 손실/이익 중인지 파악</span>
-          </div>
-          <div style="display:flex;gap:8px;align-items:flex-start">
-            <span style="font-size:10px;font-weight:800;background:var(--orange);color:#fff;border-radius:4px;padding:1px 7px;flex-shrink:0;line-height:1.8">3</span>
-            <span style="font-size:12px;color:var(--t2);line-height:1.65">생존경보 열 클릭 → <b style="color:var(--t1)">경보 단계 입력</b> (1단계 / 2단계 / 3단계)</span>
-          </div>
-          <div style="display:flex;gap:8px;align-items:flex-start">
-            <span style="font-size:10px;font-weight:800;background:#2a5fa8;color:#fff;border-radius:4px;padding:1px 7px;flex-shrink:0;line-height:1.8">4</span>
-            <span style="font-size:12px;color:var(--t2);line-height:1.65"><b style="color:var(--orange)">경보단계별 추정손실</b> 자동 출력 — 지금 손절 안 하면 내일 이 수치만큼 손실 예상</span>
-          </div>
-          <div style="display:flex;gap:8px;align-items:flex-start">
-            <span style="font-size:10px;font-weight:800;background:#2a5fa8;color:#fff;border-radius:4px;padding:1px 7px;flex-shrink:0;line-height:1.8">5</span>
-            <span style="font-size:12px;color:var(--t2);line-height:1.65">추정손실 수치 기반 <b style="color:var(--t1)">손절 여부 판단</b> — 5년 실거래 데이터 기반 (엔 캐리·관세·원유 급등 검증)</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="pt-guide-body" style="display:none"></div>
+    <div id="desc-pt-b1" style="display:none;position:relative;margin:0;padding:24px 28px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-pt-b1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">페이지 닫기</button><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">2단계 — 포지션 종합 현황 (자동 연동 통합 뷰)</div><div style="margin-bottom:14px;padding:12px 16px;background:rgba(217,102,74,.06);border:1px solid rgba(217,102,74,.30);border-radius:8px;font-size:14px;color:var(--t1);line-height:1.7"><span style="font-weight:800;color:#d9664a">[핵심 효용]</span> 보유 종목별 <b style="color:#d9664a">노출·손익·생존경보 추정손실</b>을 한 표에서 <b style="color:#d9664a">자동 통합 확인</b>하여 → 지금 종목별 <b style="color:#d9664a">손절·축소·보유 판단</b>을 곧바로 내릴 수 있습니다.</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">이 영역에서 얻는 것</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">종목별 매매 비중</b> (자본 대비 노출%) — <b style="color:#1a7a4a">안전(&lt;1%)</b> · <b style="color:#c8803a">주의(1~1.5%)</b> · <b style="color:#c83030">위험(≥1.5%)</b><br>· <b style="color:#d9664a">진입전 / 진입후 노출 비교</b> (C 진입 시뮬레이션 자동 연동)<br>· <b style="color:#d9664a">현재 평가손익</b> (자본 대비 손익률)<br>· <b style="color:#d9664a">생존경보 단계별 추정손실</b> (지금 손절 안 하면 내일 예상 손실)</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">교육생 판단·실행 흐름</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85"><b style="color:#d9664a">1.</b> 종목별 매매 비중 확인 — <b style="color:#1a7a4a">안전</b>·<b style="color:#c8803a">주의</b>·<b style="color:#c83030">위험</b> 색으로 직관 판단<br><b style="color:#d9664a">2.</b> 현재 평가손익 확인 — 손실/이익 방향 파악<br><b style="color:#d9664a">3.</b> 생존경보 알림 수신 시 → 종목별 생존경보 열 클릭 (<b style="color:#d9664a">1·2·3단계 입력</b>)<br><b style="color:#d9664a">4.</b> 경보단계별 추정손실 확인 — 지금 손절 안 하면 내일 예상 손실 자동 출력<br><b style="color:#d9664a">5.</b> 추정손실 수치 기반 — <b style="color:#d9664a">손절·축소·보유 판단</b> (5년 실거래 데이터 기반)</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">자동 연동 관계</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">데이터 입력 탭 HTS 1316</b> → 본 영역 종목별 노출 자동 계산<br>· <b style="color:#d9664a">C 진입 시뮬레이션</b> → 본 영역 "진입후" 열 자동 갱신<br>· <b style="color:#d9664a">직트 관리자 생존경보</b> → 본 영역 종목별 단계 자동 반영</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="margin-bottom:0;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· 보유 종목 전체 상태를 한 표에서 종합 파악 → <b style="color:#d9664a">분산 효과·집중 위험 즉시 확인</b><br>· <b style="color:#d9664a">생존경보 발령 시 지체 없이 손절 판단 가능</b><br>· C 진입 시뮬레이션 결과를 <b style="color:#d9664a">"진입후" 열로 즉시 검증</b> → 무리한 진입 사전 방지</div></div>
     <div style="overflow-x:auto" id="pt-master-body">
       <div style="text-align:center;padding:40px 20px;color:var(--t3);font-size:12px;line-height:2.2">
         데이터 입력 탭에서 HTS 1316창 데이터를 붙여넣으면<br>
@@ -3165,50 +3121,18 @@ input[type=range] { background: transparent !important; border: none !important;
         <div style="display:flex;align-items:center;gap:10px">
           <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">C-1</span>
           <span style="font-size:14px;font-weight:700;color:var(--t1)">진입 예정 포지션</span>
+          <button onclick="(function(){var b=document.getElementById('desc-pt-c1');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q" title="이 영역 안내 펼치기" style="margin-left:2px">3</button>
         </div>
         <span style="font-size:13px;color:var(--t2);font-weight:500">원금: <span id="sim-capital-disp" style="font-family:var(--mono);color:var(--yellow);font-weight:700">—</span></span>
       </div>
     </div>
     <div class="card-b">
-      <!-- D섹션 시뮬 사용 가이드 토글 -->
-      <div style="margin-bottom:12px;padding:8px 12px;background:rgba(176,128,64,.06);border-radius:6px;border-left:3px solid var(--yellow);font-size:13px;color:var(--t2);display:flex;align-items:center;justify-content:space-between;gap:10px">
-        <span>진입 예정 종목 추가 → <b style="color:var(--yellow)">C 테이블 "진입후" 열</b> 자동 갱신 · <b style="color:#2a5fa8">노출% 0.5% 초과</b> 시 경고</span>
-        <button onclick="(function(){var b=document.getElementById('pt-sim-guide-body');var open=b.style.display==='none';b.style.display=open?'block':'none';var _a2=document.getElementById('pt-sim-guide-arrow');if(_a2)_a2.textContent=open?'':'';})();"
-          class="btn-q">?</button>
+      <!-- 시뮬 사용 한 줄 안내 (상시 노출) -->
+      <div style="margin-bottom:12px;padding:8px 12px;background:rgba(176,128,64,.06);border-radius:6px;border-left:3px solid var(--yellow);font-size:13px;color:var(--t2)">
+        진입 예정 종목 추가 → <b style="color:var(--yellow)">C 테이블 "진입후" 열</b> 자동 갱신 · <b style="color:#2a5fa8">노출% 0.5% 초과</b> 시 경고
       </div>
-      <div id="pt-sim-guide-body" style="display:none;margin-bottom:14px">
-        <div style="padding:14px 16px;background:rgba(0,0,0,.04);border-radius:10px;border:1px solid rgba(176,128,64,.2)">
-          <div style="font-size:13px;font-weight:800;color:var(--yellow);margin-bottom:10px;letter-spacing:.04em"> 3가지 지표 관계 이해</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px">
-            <div style="padding:10px 12px;background:rgba(176,128,64,.06);border-radius:7px;border:1px solid rgba(176,128,64,.2)">
-              <div style="font-size:13px;font-weight:800;color:var(--yellow);margin-bottom:5px">진입전 노출%</div>
-              <div style="font-size:13px;color:var(--t2);line-height:1.65">현재 보유 포지션의 노출 합산 — C테이블에서 확인</div>
-            </div>
-            <div style="padding:10px 12px;background:rgba(176,128,64,.06);border-radius:7px;border:1px solid rgba(176,128,64,.2)">
-              <div style="font-size:13px;font-weight:800;color:var(--yellow);margin-bottom:5px">진입예정 노출%</div>
-              <div style="font-size:13px;color:var(--t2);line-height:1.65">이 시뮬 행에서 추가하는 가상 포지션의 노출</div>
-            </div>
-            <div style="padding:10px 12px;background:rgba(176,128,64,.1);border-radius:7px;border:1px solid rgba(176,128,64,.35)">
-              <div style="font-size:13px;font-weight:800;color:var(--yellow);margin-bottom:5px">진입후 노출%</div>
-              <div style="font-size:13px;color:var(--t2);line-height:1.65"><b style="color:var(--yellow)">이 수치로 진입 여부 판단</b></div>
-            </div>
-          </div>
-          <div style="display:flex;flex-direction:column;gap:6px">
-            <div style="display:flex;gap:8px;align-items:flex-start">
-              <span style="font-size:13px;font-weight:800;background:#d9664a;color:#fff;border-radius:4px;padding:1px 7px;flex-shrink:0;line-height:1.8">권장</span>
-              <span style="font-size:13px;color:var(--t2);line-height:1.65">1계약 추가 시 <b style="color:var(--t1)">진입후 노출%</b>가 종목 제한 비중의 <b style="color:var(--yellow)">1/3 이내</b>인지 확인</span>
-            </div>
-            <div style="display:flex;gap:8px;align-items:flex-start">
-              <span style="font-size:13px;font-weight:800;background:#2a5fa8;color:#fff;border-radius:4px;padding:1px 7px;flex-shrink:0;line-height:1.8">초과</span>
-              <span style="font-size:13px;color:var(--t2);line-height:1.65">노출% 초과 시 → 더 <b style="color:var(--t1)">외가격(OTM)</b>으로 행사가 조정해 프리미엄 축소 검토</span>
-            </div>
-            <div style="display:flex;gap:8px;align-items:flex-start">
-              <span style="font-size:13px;font-weight:800;background:rgba(251,146,60,.9);color:#fff;border-radius:4px;padding:1px 7px;flex-shrink:0;line-height:1.8">경고</span>
-              <span style="font-size:13px;color:var(--t2);line-height:1.65">진입후 노출% <b style="color:#2a5fa8">0.5% 초과</b> 시 빨간 경고 표시 — 신중하게 검토</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div id="pt-sim-guide-body" style="display:none"></div>
+      <div id="desc-pt-c1" style="display:none;position:relative;margin:0 0 14px;padding:24px 28px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-pt-c1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">페이지 닫기</button><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">3단계 — 진입 시뮬레이션 (진입 전 노출 사전 검토)</div><div style="margin-bottom:14px;padding:12px 16px;background:rgba(217,102,74,.06);border:1px solid rgba(217,102,74,.30);border-radius:8px;font-size:14px;color:var(--t1);line-height:1.7"><span style="font-weight:800;color:#d9664a">[핵심 효용]</span> <b style="color:#d9664a">진입 예정 포지션</b>을 가상으로 추가하여 → <b style="color:#d9664a">진입 후 종목별 노출%</b>를 미리 확인하고 <b style="color:#d9664a">무리한 진입을 사전에 방지</b>할 수 있습니다.</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">이 영역에서 얻는 것</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">진입 예정 포지션</b>의 가상 노출% 계산<br>· <b style="color:#d9664a">진입전 → 진입예정 → 진입후</b> 3단계 노출 비교<br>· <b style="color:#d9664a">종목 제한 비중(자본 1.5%)</b> 초과 여부 경고<br>· <b style="color:#d9664a">B-1 종목별 노출 통합 표 "진입후" 열 자동 갱신</b></div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">교육생 판단·실행 흐름</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85"><b style="color:#d9664a">1.</b> 진입 예정 포지션 추가 — 종목·구분(콜/풋)·계약수·진입가 입력<br><b style="color:#d9664a">2.</b> <b style="color:#d9664a">[+ 추가]</b> 클릭 → 시뮬 행 생성 + B-1 "진입후" 열 자동 갱신<br><b style="color:#d9664a">3.</b> 진입후 노출% 확인 — 종목 제한 비중의 <b style="color:#d9664a">1/3 이내</b>인지 검토<br><b style="color:#d9664a">4.</b> 초과 시 → 더 <b style="color:#d9664a">외가격(OTM)</b>으로 행사가 조정해 프리미엄 축소 검토<br><b style="color:#d9664a">5.</b> <b style="color:#c83030">0.5% 초과 시 빨간 경고 표시</b> → 신중 검토</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">3가지 노출 지표</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">진입전 노출%</b> — 현재 보유 포지션의 노출 합산 (B-1 테이블 기준)<br>· <b style="color:#d9664a">진입예정 노출%</b> — 이 시뮬 행에서 추가하는 가상 포지션의 노출<br>· <b style="color:#d9664a">진입후 노출%</b> — 이 수치로 진입 여부 판단 (<b style="color:#d9664a">핵심 결정 지표</b>)</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">자동 연동 관계</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">자금 설정(Tab1 A-1)</b> 원금 → 노출% 계산 기준<br>· <b style="color:#d9664a">시뮬 행 추가/삭제</b> → B-1 "진입후" 열 즉시 자동 갱신<br>· <b style="color:#d9664a">매매 전략 탭 추천 종목</b> → 본 시뮬에서 진입 전 사전 검토 가능</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="margin-bottom:0;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· 실제 매매 전 <b style="color:#d9664a">가상 시나리오</b>로 무리한 진입 사전 방지<br>· <b style="color:#d9664a">종목별 비중 한도(자본 1.5%)</b> 초과 여부 즉시 확인<br>· <b style="color:#d9664a">추천 행사가·계약수</b>를 그대로 시뮬에 넣어 진입 후 영향 예측 가능</div></div>
       <div id="pt-sim-body"><div style="text-align:center;padding:20px;color:var(--t3);font-size:13px">아래 폼에서 진입 예정 포지션을 추가하세요.</div></div>
       <div style="display:grid;grid-template-columns:2fr 1fr 0.7fr 2fr auto;gap:8px;align-items:end;margin-top:14px;padding-top:14px;border-top:1px solid var(--b1)">
         <div class="pos-field">
@@ -3263,13 +3187,15 @@ input[type=range] { background: transparent !important; border: none !important;
     <div style="height:2px;background:linear-gradient(90deg,rgba(217,102,74,.6),transparent);margin-top:12px;border-radius:1px"></div>
   </div>
 
-  <!-- [SESSION 10 디테일] D-1 배지 헤더 — 흰 카드 박스 안 -->
+  <!-- D-1 배지 헤더 + (4) 버튼 + 안내 박스 -->
   <div class="card" style="border:1.5px solid rgba(217,102,74,.25);margin-bottom:10px;background:#fff">
     <div style="padding:14px 16px 12px;display:flex;align-items:center;gap:10px">
       <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">D-1</span>
       <span style="font-size:14px;font-weight:700;color:var(--t1)">위험 포지션 표시</span>
+      <button onclick="(function(){var b=document.getElementById('desc-pt-d1');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q" title="이 영역 안내 펼치기" style="margin-left:2px">4</button>
       <span style="font-size:13px;color:var(--t2);font-weight:500;margin-left:6px">필터 조건으로 단계별 카드 조회</span>
     </div>
+    <div id="desc-pt-d1" style="display:none;position:relative;margin:0;padding:24px 28px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-pt-d1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">페이지 닫기</button><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">4단계 — 위험 포지션 카드 (위험 경보 종목 점검)</div><div style="margin-bottom:14px;padding:12px 16px;background:rgba(217,102,74,.06);border:1px solid rgba(217,102,74,.30);border-radius:8px;font-size:14px;color:var(--t1);line-height:1.7"><span style="font-weight:800;color:#d9664a">[핵심 효용]</span> 보유 포지션 중 <b style="color:#d9664a">위험 경보가 발령된 종목</b>만 한 화면에 표시하여 → 지금 즉시 <b style="color:#d9664a">점검·손절·축소가 필요한 포지션</b>을 빠르게 확인할 수 있습니다.</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">이 영역에서 얻는 것</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">위험 경보 발령 종목 카드</b>만 추출 (필터 조건으로 조정)<br>· 종목별 포지션 상세 정보 — 행사가·옵션가·매매수량·평가손익·<b style="color:#d9664a">생존경보 단계</b><br>· 필터 — 표시 모드(위험 경보만/손익 마이너스만/전체) + 종목/월물/구분 세부 조정</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">교육생 판단·실행 흐름</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85"><b style="color:#d9664a">1.</b> 표시 모드 선택 — <b style="color:#c83030">위험 경보만</b> / 손익 마이너스만 / 전체 보기<br><b style="color:#d9664a">2.</b> 세부 필터 — 종목·월물·구분(콜 포지션·풋 포지션) 좁히기<br><b style="color:#d9664a">3.</b> <b style="color:#d9664a">[조회]</b> 클릭 → 조건에 맞는 위험 포지션 카드 표시<br><b style="color:#d9664a">4.</b> 카드별 평가손익·생존경보 단계 확인 → <b style="color:#d9664a">손절·축소·관망 판단</b><br><b style="color:#d9664a">5.</b> <b style="color:#c83030">위기비상 (3단계) 종목</b> → 즉시 점검 또는 손절·청산 검토</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">필터 옵션</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">표시 모드</b> — 위험 경보만(기본) · 손익 마이너스만 · 전체 보기<br>· <b style="color:#d9664a">종목</b> — 전체 / 11종목 중 선택<br>· <b style="color:#d9664a">월물</b> — 전체 / 06월물·07월물·08월물 등<br>· <b style="color:#d9664a">구분</b> — 전체 / 콜 포지션 / 풋 포지션</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">자동 연동 관계</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">데이터 입력 탭 HTS 1316</b> → 본 영역 포지션 카드 자동 생성<br>· <b style="color:#d9664a">직트 관리자 생존경보</b> → 위험 단계 자동 반영<br>· <b style="color:#d9664a">B-1 종목별 노출 통합</b> → 손익 마이너스·위험 종목 자동 필터</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="margin-bottom:0;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· 보유 포지션 중 <b style="color:#d9664a">위험 종목만 즉시 추출</b> → 점검 우선순위 결정<br>· 생존경보 단계 변화 시 카드 자동 갱신 → <b style="color:#d9664a">지체 없이 대응 가능</b><br>· 필터로 종목·월물·구분 좁혀 <b style="color:#d9664a">빠른 판단 지원</b></div></div>
   </div>
   <!-- [SESSION 9 §10] 필터 바 — 조회 버튼 (살몬 펄스) / [SESSION 10 디테일] 살몬 통일 -->
   <div id="pt-pos-filter" style="margin-bottom:14px;padding:12px 16px;background:#fff;border:1px solid rgba(217,102,74,.25);border-radius:10px;display:flex;flex-direction:column;gap:10px">
@@ -3971,7 +3897,7 @@ input[type=range] { background: transparent !important; border: none !important;
       <div style="display:flex;align-items:center;gap:10px">
         <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">A-1</span>
         <span style="font-size:18px;font-weight:800;color:var(--t1)">종합 순위표</span>
-        <button onclick="(function(){var b=document.getElementById('g-rank');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q">?</button>
+        <button onclick="(function(){var b=document.getElementById('desc-st-a1');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q" title="이 영역 안내 펼치기" style="margin-left:2px">1</button>
         <span style="font-size:14px;color:var(--t2);font-weight:600">
           <span style="color:#1a7a4a;font-weight:700"></span> 적극(1~4위)&nbsp;
           <span style="color:var(--orange);font-weight:700"></span> 신중(5~8위)&nbsp;
@@ -3988,14 +3914,7 @@ input[type=range] { background: transparent !important; border: none !important;
       </div>
     </div>
 
-    <div id="g-rank" style="display:none;padding:14px 16px;background:rgba(26,122,74,.05);border-bottom:1px solid rgba(26,122,74,.15)">
-      <div style="font-size:12px;font-weight:800;color:#1a7a4a;margin-bottom:8px">순위표 보는 법</div>
-      <div style="font-size:12px;color:var(--t2);line-height:2.0">
-        <b style="color:var(--t1)">평균잠재수익률</b> 기준으로 내림차순 정렬되어 있어요.<br>
-        <span style="color:#1a7a4a">■ 1~4위(안전)</span> = 적극 진입 검토 &nbsp;|&nbsp; <span style="color:#d9664a">■ 5~8위(주의)</span> = 신중 &nbsp;|&nbsp; <span style="color:#c83030">■ 9~11위(위험)</span> = 비권장<br>
-        <b style="color:var(--t1)">사용 방법</b>: 관리자(admin) 화면에서 오늘의 순위 데이터를 입력하면 자동으로 표시됩니다.
-      </div>
-    </div>
+    <div id="desc-st-a1" style="display:none;position:relative;margin:0;padding:24px 28px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-st-a1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">페이지 닫기</button><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">1단계 — 종합 순위표 (자본 효율 순위)</div><div style="margin-bottom:18px;font-size:15px;color:var(--t1);line-height:1.7">11종목의 <b style="color:#d9664a">평균 잠재수익률</b>(콜·풋 평균, 한 달 기대 수익률 기준)을 <b style="color:#d9664a">내림차순 정렬</b>한 종합 순위표입니다.<br><b style="color:#d9664a">종합 현황판(B-1)</b>에서 7가지 평가 기준으로 평가된 결과 중 자금 효율이 낮고 위험 요소가 있는 종목은 <b style="color:#d9664a">자동 제외</b>되며, 평가 점수가 가장 높은 콜·풋 옵션만 선별되어 표시됩니다.<br>오늘의 시장 환경에서 <b style="color:#d9664a">자본 대비 가장 효율 좋은 종목</b>을 한눈에 확인하실 수 있습니다.<br><b style="color:#d9664a">매매 전략 워크플로우의 첫 단계</b>이며, <b style="color:#d9664a">직트 관리자</b>에서 오늘 순위 데이터를 입력하면 자동으로 표시됩니다.</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">순위 등급 (자본 효율 비교)</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">1~4위 (안전, 상위 36%)</b> — 우선검토 권장<br>· <b style="color:#d9664a">5~8위 (주의, 중위 37%)</b> — 차선검토 권장<br>· <b style="color:#d9664a">9~11위 (위험, 하위 27%)</b> — 후순위검토 권장</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">표시 정보</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· 순위 + 종목명<br>· <b style="color:#d9664a">평균 잠재수익률</b> (콜·풋 평균 %)<br>· 구분 (콜 매도 · 풋 매도)<br>· 옵션 월물 + 만기 잔존<br>· 추천 행사가 표시</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· 11종목을 한 표에서 <b style="color:#d9664a">자본 효율 순</b>으로 비교하여 <b style="color:#d9664a">우선검토 종목 선별</b><br>· <b style="color:#d9664a">시장 현황 탭 12종목 카드</b>의 잠재수익률 순위와 동일 기준으로 일관성 확보<br>· <b style="color:#d9664a">매매 전략 워크플로우</b>(종합 순위표 → 종합 현황판 → 시장 위험 단계)의 첫 진입점<br>· 추천 종목을 순위 순서대로 본인 <b style="color:#d9664a">증거금 사용률에 맞춰 매매 진행</b> 가능</div></div>
     <div class="card-b" style="padding:0;overflow-x:auto;background:rgba(192,112,48,.02)">
       <div id="st-rank-body">
         <div id="st-rank-empty" style="text-align:center;padding:32px;color:var(--t3);font-size:12px;line-height:2.2">
@@ -4041,7 +3960,7 @@ input[type=range] { background: transparent !important; border: none !important;
         <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">B-1</span>
         <span style="font-size:14px;font-weight:700;color:var(--t1)">종목별 상세 현황</span>
         <span style="font-size:12px;color:var(--t3)">종목명 클릭 → 월물별 펼치기</span>
-        <button onclick="(function(){var b=document.getElementById('g-detail');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q">?</button>
+        <button onclick="(function(){var b=document.getElementById('desc-st-b1');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q" title="이 영역 안내 펼치기" style="margin-left:2px">2</button>
       </div>
       <div style="display:flex;gap:6px">
         <span style="font-size:11px;color:var(--t3);font-family:var(--mono)" id="st-detail-date-tag">데이터 없음</span>
@@ -4060,35 +3979,7 @@ input[type=range] { background: transparent !important; border: none !important;
 
       </div>
     </div>
-    <div id="g-detail" style="display:none;padding:14px 16px;background:rgba(217,102,74,.04);border-bottom:1px solid rgba(217,102,74,.20)">
-      <div style="font-size:12px;font-weight:800;color:var(--cyan);margin-bottom:8px">현황판 보는 법</div>
-      <div style="font-size:12px;color:var(--t2);line-height:2.0">
-        종목명 클릭 → <b style="color:var(--t1)">월물별 평가 결과</b>가 펼쳐져요.<br>
-        <span style="color:#1a7a4a">■ 추천</span> = 적극 진입 검토 &nbsp;|&nbsp; <span style="color:#d9664a">■ 주의</span> = 신중 &nbsp;|&nbsp; <span style="color:#c83030">■ 비권장</span> = 진입 자제<br>
-        확인 후 <b style="color:var(--t1)">행사가 · 옵션가</b>를 HTS에서 주문하세요.
-      </div>
-    </div>
-    <!-- 현황판 열 설명 토글 -->
-    <div style="border-bottom:1px solid rgba(217,102,74,.1)">
-      <button onclick="stToggleGuide('st-detail-guide')"
-        style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:9px 16px;background:rgba(217,102,74,.10);border:1px solid rgba(217,102,74,.35);cursor:pointer;color:var(--t3);font-size:11px;font-weight:600"
-        onmouseover="this.style.background='rgba(217,102,74,.18)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">
-        <span> 현황판 각 열 설명 보기 — 7가지 평가 기준이란?</span>
-        <span id="st-detail-guide-arrow" style="transition:transform .2s"></span>
-      </button>
-      <div id="st-detail-guide" style="display:none;padding:14px 16px;background:rgba(0,0,0,.04)">
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;font-size:11px">
-          <div style="padding:8px 10px;background:var(--card);border-radius:6px;border:1px solid var(--b1)"><b style="color:var(--cyan)">추세</b><br><span style="color:var(--t3)">MACD+BBW 기반 상승/강보합/약보합/하락</span></div>
-          <div style="padding:8px 10px;background:var(--card);border-radius:6px;border:1px solid var(--b1)"><b style="color:var(--cyan)">구분</b><br><span style="color:var(--t3)">추세 반영 콜/풋 진입 여부 (역추세=X)</span></div>
-          <div style="padding:8px 10px;background:var(--card);border-radius:6px;border:1px solid var(--b1)"><b style="color:var(--cyan)">잔존일</b><br><span style="color:var(--t3)">15일 이하=X, 초과=</span></div>
-          <div style="padding:8px 10px;background:var(--card);border-radius:6px;border:1px solid var(--b1)"><b style="color:var(--cyan)">비중(%)</b><br><span style="color:var(--t3)">예탁금 대비: 1%↓= 1~1.5%= 1.5%↑=X</span></div>
-          <div style="padding:8px 10px;background:var(--card);border-radius:6px;border:1px solid var(--b1)"><b style="color:var(--cyan)">잠재수익률</b><br><span style="color:var(--t3)">이익÷(증거금×잔존일)×30 | 5%↑= 2.5~5%= ↓=X</span></div>
-          <div style="padding:8px 10px;background:var(--card);border-radius:6px;border:1px solid var(--b1)"><b style="color:var(--cyan)">순위</b><br><span style="color:var(--t3)">월물간 비교: 1위= 2위= 3위=X</span></div>
-          <div style="padding:8px 10px;background:var(--card);border-radius:6px;border:1px solid var(--b1)"><b style="color:var(--yellow)">평가점수</b><br><span style="color:var(--t3)">=4점 =2점 X=0점즉시 | 최대20점</span></div>
-          <div style="padding:8px 10px;background:var(--card);border-radius:6px;border:1px solid var(--b1)"><b style="color:var(--green)">추천종목</b><br><span style="color:var(--t3)">콜/풋 각각 최고점 월물 1개만  표시</span></div>
-        </div>
-      </div>
-    </div>
+    <div id="desc-st-b1" style="display:none;position:relative;margin:0;padding:24px 28px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-st-b1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">페이지 닫기</button><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">2단계 — 종합 현황판 (7가지 기준 종합 평가)</div><div style="margin-bottom:14px;padding:12px 16px;background:rgba(217,102,74,.06);border:1px solid rgba(217,102,74,.30);border-radius:8px;font-size:14px;color:var(--t1);line-height:1.7"><span style="font-weight:800;color:#d9664a">[핵심 효용]</span> 11종목 × 7가지 평가 기준을 종합한 <b style="color:#d9664a">추천 종목</b>을 한 표에서 확인하여 → <b style="color:#d9664a">오늘 매매할 종목을 선별</b>할 수 있습니다.</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">이 영역에서 얻는 것</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· 오늘 가장 자금 효율이 좋은 <b style="color:#d9664a">추천 콜·풋 종목 1개씩</b> (평가 점수 가장 높은)<br>· <b style="color:#d9664a">행사가·옵션가격·매매 수량·스팬 증거금·잠재 이익·손실 확률</b> (HTS 주문 시 그대로 사용)<br>· 자금 효율이 낮거나 위험 요소가 있는 종목 <b style="color:#d9664a">자동 제외</b> 결과</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">교육생 판단·실행 흐름</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85"><b style="color:#d9664a">1.</b> 추천 종목 확인 — 콜·풋 각각 평가 점수가 가장 높은 종목 1개씩<br><b style="color:#d9664a">2.</b> 추천 행사가·옵션가격·매매 수량 확인 — HTS에서 그대로 주문할 정보<br><b style="color:#d9664a">3.</b> 본인 <b style="color:#d9664a">증거금 사용률</b> 확인 — 증거금 한도 안에서 매매 진행 권장<br><b style="color:#d9664a">4.</b> HTS 진입 — 추천 종목 정보를 그대로 입력하여 실제 매매 실행</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">7가지 평가 기준 (참고)</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· ① 추세 · ② 콜/풋 구분 · ③ 잔존일 · ④ 비중 · ⑤ 잠재수익률 · ⑥ 월물 순위 · ⑦ 평가 점수</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">기호 · 색상 안내</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#1a7a4a">○ 초록</b> — 우선검토 권장<br>· <b style="color:#c8803a">◇ 주황</b> — 신중검토 권장<br>· <b style="color:#c83030">X 빨강</b> — 후순위검토 (비권장)</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">평가 점수 체계</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">○ 4점 · ◇ 2점 · X 0점</b> / 다섯 항목 합산 최대 20점<br>· <b style="color:#d9664a">X 항목 하나라도 있으면 합산 0점</b> (다른 항목과 관계없이 비권장)<br>· 콜·풋 각각 최종 점수 → 가장 높은 종목 선별 → 추천 종목</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="margin-bottom:0;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· 한 표에서 <b style="color:#d9664a">추천 종목 결정</b> → 매매 흐름 즉시 시작<br>· 종목명 클릭 → <b style="color:#d9664a">월물별 평가 결과 펼침</b>으로 상세 점수 확인 가능<br>· <b style="color:#d9664a">A-1 ↔ B-1 보완</b> (같은 평가 결과를 두 방식으로 표시)</div></div>
 
     <div class="card-b" style="background:rgba(217,102,74,.02);padding:12px">
       <div id="st-detail-list">
@@ -4260,7 +4151,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <!-- ─── E. 시장 위험 단계 판정 ───────────────────────────── -->
   <div id="pt-sec-b" style="margin:0 0 16px">
     <div style="display:flex;align-items:center;gap:12px">
-      <div style="width:40px;height:40px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .7s;">D</div>
+      <div style="width:40px;height:40px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite .7s;">C</div>
       <div>
         <div style="font-size:24px;font-weight:800;color:var(--t1)">시장 위험 단계 판정</div>
         <div style="font-size:12px;color:var(--t2);margin-top:3px;font-weight:500">지금 들어가도 되는 시장인가요? — 종목별 위험 수준을 한눈에 확인하세요</div>
@@ -4272,129 +4163,12 @@ input[type=range] { background: transparent !important; border: none !important;
   <!-- D 영역 본문 카드 (D-1 서브 배지 + 가이드 + 본문) -->
   <div class="card" style="background:#fff;border:1px solid rgba(217,102,74,.18);border-radius:10px;padding:16px 18px">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-      <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">D-1</span>
+      <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">C-1</span>
       <span style="font-size:15px;font-weight:700;color:var(--t1)">시장 위험 단계 카드</span>
+      <button onclick="(function(){var b=document.getElementById('desc-st-c1');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q" title="이 영역 안내 펼치기" style="margin-left:2px">3</button>
     </div>
 
-  <!-- F-0: 초보자 가이드 토글 -->
-  <div style="margin-bottom:14px;border-radius:10px;border:1px solid rgba(192,112,48,.25);overflow:hidden">
-    <div onclick="(function(el){var b=document.getElementById('rm-guide-body');var open=b.style.display!=='none';b.style.display=open?'none':'block';el.querySelector('.rm-g-arr').textContent=open?'':'';})(this)"
-      style="padding:11px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:rgba(192,112,48,.07);transition:background .15s"
-      onmouseover="this.style.background='rgba(192,112,48,.12)'" onmouseout="this.style.background='rgba(192,112,48,.07)'">
-      <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:14px"></span>
-        <span style="font-size:13px;font-weight:700;color:var(--orange)">이 표 보는 법 — 처음 보시는 분은 꼭 읽어주세요</span>
-      </div>
-      <span class="rm-g-arr" style="font-size:12px;color:var(--t3);font-weight:700"></span>
-    </div>
-    <div id="rm-guide-body" style="display:none;padding:20px;background:rgba(0,0,0,.03);border-top:1px solid rgba(192,112,48,.15)">
-
-      <!-- 1. 이 섹션이 무엇인가 -->
-      <div style="margin-bottom:18px">
-        <div style="font-size:12px;font-weight:800;color:var(--orange);margin-bottom:8px;display:flex;align-items:center;gap:6px">
-          <span style="background:rgba(192,112,48,.2);border-radius:4px;padding:1px 8px">01</span> 이 섹션이 무엇인가요?
-        </div>
-        <div style="font-size:12px;color:var(--t2);line-height:1.9;padding:10px 14px;background:rgba(192,112,48,.06);border-radius:8px;border-left:3px solid rgba(192,112,48,.4)">
-          옵션 매도는 <b style="color:var(--t1)">시장이 안정적일 때 유리하고, 시장이 요동칠 때 매우 위험</b>합니다.<br>
-          이 섹션은 지금 시장이 얼마나 위험한 상태인지를 종목별로 보여주는 <b style="color:var(--orange)">위험 신호등</b>입니다.<br>
-          <span style="color:var(--t3);font-size:11px"> 안전 = 마음 편히 진입 /  주의 = 줄여서 진입 /  위험 = 신규 진입 비권장</span>
-        </div>
-      </div>
-
-      <!-- 2. 숫자를 어떻게 읽는가 -->
-      <div style="margin-bottom:18px">
-        <div style="font-size:12px;font-weight:800;color:var(--orange);margin-bottom:8px;display:flex;align-items:center;gap:6px">
-          <span style="background:rgba(192,112,48,.2);border-radius:4px;padding:1px 8px">02</span> 숫자(지표)를 어떻게 읽나요?
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-          <!-- [2026-05-08 48차] 매트릭스 정합 — 안전 #3a9e6a / 신중 #c8803a / 위험 #c83030 -->
-          <div style="padding:10px 12px;background:rgba(58,158,106,.07);border-radius:8px;border:1px solid rgba(58,158,106,.22)">
-            <div style="font-size:11px;font-weight:800;color:#3a9e6a;margin-bottom:4px"> 1.2 미만 — 안전</div>
-            <div style="font-size:12px;color:var(--t2);line-height:1.65">시장이 평소와 비슷하게 움직이는 상태. 옵션 매도에 유리한 환경.</div>
-          </div>
-          <div style="padding:10px 12px;background:rgba(200,128,58,.07);border-radius:8px;border:1px solid rgba(200,128,58,.22)">
-            <div style="font-size:11px;font-weight:800;color:#c8803a;margin-bottom:4px"> 1.2~1.5 — 주의</div>
-            <div style="font-size:12px;color:var(--t2);line-height:1.65">시장이 평소보다 빠르게 움직이기 시작한 상태. 신중하게 행동.</div>
-          </div>
-          <div style="padding:10px 12px;background:rgba(200,48,48,.07);border-radius:8px;border:1px solid rgba(200,48,48,.22)">
-            <div style="font-size:11px;font-weight:800;color:#c83030;margin-bottom:4px"> 1.5 초과 — 위험</div>
-            <div style="font-size:12px;color:var(--t2);line-height:1.65">시장이 비정상적으로 급변하는 상태. 신규 진입 비권장, 기존 포지션 축소.</div>
-          </div>
-          <!-- 정보성 안내 박스 — 살몬 액센트 (매트릭스 §6 정보 알파) -->
-          <div style="padding:10px 12px;background:rgba(217,102,74,.04);border-radius:8px;border:1px solid rgba(217,102,74,.20)">
-            <div style="font-size:11px;font-weight:800;color:#d9664a;margin-bottom:4px"> 게이지 바 읽는 법</div>
-            <div style="font-size:12px;color:var(--t2);line-height:1.65">막대가 길수록 위험. 세로선 2개가 기준선 (왼쪽=주의 1.2, 오른쪽=위험 1.5).</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 3. 5개 지표 설명 -->
-      <div style="margin-bottom:18px">
-        <div style="font-size:12px;font-weight:800;color:var(--orange);margin-bottom:8px;display:flex;align-items:center;gap:6px">
-          <span style="background:rgba(192,112,48,.2);border-radius:4px;padding:1px 8px">03</span> 5개 지표가 각각 뭘 의미하나요?
-        </div>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 12px;background:rgba(0,0,0,.02);border-radius:7px">
-            <span style="font-size:10px;font-weight:800;background:rgba(0,0,0,.1);color:var(--cyan);border-radius:4px;padding:2px 8px;flex-shrink:0;white-space:nowrap;line-height:1.8">가격 변동 속도</span>
-            <span style="font-size:12px;color:var(--t2);line-height:1.65">최근 가격이 얼마나 빠르게 오르내리는지. 숫자가 클수록 가격이 날뛰고 있다는 뜻. <span style="color:var(--t3)">(PSR)</span></span>
-          </div>
-          <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 12px;background:rgba(0,0,0,.02);border-radius:7px">
-            <span style="font-size:10px;font-weight:800;background:rgba(0,0,0,.1);color:var(--cyan);border-radius:4px;padding:2px 8px;flex-shrink:0;white-space:nowrap;line-height:1.8">변동성 변화 속도</span>
-            <span style="font-size:12px;color:var(--t2);line-height:1.65">시장 공포가 얼마나 빠르게 변화하는지(오르락내리락). 높을수록 시장이 한 방향으로 정해지지 않은 상태. <span style="color:var(--t3)">(ISR)</span></span>
-          </div>
-          <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 12px;background:rgba(0,0,0,.02);border-radius:7px">
-            <span style="font-size:10px;font-weight:800;background:rgba(0,0,0,.1);color:var(--cyan);border-radius:4px;padding:2px 8px;flex-shrink:0;white-space:nowrap;line-height:1.8">증거금 증가 속도</span>
-            <span style="font-size:12px;color:var(--t2);line-height:1.65">브로커(증권사)가 요구하는 담보금이 얼마나 빠르게 늘었는지. 위험할수록 더 많은 돈을 요구함. <span style="color:var(--t3)">(LMR)</span></span>
-          </div>
-          <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 12px;background:rgba(0,0,0,.02);border-radius:7px">
-            <span style="font-size:10px;font-weight:800;background:rgba(0,0,0,.1);color:var(--cyan);border-radius:4px;padding:2px 8px;flex-shrink:0;white-space:nowrap;line-height:1.8">현재 변동성 수준</span>
-            <span style="font-size:12px;color:var(--t2);line-height:1.65">지금 변동성이 과거 대비 얼마나 높은 수준인지. <b style="color:var(--t1)">0.75 넘으면 주의</b> 신호. <span style="color:var(--t3)">(IVL)</span></span>
-          </div>
-          <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 12px;background:rgba(0,0,0,.02);border-radius:7px">
-            <span style="font-size:10px;font-weight:800;background:rgba(0,0,0,.1);color:var(--cyan);border-radius:4px;padding:2px 8px;flex-shrink:0;white-space:nowrap;line-height:1.8">방향성 변동 속도</span>
-            <span style="font-size:12px;color:var(--t2);line-height:1.65">시장이 한쪽 방향(상승 or 하락)으로 얼마나 빠르게 쏠리는지. 음수면 하락 방향 쏠림. <span style="color:var(--t3)">(DSR)</span></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 4. 국면별 행동 -->
-      <div style="margin-bottom:18px">
-        <div style="font-size:12px;font-weight:800;color:var(--orange);margin-bottom:8px;display:flex;align-items:center;gap:6px">
-          <span style="background:rgba(192,112,48,.2);border-radius:4px;padding:1px 8px">04</span> 국면별로 내가 뭘 해야 하나요?
-        </div>
-        <!-- [2026-05-08 48차] 매트릭스 정합 — 안전 #3a9e6a / 신중 #c8803a / 위험 #c83030 -->
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-          <div style="padding:12px;background:rgba(58,158,106,.07);border-radius:8px;border:1px solid rgba(58,158,106,.22)">
-            <div style="font-size:13px;font-weight:800;color:#3a9e6a;margin-bottom:6px"> 안전 국면</div>
-            <div style="font-size:12px;color:var(--t2);line-height:1.8"> 평소대로 진입<br> 기준 계약수 유지<br> 기존 포지션 그대로</div>
-          </div>
-          <div style="padding:12px;background:rgba(200,128,58,.07);border-radius:8px;border:1px solid rgba(200,128,58,.22)">
-            <div style="font-size:13px;font-weight:800;color:#c8803a;margin-bottom:6px"> 주의 국면</div>
-            <div style="font-size:12px;color:var(--t2);line-height:1.8">️ 계약수 30% 줄여 진입<br>️ 더 외가격(안전한 곳)<br>️ 기존 10~30% 줄이기</div>
-          </div>
-          <div style="padding:12px;background:rgba(200,48,48,.07);border-radius:8px;border:1px solid rgba(200,48,48,.22)">
-            <div style="font-size:13px;font-weight:800;color:#c83030;margin-bottom:6px"> 위험 국면</div>
-            <div style="font-size:12px;color:var(--t2);line-height:1.8"> 신규 진입 비권장<br> 기존 30~50% 축소<br> 관망 또는 청산</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 5. 극단위험 -->
-      <div>
-        <div style="font-size:12px;font-weight:800;color:var(--orange);margin-bottom:8px;display:flex;align-items:center;gap:6px">
-          <span style="background:rgba(192,112,48,.2);border-radius:4px;padding:1px 8px">05</span> 극단 위험(Tail Risk)이 뭔가요?
-        </div>
-        <!-- [2026-05-08 48차] 매트릭스 정합 — 정보 박스 파랑 + 위험/주의 강조 색 정합 -->
-        <div style="font-size:12px;color:var(--t2);line-height:1.9;padding:10px 14px;background:rgba(42,95,168,.06);border-radius:8px;border-left:3px solid rgba(42,95,168,.4)">
-          가격 급변 + 실제 큰 사건(전쟁, 금융위기 등)이 동시에 발생한 상태입니다.<br>
-          극단위험을 켜면 해당 종목은 <b style="color:#c83030">국면이 한 단계 상향</b> 됩니다.<br>
-          예) 안전 국면 + 극단위험 ON → <b style="color:#c8803a">주의 국면</b>으로 더 보수적으로 관리<br>
-          <span style="color:var(--t3);font-size:11px">수치만으로 파악이 어려운 이벤트 리스크를 직접 판단하여 설정하는 항목입니다.</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
+  <div id="desc-st-c1" style="display:none;position:relative;margin:0;padding:24px 28px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-st-c1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">페이지 닫기</button><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">3단계 — 시장 위험 단계 판정</div><div style="margin-bottom:14px;padding:12px 16px;background:rgba(217,102,74,.06);border:1px solid rgba(217,102,74,.30);border-radius:8px;font-size:14px;color:var(--t1);line-height:1.7"><span style="font-weight:800;color:#d9664a">[핵심 효용]</span> 11종목의 현재 <b style="color:#d9664a">시장 위험 단계(안전·주의·위험)</b>를 한 화면에서 확인하여 → 지금 <b style="color:#d9664a">신규 진입 가능한 종목</b>과 <b style="color:#d9664a">보유 포지션 점검 대상</b>을 곧바로 결정할 수 있습니다.</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">이 영역에서 얻는 것</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· 11종목 각각의 현재 <b style="color:#d9664a">시장 위험 단계</b> — 안전 / 주의 / 위험<br>· 종목별 <b style="color:#d9664a">5개 지표 수치</b> + 극단 위험 여부 + 종합 국면 판정<br>· 국면별 <b style="color:#d9664a">행동 기준</b> — 신규 진입 비중·기존 포지션 축소 권장률</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">교육생 판단·실행 흐름</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85"><b style="color:#d9664a">1.</b> 종목별 위험 단계 확인 — <b style="color:#1a7a4a">안전(초록)</b>·<b style="color:#c8803a">주의(주황)</b>·<b style="color:#c83030">위험(빨강)</b> 카드 색으로 직관 판단<br><b style="color:#1a7a4a">2. 안전 종목</b> → 평소 규모 신규 진입 권장 / 기존 포지션 유지<br><b style="color:#c8803a">3. 주의 종목</b> → 신규 진입 비중 30% 축소 권장 / 기존 10~30% 축소<br><b style="color:#c83030">4. 위험 종목</b> → 신규 진입 비권장 (보류) / 기존 30~50% 축소 또는 관망·청산<br><b style="color:#d9664a">5. 극단 위험 활성 종목</b> → 국면 한 단계 상향 처리 (예: 안전 + 극단 위험 ON → 주의 국면)</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">위험 단계 판정 기준</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#1a7a4a">안전</b> — 5개 지표 모두 1.2 미만<br>· <b style="color:#c8803a">주의</b> — 5개 지표 중 하나라도 1.2~1.5 (또는 IVL > 0.75)<br>· <b style="color:#c83030">위험</b> — 5개 지표 중 하나라도 1.5 초과<br>· <b style="color:#d9664a">극단 위험</b> — 가격 급변 + 실제 큰 사건(전쟁·금융위기 등) 발생 시 ON</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">5개 지표 (참고)</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">가격 변동 속도 (PSR)</b> — 최근 가격이 얼마나 빠르게 오르내리는지<br>· <b style="color:#d9664a">변동성 변화 속도 (ISR)</b> — 시장 공포가 얼마나 빠르게 변화하는지<br>· <b style="color:#d9664a">증거금 증가 속도 (LMR)</b> — 증권사가 요구하는 담보금 증가 속도<br>· <b style="color:#d9664a">현재 변동성 수준 (IVL)</b> — 과거 대비 변동성 수준 (0.75 초과 주의)<br>· <b style="color:#d9664a">방향성 변동 속도 (DSR)</b> — 한쪽 방향 쏠림 속도 (음수 = 하락 쏠림)</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="margin-bottom:0;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· 종목별 현재 위험 수준을 한눈에 확인 → <b style="color:#d9664a">진입·축소·관망 의사결정 즉시 가능</b><br>· 5개 지표 + 극단 위험을 모두 종합한 <b style="color:#d9664a">객관 판정</b> (AI 추정값 아님)<br>· <b style="color:#d9664a">매매 전략 워크플로우의 마지막 단계</b> — 진입 적합 종목 최종 확정</div></div>
 
   <!-- F-2: 전체 국면 요약 바 -->
   <div id="rm-summary-bar" style="margin-bottom:12px">
@@ -4640,6 +4414,9 @@ input[type=range] { background: transparent !important; border: none !important;
     <div style="height:2px;background:linear-gradient(90deg,#d9664a,transparent);margin-top:12px;border-radius:1px"></div>
   </div>
 
+  <!-- A-1 영역 가이드 박스 -->
+  <div id="desc-tr-a1" style="display:none;position:relative;margin:0 0 12px;padding:24px 28px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-tr-a1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">페이지 닫기</button><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">1단계 — 종합 성과 KPI (5개 지표 한눈 종합)</div><div style="margin-bottom:14px;padding:12px 16px;background:rgba(217,102,74,.06);border:1px solid rgba(217,102,74,.30);border-radius:8px;font-size:14px;color:var(--t1);line-height:1.7"><span style="font-weight:800;color:#d9664a">[핵심 효용]</span> 보유 종목 전체의 <b style="color:#d9664a">평가손익·예탁 평가액·수익률·누적 손익 곡선</b>을 한 화면에 모아 → 오늘의 <b style="color:#d9664a">전체 운용 성과를 한눈에 확인</b>할 수 있습니다.</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">이 영역에서 얻는 것</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">종목별 평가손익</b> (보유 종목 + 종합계)<br>· <b style="color:#d9664a">예탁 평가액</b> (달러·원화)<br>· <b style="color:#d9664a">총 평가손익</b> + 수익률<br>· <b style="color:#d9664a">평가 수익률</b> (기준 원금 대비 %)<br>· <b style="color:#d9664a">누적 손익 곡선</b> (운용 시작 ~ 현재 추이 + 우상향·낙폭·회복속도)</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">교육생 판단·실행 흐름</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85"><b style="color:#d9664a">1.</b> 종합계 확인 — 보유 종목 전체 평가손익 합계 직관 파악<br><b style="color:#d9664a">2.</b> 평가 수익률 확인 — % 기준 운용 성과 평가<br><b style="color:#d9664a">3.</b> 누적 손익 곡선 확인 — <b style="color:#d9664a">우상향·낙폭·회복속도</b> 패턴 점검<br><b style="color:#d9664a">4.</b> 종목별 분포 확인 — 손익 기여 큰 종목·손실 큰 종목 식별<br><b style="color:#d9664a">5.</b> <b style="color:#d9664a">매매 복기 탭</b>으로 연결 → 손실 원인·운용 개선 작성</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">자동 연동 관계</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">데이터 입력 탭 HTS 1316·1310</b> → 5개 KPI 자동 계산<br>· <b style="color:#d9664a">자금 설정 탭 기준 원금</b> → 평가 수익률 계산 분모<br>· <b style="color:#d9664a">매매 복기 탭</b> → 본 영역 결과를 복기 입력에 자동 반영</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="margin-bottom:0;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">5개 KPI 한 화면 동시 확인</b> → 운용 성과 즉시 파악<br>· 종목별 손익 기여도 → <b style="color:#d9664a">분산 효과·집중 위험 확인</b><br>· 누적 손익 곡선 → <b style="color:#d9664a">운용 안정성 패턴 시각 점검</b></div></div>
+
   <!-- 상단 전체 행: 종목리스트(좌) + KPI+차트(우) -->
   <div style="display:grid;grid-template-columns:240px 1fr;gap:12px;margin-bottom:12px">
 
@@ -4648,6 +4425,7 @@ input[type=range] { background: transparent !important; border: none !important;
       <div style="padding:11px 14px 9px;border-bottom:1px solid rgba(217,102,74,.15);display:flex;align-items:center;gap:8px">
         <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">A-1</span>
         <span style="font-size:13px;color:var(--t1);font-weight:700">종목별 평가손익</span>
+        <button onclick="(function(){var b=document.getElementById('desc-tr-a1');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q" title="이 영역 안내 펼치기" style="margin-left:2px">1</button>
       </div>
       <div style="padding:8px 14px;border-bottom:1px solid rgba(217,102,74,.10);display:flex;justify-content:space-between">
         <span style="font-size:12px;color:var(--t3);font-weight:600">종목</span>
@@ -4670,21 +4448,21 @@ input[type=range] { background: transparent !important; border: none !important;
 
         <!-- 예탁 평가액 -->
         <div class="card" style="border:1px solid rgba(217,102,74,.35);padding:14px 16px">
-          <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">A-2</span> <div style="font-size:14px;color:var(--t1);font-weight:700;margin-bottom:6px;letter-spacing:.04em;display:inline-block;margin-left:8px">예탁 평가액</div>
+          <div style="font-size:14px;color:var(--t1);font-weight:700;margin-bottom:6px;letter-spacing:.04em;display:inline-block">예탁 평가액</div>
           <div style="font-size:22px;font-weight:900;color:var(--t1);font-family:var(--mono);line-height:1.1" id="tr-kpi-deposit">$—</div>
           <div style="font-size:11px;color:var(--t3);margin-top:3px" id="tr-kpi-deposit-krw">₩—</div>
         </div>
 
         <!-- 총 평가손익 -->
         <div class="card" style="border:1px solid rgba(217,102,74,.35);padding:14px 16px">
-          <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">A-3</span> <div style="font-size:14px;color:var(--t1);font-weight:700;margin-bottom:6px;letter-spacing:.04em;display:inline-block;margin-left:8px">총 평가손익</div>
+          <div style="font-size:14px;color:var(--t1);font-weight:700;margin-bottom:6px;letter-spacing:.04em;display:inline-block">총 평가손익</div>
           <div style="font-size:22px;font-weight:900;font-family:var(--mono);line-height:1.1;color:var(--green)" id="tr-kpi-pnl">$—</div>
           <div style="font-size:11px;color:var(--t3);margin-top:3px" id="tr-kpi-pnl-pct">수익률 —%</div>
         </div>
 
         <!-- 평가 수익률 — [2026-05-08] 내부 회색 배경 제거, 다른 KPI 카드와 동일 톤 -->
         <div class="card" style="border:1px solid rgba(217,102,74,.35);padding:14px 16px">
-          <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">A-4</span> <div style="font-size:14px;color:var(--t1);font-weight:700;margin-bottom:6px;letter-spacing:.04em;display:inline-block;margin-left:8px">평가 수익률</div>
+          <div style="font-size:14px;color:var(--t1);font-weight:700;margin-bottom:6px;letter-spacing:.04em;display:inline-block">평가 수익률</div>
           <div style="font-size:22px;font-weight:900;font-family:var(--mono);line-height:1.1" id="tr-kpi-yield-pct">—%</div>
           <div style="font-size:13px;color:var(--t3);margin-top:3px" id="tr-kpi-yield-sub">평가손익 $—</div>
         </div>
@@ -4694,7 +4472,7 @@ input[type=range] { background: transparent !important; border: none !important;
       <div class="card" style="flex:1">
         <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px 8px;border-bottom:1px solid var(--b1)">
           <div style="display:flex;align-items:center;gap:10px">
-            <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">A-5</span> <span style="font-size:14px;font-weight:700;color:var(--t1);letter-spacing:.04em;margin-left:8px">누적 손익 곡선</span>
+            <span style="font-size:14px;font-weight:700;color:var(--t1);letter-spacing:.04em">누적 손익 곡선</span>
             <span style="font-size:12px;color:var(--t3)" id="tr-cum-period"></span>
           </div>
           <span style="font-size:12px;color:var(--t2)">우상향 · 낙폭 · 회복속도</span>
@@ -4709,7 +4487,7 @@ input[type=range] { background: transparent !important; border: none !important;
 
   <!-- 증거금 사용률 현황 — 전체 폭 -->
   <div class="card" id="tr-margin-card" style="border:1.5px solid rgba(148,163,184,.2);margin-bottom:12px;display:none;padding:12px 18px">
-    <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">A-6</span> <div style="font-size:14px;color:var(--t1);font-weight:700;margin-bottom:10px;letter-spacing:.04em;display:inline-block;margin-left:8px">증거금 사용률</div>
+    <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">A-2</span> <div style="font-size:14px;color:var(--t1);font-weight:700;margin-bottom:10px;letter-spacing:.04em;display:inline-block;margin-left:8px">증거금 사용률</div>
     <!-- 게이지 바 -->
     <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:5px">
       <span style="color:var(--t3)">0%</span>
@@ -4751,7 +4529,7 @@ input[type=range] { background: transparent !important; border: none !important;
     <!-- B-1 종목별 평가손익 바차트 -->
     <div class="card" style="border:1px solid rgba(217,102,74,.35)">
       <div style="padding:11px 14px 8px;border-bottom:1px solid rgba(148,163,184,.1)">
-        <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">A-7</span> <span style="font-size:14px;font-weight:700;color:var(--t1);letter-spacing:.04em;margin-left:8px">종목별 평가손익</span>
+        <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">A-3</span> <span style="font-size:14px;font-weight:700;color:var(--t1);letter-spacing:.04em;margin-left:8px">종목별 평가손익</span>
         <span style="font-size:12px;color:var(--t3);margin-left:8px">수익 연빨강 / 손실 연파랑</span>
       </div>
       <div class="card-b" style="background:transparent">
@@ -4764,7 +4542,7 @@ input[type=range] { background: transparent !important; border: none !important;
     <div id="tr-monthly-card" class="card" style="border:1px solid rgba(217,102,74,.35)">
       <div style="padding:11px 14px 8px;border-bottom:1px solid rgba(148,163,184,.1);display:flex;align-items:center;justify-content:space-between">
         <div>
-          <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">A-8</span> <span style="font-size:14px;font-weight:700;color:var(--t1);letter-spacing:.04em;margin-left:8px">월별 수익률</span>
+          <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">A-4</span> <span style="font-size:14px;font-weight:700;color:var(--t1);letter-spacing:.04em;margin-left:8px">월별 수익률</span>
           <span style="font-size:12px;color:var(--t3);margin-left:8px">수익 연빨강 / 손실 연파랑</span>
         </div>
         <span style="font-size:12px;color:var(--t3)" id="tr-monthly-period"></span>
@@ -4856,7 +4634,7 @@ input[type=range] { background: transparent !important; border: none !important;
       </div>
       <span style="font-family:var(--mono);font-size:14px;font-weight:800;color:var(--cyan)" id="in-capital">$35,000</span>
     </div>
-    <div id="desc-in-a1" style="display:none;position:relative;margin:0;padding:24px 28px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-in-a1').style.display='none'" class="btn-q" title="닫기" style="position:absolute;top:16px;right:16px">×</button><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">1단계 — 시작</div><div style="margin-bottom:18px;font-size:15px;color:var(--t1);line-height:1.7"><b style="color:#d9664a">본인 계좌 정보</b>를 한 곳에 입력하시면 → <b style="color:#d9664a">시장 현황·매매 전략·위험·자금·매매 현황·매매 복기</b> 다섯 탭이 모두 자동 반영됩니다. 종합 옵션 대시보드를 이용하는 <b style="color:#d9664a">첫 시작점</b>이며, 모든 분석의 기준점이 되는 시작 영역입니다.</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">입력 항목</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">예탁금</b> — 현재 HTS 계좌에 예치되어 있는 금액 입력<br>· <b style="color:#d9664a">환율</b> — 금일 환율 입력 (원화 모드 / 달러 모드 선택 가능)<br>· <b style="color:#d9664a">위탁·유지증거금</b> — HTS 1316창에서 확인 후 입력</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· 한 번 입력으로 <b style="color:#d9664a">시장 현황·매매 전략·위험·자금 관리·매매 현황·매매 복기</b> 여섯 탭의 모든 정보가 자동 계산됩니다<br>· 시장 변동이나 자본 변경 시 해당 영역의 값만 수정하면 <b style="color:#d9664a">전체 탭이 재계산되어 출력</b>됩니다</div></div>
+    <div id="desc-in-a1" style="display:none;position:relative;margin:0;padding:24px 28px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-in-a1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">페이지 닫기</button><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">1단계 — 시작</div><div style="margin-bottom:18px;font-size:15px;color:var(--t1);line-height:1.7"><b style="color:#d9664a">본인 계좌 정보</b>를 한 곳에 입력하시면 → <b style="color:#d9664a">시장 현황·매매 전략·위험·자금·매매 현황·매매 복기</b> 다섯 탭이 모두 자동 반영됩니다.<br>종합 옵션 대시보드를 이용하는 <b style="color:#d9664a">첫 시작점</b>이며, 모든 분석의 기준점이 되는 시작 영역입니다.</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">입력 항목</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">예탁금</b> — 현재 HTS 계좌에 예치되어 있는 금액 입력<br>· <b style="color:#d9664a">환율</b> — 금일 환율 입력 (원화 모드 / 달러 모드 선택 가능)<br>· <b style="color:#d9664a">위탁·유지증거금</b> — HTS 1316창에서 확인 후 입력</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· 한 번 입력으로 <b style="color:#d9664a">시장 현황·매매 전략·위험·자금 관리·매매 현황·매매 복기</b> 여섯 탭의 모든 정보가 자동 계산됩니다<br>· 시장 변동이나 자본 변경 시 해당 영역의 값만 수정하면 <b style="color:#d9664a">전체 탭이 재계산되어 출력</b>됩니다</div></div>
     <div class="card-b" style="padding:14px 16px">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
         <div class="pos-field">
@@ -4920,10 +4698,12 @@ input[type=range] { background: transparent !important; border: none !important;
         <div style="width:40px;height:40px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite 0s;">B</div>
         <span style="font-size:24px;font-weight:800;color:var(--t1)">당일 보유 포지션 — HTS 1316창</span>
         <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">B-1</span>
+        <button onclick="(function(){var b=document.getElementById('desc-in-b1');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q" title="이 영역 안내 펼치기" style="margin-left:2px">2</button>
         <span style="font-size:13px;color:var(--t2);font-family:var(--mono);font-weight:600">DB [1316창]</span>
       </div>
       <span style="font-size:13px;color:var(--cyan);font-family:var(--mono);font-weight:700" id="in-1316-count">포지션 없음</span>
     </div>
+    <div id="desc-in-b1" style="display:none;position:relative;margin:0;padding:24px 28px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-in-b1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">페이지 닫기</button><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">2단계 — 보유 포지션 입력</div><div style="margin-bottom:18px;font-size:15px;color:var(--t1);line-height:1.7"><b style="color:#d9664a">당일 들고 있는 옵션 포지션</b>을 <b style="color:#d9664a">HTS 1316창</b>에서 가져와 한 번에 입력합니다.<br>입력하시면 → <b style="color:#d9664a">위험·자금 관리·매매 현황·시장 현황·매매 복기</b> 네 탭이 이 데이터를 받아 자동 갱신됩니다.<br>데이터 입력 워크플로우의 <b style="color:#d9664a">두 번째 단계</b>입니다.</div><div style="margin-bottom:22px"><a href="https://bramble-gardenia-301.notion.site/HTS-1316-365df6df17a280f9a6d1eb97df8dbc3d?source=copy_link" target="_blank" rel="noopener noreferrer" class="hint-glow-salmon" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;padding:0 22px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;text-decoration:none;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">따라하기 →</a></div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">입력 항목</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">HTS 1316창</b> → 예탁잔고현황 → 조회 → 우클릭 <b style="color:#d9664a">[엑셀 저장]</b><br>· 저장된 엑셀에서 <b style="color:#d9664a">A열 ~ J열 전체</b> 드래그 → 우클릭 <b style="color:#d9664a">[복사]</b><br>· 아래 <b style="color:#d9664a">[+ 데이터 붙여넣기]</b> → 텍스트 영역 우클릭 <b style="color:#d9664a">[붙여넣기]</b> → <b style="color:#d9664a">[읽기 &amp; 적용]</b><br>· 우측에 데이터 요약 정보가 표시되면 완료</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">위험·자금 관리</b> 탭 D 위험 포지션 카드에 <b style="color:#d9664a">콜 매도·풋 매도·콜 매수·풋 매수</b> 네 가지 방향이 자동 분리되어 표시됩니다<br>· <b style="color:#d9664a">매매 현황</b> 탭 B 월물별 포지션 표·종목별 평가손익 바차트·포트폴리오 요약이 자동 반영됩니다<br>· <b style="color:#d9664a">시장 현황</b> 12종목 카드에 <b style="color:#d9664a">행사가까지 남은 거리</b>가 곧바로 갱신됩니다<br>· 한 번 입력한 데이터는 브라우저에 <b style="color:#d9664a">영구 저장</b>되어 새로고침 후에도 유지됩니다</div></div>
     <div class="card-b" style="padding:14px 16px">
       <div style="margin-bottom:12px;padding:10px 14px;background:rgba(0,0,0,.025);border-radius:6px;border:1px solid var(--b1);font-size:13px;color:var(--t2);line-height:1.7;display:flex;flex-direction:column;gap:8px">
         <div>DB금융투자 <b style="color:var(--t1)">1316창</b> → 예탁잔고현황 → 당일미결제약정 → <b style="color:#2a5fa8">우측 상단 [엑셀 저장]</b> → 엑셀에서 Ctrl+A → Ctrl+C → 붙여넣기</div>
@@ -4978,10 +4758,12 @@ input[type=range] { background: transparent !important; border: none !important;
         <div style="width:40px;height:40px;border-radius:8px;background:rgba(217,102,74,.12);border:1.5px solid rgba(217,102,74,.38);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#d9664a;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite 0s;">C</div>
         <span style="font-size:24px;font-weight:800;color:var(--t1)">기간별 거래 데이터 — HTS 1310창</span>
         <span style="font-size:14px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">C-1</span>
+        <button onclick="(function(){var b=document.getElementById('desc-in-c1');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q" title="이 영역 안내 펼치기" style="margin-left:2px">3</button>
         <span style="font-size:13px;color:var(--t2);font-family:var(--mono);font-weight:600">DB [1310창]</span>
       </div>
       <span style="font-size:13px;color:var(--cyan);font-family:var(--mono);font-weight:700" id="in-1310-count">데이터 없음</span>
     </div>
+    <div id="desc-in-c1" style="display:none;position:relative;margin:0;padding:24px 28px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-in-c1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">페이지 닫기</button><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">3단계 — 거래 데이터 입력</div><div style="margin-bottom:18px;font-size:15px;color:var(--t1);line-height:1.7">조회 기간 동안의 <b style="color:#d9664a">거래 내역(체결 기록)</b>을 <b style="color:#d9664a">HTS 1310창</b>에서 가져와 한 번에 입력합니다.<br>입력하시면 → <b style="color:#d9664a">매매 현황·매매 복기</b> 두 탭이 이 데이터를 받아 자동 갱신됩니다.<br>데이터 입력 워크플로우의 <b style="color:#d9664a">세 번째 단계이자 마지막 단계</b>입니다.</div><div style="margin-bottom:22px"><a href="https://bramble-gardenia-301.notion.site/HTS-1310-365df6df17a2808a875ce93db3fadc7c?source=copy_link" target="_blank" rel="noopener noreferrer" class="hint-glow-salmon" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;padding:0 22px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;text-decoration:none;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">따라하기 →</a></div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">입력 항목</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">HTS 1310창</b> → 기간별 누적 손익 → 조회 일자 입력 → <b style="color:#d9664a">[조회]</b> → 스크롤 맨 아래까지 → 우클릭 <b style="color:#d9664a">[엑셀 저장]</b><br>· 저장된 엑셀에서 <b style="color:#d9664a">A열 ~ I열 전체</b> 드래그 → 우클릭 <b style="color:#d9664a">[복사]</b><br>· 아래 <b style="color:#d9664a">[+ 데이터 붙여넣기]</b> → 텍스트 영역 우클릭 <b style="color:#d9664a">[붙여넣기]</b> → <b style="color:#d9664a">[읽기 &amp; 적용]</b><br>· 우측에 데이터 요약 정보가 표시되면 완료</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">매매 현황</b> 탭의 누적 손익 곡선·월별 수익률 바차트·종목별 평가손익 바차트가 자동 갱신됩니다<br>· <b style="color:#d9664a">매매 복기</b> 탭의 핵심 성과 KPI·손절 원칙 점검·기여도 분석·복기 진단이 자동 반영됩니다<br>· 매매 종료 후 <b style="color:#d9664a">결과 학습 흐름</b>으로 자연스럽게 이어집니다 — 복기 작성·챗베이스 의견 나누기가 가능해집니다<br>· 한 번 입력한 데이터는 브라우저에 <b style="color:#d9664a">영구 저장</b>되어 새로고침 후에도 유지됩니다</div></div>
     <div class="card-b" style="padding:14px 16px">
       <div style="margin-bottom:12px;padding:10px 14px;background:rgba(0,0,0,.025);border-radius:6px;border:1px solid var(--b1);font-size:13px;color:var(--t2);line-height:1.7;display:flex;flex-direction:column;gap:8px">
         <div>DB금융투자 <b style="color:var(--t1)">1310창</b> → 기간별 누적손익 → 비밀번호 → 조회 일자 → <b style="color:#2a5fa8">우측 상단 [엑셀 저장]</b> → 엑셀에서 Ctrl+A → Ctrl+C → 붙여넣기</div>
