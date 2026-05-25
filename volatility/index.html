@@ -1486,6 +1486,15 @@ input[type=range] { background: transparent !important; border: none !important;
   0%, 100% { box-shadow: 0 0 0 0 rgba(217,102,74,.18); border-color: rgba(217,102,74,.45); }
   50%      { box-shadow: 0 0 0 4px rgba(217,102,74,.22); border-color: rgba(217,102,74,.65); }
 }
+
+/* [사용 가이드 탭] 텍스트 펄스 — 활성 아닐 때만 펄스 */
+@keyframes pulse-guide-tab {
+  0%,100% { color:#d9664a; text-shadow:0 0 0 transparent; }
+  50%     { color:rgba(217,102,74,.5); text-shadow:0 0 12px rgba(217,102,74,.4); }
+}
+.nav-tab.nav-tab-guide { color:#d9664a !important; font-weight:700 !important; }
+.nav-tab.nav-tab-guide:not(.active) { animation: pulse-guide-tab 2.4s ease-in-out infinite; }
+.nav-tab.nav-tab-guide.active { animation: none; }
 </style></head><body>
 <div class="hdr"><div class="hdr-l"><div class="logo">CL</div><div><div class="hdr-title">종합 옵션 대시보드</div><div class="hdr-sub" data-47차-목적="부제-버전만">v3.0</div></div></div><div class="hdr-r"><div class="hdr-meta" id="hdrMeta">로딩 중...</div><div class="dot"></div></div></div>
 <div class="nav">
@@ -1495,6 +1504,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:none;');document.getElementById('page-input').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});renderPT()">위험·자금 관리</div>
   <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-input').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});trOnTabEnter()">매매 현황</div>
   <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:none;');document.getElementById('page-input').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});">매매 복기</div>
+  <div class="nav-tab nav-tab-guide" style="order:-1" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:none;');document.getElementById('page-input').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:block;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});">사용 가이드</div>
 </div>
 
 <!-- [47차 4-18] alert-band 통째 숨김 — "2단계·위험방어/헤지 또는 포지션 축소 검토" + "필터 3/6 충족·변동성 총점·레짐" 모두 사라짐. ID는 유지 (JS가 ID로 채울 때 에러 방지) -->
@@ -5184,7 +5194,8 @@ input[type=range] { background: transparent !important; border: none !important;
     <div class="exp-card"><div class="exp-t">2단계(14.3%)를 어떻게 봐야 하나요?</div><div class="exp-b">약 7일 중 1일은 <b>위험방어 구간</b>이에요. <span class="hl">만기가 길수록 보수적으로</span> 봐야 해요.</div></div>
   </div></div></div>
 </div>
-<div class="page" id="page-guide" style="display:none">
+<div class="page" id="page-guide" style="display:none"><iframe src="사용법_가이드_v2.html" style="width:100%;height:calc(100vh - 112px);border:0;display:block" title="사용법 가이드"></iframe></div>
+<div id="page-guide-legacy" style="display:none">
 <style>
 /* ── 토글 가이드 스타일 ─────────────────────────── */
 .g-wrap{max-width:860px;margin:0 auto;padding:16px 0 40px;}
