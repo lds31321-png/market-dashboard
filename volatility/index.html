@@ -5690,6 +5690,19 @@ body{padding-bottom:30px}
     background-color: transparent !important;
     box-shadow: 0 4px 14px rgba(0,0,0,0.18) !important;
   }
+  /* 챗베이스 자동 인사 메시지(teaser/intro bubbles) 숨김 — 버튼·창만 사용 */
+  #chatbase-message-bubbles,
+  #chatbase-message-bubbles-iframe,
+  iframe#chatbase-message-bubbles-iframe,
+  [id^="chatbase-message-bubble"],
+  [class^="chatbase-message-bubble"],
+  [id*="chatbase-bubble-message"],
+  [class*="chatbase-bubble-message"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
 </style>
 
 <!-- [2026-05-26] 카카오톡 오픈채팅 플로팅 버튼 (챗베이스 로고 하단) -->
