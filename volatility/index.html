@@ -5709,8 +5709,8 @@ input[type=range] { background: transparent !important; border: none !important;
   </svg>
 </a>
 
-<!-- 카카오 자동 토글: 챗베이스 창 열리면 카카오 숨김 -->
-<script>!function(){"use strict";var t=document.getElementById("kakao-floating");t&&setInterval(function(){var e=document.getElementById("chatbase-bubble-window");!(!e||null===e.offsetParent)?(t.style.opacity="0",t.style.pointerEvents="none"):(t.style.opacity="1",t.style.pointerEvents="auto")},300)}();</script>
+<!-- 카카오 자동 토글: 챗베이스 창 열리면 카카오 숨김 (robust v2 — 셀렉터 광범위) -->
+<script>!function(){"use strict";var e=document.getElementById("kakao-floating");e&&setInterval(function(){for(var t=document.querySelectorAll('iframe[src*="chatbase"], iframe[id*="chatbase"], div[id*="chatbase-bubble-window"], div[id^="chatbase-bubble-window"], div[class*="chatbase"][class*="window"], div[class*="bubble-window"]'),a=!1,i=0;i<t.length;i++){var s=t[i];if("chatbase-bubble-button"!==s.id&&(null!==s.offsetParent&&s.offsetHeight>200&&s.offsetWidth>200)){a=!0;break}}a?(e.style.opacity="0",e.style.pointerEvents="none"):(e.style.opacity="1",e.style.pointerEvents="auto")},300)}();</script>
 
 <!-- 챗베이스 v2 표준 embed (봇 ID: GKR0npderMmxUGDnqAsL8) -->
 <script>!function(){window.chatbase&&"initialized"===window.chatbase("getState")||(window.chatbase=(...e)=>{window.chatbase.q||(window.chatbase.q=[]),window.chatbase.q.push(e)},window.chatbase=new Proxy(window.chatbase,{get:(e,t)=>"q"===t?e.q:(...a)=>e(t,...a)}));const e=function(){const e=document.createElement("script");e.src="https://www.chatbase.co/embed.min.js",e.id="GKR0npderMmxUGDnqAsL8",e.domain="www.chatbase.co",document.body.appendChild(e)};"complete"===document.readyState?e():window.addEventListener("load",e)}();</script>
