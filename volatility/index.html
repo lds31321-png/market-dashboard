@@ -5730,6 +5730,43 @@ input[type=range] { background: transparent !important; border: none !important;
 <!-- 챗베이스 v2 표준 embed (봇 ID: GKR0npderMmxUGDnqAsL8) -->
 <script>!function(){window.chatbase&&"initialized"===window.chatbase("getState")||(window.chatbase=(...e)=>{window.chatbase.q||(window.chatbase.q=[]),window.chatbase.q.push(e)},window.chatbase=new Proxy(window.chatbase,{get:(e,t)=>"q"===t?e.q:(...a)=>e(t,...a)}));const e=function(){const e=document.createElement("script");e.src="https://www.chatbase.co/embed.min.js",e.id="GKR0npderMmxUGDnqAsL8",e.domain="www.chatbase.co",document.body.appendChild(e)};"complete"===document.readyState?e():window.addEventListener("load",e)}();</script>
 
+
+<!-- [2026-05-27 직트 라이선스 시스템 v1] -->
+<!-- 모달 UI -->
+<div id="jikt-license-modal" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.55);align-items:center;justify-content:center;padding:20px">
+  <div style="background:#fff;border-radius:14px;max-width:480px;width:100%;padding:32px 28px;box-shadow:0 12px 48px rgba(0,0,0,.3);font-family:var(--font-n)">
+    <div style="font-size:22px;font-weight:900;color:#d9664a;margin-bottom:6px;letter-spacing:-.01em">이용 기간 만료</div>
+    <div style="font-size:13px;color:var(--t2);margin-bottom:20px;line-height:1.6">이 영역은 결제 회원 전용입니다. 결제 후 발급받은 4자리 키를 입력하세요.</div>
+
+    <div style="padding:16px 18px;background:rgba(217,102,74,.06);border:1px solid rgba(217,102,74,.25);border-radius:10px;margin-bottom:18px">
+      <div style="font-size:12px;font-weight:800;color:#d9664a;margin-bottom:6px">갱신 / 결제 안내</div>
+      <div style="font-size:14px;font-weight:700;color:var(--t1);line-height:1.6">카카오톡 오픈채팅으로 문의해 주세요.</div>
+      <a id="jikt-kakao-display" href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:10px 16px;background:#FEE500;color:#371D1E;border-radius:8px;font-size:14px;font-weight:800;text-decoration:none;transition:all .15s" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 10px rgba(254,229,0,.4)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3C6.48 3 2 6.59 2 11c0 2.95 1.97 5.51 4.92 6.92-.21.74-.79 2.78-.91 3.22-.14.55.2.55.42.4.17-.12 2.7-1.83 3.79-2.57.58.08 1.18.13 1.78.13 5.52 0 10-3.59 10-8s-4.48-8-10-8z" fill="#371D1E"/></svg>
+        <span>오픈채팅방 바로가기</span>
+      </a>
+      <div style="font-size:12px;color:var(--t3);margin-top:6px">월 1회 결제 → 새 4자리 키 카톡으로 발송</div>
+    </div>
+
+    <div style="font-size:13px;font-weight:800;color:var(--t1);margin-bottom:8px">키 입력</div>
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <input id="jikt-key-input" type="text" inputmode="numeric" maxlength="4" placeholder="0000"
+        style="flex:1;padding:14px 16px;border:2px solid rgba(217,102,74,.30);border-radius:10px;font-size:18px;font-weight:800;text-align:center;letter-spacing:.4em;font-family:var(--mono);outline:none"
+        onfocus="this.style.borderColor='#d9664a'" onblur="this.style.borderColor='rgba(217,102,74,.30)'">
+      <button onclick="jiktSubmitKey()" style="padding:14px 22px;border:none;border-radius:10px;background:#d9664a;color:#fff;font-size:14px;font-weight:900;cursor:pointer">확인</button>
+    </div>
+    <div id="jikt-key-msg" style="font-size:12px;font-weight:700;color:#d9664a;min-height:18px;margin-bottom:14px;text-align:center"></div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:14px;border-top:1px solid rgba(0,0,0,.08)">
+      <div style="font-size:12px;color:var(--t3);line-height:1.5">데이터 입력 · 매매 현황 · 매매 복기 탭은 무료로 계속 이용 가능합니다.</div>
+      <button onclick="jiktCloseModal()" style="padding:10px 18px;border:1px solid rgba(0,0,0,.15);border-radius:8px;background:#fff;color:var(--t2);font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0">닫기</button>
+    </div>
+  </div>
+</div>
+
+<script>window.JIKT_LICENSE={FREE_OPEN_UNTIL:"2026-08-31",MONTHLY_KEY:"1004",KEY_EXPIRES:"2026-09-30",KAKAO_ID:"https://open.kakao.com/o/sWnslm0d"},function(){"use strict";var t="jikt_license_key";function e(){var t=new Date;return t.setHours(0,0,0,0),t}function n(){["page-overview","page-strategy","page-position"].forEach(function(t){document.querySelectorAll(".nav-tab").forEach(function(e){var n=e.getAttribute("onclick")||"";(n.indexOf("getElementById('"+t+"').setAttribute('style','display:flex")>=0||n.indexOf("getElementById('"+t+"').setAttribute('style','display:block")>=0)&&function(t){var e=t.getAttribute("onclick");e&&(t.removeAttribute("onclick"),t.addEventListener("click",function(n){if(!window.jiktCheckPaidAccess())return n.preventDefault(),n.stopPropagation(),void window.jiktShowLockModal();try{new Function(e).call(t)}catch(t){console.error("[jikt-license] onclick 실행 실패",t)}}))}(e)})})}window.jiktCheckPaidAccess=function(){var n=e();if(n<=new Date(window.JIKT_LICENSE.FREE_OPEN_UNTIL+"T23:59:59"))return!0;var o="";try{o=localStorage.getItem(t)||""}catch(t){}if(!o)return!1;var i=new Date(window.JIKT_LICENSE.KEY_EXPIRES+"T23:59:59");return o===window.JIKT_LICENSE.MONTHLY_KEY&&n<=i},window.jiktShowLockModal=function(){var t=document.getElementById("jikt-license-modal");if(t){var e=document.getElementById("jikt-kakao-display");e&&window.JIKT_LICENSE.KAKAO_ID&&(/^https?:\/\//i.test(window.JIKT_LICENSE.KAKAO_ID)?e.setAttribute("href",window.JIKT_LICENSE.KAKAO_ID):e.textContent=window.JIKT_LICENSE.KAKAO_ID),t.style.display="flex";var n=document.getElementById("jikt-key-input");n&&(n.value="",setTimeout(function(){n.focus()},100));var o=document.getElementById("jikt-key-msg");o&&(o.textContent="")}},window.jiktCloseModal=function(){var t=document.getElementById("jikt-license-modal");t&&(t.style.display="none")},window.jiktSubmitKey=function(){var n=document.getElementById("jikt-key-input"),o=document.getElementById("jikt-key-msg"),i=(n&&n.value||"").trim();if(/^\d{4}$/.test(i)){var a=e(),c=new Date(window.JIKT_LICENSE.KEY_EXPIRES+"T23:59:59");if(i===window.JIKT_LICENSE.MONTHLY_KEY)if(a>c)o&&(o.textContent="이번 달 키 기간이 만료됐어요. 갱신 후 받은 키를 입력해 주세요.");else{try{localStorage.setItem(t,i)}catch(t){}window.jiktCloseModal(),location.reload()}else o&&(o.textContent="키가 일치하지 않습니다. 직트 카톡으로 문의해 주세요.")}else o&&(o.textContent="4자리 숫자를 입력해 주세요.")},"loading"===document.readyState?document.addEventListener("DOMContentLoaded",n):n()}();</script>
+<!-- [/jikt-license-v1] -->
+
 <!-- protect-footer 2026-05-17: 워터마크 + 저작권 + 이용약관 -->
 <style>
 #protect-footer{position:fixed;bottom:0;left:0;right:0;background:rgba(28,32,44,0.92);border-top:1px solid rgba(217,102,74,0.3);color:#d9664a;font-size:11px;text-align:center;padding:5px 12px;z-index:100;font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;line-height:1.4;user-select:none;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
