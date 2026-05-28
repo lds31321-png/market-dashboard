@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>직트 관리자 — 옵션 대시보드</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Nunito','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f7f3ed;color:#2b2424;min-height:100vh;padding:32px 24px;line-height:1.6}
+  .wrap{max-width:1280px;margin:0 auto}
+  .hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:20px;border-bottom:2px solid rgba(217,102,74,.18)}
+  .hdr h1{font-size:24px;font-weight:900;color:#d9664a;letter-spacing:-.02em}
+  .hdr .who{font-size:13px;color:#7a7368}
+  .tabs{display:flex;gap:8px;margin-bottom:24px;border-bottom:1px solid rgba(0,0,0,.10);flex-wrap:wrap}
+  .tab{padding:10px 18px;border:none;background:transparent;cursor:pointer;font-size:14px;font-weight:700;color:#7a7368;border-bottom:3px solid transparent;font-family:inherit;transition:all .15s}
+  .tab.active{color:#d9664a;border-bottom-color:#d9664a}
+  .tab:hover{color:#d9664a}
+  .panel{display:none;background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.04);border:1px solid rgba(217,102,74,.08)}
+  .panel.active{display:block}
+  .panel h2{font-size:16px;font-weight:800;color:#2b2424;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+  .panel h2 .meta{font-size:12px;font-weight:600;color:#7a7368}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border-bottom:1px solid rgba(0,0,0,.06);padding:12px 10px;text-align:left;vertical-align:middle}
+  th{background:rgba(217,102,74,.05);font-weight:800;color:#d9664a;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+  tr:hover{background:rgba(217,102,74,.03)}
+  .badge{display:inline-block;padding:3px 10px;border-radius:5px;font-size:11px;font-weight:800;letter-spacing:.3px}
+  .badge-paid{background:rgba(26,122,74,.12);color:#1a7a4a}
+  .badge-trial{background:rgba(254,229,0,.20);color:#9a7d00}
+  .badge-free{background:rgba(0,0,0,.06);color:#7a7368}
+  .badge-suspended{background:rgba(200,48,48,.10);color:#c83030}
+  .btn{padding:6px 12px;border-radius:6px;border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;margin-right:4px}
+  .btn-primary{background:#d9664a;color:#fff}
+  .btn-ghost{background:rgba(217,102,74,.10);color:#d9664a;border:1px solid rgba(217,102,74,.30)}
+  .btn-danger{background:rgba(200,48,48,.10);color:#c83030;border:1px solid rgba(200,48,48,.30)}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px}
+  .stat{background:#fff;border-radius:10px;padding:18px 20px;border:1px solid rgba(217,102,74,.10)}
+  .stat-label{font-size:12px;color:#7a7368;margin-bottom:4px;font-weight:700}
+  .stat-value{font-size:24px;font-weight:900;color:#d9664a;letter-spacing:-.02em}
+  .stat-sub{font-size:11px;color:#a89e95;margin-top:2px}
+  .empty{padding:40px;text-align:center;color:#a89e95;font-size:13px}
+  input,select{padding:8px 12px;border-radius:6px;border:1.5px solid rgba(217,102,74,.20);font-size:13px;font-family:inherit;outline:none}
+  input:focus,select:focus{border-color:#d9664a}
+  .login-required{max-width:480px;margin:80px auto;background:#fff;border-radius:14px;padding:40px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,.08)}
+  .login-required h1{font-size:22px;color:#d9664a;font-weight:900;margin-bottom:12px}
+  .login-required p{font-size:14px;color:#7a7368;margin-bottom:20px}
+</style>
+</head>
+<body>
+<div id="app-root">
+  <div class="login-required" id="login-required">
+    <h1>관리자 로그인 필요</h1>
+    <p>직트 본인 계정으로만 접속 가능합니다.</p>
+    <a class="btn btn-primary" href="./login.html" style="text-decoration:none;display:inline-block;padding:12px 24px;font-size:14px">로그인하기</a>
+  </div>
+
+  <div class="wrap" id="admin-wrap" style="display:none">
+    <div class="hdr">
+      <h1>직트 관리자 · 옵션 대시보드</h1>
+      <div class="who" id="who"></div>
+    </div>
+
+    <div class="stats" id="stats">
+      <div class="stat"><div class="stat-label">총 회원</div><div class="stat-value" id="st-users">-</div></div>
+      <div class="stat"><div class="stat-label">이번 달 결제</div><div class="stat-value" id="st-pay-count">-</div><div class="stat-sub" id="st-pay-sub"></div></div>
+      <div class="stat"><div class="stat-label">이번 달 매출</div><div class="stat-value" id="st-revenue">-</div><div class="stat-sub" id="st-revenue-sub"></div></div>
+      <div class="stat"><div class="stat-label">재등록 요청</div><div class="stat-value" id="st-reset">-</div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="users">회원</button>
+      <button class="tab" data-tab="payments">결제</button>
+      <button class="tab" data-tab="devices">디바이스 요청</button>
+      <button class="tab" data-tab="revenue">매출 집계</button>
+    </div>
+
+    <div class="panel active" id="panel-users">
+      <h2>회원 목록 <span class="meta" id="users-meta"></span></h2>
+      <div id="users-table" class="empty">로딩 중...</div>
+    </div>
+
+    <div class="panel" id="panel-payments">
+      <h2>결제 내역
+        <span><input type="month" id="payments-month" style="font-size:12px"></span>
+      </h2>
+      <div id="payments-table" class="empty">월 선택 후 조회</div>
+    </div>
+
+    <div class="panel" id="panel-devices">
+      <h2>디바이스 재등록 요청</h2>
+      <div id="devices-table" class="empty">로딩 중...</div>
+    </div>
+
+    <div class="panel" id="panel-revenue">
+      <h2>월 매출 집계
+        <span><input type="month" id="revenue-month" style="font-size:12px"></span>
+      </h2>
+      <div id="revenue-content" class="empty">월 선택 후 조회</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* 백엔드 API URL — 직트가 Cloudflare 배포 후 실제 URL로 교체 */
+window.JIKT_API = 'https://jikt-dashboard-api.workers.dev';   /* TODO */
+
+(function(){
+  var token = (function(){
+    var hash = location.hash;
+    if (hash.indexOf('#token=') === 0) {
+      var t = decodeURIComponent(hash.split('=')[1].split('&')[0]);
+      localStorage.setItem('jikt_token', t);
+      history.replaceState(null, '', location.pathname);
+    }
+    return localStorage.getItem('jikt_token');
+  })();
+
+  if (!token) {
+    document.getElementById('login-required').style.display = 'block';
+    return;
+  }
+
+  api('GET', '/auth/me', null, token).then(function(res){
+    if (!res || !res.ok || !res.user) {
+      document.getElementById('login-required').style.display = 'block';
+      return;
+    }
+    document.getElementById('login-required').style.display = 'none';
+    document.getElementById('admin-wrap').style.display = 'block';
+    document.getElementById('who').textContent = res.user.email + ' (' + res.user.name + ')';
+    initApp();
+  }).catch(function(){
+    document.getElementById('login-required').style.display = 'block';
+  });
+
+  function api(method, path, body, t) {
+    return fetch(window.JIKT_API + path, {
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + (t || token)
+      },
+      body: body ? JSON.stringify(body) : null
+    }).then(function(r){ return r.json(); });
+  }
+
+  function initApp() {
+    loadStats();
+
+    document.querySelectorAll('.tab').forEach(function(tab){
+      tab.addEventListener('click', function(){
+        document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+        document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+        tab.classList.add('active');
+        document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+        if (tab.dataset.tab === 'users') loadUsers();
+        if (tab.dataset.tab === 'devices') loadDevices();
+      });
+    });
+
+    loadUsers();
+    loadDevices();
+
+    var now = new Date();
+    var ym = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+    document.getElementById('payments-month').value = ym;
+    document.getElementById('revenue-month').value = ym;
+    document.getElementById('payments-month').addEventListener('change', loadPayments);
+    document.getElementById('revenue-month').addEventListener('change', loadRevenue);
+    loadPayments();
+    loadRevenue();
+  }
+
+  function loadStats() {
+    Promise.all([
+      api('GET', '/admin/users?page=1&pageSize=1'),
+      api('GET', '/admin/revenue'),
+      api('GET', '/admin/device/requests')
+    ]).then(function(arr){
+      document.getElementById('st-users').textContent = arr[0].total || 0;
+      var rev = arr[1] || {};
+      document.getElementById('st-pay-count').textContent = (rev.count || 0) + '건';
+      document.getElementById('st-pay-sub').textContent = rev.month || '';
+      document.getElementById('st-revenue').textContent = ((rev.net || 0)/10000).toFixed(0) + '만원';
+      document.getElementById('st-revenue-sub').textContent = '환불 ' + ((rev.refund || 0)/10000).toFixed(0) + '만원';
+      document.getElementById('st-reset').textContent = (arr[2].requests || []).length;
+    });
+  }
+
+  function loadUsers() {
+    var box = document.getElementById('users-table');
+    box.innerHTML = '로딩 중...';
+    api('GET', '/admin/users?page=1&pageSize=50').then(function(res){
+      if (!res.ok) return box.innerHTML = '<div class="empty">불러오기 실패</div>';
+      if (res.users.length === 0) return box.innerHTML = '<div class="empty">회원 없음</div>';
+      document.getElementById('users-meta').textContent = '전체 ' + res.total + '명';
+      var rows = res.users.map(function(u){
+        return '<tr><td>' + esc(u.email) + '</td><td>' + esc(u.name) + '</td>'
+          + '<td>' + u.provider + '</td>'
+          + '<td>' + planBadge(u) + '</td>'
+          + '<td>' + shortDate(u.paidUntil) + '</td>'
+          + '<td>' + shortDate(u.createdAt) + '</td>'
+          + '<td>'
+          + (u.status==='active' ? '<button class="btn btn-danger" onclick="adminSuspend(\''+u.userId+'\')">정지</button>' : '<button class="btn btn-primary" onclick="adminReactivate(\''+u.userId+'\')">복구</button>')
+          + ' <button class="btn btn-ghost" onclick="adminGrant(\''+u.userId+'\')">30일 부여</button>'
+          + '</td></tr>';
+      }).join('');
+      box.innerHTML = '<table><tr><th>이메일</th><th>이름</th><th>가입</th><th>플랜</th><th>만료</th><th>가입일</th><th>조작</th></tr>' + rows + '</table>';
+    });
+  }
+
+  function loadPayments() {
+    var month = document.getElementById('payments-month').value.replace('-', '');
+    var box = document.getElementById('payments-table');
+    box.innerHTML = '로딩 중...';
+    api('GET', '/admin/payments?month=' + month).then(function(res){
+      if (!res.ok || !res.payments.length) return box.innerHTML = '<div class="empty">결제 없음</div>';
+      var rows = res.payments.map(function(p){
+        return '<tr><td>' + shortDate(p.approvedAt) + '</td>'
+          + '<td>' + esc(p.userId.slice(-8)) + '</td>'
+          + '<td>' + (p.amount/10000).toFixed(0) + '만원</td>'
+          + '<td>' + esc(p.method || '') + ' ' + esc(p.cardCompany || '') + '</td>'
+          + '<td>' + esc(p.status) + '</td>'
+          + '<td>' + (p.refundAmount ? (p.refundAmount/10000).toFixed(0) + '만원' : '-') + '</td></tr>';
+      }).join('');
+      box.innerHTML = '<table><tr><th>승인일시</th><th>회원</th><th>금액</th><th>수단</th><th>상태</th><th>환불</th></tr>' + rows + '</table>';
+    });
+  }
+
+  function loadDevices() {
+    var box = document.getElementById('devices-table');
+    box.innerHTML = '로딩 중...';
+    api('GET', '/admin/device/requests').then(function(res){
+      if (!res.ok || !res.requests.length) return box.innerHTML = '<div class="empty">재등록 요청 없음</div>';
+      var rows = res.requests.map(function(r){
+        var u = r.user || {};
+        return '<tr><td>' + esc(u.email || '') + '</td><td>' + esc(u.name || '') + '</td>'
+          + '<td>' + esc(r.reason || '') + '</td>'
+          + '<td>' + shortDate(r.requestedAt) + '</td>'
+          + '<td><button class="btn btn-primary" onclick="adminApproveDevice(\''+r.userId+'\')">승인</button></td></tr>';
+      }).join('');
+      box.innerHTML = '<table><tr><th>이메일</th><th>이름</th><th>사유</th><th>요청일</th><th>처리</th></tr>' + rows + '</table>';
+    });
+  }
+
+  function loadRevenue() {
+    var month = document.getElementById('revenue-month').value.replace('-', '');
+    var box = document.getElementById('revenue-content');
+    box.innerHTML = '로딩 중...';
+    api('GET', '/admin/revenue?month=' + month).then(function(res){
+      if (!res.ok) return box.innerHTML = '<div class="empty">불러오기 실패</div>';
+      box.innerHTML = '<div class="stats">'
+        + '<div class="stat"><div class="stat-label">결제 건수</div><div class="stat-value">' + res.count + '건</div></div>'
+        + '<div class="stat"><div class="stat-label">총 매출</div><div class="stat-value">' + (res.revenue/10000).toFixed(0) + '만원</div></div>'
+        + '<div class="stat"><div class="stat-label">환불</div><div class="stat-value">' + (res.refund/10000).toFixed(0) + '만원</div></div>'
+        + '<div class="stat"><div class="stat-label">순매출</div><div class="stat-value">' + (res.net/10000).toFixed(0) + '만원</div></div>'
+        + '</div>';
+    });
+  }
+
+  window.adminSuspend = function(uid){
+    if (!confirm('정말 정지하시겠어요?')) return;
+    api('POST', '/admin/users/' + uid + '/suspend').then(function(){ loadUsers(); loadStats(); });
+  };
+  window.adminReactivate = function(uid){
+    api('POST', '/admin/users/' + uid + '/reactivate').then(function(){ loadUsers(); loadStats(); });
+  };
+  window.adminGrant = function(uid){
+    var days = prompt('며칠 부여? (기본 30)', '30');
+    if (!days) return;
+    api('POST', '/admin/users/' + uid + '/grant?days=' + days).then(function(){ loadUsers(); loadStats(); });
+  };
+  window.adminApproveDevice = function(uid){
+    if (!confirm('재등록 승인하시겠어요? 회원이 다음 로그인 시 새 기기 등록됩니다.')) return;
+    api('POST', '/admin/device/' + uid + '/approve').then(function(){ loadDevices(); loadStats(); });
+  };
+
+  function esc(s){ return String(s || '').replace(/[<>&]/g, function(c){ return ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]); }); }
+  function shortDate(s){ if(!s)return '-'; return s.slice(0,10); }
+  function planBadge(u){
+    if (u.status === 'suspended') return '<span class="badge badge-suspended">정지</span>';
+    var now = Date.now();
+    if (u.paidUntil && new Date(u.paidUntil).getTime() > now) return '<span class="badge badge-paid">유료</span>';
+    if (u.trialUntil && new Date(u.trialUntil).getTime() > now) return '<span class="badge badge-trial">체험</span>';
+    return '<span class="badge badge-free">무료</span>';
+  }
+})();
+</script>
+</body>
+</html>
