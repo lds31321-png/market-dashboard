@@ -5831,23 +5831,24 @@ body{padding-bottom:62px}
     history.replaceState(null, '', location.pathname);
   }
 
-  /* 3) hdr-r 안 분석일 바로 아래에 새 줄로 위젯 삽입 (강제 wrap) */
+  /* 3) hdr-r의 hdr-meta를 통째로 column 정렬로 + 위젯을 hdr-meta 다음 자식으로 추가 */
   function render() {
     var hdrR = document.querySelector('.hdr-r');
-    if (!hdrR) return;
+    var hdrMeta = document.querySelector('.hdr-meta');
+    if (!hdrR || !hdrMeta) return;
 
-    /* hdr-r의 layout을 wrap 가능하게 inline 스타일로 강제 변경 */
-    hdrR.style.flexWrap = 'wrap';
-    hdrR.style.justifyContent = 'flex-end';
-    hdrR.style.alignItems = 'center';
-
-    /* 기존 위젯 제거 (재렌더 시 중복 방지) */
+    /* 기존 위젯 제거 */
     var oldBar = document.getElementById('jikt-auth-rowbar');
     if (oldBar) oldBar.remove();
 
+    /* hdr-meta의 부모인 hdr-r을 column 정렬로 강제 */
+    hdrR.style.flexDirection = 'column';
+    hdrR.style.alignItems = 'flex-end';
+    hdrR.style.gap = '6px';
+
     var bar = document.createElement('div');
     bar.id = 'jikt-auth-rowbar';
-    bar.style.cssText = 'flex-basis:100%;width:100%;display:flex;justify-content:flex-end;align-items:center;margin-top:6px';
+    bar.style.cssText = 'display:flex;justify-content:flex-end;align-items:center;width:auto';
 
     var data = null;
     try { data = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch(e){}
@@ -5872,8 +5873,12 @@ body{padding-bottom:62px}
       bar.appendChild(loginBtn);
     }
 
-    /* hdr-r 안 마지막 자식으로 추가 — flex-wrap에 의해 분석일+점 다음 줄로 */
-    hdrR.appendChild(bar);
+    /* hdr-meta 다음 자식으로 삽입 (column 정렬에 의해 자연스럽게 아래로) */
+    if (hdrMeta.nextSibling) {
+      hdrR.insertBefore(bar, hdrMeta.nextSibling);
+    } else {
+      hdrR.appendChild(bar);
+    }
   }
 
   /* 4) 환영 토스트 */
