@@ -5787,14 +5787,15 @@ body{padding-bottom:62px}
   <div class="pf-row pf-copy">무단 복제·배포·2차 가공은 저작권법에 따라 보호받습니다<span class="sep">|</span><a class="pf-link" href="./terms.html" target="_blank" rel="noopener noreferrer">이용약관</a><span class="sep">|</span><a class="pf-link" href="./refund.html" target="_blank" rel="noopener noreferrer">환불정책</a><span class="sep">|</span><a class="pf-link" href="./privacy.html" target="_blank" rel="noopener noreferrer">개인정보처리방침</a></div>
 </div>
 
-<!-- [2026-05-29 OAuth 회원 표시 위젯 v3 — 헤더 아래 별도 줄] -->
+<!-- [2026-05-29 OAuth 회원 표시 위젯 v4 — 헤더 우측 날짜 하단 새 줄] -->
 <style>
-  #jikt-auth-rowbar{display:flex;justify-content:flex-end;align-items:center;padding:8px 20px;background:#fff;border-bottom:1px solid rgba(0,0,0,.06)}
-  #jikt-auth-box{display:inline-flex;align-items:center;gap:8px;padding:5px 10px;background:#fff;border:1px solid rgba(0,0,0,.10);border-radius:7px;font-family:inherit;font-size:12px;line-height:1}
+  .hdr{flex-wrap:wrap !important}
+  #jikt-auth-rowbar{flex-basis:100%;display:flex;justify-content:flex-end;align-items:center;margin-top:8px;padding-top:6px}
+  #jikt-auth-box{display:inline-flex;align-items:center;gap:8px;padding:5px 10px;background:#fff;border:1px solid rgba(217,102,74,.35);border-radius:7px;font-family:inherit;font-size:12px;line-height:1}
   #jikt-auth-box .greet{font-weight:700;color:#5a544f;white-space:nowrap;letter-spacing:-.01em}
   #jikt-auth-box .greet strong{color:#d9664a;font-weight:900}
-  #jikt-auth-box .logout{padding:3px 8px;background:#fff;border:1px solid rgba(0,0,0,.10);color:#7a7368;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s}
-  #jikt-auth-box .logout:hover{border-color:#d9664a;color:#d9664a}
+  #jikt-auth-box .logout{padding:3px 8px;background:rgba(217,102,74,.10);border:1px solid rgba(217,102,74,.30);color:#d9664a;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s}
+  #jikt-auth-box .logout:hover{background:#d9664a;color:#fff;border-color:#d9664a}
   #jikt-auth-login{display:inline-block;padding:5px 12px;background:#fff;border:1px solid #d9664a;color:#d9664a;border-radius:7px;font-size:12px;font-weight:800;text-decoration:none;font-family:inherit;transition:all .15s;line-height:1.4}
   #jikt-auth-login:hover{background:#d9664a;color:#fff}
   .jikt-auth-toast{position:fixed;top:62px;right:14px;z-index:9999;background:#1a7a4a;color:#fff;padding:13px 18px;border-radius:10px;font-size:13.5px;font-weight:800;box-shadow:0 8px 24px rgba(26,122,74,.4);animation:jaIn .35s ease both,jaOut .35s ease 3.5s forwards;letter-spacing:-.01em}
@@ -5831,7 +5832,7 @@ body{padding-bottom:62px}
     history.replaceState(null, '', location.pathname);
   }
 
-  /* 3) 헤더 바로 아래에 별도 줄 위젯 삽입 */
+  /* 3) 헤더(.hdr) 안 마지막에 새 줄로 위젯 삽입 (.hdr-r의 분석일 아래 위치) */
   function render() {
     var hdr = document.querySelector('.hdr');
     if (!hdr) return;
@@ -5840,7 +5841,7 @@ body{padding-bottom:62px}
     var oldBar = document.getElementById('jikt-auth-rowbar');
     if (oldBar) oldBar.remove();
 
-    /* 새 별도 줄 생성 */
+    /* 새 별도 줄 생성 — .hdr 안 마지막 자식으로 추가 (.hdr의 flex-wrap에 의해 새 줄) */
     var bar = document.createElement('div');
     bar.id = 'jikt-auth-rowbar';
 
@@ -5854,7 +5855,7 @@ body{padding-bottom:62px}
                       '<button class="logout">로그아웃</button>';
       box.querySelector('.greet strong').textContent = data.name || '회원';
       bar.appendChild(box);
-      hdr.parentNode.insertBefore(bar, hdr.nextSibling);
+      hdr.appendChild(bar);
       box.querySelector('.logout').addEventListener('click', function(){
         if (!confirm('로그아웃 하시겠어요?')) return;
         try { localStorage.removeItem(KEY); } catch(e){}
@@ -5866,7 +5867,7 @@ body{padding-bottom:62px}
       loginBtn.href = './login.html';
       loginBtn.textContent = '로그인';
       bar.appendChild(loginBtn);
-      hdr.parentNode.insertBefore(bar, hdr.nextSibling);
+      hdr.appendChild(bar);
     }
   }
 
