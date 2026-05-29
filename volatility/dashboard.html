@@ -1499,6 +1499,19 @@ input[type=range] { background: transparent !important; border: none !important;
 .nav-tab.nav-tab-guide:not(.active) { animation: pulse-guide-tab 2.4s ease-in-out infinite; }
 .nav-tab.nav-tab-guide.active { animation: none; }
 </style></head><body>
+
+<!-- [2026-05-29 OAuth 강제 로그인 차단 v1] body 시작 직후 인라인 차단 — 콘텐츠 렌더링 전 redirect -->
+<script>
+(function(){
+  var auth = null;
+  try { auth = JSON.parse(localStorage.getItem('jikt_auth') || 'null'); } catch(e){}
+  /* jikt_auth가 없으면 로그인 페이지로 즉시 이동 (대시보드 차단) */
+  if (!auth || !auth.uid) {
+    location.replace('./login.html?from=dashboard');
+  }
+})();
+</script>
+
 <div class="hdr"><div class="hdr-l"><div class="logo">CL</div><div><div class="hdr-title">종합 옵션 대시보드</div><div class="hdr-sub" data-47차-목적="부제-버전만">v3.0</div></div></div><div class="hdr-r"><div class="hdr-meta" id="hdrMeta">로딩 중...</div><div class="dot"></div></div></div>
 <div class="nav">
   <div class="nav-tab active" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:none;');document.getElementById('page-input').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});">데이터 입력</div>
