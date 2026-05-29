@@ -55,8 +55,16 @@
   .nav{display:flex;align-items:center;gap:18px}
   .nav a{font-size:13px;color:var(--t2);font-weight:700}
   .nav a:hover{color:var(--salmon)}
-  .btn-login{padding:9px 16px;background:#fff;border:1.5px solid var(--salmon);color:var(--salmon);border-radius:9px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .15s}
+  .btn-login{padding:9px 16px;background:#fff;border:1.5px solid var(--salmon);color:var(--salmon);border-radius:9px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;transition:all .15s;text-decoration:none;display:inline-block}
   .btn-login:hover{background:var(--salmon);color:#fff}
+  .user-area{display:flex;align-items:center;gap:10px}
+  .user-greet{font-size:13px;font-weight:700;color:var(--t2);white-space:nowrap}
+  .user-greet strong{color:var(--salmon);font-weight:900}
+  .btn-logout{padding:7px 12px;background:transparent;border:1px solid var(--b2);color:var(--t3);border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s}
+  .btn-logout:hover{border-color:var(--salmon);color:var(--salmon)}
+  .login-toast{position:fixed;top:80px;right:24px;background:var(--green);color:#fff;padding:14px 20px;border-radius:10px;font-size:14px;font-weight:800;box-shadow:0 8px 24px rgba(26,122,74,.4);z-index:200;animation:toastIn .35s ease both,toastOut .35s ease 3.5s forwards}
+  @keyframes toastIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes toastOut{to{opacity:0;transform:translateY(-12px)}}
 
   .hero{padding:80px 20px 60px;text-align:center;background:var(--grad-bg)}
   .hero-tag{display:inline-block;padding:6px 14px;background:var(--salmon-a);color:var(--salmon);border-radius:99px;font-size:12px;font-weight:800;letter-spacing:.5px;margin-bottom:20px}
@@ -324,7 +332,9 @@
       <a href="#system">시스템 소개</a>
       <a href="#price">가격</a>
       <a href="#risk">투자 위험 고지</a>
-      <a class="btn-login" href="./login.html">로그인</a>
+      <div id="user-area">
+        <a class="btn-login" href="./login.html">로그인</a>
+      </div>
     </nav>
   </div>
 </header>
@@ -858,6 +868,89 @@
     </div>
   </div>
 </footer>
+
+<script>
+/* ── 로그인 상태 표시 ─────────────────────────── */
+(function(){
+  var KEY = 'jikt_auth';
+  var BASE = './';
+
+  /* 1) URL fragment에서 token·uid·name 읽기 (OAuth 콜백 직후) */
+  if (location.hash && location.hash.indexOf('token=') !== -1) {
+    var p = new URLSearchParams(location.hash.slice(1));
+    var token = p.get('token');
+    var uid = p.get('uid');
+    var name = p.get('name') || '';
+    var provider = p.get('provider') || '';
+    if (token && uid) {
+      try {
+        localStorage.setItem(KEY, JSON.stringify({
+          token: token, uid: uid, name: name, provider: provider,
+          loginAt: Date.now()
+        }));
+      } catch(e){}
+      /* URL 정리 (token 노출 방지) */
+      history.replaceState(null, '', BASE);
+      /* 환영 토스트 */
+      showToast((name || '회원') + '님, 로그인되었습니다.');
+    }
+  }
+
+  /* 2) URL 파라미터에서 login=ok 표시 정리 */
+  if (location.search && location.search.indexOf('login=') !== -1) {
+    var qs = new URLSearchParams(location.search);
+    if (qs.get('login') === 'fail') {
+      var err = qs.get('error') || 'unknown';
+      showToast('로그인 실패: ' + err, true);
+    }
+    history.replaceState(null, '', BASE);
+  }
+
+  /* 3) 헤더 업데이트 — 로그인 상태에 따라 */
+  function renderUserArea() {
+    var area = document.getElementById('user-area');
+    if (!area) return;
+    var data = null;
+    try { data = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch(e){}
+    if (data && data.uid) {
+      var label = data.name ? (escapeHtml(data.name) + '님') : '회원님';
+      area.innerHTML =
+        '<div class="user-area">' +
+          '<span class="user-greet"><strong>' + label + '</strong> 환영합니다</span>' +
+          '<button class="btn-logout" id="btn-logout">로그아웃</button>' +
+        '</div>';
+      document.getElementById('btn-logout').addEventListener('click', function(){
+        if (!confirm('로그아웃 하시겠어요?')) return;
+        try { localStorage.removeItem(KEY); } catch(e){}
+        location.reload();
+      });
+    }
+  }
+
+  /* 4) 환영 토스트 */
+  function showToast(msg, isError) {
+    var t = document.createElement('div');
+    t.className = 'login-toast';
+    if (isError) t.style.background = '#c83030';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function(){ try { t.remove(); } catch(e){} }, 4500);
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+
+  /* 페이지 로드 후 헤더 업데이트 */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderUserArea);
+  } else {
+    renderUserArea();
+  }
+})();
+</script>
 
 </body>
 </html>
