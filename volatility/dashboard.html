@@ -1500,15 +1500,68 @@ input[type=range] { background: transparent !important; border: none !important;
 .nav-tab.nav-tab-guide.active { animation: none; }
 </style></head><body>
 
-<!-- [2026-05-29 OAuth 강제 로그인 차단 v1] body 시작 직후 인라인 차단 — 콘텐츠 렌더링 전 redirect -->
+<!-- [2026-05-29 OAuth 강제 로그인 차단 + 디바이스 검증 v2] body 시작 직후 인라인 차단 -->
 <script>
 (function(){
+  var KEY = 'jikt_auth';
+  var DEV_KEY = 'jikt_device_id';
+  var API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';
+
+  /* 1) 로그인 안 됐으면 즉시 redirect */
   var auth = null;
-  try { auth = JSON.parse(localStorage.getItem('jikt_auth') || 'null'); } catch(e){}
-  /* jikt_auth가 없으면 로그인 페이지로 즉시 이동 (대시보드 차단) */
-  if (!auth || !auth.uid) {
+  try { auth = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch(e){}
+  if (!auth || !auth.uid || !auth.token) {
     location.replace('./login.html?from=dashboard');
+    return;
   }
+
+  /* 2) 디바이스 ID 가져오기 (없으면 새로 생성·저장) */
+  var deviceId = null;
+  try { deviceId = localStorage.getItem(DEV_KEY); } catch(e){}
+  if (!deviceId) {
+    /* 영구 device_id 생성 — 한 번만 */
+    var rnd = '';
+    var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    for (var i = 0; i < 24; i++) rnd += chars.charAt(Math.floor(Math.random() * chars.length));
+    deviceId = 'dev_' + Date.now().toString(36) + '_' + rnd;
+    try { localStorage.setItem(DEV_KEY, deviceId); } catch(e){}
+    /* 첫 진입: 워커에 등록 (다른 기기 덮어쓰기) */
+    fetch(API + '/device/register', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + auth.token,
+        'Content-Type': 'application/json',
+        'X-Device-Id': deviceId
+      },
+      body: JSON.stringify({ deviceId: deviceId })
+    }).catch(function(){});
+  }
+
+  /* 3) 디바이스 검증 — 다른 기기에서 로그인했는지 확인 */
+  fetch(API + '/auth/check', {
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + auth.token,
+      'X-Device-Id': deviceId
+    }
+  }).then(function(r){ return r.json(); }).then(function(j){
+    if (!j.ok && j.reason === 'different_device') {
+      /* 다른 기기에서 로그인됨 → 자동 로그아웃 */
+      try {
+        localStorage.removeItem(KEY);
+        localStorage.removeItem(DEV_KEY);
+      } catch(e){}
+      alert('다른 기기에서 로그인되어 이 기기에서는 자동 로그아웃됩니다.');
+      location.replace('./login.html?from=device_replaced');
+    } else if (!j.ok && j.reason === 'no_session') {
+      /* 세션 만료 → 로그인 페이지로 */
+      try { localStorage.removeItem(KEY); } catch(e){}
+      location.replace('./login.html?from=session_expired');
+    }
+    /* not_registered 인 경우는 첫 진입 fetch가 등록을 시도했으므로 무시 */
+  }).catch(function(){
+    /* 네트워크 에러는 무시 (오프라인 시 대시보드 계속 사용 가능) */
+  });
 })();
 </script>
 
