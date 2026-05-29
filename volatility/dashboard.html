@@ -5786,5 +5786,109 @@ body{padding-bottom:62px}
   <div class="pf-row pf-disclaim">⚠️ 본 서비스는 옵션 매도 분석 정보 도구이며 특정 종목의 매수·매도 추천이 아닙니다. 제공 정보는 모두 참고용이며 투자 결정과 손실의 책임은 사용자 본인에게 있습니다. 본 서비스는 어떠한 수익도 보장하지 않습니다.</div>
   <div class="pf-row pf-copy">무단 복제·배포·2차 가공은 저작권법에 따라 보호받습니다<span class="sep">|</span><a class="pf-link" href="./terms.html" target="_blank" rel="noopener noreferrer">이용약관</a><span class="sep">|</span><a class="pf-link" href="./refund.html" target="_blank" rel="noopener noreferrer">환불정책</a><span class="sep">|</span><a class="pf-link" href="./privacy.html" target="_blank" rel="noopener noreferrer">개인정보처리방침</a></div>
 </div>
+
+<!-- [2026-05-29 OAuth 회원 표시 위젯 v1] -->
+<style>
+  #jikt-auth-widget{position:fixed;top:12px;right:14px;z-index:9000;display:none;background:rgba(255,255,255,.96);border:1px solid rgba(217,102,74,.18);border-radius:10px;padding:8px 12px 8px 14px;box-shadow:0 4px 14px rgba(0,0,0,.08);font-family:'Nunito','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:13px;align-items:center;gap:10px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+  #jikt-auth-widget.show{display:flex}
+  #jikt-auth-widget .greet{font-weight:700;color:#5a544f;white-space:nowrap;letter-spacing:-.01em}
+  #jikt-auth-widget .greet strong{color:#d9664a;font-weight:900;margin-right:3px}
+  #jikt-auth-widget .logout{padding:5px 10px;background:transparent;border:1px solid rgba(0,0,0,.12);color:#7a7368;border-radius:6px;font-size:11.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s}
+  #jikt-auth-widget .logout:hover{border-color:#d9664a;color:#d9664a}
+  #jikt-auth-login{position:fixed;top:12px;right:14px;z-index:9000;display:none;padding:8px 14px;background:#fff;border:1.5px solid #d9664a;color:#d9664a;border-radius:9px;font-size:13px;font-weight:800;text-decoration:none;font-family:'Nunito','Noto Sans KR',sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.06);transition:all .15s}
+  #jikt-auth-login.show{display:inline-block}
+  #jikt-auth-login:hover{background:#d9664a;color:#fff}
+  .jikt-auth-toast{position:fixed;top:62px;right:14px;z-index:9001;background:#1a7a4a;color:#fff;padding:13px 18px;border-radius:10px;font-size:13.5px;font-weight:800;box-shadow:0 8px 24px rgba(26,122,74,.4);animation:jaIn .35s ease both,jaOut .35s ease 3.5s forwards;letter-spacing:-.01em}
+  @keyframes jaIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes jaOut{to{opacity:0;transform:translateY(-12px)}}
+</style>
+
+<div id="jikt-auth-widget" role="status">
+  <span class="greet"><strong id="ja-name">회원</strong>님 환영합니다</span>
+  <button class="logout" id="ja-logout">로그아웃</button>
+</div>
+<a id="jikt-auth-login" href="./login.html">로그인</a>
+
+<script>
+(function(){
+  var KEY = 'jikt_auth';
+
+  /* 1) URL fragment에서 token·uid·name 읽기 (OAuth 콜백 직접 진입 대비) */
+  if (location.hash && location.hash.indexOf('token=') !== -1) {
+    var p = new URLSearchParams(location.hash.slice(1));
+    var token = p.get('token');
+    var uid = p.get('uid');
+    var name = p.get('name') || '';
+    var provider = p.get('provider') || '';
+    if (token && uid) {
+      try {
+        localStorage.setItem(KEY, JSON.stringify({
+          token: token, uid: uid, name: name, provider: provider,
+          loginAt: Date.now()
+        }));
+      } catch(e){}
+      history.replaceState(null, '', location.pathname);
+      showToast((name || '회원') + '님, 로그인되었습니다.');
+    }
+  }
+
+  /* 2) URL 파라미터 정리 */
+  if (location.search && location.search.indexOf('login=') !== -1) {
+    var qs = new URLSearchParams(location.search);
+    if (qs.get('login') === 'fail') {
+      var err = qs.get('error') || 'unknown';
+      showToast('로그인 실패: ' + err, true);
+    }
+    history.replaceState(null, '', location.pathname);
+  }
+
+  /* 3) 위젯 표시 */
+  function render() {
+    var data = null;
+    try { data = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch(e){}
+    var widget = document.getElementById('jikt-auth-widget');
+    var loginBtn = document.getElementById('jikt-auth-login');
+    if (data && data.uid) {
+      var nameEl = document.getElementById('ja-name');
+      if (nameEl) nameEl.textContent = escapeHtml(data.name || '회원');
+      if (widget) widget.classList.add('show');
+      if (loginBtn) loginBtn.classList.remove('show');
+      var btn = document.getElementById('ja-logout');
+      if (btn) btn.addEventListener('click', function(){
+        if (!confirm('로그아웃 하시겠어요?')) return;
+        try { localStorage.removeItem(KEY); } catch(e){}
+        location.reload();
+      });
+    } else {
+      if (widget) widget.classList.remove('show');
+      if (loginBtn) loginBtn.classList.add('show');
+    }
+  }
+
+  /* 4) 환영 토스트 */
+  function showToast(msg, isError) {
+    var t = document.createElement('div');
+    t.className = 'jikt-auth-toast';
+    if (isError) t.style.background = '#c83030';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function(){ try { t.remove(); } catch(e){} }, 4500);
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', render);
+  } else {
+    render();
+  }
+})();
+</script>
+<!-- [/OAuth 회원 표시 위젯 v1] -->
+
 </body>
 </html>
