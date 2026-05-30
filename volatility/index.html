@@ -3,6 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<script>
+/* ─── 랜딩 우회 스크립트 — 2026-05-30 추가
+   1) 로그인 콜백(#token=...)으로 돌아온 경우 → fragment 파싱·저장 후 대시보드 직행
+   2) 이미 로그인된 사용자 → 랜딩 안 보고 대시보드 직행
+   토스 PG 심사용 첫 진입(비로그인·콜백 X)만 랜딩 페이지 표시 ─── */
+(function(){
+  try {
+    /* 1) 로그인 콜백으로 돌아온 경우 */
+    if (location.hash && location.hash.indexOf('token=') !== -1) {
+      var params = {};
+      location.hash.substring(1).split('&').forEach(function(p){
+        var kv = p.split('=');
+        params[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1] || '');
+      });
+      if (params.token && params.uid) {
+        var auth = {
+          token: params.token,
+          uid: params.uid,
+          name: params.name || '',
+          provider: params.provider || ''
+        };
+        try { localStorage.setItem('jikt_auth', JSON.stringify(auth)); } catch(e){}
+      }
+      location.replace('./dashboard.html');
+      return;
+    }
+    /* 2) 이미 로그인된 사용자 — 랜딩 우회하고 대시보드 직행 */
+    var saved = JSON.parse(localStorage.getItem('jikt_auth') || 'null');
+    if (saved && saved.uid && saved.token) {
+      location.replace('./dashboard.html');
+      return;
+    }
+  } catch(e){}
+})();
+</script>
 <title>직트 옵션 매도 종합 분석 시스템</title>
 <meta name="description" content="옵션 매도 전략을 위한 데이터 기반 변동성 분석·위험 관리·매매 복기 종합 대시보드. 월 20만원 정기 구독, 1주일 무료 체험.">
 <style>
