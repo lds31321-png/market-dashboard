@@ -1563,6 +1563,22 @@ input[type=range] { background: transparent !important; border: none !important;
     /* 네트워크 에러는 무시 (오프라인 시 대시보드 계속 사용 가능) */
   });
 })();
+
+/* [2026-05-30] 첫 접속 시 "사용 가이드" 탭 자동 열기 — localStorage 플래그 한 번만 */
+window.addEventListener('load', function(){
+  try {
+    if (!localStorage.getItem('jikt_first_visit_done')) {
+      var tabs = document.querySelectorAll('.nav-tab');
+      for (var i = 0; i < tabs.length; i++) {
+        if (tabs[i].textContent.trim() === '사용 가이드') {
+          tabs[i].click();
+          break;
+        }
+      }
+      localStorage.setItem('jikt_first_visit_done', '1');
+    }
+  } catch(e) {}
+});
 </script>
 
 <div class="hdr"><div class="hdr-l"><div class="logo">CL</div><div><div class="hdr-title">종합 옵션 대시보드</div><div class="hdr-sub" data-47차-목적="부제-버전만">v3.0</div></div></div><div class="hdr-r"><div class="hdr-meta" id="hdrMeta">로딩 중...</div><div class="dot"></div></div></div>
