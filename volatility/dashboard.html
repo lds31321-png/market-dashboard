@@ -1545,14 +1545,14 @@ input[type=range] { background: transparent !important; border: none !important;
       'X-Device-Id': deviceId
     }
   }).then(function(r){ return r.json(); }).then(function(j){
-    if (!j.ok && j.reason === 'different_device') {
-      /* 다른 기기에서 로그인됨 → 자동 로그아웃 */
+    if (!j.ok && (j.reason === 'slot_expired' || j.reason === 'different_device')) {
+      /* 동시 사용 가능한 디바이스 슬롯(2개) 초과 → 가장 오래 안 본 기기로 분류되어 만료됨 */
       try {
         localStorage.removeItem(KEY);
         localStorage.removeItem(DEV_KEY);
       } catch(e){}
-      alert('다른 기기에서 로그인되어 이 기기에서는 자동 로그아웃됩니다.');
-      location.replace('./login.html?from=device_replaced');
+      alert('동시 사용 가능한 기기 수(2대)를 초과해서 이 기기에서는 다시 로그인이 필요합니다.\n\n같은 PC라도 다른 브라우저·시크릿 모드는 별도 기기로 인식돼요.');
+      location.replace('./login.html?from=slot_expired');
     } else if (!j.ok && j.reason === 'no_session') {
       /* 세션 만료 → 로그인 페이지로 */
       try { localStorage.removeItem(KEY); } catch(e){}
