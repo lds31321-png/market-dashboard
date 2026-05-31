@@ -5096,6 +5096,15 @@ window.addEventListener('load', function(){
     </div>
   </div>
 
+  <!-- [2026-05-31] 통화 단위 안내 — 달러 환산 버그 수정 전까지 원화 기준 입력 안내 -->
+  <div style="display:flex;align-items:flex-start;gap:10px;padding:14px 18px;background:rgba(217,102,74,.08);border:1px solid rgba(217,102,74,.28);border-radius:10px;margin:14px 0;font-size:13.5px;color:var(--t2);line-height:1.55">
+    <span style="flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;background:#d9664a;color:#fff;border-radius:50%;font-weight:900;font-size:12px;margin-top:1px">i</span>
+    <div>
+      <strong style="color:var(--t1);font-weight:800">현재 원화 기준 입력만 정상 동작합니다.</strong>
+      <span style="display:block;margin-top:3px;color:var(--t2)">달러 옵션은 차트 환산 보완 후 6월 중 추가 예정입니다. 해외 HTS 이용자는 자체 환산하여 원화로 입력 부탁드립니다.</span>
+    </div>
+  </div>
+
   <div class="card" id="in-sec-a" style="border:1px solid rgba(217,102,74,.35);background:rgba(217,102,74,.03)">
     <div style="padding:18px 16px 14px;border-bottom:1px solid rgba(217,102,74,.2);display:flex;justify-content:space-between;align-items:center">
       <div style="display:flex;align-items:center;gap:12px">
@@ -5112,15 +5121,16 @@ window.addEventListener('load', function(){
         <div class="pos-field">
           <div class="pos-lbl" style="color:var(--t1);font-weight:700;display:flex;align-items:center;gap:10px;justify-content:space-between">
             <span>예탁금 <span style="font-size:13px;font-weight:500;color:var(--t3)">(오늘 실제 계좌 잔고)</span></span>
-            <!-- [v12 2026-05-17] 통화 선택 라디오 — 원화 / 달러 -->
-            <span style="display:inline-flex;gap:8px;font-size:12px;font-weight:600">
+            <!-- [v12 2026-05-17] 통화 선택 라디오 — 원화 / 달러
+                 [2026-05-31] 달러 옵션 임시 비활성 — 차트 환산 버그 수정 전까지 원화만 지원 -->
+            <span style="display:inline-flex;gap:8px;font-size:12px;font-weight:600;align-items:center">
               <label style="display:inline-flex;align-items:center;gap:3px;cursor:pointer;color:var(--t2)">
                 <input type="radio" name="in-currency" value="KRW" checked onchange="inSwitchCurrency(this.value)" style="margin:0;cursor:pointer">
                 <span>원화</span>
               </label>
-              <label style="display:inline-flex;align-items:center;gap:3px;cursor:pointer;color:var(--t2)">
-                <input type="radio" name="in-currency" value="USD" onchange="inSwitchCurrency(this.value)" style="margin:0;cursor:pointer">
-                <span>달러</span>
+              <label style="display:inline-flex;align-items:center;gap:3px;cursor:not-allowed;color:var(--t4);opacity:.55" title="달러 옵션은 6월 중 추가 예정입니다. 현재는 원화 기준 입력만 정상 동작합니다.">
+                <input type="radio" name="in-currency" value="USD" disabled style="margin:0;cursor:not-allowed">
+                <span>달러 <span style="font-size:10px;font-weight:700;color:#d9664a;background:rgba(217,102,74,.10);padding:1px 6px;border-radius:5px;margin-left:3px;letter-spacing:.03em">준비 중</span></span>
               </label>
             </span>
           </div>
