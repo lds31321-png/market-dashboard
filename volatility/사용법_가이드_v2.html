@@ -872,5 +872,35 @@ section[id^="int-"]{scroll-margin-top:64px;position:relative}
   spy();
 })();
 </script>
+<script>
+/* [2026-05-31] 부모 dashboard.html에 콘텐츠 높이 전달 — iframe 동적 크기 조정용 */
+(function(){
+  function sendHeight(){
+    try {
+      var h = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.offsetHeight
+      );
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'guide-height', height: h }, '*');
+      }
+    } catch(e){}
+  }
+  /* 페이지 로드 후 여러 시점에 전송 (이미지·폰트 로드 완료까지 보장) */
+  window.addEventListener('load', sendHeight);
+  setTimeout(sendHeight, 300);
+  setTimeout(sendHeight, 1000);
+  setTimeout(sendHeight, 2500);
+  setTimeout(sendHeight, 5000);
+  /* 콘텐츠 변화 감지 (영상 박스 펼침 등) */
+  if (typeof ResizeObserver !== 'undefined') {
+    try { new ResizeObserver(sendHeight).observe(document.body); } catch(e){}
+  }
+  /* 영상 박스 클릭 시 변화 대응 */
+  window.addEventListener('click', function(){ setTimeout(sendHeight, 200); });
+})();
+</script>
 </body>
 </html>
