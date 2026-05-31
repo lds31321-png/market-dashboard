@@ -10,8 +10,8 @@
 <style>
 :root{--salmon:#d9664a;--salmon-d:#b8503a;--salmon-l:#e88a6f;--salmon-bg:rgba(217,102,74,.10);--salmon-bg2:rgba(217,102,74,.05);--salmon-line:rgba(217,102,74,.30);--salmon-line2:rgba(217,102,74,.50);--t1:#1c1917;--t2:#4a4440;--t3:#6b625a;--t4:#9a9089;--bg:#f5efe7;--bg2:#faf7f4;--card:#fff;--line:rgba(0,0,0,.10);--font-base:'Noto Sans KR',system-ui,sans-serif;--font-head:'Nunito','Noto Sans KR',system-ui,sans-serif;--font-mono:'IBM Plex Mono','Noto Sans KR',monospace}
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--font-base);font-size:16px;line-height:1.7;color:var(--t1);background:var(--bg);-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth;height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch}
+body{font-family:var(--font-base);font-size:16px;line-height:1.7;color:var(--t1);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;min-height:100%}
 .wrap{max-width:1040px;margin:0 auto;padding:0 24px 80px}
 .cover{text-align:center;padding:110px 56px 90px;margin:40px 0 28px;background:var(--card);border-radius:18px;box-shadow:0 2px 6px rgba(0,0,0,.04)}
 .cover-eyebrow{font-family:var(--font-head);font-size:14px;font-weight:800;letter-spacing:.2em;color:var(--salmon);text-transform:uppercase;margin-bottom:28px}
@@ -245,12 +245,41 @@ section[id^="int-"]{scroll-margin-top:64px;position:relative}
 <div class="wrap">
 
 <!-- ═══ 0. 가이드 영상 — 최상단 (클릭 시 재생, 2026-05-31) ═══ -->
-<div id="videoIntro" style="position:relative;margin:40px auto 28px;max-width:680px;background:linear-gradient(135deg,#d9664a 0%,#b8503a 100%);border-radius:18px;overflow:hidden;box-shadow:0 4px 14px rgba(217,102,74,.30);aspect-ratio:16/9;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;transition:transform .15s,box-shadow .15s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 18px rgba(217,102,74,.40)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 14px rgba(217,102,74,.30)'" onclick="this.innerHTML='&lt;iframe src=&quot;https://www.youtube.com/embed/di77dkgWXkg?autoplay=1&amp;rel=0&quot; style=&quot;position:absolute;top:0;left:0;width:100%;height:100%;border:0&quot; allow=&quot;autoplay; encrypted-media; fullscreen; picture-in-picture&quot; allowfullscreen&gt;&lt;/iframe&gt;';this.style.cursor='default';this.style.background='#000';this.onclick=null;this.onmouseover=null;this.onmouseout=null">
-  <div style="display:flex;flex-direction:column;align-items:center;gap:18px;pointer-events:none">
-    <div style="width:78px;height:78px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.15)">
-      <div style="width:0;height:0;border-left:26px solid #d9664a;border-top:16px solid transparent;border-bottom:16px solid transparent;margin-left:7px"></div>
+<div id="videoIntro" style="position:relative;margin:40px auto 28px;max-width:720px;background:linear-gradient(135deg,#d9664a 0%,#b8503a 55%,#8f4128 100%);border-radius:18px;overflow:hidden;box-shadow:0 6px 22px rgba(217,102,74,.32);aspect-ratio:16/9;cursor:pointer;transition:transform .15s,box-shadow .15s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 28px rgba(217,102,74,.42)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 6px 22px rgba(217,102,74,.32)'" onclick="this.innerHTML='&lt;iframe src=&quot;https://www.youtube.com/embed/di77dkgWXkg?autoplay=1&amp;rel=0&quot; style=&quot;position:absolute;top:0;left:0;width:100%;height:100%;border:0&quot; allow=&quot;autoplay; encrypted-media; fullscreen; picture-in-picture&quot; allowfullscreen&gt;&lt;/iframe&gt;';this.style.cursor='default';this.style.background='#000';this.onclick=null;this.onmouseover=null;this.onmouseout=null">
+
+  <!-- 배경 패턴 (옅은 도형) -->
+  <div style="position:absolute;top:-40px;right:-30px;width:200px;height:200px;border:2px solid rgba(255,255,255,.10);border-radius:50%;pointer-events:none"></div>
+  <div style="position:absolute;bottom:-60px;left:-40px;width:160px;height:160px;border:2px solid rgba(255,255,255,.08);border-radius:50%;pointer-events:none"></div>
+
+  <!-- 좌상단 라벨 -->
+  <div style="position:absolute;top:22px;left:26px;font-family:'Nunito','Noto Sans KR',sans-serif;font-size:11.5px;font-weight:900;letter-spacing:.22em;color:#fff;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;pointer-events:none">
+    <span style="display:inline-block;width:6px;height:6px;background:#fff;border-radius:50%"></span>
+    Trading-Key Guide
+  </div>
+
+  <!-- 우상단 영상 표식 -->
+  <div style="position:absolute;top:22px;right:24px;font-family:'Nunito','Noto Sans KR',sans-serif;font-size:11px;font-weight:800;letter-spacing:.16em;color:#fff;background:rgba(0,0,0,.22);padding:6px 13px;border-radius:7px;pointer-events:none;text-transform:uppercase">
+    Intro · 사용법
+  </div>
+
+  <!-- 가운데 콘텐츠 -->
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:16px;pointer-events:none;text-align:center;width:90%">
+    <div style="width:86px;height:86px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,.20)">
+      <div style="width:0;height:0;border-left:28px solid #d9664a;border-top:18px solid transparent;border-bottom:18px solid transparent;margin-left:8px"></div>
     </div>
-    <div style="font-family:'Nunito','Noto Sans KR',sans-serif;font-size:26px;font-weight:900;letter-spacing:-.01em">가이드 영상</div>
+    <div style="font-family:'Nunito','Noto Sans KR',sans-serif;font-size:30px;font-weight:900;letter-spacing:-.012em;color:#fff;line-height:1.2">가이드 영상</div>
+    <div style="font-family:'Noto Sans KR',sans-serif;font-size:14.5px;font-weight:600;color:rgba(255,255,255,.92);line-height:1.55;letter-spacing:-.005em;max-width:440px">트레이딩키 투자정보 시스템 한 편으로<br>전체 흐름·각 영역 사용법 한 번에 파악</div>
+  </div>
+
+  <!-- 좌하단 안내 -->
+  <div style="position:absolute;bottom:20px;left:26px;font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:700;color:#fff;display:inline-flex;align-items:center;gap:6px;pointer-events:none">
+    <span style="font-size:10px">▶</span>
+    <span>클릭해서 재생</span>
+  </div>
+
+  <!-- 우하단 호스트 표시 -->
+  <div style="position:absolute;bottom:20px;right:24px;font-family:'Nunito','Noto Sans KR',sans-serif;font-size:10.5px;font-weight:800;letter-spacing:.10em;color:rgba(255,255,255,.78);pointer-events:none;text-transform:uppercase">
+    YouTube
   </div>
 </div>
 
