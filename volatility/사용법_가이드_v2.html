@@ -873,7 +873,7 @@ section[id^="int-"]{scroll-margin-top:64px;position:relative}
 })();
 </script>
 <script>
-/* [2026-05-31] 부모 dashboard.html에 콘텐츠 높이 전달 — iframe 동적 크기 조정용 */
+/* [2026-06-01] postMessage 송신 비활성 — dashboard.html에서 iframe height:20000px 고정 모드로 복귀했으므로 메시지 송신 불필요
 (function(){
   function sendHeight(){
     try {
@@ -888,19 +888,17 @@ section[id^="int-"]{scroll-margin-top:64px;position:relative}
       }
     } catch(e){}
   }
-  /* 페이지 로드 후 여러 시점에 전송 (이미지·폰트 로드 완료까지 보장) */
   window.addEventListener('load', sendHeight);
   setTimeout(sendHeight, 300);
   setTimeout(sendHeight, 1000);
   setTimeout(sendHeight, 2500);
   setTimeout(sendHeight, 5000);
-  /* 콘텐츠 변화 감지 (영상 박스 펼침 등) */
   if (typeof ResizeObserver !== 'undefined') {
     try { new ResizeObserver(sendHeight).observe(document.body); } catch(e){}
   }
-  /* 영상 박스 클릭 시 변화 대응 */
   window.addEventListener('click', function(){ setTimeout(sendHeight, 200); });
 })();
+*/
 </script>
 </body>
 </html>
