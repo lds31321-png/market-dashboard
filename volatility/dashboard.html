@@ -6000,5 +6000,202 @@ body{padding-bottom:62px}
 </script>
 <!-- [/OAuth 회원 표시 위젯 v2] -->
 
+<!-- [연락처 수집 모달 — 로그인 후 쿠폰 안내] -->
+<style>
+#jikt-contact-overlay {
+  display: none; position: fixed; inset: 0; z-index: 99999;
+  background: rgba(0,0,0,.52);
+  align-items: center; justify-content: center;
+  padding: 20px; box-sizing: border-box;
+}
+#jikt-contact-overlay.on { display: flex; }
+#jikt-contact-box {
+  background: #fff; border-radius: 18px;
+  padding: 36px 30px 28px;
+  max-width: 440px; width: 100%;
+  box-shadow: 0 12px 48px rgba(0,0,0,.20);
+  font-family: 'IBM Plex Sans KR', sans-serif;
+  position: relative;
+}
+#jikt-contact-badge {
+  display: inline-block;
+  background: rgba(217,102,74,.12); color: #d9664a;
+  border: 1px solid rgba(217,102,74,.30);
+  border-radius: 20px; padding: 4px 12px;
+  font-size: 12px; font-weight: 700;
+  margin-bottom: 14px; letter-spacing: .3px;
+}
+#jikt-contact-box h3 {
+  font-size: 19px; font-weight: 800; color: #1a1816;
+  margin: 0 0 8px; line-height: 1.3;
+}
+#jikt-contact-box p {
+  font-size: 13px; color: #6a6460; margin: 0 0 22px; line-height: 1.65;
+}
+.jikt-contact-label {
+  font-size: 12px; font-weight: 700; color: #4a4440;
+  margin-bottom: 5px; display: flex; align-items: center; gap: 6px;
+}
+.jikt-contact-opt {
+  font-size: 11px; font-weight: 500; color: #9a9390;
+  background: #f0ece8; border-radius: 4px;
+  padding: 2px 7px;
+}
+.jikt-contact-inp {
+  width: 100%; box-sizing: border-box;
+  border: 1.5px solid #d9d5d0; border-radius: 9px;
+  padding: 11px 14px; font-size: 14px;
+  font-family: 'IBM Plex Mono', monospace;
+  outline: none; color: #1a1816;
+  transition: border-color .2s, box-shadow .2s;
+  margin-bottom: 14px;
+}
+.jikt-contact-inp:focus {
+  border-color: #d9664a;
+  box-shadow: 0 0 0 3px rgba(217,102,74,.11);
+}
+#jikt-contact-err {
+  font-size: 12px; color: #c83030;
+  margin: -8px 0 10px; display: none;
+}
+#jikt-contact-btns { display: flex; gap: 10px; margin-top: 6px; }
+#jikt-contact-submit {
+  flex: 1; background: #d9664a; color: #fff; border: none;
+  border-radius: 9px; padding: 13px; font-size: 14px; font-weight: 700;
+  cursor: pointer; transition: background .15s;
+  font-family: 'IBM Plex Sans KR', sans-serif;
+}
+#jikt-contact-submit:hover { background: #c0402a; }
+#jikt-contact-submit:disabled { background: #d9b5a8; cursor: not-allowed; }
+#jikt-contact-skip {
+  flex: 0 0 auto; background: transparent; color: #9a9390; border: none;
+  padding: 13px 16px; font-size: 13px; cursor: pointer;
+  border-radius: 9px; transition: color .15s;
+  font-family: 'IBM Plex Sans KR', sans-serif;
+}
+#jikt-contact-skip:hover { color: #4a4440; }
+</style>
+
+<div id="jikt-contact-overlay">
+  <div id="jikt-contact-box">
+    <div id="jikt-contact-badge">🎁 정식 오픈 혜택 안내</div>
+    <h3>할인 쿠폰을 받으실<br>연락처를 알려주세요</h3>
+    <p>정식 오픈 시 할인 쿠폰을 발송해 드립니다.<br>
+       이메일과 전화번호는 <b>선택사항</b>이에요. 하나만 입력하셔도 됩니다.</p>
+
+    <div class="jikt-contact-label">
+      이메일 <span class="jikt-contact-opt">선택</span>
+    </div>
+    <input id="jikt-contact-email" class="jikt-contact-inp"
+           type="email" placeholder="example@email.com" autocomplete="email">
+
+    <div class="jikt-contact-label">
+      전화번호 <span class="jikt-contact-opt">선택</span>
+    </div>
+    <input id="jikt-contact-phone" class="jikt-contact-inp"
+           type="tel" placeholder="010-0000-0000" autocomplete="tel">
+
+    <div id="jikt-contact-err"></div>
+    <div id="jikt-contact-btns">
+      <button id="jikt-contact-submit">저장하기</button>
+      <button id="jikt-contact-skip">나중에</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';
+  var DONE_KEY  = 'jikt_contact_done';   /* 제출 완료 — 영구 */
+  var SKIP_KEY  = 'jikt_contact_skip';   /* 오늘 건너뜀 — 당일 */
+
+  function isDone()  { try { return !!localStorage.getItem(DONE_KEY); }  catch(e){ return false; } }
+  function isSkippedToday() {
+    try { var v=localStorage.getItem(SKIP_KEY); return v===new Date().toDateString(); }
+    catch(e){ return false; }
+  }
+
+  function showModal(){ document.getElementById('jikt-contact-overlay').classList.add('on'); }
+  function hideModal(){ document.getElementById('jikt-contact-overlay').classList.remove('on'); }
+
+  window.addEventListener('load', function(){
+    if (isDone() || isSkippedToday()) return;
+
+    var auth = null;
+    try { auth = JSON.parse(localStorage.getItem('jikt_auth')||'null'); } catch(e){}
+    if (!auth || !auth.token) return;
+
+    /* 1.5초 뒤 모달 표시 — 카카오·구글 모두 */
+    setTimeout(showModal, 1500);
+
+    var submitBtn = document.getElementById('jikt-contact-submit');
+    var emailInp  = document.getElementById('jikt-contact-email');
+    var phoneInp  = document.getElementById('jikt-contact-phone');
+    var errEl     = document.getElementById('jikt-contact-err');
+
+    submitBtn.addEventListener('click', function(){
+      var email = (emailInp.value||'').trim();
+      var phone = (phoneInp.value||'').trim().replace(/\s/g,'');
+      errEl.style.display = 'none';
+
+      /* 둘 다 비어 있으면 안내 */
+      if (!email && !phone) {
+        errEl.textContent = '이메일 또는 전화번호 중 하나는 입력해 주세요.';
+        errEl.style.display = 'block';
+        return;
+      }
+      /* 이메일 형식 검증 (입력한 경우만) */
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errEl.textContent = '이메일 형식을 확인해 주세요.';
+        errEl.style.display = 'block';
+        emailInp.focus();
+        return;
+      }
+
+      submitBtn.textContent = '저장 중...';
+      submitBtn.disabled = true;
+
+      fetch(API + '/user/update-contact', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + auth.token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email, phone: phone })
+      }).then(function(r){ return r.json(); }).then(function(j){
+        if (j.ok) {
+          try { localStorage.setItem(DONE_KEY, '1'); } catch(e){}
+          hideModal();
+        } else {
+          submitBtn.textContent = '저장하기';
+          submitBtn.disabled = false;
+          errEl.textContent = '저장 실패. 잠시 후 다시 시도해 주세요.';
+          errEl.style.display = 'block';
+        }
+      }).catch(function(){
+        submitBtn.textContent = '저장하기';
+        submitBtn.disabled = false;
+        errEl.textContent = '네트워크 오류. 다시 시도해 주세요.';
+        errEl.style.display = 'block';
+      });
+    });
+
+    /* Enter 키 제출 */
+    [emailInp, phoneInp].forEach(function(inp){
+      inp.addEventListener('keydown', function(e){
+        if (e.key === 'Enter') submitBtn.click();
+      });
+    });
+
+    /* 나중에 — 당일 스킵 */
+    document.getElementById('jikt-contact-skip').addEventListener('click', function(){
+      try { localStorage.setItem(SKIP_KEY, new Date().toDateString()); } catch(e){}
+      hideModal();
+    });
+  });
+})();
+</script>
+<!-- [/연락처 수집 모달] -->
+
 </body>
 </html>
