@@ -110,8 +110,16 @@ window.JIKT_API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';   /* TODO 
       var t = decodeURIComponent(hash.split('=')[1].split('&')[0]);
       localStorage.setItem('jikt_token', t);
       history.replaceState(null, '', location.pathname);
+      return t;
     }
-    return localStorage.getItem('jikt_token');
+    var t = localStorage.getItem('jikt_token');
+    if (!t) {
+      try {
+        var auth = JSON.parse(localStorage.getItem('jikt_auth') || 'null');
+        if (auth && auth.token) t = auth.token;
+      } catch(e){}
+    }
+    return t;
   })();
 
   if (!token) {
