@@ -6074,6 +6074,12 @@ body{padding-bottom:62px}
   font-family: 'IBM Plex Sans KR', sans-serif;
 }
 #jikt-contact-skip:hover { color: #4a4440; }
+#jikt-contact-noshowlabel {
+  display: flex; align-items: center; gap: 7px;
+  margin-top: 12px; font-size: 12px; color: #9a9390;
+  cursor: pointer; user-select: none;
+}
+#jikt-contact-noshow { accent-color: #d9664a; cursor: pointer; }
 </style>
 
 <div id="jikt-contact-overlay">
@@ -6100,6 +6106,10 @@ body{padding-bottom:62px}
       <button id="jikt-contact-submit">저장하기</button>
       <button id="jikt-contact-skip">나중에</button>
     </div>
+    <label id="jikt-contact-noshowlabel">
+      <input type="checkbox" id="jikt-contact-noshow">
+      7일간 보지 않기
+    </label>
   </div>
 </div>
 
@@ -6107,19 +6117,21 @@ body{padding-bottom:62px}
 (function(){
   var API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';
   var DONE_KEY  = 'jikt_contact_done';   /* 제출 완료 — 영구 */
-  var SKIP_KEY  = 'jikt_contact_skip';   /* 오늘 건너뜀 — 당일 */
+  var SKIP_KEY  = 'jikt_contact_skip';   /* 7일 스킵 — 타임스탬프 */
 
-  function isDone()  { try { return !!localStorage.getItem(DONE_KEY); }  catch(e){ return false; } }
-  function isSkippedToday() {
-    try { var v=localStorage.getItem(SKIP_KEY); return v===new Date().toDateString(); }
-    catch(e){ return false; }
+  function isDone() { try { return !!localStorage.getItem(DONE_KEY); } catch(e){ return false; } }
+  function isSkipped() {
+    try {
+      var v = localStorage.getItem(SKIP_KEY);
+      return v && Date.now() < parseInt(v);
+    } catch(e){ return false; }
   }
 
   function showModal(){ document.getElementById('jikt-contact-overlay').classList.add('on'); }
   function hideModal(){ document.getElementById('jikt-contact-overlay').classList.remove('on'); }
 
   window.addEventListener('load', function(){
-    if (isDone() || isSkippedToday()) return;
+    if (isDone() || isSkipped()) return;
 
     var auth = null;
     try { auth = JSON.parse(localStorage.getItem('jikt_auth')||'null'); } catch(e){}
@@ -6187,9 +6199,12 @@ body{padding-bottom:62px}
       });
     });
 
-    /* 나중에 — 당일 스킵 */
+    /* 나중에 — 7일간 보지 않기 체크 시 7일 스킵, 아니면 그냥 닫기 */
     document.getElementById('jikt-contact-skip').addEventListener('click', function(){
-      try { localStorage.setItem(SKIP_KEY, new Date().toDateString()); } catch(e){}
+      var noshow = document.getElementById('jikt-contact-noshow');
+      if (noshow && noshow.checked) {
+        try { localStorage.setItem(SKIP_KEY, String(Date.now() + 7 * 24 * 60 * 60 * 1000)); } catch(e){}
+      }
       hideModal();
     });
   });
