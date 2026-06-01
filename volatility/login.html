@@ -92,16 +92,23 @@ window.JIKT_API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';   /* TODO:
     box.classList.add('show');
   }
 
+  /* from 파라미터 추출 (예: ?from=admin) */
+  var fromParam = new URLSearchParams(location.search).get('from') || '';
+
   /* 카카오 로그인 버튼 */
   document.getElementById('btn-kakao').addEventListener('click', function(e){
     e.preventDefault();
-    location.href = window.JIKT_API + '/auth/kakao/login';
+    var url = window.JIKT_API + '/auth/kakao/login';
+    if (fromParam) url += '?state=' + encodeURIComponent(fromParam);
+    location.href = url;
   });
 
   /* 구글 로그인 버튼 */
   document.getElementById('btn-google').addEventListener('click', function(e){
     e.preventDefault();
-    location.href = window.JIKT_API + '/auth/google/login';
+    var url = window.JIKT_API + '/auth/google/login';
+    if (fromParam) url += '?state=' + encodeURIComponent(fromParam);
+    location.href = url;
   });
 })();
 </script>
