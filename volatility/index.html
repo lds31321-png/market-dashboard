@@ -1687,6 +1687,41 @@ input, select, textarea { font-size: 16px !important; }
 }
 </style>
 
+
+<style id="mobile-final">
+@media (max-width: 768px) {
+
+  /* ① protect-footer 고정 해제 → 스크롤 끝에서만 보이게 */
+  #protect-footer {
+    position: static !important;
+    padding: 8px 14px !important;
+    text-align: center !important;
+  }
+  #protect-footer .pf-biz,
+  #protect-footer .pf-disclaim { display: none !important; }
+  #protect-footer .pf-copy { font-size: 11px !important; }
+
+  /* body padding-bottom 제거 (fixed footer 없어졌으므로) */
+  body { padding-bottom: 0 !important; }
+
+  /* ② .footer 바 숨기기 */
+  .footer { display: none !important; }
+
+  /* ③ 가이드 iframe 높이 — 전체 사용 가능 공간 채우기 */
+  #page-guide iframe {
+    height: calc(100vh - 92px) !important;
+  }
+
+  /* ④ JR 플로팅 버튼 — 챗베이스 버튼과 겹치지 않게 왼쪽으로 */
+  #kakao-floating {
+    bottom: 20px !important;
+    right: 80px !important;
+    width: 48px !important;
+    height: 48px !important;
+  }
+}
+</style>
+
 </head><body>
 <div class="hdr"><div class="hdr-l"><div class="logo">CL</div><div><div class="hdr-title">종합 옵션 대시보드</div><div class="hdr-sub" data-47차-목적="부제-버전만">v3.0</div></div></div><div class="hdr-r"><div class="hdr-meta" id="hdrMeta">로딩 중...</div><div class="dot"></div></div></div>
 <div class="nav">
