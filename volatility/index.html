@@ -6065,5 +6065,50 @@ body{padding-bottom:62px}
 })();
 /* ===== 모바일 패치 끝 ===== */
 </script>
+
+<!-- ═══ 모바일 이용 안내 팝업 (2026-06-02) ═══ -->
+<div id="mobile-notice-overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.72);z-index:99999;align-items:center;justify-content:center;padding:20px;box-sizing:border-box">
+  <div style="background:#fff;border-radius:20px;padding:32px 24px 28px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3);position:relative">
+    <!-- 아이콘 -->
+    <div style="width:64px;height:64px;background:#fff5f2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;border:2px solid rgba(217,102,74,0.2)">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d9664a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/><line x1="12" y1="17" x2="12" y2="21"/>
+      </svg>
+    </div>
+    <!-- 제목 -->
+    <div style="font-size:18px;font-weight:800;color:#1c1917;letter-spacing:-.02em;margin-bottom:12px;line-height:1.3">PC에서 이용하시면<br>더 편리해요</div>
+    <!-- 설명 -->
+    <div style="font-size:13.5px;color:#6b7280;line-height:1.7;margin-bottom:24px">
+      트레이딩키 대시보드는 다양한 차트와<br>분석 도구가 포함되어 있어<br><strong style="color:#1c1917">PC 환경에서 최적으로 작동</strong>해요.<br><br>
+      모바일에서는 일부 기능이<br>제한될 수 있어요.
+    </div>
+    <!-- 버튼 영역 -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <button onclick="document.getElementById('mobile-notice-overlay').style.display='none';sessionStorage.setItem('mobileNoticeDismissed','1')"
+        style="width:100%;padding:14px;background:#d9664a;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:-.01em">
+        그래도 보기
+      </button>
+      <button onclick="window.close();history.back()"
+        style="width:100%;padding:12px;background:#f5f5f4;color:#6b7280;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer">
+        나중에 PC로 볼게요
+      </button>
+    </div>
+    <!-- 하단 메모 -->
+    <div style="margin-top:16px;font-size:11px;color:#9ca3af">이 안내는 모바일 접속 시 한 번만 표시됩니다</div>
+  </div>
+</div>
+<script>
+(function(){
+  var overlay = document.getElementById('mobile-notice-overlay');
+  if (!overlay) return;
+  // 이미 "그래도 보기" 누른 경우 표시 안 함 (세션 내)
+  if (sessionStorage.getItem('mobileNoticeDismissed')) return;
+  // 모바일 판단: 화면 너비 768px 미만
+  if (window.innerWidth < 768) {
+    overlay.style.display = 'flex';
+  }
+})();
+</script>
+
 </body>
 </html>
