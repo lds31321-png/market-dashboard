@@ -5,7 +5,6 @@
 <!-- [2026-05-26 guide auto-run OFF - jikt request. Remove the jikt-guide-disable block below to restore] -->
 <script id="jikt-guide-disable">!function(){try{for(var o=["ov_tour_done","st_tour_done","pt_tour_done","tr_tour_done","rv_tour_done","rv_chart_guide_open"],t=0;t<o.length;t++)localStorage.setItem(o[t],"1")}catch(o){}}();</script>
 
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>종합 옵션 대시보드 v3</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Nunito:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1502,28 +1501,69 @@ input[type=range] { background: transparent !important; border: none !important;
 
 /* ===== 모바일 반응형 패치 (2026-06-02) ===== */
 @media(max-width:768px){
+
+  /* 헤더 */
   .hdr{height:48px;padding:0 12px;}
   .hdr-title{font-size:16px;}
   .hdr-sub{display:none;}
   .hdr-meta{display:none;}
   .logo{width:28px;height:28px;font-size:11px;}
-  .nav{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 !important;top:48px;}
+
+  /* 탭 네비게이션 — 가로 스크롤 */
+  .nav{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    padding:0 !important;
+    top:48px;
+  }
   .nav::-webkit-scrollbar{display:none;}
-  .nav-inner{flex-wrap:nowrap;min-width:max-content;padding:0 8px;gap:0;}
-  .nav-tab{padding:0 14px;font-size:13px;height:42px;white-space:nowrap;letter-spacing:0;}
+  .nav-inner{
+    flex-wrap:nowrap;
+    min-width:max-content;
+    padding:0 8px;
+    gap:0;
+  }
+  .nav-tab{
+    padding:0 14px;
+    font-size:13px;
+    height:42px;
+    white-space:nowrap;
+    letter-spacing:0;
+  }
+
+  /* 경보 배너 */
   .alert-band{padding:8px 12px;font-size:11px;flex-wrap:wrap;gap:8px;}
+
+  /* 페이지 패딩 */
   .page{padding:10px 12px;}
+
+  /* 그리드 전부 1열 */
   [class*="row"]{grid-template-columns:1fr !important;}
+
+  /* 카드 내부 폰트·패딩 */
   .card,.ov-card,.ov-detail-card{padding:14px 14px;}
   .card-h,.card-title{font-size:14px;}
+
+  /* 섹션 내 큰 텍스트 억제 */
   h1,h2{font-size:1.3rem !important;}
   h3{font-size:1.1rem !important;}
-  input[type=number],input[type=text],select{font-size:16px;}
+
+  /* 데이터 입력 탭 — 입력 필드 */
+  .inp-group{flex-direction:column;}
+  input[type=number],input[type=text],select{font-size:16px;} /* iOS 확대 방지 */
+
+  /* 너비 오버플로 방지 */
   table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}
   pre,code{white-space:pre-wrap;word-break:break-all;}
+
+  /* 종합 대시보드 사용 가이드 탭 큰 카드 */
   .guide-stage-grid{grid-template-columns:1fr 1fr !important;}
+
+  /* 모달 */
   .modal-box,.modal-inner{width:95vw !important;padding:16px !important;}
 }
+
 @media(max-width:400px){
   .hdr-title{font-size:14px;}
   .nav-tab{padding:0 10px;font-size:12px;}
@@ -5900,52 +5940,5 @@ body{padding-bottom:62px}
   <div class="pf-row pf-disclaim">⚠️ 본 서비스는 옵션 매도 분석 정보 도구이며 특정 종목의 매수·매도 추천이 아닙니다. 제공 정보는 모두 참고용이며 투자 결정과 손실의 책임은 사용자 본인에게 있습니다. 본 서비스는 어떠한 수익도 보장하지 않습니다.</div>
   <div class="pf-row pf-copy">무단 복제·배포·2차 가공은 저작권법에 따라 보호받습니다<span class="sep">|</span><a class="pf-link" href="./terms.html" target="_blank" rel="noopener noreferrer">이용약관</a><span class="sep">|</span><a class="pf-link" href="./refund.html" target="_blank" rel="noopener noreferrer">환불정책</a><span class="sep">|</span><a class="pf-link" href="./privacy.html" target="_blank" rel="noopener noreferrer">개인정보처리방침</a></div>
 </div>
-
-<script>
-/* ===== 모바일 JS 강제 패치 (2026-06-02) ===== */
-(function(){
-  function applyMobileNav(){
-    if(window.innerWidth > 768) return;
-    // 탭 네비게이션 강제 수정
-    var nav = document.querySelector('.nav');
-    var navInner = document.querySelector('.nav-inner');
-    var tabs = document.querySelectorAll('.nav-tab');
-    if(nav){
-      nav.style.cssText += ';overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;scrollbar-width:none!important;padding:0!important;';
-    }
-    if(navInner){
-      navInner.style.cssText += ';max-width:none!important;width:max-content!important;flex-wrap:nowrap!important;min-width:max-content!important;margin:0!important;padding:0 6px!important;';
-    }
-    tabs.forEach(function(t){
-      t.style.cssText += ';white-space:nowrap!important;flex-shrink:0!important;padding:0 12px!important;font-size:13px!important;height:42px!important;min-width:unset!important;';
-    });
-    // 헤더 수정
-    var hdr = document.querySelector('.hdr');
-    var hdrTitle = document.querySelector('.hdr-title');
-    var hdrMeta = document.querySelector('.hdr-meta');
-    var hdrSub = document.querySelector('.hdr-sub');
-    if(hdr) hdr.style.cssText += ';height:48px!important;padding:0 12px!important;';
-    if(hdrTitle) hdrTitle.style.cssText += ';font-size:16px!important;';
-    if(hdrMeta) hdrMeta.style.display='none';
-    if(hdrSub) hdrSub.style.display='none';
-    // nav sticky top 위치
-    if(nav) nav.style.top='48px';
-  }
-  // DOM 준비 후 즉시 실행
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded', applyMobileNav);
-  } else {
-    applyMobileNav();
-  }
-  // 탭 클릭 시 재적용 (페이지 전환 후에도 유지)
-  document.addEventListener('click', function(e){
-    if(e.target && e.target.classList && e.target.classList.contains('nav-tab')){
-      setTimeout(applyMobileNav, 50);
-    }
-  });
-  window.addEventListener('resize', applyMobileNav);
-})();
-/* ===== 모바일 JS 패치 끝 ===== */
-</script>
 </body>
 </html>
