@@ -5,7 +5,6 @@
 <!-- [2026-05-26 guide auto-run OFF - jikt request. Remove the jikt-guide-disable block below to restore] -->
 <script id="jikt-guide-disable">!function(){try{for(var o=["ov_tour_done","st_tour_done","pt_tour_done","tr_tour_done","rv_tour_done","rv_chart_guide_open"],t=0;t<o.length;t++)localStorage.setItem(o[t],"1")}catch(o){}}();</script>
 
-<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>종합 옵션 대시보드 v3</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Nunito:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1499,235 +1498,160 @@ input[type=range] { background: transparent !important; border: none !important;
 .nav-tab.nav-tab-guide { color:#d9664a !important; font-weight:700 !important; }
 .nav-tab.nav-tab-guide:not(.active) { animation: pulse-guide-tab 2.4s ease-in-out infinite; }
 .nav-tab.nav-tab-guide.active { animation: none; }
+
+/* ===== 모바일 반응형 패치 (2026-06-02) ===== */
+@media(max-width:768px){
+
+  /* 헤더 */
+  .hdr{height:48px;padding:0 12px;}
+  .hdr-title{font-size:16px;}
+  .hdr-sub{display:none;}
+  .hdr-meta{display:none;}
+  .logo{width:28px;height:28px;font-size:11px;}
+
+  /* 탭 네비게이션 — 가로 스크롤 */
+  .nav{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    padding:0 !important;
+    top:48px;
+  }
+  .nav::-webkit-scrollbar{display:none;}
+  .nav-inner{
+    flex-wrap:nowrap;
+    min-width:max-content;
+    padding:0 8px;
+    gap:0;
+  }
+  .nav-tab{
+    padding:0 14px;
+    font-size:13px;
+    height:42px;
+    white-space:nowrap;
+    letter-spacing:0;
+  }
+
+  /* 경보 배너 */
+  .alert-band{padding:8px 12px;font-size:11px;flex-wrap:wrap;gap:8px;}
+
+  /* 페이지 패딩 */
+  .page{padding:10px 12px;}
+
+  /* 그리드 전부 1열 */
+  [class*="row"]{grid-template-columns:1fr !important;}
+
+  /* 카드 내부 폰트·패딩 */
+  .card,.ov-card,.ov-detail-card{padding:14px 14px;}
+  .card-h,.card-title{font-size:14px;}
+
+  /* 섹션 내 큰 텍스트 억제 */
+  h1,h2{font-size:1.3rem !important;}
+  h3{font-size:1.1rem !important;}
+
+  /* 데이터 입력 탭 — 입력 필드 */
+  .inp-group{flex-direction:column;}
+  input[type=number],input[type=text],select{font-size:16px;} /* iOS 확대 방지 */
+
+  /* 너비 오버플로 방지 */
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  pre,code{white-space:pre-wrap;word-break:break-all;}
+
+  /* 종합 대시보드 사용 가이드 탭 큰 카드 */
+  .guide-stage-grid{grid-template-columns:1fr 1fr !important;}
+
+  /* 모달 */
+  .modal-box,.modal-inner{width:95vw !important;padding:16px !important;}
+}
+
+@media(max-width:400px){
+  .hdr-title{font-size:14px;}
+  .nav-tab{padding:0 10px;font-size:12px;}
+  .guide-stage-grid{grid-template-columns:1fr !important;}
+}
+/* ===== 모바일 패치 끝 ===== */
 </style>
-<style id="mobile-ux-v1">
-/* ============================
-   모바일 UX 전면 재설계 v1
-   (max-width: 768px 적용)
-   ============================ */
-@media (max-width: 768px) {
+<style>
+/* ===== 모바일 강화 패치 v2 (2026-06-02) ===== */
+@media screen and (max-width:768px){
 
-/* ── 공통: 가로 넘침 차단 ── */
-body { overflow-x: hidden; }
-.page { padding: 10px 14px !important; }
-* { box-sizing: border-box; }
+  /* ① 탭 네비게이션 — 핵심 수정 */
+  .nav {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    top: 48px !important;
+  }
+  .nav::-webkit-scrollbar { display: none !important; }
+  .nav-inner {
+    max-width: none !important;        /* ← 핵심: 1100px 해제 */
+    width: max-content !important;
+    flex-wrap: nowrap !important;
+    margin: 0 !important;
+    padding: 0 6px !important;
+  }
+  .nav-tab {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    padding: 0 12px !important;
+    font-size: 13px !important;
+    height: 42px !important;
+    min-width: unset !important;
+  }
 
-/* ── 공통: 인라인 큰 글씨 억제 ── */
-[style*="font-size:36px"],[style*="font-size:34px"],[style*="font-size:32px"],
-[style*="font-size:30px"],[style*="font-size:28px"],[style*="font-size:26px"],
-[style*="font-size:24px"] { font-size: 18px !important; line-height: 1.45 !important; }
-[style*="font-size:22px"],[style*="font-size:20px"] { font-size: 16px !important; }
+  /* ② 헤더 */
+  .hdr { height: 48px !important; padding: 0 12px !important; }
+  .hdr-title { font-size: 16px !important; }
+  .hdr-sub, .hdr-meta { display: none !important; }
+  .logo { width: 28px !important; height: 28px !important; font-size: 11px !important; }
 
-/* ── 공통: 모든 그리드 1열 ── */
-[class*="row2"],[class*="row3"],[class*="row4"],[class*="row5"],
-[class*="col2"],[class*="col3"],[class*="col4"],
-.g-row, .g-row.col3, .g-row.col1 {
-  grid-template-columns: 1fr !important;
+  /* ③ 인라인 큰 글씨 억제 (section 카드 제목) */
+  [style*="font-size:36px"],
+  [style*="font-size:32px"],
+  [style*="font-size:30px"],
+  [style*="font-size:28px"],
+  [style*="font-size:26px"],
+  [style*="font-size:24px"] {
+    font-size: 18px !important;
+    line-height: 1.4 !important;
+  }
+  [style*="font-size:22px"],
+  [style*="font-size:20px"] {
+    font-size: 16px !important;
+  }
+
+  /* ④ 모든 페이지 패딩 */
+  .page { padding: 10px 12px !important; }
+  .alert-band { padding: 8px 12px !important; font-size: 11px !important; }
+
+  /* ⑤ 그리드 1열 */
+  .row2,.row3,.row4,.row5,.row21,
+  [class*="grid-col-"], .ov-inst-grid,
+  [style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* ⑥ 테이블 가로 스크롤 */
+  table { display: block !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; max-width: 100% !important; }
+
+  /* ⑦ 전체 overflow 방지 */
+  body { overflow-x: hidden !important; }
+  .page, .card, .ov-card { max-width: 100% !important; overflow-x: hidden !important; }
+  * { word-break: break-word; }
+  /* 단, 탭 nav-inner는 예외 */
+  .nav-inner { word-break: normal !important; overflow-x: visible !important; }
+
+  /* ⑧ 입력 필드 iOS 확대 방지 */
+  input, select, textarea { font-size: 16px !important; }
 }
-
-/* ── 공통: 테이블 가로 스크롤 ── */
-table {
-  display: block !important;
-  overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch !important;
-  max-width: 100% !important;
+@media screen and (max-width:400px){
+  .nav-tab { padding: 0 8px !important; font-size: 12px !important; }
+  .hdr-title { font-size: 14px !important; }
+  [style*="font-size:18px"] { font-size: 15px !important; }
 }
-
-/* ═══════════════════════════════
-   사용 가이드 탭 (page-guide)
-   ═══════════════════════════════ */
-
-.g-wrap { padding: 10px 0 24px; }
-
-/* 히어로 섹션 */
-.g-hero { padding: 16px 0 14px; }
-.g-hero h2 { font-size: 18px !important; }
-.g-hero p { font-size: 13px !important; }
-
-/* 흐름도 (mech-flow) — 가로 스크롤 */
-.mech-flow {
-  overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch !important;
-  flex-wrap: nowrap !important;
-  justify-content: flex-start !important;
-  padding: 4px 4px 12px !important;
-  scrollbar-width: none !important;
-  margin: 10px 0 !important;
-}
-.mech-flow::-webkit-scrollbar { display: none; }
-.mf-box { width: 80px !important; height: 64px !important; flex-shrink: 0 !important; }
-.mf-lbl { font-size: 11px !important; }
-.mf-sub { font-size: 10px !important; }
-.mf-arr { font-size: 13px !important; padding: 0 3px !important; }
-
-/* 토글 섹션 터치 최적화 */
-.toggle-hd { padding: 14px 14px !important; min-height: 52px !important; }
-.toggle-title { font-size: 13px !important; }
-.toggle-badge { font-size: 11px !important; }
-.toggle-body { padding: 14px 14px 18px !important; }
-.toggle-icon { font-size: 16px !important; }
-
-/* 카드 */
-.g-card { padding: 12px 12px !important; }
-.g-card-t { font-size: 13px !important; }
-.g-card-b { font-size: 13px !important; line-height: 1.7 !important; }
-
-/* 결과 흐름 */
-.res-row { padding: 10px 10px !important; }
-.res-text { font-size: 12px !important; }
-
-/* ═══════════════════════════════
-   데이터 입력 탭 (page-input)
-   ═══════════════════════════════ */
-
-/* 섹션 카드 제목 — 큰 텍스트 */
-.uxc-inst-card-name { font-size: 14px !important; }
-.uxc-h1 { font-size: 15px !important; }
-.uxc-h2 { font-size: 13px !important; }
-.uxc-body { font-size: 13px !important; }
-
-/* 입력 필드 iOS 확대 방지 */
-input, select, textarea { font-size: 16px !important; }
-
-/* ── 섹션 B/C 의 큰 제목 카드 ── */
-.uxc-inst-card {
-  min-height: unset !important;
-}
-
-/* ═══════════════════════════════
-   공통 카드/섹션 다듬기
-   ═══════════════════════════════ */
-
-.card, .ov-card { padding: 14px !important; }
-.section-title, .card-title, .card-h { font-size: 14px !important; }
-
-/* 힌트/설명 패널 안쪽 패딩 */
-[style*="padding:56px"] { padding: 36px 14px 18px !important; }
-[style*="padding: 56px"] { padding: 36px 14px 18px !important; }
-
-}
-/* ── 아주 작은 화면 (400px 미만) ── */
-@media (max-width: 400px) {
-  .mf-box { width: 68px !important; height: 58px !important; }
-  .g-hero h2 { font-size: 16px !important; }
-  .toggle-title { font-size: 12px !important; }
-}
+/* ===== 모바일 강화 패치 v2 끝 ===== */
 </style>
-
-
-<style id="mobile-fix2">
-@media (max-width: 768px) {
-
-  /* ① 폰트 업스케일 모바일에서 전부 되돌리기 */
-  [style*="font-size:12px"] { font-size: 12px !important; }
-  [style*="font-size:13px"] { font-size: 13px !important; }
-  [style*="font-size:14px"] { font-size: 14px !important; }
-  [style*="font-size:16px"] { font-size: 15px !important; }
-  [style*="font-size:22px"] { font-size: 17px !important; }
-  [style*="font-size:24px"] { font-size: 18px !important; }
-  [style*="font-size:26px"] { font-size: 18px !important; }
-  [style*="font-size:28px"] { font-size: 19px !important; }
-  [style*="font-size:30px"] { font-size: 20px !important; }
-  [style*="font-size:32px"] { font-size: 20px !important; }
-  [style*="font-size:34px"] { font-size: 21px !important; }
-  [style*="font-size:36px"] { font-size: 22px !important; }
-
-  /* ② 한국어 텍스트 줄바꿈 정상화 */
-  /* word-break: keep-all → 한글 단어 단위로 줄바꿈 (음절 쪼개짐 방지) */
-  body, .page, .card, .g-card, .g-card-b, .toggle-body,
-  [id^="page-"] { word-break: keep-all !important; overflow-wrap: break-word !important; }
-
-  /* 가운데 정렬 텍스트도 줄바꿈 정상화 */
-  [style*="text-align:center"],
-  [style*="text-align: center"] { word-break: keep-all !important; }
-
-  /* ③ 플로팅 버튼 우측 하단 고정 */
-  #kakao-floating {
-    bottom: 20px !important;
-    right: 16px !important;
-    width: 52px !important;
-    height: 52px !important;
-  }
-
-  /* ③-b 챗베이스 버튼 우측 하단 고정 */
-  #chatbase-bubble-button {
-    right: 16px !important;
-    bottom: 80px !important;
-  }
-
-  /* ④ 푸터 최소화 — 사업자 정보·면책 문구 숨기고 링크만 표시 */
-  #protect-footer .pf-biz { display: none !important; }
-  #protect-footer .pf-disclaim { display: none !important; }
-  #protect-footer {
-    padding: 8px 14px !important;
-    text-align: center !important;
-  }
-  #protect-footer .pf-copy {
-    font-size: 11px !important;
-    text-align: center !important;
-    line-height: 1.8 !important;
-  }
-
-  /* ⑤ body 하단 패딩 줄이기 (푸터 작아졌으므로) */
-  body { padding-bottom: 40px !important; }
-}
-</style>
-
-
-<style id="mobile-footer-float">
-@media (max-width: 768px) {
-  /* .footer ("Options Trading Dashboard v3.0...") 숨기기 */
-  .footer { display: none !important; }
-
-  /* 챗베이스 버튼 우측 하단 고정 (여러 선택자 대응) */
-  div[style*="position: fixed"][style*="bottom"],
-  div[style*="position:fixed"][style*="bottom"] {
-    bottom: 16px !important;
-    right: 16px !important;
-  }
-  /* protect-footer 위로 올리지 않도록 bottom 여유 */
-  #protect-footer {
-    position: relative;
-    z-index: 100;
-  }
-}
-</style>
-
-
-<style id="mobile-final">
-@media (max-width: 768px) {
-
-  /* ① protect-footer 고정 해제 → 스크롤 끝에서만 보이게 */
-  #protect-footer {
-    position: static !important;
-    padding: 8px 14px !important;
-    text-align: center !important;
-  }
-  #protect-footer .pf-biz,
-  #protect-footer .pf-disclaim { display: none !important; }
-  #protect-footer .pf-copy { font-size: 11px !important; }
-
-  /* body padding-bottom 제거 (fixed footer 없어졌으므로) */
-  body { padding-bottom: 0 !important; }
-
-  /* ② .footer 바 숨기기 */
-  .footer { display: none !important; }
-
-  /* ③ 가이드 iframe 높이 — 전체 사용 가능 공간 채우기 */
-  #page-guide iframe {
-    height: calc(100vh - 92px) !important;
-  }
-
-  /* ④ JR 플로팅 버튼 — 챗베이스 버튼과 겹치지 않게 왼쪽으로 */
-  #kakao-floating {
-    bottom: 20px !important;
-    right: 80px !important;
-    width: 48px !important;
-    height: 48px !important;
-  }
-}
-</style>
-
 </head><body>
 <div class="hdr"><div class="hdr-l"><div class="logo">CL</div><div><div class="hdr-title">종합 옵션 대시보드</div><div class="hdr-sub" data-47차-목적="부제-버전만">v3.0</div></div></div><div class="hdr-r"><div class="hdr-meta" id="hdrMeta">로딩 중...</div><div class="dot"></div></div></div>
 <div class="nav">
@@ -5903,9 +5827,13 @@ input, select, textarea { font-size: 16px !important; }
 
 <!-- [2026-05-26 챗베이스·카카오 통합] 재삽입 -->
 <style>
-/* 챗베이스 버튼 전체 숨김 (PC + 모바일) */
+/* 챗베이스 버튼 위치 + 살몬 배경 제거 */
 #chatbase-bubble-button {
-  display: none !important;
+  background: transparent !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  bottom: 130px !important;
+  right: 100px !important;
 }
 /* 챗베이스 인사 메시지 말풍선 숨김 */
 #chatbase-message-bubbles,
@@ -6012,133 +5940,5 @@ body{padding-bottom:62px}
   <div class="pf-row pf-disclaim">⚠️ 본 서비스는 옵션 매도 분석 정보 도구이며 특정 종목의 매수·매도 추천이 아닙니다. 제공 정보는 모두 참고용이며 투자 결정과 손실의 책임은 사용자 본인에게 있습니다. 본 서비스는 어떠한 수익도 보장하지 않습니다.</div>
   <div class="pf-row pf-copy">무단 복제·배포·2차 가공은 저작권법에 따라 보호받습니다<span class="sep">|</span><a class="pf-link" href="./terms.html" target="_blank" rel="noopener noreferrer">이용약관</a><span class="sep">|</span><a class="pf-link" href="./refund.html" target="_blank" rel="noopener noreferrer">환불정책</a><span class="sep">|</span><a class="pf-link" href="./privacy.html" target="_blank" rel="noopener noreferrer">개인정보처리방침</a></div>
 </div>
-
-<script>
-/* ===== 모바일 JS 강제 패치 ===== */
-(function(){
-  function fix(){
-    if(screen.width > 768) return;
-    var nav = document.querySelector('.nav');
-    var navInner = document.querySelector('.nav-inner');
-    var tabs = document.querySelectorAll('.nav-tab');
-    if(nav){
-      nav.style.overflowX='auto';
-      nav.style.webkitOverflowScrolling='touch';
-      nav.style.padding='0';
-    }
-    if(navInner){
-      navInner.style.maxWidth='none';
-      navInner.style.width='auto';
-      navInner.style.flexWrap='nowrap';
-      navInner.style.display='flex';
-      navInner.style.margin='0';
-      navInner.style.padding='0 6px';
-    }
-    tabs.forEach(function(t){
-      t.style.whiteSpace='nowrap';
-      t.style.flex='0 0 auto';
-      t.style.padding='0 10px';
-      t.style.fontSize='13px';
-      t.style.height='42px';
-    });
-    var hdr=document.querySelector('.hdr');
-    var hdrTitle=document.querySelector('.hdr-title');
-    if(hdr) hdr.style.cssText+=';height:48px!important;padding:0 12px!important;';
-    if(hdrTitle) hdrTitle.style.cssText+=';font-size:16px!important;';
-    var meta=document.querySelector('.hdr-meta');
-    var sub=document.querySelector('.hdr-sub');
-    if(meta) meta.style.display='none';
-    if(sub) sub.style.display='none';
-    if(nav) nav.style.top='48px';
-  }
-  document.readyState==='loading'
-    ? document.addEventListener('DOMContentLoaded',fix)
-    : fix();
-  document.addEventListener('click',function(e){
-    if(e.target&&e.target.classList&&e.target.classList.contains('nav-tab'))
-      setTimeout(fix,30);
-  });
-})();
-/* ===== 모바일 패치 끝 ===== */
-</script>
-
-<!-- ═══ 모바일 이용 안내 팝업 (2026-06-02) ═══ -->
-<div id="mobile-notice-overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.72);z-index:99999;align-items:center;justify-content:center;padding:20px;box-sizing:border-box">
-  <div style="background:#fff;border-radius:20px;padding:32px 24px 28px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3);position:relative">
-    <!-- 아이콘 -->
-    <div style="width:64px;height:64px;background:#fff5f2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;border:2px solid rgba(217,102,74,0.2)">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d9664a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/><line x1="12" y1="17" x2="12" y2="21"/>
-      </svg>
-    </div>
-    <!-- 제목 -->
-    <div style="font-size:18px;font-weight:800;color:#1c1917;letter-spacing:-.02em;margin-bottom:12px;line-height:1.3">PC에서 이용하시면<br>더 편리해요</div>
-    <!-- 설명 -->
-    <div style="font-size:13.5px;color:#6b7280;line-height:1.7;margin-bottom:24px">
-      트레이딩키 대시보드는 다양한 차트와<br>분석 도구가 포함되어 있어<br><strong style="color:#1c1917">PC 환경에서 최적으로 작동</strong>해요.<br><br>
-      모바일에서는 일부 기능이<br>제한될 수 있어요.
-    </div>
-    <!-- 버튼 영역 -->
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <button onclick="document.getElementById('mobile-notice-overlay').style.display='none';sessionStorage.setItem('mobileNoticeDismissed','1')"
-        style="width:100%;padding:14px;background:#d9664a;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:-.01em">
-        그래도 보기
-      </button>
-      <button onclick="window.close();history.back()"
-        style="width:100%;padding:12px;background:#f5f5f4;color:#6b7280;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer">
-        나중에 PC로 볼게요
-      </button>
-    </div>
-    <!-- 하단 메모 -->
-    <div style="margin-top:16px;font-size:11px;color:#9ca3af">이 안내는 모바일 접속 시 한 번만 표시됩니다</div>
-  </div>
-</div>
-<script>
-(function(){
-  var overlay = document.getElementById('mobile-notice-overlay');
-  if (!overlay) return;
-  if (sessionStorage.getItem('mobileNoticeDismissed')) return;
-  if (window.innerWidth >= 768) return;
-
-  // 챗베이스 버튼 숨김/보임 헬퍼
-  function setChatbaseVisible(visible) {
-    var tryCount = 0;
-    var timer = setInterval(function(){
-      var btn = document.getElementById('chatbase-bubble-button');
-      if (!btn) { // 아직 로딩 안 됐으면 재시도
-        if (++tryCount > 40) clearInterval(timer);
-        return;
-      }
-      clearInterval(timer);
-      btn.style.setProperty('display', visible ? '' : 'none', 'important');
-    }, 300);
-  }
-
-  // 팝업 표시 + 챗베이스 숨김
-  overlay.style.display = 'flex';
-  setChatbaseVisible(false);
-
-  // "그래도 보기" 버튼에 챗베이스 복원 추가
-  var confirmBtn = overlay.querySelector('button:first-child');
-  if (confirmBtn) {
-    var origOnclick = confirmBtn.onclick;
-    confirmBtn.onclick = function(){
-      if (origOnclick) origOnclick.call(this);
-      setChatbaseVisible(true);
-    };
-  }
-
-  // 모바일에서 챗베이스 버튼 위치 JS로 강제 고정
-  var posTimer = setInterval(function(){
-    var btn = document.getElementById('chatbase-bubble-button');
-    if (!btn) return;
-    clearInterval(posTimer);
-    btn.style.setProperty('right', '16px', 'important');
-    btn.style.setProperty('bottom', '80px', 'important');
-    btn.style.setProperty('left', 'auto', 'important');
-  }, 200);
-})();
-</script>
-
 </body>
 </html>
