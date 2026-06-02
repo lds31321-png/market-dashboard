@@ -1614,6 +1614,59 @@ input, select, textarea { font-size: 16px !important; }
 }
 </style>
 
+
+<style id="mobile-fix2">
+@media (max-width: 768px) {
+
+  /* ① 폰트 업스케일 모바일에서 전부 되돌리기 */
+  [style*="font-size:12px"] { font-size: 12px !important; }
+  [style*="font-size:13px"] { font-size: 13px !important; }
+  [style*="font-size:14px"] { font-size: 14px !important; }
+  [style*="font-size:16px"] { font-size: 15px !important; }
+  [style*="font-size:22px"] { font-size: 17px !important; }
+  [style*="font-size:24px"] { font-size: 18px !important; }
+  [style*="font-size:26px"] { font-size: 18px !important; }
+  [style*="font-size:28px"] { font-size: 19px !important; }
+  [style*="font-size:30px"] { font-size: 20px !important; }
+  [style*="font-size:32px"] { font-size: 20px !important; }
+  [style*="font-size:34px"] { font-size: 21px !important; }
+  [style*="font-size:36px"] { font-size: 22px !important; }
+
+  /* ② 한국어 텍스트 줄바꿈 정상화 */
+  /* word-break: keep-all → 한글 단어 단위로 줄바꿈 (음절 쪼개짐 방지) */
+  body, .page, .card, .g-card, .g-card-b, .toggle-body,
+  [id^="page-"] { word-break: keep-all !important; overflow-wrap: break-word !important; }
+
+  /* 가운데 정렬 텍스트도 줄바꿈 정상화 */
+  [style*="text-align:center"],
+  [style*="text-align: center"] { word-break: keep-all !important; }
+
+  /* ③ 플로팅 버튼 우측 하단 고정 */
+  #kakao-floating {
+    bottom: 20px !important;
+    right: 16px !important;
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  /* ④ 푸터 최소화 — 사업자 정보·면책 문구 숨기고 링크만 표시 */
+  #protect-footer .pf-biz { display: none !important; }
+  #protect-footer .pf-disclaim { display: none !important; }
+  #protect-footer {
+    padding: 8px 14px !important;
+    text-align: center !important;
+  }
+  #protect-footer .pf-copy {
+    font-size: 11px !important;
+    text-align: center !important;
+    line-height: 1.8 !important;
+  }
+
+  /* ⑤ body 하단 패딩 줄이기 (푸터 작아졌으므로) */
+  body { padding-bottom: 40px !important; }
+}
+</style>
+
 </head><body>
 <div class="hdr"><div class="hdr-l"><div class="logo">CL</div><div><div class="hdr-title">종합 옵션 대시보드</div><div class="hdr-sub" data-47차-목적="부제-버전만">v3.0</div></div></div><div class="hdr-r"><div class="hdr-meta" id="hdrMeta">로딩 중...</div><div class="dot"></div></div></div>
 <div class="nav">
