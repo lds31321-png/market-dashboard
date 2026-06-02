@@ -1499,7 +1499,122 @@ input[type=range] { background: transparent !important; border: none !important;
 .nav-tab.nav-tab-guide { color:#d9664a !important; font-weight:700 !important; }
 .nav-tab.nav-tab-guide:not(.active) { animation: pulse-guide-tab 2.4s ease-in-out infinite; }
 .nav-tab.nav-tab-guide.active { animation: none; }
-</style></head><body>
+</style>
+<style id="mobile-ux-v1">
+/* ============================
+   모바일 UX 전면 재설계 v1
+   (max-width: 768px 적용)
+   ============================ */
+@media (max-width: 768px) {
+
+/* ── 공통: 가로 넘침 차단 ── */
+body { overflow-x: hidden; }
+.page { padding: 10px 14px !important; }
+* { box-sizing: border-box; }
+
+/* ── 공통: 인라인 큰 글씨 억제 ── */
+[style*="font-size:36px"],[style*="font-size:34px"],[style*="font-size:32px"],
+[style*="font-size:30px"],[style*="font-size:28px"],[style*="font-size:26px"],
+[style*="font-size:24px"] { font-size: 18px !important; line-height: 1.45 !important; }
+[style*="font-size:22px"],[style*="font-size:20px"] { font-size: 16px !important; }
+
+/* ── 공통: 모든 그리드 1열 ── */
+[class*="row2"],[class*="row3"],[class*="row4"],[class*="row5"],
+[class*="col2"],[class*="col3"],[class*="col4"],
+.g-row, .g-row.col3, .g-row.col1 {
+  grid-template-columns: 1fr !important;
+}
+
+/* ── 공통: 테이블 가로 스크롤 ── */
+table {
+  display: block !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  max-width: 100% !important;
+}
+
+/* ═══════════════════════════════
+   사용 가이드 탭 (page-guide)
+   ═══════════════════════════════ */
+
+.g-wrap { padding: 10px 0 24px; }
+
+/* 히어로 섹션 */
+.g-hero { padding: 16px 0 14px; }
+.g-hero h2 { font-size: 18px !important; }
+.g-hero p { font-size: 13px !important; }
+
+/* 흐름도 (mech-flow) — 가로 스크롤 */
+.mech-flow {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  flex-wrap: nowrap !important;
+  justify-content: flex-start !important;
+  padding: 4px 4px 12px !important;
+  scrollbar-width: none !important;
+  margin: 10px 0 !important;
+}
+.mech-flow::-webkit-scrollbar { display: none; }
+.mf-box { width: 80px !important; height: 64px !important; flex-shrink: 0 !important; }
+.mf-lbl { font-size: 11px !important; }
+.mf-sub { font-size: 10px !important; }
+.mf-arr { font-size: 13px !important; padding: 0 3px !important; }
+
+/* 토글 섹션 터치 최적화 */
+.toggle-hd { padding: 14px 14px !important; min-height: 52px !important; }
+.toggle-title { font-size: 13px !important; }
+.toggle-badge { font-size: 11px !important; }
+.toggle-body { padding: 14px 14px 18px !important; }
+.toggle-icon { font-size: 16px !important; }
+
+/* 카드 */
+.g-card { padding: 12px 12px !important; }
+.g-card-t { font-size: 13px !important; }
+.g-card-b { font-size: 13px !important; line-height: 1.7 !important; }
+
+/* 결과 흐름 */
+.res-row { padding: 10px 10px !important; }
+.res-text { font-size: 12px !important; }
+
+/* ═══════════════════════════════
+   데이터 입력 탭 (page-input)
+   ═══════════════════════════════ */
+
+/* 섹션 카드 제목 — 큰 텍스트 */
+.uxc-inst-card-name { font-size: 14px !important; }
+.uxc-h1 { font-size: 15px !important; }
+.uxc-h2 { font-size: 13px !important; }
+.uxc-body { font-size: 13px !important; }
+
+/* 입력 필드 iOS 확대 방지 */
+input, select, textarea { font-size: 16px !important; }
+
+/* ── 섹션 B/C 의 큰 제목 카드 ── */
+.uxc-inst-card {
+  min-height: unset !important;
+}
+
+/* ═══════════════════════════════
+   공통 카드/섹션 다듬기
+   ═══════════════════════════════ */
+
+.card, .ov-card { padding: 14px !important; }
+.section-title, .card-title, .card-h { font-size: 14px !important; }
+
+/* 힌트/설명 패널 안쪽 패딩 */
+[style*="padding:56px"] { padding: 36px 14px 18px !important; }
+[style*="padding: 56px"] { padding: 36px 14px 18px !important; }
+
+}
+/* ── 아주 작은 화면 (400px 미만) ── */
+@media (max-width: 400px) {
+  .mf-box { width: 68px !important; height: 58px !important; }
+  .g-hero h2 { font-size: 16px !important; }
+  .toggle-title { font-size: 12px !important; }
+}
+</style>
+
+</head><body>
 <div class="hdr"><div class="hdr-l"><div class="logo">CL</div><div><div class="hdr-title">종합 옵션 대시보드</div><div class="hdr-sub" data-47차-목적="부제-버전만">v3.0</div></div></div><div class="hdr-r"><div class="hdr-meta" id="hdrMeta">로딩 중...</div><div class="dot"></div></div></div>
 <div class="nav">
   <div class="nav-tab active" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:none;');document.getElementById('page-input').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});">데이터 입력</div>
