@@ -255,8 +255,33 @@ section[id^="int-"]{scroll-margin-top:64px;position:relative}
   body { font-size: 15px; }
   .wrap { padding: 0 14px 48px; }
 
-  /* 가이드 영상 카드 */
+  /* 가이드 영상 카드 — 모바일 최적화 */
   #videoIntro { margin: 16px 0 16px; border-radius: 12px; }
+  /* 재생 버튼 원형 축소 */
+  #videoIntro [style*="width:94px"] {
+    width: 56px !important; height: 56px !important;
+  }
+  #videoIntro [style*="border-left:30px"] {
+    border-left: 18px solid #fff !important;
+    border-top: 12px solid transparent !important;
+    border-bottom: 12px solid transparent !important;
+    margin-left: 5px !important;
+  }
+  /* 제목 텍스트 축소 */
+  #videoIntro [style*="font-size:34px"] {
+    font-size: 18px !important; line-height: 1.2 !important;
+  }
+  /* 부제 텍스트 축소 */
+  #videoIntro [style*="font-size:15.5px"] {
+    font-size: 12px !important; line-height: 1.4 !important;
+  }
+  /* 가운데 콘텐츠 gap 줄이기 */
+  #videoIntro [style*="gap:20px"] { gap: 10px !important; }
+  /* 좌상단·우상단·하단 라벨 축소 */
+  #videoIntro [style*="top:24px"] { top: 10px !important; font-size: 9px !important; }
+  #videoIntro [style*="bottom:24px"] { bottom: 8px !important; font-size: 10px !important; }
+  #videoIntro [style*="left:28px"] { left: 12px !important; }
+  #videoIntro [style*="right:28px"] { right: 12px !important; }
 
   /* ── 히어로 섹션 ── */
   .hero { padding: 40px 18px 36px; margin: 16px 0 16px; border-radius: 14px; }
