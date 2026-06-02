@@ -5,6 +5,7 @@
 <!-- [2026-05-26 guide auto-run OFF - jikt request. Remove the jikt-guide-disable block below to restore] -->
 <script id="jikt-guide-disable">!function(){try{for(var o=["ov_tour_done","st_tour_done","pt_tour_done","tr_tour_done","rv_tour_done","rv_chart_guide_open"],t=0;t<o.length;t++)localStorage.setItem(o[t],"1")}catch(o){}}();</script>
 
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>종합 옵션 대시보드 v3</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Nunito:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -5786,5 +5787,54 @@ body{padding-bottom:62px}
   <div class="pf-row pf-disclaim">⚠️ 본 서비스는 옵션 매도 분석 정보 도구이며 특정 종목의 매수·매도 추천이 아닙니다. 제공 정보는 모두 참고용이며 투자 결정과 손실의 책임은 사용자 본인에게 있습니다. 본 서비스는 어떠한 수익도 보장하지 않습니다.</div>
   <div class="pf-row pf-copy">무단 복제·배포·2차 가공은 저작권법에 따라 보호받습니다<span class="sep">|</span><a class="pf-link" href="./terms.html" target="_blank" rel="noopener noreferrer">이용약관</a><span class="sep">|</span><a class="pf-link" href="./refund.html" target="_blank" rel="noopener noreferrer">환불정책</a><span class="sep">|</span><a class="pf-link" href="./privacy.html" target="_blank" rel="noopener noreferrer">개인정보처리방침</a></div>
 </div>
+
+<script>
+/* ===== 모바일 JS 강제 패치 ===== */
+(function(){
+  function fix(){
+    if(screen.width > 768) return;
+    var nav = document.querySelector('.nav');
+    var navInner = document.querySelector('.nav-inner');
+    var tabs = document.querySelectorAll('.nav-tab');
+    if(nav){
+      nav.style.overflowX='auto';
+      nav.style.webkitOverflowScrolling='touch';
+      nav.style.padding='0';
+    }
+    if(navInner){
+      navInner.style.maxWidth='none';
+      navInner.style.width='auto';
+      navInner.style.flexWrap='nowrap';
+      navInner.style.display='flex';
+      navInner.style.margin='0';
+      navInner.style.padding='0 6px';
+    }
+    tabs.forEach(function(t){
+      t.style.whiteSpace='nowrap';
+      t.style.flex='0 0 auto';
+      t.style.padding='0 10px';
+      t.style.fontSize='13px';
+      t.style.height='42px';
+    });
+    var hdr=document.querySelector('.hdr');
+    var hdrTitle=document.querySelector('.hdr-title');
+    if(hdr) hdr.style.cssText+=';height:48px!important;padding:0 12px!important;';
+    if(hdrTitle) hdrTitle.style.cssText+=';font-size:16px!important;';
+    var meta=document.querySelector('.hdr-meta');
+    var sub=document.querySelector('.hdr-sub');
+    if(meta) meta.style.display='none';
+    if(sub) sub.style.display='none';
+    if(nav) nav.style.top='48px';
+  }
+  document.readyState==='loading'
+    ? document.addEventListener('DOMContentLoaded',fix)
+    : fix();
+  document.addEventListener('click',function(e){
+    if(e.target&&e.target.classList&&e.target.classList.contains('nav-tab'))
+      setTimeout(fix,30);
+  });
+})();
+/* ===== 모바일 패치 끝 ===== */
+</script>
 </body>
 </html>
