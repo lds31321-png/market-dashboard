@@ -5,7 +5,6 @@
 <!-- [2026-05-26 guide auto-run OFF - jikt request. Remove the jikt-guide-disable block below to restore] -->
 <script id="jikt-guide-disable">!function(){try{for(var o=["ov_tour_done","st_tour_done","pt_tour_done","tr_tour_done","rv_tour_done","rv_chart_guide_open"],t=0;t<o.length;t++)localStorage.setItem(o[t],"1")}catch(o){}}();</script>
 
-<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>종합 옵션 대시보드 v3</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Nunito:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1499,121 +1498,160 @@ input[type=range] { background: transparent !important; border: none !important;
 .nav-tab.nav-tab-guide { color:#d9664a !important; font-weight:700 !important; }
 .nav-tab.nav-tab-guide:not(.active) { animation: pulse-guide-tab 2.4s ease-in-out infinite; }
 .nav-tab.nav-tab-guide.active { animation: none; }
+
+/* ===== 모바일 반응형 패치 (2026-06-02) ===== */
+@media(max-width:768px){
+
+  /* 헤더 */
+  .hdr{height:48px;padding:0 12px;}
+  .hdr-title{font-size:16px;}
+  .hdr-sub{display:none;}
+  .hdr-meta{display:none;}
+  .logo{width:28px;height:28px;font-size:11px;}
+
+  /* 탭 네비게이션 — 가로 스크롤 */
+  .nav{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    padding:0 !important;
+    top:48px;
+  }
+  .nav::-webkit-scrollbar{display:none;}
+  .nav-inner{
+    flex-wrap:nowrap;
+    min-width:max-content;
+    padding:0 8px;
+    gap:0;
+  }
+  .nav-tab{
+    padding:0 14px;
+    font-size:13px;
+    height:42px;
+    white-space:nowrap;
+    letter-spacing:0;
+  }
+
+  /* 경보 배너 */
+  .alert-band{padding:8px 12px;font-size:11px;flex-wrap:wrap;gap:8px;}
+
+  /* 페이지 패딩 */
+  .page{padding:10px 12px;}
+
+  /* 그리드 전부 1열 */
+  [class*="row"]{grid-template-columns:1fr !important;}
+
+  /* 카드 내부 폰트·패딩 */
+  .card,.ov-card,.ov-detail-card{padding:14px 14px;}
+  .card-h,.card-title{font-size:14px;}
+
+  /* 섹션 내 큰 텍스트 억제 */
+  h1,h2{font-size:1.3rem !important;}
+  h3{font-size:1.1rem !important;}
+
+  /* 데이터 입력 탭 — 입력 필드 */
+  .inp-group{flex-direction:column;}
+  input[type=number],input[type=text],select{font-size:16px;} /* iOS 확대 방지 */
+
+  /* 너비 오버플로 방지 */
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  pre,code{white-space:pre-wrap;word-break:break-all;}
+
+  /* 종합 대시보드 사용 가이드 탭 큰 카드 */
+  .guide-stage-grid{grid-template-columns:1fr 1fr !important;}
+
+  /* 모달 */
+  .modal-box,.modal-inner{width:95vw !important;padding:16px !important;}
+}
+
+@media(max-width:400px){
+  .hdr-title{font-size:14px;}
+  .nav-tab{padding:0 10px;font-size:12px;}
+  .guide-stage-grid{grid-template-columns:1fr !important;}
+}
+/* ===== 모바일 패치 끝 ===== */
 </style>
-<style id="mobile-ux-v1">
-/* ============================
-   모바일 UX 전면 재설계 v1
-   (max-width: 768px 적용)
-   ============================ */
-@media (max-width: 768px) {
+<style>
+/* ===== 모바일 강화 패치 v2 (2026-06-02) ===== */
+@media screen and (max-width:768px){
 
-/* ── 공통: 가로 넘침 차단 ── */
-body { overflow-x: hidden; }
-.page { padding: 10px 14px !important; }
-* { box-sizing: border-box; }
+  /* ① 탭 네비게이션 — 핵심 수정 */
+  .nav {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    top: 48px !important;
+  }
+  .nav::-webkit-scrollbar { display: none !important; }
+  .nav-inner {
+    max-width: none !important;        /* ← 핵심: 1100px 해제 */
+    width: max-content !important;
+    flex-wrap: nowrap !important;
+    margin: 0 !important;
+    padding: 0 6px !important;
+  }
+  .nav-tab {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    padding: 0 12px !important;
+    font-size: 13px !important;
+    height: 42px !important;
+    min-width: unset !important;
+  }
 
-/* ── 공통: 인라인 큰 글씨 억제 ── */
-[style*="font-size:36px"],[style*="font-size:34px"],[style*="font-size:32px"],
-[style*="font-size:30px"],[style*="font-size:28px"],[style*="font-size:26px"],
-[style*="font-size:24px"] { font-size: 18px !important; line-height: 1.45 !important; }
-[style*="font-size:22px"],[style*="font-size:20px"] { font-size: 16px !important; }
+  /* ② 헤더 */
+  .hdr { height: 48px !important; padding: 0 12px !important; }
+  .hdr-title { font-size: 16px !important; }
+  .hdr-sub, .hdr-meta { display: none !important; }
+  .logo { width: 28px !important; height: 28px !important; font-size: 11px !important; }
 
-/* ── 공통: 모든 그리드 1열 ── */
-[class*="row2"],[class*="row3"],[class*="row4"],[class*="row5"],
-[class*="col2"],[class*="col3"],[class*="col4"],
-.g-row, .g-row.col3, .g-row.col1 {
-  grid-template-columns: 1fr !important;
+  /* ③ 인라인 큰 글씨 억제 (section 카드 제목) */
+  [style*="font-size:36px"],
+  [style*="font-size:32px"],
+  [style*="font-size:30px"],
+  [style*="font-size:28px"],
+  [style*="font-size:26px"],
+  [style*="font-size:24px"] {
+    font-size: 18px !important;
+    line-height: 1.4 !important;
+  }
+  [style*="font-size:22px"],
+  [style*="font-size:20px"] {
+    font-size: 16px !important;
+  }
+
+  /* ④ 모든 페이지 패딩 */
+  .page { padding: 10px 12px !important; }
+  .alert-band { padding: 8px 12px !important; font-size: 11px !important; }
+
+  /* ⑤ 그리드 1열 */
+  .row2,.row3,.row4,.row5,.row21,
+  [class*="grid-col-"], .ov-inst-grid,
+  [style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* ⑥ 테이블 가로 스크롤 */
+  table { display: block !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; max-width: 100% !important; }
+
+  /* ⑦ 전체 overflow 방지 */
+  body { overflow-x: hidden !important; }
+  .page, .card, .ov-card { max-width: 100% !important; overflow-x: hidden !important; }
+  * { word-break: break-word; }
+  /* 단, 탭 nav-inner는 예외 */
+  .nav-inner { word-break: normal !important; overflow-x: visible !important; }
+
+  /* ⑧ 입력 필드 iOS 확대 방지 */
+  input, select, textarea { font-size: 16px !important; }
 }
-
-/* ── 공통: 테이블 가로 스크롤 ── */
-table {
-  display: block !important;
-  overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch !important;
-  max-width: 100% !important;
+@media screen and (max-width:400px){
+  .nav-tab { padding: 0 8px !important; font-size: 12px !important; }
+  .hdr-title { font-size: 14px !important; }
+  [style*="font-size:18px"] { font-size: 15px !important; }
 }
-
-/* ═══════════════════════════════
-   사용 가이드 탭 (page-guide)
-   ═══════════════════════════════ */
-
-.g-wrap { padding: 10px 0 24px; }
-
-/* 히어로 섹션 */
-.g-hero { padding: 16px 0 14px; }
-.g-hero h2 { font-size: 18px !important; }
-.g-hero p { font-size: 13px !important; }
-
-/* 흐름도 (mech-flow) — 가로 스크롤 */
-.mech-flow {
-  overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch !important;
-  flex-wrap: nowrap !important;
-  justify-content: flex-start !important;
-  padding: 4px 4px 12px !important;
-  scrollbar-width: none !important;
-  margin: 10px 0 !important;
-}
-.mech-flow::-webkit-scrollbar { display: none; }
-.mf-box { width: 80px !important; height: 64px !important; flex-shrink: 0 !important; }
-.mf-lbl { font-size: 11px !important; }
-.mf-sub { font-size: 10px !important; }
-.mf-arr { font-size: 13px !important; padding: 0 3px !important; }
-
-/* 토글 섹션 터치 최적화 */
-.toggle-hd { padding: 14px 14px !important; min-height: 52px !important; }
-.toggle-title { font-size: 13px !important; }
-.toggle-badge { font-size: 11px !important; }
-.toggle-body { padding: 14px 14px 18px !important; }
-.toggle-icon { font-size: 16px !important; }
-
-/* 카드 */
-.g-card { padding: 12px 12px !important; }
-.g-card-t { font-size: 13px !important; }
-.g-card-b { font-size: 13px !important; line-height: 1.7 !important; }
-
-/* 결과 흐름 */
-.res-row { padding: 10px 10px !important; }
-.res-text { font-size: 12px !important; }
-
-/* ═══════════════════════════════
-   데이터 입력 탭 (page-input)
-   ═══════════════════════════════ */
-
-/* 섹션 카드 제목 — 큰 텍스트 */
-.uxc-inst-card-name { font-size: 14px !important; }
-.uxc-h1 { font-size: 15px !important; }
-.uxc-h2 { font-size: 13px !important; }
-.uxc-body { font-size: 13px !important; }
-
-/* 입력 필드 iOS 확대 방지 */
-input, select, textarea { font-size: 16px !important; }
-
-/* ── 섹션 B/C 의 큰 제목 카드 ── */
-.uxc-inst-card {
-  min-height: unset !important;
-}
-
-/* ═══════════════════════════════
-   공통 카드/섹션 다듬기
-   ═══════════════════════════════ */
-
-.card, .ov-card { padding: 14px !important; }
-.section-title, .card-title, .card-h { font-size: 14px !important; }
-
-/* 힌트/설명 패널 안쪽 패딩 */
-[style*="padding:56px"] { padding: 36px 14px 18px !important; }
-[style*="padding: 56px"] { padding: 36px 14px 18px !important; }
-
-}
-/* ── 아주 작은 화면 (400px 미만) ── */
-@media (max-width: 400px) {
-  .mf-box { width: 68px !important; height: 58px !important; }
-  .g-hero h2 { font-size: 16px !important; }
-  .toggle-title { font-size: 12px !important; }
-}
+/* ===== 모바일 강화 패치 v2 끝 ===== */
 </style>
-
 </head><body>
 <div class="hdr"><div class="hdr-l"><div class="logo">CL</div><div><div class="hdr-title">종합 옵션 대시보드</div><div class="hdr-sub" data-47차-목적="부제-버전만">v3.0</div></div></div><div class="hdr-r"><div class="hdr-meta" id="hdrMeta">로딩 중...</div><div class="dot"></div></div></div>
 <div class="nav">
@@ -1659,17 +1697,6 @@ input, select, textarea { font-size: 16px !important; }
 
 
 
-    <!-- ═══ 주간 추천 포지션 카드 ═══ -->
-    <div id="weekly-picks-card" style="display:none;background:#fff;border-radius:16px;border:1.5px solid rgba(217,102,74,.25);padding:24px 28px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
-        <div style="font-size:20px;font-weight:800;color:#1c1917" id="weekly-picks-title">이번 주 추천 포지션</div>
-        <span style="font-size:12px;color:#9a9089;font-weight:600" id="weekly-picks-date"></span>
-        <span style="font-size:12px;padding:3px 10px;border-radius:20px;background:rgba(217,102,74,.12);color:#d9664a;font-weight:700">직트 선정</span>
-      </div>
-      <div id="weekly-picks-body" style="overflow-x:auto"></div>
-      <div style="margin-top:12px;font-size:12px;color:#9a9089">※ 추천 수익률은 프리미엄/증거금 기준 단순 계산값이며 실제 수익을 보장하지 않습니다.</div>
-    </div>
-    
     <!-- 섹션 헤더 -->
     <!-- [47차 4-2] 머리글 확대 (15px → 22px) + 서브 텍스트 단축 ("카드 클릭 →"만) -->
     <div class="ov-grid-header" data-47차-목적="머리글확대-서브단축" style="margin-top:8px">
@@ -3223,7 +3250,7 @@ input, select, textarea { font-size: 16px !important; }
   </div><!-- /ov-detail-view -->
 
 
-<script>!function(){var e=[{code:"OES",name:"S&P500",sub:"미국 주가지수",icon:"",iconA:"rgba(217,102,74,.55)",iconB:"rgba(0,0,0,.22)"},{code:"OCL",name:"원유",sub:"크루드오일",icon:"️",iconA:"rgba(192,112,48,.55)",iconB:"rgba(200,100,60,.35)"},{code:"ONG",name:"천연가스",sub:"내추럴가스",icon:"",iconA:"rgba(42,95,168,.55)",iconB:"rgba(180,60,80,.35)"},{code:"OGC",name:"골드",sub:"금 선물",icon:"",iconA:"rgba(176,128,64,.55)",iconB:"rgba(200,160,60,.35)"},{code:"OEUU",name:"유로",sub:"유로FX",icon:"",iconA:"rgba(217,102,74,.5)",iconB:"rgba(50,160,200,.3)"},{code:"OADU",name:"호주달러",sub:"AUD/USD",icon:"",iconA:"rgba(26,122,74,.55)",iconB:"rgba(30,160,120,.35)"},{code:"OJY",name:"엔",sub:"JPY/USD",icon:"",iconA:"rgba(217,102,74,.5)",iconB:"rgba(220,180,180,.3)"},{code:"OZN",name:"10년국채",sub:"T-Note",icon:"",iconA:"rgba(217,102,74,.5)",iconB:"rgba(100,120,200,.3)"},{code:"OZS",name:"대두",sub:"소이빈",icon:"",iconA:"rgba(26,122,74,.5)",iconB:"rgba(100,200,130,.3)"},{code:"OZW",name:"밀",sub:"위트",icon:"",iconA:"rgba(176,128,64,.5)",iconB:"rgba(180,160,80,.3)"},{code:"OZC",name:"옥수수",sub:"콘",icon:"",iconA:"rgba(176,128,64,.5)",iconB:"rgba(220,180,80,.3)"}],t=[{label:"정상",color:"#1a7a4a",shadow:"rgba(26,122,74,.30)",barStart:"#1a7a4a",barEnd:"rgba(26,122,74,.4)"},{label:"점검",color:"#3a9e6a",shadow:"rgba(58,158,106,.25)",barStart:"rgba(58,158,106,.4)",barEnd:"#3a9e6a"},{label:"신중",color:"#c8803a",shadow:"rgba(200,128,58,.25)",barStart:"rgba(200,128,58,.4)",barEnd:"#c8803a"},{label:"금지",color:"#c83030",shadow:"rgba(200,48,48,.25)",barStart:"rgba(200,48,48,.4)",barEnd:"#c83030"}],a={LOW:"#1a7a4a",MID:"#b08040",HIGH:"#d9664a"},o=["#1a7a4a","#e08227","#c83030","#8a3fc0"],n=["0단계 · 정상","1단계 · 노출점검","2단계 · 위험방어","3단계 · 위기비상"];function r(e,t){var a=55*t+"ms";return'<div class="ov-inst-card" id="ov-card-'+e.code+'" style="--ov-glow:rgba(217,102,74,.3);--ov-border:rgba(217,102,74,.25);--ov-shadow:rgba(217,102,74,.08);--ov-accent:rgba(217,102,74,.3);--ov-bar:linear-gradient(90deg,#d9664a,#d9664a);--ov-dot:#1a7a4a;--ov-icon-a:'+e.iconA+";--ov-icon-b:"+e.iconB+";animation-delay:"+a+'" onclick="window.uxcCardOnClick(\''+e.code+'\')"><div class="ov-card-accent"></div><div class="ov-card-header"><div class="ov-card-names"><div class="ov-card-name">'+e.name+'</div><div class="ov-card-code">'+e.code+" · "+e.sub+'</div></div><div id="ov-badge-'+e.code+'" class="ov-grade-badge" style="color:rgba(217,102,74,.4);background:rgba(217,102,74,.05)">—</div></div><div class="ov-price-row"><span id="ov-price-'+e.code+'" style="color:var(--t3);font-size:11px;font-family:var(--mono)">─ ─</span></div><div class="ov-alert-row"><div class="ov-alert-label-row"><span class="ov-alert-lbl">생존경보</span><span id="ov-alert-txt-'+e.code+'" class="ov-alert-stage" style="color:var(--t3)">로딩 중</span></div><div class="ov-alert-track"><div id="ov-alert-bar-'+e.code+'" class="ov-alert-bar" style="width:0%;background:#1a7a4a"></div></div></div><div class="ov-regime-row"><div class="ov-regime-label-row"><span class="ov-regime-lbl">시장 국면</span><span id="ov-regime-txt-'+e.code+'" class="ov-regime-txt" style="color:var(--t3)">─</span></div><div class="ov-regime-track"><div id="ov-regime-bar-'+e.code+'" class="ov-regime-bar" style="width:0%;background:#d9664a"></div></div></div><span class="ov-card-hint">📈 클릭 → 하단 손실확률 차트로 이동</span></div>'}function d(e,r){var d=r.current||r.latest||r;if(d&&void 0!==d.vol_score){var l=Math.min(d.alert_level||0,3),c=t[l],s=Math.round(d.vol_score||0),v=d.regime||"MID",g=a[v],u=o[l],b=d.close,m="number"==typeof b?b.toFixed(2):b||"—",y=document.getElementById("ov-card-"+e);if(y){y.style.setProperty("--ov-glow",c.color),y.style.setProperty("--ov-border",c.color),y.style.setProperty("--ov-shadow",c.shadow),y.style.setProperty("--ov-accent",c.color),y.style.setProperty("--ov-bar","linear-gradient(90deg,"+c.barStart+","+c.barEnd+")"),y.style.setProperty("--ov-dot",u);var p=document.getElementById("ov-badge-"+e);p&&(p.textContent=c.label,p.style.color=c.color,p.style.background=c.shadow.replace(".35","0.12").replace(".30","0.10"));var f=document.getElementById("ov-price-"+e);f&&(f.innerHTML='<span class="ov-price">'+m+"</span>");var h=document.getElementById("ov-vol-txt-"+e);h&&(h.textContent=s+"pt · "+v,h.style.color=g);var w=document.getElementById("ov-vol-bar-"+e);if(w){w.style.width=Math.max(33,s)+"%";var I=s>=70?"linear-gradient(90deg,rgba(217,102,74,.5),rgba(217,102,74,1))":s>=30?"linear-gradient(90deg,rgba(176,128,64,.4),rgba(192,112,48,.85))":"linear-gradient(90deg,rgba(26,122,74,.45),rgba(26,122,74,.85))";w.style.background=I}var _=function(){try{var e=localStorage.getItem("sv_rm_data");return!!e&&Object.keys(JSON.parse(e)||{}).length>0}catch(e){return!1}}();if(!function(){try{var e=localStorage.getItem("sv_admin_alerts");return!!e&&Object.keys(JSON.parse(e)||{}).length>0}catch(e){return!1}}()){var E=document.getElementById("ov-alert-bar-"+e);E&&(E.style.width=[33,55,77,100][l]+"%",E.style.background=["linear-gradient(90deg,rgba(26,122,74,.45),rgba(26,122,74,.85))","linear-gradient(90deg,rgba(224,130,39,.45),rgba(224,130,39,.85))","linear-gradient(90deg,rgba(200,48,48,.45),rgba(200,48,48,.9))","linear-gradient(90deg,rgba(138,63,192,.5),rgba(138,63,192,.9))"][l],E.style.animation=l>=3?"seg-pulse 2s ease-in-out infinite":"");var x=document.getElementById("ov-alert-txt-"+e);x&&(x.textContent=n[l],x.style.color=u)}if(!_){var O=document.getElementById("ov-regime-bar-"+e);O&&(O.style.width=({LOW:33,MID:67,HIGH:100}[v]||67)+"%",O.style.background={LOW:"rgba(217,102,74,.3)",MID:"linear-gradient(90deg,rgba(217,102,74,.3),rgba(217,102,74,.7))",HIGH:"linear-gradient(90deg,rgba(217,102,74,.5),rgba(217,102,74,1))"}[v]||"#b08040",O.style.animation="HIGH"===v?"seg-pulse 2s ease-in-out infinite":"");var B=document.getElementById("ov-regime-txt-"+e);B&&(B.textContent={LOW:"저변동 · 안정",MID:"중간변동 · 주의",HIGH:"고변동 · 위험"}[v]||v,B.style.color=g)}"function"==typeof window.ovApplyRMToCards&&window.ovApplyRMToCards(),i()}}}function i(){var t=[0,0,0,0];e.forEach(function(e){var a=document.getElementById("ov-badge-"+e.code);if(a){var o=["정상","점검","신중","금지"].indexOf(a.textContent);o>=0&&t[o]++}});var a=t.reduce(function(e,t){return e+t},0);if(0!==a){var o=[];[{label:"정상",color:"#1a7a4a"},{label:"점검",color:"#d9664a"},{label:"신중",color:"#b08040"},{label:"금지",color:"#2a5fa8"}].forEach(function(e,a){t[a]>0&&o.push('<span style="color:'+e.color+';font-weight:700">● '+e.label+" "+t[a]+"개</span>")});var n=document.getElementById("ov-alert-summary");n&&(n.innerHTML='<span style="color:var(--t3)">'+a+"개 종목 현재 상태 · </span>"+o.join('<span style="color:var(--b2)"> · </span>'))}}function l(){fetch("admin_data.json?t="+Date.now()).then(function(e){return e.ok?e.json():null}).catch(function(){return null}).then(function(t){if(t&&"object"==typeof t)try{t.sv_rm_data&&localStorage.setItem("sv_rm_data",JSON.stringify(t.sv_rm_data)),t.sv_admin_alerts&&localStorage.setItem("sv_admin_alerts",JSON.stringify(t.sv_admin_alerts)),t.st_rank_v3&&localStorage.setItem("st_rank_v3",JSON.stringify(t.st_rank_v3)),t.st_detail_v3&&localStorage.setItem("st_detail_v3",JSON.stringify(t.st_detail_v3)),t.sv_phase_note&&localStorage.setItem("sv_phase_note",t.sv_phase_note),t.sv_phase_note_updated&&localStorage.setItem("sv_phase_note_updated",t.sv_phase_note_updated);if(t.weekly_picks){try{localStorage.setItem("weekly_picks",JSON.stringify(t.weekly_picks))}catch(e){}}try{localStorage.setItem("sv_admin_loaded_at",(new Date).toISOString())}catch(e){};renderWeeklyPicks(t.weekly_picks)}catch(e){console.error("[admin_data 로드 실패]",e)}!function(){var t=document.getElementById("ov-inst-grid");if(t){var a=e;try{var o=JSON.parse(localStorage.getItem("sv_rm_data")||"{}"),n=Array.isArray(o)?o.map(function(e){return e&&e.code}).filter(Boolean):Object.keys(o||{});n.length>0&&(a=e.filter(function(e){return n.indexOf(e.code)>=0}))}catch(e){}for(var i="",l=0;l<a.length;l++)i+=("function"==typeof buildCardV2?buildCardV2:r)(a[l],l);t.innerHTML=i,"undefined"!=typeof D&&D.current&&(d("OCL",D),window.ovUpdateCardV2&&window.ovUpdateCardV2("OCL",D)),a.forEach(function(e){"OCL"!==e.code&&fetch("data/"+e.code+"_data.json").then(function(e){return e.ok?e.json():null}).then(function(t){t&&(d(e.code,t),window.ovUpdateCardV2&&window.ovUpdateCardV2(e.code,t))}).catch(function(){})}),setTimeout(function(){"function"==typeof window.ovApplyRMToCards&&window.ovApplyRMToCards()},1e3);var c=document.getElementById("ov-data-stamp");if(c){var s=new Date;c.textContent=s.getFullYear()+"."+String(s.getMonth()+1).padStart(2,"0")+"."+String(s.getDate()).padStart(2,"0")+" 기준"}}}()})}window.ovApplyRMToCards=function(){if("function"==typeof window.ovUpdateCardV2&&void 0!==e)try{e.forEach(function(e){window.ovUpdateCardV2(e.code,null)})}catch(e){}var r={},d={};try{r=JSON.parse(localStorage.getItem("sv_rm_data")||"{}")}catch(e){}try{d=JSON.parse(localStorage.getItem("sv_admin_alerts")||"{}")}catch(e){}var l=Object.keys(r).length>0,c=Object.keys(d).length>0,s={LOW:33,MID:67,HIGH:100},v={LOW:"rgba(217,102,74,.3)",MID:"linear-gradient(90deg,rgba(217,102,74,.3),rgba(217,102,74,.7))",HIGH:"linear-gradient(90deg,rgba(217,102,74,.5),rgba(217,102,74,1))"},g={LOW:"저변동 · 안정",MID:"중간변동 · 주의",HIGH:"고변동 · 위험"},u=[33,55,77,100],b=["linear-gradient(90deg,rgba(26,122,74,.45),rgba(26,122,74,.85))","linear-gradient(90deg,rgba(224,130,39,.45),rgba(224,130,39,.85))","linear-gradient(90deg,rgba(200,48,48,.45),rgba(200,48,48,.9))","linear-gradient(90deg,rgba(138,63,192,.5),rgba(138,63,192,.9))"];e.forEach(function(e){var i,m,y,p=e.code,f=r[p],h=d[p];if(f&&l&&"function"==typeof rmCalcPhase){var w=rmCalcPhase(f.psr,f.isr,f.lmr,f.ivl);y="function"==typeof rmEffectivePhase?rmEffectivePhase(w,f.tail):w,f.phase_admin&&(w=f.phase_admin,y=f.phase_admin),i="NORMAL"===y?"LOW":"WARNING"===y?"MID":"HIGH"}else y="NORMAL",i="LOW";m=a[i];var I=document.getElementById("ov-regime-bar-"+p),_=document.getElementById("ov-regime-txt-"+p);if(I&&(I.style.width=(s[i]||67)+"%",I.style.background=v[i]||"#b08040",I.style.animation="HIGH"===i?"seg-pulse 2s ease-in-out infinite":""),_&&(_.textContent=g[i]||i,_.style.color=m),f&&l&&"OCL"!==p){var E=Math.max(33,Math.min(100,Math.round(80*(f.ivl||0)+Math.min(10*(f.psr||0),20)))),x=document.getElementById("ov-vol-txt-"+p),O=document.getElementById("ov-vol-bar-"+p);if(x&&(x.textContent=E+"pt · "+i,x.style.color=m),O){O.style.width=E+"%";var B=E>=70?"linear-gradient(90deg,rgba(217,102,74,.5),rgba(217,102,74,1))":E>=30?"linear-gradient(90deg,rgba(176,128,64,.4),rgba(192,112,48,.85))":"linear-gradient(90deg,rgba(26,122,74,.45),rgba(26,122,74,.85))";O.style.background=B}}var S=t["NORMAL"===y?0:"WARNING"===y?2:3];if(S){var C=document.getElementById("ov-card-"+p);C&&(C.style.setProperty("--ov-glow",S.color),C.style.setProperty("--ov-border",S.color),C.style.setProperty("--ov-shadow",S.shadow),C.style.setProperty("--ov-bar","linear-gradient(90deg,"+S.barStart+","+S.barEnd+")"));var M=document.getElementById("ov-badge-"+p);M&&(M.textContent=S.label,M.style.color=S.color,M.style.background=S.shadow.replace(".35",".12").replace(".30",".10"))}I=document.getElementById("ov-regime-bar-"+p),_=document.getElementById("ov-regime-txt-"+p);I&&(I.style.width=({LOW:33,MID:67,HIGH:100}[i]||33)+"%",I.style.background={LOW:"rgba(217,102,74,.3)",MID:"linear-gradient(90deg,rgba(217,102,74,.3),rgba(217,102,74,.7))",HIGH:"linear-gradient(90deg,rgba(217,102,74,.5),rgba(217,102,74,1))"}[i]||"#d9664a",I.style.animation="HIGH"===i?"seg-pulse 2s ease-in-out infinite":""),_&&(_.textContent={LOW:"저변동 · 안정",MID:"중간변동 · 주의",HIGH:"고변동 · 위험"}[i]||"저변동 · 안정",_.style.color=m);var H=0;void 0!==h&&c&&(H="object"==typeof h?Math.max(h.call||0,h.put||0):parseInt(h)||0,H=Math.min(H,3));var R=document.getElementById("ov-alert-bar-"+p),k=document.getElementById("ov-alert-txt-"+p);R&&(R.style.width=u[H]+"%",R.style.background=b[H],R.style.animation=H>=3?"seg-pulse 2s ease-in-out infinite":""),k&&(k.textContent=n[H],k.style.color=o[H])}),i()},window.ovShowGrid=function(){document.getElementById("ov-grid-view").style.display="",document.getElementById("ov-detail-view").style.display="none",window.scrollTo({top:0,behavior:"smooth"})},window.goToTab=function(e){var t=document.querySelectorAll(".nav-tab");t[e]&&(t[e].click(),window.scrollTo({top:0,behavior:"smooth"}))},window.ovShowDetail=function(a){for(var o=null,n=0;n<e.length;n++)if(e[n].code===a){o=e[n];break}if(o){var r=document.getElementById("ov-badge-"+a),d=r?r.textContent:"—",i=["정상","점검","신중","금지"].indexOf(d);i<0&&(i=0);var l=t[i];document.getElementById("ov-detail-name").textContent=o.icon+"  "+o.name,document.getElementById("ov-detail-code").textContent=o.code+" · "+o.sub;var c=document.getElementById("ov-detail-grade");c&&(c.textContent="—"!==d?d:"",c.style.color=l.color,c.style.background=l.shadow.replace(".35","0.12").replace(".30","0.10"),c.style.display="");var s=document.getElementById("ov-ocl-panel"),v=document.getElementById("ov-placeholder-panel");s&&(s.style.display="none"),v&&(v.style.display="none"),"OCL"===a?(ovRenderLoading(o.name,o.code),setTimeout(function(){"function"==typeof ovRenderMultiPanel&&ovRenderMultiPanel(D)},50)):(ovRenderLoading(o.name,o.code),ovFetchAndRender(a)),document.getElementById("ov-grid-view").style.display="none",document.getElementById("ov-detail-view").style.display="";var g=document.getElementById("ov-univ-panel");g&&(g.style.display=""),setTimeout(u,300),setTimeout(u,800),setTimeout(function(){function e(e,t,a,o){var n=document.getElementById(e);if(n){var r=(n.textContent||"").trim();r&&r.indexOf("데이터 로드 중")<0&&r.length>5&&n.children.length>0||(n.innerHTML='<div style="padding:32px 24px;text-align:center;background:rgba(217,102,74,.04);border:1px dashed rgba(217,102,74,.30);border-radius:8px"><div style="font-size:14px;font-weight:800;color:#d9664a;margin-bottom:8px">'+t+' — 데이터 없음</div><div style="font-size:13px;color:var(--t2);line-height:1.7"><b style="color:#d9664a">'+a+"</b>에서<br><b>"+o+"</b>을(를) 입력하면 이 영역이 자동으로 채워집니다.</div></div>")}}e("uvp-radar-detail","시장위험 5지표","admin.html → 시장 위험 관리 탭","종목 "+a+"의 5지표 (변동성·트렌드·상관·모멘텀·폭주) 수치");var t=document.getElementById("uvp-phase-hist-strip");t&&0===t.children.length&&e("uvp-phase-hist-body","일별 국면 흐름","admin.html → 시장국면 입력 탭","일별 시장 국면 (정상/주의/비상) 14일 이력");var o=document.getElementById("uvp-chart1-month"),n=!o||0===o.options.length||1===o.options.length&&o.options[0].text.indexOf("데이터 없음")>=0,r=document.getElementById("uvp-chart1-info");n&&r&&(r.innerHTML='<div style="padding:24px 20px;text-align:center;background:rgba(217,102,74,.04);border:1px dashed rgba(217,102,74,.30);border-radius:8px;margin-bottom:8px"><div style="font-size:14px;font-weight:800;color:#d9664a;margin-bottom:8px">가격+행사가 분포 — 데이터 없음</div><div style="font-size:13px;color:var(--t2);line-height:1.7"><b style="color:#d9664a">admin.html → 매매전략 입력 (상세) 탭</b>에서<br><b>종목 '+a+"의 월물별 행사가 + 손실확률 + 옵션 가격</b>을 입력하면<br>월물 드롭다운에 표시되고 차트가 자동으로 채워집니다.</div></div>")},1500),window.scrollTo({top:0,behavior:"smooth"})}function u(){try{"function"==typeof window._uvpInit&&window._uvpInit(a)}catch(e){console.error("[_uvpInit]",e)}try{"function"==typeof window.uvpShow&&window.uvpShow(a)}catch(e){}try{"function"==typeof window.uvpRenderStepConclusions&&window.uvpRenderStepConclusions(a)}catch(e){console.error("[StepConclusions]",e)}try{"function"==typeof window.uvpRenderHero&&window.uvpRenderHero(a)}catch(e){}try{"function"==typeof window.uvpRenderChart1&&window.uvpRenderChart1()}catch(e){}try{"function"==typeof window.uvpRenderRadar&&window.uvpRenderRadar(a)}catch(e){}try{"function"==typeof window.uvpRenderStrikesTable&&window.uvpRenderStrikesTable()}catch(e){}try{"function"==typeof window.uvpRenderPosGauge&&window.uvpRenderPosGauge(a)}catch(e){}try{"function"==typeof window.uvpRenderEntrySim&&window.uvpRenderEntrySim(a)}catch(e){}try{"function"==typeof window.uvpRenderPhaseHist&&window.uvpRenderPhaseHist(a)}catch(e){}try{"function"==typeof window.uvpRenderVolEstimate&&window.uvpRenderVolEstimate(a)}catch(e){}try{"function"==typeof window.uvpRenderMacroMini&&window.uvpRenderMacroMini(a)}catch(e){}}},"loading"===document.readyState?document.addEventListener("DOMContentLoaded",l):l()}();</script>
+<script>!function(){var e=[{code:"OES",name:"S&P500",sub:"미국 주가지수",icon:"",iconA:"rgba(217,102,74,.55)",iconB:"rgba(0,0,0,.22)"},{code:"OCL",name:"원유",sub:"크루드오일",icon:"️",iconA:"rgba(192,112,48,.55)",iconB:"rgba(200,100,60,.35)"},{code:"ONG",name:"천연가스",sub:"내추럴가스",icon:"",iconA:"rgba(42,95,168,.55)",iconB:"rgba(180,60,80,.35)"},{code:"OGC",name:"골드",sub:"금 선물",icon:"",iconA:"rgba(176,128,64,.55)",iconB:"rgba(200,160,60,.35)"},{code:"OEUU",name:"유로",sub:"유로FX",icon:"",iconA:"rgba(217,102,74,.5)",iconB:"rgba(50,160,200,.3)"},{code:"OADU",name:"호주달러",sub:"AUD/USD",icon:"",iconA:"rgba(26,122,74,.55)",iconB:"rgba(30,160,120,.35)"},{code:"OJY",name:"엔",sub:"JPY/USD",icon:"",iconA:"rgba(217,102,74,.5)",iconB:"rgba(220,180,180,.3)"},{code:"OZN",name:"10년국채",sub:"T-Note",icon:"",iconA:"rgba(217,102,74,.5)",iconB:"rgba(100,120,200,.3)"},{code:"OZS",name:"대두",sub:"소이빈",icon:"",iconA:"rgba(26,122,74,.5)",iconB:"rgba(100,200,130,.3)"},{code:"OZW",name:"밀",sub:"위트",icon:"",iconA:"rgba(176,128,64,.5)",iconB:"rgba(180,160,80,.3)"},{code:"OZC",name:"옥수수",sub:"콘",icon:"",iconA:"rgba(176,128,64,.5)",iconB:"rgba(220,180,80,.3)"}],t=[{label:"정상",color:"#1a7a4a",shadow:"rgba(26,122,74,.30)",barStart:"#1a7a4a",barEnd:"rgba(26,122,74,.4)"},{label:"점검",color:"#3a9e6a",shadow:"rgba(58,158,106,.25)",barStart:"rgba(58,158,106,.4)",barEnd:"#3a9e6a"},{label:"신중",color:"#c8803a",shadow:"rgba(200,128,58,.25)",barStart:"rgba(200,128,58,.4)",barEnd:"#c8803a"},{label:"금지",color:"#c83030",shadow:"rgba(200,48,48,.25)",barStart:"rgba(200,48,48,.4)",barEnd:"#c83030"}],a={LOW:"#1a7a4a",MID:"#b08040",HIGH:"#d9664a"},o=["#1a7a4a","#e08227","#c83030","#8a3fc0"],n=["0단계 · 정상","1단계 · 노출점검","2단계 · 위험방어","3단계 · 위기비상"];function r(e,t){var a=55*t+"ms";return'<div class="ov-inst-card" id="ov-card-'+e.code+'" style="--ov-glow:rgba(217,102,74,.3);--ov-border:rgba(217,102,74,.25);--ov-shadow:rgba(217,102,74,.08);--ov-accent:rgba(217,102,74,.3);--ov-bar:linear-gradient(90deg,#d9664a,#d9664a);--ov-dot:#1a7a4a;--ov-icon-a:'+e.iconA+";--ov-icon-b:"+e.iconB+";animation-delay:"+a+'" onclick="window.uxcCardOnClick(\''+e.code+'\')"><div class="ov-card-accent"></div><div class="ov-card-header"><div class="ov-card-names"><div class="ov-card-name">'+e.name+'</div><div class="ov-card-code">'+e.code+" · "+e.sub+'</div></div><div id="ov-badge-'+e.code+'" class="ov-grade-badge" style="color:rgba(217,102,74,.4);background:rgba(217,102,74,.05)">—</div></div><div class="ov-price-row"><span id="ov-price-'+e.code+'" style="color:var(--t3);font-size:11px;font-family:var(--mono)">─ ─</span></div><div class="ov-alert-row"><div class="ov-alert-label-row"><span class="ov-alert-lbl">생존경보</span><span id="ov-alert-txt-'+e.code+'" class="ov-alert-stage" style="color:var(--t3)">로딩 중</span></div><div class="ov-alert-track"><div id="ov-alert-bar-'+e.code+'" class="ov-alert-bar" style="width:0%;background:#1a7a4a"></div></div></div><div class="ov-regime-row"><div class="ov-regime-label-row"><span class="ov-regime-lbl">시장 국면</span><span id="ov-regime-txt-'+e.code+'" class="ov-regime-txt" style="color:var(--t3)">─</span></div><div class="ov-regime-track"><div id="ov-regime-bar-'+e.code+'" class="ov-regime-bar" style="width:0%;background:#d9664a"></div></div></div><span class="ov-card-hint">📈 클릭 → 하단 손실확률 차트로 이동</span></div>'}function d(e,r){var d=r.current||r.latest||r;if(d&&void 0!==d.vol_score){var l=Math.min(d.alert_level||0,3),c=t[l],s=Math.round(d.vol_score||0),v=d.regime||"MID",g=a[v],u=o[l],b=d.close,m="number"==typeof b?b.toFixed(2):b||"—",y=document.getElementById("ov-card-"+e);if(y){y.style.setProperty("--ov-glow",c.color),y.style.setProperty("--ov-border",c.color),y.style.setProperty("--ov-shadow",c.shadow),y.style.setProperty("--ov-accent",c.color),y.style.setProperty("--ov-bar","linear-gradient(90deg,"+c.barStart+","+c.barEnd+")"),y.style.setProperty("--ov-dot",u);var p=document.getElementById("ov-badge-"+e);p&&(p.textContent=c.label,p.style.color=c.color,p.style.background=c.shadow.replace(".35","0.12").replace(".30","0.10"));var f=document.getElementById("ov-price-"+e);f&&(f.innerHTML='<span class="ov-price">'+m+"</span>");var h=document.getElementById("ov-vol-txt-"+e);h&&(h.textContent=s+"pt · "+v,h.style.color=g);var w=document.getElementById("ov-vol-bar-"+e);if(w){w.style.width=Math.max(33,s)+"%";var I=s>=70?"linear-gradient(90deg,rgba(217,102,74,.5),rgba(217,102,74,1))":s>=30?"linear-gradient(90deg,rgba(176,128,64,.4),rgba(192,112,48,.85))":"linear-gradient(90deg,rgba(26,122,74,.45),rgba(26,122,74,.85))";w.style.background=I}var _=function(){try{var e=localStorage.getItem("sv_rm_data");return!!e&&Object.keys(JSON.parse(e)||{}).length>0}catch(e){return!1}}();if(!function(){try{var e=localStorage.getItem("sv_admin_alerts");return!!e&&Object.keys(JSON.parse(e)||{}).length>0}catch(e){return!1}}()){var E=document.getElementById("ov-alert-bar-"+e);E&&(E.style.width=[33,55,77,100][l]+"%",E.style.background=["linear-gradient(90deg,rgba(26,122,74,.45),rgba(26,122,74,.85))","linear-gradient(90deg,rgba(224,130,39,.45),rgba(224,130,39,.85))","linear-gradient(90deg,rgba(200,48,48,.45),rgba(200,48,48,.9))","linear-gradient(90deg,rgba(138,63,192,.5),rgba(138,63,192,.9))"][l],E.style.animation=l>=3?"seg-pulse 2s ease-in-out infinite":"");var x=document.getElementById("ov-alert-txt-"+e);x&&(x.textContent=n[l],x.style.color=u)}if(!_){var O=document.getElementById("ov-regime-bar-"+e);O&&(O.style.width=({LOW:33,MID:67,HIGH:100}[v]||67)+"%",O.style.background={LOW:"rgba(217,102,74,.3)",MID:"linear-gradient(90deg,rgba(217,102,74,.3),rgba(217,102,74,.7))",HIGH:"linear-gradient(90deg,rgba(217,102,74,.5),rgba(217,102,74,1))"}[v]||"#b08040",O.style.animation="HIGH"===v?"seg-pulse 2s ease-in-out infinite":"");var B=document.getElementById("ov-regime-txt-"+e);B&&(B.textContent={LOW:"저변동 · 안정",MID:"중간변동 · 주의",HIGH:"고변동 · 위험"}[v]||v,B.style.color=g)}"function"==typeof window.ovApplyRMToCards&&window.ovApplyRMToCards(),i()}}}function i(){var t=[0,0,0,0];e.forEach(function(e){var a=document.getElementById("ov-badge-"+e.code);if(a){var o=["정상","점검","신중","금지"].indexOf(a.textContent);o>=0&&t[o]++}});var a=t.reduce(function(e,t){return e+t},0);if(0!==a){var o=[];[{label:"정상",color:"#1a7a4a"},{label:"점검",color:"#d9664a"},{label:"신중",color:"#b08040"},{label:"금지",color:"#2a5fa8"}].forEach(function(e,a){t[a]>0&&o.push('<span style="color:'+e.color+';font-weight:700">● '+e.label+" "+t[a]+"개</span>")});var n=document.getElementById("ov-alert-summary");n&&(n.innerHTML='<span style="color:var(--t3)">'+a+"개 종목 현재 상태 · </span>"+o.join('<span style="color:var(--b2)"> · </span>'))}}function l(){fetch("admin_data.json?t="+Date.now()).then(function(e){return e.ok?e.json():null}).catch(function(){return null}).then(function(t){if(t&&"object"==typeof t)try{t.sv_rm_data&&localStorage.setItem("sv_rm_data",JSON.stringify(t.sv_rm_data)),t.sv_admin_alerts&&localStorage.setItem("sv_admin_alerts",JSON.stringify(t.sv_admin_alerts)),t.st_rank_v3&&localStorage.setItem("st_rank_v3",JSON.stringify(t.st_rank_v3)),t.st_detail_v3&&localStorage.setItem("st_detail_v3",JSON.stringify(t.st_detail_v3)),t.sv_phase_note&&localStorage.setItem("sv_phase_note",t.sv_phase_note),t.sv_phase_note_updated&&localStorage.setItem("sv_phase_note_updated",t.sv_phase_note_updated);try{localStorage.setItem("sv_admin_loaded_at",(new Date).toISOString())}catch(e){}}catch(e){console.error("[admin_data 로드 실패]",e)}!function(){var t=document.getElementById("ov-inst-grid");if(t){var a=e;try{var o=JSON.parse(localStorage.getItem("sv_rm_data")||"{}"),n=Array.isArray(o)?o.map(function(e){return e&&e.code}).filter(Boolean):Object.keys(o||{});n.length>0&&(a=e.filter(function(e){return n.indexOf(e.code)>=0}))}catch(e){}for(var i="",l=0;l<a.length;l++)i+=("function"==typeof buildCardV2?buildCardV2:r)(a[l],l);t.innerHTML=i,"undefined"!=typeof D&&D.current&&(d("OCL",D),window.ovUpdateCardV2&&window.ovUpdateCardV2("OCL",D)),a.forEach(function(e){"OCL"!==e.code&&fetch("data/"+e.code+"_data.json").then(function(e){return e.ok?e.json():null}).then(function(t){t&&(d(e.code,t),window.ovUpdateCardV2&&window.ovUpdateCardV2(e.code,t))}).catch(function(){})}),setTimeout(function(){"function"==typeof window.ovApplyRMToCards&&window.ovApplyRMToCards()},1e3);var c=document.getElementById("ov-data-stamp");if(c){var s=new Date;c.textContent=s.getFullYear()+"."+String(s.getMonth()+1).padStart(2,"0")+"."+String(s.getDate()).padStart(2,"0")+" 기준"}}}()})}window.ovApplyRMToCards=function(){if("function"==typeof window.ovUpdateCardV2&&void 0!==e)try{e.forEach(function(e){window.ovUpdateCardV2(e.code,null)})}catch(e){}var r={},d={};try{r=JSON.parse(localStorage.getItem("sv_rm_data")||"{}")}catch(e){}try{d=JSON.parse(localStorage.getItem("sv_admin_alerts")||"{}")}catch(e){}var l=Object.keys(r).length>0,c=Object.keys(d).length>0,s={LOW:33,MID:67,HIGH:100},v={LOW:"rgba(217,102,74,.3)",MID:"linear-gradient(90deg,rgba(217,102,74,.3),rgba(217,102,74,.7))",HIGH:"linear-gradient(90deg,rgba(217,102,74,.5),rgba(217,102,74,1))"},g={LOW:"저변동 · 안정",MID:"중간변동 · 주의",HIGH:"고변동 · 위험"},u=[33,55,77,100],b=["linear-gradient(90deg,rgba(26,122,74,.45),rgba(26,122,74,.85))","linear-gradient(90deg,rgba(224,130,39,.45),rgba(224,130,39,.85))","linear-gradient(90deg,rgba(200,48,48,.45),rgba(200,48,48,.9))","linear-gradient(90deg,rgba(138,63,192,.5),rgba(138,63,192,.9))"];e.forEach(function(e){var i,m,y,p=e.code,f=r[p],h=d[p];if(f&&l&&"function"==typeof rmCalcPhase){var w=rmCalcPhase(f.psr,f.isr,f.lmr,f.ivl);y="function"==typeof rmEffectivePhase?rmEffectivePhase(w,f.tail):w,f.phase_admin&&(w=f.phase_admin,y=f.phase_admin),i="NORMAL"===y?"LOW":"WARNING"===y?"MID":"HIGH"}else y="NORMAL",i="LOW";m=a[i];var I=document.getElementById("ov-regime-bar-"+p),_=document.getElementById("ov-regime-txt-"+p);if(I&&(I.style.width=(s[i]||67)+"%",I.style.background=v[i]||"#b08040",I.style.animation="HIGH"===i?"seg-pulse 2s ease-in-out infinite":""),_&&(_.textContent=g[i]||i,_.style.color=m),f&&l&&"OCL"!==p){var E=Math.max(33,Math.min(100,Math.round(80*(f.ivl||0)+Math.min(10*(f.psr||0),20)))),x=document.getElementById("ov-vol-txt-"+p),O=document.getElementById("ov-vol-bar-"+p);if(x&&(x.textContent=E+"pt · "+i,x.style.color=m),O){O.style.width=E+"%";var B=E>=70?"linear-gradient(90deg,rgba(217,102,74,.5),rgba(217,102,74,1))":E>=30?"linear-gradient(90deg,rgba(176,128,64,.4),rgba(192,112,48,.85))":"linear-gradient(90deg,rgba(26,122,74,.45),rgba(26,122,74,.85))";O.style.background=B}}var S=t["NORMAL"===y?0:"WARNING"===y?2:3];if(S){var C=document.getElementById("ov-card-"+p);C&&(C.style.setProperty("--ov-glow",S.color),C.style.setProperty("--ov-border",S.color),C.style.setProperty("--ov-shadow",S.shadow),C.style.setProperty("--ov-bar","linear-gradient(90deg,"+S.barStart+","+S.barEnd+")"));var M=document.getElementById("ov-badge-"+p);M&&(M.textContent=S.label,M.style.color=S.color,M.style.background=S.shadow.replace(".35",".12").replace(".30",".10"))}I=document.getElementById("ov-regime-bar-"+p),_=document.getElementById("ov-regime-txt-"+p);I&&(I.style.width=({LOW:33,MID:67,HIGH:100}[i]||33)+"%",I.style.background={LOW:"rgba(217,102,74,.3)",MID:"linear-gradient(90deg,rgba(217,102,74,.3),rgba(217,102,74,.7))",HIGH:"linear-gradient(90deg,rgba(217,102,74,.5),rgba(217,102,74,1))"}[i]||"#d9664a",I.style.animation="HIGH"===i?"seg-pulse 2s ease-in-out infinite":""),_&&(_.textContent={LOW:"저변동 · 안정",MID:"중간변동 · 주의",HIGH:"고변동 · 위험"}[i]||"저변동 · 안정",_.style.color=m);var H=0;void 0!==h&&c&&(H="object"==typeof h?Math.max(h.call||0,h.put||0):parseInt(h)||0,H=Math.min(H,3));var R=document.getElementById("ov-alert-bar-"+p),k=document.getElementById("ov-alert-txt-"+p);R&&(R.style.width=u[H]+"%",R.style.background=b[H],R.style.animation=H>=3?"seg-pulse 2s ease-in-out infinite":""),k&&(k.textContent=n[H],k.style.color=o[H])}),i()},window.ovShowGrid=function(){document.getElementById("ov-grid-view").style.display="",document.getElementById("ov-detail-view").style.display="none",window.scrollTo({top:0,behavior:"smooth"})},window.goToTab=function(e){var t=document.querySelectorAll(".nav-tab");t[e]&&(t[e].click(),window.scrollTo({top:0,behavior:"smooth"}))},window.ovShowDetail=function(a){for(var o=null,n=0;n<e.length;n++)if(e[n].code===a){o=e[n];break}if(o){var r=document.getElementById("ov-badge-"+a),d=r?r.textContent:"—",i=["정상","점검","신중","금지"].indexOf(d);i<0&&(i=0);var l=t[i];document.getElementById("ov-detail-name").textContent=o.icon+"  "+o.name,document.getElementById("ov-detail-code").textContent=o.code+" · "+o.sub;var c=document.getElementById("ov-detail-grade");c&&(c.textContent="—"!==d?d:"",c.style.color=l.color,c.style.background=l.shadow.replace(".35","0.12").replace(".30","0.10"),c.style.display="");var s=document.getElementById("ov-ocl-panel"),v=document.getElementById("ov-placeholder-panel");s&&(s.style.display="none"),v&&(v.style.display="none"),"OCL"===a?(ovRenderLoading(o.name,o.code),setTimeout(function(){"function"==typeof ovRenderMultiPanel&&ovRenderMultiPanel(D)},50)):(ovRenderLoading(o.name,o.code),ovFetchAndRender(a)),document.getElementById("ov-grid-view").style.display="none",document.getElementById("ov-detail-view").style.display="";var g=document.getElementById("ov-univ-panel");g&&(g.style.display=""),setTimeout(u,300),setTimeout(u,800),setTimeout(function(){function e(e,t,a,o){var n=document.getElementById(e);if(n){var r=(n.textContent||"").trim();r&&r.indexOf("데이터 로드 중")<0&&r.length>5&&n.children.length>0||(n.innerHTML='<div style="padding:32px 24px;text-align:center;background:rgba(217,102,74,.04);border:1px dashed rgba(217,102,74,.30);border-radius:8px"><div style="font-size:14px;font-weight:800;color:#d9664a;margin-bottom:8px">'+t+' — 데이터 없음</div><div style="font-size:13px;color:var(--t2);line-height:1.7"><b style="color:#d9664a">'+a+"</b>에서<br><b>"+o+"</b>을(를) 입력하면 이 영역이 자동으로 채워집니다.</div></div>")}}e("uvp-radar-detail","시장위험 5지표","admin.html → 시장 위험 관리 탭","종목 "+a+"의 5지표 (변동성·트렌드·상관·모멘텀·폭주) 수치");var t=document.getElementById("uvp-phase-hist-strip");t&&0===t.children.length&&e("uvp-phase-hist-body","일별 국면 흐름","admin.html → 시장국면 입력 탭","일별 시장 국면 (정상/주의/비상) 14일 이력");var o=document.getElementById("uvp-chart1-month"),n=!o||0===o.options.length||1===o.options.length&&o.options[0].text.indexOf("데이터 없음")>=0,r=document.getElementById("uvp-chart1-info");n&&r&&(r.innerHTML='<div style="padding:24px 20px;text-align:center;background:rgba(217,102,74,.04);border:1px dashed rgba(217,102,74,.30);border-radius:8px;margin-bottom:8px"><div style="font-size:14px;font-weight:800;color:#d9664a;margin-bottom:8px">가격+행사가 분포 — 데이터 없음</div><div style="font-size:13px;color:var(--t2);line-height:1.7"><b style="color:#d9664a">admin.html → 매매전략 입력 (상세) 탭</b>에서<br><b>종목 '+a+"의 월물별 행사가 + 손실확률 + 옵션 가격</b>을 입력하면<br>월물 드롭다운에 표시되고 차트가 자동으로 채워집니다.</div></div>")},1500),window.scrollTo({top:0,behavior:"smooth"})}function u(){try{"function"==typeof window._uvpInit&&window._uvpInit(a)}catch(e){console.error("[_uvpInit]",e)}try{"function"==typeof window.uvpShow&&window.uvpShow(a)}catch(e){}try{"function"==typeof window.uvpRenderStepConclusions&&window.uvpRenderStepConclusions(a)}catch(e){console.error("[StepConclusions]",e)}try{"function"==typeof window.uvpRenderHero&&window.uvpRenderHero(a)}catch(e){}try{"function"==typeof window.uvpRenderChart1&&window.uvpRenderChart1()}catch(e){}try{"function"==typeof window.uvpRenderRadar&&window.uvpRenderRadar(a)}catch(e){}try{"function"==typeof window.uvpRenderStrikesTable&&window.uvpRenderStrikesTable()}catch(e){}try{"function"==typeof window.uvpRenderPosGauge&&window.uvpRenderPosGauge(a)}catch(e){}try{"function"==typeof window.uvpRenderEntrySim&&window.uvpRenderEntrySim(a)}catch(e){}try{"function"==typeof window.uvpRenderPhaseHist&&window.uvpRenderPhaseHist(a)}catch(e){}try{"function"==typeof window.uvpRenderVolEstimate&&window.uvpRenderVolEstimate(a)}catch(e){}try{"function"==typeof window.uvpRenderMacroMini&&window.uvpRenderMacroMini(a)}catch(e){}}},"loading"===document.readyState?document.addEventListener("DOMContentLoaded",l):l()}();</script>
 
 </div>
 
@@ -5216,11 +5243,10 @@ input, select, textarea { font-size: 16px !important; }
       </div>
       <span style="font-size:13px;color:var(--cyan);font-family:var(--mono);font-weight:700" id="in-1316-count">포지션 없음</span>
     </div>
-    <div id="desc-in-b1" style="display:none;position:relative;margin:0;padding:56px 28px 24px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-in-b1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">페이지 닫기</button><div style="margin-bottom:18px;padding:12px 18px;background:rgba(217,102,74,.08);border-radius:8px;border:1px solid rgba(217,102,74,.25);font-size:14px;color:var(--t1);animation:pulse-bg-orange 2s ease-in-out infinite"><b style="color:#d9664a">증권사 HTS가 없어도 괜찮아요</b> — 아래 <b style="color:#d9664a">⬇ 예시 파일</b> 버튼으로 예시 데이터를 받아 먼저 연습해보세요. 실제 데이터와 똑같은 방식으로 입력하면 돼요.</div><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">2단계 — 보유 포지션 입력</div><div style="margin-bottom:14px;padding:12px 16px;background:rgba(217,102,74,.06);border:1px solid rgba(217,102,74,.30);border-radius:8px;font-size:14px;color:var(--t1);line-height:1.7"><span style="font-weight:800;color:#d9664a">[한 줄 요약]</span> 당일 보유 옵션 포지션을 <b style="color:#d9664a">HTS 1316창</b>에서 가져와 → 위험·자금 관리·매매 현황·시장 현황·매매 복기 <b style="color:#d9664a">네 탭이 자동 갱신</b>되게 합니다.</div><div style="margin-bottom:18px;font-size:15px;color:var(--t1);line-height:1.7"><b style="color:#d9664a">당일 들고 있는 옵션 포지션</b>을 <b style="color:#d9664a">HTS 1316창</b>에서 가져와 한 번에 입력합니다.<br>입력하시면 → <b style="color:#d9664a">위험·자금 관리·매매 현황·시장 현황·매매 복기</b> 네 탭이 이 데이터를 받아 자동 갱신됩니다.<br>데이터 입력 워크플로우의 <b style="color:#d9664a">두 번째 단계</b>입니다.</div><div style="margin-bottom:22px"><a href="https://bramble-gardenia-301.notion.site/HTS-1316-365df6df17a280f9a6d1eb97df8dbc3d?source=copy_link" target="_blank" rel="noopener noreferrer" class="hint-glow-salmon" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;padding:0 22px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;text-decoration:none;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">따라하기 →</a></div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">입력 항목</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">HTS 1316창</b> → 예탁잔고현황 → 조회 → 우클릭 <b style="color:#d9664a">[엑셀 저장]</b><br>· 저장된 엑셀에서 <b style="color:#d9664a">A열 ~ J열 전체</b> 드래그 → 우클릭 <b style="color:#d9664a">[복사]</b><br>· 아래 <b style="color:#d9664a">[+ 데이터 붙여넣기]</b> → 텍스트 영역 우클릭 <b style="color:#d9664a">[붙여넣기]</b> → <b style="color:#d9664a">[읽기 &amp; 적용]</b><br>· 우측에 데이터 요약 정보가 표시되면 완료</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">위험·자금 관리</b> 탭 D 위험 포지션 카드에 <b style="color:#d9664a">콜 매도·풋 매도·콜 매수·풋 매수</b> 네 가지 방향이 자동 분리되어 표시됩니다<br>· <b style="color:#d9664a">매매 현황</b> 탭 B 월물별 포지션 표·종목별 평가손익 바차트·포트폴리오 요약이 자동 반영됩니다<br>· <b style="color:#d9664a">시장 현황</b> 12종목 카드에 <b style="color:#d9664a">행사가까지 남은 거리</b>가 곧바로 갱신됩니다<br>· 한 번 입력한 데이터는 브라우저에 <b style="color:#d9664a">영구 저장</b>되어 새로고침 후에도 유지됩니다</div></div>
+    <div id="desc-in-b1" style="display:none;position:relative;margin:0;padding:56px 28px 24px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-in-b1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">페이지 닫기</button><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">2단계 — 보유 포지션 입력</div><div style="margin-bottom:14px;padding:12px 16px;background:rgba(217,102,74,.06);border:1px solid rgba(217,102,74,.30);border-radius:8px;font-size:14px;color:var(--t1);line-height:1.7"><span style="font-weight:800;color:#d9664a">[한 줄 요약]</span> 당일 보유 옵션 포지션을 <b style="color:#d9664a">HTS 1316창</b>에서 가져와 → 위험·자금 관리·매매 현황·시장 현황·매매 복기 <b style="color:#d9664a">네 탭이 자동 갱신</b>되게 합니다.</div><div style="margin-bottom:18px;font-size:15px;color:var(--t1);line-height:1.7"><b style="color:#d9664a">당일 들고 있는 옵션 포지션</b>을 <b style="color:#d9664a">HTS 1316창</b>에서 가져와 한 번에 입력합니다.<br>입력하시면 → <b style="color:#d9664a">위험·자금 관리·매매 현황·시장 현황·매매 복기</b> 네 탭이 이 데이터를 받아 자동 갱신됩니다.<br>데이터 입력 워크플로우의 <b style="color:#d9664a">두 번째 단계</b>입니다.</div><div style="margin-bottom:22px"><a href="https://bramble-gardenia-301.notion.site/HTS-1316-365df6df17a280f9a6d1eb97df8dbc3d?source=copy_link" target="_blank" rel="noopener noreferrer" class="hint-glow-salmon" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;padding:0 22px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;text-decoration:none;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">따라하기 →</a></div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">입력 항목</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">HTS 1316창</b> → 예탁잔고현황 → 조회 → 우클릭 <b style="color:#d9664a">[엑셀 저장]</b><br>· 저장된 엑셀에서 <b style="color:#d9664a">A열 ~ J열 전체</b> 드래그 → 우클릭 <b style="color:#d9664a">[복사]</b><br>· 아래 <b style="color:#d9664a">[+ 데이터 붙여넣기]</b> → 텍스트 영역 우클릭 <b style="color:#d9664a">[붙여넣기]</b> → <b style="color:#d9664a">[읽기 &amp; 적용]</b><br>· 우측에 데이터 요약 정보가 표시되면 완료</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">위험·자금 관리</b> 탭 D 위험 포지션 카드에 <b style="color:#d9664a">콜 매도·풋 매도·콜 매수·풋 매수</b> 네 가지 방향이 자동 분리되어 표시됩니다<br>· <b style="color:#d9664a">매매 현황</b> 탭 B 월물별 포지션 표·종목별 평가손익 바차트·포트폴리오 요약이 자동 반영됩니다<br>· <b style="color:#d9664a">시장 현황</b> 12종목 카드에 <b style="color:#d9664a">행사가까지 남은 거리</b>가 곧바로 갱신됩니다<br>· 한 번 입력한 데이터는 브라우저에 <b style="color:#d9664a">영구 저장</b>되어 새로고침 후에도 유지됩니다</div></div>
     <div class="card-b" style="padding:14px 16px">
       <div style="margin-bottom:12px;padding:10px 14px;background:rgba(0,0,0,.025);border-radius:6px;border:1px solid var(--b1);font-size:13px;color:var(--t2);line-height:1.7;display:flex;flex-direction:column;gap:8px">
         <div>DB금융투자 <b style="color:var(--t1)">1316창</b> → 예탁잔고현황 → 당일미결제약정 → <b style="color:#2a5fa8">우측 상단 [엑셀 저장]</b> → 엑셀에서 Ctrl+A → Ctrl+C → 붙여넣기</div>
-        <div style="margin-top:6px;font-size:13px;color:var(--t2)"><b style="color:#d9664a;font-weight:800">처음 이용하시는 분</b> — HTS 없어도 아래 <b style="color:#d9664a">⬇ 예시 파일</b> 버튼으로 예시 데이터를 받아 동일하게 진행하세요</div>
         <div style="display:flex;gap:6px;justify-content:flex-end">
           <button onclick="var b=document.getElementById('in-1316-db-guide');b.style.display=b.style.display==='none'?'block':'none';document.getElementById('in-1316-yt-guide').style.display='none'" style="padding:4px 14px;font-size:13px;border-radius:6px;border:1px solid rgba(217,102,74,.40);background:rgba(217,102,74,.08);color:#d9664a;cursor:pointer;font-weight:700">DB?</button>
           <button onclick="var b=document.getElementById('in-1316-yt-guide');b.style.display=b.style.display==='none'?'block':'none';document.getElementById('in-1316-db-guide').style.display='none'" style="padding:4px 14px;font-size:13px;border-radius:6px;border:1px solid rgba(42,95,168,.40);background:rgba(42,95,168,.08);color:#2a5fa8;cursor:pointer;font-weight:700">유안타?</button>
@@ -5253,7 +5279,6 @@ input, select, textarea { font-size: 16px !important; }
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
         <button onclick="inToggle1316Paste()" class="btn-primary hint-glow-salmon" style="display:inline-flex;align-items:center;justify-content:center;padding:0 18px;height:34px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s" onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'">+ 데이터 붙여넣기</button>
         <button onclick="inClear1316()" class="btn-danger" style="display:inline-flex;align-items:center;justify-content:center;height:34px;padding:0 14px;border-radius:7px;font-size:13px;cursor:pointer;transition:all .15s">초기화</button>
-        <a href="예시_당일보유포지션_1316창.xlsx" download style="display:inline-flex;align-items:center;gap:5px;height:34px;padding:0 14px;border-radius:7px;font-size:13px;font-weight:700;color:#c0392b;background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.35);cursor:pointer;text-decoration:none;white-space:nowrap;animation:pulse-red 1s ease-in-out infinite">⬇ 예시 파일</a>
         <span id="in-1316-status" style="font-size:13px;color:var(--t3);margin-left:6px"></span>
       </div>
       <div id="in-1316-paste-wrap" style="display:none">
@@ -5278,11 +5303,10 @@ input, select, textarea { font-size: 16px !important; }
       </div>
       <span style="font-size:13px;color:var(--cyan);font-family:var(--mono);font-weight:700" id="in-1310-count">데이터 없음</span>
     </div>
-    <div id="desc-in-c1" style="display:none;position:relative;margin:0;padding:56px 28px 24px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-in-c1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">페이지 닫기</button><div style="margin-bottom:18px;padding:12px 18px;background:rgba(217,102,74,.08);border-radius:8px;border:1px solid rgba(217,102,74,.25);font-size:14px;color:var(--t1);animation:pulse-bg-orange 2s ease-in-out infinite"><b style="color:#d9664a">증권사 HTS가 없어도 괜찮아요</b> — 아래 <b style="color:#d9664a">⬇ 예시 파일</b> 버튼으로 예시 거래 데이터를 받아 먼저 연습해보세요. 매매 복기·현황 탭이 어떻게 작동하는지 바로 확인할 수 있어요.</div><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">3단계 — 거래 데이터 입력</div><div style="margin-bottom:14px;padding:12px 16px;background:rgba(217,102,74,.06);border:1px solid rgba(217,102,74,.30);border-radius:8px;font-size:14px;color:var(--t1);line-height:1.7"><span style="font-weight:800;color:#d9664a">[한 줄 요약]</span> 조회 기간 거래 내역을 <b style="color:#d9664a">HTS 1310창</b>에서 가져와 → 매매 현황·매매 복기 <b style="color:#d9664a">두 탭이 자동 갱신</b>되게 합니다.</div><div style="margin-bottom:18px;font-size:15px;color:var(--t1);line-height:1.7">조회 기간 동안의 <b style="color:#d9664a">거래 내역(체결 기록)</b>을 <b style="color:#d9664a">HTS 1310창</b>에서 가져와 한 번에 입력합니다.<br>입력하시면 → <b style="color:#d9664a">매매 현황·매매 복기</b> 두 탭이 이 데이터를 받아 자동 갱신됩니다.<br>데이터 입력 워크플로우의 <b style="color:#d9664a">세 번째 단계이자 마지막 단계</b>입니다.</div><div style="margin-bottom:22px"><a href="https://bramble-gardenia-301.notion.site/HTS-1310-365df6df17a2808a875ce93db3fadc7c?source=copy_link" target="_blank" rel="noopener noreferrer" class="hint-glow-salmon" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;padding:0 22px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;text-decoration:none;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">따라하기 →</a></div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">입력 항목</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">HTS 1310창</b> → 기간별 누적 손익 → 조회 일자 입력 → <b style="color:#d9664a">[조회]</b> → 스크롤 맨 아래까지 → 우클릭 <b style="color:#d9664a">[엑셀 저장]</b><br>· 저장된 엑셀에서 <b style="color:#d9664a">A열 ~ I열 전체</b> 드래그 → 우클릭 <b style="color:#d9664a">[복사]</b><br>· 아래 <b style="color:#d9664a">[+ 데이터 붙여넣기]</b> → 텍스트 영역 우클릭 <b style="color:#d9664a">[붙여넣기]</b> → <b style="color:#d9664a">[읽기 &amp; 적용]</b><br>· 우측에 데이터 요약 정보가 표시되면 완료</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">매매 현황</b> 탭의 누적 손익 곡선·월별 수익률 바차트·종목별 평가손익 바차트가 자동 갱신됩니다<br>· <b style="color:#d9664a">매매 복기</b> 탭의 핵심 성과 KPI·손절 원칙 점검·기여도 분석·복기 진단이 자동 반영됩니다<br>· 매매 종료 후 <b style="color:#d9664a">결과 학습 흐름</b>으로 자연스럽게 이어집니다 — 복기 작성·챗베이스 의견 나누기가 가능해집니다<br>· 한 번 입력한 데이터는 브라우저에 <b style="color:#d9664a">영구 저장</b>되어 새로고침 후에도 유지됩니다</div></div>
+    <div id="desc-in-c1" style="display:none;position:relative;margin:0;padding:56px 28px 24px;background:#fff;border-top:1px solid rgba(217,102,74,.25);border-bottom:1px solid rgba(217,102,74,.25);border-left:4px solid #d9664a;font-size:14px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-in-c1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">페이지 닫기</button><div style="font-weight:900;color:#d9664a;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">3단계 — 거래 데이터 입력</div><div style="margin-bottom:14px;padding:12px 16px;background:rgba(217,102,74,.06);border:1px solid rgba(217,102,74,.30);border-radius:8px;font-size:14px;color:var(--t1);line-height:1.7"><span style="font-weight:800;color:#d9664a">[한 줄 요약]</span> 조회 기간 거래 내역을 <b style="color:#d9664a">HTS 1310창</b>에서 가져와 → 매매 현황·매매 복기 <b style="color:#d9664a">두 탭이 자동 갱신</b>되게 합니다.</div><div style="margin-bottom:18px;font-size:15px;color:var(--t1);line-height:1.7">조회 기간 동안의 <b style="color:#d9664a">거래 내역(체결 기록)</b>을 <b style="color:#d9664a">HTS 1310창</b>에서 가져와 한 번에 입력합니다.<br>입력하시면 → <b style="color:#d9664a">매매 현황·매매 복기</b> 두 탭이 이 데이터를 받아 자동 갱신됩니다.<br>데이터 입력 워크플로우의 <b style="color:#d9664a">세 번째 단계이자 마지막 단계</b>입니다.</div><div style="margin-bottom:22px"><a href="https://bramble-gardenia-301.notion.site/HTS-1310-365df6df17a2808a875ce93db3fadc7c?source=copy_link" target="_blank" rel="noopener noreferrer" class="hint-glow-salmon" style="display:inline-flex;align-items:center;justify-content:center;gap:6px;height:40px;padding:0 22px;border-radius:8px;border:1.5px solid rgba(217,102,74,.45);background:rgba(217,102,74,.10);color:#d9664a;font-size:14px;font-weight:800;cursor:pointer;text-decoration:none;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.20)'" onmouseout="this.style.background='rgba(217,102,74,.10)'">따라하기 →</a></div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">입력 항목</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">HTS 1310창</b> → 기간별 누적 손익 → 조회 일자 입력 → <b style="color:#d9664a">[조회]</b> → 스크롤 맨 아래까지 → 우클릭 <b style="color:#d9664a">[엑셀 저장]</b><br>· 저장된 엑셀에서 <b style="color:#d9664a">A열 ~ I열 전체</b> 드래그 → 우클릭 <b style="color:#d9664a">[복사]</b><br>· 아래 <b style="color:#d9664a">[+ 데이터 붙여넣기]</b> → 텍스트 영역 우클릭 <b style="color:#d9664a">[붙여넣기]</b> → <b style="color:#d9664a">[읽기 &amp; 적용]</b><br>· 우측에 데이터 요약 정보가 표시되면 완료</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="padding-left:14px;color:var(--t2);font-size:14px;line-height:1.85">· <b style="color:#d9664a">매매 현황</b> 탭의 누적 손익 곡선·월별 수익률 바차트·종목별 평가손익 바차트가 자동 갱신됩니다<br>· <b style="color:#d9664a">매매 복기</b> 탭의 핵심 성과 KPI·손절 원칙 점검·기여도 분석·복기 진단이 자동 반영됩니다<br>· 매매 종료 후 <b style="color:#d9664a">결과 학습 흐름</b>으로 자연스럽게 이어집니다 — 복기 작성·챗베이스 의견 나누기가 가능해집니다<br>· 한 번 입력한 데이터는 브라우저에 <b style="color:#d9664a">영구 저장</b>되어 새로고침 후에도 유지됩니다</div></div>
     <div class="card-b" style="padding:14px 16px">
       <div style="margin-bottom:12px;padding:10px 14px;background:rgba(0,0,0,.025);border-radius:6px;border:1px solid var(--b1);font-size:13px;color:var(--t2);line-height:1.7;display:flex;flex-direction:column;gap:8px">
         <div>DB금융투자 <b style="color:var(--t1)">1310창</b> → 기간별 누적손익 → 비밀번호 → 조회 일자 → <b style="color:#2a5fa8">우측 상단 [엑셀 저장]</b> → 엑셀에서 Ctrl+A → Ctrl+C → 붙여넣기</div>
-        <div style="margin-top:6px;font-size:13px;color:var(--t2)"><b style="color:#d9664a;font-weight:800">처음 이용하시는 분</b> — HTS 없어도 아래 <b style="color:#d9664a">⬇ 예시 파일</b> 버튼으로 예시 데이터를 받아 동일하게 진행하세요</div>
         <div style="display:flex;gap:6px;justify-content:flex-end">
           <button onclick="var b=document.getElementById('in-1310-db-guide');b.style.display=b.style.display==='none'?'block':'none';document.getElementById('in-1310-yt-guide').style.display='none'" style="padding:4px 14px;font-size:13px;border-radius:6px;border:1px solid rgba(217,102,74,.40);background:rgba(217,102,74,.08);color:#d9664a;cursor:pointer;font-weight:700">DB?</button>
           <button onclick="var b=document.getElementById('in-1310-yt-guide');b.style.display=b.style.display==='none'?'block':'none';document.getElementById('in-1310-db-guide').style.display='none'" style="padding:4px 14px;font-size:13px;border-radius:6px;border:1px solid rgba(42,95,168,.40);background:rgba(42,95,168,.08);color:#2a5fa8;cursor:pointer;font-weight:700">유안타?</button>
@@ -5316,7 +5340,6 @@ input, select, textarea { font-size: 16px !important; }
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
         <button onclick="inToggle1310Paste()" class="btn-primary hint-glow-salmon" style="display:inline-flex;align-items:center;justify-content:center;padding:0 18px;height:34px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s" onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'">+ 데이터 붙여넣기</button>
         <button onclick="inClear1310()" class="btn-danger" style="display:inline-flex;align-items:center;justify-content:center;height:34px;padding:0 14px;border-radius:7px;font-size:13px;cursor:pointer;transition:all .15s">초기화</button>
-        <a href="예시_기간별거래데이터_1310창.xlsx" download style="display:inline-flex;align-items:center;gap:5px;height:34px;padding:0 14px;border-radius:7px;font-size:13px;font-weight:700;color:#c0392b;background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.35);cursor:pointer;text-decoration:none;white-space:nowrap;animation:pulse-red 1s ease-in-out infinite">⬇ 예시 파일</a>
         <span id="in-1310-status" style="font-size:13px;color:var(--t3);margin-left:6px"></span>
       </div>
       <div id="in-1310-paste-wrap" style="display:none">
@@ -5804,9 +5827,13 @@ input, select, textarea { font-size: 16px !important; }
 
 <!-- [2026-05-26 챗베이스·카카오 통합] 재삽입 -->
 <style>
-/* 챗베이스 버튼 전체 숨김 */
+/* 챗베이스 버튼 위치 + 살몬 배경 제거 */
 #chatbase-bubble-button {
-  display: none !important;
+  background: transparent !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  bottom: 130px !important;
+  right: 100px !important;
 }
 /* 챗베이스 인사 메시지 말풍선 숨김 */
 #chatbase-message-bubbles,
@@ -5913,123 +5940,5 @@ body{padding-bottom:62px}
   <div class="pf-row pf-disclaim">⚠️ 본 서비스는 옵션 매도 분석 정보 도구이며 특정 종목의 매수·매도 추천이 아닙니다. 제공 정보는 모두 참고용이며 투자 결정과 손실의 책임은 사용자 본인에게 있습니다. 본 서비스는 어떠한 수익도 보장하지 않습니다.</div>
   <div class="pf-row pf-copy">무단 복제·배포·2차 가공은 저작권법에 따라 보호받습니다<span class="sep">|</span><a class="pf-link" href="./terms.html" target="_blank" rel="noopener noreferrer">이용약관</a><span class="sep">|</span><a class="pf-link" href="./refund.html" target="_blank" rel="noopener noreferrer">환불정책</a><span class="sep">|</span><a class="pf-link" href="./privacy.html" target="_blank" rel="noopener noreferrer">개인정보처리방침</a></div>
 </div>
-
-<script>
-/* ===== 모바일 JS 강제 패치 ===== */
-(function(){
-  function fix(){
-    if(screen.width > 768) return;
-    var nav = document.querySelector('.nav');
-    var navInner = document.querySelector('.nav-inner');
-    var tabs = document.querySelectorAll('.nav-tab');
-    if(nav){
-      nav.style.overflowX='auto';
-      nav.style.webkitOverflowScrolling='touch';
-      nav.style.padding='0';
-    }
-    if(navInner){
-      navInner.style.maxWidth='none';
-      navInner.style.width='auto';
-      navInner.style.flexWrap='nowrap';
-      navInner.style.display='flex';
-      navInner.style.margin='0';
-      navInner.style.padding='0 6px';
-    }
-    tabs.forEach(function(t){
-      t.style.whiteSpace='nowrap';
-      t.style.flex='0 0 auto';
-      t.style.padding='0 10px';
-      t.style.fontSize='13px';
-      t.style.height='42px';
-    });
-    var hdr=document.querySelector('.hdr');
-    var hdrTitle=document.querySelector('.hdr-title');
-    if(hdr) hdr.style.cssText+=';height:48px!important;padding:0 12px!important;';
-    if(hdrTitle) hdrTitle.style.cssText+=';font-size:16px!important;';
-    var meta=document.querySelector('.hdr-meta');
-    var sub=document.querySelector('.hdr-sub');
-    if(meta) meta.style.display='none';
-    if(sub) sub.style.display='none';
-    if(nav) nav.style.top='48px';
-  }
-  document.readyState==='loading'
-    ? document.addEventListener('DOMContentLoaded',fix)
-    : fix();
-  document.addEventListener('click',function(e){
-    if(e.target&&e.target.classList&&e.target.classList.contains('nav-tab'))
-      setTimeout(fix,30);
-  });
-})();
-/* ===== 모바일 패치 끝 ===== */
-</script>
-
-<!-- ═══ 모바일 이용 안내 팝업 ═══ -->
-<div id="mobile-notice-overlay" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.72);z-index:99999;align-items:center;justify-content:center;padding:20px;box-sizing:border-box">
-  <div style="background:#fff;border-radius:20px;padding:32px 24px 28px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
-    <div style="width:64px;height:64px;background:#fff5f2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;border:2px solid rgba(217,102,74,0.2)">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d9664a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-    </div>
-    <div style="font-size:18px;font-weight:800;color:#1c1917;margin-bottom:12px">PC에서 이용하시면<br>더 편리해요</div>
-    <div style="font-size:13.5px;color:#6b7280;line-height:1.7;margin-bottom:24px">트레이딩키 대시보드는 다양한 차트와<br>분석 도구가 포함되어 있어<br><strong style="color:#1c1917">PC 환경에서 최적으로 작동</strong>해요.<br><br>모바일에서는 일부 기능이<br>제한될 수 있어요.</div>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <button onclick="document.getElementById('mobile-notice-overlay').style.display='none';sessionStorage.setItem('mobileNoticeDismissed','1')" style="width:100%;padding:14px;background:#d9664a;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer">그래도 보기</button>
-      <button onclick="history.back()" style="width:100%;padding:12px;background:#f5f5f4;color:#6b7280;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer">나중에 PC로 볼게요</button>
-    </div>
-    <div style="margin-top:16px;font-size:11px;color:#9ca3af">이 안내는 모바일 접속 시 한 번만 표시됩니다</div>
-  </div>
-</div>
-<script>
-(function(){
-  var overlay = document.getElementById('mobile-notice-overlay');
-  if (!overlay) return;
-  if (sessionStorage.getItem('mobileNoticeDismissed')) return;
-  if (window.innerWidth < 768) overlay.style.display = 'flex';
-})();
-</script>
-
-
-<script>
-function renderWeeklyPicks(data) {
-  if (!data) {
-    try { data = JSON.parse(localStorage.getItem('weekly_picks')||'null'); } catch(e){}
-  }
-  var card = document.getElementById('weekly-picks-card');
-  if (!card || !data || !data.items || !data.items.length) return;
-  document.getElementById('weekly-picks-title').textContent = data.title || '이번 주 추천 포지션';
-  document.getElementById('weekly-picks-date').textContent = data.updated ? data.updated + ' 기준' : '';
-  var MULT = {'크루드 오일':1000,'천연가스':10000,'골드':100,'S&P500':50,'s&p500':50,'대두':50,'밀':50,'옥수수':50};
-  var rows = data.items.map(function(p){
-    var optColor = p.optType.includes('콜') ? '#d9664a' : '#2a5fa8';
-    var ret = p.returnPct ? '<b style="color:#16a34a;font-size:15px">+'+p.returnPct+'%</b>' : '—';
-    var margin = p.margin ? '$'+Number(p.margin).toLocaleString() : '—';
-    return '<tr style="border-bottom:1px solid #f3f4f6">'
-      +'<td style="padding:10px 12px;font-weight:700;white-space:nowrap">'+p.name+'</td>'
-      +'<td style="padding:10px 12px;color:#6b7280">'+p.month+'</td>'
-      +'<td style="padding:10px 12px;font-weight:600">'+p.strike+'</td>'
-      +'<td style="padding:10px 12px"><span style="color:'+optColor+';font-weight:700;background:'+optColor+'18;padding:2px 8px;border-radius:4px">'+p.optType+'</span></td>'
-      +'<td style="padding:10px 12px;font-family:monospace">'+p.premium+'</td>'
-      +'<td style="padding:10px 12px;color:#6b7280">'+p.contracts+'계약</td>'
-      +'<td style="padding:10px 12px;color:#6b7280">'+margin+'</td>'
-      +'<td style="padding:10px 12px;text-align:right">'+ret+'</td>'
-      +'</tr>';
-  }).join('');
-  document.getElementById('weekly-picks-body').innerHTML =
-    '<table style="width:100%;border-collapse:collapse;font-size:13.5px">'
-    +'<tr style="background:#faf7f4;font-size:12px;color:#9a9089">'
-    +'<th style="padding:8px 12px;text-align:left;font-weight:600">종목</th>'
-    +'<th style="padding:8px 12px;text-align:left;font-weight:600">월물</th>'
-    +'<th style="padding:8px 12px;text-align:left;font-weight:600">행사가</th>'
-    +'<th style="padding:8px 12px;text-align:left;font-weight:600">전략</th>'
-    +'<th style="padding:8px 12px;text-align:left;font-weight:600">프리미엄</th>'
-    +'<th style="padding:8px 12px;text-align:left;font-weight:600">계약</th>'
-    +'<th style="padding:8px 12px;text-align:left;font-weight:600">증거금</th>'
-    +'<th style="padding:8px 12px;text-align:right;font-weight:600">월간수익률</th>'
-    +'</tr>'+rows+'</table>';
-  card.style.display = 'block';
-}
-// 페이지 로드 시 로컬스토리지에서도 복원
-document.addEventListener('DOMContentLoaded', function(){ renderWeeklyPicks(null); });
-</script>
-
 </body>
 </html>
