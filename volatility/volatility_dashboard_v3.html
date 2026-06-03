@@ -3539,9 +3539,11 @@ input[type=range] { background: transparent !important; border: none !important;
         </div>
         <!-- [2026-05-08] ①②③ 단계 박스 통째 삭제 — 상단 한줄 요약과 중복 -->
 
-        <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
           <button onclick="togglePasteArea()" class="btn-primary" style="display:inline-flex;align-items:center;justify-content:center;padding:0 18px;height:34px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .15s" onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'">+ 데이터 붙여넣기</button>
           <button onclick="clearPositions()" class="btn-danger" style="display:inline-flex;align-items:center;justify-content:center;height:34px;padding:0 14px;border-radius:7px;font-size:13px;cursor:pointer;transition:all .15s">초기화</button>
+          <a href="예시_당일보유포지션_1316창.xlsx" download style="display:inline-flex;align-items:center;gap:4px;height:34px;padding:0 14px;border-radius:7px;border:1px solid rgba(217,102,74,.30);background:rgba(217,102,74,.06);color:#d9664a;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.14)'" onmouseout="this.style.background='rgba(217,102,74,.06)'">예시 파일 다운로드</a>
+          <span style="font-size:12px;color:var(--t3)">읽기 완료 — 위험·자금 / 매매 현황 모두 반영</span>
         </div>
         <div id="pt-paste-wrap" style="display:none">
           <div style="font-size:13px;color:var(--t2);margin-bottom:6px;font-family:var(--mono);line-height:1.6">컬럼: 종목코드 · 통화 · 매매 · 미결제 · 평균가 · 현재가 · 옵션시장가치 · 옵션평가손익 · 청산가능</div>
@@ -3887,6 +3889,7 @@ input[type=range] { background: transparent !important; border: none !important;
         </div>
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
           <button onclick="toggleRVPaste()" class="pos-add-btn btn-primary" style="display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 20px;font-size:13px;font-weight:700;background:#d9664a;color:#fff">+ 데이터 붙여넣기</button>
+          <a href="예시_기간별거래데이터_1310창.xlsx" download style="display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 14px;border-radius:7px;border:1px solid rgba(217,102,74,.30);background:rgba(217,102,74,.06);color:#d9664a;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.14)'" onmouseout="this.style.background='rgba(217,102,74,.06)'">예시 파일 다운로드</a>
           <button onclick="clearReviewData()" class="btn-danger" style="display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 14px;border-radius:6px;font-size:13px;cursor:pointer">초기화</button>
         </div>
         <div id="rv-paste-wrap" style="display:none;margin-top:10px">
@@ -4913,6 +4916,7 @@ input[type=range] { background: transparent !important; border: none !important;
         <!-- 버튼 행 -->
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
           <button onclick="toggleTRPaste()" class="pos-add-btn btn-primary" style="display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 20px;font-size:13px;font-weight:700;background:#d9664a;color:#fff">+ 데이터 붙여넣기</button>
+          <a href="예시_기간별거래데이터_1310창.xlsx" download style="display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 14px;border-radius:7px;border:1px solid rgba(217,102,74,.30);background:rgba(217,102,74,.06);color:#d9664a;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(217,102,74,.14)'" onmouseout="this.style.background='rgba(217,102,74,.06)'">예시 파일 다운로드</a>
           <button onclick="trClearHTS()" class="btn-danger" style="display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 14px;border-radius:6px;font-size:13px;cursor:pointer">초기화</button>
         </div>
         <!-- 붙여넣기 영역 (토글) -->
