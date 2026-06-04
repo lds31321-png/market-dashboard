@@ -6184,9 +6184,9 @@ body{padding-bottom:62px}
     var stratColor=s.stratType==='양매도'?'#2a5fa8':s.stratType&&s.stratType.indexOf('콜')>=0?'#c83030':'#1a7a4a';
     var lh=legs.map(function(l){
       var isCall=l.optType&&l.optType.includes('콜');
-      var col=isCall?'#c83030':'#1a7a4a';
-      var bg=isCall?'rgba(200,48,48,.08)':'rgba(26,122,74,.08)';
-      var bdr=isCall?'rgba(200,48,48,.22)':'rgba(26,122,74,.22)';
+      var col='#2a5fa8';
+      var bg='rgba(42,95,168,.08)';
+      var bdr='rgba(42,95,168,.22)';
       var pu=pr(l.premium,l.name)*(parseInt(l.contracts)||1)*(MULT[l.name]||1000);
       var label=isCall?'콜 매도':'풋 매도';
       var puStr=pu>0?'$'+Math.round(pu):'—';
@@ -6208,14 +6208,14 @@ body{padding-bottom:62px}
       +'<div style="width:13%;text-align:right">만기일</div></div>';
     var summary='<div style="display:flex;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(217,102,74,.12)">'
       +'<div style="flex:1;text-align:center;padding:10px 6px;background:rgba(217,102,74,.05);border-radius:8px">'
-      +'<div style="font-size:11px;color:var(--t3);margin-bottom:3px">월간 잠재 수익률</div>'
-      +'<div style="font-size:18px;font-weight:900;color:#d9664a">+'+(rp||'—')+'%</div></div>'
+      +'<div style="font-size:14px;font-weight:700;color:var(--t3);margin-bottom:4px">월간 잠재 수익률</div>'
+      +'<div style="font-size:22px;font-weight:900;color:#d9664a">+'+(rp||'—')+'%</div></div>'
       +'<div style="flex:1;text-align:center;padding:10px 6px;background:rgba(217,102,74,.05);border-radius:8px">'
-      +'<div style="font-size:11px;color:var(--t3);margin-bottom:3px">예상 총 수익</div>'
-      +'<div style="font-size:15px;font-weight:800;color:var(--t1)">'+pStr+'</div></div>'
+      +'<div style="font-size:14px;font-weight:700;color:var(--t3);margin-bottom:4px">예상 총 수익</div>'
+      +'<div style="font-size:19px;font-weight:800;color:var(--t1)">'+pStr+'</div></div>'
       +'<div style="flex:1;text-align:center;padding:10px 6px;background:rgba(217,102,74,.05);border-radius:8px">'
-      +'<div style="font-size:11px;color:var(--t3);margin-bottom:3px">투자금(증거금)</div>'
-      +'<div style="font-size:15px;font-weight:800;color:var(--t1)">'+mStr+'</div></div></div>';
+      +'<div style="font-size:14px;font-weight:700;color:var(--t3);margin-bottom:4px">투자금(증거금)</div>'
+      +'<div style="font-size:19px;font-weight:800;color:var(--t1)">'+mStr+'</div></div></div>';
     var strikesJson=JSON.stringify(strikesData).replace(/'/g,'&#39;');
     return '<div id="wp-card-'+idx+'" data-comm="'+comm+'" data-strikes=\''+strikesJson+'\' data-entry="'+entryDate+'" data-expiry="'+(s.expiry||'')+'" style="background:#fff;border:1px solid rgba(217,102,74,.18);border-radius:12px;margin-bottom:16px;overflow:hidden;box-shadow:0 2px 12px rgba(217,102,74,.07)">'
       +'<div style="display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid rgba(217,102,74,.10);cursor:pointer" onclick="window.wpToggle&&window.wpToggle('+idx+')">'
@@ -6227,7 +6227,7 @@ body{padding-bottom:62px}
       +'<button id="wp-btn-'+idx+'" style="margin-left:8px;padding:4px 12px;border-radius:6px;border:1px solid rgba(217,102,74,.35);background:rgba(217,102,74,.08);color:#d9664a;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;white-space:nowrap" onclick="event.stopPropagation();window.wpToggle&&window.wpToggle('+idx+')">자세히 보기</button>'
       +'</div>'
       +'<div id="wp-det-'+idx+'" style="display:none;padding:16px 18px">'
-      +'<div id="wp-chart-'+idx+'" style="width:100%;height:280px;margin-bottom:14px"></div>'
+      +'<div id="wp-chart-'+idx+'" style="width:100%;height:380px;margin-bottom:14px"></div>'
       +'<div style="font-size:13px">'+tblHdr+lh+'</div>'
       +summary
       +'</div>'
