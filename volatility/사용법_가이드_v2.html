@@ -239,6 +239,10 @@ section[id^="int-"]{scroll-margin-top:64px;position:relative}
 .p5-tip{margin:20px 0 0;padding:16px 18px;background:var(--salmon-bg);border:1px solid var(--salmon-line);border-radius:10px;font-size:13.5px;color:var(--t2);line-height:1.8}
 .p5-tip b{color:var(--salmon-d);font-weight:800}
 @media(max-width:840px){.wrap{padding:0 16px 60px}section,.cover{padding:36px 24px}.hero{padding:64px 24px 56px}.hero h1{font-size:29px}.cover h1{font-size:32px}h2{font-size:26px}.copy-title{font-size:23px}.kpi{font-size:18px;padding:26px 22px}.duo,.sys4,.sysrow,.proof-stats,.numfacts{grid-template-columns:1fr}.mflow{flex-direction:column}.mfarrow{transform:rotate(90deg);padding:5px 0}.stage-grid{grid-template-columns:1fr 1fr;gap:10px}.stage-card::after{display:none}.principle-grid{grid-template-columns:1fr;gap:10px}.toc{grid-template-columns:1fr}.ps-pair{grid-template-columns:1fr;gap:8px}.ps-arrow{transform:rotate(90deg);padding:6px 0}.df-item{grid-template-columns:70px 1fr;gap:16px;padding:20px}.df-num{font-size:30px}.step-row{grid-template-columns:60px 1fr;gap:12px}.sec-num{top:14px;left:16px;width:34px;height:34px;font-size:16px;border-radius:9px}}
+@keyframes pulse-border-salmon {
+  0%,100%{box-shadow:0 4px 14px rgba(217,102,74,.28),0 0 0 0 rgba(217,102,74,.45);}
+  50%{box-shadow:0 4px 14px rgba(217,102,74,.28),0 0 0 7px rgba(217,102,74,.0);}
+}
 </style>
 
 <style id="mobile-guide-v1">
@@ -411,6 +415,18 @@ section[id^="int-"]{scroll-margin-top:64px;position:relative}
     YouTube
   </div>
 </div>
+
+<!-- 프로그램 설치 & 거래 방법 버튼 -->
+<a href="https://naver.me/xeFVXC02" target="_blank" rel="noopener"
+  style="display:flex;align-items:center;justify-content:space-between;width:100%;box-sizing:border-box;margin:0 0 28px;padding:18px 28px;background:#d9664a;border-radius:14px;text-decoration:none;transition:opacity .15s;animation:pulse-border-salmon 2.2s ease-in-out infinite"
+  onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+  <div style="display:flex;flex-direction:column;gap:4px">
+    <span style="font-family:'Noto Sans KR',sans-serif;font-size:11px;font-weight:700;color:rgba(255,255,255,.75);letter-spacing:.08em;text-transform:uppercase">Step 0 · 시작 전 필수</span>
+    <span style="font-family:'Noto Sans KR',sans-serif;font-size:17px;font-weight:800;color:#fff;letter-spacing:-.02em">HTS 설치 · 거래 시작 방법</span>
+  </div>
+  <span style="font-size:22px;color:rgba(255,255,255,.85)">→</span>
+</a>
+
 
 <!-- ═══ 1. 히어로 — 후킹 ═══ -->
 <div class="hero">
