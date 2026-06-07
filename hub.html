@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>직트 트레이딩 데스크</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:#f0e9e1;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    font-family:'Noto Sans KR',sans-serif;
+    padding:40px 20px;
+  }
+  .hub-header{
+    text-align:center;
+    margin-bottom:14px;
+  }
+  .hub-logo{
+    font-size:15px;
+    font-weight:800;
+    letter-spacing:0.12em;
+    color:#d9664a;
+    margin-bottom:12px;
+  }
+  .hub-title{
+    font-size:32px;
+    font-weight:800;
+    color:#1a1816;
+    line-height:1.2;
+    margin-bottom:10px;
+  }
+  .hub-sub{
+    font-size:15px;
+    color:#7a736e;
+    font-weight:500;
+  }
+  .hub-flow{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin:18px 0 34px;
+    flex-wrap:wrap;
+  }
+  .hub-flow .f{
+    font-size:15px;
+    font-weight:700;
+    color:#d9664a;
+    background:rgba(217,102,74,.08);
+    border:1px solid rgba(217,102,74,.28);
+    padding:6px 16px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .hub-flow .a{
+    font-size:17px;
+    font-weight:800;
+    color:#d9664a;
+  }
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(310px,1fr));
+    gap:24px;
+    width:100%;
+    max-width:1180px;
+  }
+  .hub-card{
+    background:#ffffff;
+    border-radius:16px;
+    border:1.5px solid #e8e0d8;
+    padding:30px 28px;
+    text-decoration:none;
+    display:flex;
+    flex-direction:column;
+    gap:11px;
+    transition:transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+    cursor:pointer;
+  }
+  .hub-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 32px rgba(217,102,74,0.12);
+    border-color:#d9664a;
+  }
+  .card-step{
+    display:flex;
+    align-items:center;
+    gap:9px;
+  }
+  .card-step .n{
+    width:28px;height:28px;
+    display:flex;align-items:center;justify-content:center;
+    background:#d9664a;color:#fff;
+    font-size:15px;font-weight:900;
+    border-radius:8px;
+    font-family:'IBM Plex Mono',monospace;
+    flex-shrink:0;
+  }
+  .card-step .t{
+    font-size:15px;
+    font-weight:800;
+    color:#d9664a;
+    letter-spacing:0.02em;
+  }
+  .card-title{
+    font-size:21px;
+    font-weight:800;
+    color:#1a1816;
+    line-height:1.25;
+  }
+  .card-desc{
+    font-size:15px;
+    color:#55504c;
+    line-height:1.7;
+  }
+  .card-items{
+    margin-top:2px;
+    padding-top:12px;
+    border-top:1px solid rgba(0,0,0,.07);
+    font-size:15px;
+    color:#8a8480;
+    line-height:1.7;
+  }
+  .card-arrow{
+    margin-top:auto;
+    padding-top:10px;
+    font-size:20px;
+    color:#d9664a;
+    font-weight:700;
+  }
+</style>
+</head>
+<body>
+
+<div class="hub-header">
+  <div class="hub-logo">JIKT · OPTION SELLING</div>
+  <div class="hub-title">직트 트레이딩 데스크</div>
+  <div class="hub-sub" style="font-size:16px;font-weight:700;color:#55504c">수익은 시장이 주고, 손실은 우리가 통제합니다</div>
+</div>
+
+<div class="hub-flow">
+  <span class="f">1 체험 · 연습</span><span class="a">→</span><span class="f">2 실전 운용</span><span class="a">→</span><span class="f">3 거시 대비</span>
+</div>
+
+<div class="card-grid">
+
+  <a class="hub-card" href="dashboard.html">
+    <div class="card-step"><span class="n">1</span><span class="t">체험 · 연습 단계</span></div>
+    <div class="card-title">무료 포지션 공유</div>
+    <div class="card-desc">공유되는 실제 포지션을 따라 진입하며 옵션 매도를 직접 경험하는 연습 공간입니다.</div>
+    <div class="card-items">진행 포지션 · 추천 종목 · 수익률 · 전략 히스토리</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a class="hub-card" href="volatility_dashboard_v3.html">
+    <div class="card-step"><span class="n">2</span><span class="t">실전 운용 단계</span></div>
+    <div class="card-title">종합 옵션 대시보드</div>
+    <div class="card-desc">위험·자금·전략 — 내 자금에 맞는 최적의 진입·관리 정보를 제공하는 실전 운용 영역입니다.</div>
+    <div class="card-items">종목 4단계 분석 · 최종 진입 정보 · 종합 순위표 · 생존경보 · 매매 현황·복기</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a class="hub-card" href="index.html">
+    <div class="card-step"><span class="n">3</span><span class="t">거시 대비 단계</span></div>
+    <div class="card-title">글로벌 대시보드</div>
+    <div class="card-desc">거시경제를 점검해 큰 변동성을 미리 파악하고 대비하는 영역입니다.</div>
+    <div class="card-items">변동성 예측 헤드라인 · 7종목 시나리오 분석 · EIA·FRED 공식 데이터</div>
+    <div class="card-arrow">→</div>
+  </a>
+
+</div>
+
+</body>
+</html>
