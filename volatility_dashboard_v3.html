@@ -6165,6 +6165,16 @@ body{padding-bottom:0}
 .uvp-face-final .uvp-ftb{background:rgba(217,102,74,.05);border:1px solid rgba(217,102,74,.14);border-radius:10px;overflow:hidden}
 .uvp-face-final .uvp-ftb td{border:none!important;text-align:center!important;padding:8px 10px!important}
 .uvp-face-final .uvp-ftb th{border:none!important;text-align:center!important;background:transparent!important;color:#d9664a;padding:8px 10px 4px!important}
+
+/* 51차-3: ? 우상단 고정 + 줄바꿈 + 펄스 */
+.uvp-face-q{position:relative;grid-template-columns:118px 1fr!important}
+.uvp-q-help-btn{position:absolute!important;top:7px;right:12px;margin:0!important;z-index:3}
+.uvp-face-q .uvp-ftb{table-layout:auto!important}
+.uvp-face-q .uvp-ftb td{white-space:normal!important;word-break:keep-all;line-height:1.45}
+.uvp-face-badge{animation:uvpBadgePulse 2.2s ease-in-out infinite}
+@keyframes uvpBadgePulse{0%,100%{box-shadow:0 0 0 0 rgba(217,102,74,0)}50%{box-shadow:0 0 0 4px rgba(217,102,74,.13)}}
+.uvp-face-q .uvp-ftb td[style*="color"]{animation:uvpAbnPulse 1.5s ease-in-out infinite;font-weight:700}
+@keyframes uvpAbnPulse{0%,100%{opacity:1}50%{opacity:.5}}
 </style>
 <div id="protect-footer">
   <div class="pf-row pf-biz">© 2026 <b>직트</b><span class="sep">|</span>사업자 782-08-02561<span class="sep">|</span>통신판매 제2025-고양일산동-0262호<span class="sep">|</span>대표 임대성<span class="sep">|</span>고양시 일산동구 중앙로 1080, 402동 4층 402-S91호<span class="sep">|</span>문의 031-900-9227<a class="pf-link" href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener noreferrer">카톡 오픈채팅</a></div>
