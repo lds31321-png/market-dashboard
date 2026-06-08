@@ -6171,13 +6171,13 @@ body{padding-bottom:0}
 .uvp-q-help-btn{position:absolute!important;top:7px;right:12px;margin:0!important;z-index:3}
 .uvp-face-q .uvp-ftb{table-layout:auto!important}
 .uvp-face-q .uvp-ftb td{white-space:normal!important;word-break:keep-all;line-height:1.45}
-.uvp-face-badge{animation:uvpBadgePulse 2.2s ease-in-out infinite}
+.uvp-face-badge.abn{animation:uvpBadgePulse 2.2s ease-in-out infinite}
 @keyframes uvpBadgePulse{0%,100%{box-shadow:0 0 0 0 rgba(217,102,74,0)}50%{box-shadow:0 0 0 4px rgba(217,102,74,.13)}}
-.uvp-face-q .uvp-ftb td[style*="color"]{animation:uvpAbnPulse 1.5s ease-in-out infinite;font-weight:700}
+.uvp-face-q .uvp-ftb td[style*="color"]:not([style*="--green"]){animation:uvpAbnPulse 1.5s ease-in-out infinite;font-weight:700}
 @keyframes uvpAbnPulse{0%,100%{opacity:1}50%{opacity:.5}}
 
 /* 51차-4: 배지펄스=배경색 + 셌 줄바꿈 */
-.uvp-face-badge{animation:uvpBadgePulse 2.2s ease-in-out infinite}
+.uvp-face-badge.abn{animation:uvpBadgePulse 2.2s ease-in-out infinite}
 @keyframes uvpBadgePulse{0%,100%{box-shadow:0 0 0 0 var(--pulse,rgba(0,0,0,.05))}50%{box-shadow:0 0 0 5px var(--pulse,rgba(0,0,0,.05))}}
 .uvp-face-q .uvp-ftb td{white-space:pre-line!important}
 </style>
@@ -6465,7 +6465,7 @@ if(!E("uvp-face"))return;
 var slot=E("uvp-face-chart-slot"),cs=E("uvp-chart-series");
 if(slot&&cs&&cs.parentNode!==slot){slot.appendChild(cs);cs.style.marginTop="10px"}
 var ph=T("uvp-info-phase-txt"),al=T("uvp-info-alert-txt");
-function paint(el,txt,kind){if(!el)return;el.textContent=txt;var c="bad"===kind?["#9a3a12","rgba(154,58,18,.10)"]:"warn"===kind?["#c8803a","rgba(200,128,58,.12)"]:["#5f5e5a","rgba(0,0,0,.05)"];el.style.color=c[0];el.style.background=c[1];el.style.setProperty("--pulse",c[1])}
+function paint(el,txt,kind){if(!el)return;el.textContent=txt;var c="bad"===kind?["#9a3a12","rgba(154,58,18,.10)"]:"warn"===kind?["#c8803a","rgba(200,128,58,.12)"]:["#5f5e5a","rgba(0,0,0,.05)"];el.style.color=c[0];el.style.background=c[1];el.style.setProperty("--pulse",c[1]);el.classList.toggle("abn","ok"!==kind)}
 paint(E("uvp-face-badge-phase"),"국면 "+(ph||"—"),"위기"===ph?"bad":"주의"===ph?"warn":"ok");
 paint(E("uvp-face-badge-alert"),"경보 "+(al||"—"),/3/.test(al)?"bad":/[12]/.test(al)?"warn":"ok");
 var rm1=T("uvp-rm-concl-1")||"—",rm2=T("uvp-rm-concl-2")||"—",rm4=T("uvp-rm-concl-4")||"";
