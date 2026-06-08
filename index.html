@@ -532,6 +532,12 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 }
 
 .sec-notice strong{color:var(--accent1);}
+
+/* === 51차: 좌측 세로선 제거 === */
+.sec-lbl::before{display:none!important}
+.headline-news{border-left:none!important}
+.cal-guide-note{border-left:none!important}
+.cm-title{border-left:none!important;padding-left:0!important}
 </style>
 </head>
 <body>
@@ -543,7 +549,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
     <div class="setup-title">실시간 데이터 연결 설정</div>
     <div class="setup-desc">EIA·FRED 두 개의 무료 API 키로 7개 자산 전체의 현재가를 실시간으로 불러옵니다. 키는 이 브라우저에만 저장됩니다.</div>
     <div class="setup-guide">
-      <div class="setup-guide-title">📋 API 키 발급 (각 5분, 완전 무료)</div>
+      <div class="setup-guide-title">API 키 발급 (각 5분, 완전 무료)</div>
       <div class="setup-guide-steps">EIA → eia.gov/opendata/register.php → 이메일 인증 → 키 복사<br>FRED → fred.stlouisfed.org → My Account → API Keys → 키 복사</div>
     </div>
     <div class="setup-step">
@@ -556,7 +562,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
       <input class="sinput" id="fred-input" type="text" placeholder="FRED 키 붙여넣기" autocomplete="off" spellcheck="false">
       <div class="shint">fred.stlouisfed.org → My Account → API Keys → 무료</div>
     </div>
-    <button class="setup-btn" onclick="saveKeys()">✓ 저장하고 대시보드 열기</button>
+    <button class="setup-btn" onclick="saveKeys()">저장하고 대시보드 열기</button>
     <div class="setup-skip">키가 없어도 <a onclick="skipSetup()">수동 데이터로 먼저 보기</a></div>
   </div>
 </div>
@@ -566,8 +572,8 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
   <div><div class="topbar-logo">글로벌 시장 대시보드<span id="cur-asset-badge"></span></div><div class="topbar-sub">EIA · FRED · World Bank · IMF · USDA 공식 데이터 기반</div></div>
   <div class="topbar-right">
     <div class="live-badge"><div class="ldot loading" id="status-dot"></div><span id="status-text">연결 중...</span></div>
-    <button class="tb-btn" onclick="loadAllData()">↺ 새로고침</button>
-    <button class="tb-btn" onclick="diagAPI()" style="border-color:rgba(200,128,58,0.4);color:var(--blue2)">🔍 API 진단</button>
+    <button class="tb-btn" onclick="loadAllData()">새로고침</button>
+    <button class="tb-btn" onclick="diagAPI()" style="border-color:rgba(200,128,58,0.4);color:var(--blue2)">API 진단</button>
     <a href="hub.html" class="tb-btn" style="border:1.5px solid #d9664a;color:#d9664a;background:#fff;text-decoration:none;font-weight:700" onmouseover="this.style.background='#d9664a';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='#d9664a'">← 메인으로</a>
   </div>
 </div>
@@ -586,7 +592,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 
     <!-- 핵심 헤드라인 -->
     <div class="headline-news" style="margin-bottom:14px">
-      <div class="hn-tag">🔴 핵심 헤드라인 — 2026.06.05 최신</div>
+      <div class="hn-tag">핵심 헤드라인 — 2026.06.05 최신</div>
       <div class="hn-title">WTI $93 급락(-3.1%)·Dow 875포인트 신고가 — S&amp;P500 7,584 반등·나스닥 Broadcom 실망 부진·주간 실업청구 225K·SpaceX IPO 6/12·내일 NFP(5월)</div>
       <div class="hn-desc">6월 4일(목) WTI가 -3.11%($93.0) 급락했다. 이란 Qeshm Island 재타격 이후 하원 전쟁 종식 결의안이 통과되며 협상 재개 기대가 확산됐다. S&amp;P500(+0.41%, 7,584pt)은 헬스케어(+3.14%)·금융(+2.67%)·부동산(+1.87%) 주도로 반등했다. Dow는 875포인트 폭등해 사상 최고치를 경신했다. 반면 나스닥(-0.09%)은 Broadcom 실적 실망(매출 소폭 미달)으로 반도체가 부진했다. 10Y는 4.477%로 하락. 주간 실업청구 225K(소폭 상승). SpaceX가 6/12 IPO를 공식 확정했다. 내일(6/5) 오늘 ECB 통화정책 회의, 내일(6/6) NFP(5월, 예측 130K)가 6/18 FOMC(Kevin Warsh·인상 확률 70%) 방향을 결정한다.</div>
       <!-- 출처 링크 (중요도 순) -->
@@ -616,7 +622,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
     <div class="headline-lead">
       <div class="headline-top1">
         <div>
-          <div class="ht1-tag">⚡ 향후 30일 최고 변동성 예상</div>
+          <div class="ht1-tag">향후 30일 최고 변동성 예상</div>
           <div class="ht1-label">1순위 종목 (공동)</div>
           <div class="ht1-asset">원유 + S&P 500</div>
         </div>
@@ -841,7 +847,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
       <div class="at-price" id="nav-t10y-price">—</div><div class="at-chg" id="nav-t10y-chg">—</div>
     </div>
     <div class="asset-tab cal-tab" onclick="switchAsset('calendar',this)">
-      <div class="at-name cal-tab-label">📅 경제일정</div>
+      <div class="at-name cal-tab-label">경제일정</div>
       <div class="at-price cal-tab-sub">★★★ 지표</div>
       <div class="at-chg cal-tab-sub2">미·중·한·일</div>
     </div>
@@ -872,7 +878,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 <!-- ══ MACRO STRIP (World Bank · IMF · USDA — 키 불필요 자동 로드) ══ -->
 
 <div class="page">
-<div class="notice warn" id="notice-fallback">📋 현재 수동 업데이트 데이터를 표시하고 있습니다. 매일 오전 최신 데이터로 업데이트됩니다.</div>
+<div class="notice warn" id="notice-fallback">현재 수동 업데이트 데이터를 표시하고 있습니다. 매일 오전 최신 데이터로 업데이트됩니다.</div>
 
 <!-- ════════ OIL ════════ -->
 <div class="asset-page active" id="page-oil">
@@ -1707,7 +1713,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
   <div class="cal-popup-row" id="popActualRow"><span class="cal-popup-lbl">실제값</span><span class="cal-popup-val actual" id="popActual"></span></div>
   <div class="cal-popup-row" id="popImpactRow"><span class="cal-popup-lbl">시장 반응</span><span class="cal-popup-val" id="popImpact"></span></div>
   <div class="cal-guide-wrap" id="popGuideWrap">
-    <div class="cal-guide-title">📊 자산별 영향 가이드</div>
+    <div class="cal-guide-title">자산별 영향 가이드</div>
     <table class="cal-guide-table">
       <thead><tr><th>자산</th><th>예상치 상회 시</th><th>예상치 하회 시</th></tr></thead>
       <tbody id="popGuideTable"></tbody>
@@ -1718,7 +1724,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 <div class="cal-wrap">
   <div class="cal-header">
     <div>
-      <div class="cal-title">📅 경제 캘린더</div>
+      <div class="cal-title">경제 캘린더</div>
       <div style="font-size:12px;color:var(--text2);margin-top:4px">미국·중국·한국·일본 ★★★ 최고 중요도 지표 · 시간 KST 기준 · 지표 클릭 시 자산 영향 해설</div>
     </div>
     <div class="cal-nav">
@@ -1735,7 +1741,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
     <div class="cal-leg-item" style="margin-left:auto"><span style="color:#c8803a;font-size:11px">✓ 발표완료</span></div>
   </div>
   <div class="cal-summary">
-    <div class="cal-summary-title">⚡ 이달의 핵심 이벤트</div>
+    <div class="cal-summary-title">이달의 핵심 이벤트</div>
     <div class="cal-summary-list" id="calSummaryList"></div>
   </div>
   <div class="cal-grid" id="calGrid"></div>
@@ -1843,7 +1849,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
       <div class="footer-card-desc">FOMC 결정 · 점도표 · 성명</div>
     </div>
   </div>
-  <div class="footer-note">⚠ 본 대시보드는 교육 목적으로 제작되었으며, 투자 조언이 아닙니다. 분석 콘텐츠는 시장 상황에 따라 주기적으로 업데이트됩니다. &nbsp;|&nbsp; 기준일: 2026년 6월 4일</div>
+  <div class="footer-note">본 대시보드는 교육 목적으로 제작되었으며, 투자 조언이 아닙니다. 분석 콘텐츠는 시장 상황에 따라 주기적으로 업데이트됩니다. &nbsp;|&nbsp; 기준일: 2026년 6월 4일</div>
 </div>
 </div><!-- page -->
 
@@ -2900,5 +2906,20 @@ function closeCalPopup(){
 
 </script>
 
+
+<script>
+/* 51차: 본문 문장 단위 자동 줄바꿈 (데이터 업데이트 후에도 매 로드 시 적용) */
+(function(){
+  function brk(el){ if(!el) return; if(el.dataset.brk) return; el.dataset.brk='1';
+    el.innerHTML = el.innerHTML.replace(/([.!?])\s+/g, '$1<br>'); }
+  function run(){
+    document.querySelectorAll('.hn-desc, .ht1-reason, .sc-trigger').forEach(brk);
+    var hs=document.querySelector('.headline-section');
+    if(hs){ hs.querySelectorAll('div[style*="align-items:baseline"] span:last-child').forEach(brk); }
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',function(){setTimeout(run,300);}); }
+  else { setTimeout(run,300); }
+})();
+</script>
 </body>
 </html>
