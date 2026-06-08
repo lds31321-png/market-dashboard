@@ -1927,10 +1927,10 @@ input[type=range] { background: transparent !important; border: none !important;
             <div id="uvp-face-final" style="min-width:0"></div>
           </div>
         </div>
-        <div class="uvp-face-q"><span class="ql">시장 점검</span><div id="uvp-face-a1" style="min-width:0">—</div></div>
-        <div class="uvp-face-q"><span class="ql">보유 점검</span><div id="uvp-face-a2" style="min-width:0">—</div></div>
-        <div class="uvp-face-q"><span class="ql">진입 설계</span><div id="uvp-face-a3" style="min-width:0">—</div></div>
-        <div class="uvp-face-q" id="uvp-face-q4" style="margin-bottom:4px"><span class="ql">진입 규모</span><div id="uvp-face-a4" style="min-width:0">—</div></div>
+        <div class="uvp-face-q"><span class="ql"><span class="uvp-q-no">1</span>시장 점검 <button class="uvp-q-help-btn" title="시장 점검 설명 보기" onclick="var h=this.closest('.uvp-face-q').querySelector('.uvp-q-help');h.style.display=h.style.display==='block'?'none':'block'">?</button></span><div id="uvp-face-a1" style="min-width:0">—</div><div class="uvp-q-help" style="display:none">지금 진입해도 되는 시장인지 4가지로 점검해요. 시장 국면(안전·주의·위기), 생존 경보 단계, 콜·풋 꼬리위험 활성 여부를 종합해 '진입 적합 / 신중 검토 / 진입 중단'을 판정합니다.</div></div>
+        <div class="uvp-face-q"><span class="ql"><span class="uvp-q-no">2</span>보유 점검 <button class="uvp-q-help-btn" title="보유 점검 설명 보기" onclick="var h=this.closest('.uvp-face-q').querySelector('.uvp-q-help');h.style.display=h.style.display==='block'?'none':'block'">?</button></span><div id="uvp-face-a2" style="min-width:0">—</div><div class="uvp-q-help" style="display:none">이미 들고 있는 포지션이 안전한지 봐요. 보유 콜·풋 계약수, 국면에 따른 축소 권장 비율, 만기까지 남은 일수를 표시해 교체 시점을 안내합니다.</div></div>
+        <div class="uvp-face-q"><span class="ql"><span class="uvp-q-no">3</span>진입 설계 <button class="uvp-q-help-btn" title="진입 설계 설명 보기" onclick="var h=this.closest('.uvp-face-q').querySelector('.uvp-q-help');h.style.display=h.style.display==='block'?'none':'block'">?</button></span><div id="uvp-face-a3" style="min-width:0">—</div><div class="uvp-q-help" style="display:none">어디에·얼마짜리로 새로 진입할지 정해요. 추세와 권장 월물, 만기일, 콜·풋 매도 행사가와 예상 프리미엄을 안내합니다.</div></div>
+        <div class="uvp-face-q" id="uvp-face-q4" style="margin-bottom:4px"><span class="ql"><span class="uvp-q-no">4</span>진입 규모 <button class="uvp-q-help-btn" title="진입 규모 설명 보기" onclick="var h=this.closest('.uvp-face-q').querySelector('.uvp-q-help');h.style.display=h.style.display==='block'?'none':'block'">?</button></span><div id="uvp-face-a4" style="min-width:0">—</div><div class="uvp-q-help" style="display:none">몇 계약까지 들어갈지 정해요. 순위표 기반 권장 계약수와 1회 진입 한도(자본의 0.5% 고정), 콜·풋 방향별 상한을 함께 보여줍니다.</div></div>
         <div id="uvp-face-chart-slot"></div>
         <button id="uvp-face-evi-btn" onclick="var e=document.getElementById('uvp-evidence');if(e){var v='none'===e.style.display;e.style.display=v?'block':'none';this.classList.toggle('evi-open',v);this.textContent=v?'상세 분석 접기 \u25B4':'종합 판단 \u2014 4단계 상세 분석 전체 열기 \u25BE'}">종합 판단 — 4단계 상세 분석 전체 열기 ▾</button>
       </div>
@@ -6144,10 +6144,16 @@ body{padding-bottom:0}
 .uvp-face-q .uvp-ftb td{border:none!important;text-align:center!important;padding:6px 8px!important}
 .uvp-face-q .uvp-ftb th{text-align:center!important;background:transparent!important;border:none!important;padding:6px 8px 2px!important}
 .uvp-face-q .uvp-ftb .note{text-align:center!important;background:transparent!important;border:none!important;padding-top:2px!important}
-.uvp-face-q > div:last-child{background:rgba(217,102,74,.05);border:1px solid rgba(217,102,74,.14);border-radius:10px;padding:4px 12px}
+.uvp-face-q > div[id^="uvp-face-a"]{background:rgba(217,102,74,.05);border:1px solid rgba(217,102,74,.14);border-radius:10px;padding:4px 12px}
 /* 51차: '종합 판단'을 섹션 헤더로 — 하단 가로선 + 큰 폰트 */
 .uvp-face-badges{border-bottom:1px solid rgba(0,0,0,.12);padding-bottom:11px;margin-bottom:14px!important}
 .uvp-face-badges > span:first-child{font-size:20px!important;letter-spacing:.01em}
+
+/* 51차: 점검 영역 번호 배지 + ? 도움말 버튼 + 설명글 */
+.uvp-q-no{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;margin-right:7px;background:#d9664a;color:#fff;font-size:13px;font-weight:900;border-radius:6px;font-family:'IBM Plex Mono',monospace;vertical-align:middle}
+.uvp-q-help-btn{width:20px;height:20px;margin-left:5px;border-radius:50%;border:1.5px solid #b8501e;background:rgba(184,80,30,.10);color:#b8501e;font-size:13px;font-weight:900;line-height:1;cursor:pointer;padding:0;vertical-align:middle;transition:transform .15s}
+.uvp-q-help-btn:hover{transform:scale(1.12);background:rgba(184,80,30,.2)}
+.uvp-q-help{grid-column:1/-1;margin-top:8px;padding:11px 14px;background:rgba(217,102,74,.06);border:1px solid rgba(217,102,74,.18);border-radius:8px;font-size:14px;line-height:1.65;color:var(--t2)}
 </style>
 <div id="protect-footer">
   <div class="pf-row pf-biz">© 2026 <b>직트</b><span class="sep">|</span>사업자 782-08-02561<span class="sep">|</span>통신판매 제2025-고양일산동-0262호<span class="sep">|</span>대표 임대성<span class="sep">|</span>고양시 일산동구 중앙로 1080, 402동 4층 402-S91호<span class="sep">|</span>문의 031-900-9227<a class="pf-link" href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener noreferrer">카톡 오픈채팅</a></div>
