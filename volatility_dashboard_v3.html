@@ -6139,6 +6139,15 @@ input[type=range] { background: transparent !important; border: none !important;
 body{padding-bottom:0}
 @media print{#protect-footer{display:none}body{padding-bottom:0}}
 @media (max-width:700px){#protect-footer{font-size:15px;padding:5px 8px;line-height:1.5}body{padding-bottom:84px}#protect-footer .sep{display:none}#protect-footer .pf-row{display:block;margin:2px 0}}
+
+/* 51차: 종합판단 점검표 가독성 — 테두리 제거·중앙정렬·영역 배경 그룹 */
+.uvp-face-q .uvp-ftb td{border:none!important;text-align:center!important;padding:6px 8px!important}
+.uvp-face-q .uvp-ftb th{text-align:center!important;background:transparent!important;border:none!important;padding:6px 8px 2px!important}
+.uvp-face-q .uvp-ftb .note{text-align:center!important;background:transparent!important;border:none!important;padding-top:2px!important}
+.uvp-face-q > div:last-child{background:rgba(217,102,74,.05);border:1px solid rgba(217,102,74,.14);border-radius:10px;padding:4px 12px}
+/* 51차: '종합 판단'을 섹션 헤더로 — 하단 가로선 + 큰 폰트 */
+.uvp-face-badges{border-bottom:1px solid rgba(0,0,0,.12);padding-bottom:11px;margin-bottom:14px!important}
+.uvp-face-badges > span:first-child{font-size:20px!important;letter-spacing:.01em}
 </style>
 <div id="protect-footer">
   <div class="pf-row pf-biz">© 2026 <b>직트</b><span class="sep">|</span>사업자 782-08-02561<span class="sep">|</span>통신판매 제2025-고양일산동-0262호<span class="sep">|</span>대표 임대성<span class="sep">|</span>고양시 일산동구 중앙로 1080, 402동 4층 402-S91호<span class="sep">|</span>문의 031-900-9227<a class="pf-link" href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener noreferrer">카톡 오픈채팅</a></div>
