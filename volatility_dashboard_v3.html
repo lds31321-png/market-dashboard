@@ -6470,7 +6470,7 @@ paint(E("uvp-face-badge-phase"),"국면 "+(ph||"—"),"위기"===ph?"bad":"주�
 paint(E("uvp-face-badge-alert"),"경보 "+(al||"—"),/3/.test(al)?"bad":/[12]/.test(al)?"warn":"ok");
 var rm1=T("uvp-rm-concl-1")||"—",rm2=T("uvp-rm-concl-2")||"—",rm4=T("uvp-rm-concl-4")||"";
 var c1=E("uvp-rm-concl-1"),c2el=E("uvp-rm-concl-2");
-var rm4bad=/초과|불가|100/.test(rm4),vHtml=rm4bad?esc(rm1)+" →<br>신규 불가 (통합 진입 한도 소진)":esc(rm1),vCol=rm4bad?"#9a3a12":((c1&&c1.style.color)||"var(--t1)");
+var rm4bad=/초과|불가|100/.test(rm4),vHtml=rm4bad?esc(rm1)+" → 신규 불가 (통합 진입 한도 소진)":esc(rm1),vCol=rm4bad?"#9a3a12":((c1&&c1.style.color)||"var(--t1)");
 var act=E("uvp-face-act");if(act)act.innerHTML='신규 진입 — <b style="color:'+vCol+'">'+vHtml+'</b><br>보유 포지션 — <b style="color:'+((c2el&&c2el.style.color)||"var(--t1)")+'">'+esc(rm2)+"</b>";
 var why=E("uvp-face-act-why");if(why){var w=[];ph&&"-"!==ph&&w.push(ph+" 국면");al&&"-"!==al&&w.push("생존경보 "+al);rm4&&w.push(rm4);why.textContent=w.length?"근거: "+w.join(" · "):""}
 var box=E("uvp-face-act-box");
