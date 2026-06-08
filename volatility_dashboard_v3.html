@@ -1895,7 +1895,7 @@ input[type=range] { background: transparent !important; border: none !important;
         .uvp-face-badges{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
         .uvp-face-badge{font-size:15px;font-weight:700;padding:4px 14px;border-radius:999px;background:rgba(0,0,0,.05);color:var(--t2)}
         #uvp-face-act-box{border-radius:10px;padding:14px 17px;margin-bottom:14px;background:rgba(0,0,0,.04)}
-        #uvp-face-act-cap{font-size:15px;font-weight:700;color:var(--t3);margin-bottom:6px}
+        #uvp-face-act-cap{font-size:18px;font-weight:800;color:var(--cyan);letter-spacing:.01em;margin-bottom:7px}
         #uvp-face-act{font-size:18px;font-weight:800;color:var(--t1);line-height:1.6}
         #uvp-face-act-why{font-size:15px;color:var(--t3);margin-top:6px}
         .uvp-face-q{display:grid;grid-template-columns:104px 1fr;gap:14px;margin-bottom:10px;align-items:center}
@@ -6498,7 +6498,7 @@ return[label,mo,pct,prTxt,contracts+"계약",tip,capAdj?["#c8803a",null]:null]}
 var rc=frow("call","콜 매도"),rp=frow("put","풋 매도");
 function ftd(v,c,t){return"<td"+(c?' style="color:'+c+'"':"")+(t?' title="'+esc(t)+'"':"")+">"+esc(v)+"</td>"}
 var nmShow=(T("ov-detail-name")||"").replace(/^[^가-힣A-Za-z0-9]+/,"").trim()||nm;
-fin.innerHTML='<div style="font-size:15px;font-weight:700;color:var(--t3);margin-bottom:6px">최종 진입 정보 <span style="font-weight:600">— 국면·경보·꼬리위험·한도 반영</span></div>'
+fin.innerHTML='<div style="font-size:18px;font-weight:800;color:var(--cyan);letter-spacing:.01em;margin-bottom:7px">최종 진입 정보 <span style="font-weight:600;font-size:13px;color:var(--t3)">— 국면·경보·꼬리위험·한도 반영</span></div>'
 +'<table class="uvp-ftb"><tr><th>종목</th><th>구분</th><th>월물</th><th>기대수익률</th><th>프리미엄</th><th>계약수</th></tr>'
 +"<tr>"+ftd(nmShow)+ftd(rc[0])+ftd(rc[1])+ftd(rc[2])+ftd(rc[3],rc[6]&&rc[6][0],rc[5])+ftd(rc[4],rc[6]&&rc[6][1],rc[5])+"</tr>"
 +"<tr>"+ftd(nmShow)+ftd(rp[0])+ftd(rp[1])+ftd(rp[2])+ftd(rp[3],rp[6]&&rp[6][0],rp[5])+ftd(rp[4],rp[6]&&rp[6][1],rp[5])+"</tr></table>"}}catch(e){console.error("[uvpFaceFinal]",e)}
