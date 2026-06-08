@@ -2622,7 +2622,7 @@ input[type=range] { background: transparent !important; border: none !important;
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
               <span style="font-size:15px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">3-5</span>
               <h3 style="margin:0;font-size:15px;font-weight:800;color:var(--t1)">가격 + 행사가 분포</h3>
-              <button onclick="_uvpTogA3('uvp-detail-c5')" class="btn-q" title="가격·행사가 분포 차트 상세 설명 보기" style="margin-left:2px">?</button>
+              <button onclick="_uvpTogA3('uvp-detail-c5');var _e=document.getElementById('uvp-detail-c5');if(_e&&_e.style.display!=='none')setTimeout(function(){_e.scrollIntoView({behavior:'smooth',block:'center'})},50)" class="btn-q" title="가격·행사가 분포 차트 상세 설명 보기" style="margin-left:2px">?</button>
             </div>
             <div class="uxc-cap">현재가 · 콜·풋 행사가 가로선 (손실확률·프리미엄 포함) · 만기일 · 수익 구간</div>
           </div>
