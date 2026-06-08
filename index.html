@@ -539,7 +539,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 <!-- ══ SETUP ══ -->
 <div id="setup-overlay">
   <div class="setup-box">
-    <div class="setup-logo">◈ Global Market Dashboard</div>
+    <div class="setup-logo">글로벌 시장 대시보드</div>
     <div class="setup-title">실시간 데이터 연결 설정</div>
     <div class="setup-desc">EIA·FRED 두 개의 무료 API 키로 7개 자산 전체의 현재가를 실시간으로 불러옵니다. 키는 이 브라우저에만 저장됩니다.</div>
     <div class="setup-guide">
@@ -563,11 +563,12 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 
 <!-- ══ TOPBAR ══ -->
 <div class="topbar">
-  <div><div class="topbar-logo">◈ Global Market Dashboard<span id="cur-asset-badge">◈ WTI 원유</span></div><div class="topbar-sub">EIA · FRED · World Bank · IMF · USDA 공식 데이터 기반</div></div>
+  <div><div class="topbar-logo">글로벌 시장 대시보드<span id="cur-asset-badge"></span></div><div class="topbar-sub">EIA · FRED · World Bank · IMF · USDA 공식 데이터 기반</div></div>
   <div class="topbar-right">
     <div class="live-badge"><div class="ldot loading" id="status-dot"></div><span id="status-text">연결 중...</span></div>
     <button class="tb-btn" onclick="loadAllData()">↺ 새로고침</button>
     <button class="tb-btn" onclick="diagAPI()" style="border-color:rgba(200,128,58,0.4);color:var(--blue2)">🔍 API 진단</button>
+    <a href="hub.html" class="tb-btn" style="border:1.5px solid #d9664a;color:#d9664a;background:#fff;text-decoration:none;font-weight:700" onmouseover="this.style.background='#d9664a';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='#d9664a'">← 메인으로</a>
   </div>
 </div>
 
@@ -1900,7 +1901,7 @@ function switchAsset(id,el){
   curAsset=id;
   // 배지 업데이트
   var badge=document.getElementById('cur-asset-badge');
-  if(badge&&ASSET_NAMES[id])badge.textContent='◈ '+ASSET_NAMES[id];
+  /* 자산 배지 비표시 */ if(badge)badge.textContent='';
   if(id==='calendar'){setTimeout(()=>renderCalendar(),60);return;}
   setTimeout(()=>{buildAllCharts(id);applySeasonBarGradient();addSourceLinks();},60);
 }
@@ -2898,6 +2899,6 @@ function closeCalPopup(){
 }
 
 </script>
-<a href="hub.html" id="jikt-desk-btn" style="position:fixed;left:18px;bottom:18px;z-index:99999;display:inline-flex;align-items:center;gap:7px;padding:11px 18px;background:#ffffff;border:1.5px solid #d9664a;border-radius:999px;color:#d9664a;font-size:14px;font-weight:700;text-decoration:none;font-family:'Noto Sans KR',sans-serif;box-shadow:0 4px 18px rgba(0,0,0,.12)" onmouseover="this.style.background='#d9664a';this.style.color='#fff'" onmouseout="this.style.background='#ffffff';this.style.color='#d9664a'">&#8592; 트레이딩 데스크</a>
+
 </body>
 </html>
