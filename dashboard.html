@@ -351,6 +351,9 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
   .modal-grid{grid-template-columns:1fr 1fr;}
   .pos-grid{grid-template-columns:1fr;}
 }
+
+.ms-abn{animation:msPulse 1.5s ease-in-out infinite}
+@keyframes msPulse{0%,100%{box-shadow:0 0 0 0 var(--p,rgba(0,0,0,0))}50%{box-shadow:0 0 0 4px var(--p,rgba(0,0,0,0))}}
 </style>
 </head>
 <body>
@@ -761,9 +764,9 @@ function buildStrangleBar(entry, current, putStrike, callStrike){
 function msBadges(u){try{var s=(meta.market_state||{})[u];if(!s)return '';
 var ph=s.phase||'안전';var pc=ph==='위기'?['#9a3a12','rgba(154,58,18,.10)']:ph==='주의'?['#c8803a','rgba(200,128,58,.12)']:['#8a8480','rgba(0,0,0,.05)'];
 var lv=s.alert||0;var ac=lv>=3?['#9a3a12','rgba(154,58,18,.10)']:lv>=1?['#c8803a','rgba(200,128,58,.12)']:['#8a8480','rgba(0,0,0,.05)'];
-var h='<span style="font-size:12px;font-weight:700;color:'+pc[0]+';background:'+pc[1]+';padding:3px 9px;border-radius:999px;white-space:nowrap;">국면 '+ph+'</span>'
-+'<span style="font-size:12px;font-weight:700;color:'+ac[0]+';background:'+ac[1]+';padding:3px 9px;border-radius:999px;white-space:nowrap;">'+(lv>=1?'경보 '+lv+'단계':'경보 정상')+'</span>';
-if(s.tail)h+='<span style="font-size:12px;font-weight:700;color:#9a3a12;background:rgba(154,58,18,.10);padding:3px 9px;border-radius:999px;white-space:nowrap;">꼬리위험</span>';
+var h='<span class="ms-b'+(ph!=='안전'?' ms-abn':'')+'" style="--p:'+pc[1]+';font-size:12px;font-weight:700;color:'+pc[0]+';background:'+pc[1]+';padding:3px 9px;border-radius:999px;white-space:nowrap;">국면 '+ph+'</span>'
++'<span class="ms-b'+(lv>=1?' ms-abn':'')+'" style="--p:'+ac[1]+';font-size:12px;font-weight:700;color:'+ac[0]+';background:'+ac[1]+';padding:3px 9px;border-radius:999px;white-space:nowrap;">'+(lv>=1?'경보 '+lv+'단계':'경보 정상')+'</span>';
+if(s.tail)h+='<span class="ms-b ms-abn" style="--p:rgba(154,58,18,.10);font-size:12px;font-weight:700;color:#9a3a12;background:rgba(154,58,18,.10);padding:3px 9px;border-radius:999px;white-space:nowrap;">꼬리위험</span>';
 return '<div style="display:flex;gap:5px;margin-top:5px;flex-wrap:wrap;">'+h+'</div>';}catch(e){return ''}}
 function renderCards(pos){
   const g=document.getElementById('posGrid');
