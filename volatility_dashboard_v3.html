@@ -1905,7 +1905,9 @@ input[type=range] { background: transparent !important; border: none !important;
         .uvp-ftb th{color:#d9664a;font-weight:700;background:rgba(217,102,74,.04)}
         .uvp-ftb td{font-weight:700;color:var(--t1);background:#fff}
         .uvp-ftb td.note{font-weight:600;color:var(--t3);background:rgba(0,0,0,.015)}
-        #uvp-face-evi-btn{margin-top:12px;width:100%;padding:11px;border:1px solid rgba(217,102,74,.35);background:rgba(217,102,74,.06);color:#d9664a;font-size:15px;font-weight:700;border-radius:8px;cursor:pointer}
+        #uvp-face-evi-btn{margin-top:12px;width:100%;padding:11px;border:1.5px solid rgba(217,102,74,.55);background:rgba(217,102,74,.06);color:#d9664a;font-size:15px;font-weight:700;border-radius:8px;cursor:pointer;animation:eviPulse 1.1s ease-in-out infinite}
+#uvp-face-evi-btn.evi-open{animation:none}
+@keyframes eviPulse{0%,100%{box-shadow:0 0 0 0 rgba(217,102,74,.45);border-color:rgba(217,102,74,.55)}50%{box-shadow:0 0 0 5px rgba(217,102,74,0);border-color:rgba(217,102,74,.95)}}
         #uvp-face-evi-btn:hover{background:rgba(217,102,74,.12)}
         @media (max-width:900px){.uvp-face-q{grid-template-columns:1fr}}
       </style>
@@ -1930,7 +1932,7 @@ input[type=range] { background: transparent !important; border: none !important;
         <div class="uvp-face-q"><span class="ql">진입 설계</span><div id="uvp-face-a3" style="min-width:0">—</div></div>
         <div class="uvp-face-q" id="uvp-face-q4" style="margin-bottom:4px"><span class="ql">진입 규모</span><div id="uvp-face-a4" style="min-width:0">—</div></div>
         <div id="uvp-face-chart-slot"></div>
-        <button id="uvp-face-evi-btn" onclick="var e=document.getElementById('uvp-evidence');if(e){var v='none'===e.style.display;e.style.display=v?'block':'none';this.textContent=v?'근거 접기 \u25B4':'자세한 숫자 \u00B7 게이지 \u00B7 계산 근거 전부 보기 \u25BE'}">자세한 숫자 · 게이지 · 계산 근거 전부 보기 ▾</button>
+        <button id="uvp-face-evi-btn" onclick="var e=document.getElementById('uvp-evidence');if(e){var v='none'===e.style.display;e.style.display=v?'block':'none';this.classList.toggle('evi-open',v);this.textContent=v?'상세 분석 접기 \u25B4':'변동성 수치\u00B7게이지\u00B7차트\u00B7계약수 계산 근거 \u2014 4단계 상세 분석 전체 열기 \u25BE'}">변동성 수치·게이지·차트·계약수 계산 근거 — 4단계 상세 분석 전체 열기 ▾</button>
       </div>
       <div id="uvp-evidence" style="display:none">
       <!-- [49차] 상단 분석 로드맵 — 4단계 한눈 요약 (구조 + 현재 결론) -->
