@@ -538,6 +538,10 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 .headline-news{border-left:none!important}
 .cal-guide-note{border-left:none!important}
 .cm-title{border-left:none!important;padding-left:0!important}
+
+/* 51차: 빈 자산배지 + 상태배지 숨김 */
+#cur-asset-badge{display:none!important}
+.live-badge{display:none!important}
 </style>
 </head>
 <body>
@@ -569,12 +573,10 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 
 <!-- ══ TOPBAR ══ -->
 <div class="topbar">
-  <div><div class="topbar-logo">글로벌 시장 대시보드<span id="cur-asset-badge"></span></div><div class="topbar-sub">EIA · FRED · World Bank · IMF · USDA 공식 데이터 기반</div></div>
+  <div><div class="topbar-logo">글로벌 시장 대시보드</div><div class="topbar-sub">EIA · FRED · World Bank · IMF · USDA 공식 데이터 기반</div></div>
   <div class="topbar-right">
-    <div class="live-badge"><div class="ldot loading" id="status-dot"></div><span id="status-text">연결 중...</span></div>
-    <button class="tb-btn" onclick="loadAllData()">새로고침</button>
-    <button class="tb-btn" onclick="diagAPI()" style="border-color:rgba(200,128,58,0.4);color:var(--blue2)">API 진단</button>
-    <a href="hub.html" class="tb-btn" style="border:1.5px solid #d9664a;color:#d9664a;background:#fff;text-decoration:none;font-weight:700" onmouseover="this.style.background='#d9664a';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='#d9664a'">← 메인으로</a>
+    <!-- 상태배지·새로고침·API진단 삭제됨 (수동 데이터 운영) -->
+    <a href="hub.html" class="tb-btn" style="padding:7px 15px;font-size:15px;border-radius:8px;border:1.5px solid #d9664a;color:#d9664a;background:#fff;text-decoration:none;font-weight:700" onmouseover="this.style.background='#d9664a';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='#d9664a'">← 메인으로</a>
   </div>
 </div>
 
