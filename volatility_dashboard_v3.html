@@ -2346,7 +2346,7 @@ input[type=range] { background: transparent !important; border: none !important;
         <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:14px;align-items:stretch">
           <section class="uxc-card" data-step="4" style="padding:16px 18px;background:#fff">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-              <span style="font-size:15px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">2-4</span>
+              <span style="font-size:15px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">2-3</span>
               <span style="font-size:15px;color:var(--t1);font-weight:700">청산 후 재진입 · 다음 월물로 교체</span>
             </div>
             <div style="display:flex;flex-direction:column;gap:6px">
@@ -2570,7 +2570,7 @@ input[type=range] { background: transparent !important; border: none !important;
         <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:14px;align-items:stretch">
           <section class="uxc-card" data-step="3" style="padding:16px 18px;background:#fff">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-              <span style="font-size:15px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">3-4</span>
+              <span style="font-size:15px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30)">3-3</span>
               <span style="font-size:15px;color:var(--t1);font-weight:700">1계약 필요 증거금 + 행사가 거리</span>
             </div>
             <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:8px">
@@ -2620,7 +2620,7 @@ input[type=range] { background: transparent !important; border: none !important;
         <div class="uxc-row-between" style="margin-bottom:10px;flex-wrap:wrap;gap:10px">
           <div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
-              <span style="font-size:15px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">3-5</span>
+              <span style="font-size:15px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(217,102,74,.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">3-4</span>
               <h3 style="margin:0;font-size:15px;font-weight:800;color:var(--t1)">가격 + 행사가 분포</h3>
               <button onclick="_uvpTogA3('uvp-detail-c5');var _e=document.getElementById('uvp-detail-c5');if(_e&&_e.style.display!=='none')setTimeout(function(){_e.scrollIntoView({behavior:'smooth',block:'center'})},50)" class="btn-q" title="가격·행사가 분포 차트 상세 설명 보기" style="margin-left:2px">?</button>
             </div>
@@ -6175,6 +6175,11 @@ body{padding-bottom:0}
 @keyframes uvpBadgePulse{0%,100%{box-shadow:0 0 0 0 rgba(217,102,74,0)}50%{box-shadow:0 0 0 4px rgba(217,102,74,.13)}}
 .uvp-face-q .uvp-ftb td[style*="color"]{animation:uvpAbnPulse 1.5s ease-in-out infinite;font-weight:700}
 @keyframes uvpAbnPulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* 51차-4: 배지펄스=배경색 + 셌 줄바꿈 */
+.uvp-face-badge{animation:uvpBadgePulse 2.2s ease-in-out infinite}
+@keyframes uvpBadgePulse{0%,100%{box-shadow:0 0 0 0 var(--pulse,rgba(0,0,0,.05))}50%{box-shadow:0 0 0 5px var(--pulse,rgba(0,0,0,.05))}}
+.uvp-face-q .uvp-ftb td{white-space:pre-line!important}
 </style>
 <div id="protect-footer">
   <div class="pf-row pf-biz">© 2026 <b>직트</b><span class="sep">|</span>사업자 782-08-02561<span class="sep">|</span>통신판매 제2025-고양일산동-0262호<span class="sep">|</span>대표 임대성<span class="sep">|</span>고양시 일산동구 중앙로 1080, 402동 4층 402-S91호<span class="sep">|</span>문의 031-900-9227<a class="pf-link" href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener noreferrer">카톡 오픈채팅</a></div>
@@ -6460,13 +6465,13 @@ if(!E("uvp-face"))return;
 var slot=E("uvp-face-chart-slot"),cs=E("uvp-chart-series");
 if(slot&&cs&&cs.parentNode!==slot){slot.appendChild(cs);cs.style.marginTop="10px"}
 var ph=T("uvp-info-phase-txt"),al=T("uvp-info-alert-txt");
-function paint(el,txt,kind){if(!el)return;el.textContent=txt;var c="bad"===kind?["#9a3a12","rgba(154,58,18,.10)"]:"warn"===kind?["#c8803a","rgba(200,128,58,.12)"]:["#5f5e5a","rgba(0,0,0,.05)"];el.style.color=c[0];el.style.background=c[1]}
+function paint(el,txt,kind){if(!el)return;el.textContent=txt;var c="bad"===kind?["#9a3a12","rgba(154,58,18,.10)"]:"warn"===kind?["#c8803a","rgba(200,128,58,.12)"]:["#5f5e5a","rgba(0,0,0,.05)"];el.style.color=c[0];el.style.background=c[1];el.style.setProperty("--pulse",c[1])}
 paint(E("uvp-face-badge-phase"),"국면 "+(ph||"—"),"위기"===ph?"bad":"주의"===ph?"warn":"ok");
 paint(E("uvp-face-badge-alert"),"경보 "+(al||"—"),/3/.test(al)?"bad":/[12]/.test(al)?"warn":"ok");
 var rm1=T("uvp-rm-concl-1")||"—",rm2=T("uvp-rm-concl-2")||"—",rm4=T("uvp-rm-concl-4")||"";
 var c1=E("uvp-rm-concl-1"),c2el=E("uvp-rm-concl-2");
-var rm4bad=/초과|불가|100/.test(rm4),vTxt=rm4bad?rm1+" → 신규 불가 (통합 진입 한도 소진)":rm1,vCol=rm4bad?"#9a3a12":((c1&&c1.style.color)||"var(--t1)");
-var act=E("uvp-face-act");if(act)act.innerHTML='신규 진입 — <b style="color:'+vCol+'">'+esc(vTxt)+'</b><br>보유 포지션 — <b style="color:'+((c2el&&c2el.style.color)||"var(--t1)")+'">'+esc(rm2)+"</b>";
+var rm4bad=/초과|불가|100/.test(rm4),vHtml=rm4bad?esc(rm1)+" →<br>신규 불가 (통합 진입 한도 소진)":esc(rm1),vCol=rm4bad?"#9a3a12":((c1&&c1.style.color)||"var(--t1)");
+var act=E("uvp-face-act");if(act)act.innerHTML='신규 진입 — <b style="color:'+vCol+'">'+vHtml+'</b><br>보유 포지션 — <b style="color:'+((c2el&&c2el.style.color)||"var(--t1)")+'">'+esc(rm2)+"</b>";
 var why=E("uvp-face-act-why");if(why){var w=[];ph&&"-"!==ph&&w.push(ph+" 국면");al&&"-"!==al&&w.push("생존경보 "+al);rm4&&w.push(rm4);why.textContent=w.length?"근거: "+w.join(" · "):""}
 var box=E("uvp-face-act-box");
 if(box&&c1&&c1.style.background){var bg=c1.style.background;box.style.background=bg.indexOf("rgba")>=0?bg.replace(/\.1\)/,".07)"):"rgba(0,0,0,.04)"}
@@ -6486,7 +6491,7 @@ var pc=T("uvp-info-step3-prem-call"),pck=T("uvp-info-step3-prem-call-krw"),pp=T(
 var skc=T("uvp-info-step3-strike-call"),skp=T("uvp-info-step3-strike-put");
 var ov=E("uvp-info-step3-cap-over"),on=!!(ov&&"none"!==ov.style.display);
 function zt(p){return p&&/^0(\.0+)?\s*(포인트)?$/.test(p.trim())?"1틱 미만":p}
-function sv(strike,prem,krw,adj,adjK){if(on&&adj&&"-"!==adj)return["행사가 "+(strike&&"-"!==strike?strike+"보다 외가":"외가")+" · "+zt(adj)+(adjK&&"-"!==adjK?" ("+adjK+")":"")+" · 외가 조정","#9a3a12"];
+function sv(strike,prem,krw,adj,adjK){if(on&&adj&&"-"!==adj)return["행사가 "+(strike&&"-"!==strike?strike+"보다 외가":"외가")+" · "+zt(adj)+(adjK&&"-"!==adjK?"\n("+adjK+")":"")+" · 외가 조정","#9a3a12"];
 prem=zt(prem);var t=(strike&&"-"!==strike?"행사가 "+strike+" · ":"")+(prem&&"-"!==prem?("1틱 미만"===prem?prem:prem+(krw&&"-"!==krw?" ("+krw+")":"")):"—");return[t,null]}
 var svc=sv(skc,pc,pck,T("uvp-info-step3-cap-prem-call"),T("uvp-info-step3-cap-prem-call-krw")),svp=sv(skp,pp,ppk,T("uvp-info-step3-cap-prem-put"),T("uvp-info-step3-cap-prem-put-krw"));
 var a3=E("uvp-face-a3");if(a3)a3.innerHTML=tbl([["추세",T("uvp-info-step3-trend")],["월물",mShort,null,mFull],["만기일",(T("uvp-info-step3-expiry")||"—").replace(/^만기일\s*/,"")],["콜 매도",svc[0],svc[1]],["풋 매도",svp[0],svp[1]]],on?"기준 행사가의 프리미엄이 1회 한도(자본 0.5%) 초과 — 더 외가 행사가로 조정 진입 권고":null);
