@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_updated": "2026-06-08",
+    "last_updated": "2026-06-09",
     "base_currency": "USD",
     "exchange_rate": 1500,
     "total_deposit_krw": 50000000,
@@ -66,10 +66,209 @@
       }
     },
     "market_state_updated": "2026-06-07",
-    "last_price_update": "2026-06-08 21:47:00",
+    "last_price_update": "2026-06-09 14:15:18",
     "schema_note": "v2: 각 종목 option_charts에 옵션 월물별 차트 분리 (기초자산 선물 매핑)"
   },
   "positions": [
+    {
+      "id": "p18",
+      "number": 18,
+      "sub": null,
+      "shared_date": "2026-06-09",
+      "status": "active",
+      "notion_url": "https://www.notion.so/37adf6df17a2814b940fe543b3da7a13",
+      "strategy_type": "naked_call",
+      "underlying": "대두",
+      "underlying_en": "Soybean",
+      "expiry_month": "9월물",
+      "expiry_date": "2026-08-21",
+      "current_price": 1150,
+      "legs": [
+        {
+          "type": "call_sell",
+          "strike": 1400,
+          "contracts": 3,
+          "premium": 150,
+          "current_price_pt": 1.0
+        }
+      ],
+      "total_premium": 150,
+      "margin": 822,
+      "margin_krw": 1233000,
+      "profit_scenarios": [
+        {
+          "label": "만기 시 $1,400 미만",
+          "profit": 150,
+          "profit_krw": 225000,
+          "return_pct": 18.25,
+          "type": "win"
+        },
+        {
+          "label": "만기 시 $1,400 초과",
+          "profit": null,
+          "return_pct": null,
+          "type": "loss"
+        }
+      ],
+      "expected_return_pct": 18.25,
+      "monthly_return_pct": 7.5,
+      "current_pnl": 0,
+      "memo": "",
+      "chart_data": null,
+      "entry_price": 1150,
+      "strategy_num": 161
+    },
+    {
+      "id": "p17",
+      "number": 17,
+      "sub": null,
+      "shared_date": "2026-06-09",
+      "status": "active",
+      "notion_url": "https://www.notion.so/37adf6df17a281f0ab79f8036e2ba013",
+      "strategy_type": "naked_put",
+      "underlying": "천연가스",
+      "underlying_en": "Natural Gas",
+      "expiry_month": "9월물",
+      "expiry_date": "2026-08-26",
+      "current_price": 3.2,
+      "legs": [
+        {
+          "type": "put_sell",
+          "strike": 2.1,
+          "contracts": 1,
+          "premium": 100,
+          "current_price_pt": 0.01
+        }
+      ],
+      "total_premium": 100,
+      "margin": 239,
+      "margin_krw": 358500,
+      "profit_scenarios": [
+        {
+          "label": "만기 시 $2.10 초과",
+          "profit": 100,
+          "profit_krw": 150000,
+          "return_pct": 41.84,
+          "type": "win"
+        },
+        {
+          "label": "만기 시 $2.10 미만",
+          "profit": null,
+          "return_pct": null,
+          "type": "loss"
+        }
+      ],
+      "expected_return_pct": 41.84,
+      "monthly_return_pct": 16.09,
+      "current_pnl": 0,
+      "memo": "",
+      "chart_data": null,
+      "entry_price": 3.2,
+      "strategy_num": 160
+    },
+    {
+      "id": "p16",
+      "number": 16,
+      "sub": null,
+      "shared_date": "2026-06-09",
+      "status": "active",
+      "notion_url": "https://www.notion.so/37adf6df17a281b4b195c4af7ed03d40",
+      "strategy_type": "naked_call",
+      "underlying": "천연가스",
+      "underlying_en": "Natural Gas",
+      "expiry_month": "8월물",
+      "expiry_date": "2026-07-28",
+      "current_price": 3.2,
+      "legs": [
+        {
+          "type": "call_sell",
+          "strike": 4.55,
+          "contracts": 1,
+          "premium": 100,
+          "current_price_pt": 0.01
+        }
+      ],
+      "total_premium": 100,
+      "margin": 356,
+      "margin_krw": 534000,
+      "profit_scenarios": [
+        {
+          "label": "만기 시 $4.55 미만",
+          "profit": 100,
+          "profit_krw": 150000,
+          "return_pct": 28.09,
+          "type": "win"
+        },
+        {
+          "label": "만기 시 $4.55 초과",
+          "profit": null,
+          "return_pct": null,
+          "type": "loss"
+        }
+      ],
+      "expected_return_pct": 28.09,
+      "monthly_return_pct": 17.2,
+      "current_pnl": 0,
+      "memo": "",
+      "chart_data": null,
+      "entry_price": 3.2,
+      "strategy_num": 159
+    },
+    {
+      "id": "p15",
+      "number": 15,
+      "sub": null,
+      "shared_date": "2026-06-09",
+      "status": "active",
+      "notion_url": "https://www.notion.so/37adf6df17a281c4a6bceb844f8c1b26",
+      "strategy_type": "strangle",
+      "underlying": "크루드 오일",
+      "underlying_en": "Crude Oil",
+      "expiry_month": "8월물",
+      "expiry_date": "2026-07-16",
+      "current_price": 91.4,
+      "legs": [
+        {
+          "type": "call_sell",
+          "strike": 161,
+          "contracts": 1,
+          "premium": 160,
+          "current_price_pt": 0.16
+        },
+        {
+          "type": "put_sell",
+          "strike": 53,
+          "contracts": 1,
+          "premium": 170,
+          "current_price_pt": 0.17
+        }
+      ],
+      "total_premium": 330,
+      "margin": 1144,
+      "margin_krw": 1716000,
+      "profit_scenarios": [
+        {
+          "label": "만기 시 $53~$161 구간",
+          "profit": 330,
+          "profit_krw": 495000,
+          "return_pct": 28.85,
+          "type": "win"
+        },
+        {
+          "label": "만기 시 $161 초과 또는 $53 미만",
+          "profit": null,
+          "return_pct": null,
+          "type": "loss"
+        }
+      ],
+      "expected_return_pct": 28.85,
+      "monthly_return_pct": 23.39,
+      "current_pnl": 0,
+      "memo": "",
+      "chart_data": null,
+      "entry_price": 91.4,
+      "strategy_num": 158
+    },
     {
       "id": "p1a",
       "number": 1,
