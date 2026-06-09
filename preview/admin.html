@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>직트 관리자 — 생존경보 관리</title>
+<style>
+  :root {
+    --bg:    #e8e8ec;
+    --bg2:   #e2e2e8;
+    --card:  #f6f6f8;
+    --card2: #ffffff;
+    --b1:    rgba(30,45,64,.09);
+    --b2:    rgba(30,45,64,.16);
+    --t1:    #0d1520;
+    --t2:    #5a6070;
+    --t3:    #9a9ea8;
+    --sal:   #d9664a;
+    --green: #059669;
+    --amber: #d97706;
+    --red:   #e11d48;
+    --r:     12px;
+    --font-n: 'Noto Sans KR', sans-serif;
+    --mono:  'JetBrains Mono', 'Fira Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--t1); font-family: var(--font-n); min-height: 100vh; }
+
+  /* ── 헤더 ── */
+  .header {
+    background: rgba(232,232,236,.97);
+    border-bottom: 1.5px solid var(--b1);
+    padding: 0 32px; height: 64px;
+    display: flex; align-items: center; gap: 16px;
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 3px rgba(0,0,0,.05), 0 4px 12px rgba(0,0,0,.06);
+  }
+  .header-title { font-size: 18px; font-weight: 800; color: var(--t1); }
+  .header-sub   { font-size: 12px; color: var(--t3); margin-top: 2px; }
+
+  /* ── 레이아웃 ── */
+  .container { max-width: 960px; margin: 0 auto; padding: 28px 24px; display: flex; flex-direction: column; gap: 16px; }
+
+  /* ── 카드 ── */
+  .card {
+    background: var(--card);
+    border: 1.5px solid var(--b1);
+    border-radius: var(--r); overflow: hidden;
+    box-shadow: 0 1px 0 rgba(255,255,255,.92), 0 1px 3px rgba(0,0,0,.05), 0 6px 18px rgba(0,0,0,.07), 0 24px 52px rgba(0,0,0,.09);
+  }
+  .card-head {
+    padding: 16px 20px;
+    border-bottom: 1.5px solid var(--b1);
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,.5);
+  }
+  .card-head .badge {
+    font-size: 11px; font-weight: 800; padding: 3px 10px;
+    border-radius: 6px; background: rgba(217,102,74,.10);
+    color: var(--sal); border: 1px solid rgba(217,102,74,.25);
+    flex-shrink: 0;
+  }
+  .card-head .title { font-size: 16px; font-weight: 800; color: var(--t1); }
+  .card-head .sub   { font-size: 12px; color: var(--t3); margin-left: auto; font-weight: 500; }
+  .card-body { padding: 20px; }
+
+  /* ── 정보 박스 ── */
+  .info-box {
+    margin-bottom: 12px; padding: 10px 14px;
+    background: rgba(246,246,248,.8); border-radius: 8px;
+    border: 1.5px solid var(--b1);
+    font-size: 12px; color: var(--t2); line-height: 1.8;
+  }
+
+  /* ── 텍스트에리어 ── */
+  .paste-area {
+    width: 100%; min-height: 140px; padding: 14px;
+    background: #fafafa; border: 1.5px solid var(--b1);
+    border-radius: 8px; color: var(--t1); font-size: 13px;
+    font-family: var(--font-n); line-height: 1.7;
+    resize: vertical; outline: none; transition: border-color .2s, box-shadow .2s;
+  }
+  .paste-area:focus { border-color: rgba(217,102,74,.55); box-shadow: 0 0 0 3px rgba(217,102,74,.08); }
+  .paste-area::placeholder { color: var(--t3); }
+
+  /* ── 버튼 ── */
+  .btn { padding: 10px 22px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; border: none; transition: all .2s; font-family: inherit; }
+  .btn-primary { background: var(--sal); color: #fff; border: none; }
+  .btn-primary:hover { background: #c25840; }
+  .btn-clear { background: transparent; color: var(--t2); border: 1.5px solid var(--b1); }
+  .btn-clear:hover { border-color: var(--b2); color: var(--t1); }
+  .btn-secondary { background: rgba(217,102,74,.08); color: var(--sal); border: 1.5px solid rgba(217,102,74,.25); }
+  .btn-secondary:hover { background: rgba(217,102,74,.16); }
+  .btn-danger { background: transparent; color: var(--red); border: 1.5px solid rgba(225,29,72,.25); font-size: 12px; padding: 7px 14px; }
+  .btn-danger:hover { background: rgba(225,29,72,.06); }
+  .btn-resolve { background: transparent; color: var(--green); border: 1.5px solid rgba(5,150,105,.25); font-size: 12px; padding: 7px 14px; }
+  .btn-resolve:hover { background: rgba(5,150,105,.06); }
+
+  /* ── 결과 메시지 ── */
+  .result-msg { font-size: 12px; margin-top: 10px; padding: 8px 12px; border-radius: 6px; }
+  .result-ok  { background: rgba(5,150,105,.07); color: var(--green); border: 1.5px solid rgba(5,150,105,.18); }
+  .result-err { background: rgba(225,29,72,.07); color: var(--red);   border: 1.5px solid rgba(225,29,72,.18); }
+
+  /* ── 경보 카드 ── */
+  .alert-list { display: flex; flex-direction: column; gap: 10px; }
+  .alert-item { border-radius: 10px; overflow: hidden; border: 1.5px solid var(--b1); background: var(--card2); box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+  .alert-item.lv1 { border-color: rgba(5,150,105,.30);  background: rgba(5,150,105,.03); }
+  .alert-item.lv2 { border-color: rgba(217,119,6,.30);  background: rgba(217,119,6,.03); }
+  .alert-item.lv3 { border-color: rgba(225,29,72,.40);  background: rgba(225,29,72,.04); animation: flash3 2s ease-in-out infinite; }
+  .alert-item.resolved { opacity: .45; filter: grayscale(.6); }
+  @keyframes flash3 {
+    0%,100% { border-color: rgba(225,29,72,.40); }
+    50%      { border-color: rgba(225,29,72,.80); box-shadow: 0 0 0 2px rgba(225,29,72,.10); }
+  }
+  .alert-top { padding: 12px 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .lv-badge { font-size: 12px; font-weight: 900; padding: 3px 12px; border-radius: 20px; flex-shrink: 0; }
+  .lv1 .lv-badge { background: rgba(5,150,105,.12);  color: var(--green); border: 1px solid rgba(5,150,105,.28); }
+  .lv2 .lv-badge { background: rgba(217,119,6,.12);  color: var(--amber); border: 1px solid rgba(217,119,6,.28); }
+  .lv3 .lv-badge { background: rgba(225,29,72,.10);  color: var(--red);   border: 1px solid rgba(225,29,72,.32); }
+  .alert-name  { font-size: 13px; font-weight: 700; color: var(--t1); }
+  .alert-time  { font-size: 12px; color: var(--t2); font-family: var(--mono); }
+  .alert-insts { font-size: 11px; color: var(--sal); margin-left: 4px; font-weight: 700; }
+  .alert-btns  { margin-left: auto; display: flex; gap: 6px; }
+  .alert-body { padding: 12px 16px; border-top: 1.5px solid var(--b1); display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .action-box { padding: 10px 12px; border-radius: 8px; background: rgba(246,246,248,.9); border: 1.5px solid var(--b1); }
+  .action-label { font-size: 11px; font-weight: 800; color: var(--t1); margin-bottom: 6px; letter-spacing: .05em; text-transform: uppercase; }
+  .action-item  { font-size: 12px; color: var(--t2); line-height: 1.9; font-weight: 500; }
+  .action-item::before { content: '→ '; color: var(--t3); }
+
+  /* ── 대응방안 카드 ── */
+  .guide-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+  .guide-card { border-radius: 10px; padding: 16px; border: 1.5px solid var(--b1); background: var(--card2); }
+  .guide-card.g1 { background: rgba(5,150,105,.04);  border-color: rgba(5,150,105,.22); }
+  .guide-card.g2 { background: rgba(217,119,6,.04);  border-color: rgba(217,119,6,.22); }
+  .guide-card.g3 { background: rgba(225,29,72,.04);  border-color: rgba(225,29,72,.24); }
+  .guide-head { font-size: 14px; font-weight: 800; margin-bottom: 10px; }
+  .g1 .guide-head { color: var(--green); }
+  .g2 .guide-head { color: var(--amber); }
+  .g3 .guide-head { color: var(--red); }
+  .guide-purpose { font-size: 12px; color: var(--t2); margin-bottom: 10px; line-height: 1.7; padding: 8px 10px; background: rgba(0,0,0,.03); border-radius: 6px; }
+  .guide-actions { display: flex; flex-direction: column; gap: 5px; }
+  .guide-action  { font-size: 12px; color: var(--t2); line-height: 1.8; font-weight: 500; }
+  .guide-action::before { content: '→ '; color: var(--t3); }
+
+  /* ── 기타 ── */
+  .empty-msg { text-align: center; padding: 32px; color: var(--t2); font-size: 13px; line-height: 2; font-weight: 500; }
+  .sync-bar { padding: 10px 16px; background: rgba(5,150,105,.06); border: 1.5px solid rgba(5,150,105,.18); border-radius: 8px; font-size: 12px; color: var(--green); display: flex; align-items: center; gap: 8px; }
+  .resolved-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: rgba(0,0,0,.04); color: var(--t3); border: 1.5px solid var(--b1); }
+  #admin-save-btn { background: var(--sal) !important; border: none !important; color: #fff !important; }
+  #admin-save-btn:hover { background: #c25840 !important; }
+
+  /* ── 서브 섹션 라벨 (B/C) ── */
+  .sub-label {
+    width: 28px; height: 28px; border-radius: 6px;
+    background: rgba(30,45,64,.07); border: 1.5px solid var(--b1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900; color: var(--t2); flex-shrink: 0;
+  }
+  .sub-label-title { font-size: 14px; font-weight: 800; color: var(--t1); }
+  .sub-label-desc  { font-size: 12px; color: var(--t3); margin-top: 2px; }
+
+  @media (max-width: 680px) {
+    .guide-grid { grid-template-columns: 1fr; }
+    .alert-body { grid-template-columns: 1fr; }
+    .header { padding: 0 16px; }
+    .container { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-title">직트 관리자 — 생존경보 관리</div>
+    <div class="header-sub">텔레그램 생존경보 내용을 붙여넣으면 대시보드에 자동 반영됩니다</div>
+  </div>
+  <div style="margin-left:auto;display:flex;gap:8px;flex-shrink:0">
+    <button id="admin-save-btn" class="btn btn-clear" onclick="adminSaveAndSync()"
+      style="font-size:13px;font-weight:800;white-space:nowrap">
+      저장
+    </button>
+    <button id="admin-export-deploy-btn" class="btn btn-primary" onclick="adminExportDeployJSON()"
+      title="교육생 배포용 admin_data.json 다운로드"
+      style="font-size:13px;font-weight:800;white-space:nowrap">
+      배포용 JSON 다운로드
+    </button>
+  </div>
+</div>
+
+<script>
+/* 교육생 배포용 admin_data.json 다운로드 */
+function adminExportDeployJSON(){
+  try {
+    var pick = function(k){ try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch(e){ return null; } };
+    var wp = pick('weekly_picks');
+    var pkg = {
+      _meta: { exported_at: new Date().toISOString(), source: 'admin.html', version: 1, keys: ['sv_admin_alerts','sv_rm_data','st_rank_v3','st_detail_v3','sv_phase_note','sv_phase_note_updated','weekly_picks'] },
+      sv_admin_alerts: pick('sv_admin_alerts'),
+      sv_rm_data:      pick('sv_rm_data'),
+      st_rank_v3:      pick('st_rank_v3'),
+      st_detail_v3:    pick('st_detail_v3'),
+      sv_phase_note:         localStorage.getItem('sv_phase_note') || null,
+      sv_phase_note_updated: localStorage.getItem('sv_phase_note_updated') || null,
+      weekly_picks:    wp
+    };
+    var checkKeys = ['sv_admin_alerts','sv_rm_data','st_rank_v3','st_detail_v3'];
+    var miss = checkKeys.filter(function(k){ return pkg[k] === null; });
+    if (miss.length && !confirm('비어있는 키: ' + miss.join(', ') + '\n그래도 다운로드?')) return;
+    var blob = new Blob([JSON.stringify(pkg, null, 2)], {type:'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'admin_data.json';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(a.href); }, 100);
+    var btn = document.getElementById('admin-export-deploy-btn');
+    if (btn) { var orig = btn.textContent; btn.textContent = '완료'; setTimeout(function(){ btn.textContent = orig; }, 1800); }
+  } catch(e) { alert('배포용 JSON 생성 실패: ' + e.message); }
+}
+</script>
+
+<div class="container">
+
+  <!-- [Task #15-B] 통합 입력 (NEW) — 엑셀 시트 전체 자동 분리 -->
+  <div class="card" >
+    <div class="card-head">
+      <span class="badge" style="">NEW</span>
+      <span class="title">엑셀 시트 전체 통합 입력 (자동 분리)</span>
+      <span class="sub">시트 전체 Ctrl+A → Ctrl+C → 붙여넣기 → 자동 분리 저장</span>
+    </div>
+    <div class="card-body">
+      <div class="info-box">
+        엑셀 <b style="color:var(--t1)">종목별손실확률(종합) 시트</b>에서 <b style="color:#3ecfaa">Ctrl+A → Ctrl+C</b> →
+        아래 붙여넣기 → <b style="color:#3ecfaa">자동 저장</b>이 시장국면 영역(행 80~90)을 자동 식별하여
+        <code style="background:rgba(0,0,0,.04);padding:1px 6px;border-radius:4px">sv_rm_data</code>로 저장합니다.
+        <br>
+        <span style="font-size:10px;color:var(--t3)">※ 매매전략 데이터(행 1~74) + 시장국면(행 80~90) 통합 자동 분리 — 별도 입력 불필요</span>
+      </div>
+      <textarea id="rm-unified-area"
+        class="paste-area" style="min-height:200px;font-family:var(--mono);font-size:12px"
+        placeholder="여기에 엑셀 시트 전체를 붙여넣으세요 (Ctrl+A → Ctrl+C → Ctrl+V)&#10;&#10;시장국면 영역(PSR/ISR/LMR/DSR/IVL 헤더가 있는 표)이 자동으로 인식됩니다."></textarea>
+      <div style="display:flex;gap:10px;margin-top:12px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="rmAutoSave()">자동 분리 저장</button>
+        <button class="btn btn-clear" onclick="rmAutoClear()">초기화</button>
+        <div id="rm-auto-result" style="font-size:12px;color:var(--t3)"></div>
+      </div>
+      <div id="rm-auto-summary" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+  <!-- 시장 위험 데이터 섹션 (44차 - 통합 입력으로 대체, 숨김 처리) -->
+  <div class="card" style="display:none" data-hidden-by="44차-통합입력으로-대체">
+    <div class="card-head">
+      <span class="badge">입력</span>
+      <span class="title">📊 시장 위험 단계 데이터</span>
+      <span class="sub">엑셀 표 전체 복사(Ctrl+A → Ctrl+C) → 붙여넣기 → 저장</span>
+    </div>
+    <div class="card-body">
+      <div style="margin-bottom:10px;padding:10px 14px;background:rgba(224,96,112,.07);border-radius:8px;border:1px solid rgba(224,96,112,.2);font-size:11px;color:var(--t2);line-height:1.8">
+        엑셀 <b style="color:var(--t1)">종목별손실확률 시트</b> → 표 전체 선택(Ctrl+A) → 복사(Ctrl+C) → 아래 붙여넣기(Ctrl+V) → 저장하기
+      </div>
+      <textarea id="rm-paste-area"
+        style="width:100%;min-height:180px;padding:12px;background:#fdf9f6;
+        border:1.5px solid rgba(217,102,74,.22);border-radius:8px;color:var(--t1);
+        font-family:monospace;font-size:12px;line-height:1.7;resize:vertical;
+        outline:none;box-sizing:border-box;transition:all .2s"
+        onfocus="this.style.borderColor='rgba(217,102,74,.65)';this.style.boxShadow='0 0 0 3px rgba(217,102,74,.08)'"
+        onblur="this.style.borderColor='rgba(217,102,74,.22)';this.style.boxShadow='none'"
+        placeholder="여기에 엑셀 데이터를 붙여넣으세요 (Ctrl+V)&#10;&#10;예시:&#10;종목   PSR   ISR   LMR   DSR   IVL   극단위험&#10;S&P500  1.06  0.68  0.99  1.47  0.38  OFF&#10;원유    1.45  1.21  1.21  -1.16 0.36  ON"></textarea>
+      <div style="display:flex;gap:10px;margin-top:12px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-primary" style="background:linear-gradient(135deg,rgba(224,96,112,.25),rgba(232,149,106,.15));color:var(--orange);border-color:rgba(232,149,106,.4)" onclick="rmAdminSave()">✅ 읽기 &amp; 저장</button>
+        <button class="btn btn-clear" onclick="rmAdminClear()">초기화</button>
+        <div id="rm-save-result" style="font-size:12px;color:var(--t3)"></div>
+      </div>
+      <div id="rm-saved-summary" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+  <!-- 시장국면 변동 사유 (44차 admin에 부활) -->
+  <div class="card">
+    <div class="card-head">
+      <span class="badge">입력</span>
+      <span class="title">시장국면 변동 사유</span>
+      <span class="sub">변동 시만 입력 — 텍스트 붙여넣기 → 시장 현황 탭 자동 표시</span>
+    </div>
+    <div class="card-body">
+      <textarea id="admin-phase-note-text"
+        class="paste-area" style="min-height:140px;font-family:var(--mono);font-size:12px"
+        placeholder="예시:&#10;&#10;1. 천연가스&#10;  * 국면변화 : DSR 상승으로 경고국면 진입&#10;  * 신규진입 : 사이징 0.8 × 거리 0.85 = 0.68배 축소진입&#10;  * 기존포지션 : 0.0배에서 0.2배로 상승 = 콜 노출량의 0.2배 축소&#10;&#10;2. 대두&#10;  * 국면변화 : ISR 상승으로 경고국면 진입&#10;  * ..."></textarea>
+      <div style="display:flex;gap:10px;margin-top:12px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="adminSavePhaseNote()">저장</button>
+        <button class="btn btn-clear" onclick="adminClearPhaseNote()">초기화</button>
+        <span id="admin-phase-note-msg" style="display:none;font-size:12px;color:#3ecfaa"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 생존경보 섹션 -->
+  <div class="card">
+    <div class="card-head">
+      <span class="badge">입력</span>
+      <span class="title">생존경보 붙여넣기</span>
+      <span class="sub">텔레그램 메시지 전체 복사 → 붙여넣기 → 저장</span>
+    </div>
+    <div class="card-body">
+      <textarea id="pasteArea" class="paste-area"
+        placeholder="🚨 [옵션 생존경보 발동]&#10;&#10;경보 단계 : 1단계&#10;발동 시각 : 3월 23일 9시 42분&#10;대상 종목 : 금 풋&#10;...&#10;&#10;텔레그램 메시지 전체를 여기에 붙여넣으세요."></textarea>
+      <div style="display:flex;gap:10px;margin-top:12px;align-items:center;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="parseAndSave()">저장</button>
+        <button class="btn btn-clear" onclick="document.getElementById('pasteArea').value=''">초기화</button>
+        <div id="resultMsg" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 현재 활성 경보 -->
+  <div class="card">
+    <div class="card-head">
+      <span class="badge">현황</span>
+      <span class="title">생존경보 이력</span>
+      <span class="sub" id="syncStatus"></span>
+    </div>
+    <div class="card-body">
+      <div id="syncBar" style="display:none;margin-bottom:14px" class="sync-bar">
+        대시보드 자금·위험관리 탭과 동기화 완료 — 교육생 화면에 반영됩니다
+      </div>
+      <div id="alertList" class="alert-list">
+        <div class="empty-msg">저장된 경보가 없습니다.<br>위에서 텔레그램 내용을 붙여넣어 주세요.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 단계별 대응 방안 -->
+  <div class="card">
+    <div class="card-head">
+      <span class="badge">가이드</span>
+      <span class="title">단계별 대응 방안</span>
+    </div>
+    <div class="card-body">
+      <div class="guide-grid">
+        <div class="guide-card g1">
+          <div class="guide-head">1단계 — 노출 점검 모드</div>
+          <div class="guide-purpose">최소프리 대비 10배 이상 급등 시 발동.<br>추가 급변동 가능성이 높아진 상태.</div>
+          <div class="guide-actions">
+            <div class="guide-action">해당 종목 전체 운용자산 대비 비중 점검</div>
+            <div class="guide-action">개별 위험관리 원칙 기준 충족 여부 확인</div>
+            <div class="guide-action">대응 수행 여부 체크 후 인증</div>
+          </div>
+        </div>
+        <div class="guide-card g2">
+          <div class="guide-head">2단계 — 위험 방어 모드</div>
+          <div class="guide-purpose">잠재수익률 대비 2배 이상 프리 급등.<br>변동성 확대 지속 가능성 현실적으로 높음.</div>
+          <div class="guide-actions">
+            <div class="guide-action">해당 종목 리스크 노출 즉시 점검</div>
+            <div class="guide-action">손실 확산 방지를 위한 포지션 축소 검토</div>
+            <div class="guide-action">계좌 생존 확보 우선 — 손실 회복은 나중</div>
+          </div>
+        </div>
+        <div class="guide-card g3">
+          <div class="guide-head">3단계 — 위험 비상 모드</div>
+          <div class="guide-purpose">7개 필터 중 5개 이상 충족.<br>기존 전략의 확률적 우위 유지 어려운 구간.</div>
+          <div class="guide-actions">
+            <div class="guide-action">해당 종목 전량 또는 대폭 포지션 축소</div>
+            <div class="guide-action">신규 진입 전면 금지</div>
+            <div class="guide-action">계좌 탈락 회피 최우선 — 즉각 대응</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 전체 삭제 -->
+  <div style="text-align:right">
+    <button class="btn btn-danger" onclick="clearAll()">전체 이력 삭제</button>
+  </div>
+  <!-- 매매전략 데이터 입력 -->
+  <div class="card" style="margin-top:8px">
+    <div class="card-head">
+      <span class="badge">입력</span>
+      <span class="title">매매전략 데이터 입력</span>
+      <span class="sub">순위표(B) + 현황판(C) 엑셀 복붙 → 대시보드 자동 반영</span>
+    </div>
+    <div class="card-body">
+      <!-- B 순위표 -->
+      <div style="margin-bottom:24px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <div class="sub-label">B</div>
+          <div>
+            <div class="sub-label-title">투자 정보 종합 순위표</div>
+            <div class="sub-label-desc">엑셀 순위표 전체 복사(Ctrl+A) → 붙여넣기(Ctrl+V)</div>
+          </div>
+        </div>
+        <div class="info-box">
+          <b style="color:var(--t1)">순위표 데이터</b> 헤더 포함 전체 복사 → 붙여넣기 → 저장하기
+        </div>
+        <textarea id="admin-rank-text" class="paste-area" style="min-height:120px;font-family:var(--mono);font-size:12px" placeholder="순위   종목   평균잠재수익률   구분   옵션 월물   잠재수익률..."></textarea>
+        <div style="display:flex;gap:10px;margin-top:10px;align-items:center">
+          <button class="btn btn-primary" onclick="adminSaveRank()">저장</button>
+          <button class="btn btn-clear" onclick="adminClearRank()">초기화</button>
+          <span id="admin-strat-msg-rank" style="display:none;font-size:12px"></span>
+        </div>
+        <div id="admin-rank-preview"></div>
+      </div>
+      <div style="height:1.5px;background:var(--b1);margin-bottom:24px"></div>
+      <!-- C 현황판 -->
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <div class="sub-label">C</div>
+          <div>
+            <div class="sub-label-title">투자 정보 종합 현황판</div>
+            <div class="sub-label-desc">엑셀 현황판 전체 복사(Ctrl+A) → 붙여넣기(Ctrl+V)</div>
+          </div>
+        </div>
+        <div class="info-box">
+          <b style="color:var(--t1)">현황판 데이터</b> 헤더 포함 전체 복사 → 붙여넣기 → 저장하기
+        </div>
+        <textarea id="admin-detail-text" class="paste-area" style="min-height:120px;font-family:var(--mono);font-size:12px" placeholder="S&P500      순위        S&P500 06월물 (기초자산 06월물)..."></textarea>
+        <div style="display:flex;gap:10px;margin-top:10px;align-items:center">
+          <button class="btn btn-primary" onclick="adminSaveDetail()">저장</button>
+          <button class="btn btn-clear" onclick="adminClearDetail()">초기화</button>
+          <span id="admin-strat-msg-detail" style="display:none;font-size:12px"></span>
+        </div>
+        <div id="admin-detail-preview"></div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- ═══ 주간 추천 포지션 ═══ -->
+<div class="card" id="card-weekly-picks">
+  <div class="card-head">
+    <span class="badge">주간</span>
+    <span class="title">주간 추천 포지션</span>
+    <span class="sub">저장 → 배포용 JSON 다운로드 → 깃허브_푸시.bat</span>
+  </div>
+  <div class="card-body">
+    <div class="info-box">
+      포지션 텍스트 붙여넣기 → <b style="color:var(--t1)">저장</b> → 상단 <b style="color:var(--sal)">배포용 JSON 다운로드</b> →
+      <code style="background:rgba(0,0,0,.04);padding:1px 6px;border-radius:4px">admin_data.json</code> → volatility/ 폴더 덮어쓰기 → 깃허브_푸시.bat<br>
+      형식: <code style="background:rgba(0,0,0,.04);padding:1px 6px;border-radius:4px">날짜, 종목, 월물, 행사가 X, 콜/풋옵션 매도, 프리미엄, N계약 추천</code>
+      &nbsp;/&nbsp; <b style="color:var(--t1)">증거금 ####</b> 줄이 전략 구분점
+    </div>
+    <input type="text" id="wp-title"
+      placeholder="제목 (예: 06월 02일 추천 포지션) — 비워두면 날짜로 자동 생성"
+      class="paste-area"
+      style="min-height:unset;height:42px;padding:10px 14px;resize:none;margin-bottom:10px;font-size:13px">
+    <textarea id="wp-input" class="paste-area" rows="10"
+      placeholder="06월 02일, 크루드 오일, 08월물, 행사가 177.5, 콜옵션 매도, 0.17, 1계약 추천&#10;06월 02일, 크루드 오일, 08월물, 행사가 60, 풋옵션 매도, 0.15, 1계약 추천&#10;증거금 942 만기일 26 07 16 잔존일 44&#10;&#10;06월 02일, 천연가스, 08월물, 행사가 4.65, 콜옵션 매도, 0.016, 1계약 추천&#10;증거금 485 만기일 26 07 28 잔존일 56"></textarea>
+    <div style="display:flex;gap:8px;margin-top:12px;align-items:center;flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="saveWeeklyPicks()">저장</button>
+      <button class="btn btn-clear"
+        onclick="document.getElementById('wp-input').value='';document.getElementById('wp-title').value='';document.getElementById('wp-preview').innerHTML='';document.getElementById('wp-status').textContent=''">초기화</button>
+      <span style="font-size:12px;color:var(--t3)">저장 후 → 상단 <b style="color:var(--sal)">배포용 JSON 다운로드</b></span>
+    </div>
+    <div id="wp-status" style="font-size:12px;margin-top:8px;color:var(--t3)"></div>
+    <div id="wp-preview" style="margin-top:14px"></div>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+var STORAGE_KEY    = 'sv_alerts_v1';
+var ADMIN_SYNC_KEY = 'sv_admin_alerts'; // admin 전용 키 (pt_alerts와 분리)
+
+// ── [Task #15-B] 통합 입력 자동 분리 파서 ──────────────────────
+// 엑셀 시트 전체(Ctrl+A) 붙여넣기 → 'PSR' 헤더 라인 자동 식별 →
+// 종목명 컬럼 자동 탐지 → 시장국면 영역만 추출 → sv_rm_data 저장
+
+// RFC 4180 스타일 TSV 파서 — 큰따옴표로 묶인 셀의 내부 \n / \t를 보존
+function _t15bParseTSV(text) {
+  var rows = [], row = [], cell = '', inQuote = false;
+  var t = String(text || '');
+  for (var i = 0; i < t.length; i++) {
+    var ch = t.charAt(i);
+    if (inQuote) {
+      if (ch === '"') {
+        if (t.charAt(i+1) === '"') { cell += '"'; i++; continue; }
+        inQuote = false; continue;
+      }
+      cell += ch; continue;
+    }
+    if (ch === '"') { inQuote = true; continue; }
+    if (ch === '\t') { row.push(cell); cell = ''; continue; }
+    if (ch === '\r') continue;  // Windows CRLF의 \r 무시
+    if (ch === '\n') { row.push(cell); rows.push(row); row = []; cell = ''; continue; }
+    cell += ch;
+  }
+  // 마지막 셀/행
+  if (cell.length || row.length) { row.push(cell); rows.push(row); }
+  // 셀 안 줄바꿈은 공백으로 normalize (헤더/데이터 비교용)
+  return rows.map(function(r) {
+    return r.map(function(c) { return String(c || '').replace(/\r?\n/g, ' ').trim(); });
+  });
+}
+
+function rmAutoSave() {
+  var text = (document.getElementById('rm-unified-area').value || '').replace(/\r/g, '');
+  var result = document.getElementById('rm-auto-result');
+  var summary = document.getElementById('rm-auto-summary');
+  if (!text.trim()) {
+    result.textContent = '⚠️ 데이터를 붙여넣어 주세요.';
+    result.style.color = 'var(--orange)'; return;
+  }
+  // RFC 4180 TSV 파싱 (셀 안 줄바꿈을 큰따옴표로 인식)
+  var rows = _t15bParseTSV(text);
+
+  // 1) 'PSR' 헤더 행 식별 + 컬럼 인덱스 매핑
+  var headerIdx = -1;
+  var col = { psr:-1, isr:-1, lmr:-1, dsr:-1, ivl:-1, tail:-1, sizing:-1, dist:-1, decel:-1, cap:-1, phase:-1 };
+  for (var i = 0; i < rows.length; i++) {
+    var cells = rows[i];
+    var found = { psr:-1, isr:-1, lmr:-1, dsr:-1, ivl:-1, tail:-1, sizing:-1, dist:-1, decel:-1, cap:-1, phase:-1 };
+    for (var c = 0; c < cells.length; c++) {
+      var t = (cells[c] || '').trim().toUpperCase();
+      if (t === 'PSR') found.psr = c;
+      else if (t === 'ISR') found.isr = c;
+      else if (t === 'LMR') found.lmr = c;
+      else if (t === 'DSR') found.dsr = c;
+      else if (t === 'IVL') found.ivl = c;
+      else if (t.indexOf('꼬리') >= 0 || t === 'TAIL') found.tail = c;
+      else if (t === '사이징' || t === 'SIZING') found.sizing = c;
+      else if (t === '거리' || t === 'DIST' || t === 'DISTANCE') found.dist = c;
+      else if (t === '감속' || t === 'DECEL') found.decel = c;
+      else if (t === '노출캡' || t === 'CAP') found.cap = c;
+      else if (t.indexOf('시장국면') >= 0 && t.indexOf('종합') >= 0 && t.indexOf('판단') < 0) found.phase = c;
+    }
+    if (found.psr >= 0) {
+      col = found; headerIdx = i; break;
+    }
+  }
+  if (headerIdx < 0) {
+    result.textContent = '❌ PSR 헤더를 찾을 수 없습니다. 시장국면 영역이 포함된 시트인지 확인하세요.';
+    result.style.color = 'var(--red)'; return;
+  }
+
+  // 1-b) PSR 헤더 행에 없는 컬럼 (꼬리위험·종합국면·사이징·거리·감속·노출캡)
+  //      직전 1~2행도 검색 (엑셀 헤더가 2행에 걸쳐 분산되는 케이스 대응)
+  if (col.tail < 0 || col.phase < 0 || col.sizing < 0 || col.dist < 0 || col.decel < 0 || col.cap < 0) {
+    for (var hb = 1; hb <= 2; hb++) {
+      var prevIdx = headerIdx - hb;
+      if (prevIdx < 0) break;
+      var prevCells = rows[prevIdx];
+      for (var pc = 0; pc < prevCells.length; pc++) {
+        var pt = (prevCells[pc] || '').trim();
+        var ptu = pt.toUpperCase();
+        if (col.tail < 0 && (pt.indexOf('꼬리') >= 0 || ptu === 'TAIL')) col.tail = pc;
+        if (col.phase < 0 && pt.indexOf('시장국면') >= 0 && pt.indexOf('종합') >= 0 && pt.indexOf('판단') < 0) col.phase = pc;
+        if (col.sizing < 0 && (pt === '사이징' || ptu === 'SIZING')) col.sizing = pc;
+        if (col.dist < 0 && (pt === '거리' || ptu === 'DIST' || ptu === 'DISTANCE')) col.dist = pc;
+        if (col.decel < 0 && (pt === '감속' || ptu === 'DECEL')) col.decel = pc;
+        if (col.cap < 0 && (pt === '노출캡' || ptu === 'CAP')) col.cap = pc;
+      }
+      /* 모든 컬럼 찾았으면 종료 */
+      if (col.tail >= 0 && col.phase >= 0 && col.sizing >= 0 && col.dist >= 0 && col.decel >= 0 && col.cap >= 0) break;
+    }
+  }
+
+  // 2) 종목명 컬럼 자동 탐지 — 빈 행 건너뛰며 PSR 헤더 이후 모든 데이터 행 검색
+  //    (종료자 '종목/추세/구분' 만나면 중단, 최대 30행까지)
+  var nameCol = -1;
+  var T_TERM = { '종목':1, '추세':1, '구분':1 };
+  var nameSearchLimit = Math.min(headerIdx + 31, rows.length);
+  for (var i = headerIdx + 1; i < nameSearchLimit; i++) {
+    var cells = rows[i];
+    var allEmpty = true;
+    for (var ce = 0; ce < cells.length; ce++) {
+      if ((cells[ce] || '').trim()) { allEmpty = false; break; }
+    }
+    if (allEmpty) continue;  // 빈 행은 스킵
+
+    // 다음 영역 헤더(예: 종목/추세/구분 등)가 시작되면 종목명 탐색 중단
+    var sawTerminator = false;
+    for (var c = 0; c < cells.length; c++) {
+      var v = (cells[c] || '').trim();
+      if (T_TERM[v]) { sawTerminator = true; break; }
+      if (rmNameToCodeAdmin(v)) { nameCol = c; break; }
+    }
+    if (nameCol >= 0) break;
+    if (sawTerminator) break;
+  }
+  if (nameCol < 0) {
+    // 풍부한 에러 — 디버깅 용이성
+    var dbg = '<div style="margin-top:8px;padding:10px 12px;background:#fdf9f6;border-radius:8px;border:1px solid rgba(217,102,74,.2);font-size:11px;color:var(--t2);line-height:1.7;font-family:monospace">';
+    dbg += '<div style="color:var(--red);font-weight:700;margin-bottom:6px">❌ 종목명 컬럼 탐지 실패</div>';
+    dbg += '<div>PSR 헤더 행: <b>' + (headerIdx+1) + '</b>번째 라인 (1-indexed)</div>';
+    dbg += '<div>컬럼 매핑: PSR=' + col.psr + ', ISR=' + col.isr + ', LMR=' + col.lmr + ', DSR=' + col.dsr + ', IVL=' + col.ivl + ', tail=' + col.tail + '</div>';
+    dbg += '<div style="margin-top:6px;color:var(--t3)">PSR 헤더 다음 데이터 행 미리보기:</div>';
+    var prevCnt = 0;
+    for (var pi = headerIdx + 1; pi < rows.length && prevCnt < 5; pi++) {
+      var pc = rows[pi];
+      var pcEmpty = true;
+      for (var ce2 = 0; ce2 < pc.length; ce2++) {
+        if ((pc[ce2] || '').trim()) { pcEmpty = false; break; }
+      }
+      if (pcEmpty) continue;
+      dbg += '<div style="color:var(--t3);font-size:10px">L' + (pi+1) + ': ' + pc.slice(0,8).map(function(x){ return JSON.stringify(String(x||'').slice(0,15)); }).join(' | ') + '</div>';
+      prevCnt++;
+    }
+    dbg += '<div style="margin-top:6px;color:var(--t3)">기대 종목명: S&P500 / 유로 / 호주달러 / 10년국채 / 금 / 원유 / 천연가스 / 대두 / 밀</div>';
+    dbg += '</div>';
+    result.innerHTML = '❌ 종목명을 찾을 수 없습니다.';
+    result.style.color = 'var(--red)';
+    summary.innerHTML = dbg;
+    return;
+  }
+
+  // 3) 시장국면 영역 추출 (헤더 다음 행부터, 빈 행이나 '종목/추세/구분' 만나면 종료)
+  var parsed = {}, count = 0, skipped = [];
+  var TERMINATORS = { '종목':1, '추세':1, '구분':1 };
+  for (var i = headerIdx + 1; i < rows.length; i++) {
+    var cells = rows[i];
+    // 빈 행 (모든 셀이 빈 문자열) → 영역 종료
+    var allEmpty = true;
+    for (var ce = 0; ce < cells.length; ce++) { if ((cells[ce] || '').trim()) { allEmpty = false; break; } }
+    if (allEmpty) break;
+
+    if (cells.length <= Math.max(col.psr, nameCol)) continue;
+
+    var nameRaw = (cells[nameCol] || '').trim();
+    if (!nameRaw) continue;
+    if (TERMINATORS[nameRaw]) break;  // 다음 영역 시작
+
+    var code = rmNameToCodeAdmin(nameRaw);
+    if (!code) { skipped.push(nameRaw); continue; }
+
+    var gv = function(idx) {
+      if (idx < 0 || cells[idx] === undefined) return 0;
+      var v = parseFloat(cells[idx]);
+      return isFinite(v) ? v : 0;
+    };
+    var gt = function(idx) {
+      // 엑셀 형식 "O / " 또는 " / O" 또는 "O / O" 또는 " / "
+      // 옵션 A: 'O' 문자가 하나라도 있으면 true (콜·풋 단순 OR)
+      if (idx < 0 || !cells[idx]) return false;
+      return cells[idx].toUpperCase().indexOf('O') >= 0;
+    };
+
+    /* Phase E — admin 직접값 추출 (콜/풋 분리 형식 파싱) */
+    var _parsePair = function(idx) {
+      /* "0→0 / 0→0" 또는 "1.50% / 1.50%" 또는 "O / " 형식 → [call, put] */
+      if (idx < 0 || !cells[idx]) return [null, null];
+      var s = String(cells[idx]).trim();
+      var parts = s.split('/');
+      var c = (parts[0] || '').trim();
+      var p = (parts[1] || '').trim();
+      return [c, p];
+    };
+    var _decelToPct = function(s) {
+      /* "0→0", "0.3→0.1", "→0.2" → 도착값 % (예: 0.3 → 30) */
+      if (!s) return 0;
+      var m = s.match(/(\d*\.?\d+)\s*$/);
+      if (!m) return 0;
+      var v = parseFloat(m[1]);
+      return isFinite(v) ? Math.round(v * 100) : 0;
+    };
+    var _capToPct = function(s) {
+      /* "1.50%" → 0.015 */
+      if (!s) return null;
+      var m = s.match(/(\d*\.?\d+)\s*%/);
+      if (!m) return null;
+      var v = parseFloat(m[1]);
+      return isFinite(v) ? v / 100 : null;
+    };
+    var _tailToBool = function(s) {
+      if (!s) return false;
+      return s.toUpperCase().indexOf('O') >= 0;
+    };
+
+    var _decelPair = _parsePair(col.decel);
+    var _capPair = _parsePair(col.cap);
+    var _tailPair = _parsePair(col.tail);
+    /* [콜풋분리 패치 2026-05-15] 사이징·거리 슬래시 분리 처리 */
+    var _sizingPair = _parsePair(col.sizing);
+    var _distPair = _parsePair(col.dist);
+    var _pairNum = function(v) { var x = parseFloat(v); return isNaN(x) ? null : x; };
+    var _phaseStr = col.phase >= 0 ? String(cells[col.phase] || '').trim().toUpperCase() : '';
+    var _phaseAdmin = ['NORMAL', 'WARNING', 'CRISIS'].indexOf(_phaseStr) >= 0 ? _phaseStr : null;
+
+    parsed[code] = {
+      psr: gv(col.psr),
+      isr: gv(col.isr),
+      lmr: gv(col.lmr),
+      dsr: gv(col.dsr),
+      ivl: gv(col.ivl),
+      tail: gt(col.tail),
+      /* Phase E — admin 직접값 (rmCalcMacros가 우선 사용) */
+      phase_admin: _phaseAdmin,
+      sizing_admin: col.sizing >= 0 ? gv(col.sizing) : null,
+      sizingCall_admin: _pairNum(_sizingPair[0]),
+      sizingPut_admin: _pairNum(_sizingPair[1]),
+      dist_admin: col.dist >= 0 ? gv(col.dist) : null,
+      distCall_admin: _pairNum(_distPair[0]),
+      distPut_admin: _pairNum(_distPair[1]),
+      decelCall_admin: _decelToPct(_decelPair[0]),
+      decelPut_admin: _decelToPct(_decelPair[1]),
+      capCall_admin: _capToPct(_capPair[0]),
+      capPut_admin: _capToPct(_capPair[1]),
+      tailCall_admin: _tailToBool(_tailPair[0]),
+      tailPut_admin: _tailToBool(_tailPair[1])
+    };
+    count++;
+  }
+
+  if (!count) {
+    result.textContent = '❌ 인식된 종목이 0개. 시장국면 영역(행 80~90)이 시트에 포함되어 있는지 확인하세요.';
+    result.style.color = 'var(--red)'; return;
+  }
+
+  // [40차 옵션 3] 매매전략 데이터(PSR 헤더 위쪽) 자동 분리
+  //   _t15bParseTSV로 normalize된 행들을 \t join → strategyText 재구성 → 기존 파서 호출
+  var strategyRowsArr = rows.slice(0, headerIdx);
+  var strategyText = strategyRowsArr.map(function(r) { return r.join('\t'); }).join('\n');
+  var rankItems = [];
+  var detailItems = [];
+  try {
+    if (typeof parseRankText === 'function')   rankItems   = parseRankText(strategyText)   || [];
+    if (typeof parseDetailText === 'function') detailItems = parseDetailText(strategyText) || [];
+  } catch(eS) {
+    console.error('[통합 파서] 매매전략 영역 파싱 오류:', eS);
+  }
+  var stratSavedRank = 0, stratSavedDetail = 0;
+  if (rankItems.length) {
+    localStorage.setItem('st_rank_v3',     JSON.stringify(rankItems));
+    localStorage.setItem('st_rank_updated', Date.now().toString());
+    stratSavedRank = rankItems.length;
+  }
+  if (detailItems.length) {
+    localStorage.setItem('st_detail_v3',     JSON.stringify(detailItems));
+    localStorage.setItem('st_detail_updated', Date.now().toString());
+    stratSavedDetail = detailItems.length;
+  }
+
+  // 4) sv_rm_data 저장 + 트리거
+  localStorage.setItem('sv_rm_data', JSON.stringify(parsed));
+  localStorage.setItem('sv_rm_updated', Date.now().toString());
+
+  // 5) 결과 표시 — 시장국면 + 매매전략 통합 결과
+  var stratParts = [];
+  if (stratSavedRank)   stratParts.push('순위표 ' + stratSavedRank + '종목');
+  if (stratSavedDetail) stratParts.push('현황판 ' + stratSavedDetail + '종목');
+  var stratStr = stratParts.length ? ' / 매매전략 ' + stratParts.join(' · ') : '';
+  result.textContent = '✅ 시장국면 ' + count + '종목' + stratStr + ' 자동 인식 / 저장 완료'
+    + (skipped.length ? ' · 미인식: ' + skipped.slice(0,3).join(', ') + (skipped.length>3?'…':'') : '');
+  result.style.color = '#3ecfaa';
+
+  var phaseLabel = {'NORMAL':'🟢 안전','WARNING':'🟡 경고','CRISIS':'🔴 위기'};
+  var rows = Object.keys(parsed).map(function(ic) {
+    var d = parsed[ic];
+    var ph = 'NORMAL';
+    if (d.psr > 1.5 || d.isr > 1.5 || d.lmr > 1.5) ph = 'CRISIS';
+    else if (d.psr >= 1.2 || d.isr >= 1.2 || d.lmr >= 1.2 || d.ivl > 0.75) ph = 'WARNING';
+    if (d.tail) {
+      if (ph === 'NORMAL') ph = 'WARNING';
+      else if (ph === 'WARNING') ph = 'CRISIS';
+    }
+    /* Phase E — admin 직접 종합국면 우선 사용 */
+    if (d.phase_admin) ph = d.phase_admin;
+    var pc = ph === 'CRISIS' ? '#e06070' : ph === 'WARNING' ? '#e8c96a' : '#3ecfaa';
+    return '<div style="display:flex;gap:10px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05)">'
+      + '<span style="font-size:11px;color:#c8cdd8;width:80px">' + ic + '</span>'
+      + '<span style="font-size:11px;font-weight:800;color:' + pc + '">' + phaseLabel[ph] + '</span>'
+      + '<span style="font-size:10px;color:var(--t3);font-family:monospace">PSR ' + d.psr.toFixed(2)
+      + ' · ISR ' + d.isr.toFixed(2) + ' · LMR ' + d.lmr.toFixed(2)
+      + ' · IVL ' + d.ivl.toFixed(2) + ' · DSR ' + d.dsr.toFixed(2) + '</span>'
+      + (d.tail ? '<span style="font-size:10px;color:#e06070">극단위험</span>' : '') + '</div>';
+  }).join('');
+  summary.innerHTML = '<div style="margin-top:8px;padding:12px;background:#fdf9f6;border-radius:8px;border:1px solid rgba(94,222,168,.22)">'
+    + '<div style="font-size:11px;font-weight:700;color:#7a8499;margin-bottom:8px">📊 자동 인식 결과 — 시장국면</div>' + rows + '</div>';
+  setTimeout(function() { result.textContent = ''; }, 5000);
+}
+
+function rmAutoClear() {
+  if (!confirm('통합 입력 영역을 초기화할까요? (저장된 sv_rm_data는 그대로 유지)')) return;
+  document.getElementById('rm-unified-area').value = '';
+  document.getElementById('rm-auto-result').textContent = '';
+  document.getElementById('rm-auto-summary').innerHTML = '';
+}
+
+// ── 시장 위험 데이터 파싱 & 저장 ──────────────────────────────
+var RM_NAME_MAP = {
+  'S&P500':'OES','SP500':'OES','s&p500':'OES',
+  '유로':'OEUU','유로fx':'OEUU','eur':'OEUU',
+  '호주달러':'OADU','호주 달러':'OADU',
+  '10년국채':'OZN','10년물국채':'OZN','국채':'OZN',
+  '금':'OGC','골드':'OGC','gold':'OGC',
+  '원유':'OCL','크루드오일':'OCL','wti':'OCL',
+  '천연가스':'ONG','가스':'ONG',
+  '대두':'OZS','soybean':'OZS',
+  '밀':'OZW','wheat':'OZW',
+  '옥수수':'OZC','corn':'OZC',
+};
+function rmNameToCodeAdmin(name) {
+  var n = name.trim();
+  return RM_NAME_MAP[n] || RM_NAME_MAP[n.toLowerCase()] || null;
+}
+function rmAdminSave() {
+  var text = document.getElementById('rm-paste-area').value.trim();
+  var result = document.getElementById('rm-save-result');
+  var summary = document.getElementById('rm-saved-summary');
+  if (!text) { result.textContent = '⚠️ 데이터를 붙여넣어 주세요.'; result.style.color = 'var(--orange)'; return; }
+
+  var lines = text.split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
+  var headerIdx = -1, headerLine = null;
+  for (var i = 0; i < lines.length; i++) {
+    if (lines[i].indexOf('PSR') >= 0) { headerLine = lines[i].split('\t'); headerIdx = i; break; }
+  }
+  var parsed = {}, count = 0, skipped = [];
+  if (headerLine) {
+    var col = { psr:-1, isr:-1, lmr:-1, dsr:-1, ivl:-1, tail:-1 };
+    headerLine.forEach(function(h,i) {
+      var ht = h.trim().toUpperCase();
+      if (ht==='PSR') col.psr=i; else if (ht==='ISR') col.isr=i;
+      else if (ht==='LMR') col.lmr=i; else if (ht==='DSR') col.dsr=i;
+      else if (ht==='IVL') col.ivl=i;
+      else if (ht.indexOf('꼬리')>=0||ht.indexOf('TAIL')>=0) col.tail=i;
+    });
+    lines.slice(headerIdx+1).forEach(function(line) {
+      var cols = line.split('\t'); if (cols.length < 3) return;
+      var code = rmNameToCodeAdmin(cols[0]);
+      if (!code) { skipped.push(cols[0]); return; }
+      function gv(idx) { return idx>=0&&cols[idx]!==undefined?(parseFloat(cols[idx])||0):0; }
+      function gt(idx) { if(idx<0||!cols[idx])return false; var v=cols[idx].trim().toUpperCase(); return v==='ON'||v.charAt(0)==='O'; }
+      parsed[code] = { psr:gv(col.psr), isr:gv(col.isr), lmr:gv(col.lmr), dsr:gv(col.dsr), ivl:gv(col.ivl), tail:gt(col.tail) };
+      count++;
+    });
+  }
+  if (!count) { result.textContent = '❌ 파싱 실패 — PSR 헤더가 있는 표를 붙여넣었는지 확인해 주세요.'; result.style.color = 'var(--red)'; return; }
+
+  localStorage.setItem('sv_rm_data', JSON.stringify(parsed));
+  localStorage.setItem('sv_rm_updated', Date.now().toString());
+
+  result.textContent = '✅ ' + count + '개 종목 저장 완료' + (skipped.length ? ' / 미인식: ' + skipped.join(', ') : '');
+  result.style.color = '#3ecfaa';
+  var phaseLabel = {'NORMAL':'🟢 안전','WARNING':'🟡 경고','CRISIS':'🔴 위기'};
+  var rows = Object.keys(parsed).map(function(ic) {
+    var d = parsed[ic];
+    var ph = 'NORMAL';
+    if (d.psr>1.5||d.isr>1.5||d.lmr>1.5) ph='CRISIS';
+    else if (d.psr>=1.2||d.isr>=1.2||d.lmr>=1.2||d.ivl>0.75) ph='WARNING';
+    if (d.tail && ph!=='CRISIS') ph='CRISIS';
+    var pc = ph==='CRISIS'?'#e06070':ph==='WARNING'?'#e8c96a':'#3ecfaa';
+    return '<div style="display:flex;gap:10px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.05)">'
+      +'<span style="font-size:11px;color:#c8cdd8;width:80px">'+ic+'</span>'
+      +'<span style="font-size:11px;font-weight:800;color:'+pc+'">'+phaseLabel[ph]+'</span>'
+      +(d.tail?'<span style="font-size:10px;color:#e06070">극단위험</span>':'')+'</div>';
+  }).join('');
+  summary.innerHTML = '<div style="margin-top:8px;padding:12px;background:#fdf9f6;border-radius:8px;border:1px solid rgba(217,102,74,.15)">'
+    +'<div style="font-size:11px;font-weight:700;color:#7a8499;margin-bottom:8px">📊 저장된 종목 국면</div>'+rows+'</div>';
+  setTimeout(function(){ result.textContent=''; }, 4000);
+}
+function rmAdminClear() {
+  if (!confirm('시장 위험 데이터를 초기화할까요?')) return;
+  document.getElementById('rm-paste-area').value = '';
+  document.getElementById('rm-saved-summary').innerHTML = '';
+  localStorage.removeItem('sv_rm_data');
+  localStorage.setItem('sv_rm_updated', Date.now().toString());
+}
+
+// 종목명 → 코드 매핑 (한글 + 영어 경보명 — 텔레그램 생존경보는 영어 종목명으로 옴)
+var INST_MAP = {
+  // 원유
+  '원유': 'OCL', '크루드오일': 'OCL', 'crude': 'OCL', 'crude oil': 'OCL', 'wti': 'OCL',
+  // 천연가스
+  '천연가스': 'ONG', '가스': 'ONG', 'natural gas': 'ONG', 'natgas': 'ONG', 'nat gas': 'ONG', 'natural': 'ONG', 'ng': 'ONG',
+  // S&P500
+  's&p500': 'OES', 'sp500': 'OES', 'mini s&p500': 'OES', 's&p': 'OES', 'snp': 'OES', 'e-mini': 'OES', 'emini': 'OES', 'es': 'OES',
+  // 유로
+  '유로': 'OEUU', 'euro': 'OEUU', 'euro fx': 'OEUU', 'eur': 'OEUU',
+  // 호주달러
+  '호주달러': 'OADU', '호주': 'OADU', 'australian dollar': 'OADU', 'australian': 'OADU', 'aussie': 'OADU', 'aud': 'OADU',
+  // 엔
+  '엔': 'OJPU', '일본엔': 'OJPU', '엔화': 'OJPU', 'japanese yen': 'OJPU', 'yen': 'OJPU', 'jpy': 'OJPU',
+  // 10년국채
+  '10년국채': 'OZN', '10년물': 'OZN', '국채': 'OZN', '10yr_note': 'OZN', '10yr note': 'OZN', '10yr': 'OZN', 't-note': 'OZN', 'tnote': 'OZN', 'treasury': 'OZN',
+  // 금
+  '금': 'OGC', '골드': 'OGC', 'gold': 'OGC',
+  // 대두
+  '대두': 'OZS', '콩': 'OZS', 'soybeans': 'OZS', 'soybean': 'OZS', 'soy': 'OZS',
+  // 밀
+  '밀': 'OZW', 'wheat': 'OZW',
+  // 옥수수
+  '옥수수': 'OZC', 'corn': 'OZC',
+  // 나스닥
+  'nasdaq': 'ENQ', '나스닥': 'ENQ',
+};
+
+function nameToCode(name) {
+  var n = name.trim().toLowerCase();
+  for (var k in INST_MAP) {
+    if (n.indexOf(k) >= 0) return INST_MAP[k];
+  }
+  return null;
+}
+
+function parseAlert(text) {
+  var isRelease = text.indexOf('해제') >= 0 && text.indexOf('발동 해제') >= 0;
+
+  // 단계 파싱
+  var lvMatch = text.match(/경보\s*단계\s*:\s*(\d)단계/);
+  if (!lvMatch) return null;
+  var level = parseInt(lvMatch[1]);
+
+  // 시각 파싱
+  var timeKey = isRelease ? '해제 시각' : '발동 시각';
+  var timeMatch = text.match(new RegExp(timeKey + '\\s*:\\s*([^\\n]+)'));
+  var time = timeMatch ? timeMatch[1].trim() : '';
+
+  // 종목 파싱
+  var instMatch = text.match(/대상\s*종목\s*:\s*([^\n]+)/);
+  var instRaw   = instMatch ? instMatch[1].trim() : '';
+  var instParts = instRaw.split(/[,、·\s]+/).filter(Boolean);
+
+  // 종목별 콜/풋 분리
+  var instruments = [];
+  var cur = null;
+  instParts.forEach(function(p) {
+    var pl = p.toLowerCase();
+    if (pl === '콜' || pl === '풋') {
+      if (cur) { cur.dir = pl; instruments.push(cur); cur = null; }
+    } else {
+      if (cur) instruments.push(cur);
+      cur = { name: p, dir: null, code: nameToCode(p) };
+    }
+  });
+  if (cur) instruments.push(cur);
+
+  return {
+    id: Date.now() + Math.random(),
+    level: level,
+    time: time,
+    type: isRelease ? 'release' : 'active',
+    instRaw: instRaw,
+    instruments: instruments,
+    raw: text,
+    savedAt: new Date().toLocaleString('ko-KR'),
+    resolved: isRelease,
+  };
+}
+
+function loadAlerts() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+  catch(e) { return []; }
+}
+
+function saveAlerts(list) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+  localStorage.setItem('sv_alerts_updated', Date.now().toString());
+}
+
+// ── 저장 & 대시보드 반영 버튼 ─────────────────────────────────
+var DASHBOARD_URL = 'http://localhost:8765/volatility_dashboard_v3.html';
+
+function adminSaveAndSync() {
+  var list = loadAlerts();
+  // 현재 경보 데이터 빌드 (syncToDashboard 동일 로직)
+  var ptAlerts = {};
+  list.forEach(function(a) {
+    if (a.resolved) return;
+    a.instruments.forEach(function(inst) {
+      var code = inst.code || nameToCode(inst.name || '');  /* [생존경보 수정] 영어 종목명 재해석 — 옛 경보 자동 치유 */
+      if (!code) return;
+      var dir = inst.dir || 'call';
+      var isCall = dir === '콜' || dir === 'call';
+      var isPut  = dir === '풋' || dir === 'put';
+      if (!ptAlerts[code]) ptAlerts[code] = { call:0, put:0 };
+      if (isCall) ptAlerts[code].call = Math.max(ptAlerts[code].call, a.level);
+      else if (isPut) ptAlerts[code].put = Math.max(ptAlerts[code].put, a.level);
+      else {
+        ptAlerts[code].call = Math.max(ptAlerts[code].call, a.level);
+        ptAlerts[code].put  = Math.max(ptAlerts[code].put,  a.level);
+      }
+    });
+  });
+
+  // ① 같은 origin일 때: localStorage 직접 저장 (자동 반영)
+  try {
+    localStorage.setItem(ADMIN_SYNC_KEY, JSON.stringify(ptAlerts));
+    localStorage.setItem('sv_alerts_updated', Date.now().toString());
+  } catch(e) {}
+
+  // [수정] window.open 제거 — 새 창 부작용 방지
+  // localStorage 저장이면 충분 (DOMContentLoaded 자동 로드 + storage 이벤트로 자동 반영)
+  // 대시보드 빈 메시지의 [↻ 데이터 다시 불러오기] 버튼이 백업 수단
+  var btn = document.getElementById('admin-save-btn');
+  if (btn) {
+    var prev = btn.textContent;
+    btn.textContent = '저장 완료';
+    btn.style.background = 'rgba(62,207,170,.35)';
+    setTimeout(function() {
+      btn.textContent = prev;
+      btn.style.background = 'rgba(62,207,170,.15)';
+    }, 2000);
+  }
+}
+
+function syncToDashboard(list) {
+  // pt_alerts에 현재 활성 경보 반영
+  var ptAlerts = {};
+  list.forEach(function(a) {
+    if (a.resolved) return;
+    a.instruments.forEach(function(inst) {
+      var code = inst.code || nameToCode(inst.name || '');  /* [생존경보 수정] 영어 종목명 재해석 — 옛 경보 자동 치유 */
+      if (!code) return;
+      var dir  = inst.dir || 'call';
+      var isCall = dir === '콜' || dir === 'call';
+      var isPut  = dir === '풋' || dir === 'put';
+      if (!ptAlerts[code]) ptAlerts[code] = { call: 0, put: 0 };
+      if (isCall) ptAlerts[code].call = Math.max(ptAlerts[code].call, a.level);
+      else if (isPut) ptAlerts[code].put = Math.max(ptAlerts[code].put, a.level);
+      else {
+        ptAlerts[code].call = Math.max(ptAlerts[code].call, a.level);
+        ptAlerts[code].put  = Math.max(ptAlerts[code].put,  a.level);
+      }
+    });
+  });
+  localStorage.setItem(ADMIN_SYNC_KEY, JSON.stringify(ptAlerts));
+}
+
+function parseAndSave() {
+  var text = document.getElementById('pasteArea').value.trim();
+  if (!text) { showResult('error', '내용을 붙여넣어 주세요.'); return; }
+
+  var alert = parseAlert(text);
+  if (!alert) { showResult('error', '파싱 실패 — 경보 단계를 찾을 수 없습니다. 전체 메시지를 붙여넣었는지 확인해 주세요.'); return; }
+
+  var list = loadAlerts();
+
+  // 중복 저장 방지 — 같은 단계 + 같은 시각 + 같은 종목이면 저장 안 함
+  var isDuplicate = list.some(function(a) {
+    return a.level === alert.level
+      && a.time === alert.time
+      && a.instRaw === alert.instRaw
+      && a.type === alert.type;
+  });
+  if (isDuplicate) {
+    showResult('error', '⚠️ 이미 저장된 경보예요. (같은 단계·시각·종목)');
+    return;
+  }
+
+  // 해제 메시지인 경우 → 해당 종목 활성 경보 해제 처리
+  if (alert.type === 'release') {
+    var relInstCodes = alert.instruments.map(function(i) { return i.code; }).filter(Boolean);
+    list.forEach(function(a) {
+      if (a.resolved) return;
+      if (a.level !== alert.level) return;
+      var hasMatch = a.instruments.some(function(i) { return relInstCodes.indexOf(i.code) >= 0; });
+      if (hasMatch) a.resolved = true;
+    });
+    list.push(alert);
+    syncToDashboard(list);   // ① pt_alerts 먼저
+    saveAlerts(list);        // ② sv_alerts_updated 나중
+    showResult('ok', '✅ 해제 처리 완료 — 해당 종목 경보가 해제됐습니다.');
+  } else {
+    list.push(alert);
+    syncToDashboard(list);   // ① pt_alerts 먼저
+    saveAlerts(list);        // ② sv_alerts_updated 나중
+    showResult('ok', '✅ ' + alert.level + '단계 경보 저장 완료 — 대시보드에 자동 반영됩니다.');
+  }
+  document.getElementById('pasteArea').value = '';
+  renderList();
+  document.getElementById('syncBar').style.display = 'flex';
+}
+
+function resolveAlert(id) {
+  var list = loadAlerts();
+  list.forEach(function(a) { if (a.id === id) a.resolved = true; });
+  syncToDashboard(list);  // ① admin 데이터 먼저
+  saveAlerts(list);       // ② 이벤트 나중
+  renderList();
+  document.getElementById('syncBar').style.display = 'flex';
+}
+
+function deleteAlert(id) {
+  if (!confirm('이 경보 기록을 삭제할까요?')) return;
+  var list = loadAlerts().filter(function(a) { return a.id !== id; });
+  syncToDashboard(list);  // ① admin 데이터 먼저
+  saveAlerts(list);       // ② 이벤트 나중
+  renderList();
+}
+
+function clearAll() {
+  if (!confirm('전체 경보 이력을 삭제할까요?\n대시보드 연동도 초기화됩니다.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(ADMIN_SYNC_KEY);
+  localStorage.removeItem('pt_alerts');
+  localStorage.setItem('sv_alerts_updated', Date.now().toString());
+  renderList();
+  document.getElementById('syncBar').style.display = 'none';
+}
+
+var LV_NAMES = { 1: '🟡 1단계 — 노출 점검', 2: '🟠 2단계 — 위험 방어', 3: '🔴 3단계 — 위험 비상' };
+var LV_ACTIONS = {
+  1: ['해당 종목 비중 점검', '개인 원칙 기준 확인', '대응 수행 여부 인증'],
+  2: ['리스크 노출 즉시 점검', '포지션 축소 검토', '계좌 생존 확보 최우선'],
+  3: ['포지션 대폭/전량 축소', '신규 진입 비권장', '즉각 대응 — 계좌 탈락 회피'],
+};
+var RELEASE_ACTIONS = ['경보 해제 확인', '시장 상황 재점검', '포지션 정상화 여부 확인'];
+
+function renderList() {
+  var list = loadAlerts();
+  var el   = document.getElementById('alertList');
+  var st   = document.getElementById('syncStatus');
+
+  var active   = list.filter(function(a) { return !a.resolved && a.type !== 'release'; });
+  var resolved = list.filter(function(a) { return  a.resolved || a.type === 'release'; });
+
+  st.textContent = '활성 ' + active.length + '건 / 해제 ' + resolved.length + '건';
+
+  if (!list.length) {
+    el.innerHTML = '<div class="empty-msg">저장된 경보가 없습니다.<br>위에서 텔레그램 내용을 붙여넣어 주세요.</div>';
+    return;
+  }
+
+  var html = '';
+
+  // 활성 경보 먼저
+  var sorted = active.slice().sort(function(a,b) { return b.level - a.level; });
+  sorted.forEach(function(a) { html += renderItem(a, false); });
+
+  // 해제된 것
+  if (resolved.length) {
+    html += '<div style="font-size:11px;color:var(--t3);margin:14px 0 8px;font-weight:700;letter-spacing:.04em">해제된 경보</div>';
+    resolved.slice().reverse().forEach(function(a) { html += renderItem(a, true); });
+  }
+
+  el.innerHTML = html;
+}
+
+function renderItem(a, isResolved) {
+  var cls    = isResolved ? 'lv' + a.level + ' resolved' : 'lv' + a.level;
+  var name   = a.type === 'release' ? '🔓 경보 해제' : (LV_NAMES[a.level] || a.level + '단계');
+  var timeLabel = a.type === 'release' ? '해제' : '발동';
+  var actions = a.type === 'release' ? RELEASE_ACTIONS : (LV_ACTIONS[a.level] || []);
+
+  var btns = '';
+  if (!isResolved && a.type !== 'release') {
+    btns = '<div class="alert-btns">'
+      + '<button class="btn btn-resolve" onclick="resolveAlert(' + a.id + ')">✅ 해제</button>'
+      + '<button class="btn btn-danger"  onclick="deleteAlert('  + a.id + ')">삭제</button>'
+      + '</div>';
+  } else {
+    btns = '<div class="alert-btns"><span class="resolved-badge">' + (a.type === 'release' ? '해제됨' : '종료') + '</span>'
+      + '<button class="btn btn-danger" style="margin-left:6px" onclick="deleteAlert(' + a.id + ')">삭제</button>'
+      + '</div>';
+  }
+
+  var instHtml = a.instruments.map(function(i) {
+    var codeTag = i.code ? '<span style="font-size:9px;background:rgba(77,216,240,.12);color:var(--cyan);padding:1px 5px;border-radius:4px;margin-left:3px">' + i.code + '</span>' : '';
+    return i.name + (i.dir ? ' ' + i.dir : '') + codeTag;
+  }).join(' · ');
+
+  var actionHtml = actions.map(function(ac) {
+    return '<div class="action-item">' + ac + '</div>';
+  }).join('');
+
+  return '<div class="alert-item ' + cls + '">'
+    + '<div class="alert-top">'
+    + '<span class="lv-badge">' + name + '</span>'
+    + '<span class="alert-time">' + timeLabel + ' · ' + a.time + '</span>'
+    + '<span class="alert-insts">' + instHtml + '</span>'
+    + btns
+    + '</div>'
+    + '<div class="alert-body">'
+    + '<div class="action-box"><div class="action-label">✅ 해야 할 행동</div>' + actionHtml + '</div>'
+    + '<div class="action-box"><div class="action-label">🕐 저장 시각</div><div class="action-item" style="color:var(--t2)">' + a.savedAt + '</div>'
+    + (a.instRaw ? '<div class="action-label" style="margin-top:8px">대상 종목 원문</div><div style="font-size:11px;color:var(--t3);line-height:1.7">' + a.instRaw + '</div>' : '')
+    + '</div>'
+    + '</div>'
+    + '</div>';
+}
+
+function showResult(type, msg) {
+  var el = document.getElementById('resultMsg');
+  el.style.display = 'block';
+  el.className = 'result-msg ' + (type === 'ok' ? 'result-ok' : 'result-err');
+  el.textContent = msg;
+  setTimeout(function() { el.style.display = 'none'; }, 4000);
+}
+
+// 초기 렌더
+renderList();
+
+// 저장된 게 있으면 syncBar 표시
+if (loadAlerts().length) {
+  document.getElementById('syncBar').style.display = 'flex';
+}
+
+// ══════════════════════════════════════════════════════
+//  매매전략 데이터 파서
+// ══════════════════════════════════════════════════════
+
+// ── B. 순위표 파서 ─────────────────────────────────────
+function parseRankText(text) {
+  // 엑셀 복붙 시 맨 앞 빈 열(탭) 포함 여부를 동적으로 감지
+  // 실제 데이터 컬럼 구조:
+  //  [앞빈열?] [순위] [종목] [평균잠재수익률] [콜/풋매도] [월물] [잠재수익률] [행사가] [가격] [수량] [증거금] [이익]
+  var lines = text.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');
+  var items = [];
+  var current = null;
+
+  // 오프셋 자동 감지: '콜 매도' 또는 '풋 매도'가 있는 첫 행에서 컬럼 인덱스 파악
+  var cpColIdx = -1;
+  for (var pi = 0; pi < lines.length; pi++) {
+    var pc = lines[pi].split('\t').map(function(c){ return c.trim(); });
+    for (var pj = 0; pj < pc.length; pj++) {
+      if (pc[pj] === '콜 매도' || pc[pj] === '풋 매도') { cpColIdx = pj; break; }
+    }
+    if (cpColIdx >= 0) break;
+  }
+  if (cpColIdx < 0) return []; // 콜/풋 매도 행 없음
+
+  // cpColIdx 기준 오프셋 계산
+  // 콜/풋 열이 4번이면 앞에 빈열 있음(오프셋+1), 3번이면 없음(오프셋 0)
+  var off = cpColIdx - 3; // 기본 레이아웃: rank=off, name=off+1, avgPct=off+2, cp=off+3
+
+  for (var i = 0; i < lines.length; i++) {
+    var cols = lines[i].split('\t').map(function(c){ return c.trim(); });
+    while (cols.length < cpColIdx + 9) cols.push('');
+
+    var cpVal = cols[cpColIdx];
+    if (cpVal !== '콜 매도' && cpVal !== '풋 매도') continue;
+
+    // 새 종목 행: cpColIdx 앞쪽 어딘가에 숫자(순위)가 있음
+    for (var ri = 0; ri <= cpColIdx; ri++) {
+      if (cols[ri] && /^\d+$/.test(cols[ri])) {
+        // 순위 발견 → 새 종목
+        if (!current || current.rank !== parseInt(cols[ri]) || ri < cpColIdx - 1) {
+          current = {
+            rank: parseInt(cols[ri]),
+            name: cols[ri + 1] || '',
+            avgPct: parseFloat((cols[ri + 2]||'0').replace('%','')) || 0,
+            call: null, put: null
+          };
+          items.push(current);
+        }
+        break;
+      }
+    }
+    if (!current) continue;
+
+    // 월물 및 수치 데이터 (콜/풋 열 이후)
+    var month  = cols[cpColIdx + 1] || '';
+    var sideData = month ? {
+      month:  month,
+      pct:    parseFloat((cols[cpColIdx + 2]||'0').replace('%','')) || 0,
+      strike: (cols[cpColIdx + 3]||'').trim(),
+      price:  cols[cpColIdx + 4] || '',
+      qty:    cols[cpColIdx + 5] || '',
+      margin: parseInt((cols[cpColIdx + 6]||'0').replace(/[^0-9]/g,'')) || 0,
+      profit: parseInt((cols[cpColIdx + 7]||'0').replace(/[^0-9]/g,'')) || 0
+    } : null;
+
+    if (cpVal === '콜 매도') current.call = sideData;
+    else current.put = sideData;
+  }
+  return items;
+}
+
+// ── C. 현황판 파서 ─────────────────────────────────────
+function normSig(v) {
+  if (!v) return 'X';
+  v = v.trim();
+  if (v === '○' || v === 'O') return 'O';
+  if (v === '◇') return '◇';
+  return 'X';
+}
+
+
+/* [fix v3] 한 행에서 다중 (행사가, 손실확률) 세트 추출 — 트리플 패턴 명시적 인식
+   직트 새 시트 형식: ... 선물가 | 손실확률(정수%) | 변동률(소수%) | 행사가 | 손실확률 | 변동률 | 행사가 | ... 패턴
+   - 손실확률: 정수 % (예: 1%, 3%, 10%, 20%, 30%) — 소수점 없음
+   - 변동률: 소수점 + 부호 가능 % (예: 13.3%, -24.7%, 7.9%)
+   - 행사가: 숫자 (콤마/소수점 허용, 부호 없음)
+   변동률을 손실확률로 오인하지 않도록 정규식으로 명확히 구분. */
+var _emsDeepDebug = 0;
+function _extractMultiStrikes(cols, typeCol, rowType) {
+  var sets = [];
+  var lossProbRe = /^\d{1,2}(\.0+)?%$/;       /* [SESSION 9] 정수 또는 .0/.00 형식 허용 — 변동률 "9.6%" 같은 .N+은 매칭 안 됨 */
+  var changeRe   = /^[+\-]?\d+\.\d+%$/;     /* 소수점 필수 + 부호 가능 — 변동률 */
+  var strikeRe   = /^[\d,]+(\.\d+)?$/;       /* 부호 없는 숫자 (콤마/소수점 허용) — 행사가 */
+  for (var i = typeCol + 1; i < cols.length - 2; i++) {
+    var v0 = (cols[i]   || '').trim();
+    var v1 = (cols[i+1] || '').trim();
+    var v2 = (cols[i+2] || '').trim();
+    if (lossProbRe.test(v0) && changeRe.test(v1) && strikeRe.test(v2)) {
+      var lp = parseInt(v0.replace('%',''));
+      var sk = parseFloat(v2.replace(/,/g,''));
+      if (lp > 0 && lp <= 50 && sk > 0) {
+        sets.push({type: rowType, strike: String(sk), lossProb: lp + '%', recommended: false});
+        i += 2;  /* 다음 트리플은 i+3부터 */
+      }
+    }
+  }
+  /* 디버그: 첫 3회만 — sets 결과 풀덤프 */
+  if (_emsDeepDebug < 3) {
+    console.log('[_extractMultiStrikes v3 #' + (_emsDeepDebug+1) + '] rowType=' + rowType + ' typeCol=' + typeCol + ' sets=' + sets.length + '개');
+    console.log('  cols=', cols.slice(typeCol, typeCol + 25));
+    console.log('  result=', sets);
+    _emsDeepDebug++;
+  }
+  return sets;
+}
+
+/* [SESSION 9 §4 후속] 추세별 권장 손실확률 매핑 — 메인 파일 _uvpTrendToRecLp와 동일. raw 데이터 형식이 바뀌어도 매입가·스팬이 권장 단계에 자동 매핑되도록 보강 */
+function _trendToRecLp(trend, type) {
+  var map = {
+    '상승':   { '콜': 3,  '풋': 20 },
+    '강보합': { '콜': 3,  '풋': 10 },
+    '보합':   { '콜': 10, '풋': 10 },
+    '약보합': { '콜': 10, '풋': 3 },
+    '하락':   { '콜': 20, '풋': 3 }
+  };
+  return (map[trend] || map['보합'])[type] || 10;
+}
+
+function parseDetailText(text) {
+  // \r\n / \r 줄바꿈 모두 처리
+  var lines = text.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');
+  var items = [];
+  var current = null;
+  var currentMonth = null;
+  var currentTrend = '';
+  /* [47차 5-71] 빈 옵션 셀 fallback용 모듈 스코프 변수 reset — 매번 파싱 시 초기화 */
+  parseDetailText._lastTypeCol = -1;
+  parseDetailText._lastRowType = '';
+  var NAMES = ['S&P500','NASDAQ100','나스닥100','나스닥','호주달러','골드','크루드 오일','원유','크로드 오일','천연가스','대두','10년국채','유로FX','유로','엔화','엔','밀','옥수수'];
+  // [SESSION 7] cols에서 옵션 월물·만기일·기초자산 한 번에 추출 (raw text 단일 진실 출처)
+  function _extractMonthInfo(cols) {
+    var info = { optMonth: '', expiry: '', undMonth: '' };
+    for (var i = 0; i < cols.length; i++) {
+      var v = cols[i];
+      if (!v) continue;
+      // 옛 형식: "06월물 (기초자산 06월물)" 통째 셀
+      if (!info.optMonth && (v.indexOf('월물 (기초자산') >= 0 || v.indexOf('월물(기초자산') >= 0)) {
+        info.optMonth = v;
+        var m = v.match(/^(\d{1,2}월물)\s*\(기초자산\s*(\d{1,2}월물)\)/);
+        if (m) info.undMonth = m[2];
+        continue;
+      }
+      // 새 형식: 첫 번째 단순 월물 셀 = 옵션 월물
+      if (!info.optMonth && /^\d{1,2}월물$/.test(v)) {
+        info.optMonth = v;
+        continue;
+      }
+      // 만기일
+      if (!info.expiry && /^20\d{2}-\d{2}-\d{2}$/.test(v)) {
+        info.expiry = v;
+        continue;
+      }
+      // 두 번째 단순 월물 셀 = 기초자산
+      if (info.optMonth && !info.undMonth && /^\d{1,2}월물$/.test(v)) {
+        info.undMonth = v;
+        continue;
+      }
+    }
+    if (!info.undMonth && info.optMonth && info.optMonth.indexOf('기초자산') < 0) {
+      info.undMonth = info.optMonth;  // 대비책: 옵션 월물 = 기초자산
+    }
+    return info;
+  }
+
+  var _debugCount = 0;  // [fix] 첫 5줄만 콘솔 출력
+
+  for (var i = 0; i < lines.length; i++) {
+    var cols = lines[i].split('\t').map(function(c){ return c.trim(); });
+    while (cols.length < 28) cols.push('');
+
+    // 새 종목 헤더: 첫 5칸 안에 알려진 종목명이 있으면 인식
+    var foundName = '';
+    var foundNameCol = -1;
+    for (var ni = 0; ni < Math.min(cols.length, 5); ni++) {
+      if (cols[ni] && NAMES.indexOf(cols[ni]) >= 0) {
+        foundName = cols[ni]; foundNameCol = ni; break;
+      }
+    }
+    if (foundName) {
+      // 이미 같은 이름 current가 있고 month가 없으면 스킵 (중복 헤더)
+      if (!(current && current.name === foundName && current.months.length === 0)) {
+        current = { rank: 0, name: foundName, avgPct: 0, months: [] };
+        items.push(current);
+        currentMonth = null;
+        currentTrend = '';
+        /* [47차 5-71] 종목 변경 시 typeCol·rowType fallback reset (이전 종목 콜/풋 잔재 방지) */
+        parseDetailText._lastTypeCol = -1;
+        parseDetailText._lastRowType = '';
+      }
+      // 같은 줄에 월물 라벨 탐색 (강화: "06월물" 단순 형식도 인식)
+      for (var ci = foundNameCol + 1; ci < cols.length; ci++) {
+        var _vci = cols[ci];
+        if (_vci && (_vci.indexOf('월물 (기초자산') >= 0 || _vci.indexOf('월물(기초자산') >= 0 || /^\d{1,2}월물$/.test(_vci))) {
+          // [fix] 같은 라벨 month 있으면 머지, 없으면 새로 생성
+          var _existInline = null;
+          for (var _eii = 0; _eii < current.months.length; _eii++) {
+            if (current.months[_eii].label === _vci) { _existInline = current.months[_eii]; break; }
+          }
+          if (_existInline) {
+            currentMonth = _existInline;
+          } else {
+            currentMonth = { label: _vci, rows: [] };
+            current.months.push(currentMonth);
+          }
+          break;
+        }
+      }
+      // [fix] continue 제거 — 같은 줄에 데이터(콜/풋·행사가·손실확률)가 함께 있을 수 있음
+    }
+
+    // 월물 헤더 라인 (강화: "06월물" 단순 형식도 인식)
+    // [fix v6] 옵션 타입(콜/풋) 컬럼이나 _콜_/_풋_ 키가 있으면 데이터 행 → 월물 헤더 인식 스킵
+    var monthLabel = '';
+    var _isDataLine = false;
+    for (var ci2 = 0; ci2 < cols.length; ci2++) {
+      var _vc2 = cols[ci2];
+      if (!_vc2) continue;
+      if (_vc2 === '콜' || _vc2 === '풋' || _vc2 === '콜 매도' || _vc2 === '풋 매도') _isDataLine = true;
+      if (/_(콜|풋)_/.test(_vc2)) _isDataLine = true;
+      /* [47차 5-73] 빈 옵션 셀이라도 lossProb 패턴(1%/3%/10%/20%/30% 등)이 있으면 데이터 행 — 월물 헤더로 잘못 분류 방지 (직트 raw: "" "" "강보합" "09월물" "..." "3%" "..." 같은 빈 옵션 셀 라인) */
+      if (/^\d{1,2}%$/.test(_vc2)) _isDataLine = true;
+      if (!monthLabel && (_vc2.indexOf('월물 (기초자산') >= 0 || _vc2.indexOf('월물(기초자산') >= 0 || /^\d{1,2}월물$/.test(_vc2))) {
+        monthLabel = _vc2;
+      }
+    }
+    if (monthLabel && current && !_isDataLine) {
+      // [fix] 같은 라벨 month 있으면 머지, 없으면 새로 생성
+      var _existSep = null;
+      for (var _esi = 0; _esi < current.months.length; _esi++) {
+        if (current.months[_esi].label === monthLabel) { _existSep = current.months[_esi]; break; }
+      }
+      if (_existSep) {
+        currentMonth = _existSep;
+      } else {
+        currentMonth = { label: monthLabel, rows: [] };
+        current.months.push(currentMonth);
+      }
+      currentTrend = '';
+      continue;
+    }
+    // [fix v6] 데이터 행 + 월물 셀 → 같은 종목 내 월물 변경 시 currentMonth 갱신
+    if (_isDataLine && current && monthLabel && (!currentMonth || currentMonth.label !== monthLabel)) {
+      var _existD = null;
+      for (var _edi = 0; _edi < current.months.length; _edi++) {
+        if (current.months[_edi].label === monthLabel) { _existD = current.months[_edi]; break; }
+      }
+      if (_existD) {
+        currentMonth = _existD;
+      } else {
+        currentMonth = { label: monthLabel, rows: [] };
+        current.months.push(currentMonth);
+      }
+    }
+
+    // 데이터 행: typeCol 동적 탐색 (강화: "콜"/"풋" 단순 매칭 추가)
+    var typeCol = -1;
+    var rowTypeFromHeader = '';
+    for (var tc = 0; tc < Math.min(cols.length, 10); tc++) {
+      var _vtc = cols[tc];
+      if (_vtc === '콜 매도' || _vtc === '풋 매도' || _vtc === '콜' || _vtc === '풋') {
+        typeCol = tc;
+        rowTypeFromHeader = (_vtc === '콜' || _vtc === '콜 매도') ? '콜' : '풋';
+        break;
+      }
+    }
+    // [fix v5] cols 전체(처음 5칸)에서 _콜_ / _풋_ 키 패턴 탐색 — col[0]이 빈칸이어도 매칭
+    // 옵션 컬럼이 빈칸인 행 + 모든 라인이 탭으로 시작해 한 칸 밀린 경우 모두 처리
+    if (typeCol < 0) {
+      for (var ki = 0; ki < Math.min(cols.length, 5); ki++) {
+        if (cols[ki]) {
+          if (/_콜_/.test(cols[ki])) { typeCol = ki + 1; rowTypeFromHeader = '콜'; break; }
+          else if (/_풋_/.test(cols[ki])) { typeCol = ki + 1; rowTypeFromHeader = '풋'; break; }
+        }
+      }
+    }
+    /* [47차 5-71] 빈 옵션 셀 fallback — 직전 라인의 typeCol·rowType 활용 (Excel 병합 셀 효과 처리) */
+    if (typeCol < 0 && parseDetailText._lastTypeCol >= 0 && parseDetailText._lastRowType) {
+      var _hasTrendOrMonth = false;
+      for (var _tc71 = 0; _tc71 < cols.length; _tc71++) {
+        var _v71 = cols[_tc71];
+        if (_v71 === '강보합' || _v71 === '약보합' || _v71 === '보합' || _v71 === '상승' || _v71 === '하락' || _v71 === '-') { _hasTrendOrMonth = true; break; }
+        if (/^\d{1,2}월물$/.test(_v71)) { _hasTrendOrMonth = true; break; }
+      }
+      if (_hasTrendOrMonth) {
+        typeCol = parseDetailText._lastTypeCol;
+        rowTypeFromHeader = parseDetailText._lastRowType;
+      }
+    }
+    /* typeCol·rowType 결정되면 다음 라인 fallback용으로 기억 */
+    if (typeCol >= 0 && rowTypeFromHeader) {
+      parseDetailText._lastTypeCol = typeCol;
+      parseDetailText._lastRowType = rowTypeFromHeader;
+    }
+    /* [47차 5-72] 빈 옵션 셀 라인에서도 월물 셀 인식 → currentMonth 갱신 (직트 raw: 같은 종목 콜/풋의 09월물·12월물 라인 처리) */
+    if (typeCol >= 0 && current) {
+      var _newMonth72 = '';
+      for (var _mi72 = 0; _mi72 < cols.length; _mi72++) {
+        var _vmi72 = cols[_mi72];
+        if (_vmi72 && (/^\d{1,2}월물$/.test(_vmi72) || _vmi72.indexOf('월물 (기초자산') >= 0 || _vmi72.indexOf('월물(기초자산') >= 0)) {
+          _newMonth72 = _vmi72; break;
+        }
+      }
+      if (_newMonth72 && (!currentMonth || currentMonth.label !== _newMonth72)) {
+        var _existM72 = null;
+        for (var _emi72 = 0; _emi72 < current.months.length; _emi72++) {
+          if (current.months[_emi72].label === _newMonth72) { _existM72 = current.months[_emi72]; break; }
+        }
+        if (_existM72) {
+          currentMonth = _existM72;
+        } else {
+          currentMonth = { label: _newMonth72, rows: [] };
+          current.months.push(currentMonth);
+          /* 만기일도 동시 추출 */
+          for (var _exi72 = 0; _exi72 < cols.length; _exi72++) {
+            if (/^20\d{2}-\d{2}-\d{2}$/.test(cols[_exi72])) { currentMonth.expiry = cols[_exi72]; break; }
+          }
+        }
+      }
+    }
+    // [fix v5] 디버그 강화: cols 첫 8개를 JSON으로 출력 (빈칸 vs 미정의 구분)
+    if (_debugCount < 8) {
+      var _colsDump = cols.slice(0, 8).map(function(c){ return JSON.stringify(c||''); }).join(', ');
+      console.log('[parseDetailText 디버그 #' + (_debugCount+1) + '] typeCol=' + typeCol + ' rowType=' + rowTypeFromHeader + ' currentMonth=' + (currentMonth?currentMonth.label:'없음') + ' cols[0..7]=[' + _colsDump + ']');
+      _debugCount++;
+    }
+    if (typeCol < 0 || !current || !currentMonth) continue;
+
+    // 순위: col[1] (또는 typeCol 앞 어딘가)
+    for (var ri = 0; ri < typeCol; ri++) {
+      if (cols[ri] && /^\d+$/.test(cols[ri])) { current.rank = parseInt(cols[ri]); break; }
+    }
+
+    var rowType = rowTypeFromHeader || '풋';  // [fix v4] header/key에서 추출한 type 사용
+
+    /* [SESSION 7] 데이터 행마다 cols에서 옵션 월물·만기일·기초자산 정확 추출 → currentMonth 정보 정정 (라벨·expiry·underlying_month) */
+    var _mInfo = _extractMonthInfo(cols);
+    if (_mInfo.optMonth && current) {
+      var _optMonthSimple = _mInfo.optMonth.replace(/\s*\(기초자산.*\)$/, '');
+      var _newLabel;
+      if (_mInfo.optMonth.indexOf('기초자산') >= 0) {
+        _newLabel = current.name + ' ' + _mInfo.optMonth;
+      } else {
+        _newLabel = current.name + ' ' + _optMonthSimple + ' (기초자산 ' + (_mInfo.undMonth || _optMonthSimple) + ')';
+      }
+      /* 라벨의 첫 단순 월물 패턴으로 기존 currentMonth 매칭 */
+      var _cmMatched = null;
+      for (var _cmi = 0; _cmi < current.months.length; _cmi++) {
+        var _cmLblOpt = (current.months[_cmi].label || '').match(/(\d{1,2}월물)/);
+        if (_cmLblOpt && _cmLblOpt[1] === _optMonthSimple) {
+          _cmMatched = current.months[_cmi]; break;
+        }
+      }
+      if (_cmMatched) {
+        _cmMatched.label = _newLabel;
+        if (_mInfo.expiry) _cmMatched.expiry = _mInfo.expiry;
+        if (_mInfo.undMonth) _cmMatched.underlying_month = _mInfo.undMonth;
+        currentMonth = _cmMatched;
+      } else {
+        currentMonth = { label: _newLabel, rows: [], expiry: _mInfo.expiry, underlying_month: _mInfo.undMonth };
+        current.months.push(currentMonth);
+      }
+    }
+    /* 만기일 대비책 (옵션 월물 못 잡힌 경우) */
+    if (currentMonth && !currentMonth.expiry) {
+      for (var _exi = 0; _exi < cols.length; _exi++) {
+        if (/^20\d{2}-\d{2}-\d{2}$/.test(cols[_exi])) {
+          currentMonth.expiry = cols[_exi];
+          break;
+        }
+      }
+    }
+
+    /* [fix] 다중 (행사가, 손실확률) 세트 추출 */
+    var _multi = _extractMultiStrikes(cols, typeCol, rowType);
+    if (_multi.length > 0) {
+      /* [47차 5-60] 추세를 rows[]에 저장 — cols[typeCol+1] 위치에서 추세 추출 (예: "강보합"/"약보합"/"보합"/"상승"/"하락"). 빈 값·'-'·'─'은 이전 currentTrend 사용 */
+      var _rowTrend = (cols[typeCol + 1] || '').trim();
+      if (_rowTrend && _rowTrend !== '-' && _rowTrend !== '─') currentTrend = _rowTrend;
+      else _rowTrend = currentTrend;
+
+      /* [47차 다듬기 12차] 매입가(옵션가격)·스팬증거금 자동 탐색 — 스팬증거금($X,XXX) 패턴으로 위치 찾고 그 직전 셀이 매입가.
+         시트 구조: ... 행사가3 | 위탁증거금 | 추세 | 매입가 | 스팬증거금($X,XXX) | 위탁증거금($X,XXX)
+         매입가는 첫 번째 lp(가장 외가) 행사가의 옵션가격 — sets[0]에만 매핑. 시장국면 반영 후 final_lp가 첫 번째 lp와 다르면 가격 알 수 없으므로 sets[1+]엔 매핑 안 함 */
+      var _spanIdx = -1;
+      for (var _si = 0; _si < cols.length; _si++) {
+        if (/^\$[\d,]+$/.test((cols[_si] || '').trim())) { _spanIdx = _si; break; }
+      }
+      var _priceVal = '', _spanVal = 0;
+      if (_spanIdx > 0) {
+        _priceVal = (cols[_spanIdx - 1] || '').trim();
+        _spanVal = parseInt((cols[_spanIdx] || '').replace(/[^0-9]/g, '')) || 0;
+      }
+
+      /* [SESSION 9 §4 후속] 매입가·스팬을 추세별 권장 단계 set에 자동 매핑 (raw 형식 변해도 안정) */
+      var _recLp = _trendToRecLp(_rowTrend, rowType);
+      var _recIdx = -1;
+      for (var _rmi = 0; _rmi < _multi.length; _rmi++) {
+        var _mLp = parseFloat(String(_multi[_rmi].lossProb || '').replace('%','')) || 0;
+        if (Math.abs(_mLp - _recLp) < 0.01) { _recIdx = _rmi; break; }
+      }
+      if (_recIdx < 0) _recIdx = 0;  /* 권장 단계 못 찾으면 1단계(첫 set)로 폴백 */
+      _multi.forEach(function(r, _idx){
+        if (_rowTrend) r.trend = _rowTrend;
+        /* 추세별 권장 단계 set에만 매입가·증거금 매핑 — 콜·풋 자동 결정 */
+        if (_idx === _recIdx) {
+          if (_priceVal) r.price = _priceVal;
+          if (_spanVal)  r.margin = _spanVal;
+        }
+        currentMonth.rows.push(r);
+      });
+      if (_debugCount <= 5) console.log('[다중 세트 push] ' + _multi.length + '개 행, 종목=' + current.name + ' 월물=' + currentMonth.label + ' 추세=' + (_rowTrend||'없음') + ' 매입가=' + _priceVal + ' 증거금=' + _spanVal);
+      continue;
+    }
+    var trend = cols[typeCol - 1] || '';
+    if (trend) currentTrend = trend;
+    else trend = currentTrend;
+
+    /* [2026-05-16 패치] 새 엑셀 구조 (비중 열 없음) — 매핑 -2 시프트 */
+    var daysLeft  = parseInt(cols[typeCol + 2]) || 0;
+    var daysSig   = normSig(cols[typeCol + 3]);
+    /* [오류수정 #4 · 2026-05-22] 현황판 실제 붙여넣기 열 구조로 정정 —
+       이전 +6/+8/+12/+14는 '비중 열' 가정값이었으나 실제 붙여넣기엔 비중 열이 없어 2칸씩 어긋났다.
+       그 결과 잠재수익률 칸에 순위값(1·2·3)이, 평가점수·추천 칸엔 빈칸이 들어가 0/false로 저장됐다.
+       실제 구조: typeCol(구분) +1 구분sig / +2 잔존일 / +3 잔존sig / +4 잠재수익률 / +5 수익sig /
+                  +6 순위 / +7 순위sig / +9 콜·풋 라벨 / +10 평가점수 / +12 추천(○) */
+    var yieldPct  = (cols[typeCol + 4] || '').trim();        /* 잠재수익률 */
+    var yieldSig  = normSig(cols[typeCol + 5]);
+    var monthRank = parseInt(cols[typeCol + 6]) || 0;        /* 순위 */
+    var rankSig   = normSig(cols[typeCol + 7]);
+    var evalScore    = parseInt(cols[typeCol + 10]) || 0;    /* 평가점수 */
+    var recommended  = (cols[typeCol + 12] === '○');         /* 추천 표시 */
+    // ── 스팬증거금($X,XXX) 패턴으로 절대 위치 탐색 → typeCol 값에 무관하게 정확 ──
+    var marginIdx = -1;
+    for (var mi = typeCol + 10; mi < cols.length; mi++) {
+      if (/^\$[\d,]+$/.test((cols[mi] || '').trim())) { marginIdx = mi; break; }
+    }
+    var strike, price, qty, margin, profit, lossPct;
+    if (marginIdx >= 0) {
+      // 스팬증거금 기준: [margin-3]=행사가, [margin-2]=옵션가격, [margin-1]=매매수량
+      strike  = (cols[marginIdx - 3] || '').trim();
+      price   = cols[marginIdx - 2] || '';
+      qty     = cols[marginIdx - 1] || '';
+      margin  = parseInt((cols[marginIdx]     || '').replace(/[^0-9]/g, '')) || 0;
+      profit  = parseInt((cols[marginIdx + 1] || '').replace(/[^0-9]/g, '')) || 0;
+      lossPct = cols[marginIdx + 2] || '';
+    } else {
+      // 폴백: 기존 offset 방식
+      var offset = recommended ? 14 : 15;
+      strike  = (cols[typeCol + offset]     || '').trim();
+      price   = cols[typeCol + offset + 1]  || '';
+      qty     = cols[typeCol + offset + 2]  || '';
+      margin  = parseInt((cols[typeCol + offset + 3] || '0').replace(/[^0-9]/g, '')) || 0;
+      profit  = parseInt((cols[typeCol + offset + 4] || '0').replace(/[^0-9]/g, '')) || 0;
+      lossPct = cols[typeCol + offset + 5]  || '';
+    }
+
+    currentMonth.rows.push({
+      type: rowType, trend: trend,
+      daysSig: daysSig, daysLeft: daysLeft,
+      yieldSig: yieldSig, yieldPct: yieldPct,
+      rankSig: rankSig, monthRank: monthRank,
+      evalScore: evalScore, recommended: recommended,
+      strike: strike, price: price, qty: qty,
+      margin: margin, profit: profit, lossPct: lossPct
+    });
+  }
+  // [SESSION 7] 빈 월물 제거 (행 0개인 month 객체) — 정정 과정에서 라벨 교체 후 잔존하는 빈 객체 정리
+  items.forEach(function(it) {
+    if (it.months) {
+      it.months = it.months.filter(function(m) { return m.rows && m.rows.length > 0; });
+    }
+  });
+  // [fix] 검증 로그: 각 종목별 총 rows 개수
+  console.log('[parseDetailText 결과 검증]');
+  items.forEach(function(it) {
+    var totalRows = 0;
+    (it.months || []).forEach(function(m) { totalRows += (m.rows || []).length; });
+    console.log('  ' + it.name + ': ' + (it.months||[]).length + '개월물, ' + totalRows + '행');
+  });
+  return items;
+}
+
+// ── 저장 함수 ──────────────────────────────────────────
+function adminClearRank() {
+  if (!confirm('순위표 데이터를 초기화하시겠습니까?')) return;
+  localStorage.removeItem('st_rank_v3');
+  localStorage.setItem('st_rank_updated', Date.now().toString());
+  document.getElementById('admin-rank-text').value = '';
+  document.getElementById('admin-rank-preview').innerHTML = '';
+  adminStratMsg('rank', '순위표 초기화됨', 'ok');
+}
+
+function adminClearDetail() {
+  if (!confirm('현황판 데이터를 초기화하시겠습니까?')) return;
+  localStorage.removeItem('st_detail_v3');
+  localStorage.setItem('st_detail_updated', Date.now().toString());
+  document.getElementById('admin-detail-text').value = '';
+  document.getElementById('admin-detail-preview').innerHTML = '';
+  adminStratMsg('detail', '현황판 초기화됨', 'ok');
+}
+
+function adminSaveRank() {
+  var text = document.getElementById('admin-rank-text').value.trim();
+  if (!text) { adminStratMsg('rank', '붙여넣기한 데이터가 없습니다', 'err'); return; }
+  var data = parseRankText(text);
+  if (!data.length) {
+    // 디버그: 콜/풋 매도 문자열 존재 여부 확인
+    var hasCpStr = text.indexOf('콜 매도') >= 0 || text.indexOf('풋 매도') >= 0;
+    var hint = hasCpStr ? '' : ' (⚠️ "콜 매도"/"풋 매도" 열을 찾을 수 없어요 — 엑셀 전체 복사 후 붙여넣기 해주세요)';
+    adminStratMsg('rank', '파싱된 종목이 없습니다. 형식을 확인해주세요.' + hint, 'err');
+    return;
+  }
+  localStorage.setItem('st_rank_v3', JSON.stringify(data));
+  localStorage.setItem('st_rank_updated', Date.now().toString());
+  adminRankPreview(data);
+  adminStratMsg('rank', data.length + '개 종목 저장 완료 ✅', 'ok');
+}
+
+function adminSaveDetail() {
+  var text = document.getElementById('admin-detail-text').value.trim();
+  if (!text) { adminStratMsg('detail', '붙여넣기한 데이터가 없습니다', 'err'); return; }
+  var data = parseDetailText(text);
+  if (!data.length) {
+    var hasName = ['S&P500','호주달러','골드','크루드 오일','천연가스','대두','10년국채','유로FX','엔화','밀','옥수수','나스닥100'].some(function(n){ return text.indexOf(n) >= 0; });
+    var hint2 = hasName ? ' (종목명 인식 성공 — 월물 행 형식 확인 필요)' : ' (⚠️ 종목명이 인식되지 않아요 — 한글 종목명 포함된 현황판인지 확인해주세요)';
+    adminStratMsg('detail', '파싱된 종목이 없습니다. 형식을 확인해주세요.' + hint2, 'err');
+    return;
+  }
+  localStorage.setItem('st_detail_v3', JSON.stringify(data));
+  localStorage.setItem('st_detail_updated', Date.now().toString());
+  adminDetailPreview(data);
+  adminStratMsg('detail', data.length + '개 종목 저장 완료 ✅', 'ok');
+}
+
+function adminStratMsg(id, msg, type) {
+  var el = document.getElementById('admin-strat-msg-' + id);
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = type === 'ok' ? 'var(--green)' : 'var(--red)';
+  el.style.display = 'inline';
+  setTimeout(function() { el.style.display = 'none'; }, 4000);
+}
+
+function adminRankPreview(data) {
+  var el = document.getElementById('admin-rank-preview');
+  if (!el) return;
+  var h = '<div style="font-size:11px;color:var(--t3);margin-top:8px;line-height:2">';
+  data.forEach(function(d) {
+    h += '<span style="display:inline-block;margin:2px 6px 2px 0;padding:2px 8px;border-radius:4px;background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.2);color:var(--cyan)">';
+    h += d.rank + '. ' + d.name + ' <span style="color:var(--yellow)">' + (d.avgPct||0).toFixed(2) + '%</span></span>';
+  });
+  h += '</div>';
+  el.innerHTML = h;
+}
+
+function adminDetailPreview(data) {
+  var el = document.getElementById('admin-detail-preview');
+  if (!el) return;
+  var h = '<div style="font-size:11px;color:var(--t3);margin-top:8px;line-height:2">';
+  data.forEach(function(d) {
+    var monthCnt = d.months ? d.months.length : 0;
+    h += '<span style="display:inline-block;margin:2px 6px 2px 0;padding:2px 8px;border-radius:4px;background:rgba(62,207,170,.08);border:1px solid rgba(62,207,170,.2);color:var(--green)">';
+    h += (d.rank||'?') + '. ' + d.name + ' <span style="color:var(--t3)">(' + monthCnt + '개 월물)</span></span>';
+  });
+  h += '</div>';
+  el.innerHTML = h;
+}
+</script>
+
+<script>
+
+function adminSavePhaseNote() {
+  var ta = document.getElementById('admin-phase-note-text');
+  var msg = document.getElementById('admin-phase-note-msg');
+  if (!ta) return;
+  var text = ta.value.trim();
+  if (!text) {
+    if (msg) {
+      msg.textContent = '⚠️ 텍스트를 입력해주세요';
+      msg.style.color = '#d9664a';
+      msg.style.display = '';
+      setTimeout(function() { msg.style.display = 'none'; }, 3000);
+    }
+    return;
+  }
+  localStorage.setItem('sv_phase_note', text);
+  localStorage.setItem('sv_phase_note_updated', Date.now().toString());
+  if (msg) {
+    msg.textContent = '저장 완료 — 대시보드 시장 현황 탭에 자동 표시됩니다';
+    msg.style.color = '#3ecfaa';
+    msg.style.display = '';
+    setTimeout(function() { msg.style.display = 'none'; }, 4000);
+  }
+}
+
+function adminClearPhaseNote() {
+  if (!confirm('변동 사유를 삭제할까요?')) return;
+  var ta = document.getElementById('admin-phase-note-text');
+  if (ta) ta.value = '';
+  localStorage.removeItem('sv_phase_note');
+  localStorage.removeItem('sv_phase_note_updated');
+  var msg = document.getElementById('admin-phase-note-msg');
+  if (msg) {
+    msg.textContent = '삭제 완료';
+    msg.style.color = '#94a3b8';
+    msg.style.display = '';
+    setTimeout(function() { msg.style.display = 'none'; }, 2000);
+  }
+}
+
+/* 페이지 로드 시 기존 값 복원 */
+(function() {
+  function loadPhaseNote() {
+    var ta = document.getElementById('admin-phase-note-text');
+    if (!ta) return;
+    var saved = localStorage.getItem('sv_phase_note') || '';
+    ta.value = saved;
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadPhaseNote);
+  } else {
+    setTimeout(loadPhaseNote, 50);
+  }
+})();
+</script>
+
+
+<script>
+(function(){
+  var MULT = {'크루드 오일':1000,'천연가스':10000,'골드':100,'S&P500':50,'s&p500':50,'호주달러':100000,'10년국채':1000,'대두':50,'밀':50,'옥수수':50};
+  var FRAC = {'대두':8,'밀':8,'옥수수':8,'10년국채':64};
+  var EXRATE = 1500;
+
+  function parsePrem(val, name){
+    var s = String(val).trim(), d = FRAC[name];
+    if(d && s.includes('`')){var p=s.split('`');return(parseFloat(p[0])||0)+(parseFloat(p[1])||0)/d;}
+    return parseFloat(s)||0;
+  }
+
+  function parseStrategies(text){
+    var lines = text.split('\n');
+    var strategies = [];
+    var cur = [];
+    var curMeta = {};
+    lines.forEach(function(line){
+      line = line.trim();
+      if(!line) return;
+      var m = line.match(/^증거금\s*([\d,]+)/);
+      if(m){
+        var margin = parseFloat(m[1].replace(/,/g,''));
+        // 만기일 파싱: "만기일 26 07 16" → "2026-07-16"
+        var expM = line.match(/만기일\s+(\d{2})\s+(\d{2})\s+(\d{2})/);
+        var expiry = expM ? '20'+expM[1]+'-'+expM[2]+'-'+expM[3] : null;
+        // 잔존일 파싱
+        var daysM = line.match(/잔존일\s+(\d+)/);
+        var daysLeft = daysM ? parseInt(daysM[1]) : null;
+        if(cur.length) strategies.push(buildStrategy(cur, margin, expiry, daysLeft));
+        cur = [];
+      } else {
+        cur.push(line);
+      }
+    });
+    if(cur.length) strategies.push(buildStrategy(cur, null, null, null));
+    return strategies;
+  }
+
+  function buildStrategy(lines, margin, expiry, daysLeft){
+    var legs = lines.map(function(line){
+      var p = line.split(',').map(function(s){return s.trim();});
+      if(p.length < 7) return null;
+      var name = p[1], premium = p[5], rest = p[6];
+      var contracts = parseInt(rest)||1;
+      var prem = parsePrem(premium, name);
+      return {date:p[0], name:name, month:p[2], strike:p[3].replace('행사가','').trim(), optType:p[4], premium:premium, contracts:contracts, premUsd: prem*contracts*(MULT[name]||1000)};
+    }).filter(Boolean);
+    if(!legs.length) return null;
+    var hasCall = legs.some(function(l){return l.optType.includes('콜');});
+    var hasPut  = legs.some(function(l){return l.optType.includes('풋');});
+    var stratType = (hasCall && hasPut) ? '양매도' : hasCall ? '콜 매도' : '풋 매도';
+    var totalPrem = legs.reduce(function(s,l){return s+l.premUsd;},0);
+    var ret = margin ? (totalPrem/margin*100).toFixed(1) : null;
+    var date = legs[0].date;
+    var commodities = [...new Set(legs.map(function(l){return l.name;}))].join(' · ');
+    return {date:date, stratType:stratType, commodities:commodities, legs:legs, margin:margin, totalPremUsd:Math.round(totalPrem), returnPct:ret, expiry:expiry, daysLeft:daysLeft};
+  }
+
+  function renderPreview(strategies){
+    if(!strategies.length) return '<p style="color:var(--t3);font-size:13px">파싱된 전략 없음</p>';
+    return strategies.map(function(s){
+      if(!s) return '';
+      var legRows = s.legs.map(function(l){
+        return '<tr style="border-top:1px solid rgba(217,102,74,.08)">'
+          +'<td style="padding:6px 10px;color:var(--t2)">'+l.month+'</td>'
+          +'<td style="padding:6px 10px;font-weight:700">'+l.strike+'</td>'
+          +'<td style="padding:6px 10px"><span style="color:'+(l.optType.includes('콜')?'#c83030':'#2a5fa8')+';font-weight:700">'+l.optType+'</span></td>'
+          +'<td style="padding:6px 10px;font-family:var(--mono)">'+l.premium+' ('+l.contracts+'계약)</td>'
+          +'<td style="padding:6px 10px;color:var(--t2)">$'+Math.round(l.premUsd)+'</td>'
+          +'</tr>';
+      }).join('');
+      var ret = s.returnPct ? '<b style="color:#1a7a4a">+'+s.returnPct+'%</b>' : '—';
+      var margin = s.margin ? '$'+s.margin.toLocaleString()+' ('+Math.round(s.margin*EXRATE/10000)+'만원)' : '—';
+      var totalKrw = Math.round(s.totalPremUsd*EXRATE/10000).toLocaleString();
+      return '<div style="border:1px solid rgba(217,102,74,.20);border-radius:8px;overflow:hidden;margin-bottom:10px">'
+        +'<div style="background:rgba(217,102,74,.06);padding:8px 12px;display:flex;gap:8px;align-items:center">'
+        +'<span style="font-size:11px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.15);padding:2px 8px;border-radius:4px;border:1px solid rgba(217,102,74,.3)">'+s.stratType+'</span>'
+        +'<span style="font-size:13px;font-weight:700;color:var(--t1)">'+s.commodities+'</span>'
+        +'<span style="font-size:12px;color:var(--t3);margin-left:auto">'+s.date+'</span>'
+        +'</div>'
+        +'<table style="width:100%;border-collapse:collapse;font-size:12.5px"><tr style="background:rgba(0,0,0,.03);color:var(--t3)">'
+        +'<th style="padding:6px 10px;text-align:left;font-weight:600">월물</th><th style="padding:6px 10px;text-align:left;font-weight:600">행사가</th>'
+        +'<th style="padding:6px 10px;text-align:left;font-weight:600">전략</th><th style="padding:6px 10px;text-align:left;font-weight:600">프리미엄</th>'
+        +'<th style="padding:6px 10px;text-align:left;font-weight:600">수취금</th></tr>'+legRows+'</table>'
+        +'<div style="padding:8px 12px;display:flex;gap:20px;flex-wrap:wrap;background:rgba(217,102,74,.03);border-top:1px solid rgba(217,102,74,.10);font-size:12.5px">'
+        +'<span>월간 수익률 '+ret+'</span>'
+        +'<span>예상 수익 '+totalKrw+'원</span>'
+        +'<span>투자금 '+margin+'</span>'
+        +'</div></div>';
+    }).join('');
+  }
+
+  window.saveWeeklyPicks = function(){
+    var title  = (document.getElementById('wp-title').value||'').trim();
+    var text   = (document.getElementById('wp-input').value||'').trim();
+    var status = document.getElementById('wp-status');
+    if(!text){status.textContent='내용을 입력해주세요.'; return;}
+    var strategies = parseStrategies(text).filter(Boolean);
+    if(!strategies.length){status.textContent='파싱 실패 — 형식을 확인해주세요.'; return;}
+    document.getElementById(                                                                                                                                                                                                                                                                                                                                                
