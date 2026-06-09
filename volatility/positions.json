@@ -66,209 +66,10 @@
       }
     },
     "market_state_updated": "2026-06-07",
-    "last_price_update": "2026-06-09 14:15:18",
+    "last_price_update": "2026-06-09 17:22:35",
     "schema_note": "v2: 각 종목 option_charts에 옵션 월물별 차트 분리 (기초자산 선물 매핑)"
   },
   "positions": [
-    {
-      "id": "p18",
-      "number": 18,
-      "sub": null,
-      "shared_date": "2026-06-09",
-      "status": "active",
-      "notion_url": "https://www.notion.so/37adf6df17a2814b940fe543b3da7a13",
-      "strategy_type": "naked_call",
-      "underlying": "대두",
-      "underlying_en": "Soybean",
-      "expiry_month": "9월물",
-      "expiry_date": "2026-08-21",
-      "current_price": 1150,
-      "legs": [
-        {
-          "type": "call_sell",
-          "strike": 1400,
-          "contracts": 3,
-          "premium": 150,
-          "current_price_pt": 1.0
-        }
-      ],
-      "total_premium": 150,
-      "margin": 822,
-      "margin_krw": 1233000,
-      "profit_scenarios": [
-        {
-          "label": "만기 시 $1,400 미만",
-          "profit": 150,
-          "profit_krw": 225000,
-          "return_pct": 18.25,
-          "type": "win"
-        },
-        {
-          "label": "만기 시 $1,400 초과",
-          "profit": null,
-          "return_pct": null,
-          "type": "loss"
-        }
-      ],
-      "expected_return_pct": 18.25,
-      "monthly_return_pct": 7.5,
-      "current_pnl": 0,
-      "memo": "",
-      "chart_data": null,
-      "entry_price": 1150,
-      "strategy_num": 161
-    },
-    {
-      "id": "p17",
-      "number": 17,
-      "sub": null,
-      "shared_date": "2026-06-09",
-      "status": "active",
-      "notion_url": "https://www.notion.so/37adf6df17a281f0ab79f8036e2ba013",
-      "strategy_type": "naked_put",
-      "underlying": "천연가스",
-      "underlying_en": "Natural Gas",
-      "expiry_month": "9월물",
-      "expiry_date": "2026-08-26",
-      "current_price": 3.2,
-      "legs": [
-        {
-          "type": "put_sell",
-          "strike": 2.1,
-          "contracts": 1,
-          "premium": 100,
-          "current_price_pt": 0.01
-        }
-      ],
-      "total_premium": 100,
-      "margin": 239,
-      "margin_krw": 358500,
-      "profit_scenarios": [
-        {
-          "label": "만기 시 $2.10 초과",
-          "profit": 100,
-          "profit_krw": 150000,
-          "return_pct": 41.84,
-          "type": "win"
-        },
-        {
-          "label": "만기 시 $2.10 미만",
-          "profit": null,
-          "return_pct": null,
-          "type": "loss"
-        }
-      ],
-      "expected_return_pct": 41.84,
-      "monthly_return_pct": 16.09,
-      "current_pnl": 0,
-      "memo": "",
-      "chart_data": null,
-      "entry_price": 3.2,
-      "strategy_num": 160
-    },
-    {
-      "id": "p16",
-      "number": 16,
-      "sub": null,
-      "shared_date": "2026-06-09",
-      "status": "active",
-      "notion_url": "https://www.notion.so/37adf6df17a281b4b195c4af7ed03d40",
-      "strategy_type": "naked_call",
-      "underlying": "천연가스",
-      "underlying_en": "Natural Gas",
-      "expiry_month": "8월물",
-      "expiry_date": "2026-07-28",
-      "current_price": 3.2,
-      "legs": [
-        {
-          "type": "call_sell",
-          "strike": 4.55,
-          "contracts": 1,
-          "premium": 100,
-          "current_price_pt": 0.01
-        }
-      ],
-      "total_premium": 100,
-      "margin": 356,
-      "margin_krw": 534000,
-      "profit_scenarios": [
-        {
-          "label": "만기 시 $4.55 미만",
-          "profit": 100,
-          "profit_krw": 150000,
-          "return_pct": 28.09,
-          "type": "win"
-        },
-        {
-          "label": "만기 시 $4.55 초과",
-          "profit": null,
-          "return_pct": null,
-          "type": "loss"
-        }
-      ],
-      "expected_return_pct": 28.09,
-      "monthly_return_pct": 17.2,
-      "current_pnl": 0,
-      "memo": "",
-      "chart_data": null,
-      "entry_price": 3.2,
-      "strategy_num": 159
-    },
-    {
-      "id": "p15",
-      "number": 15,
-      "sub": null,
-      "shared_date": "2026-06-09",
-      "status": "active",
-      "notion_url": "https://www.notion.so/37adf6df17a281c4a6bceb844f8c1b26",
-      "strategy_type": "strangle",
-      "underlying": "크루드 오일",
-      "underlying_en": "Crude Oil",
-      "expiry_month": "8월물",
-      "expiry_date": "2026-07-16",
-      "current_price": 91.4,
-      "legs": [
-        {
-          "type": "call_sell",
-          "strike": 161,
-          "contracts": 1,
-          "premium": 160,
-          "current_price_pt": 0.16
-        },
-        {
-          "type": "put_sell",
-          "strike": 53,
-          "contracts": 1,
-          "premium": 170,
-          "current_price_pt": 0.17
-        }
-      ],
-      "total_premium": 330,
-      "margin": 1144,
-      "margin_krw": 1716000,
-      "profit_scenarios": [
-        {
-          "label": "만기 시 $53~$161 구간",
-          "profit": 330,
-          "profit_krw": 495000,
-          "return_pct": 28.85,
-          "type": "win"
-        },
-        {
-          "label": "만기 시 $161 초과 또는 $53 미만",
-          "profit": null,
-          "return_pct": null,
-          "type": "loss"
-        }
-      ],
-      "expected_return_pct": 28.85,
-      "monthly_return_pct": 23.39,
-      "current_pnl": 0,
-      "memo": "",
-      "chart_data": null,
-      "entry_price": 91.4,
-      "strategy_num": 158
-    },
     {
       "id": "p1a",
       "number": 1,
@@ -941,15 +742,13 @@
           "type": "call_sell",
           "strike": 7,
           "contracts": 2,
-          "premium": 120,
-          "current_price_pt": 0.001
+          "premium": 120
         },
         {
           "type": "put_sell",
           "strike": 1.9,
           "contracts": 2,
-          "premium": 80,
-          "current_price_pt": 0.001
+          "premium": 80
         }
       ],
       "total_premium": 200,
@@ -978,7 +777,7 @@
       ],
       "expected_return_pct": 43,
       "monthly_return_pct": 25.8,
-      "current_pnl": 160,
+      "current_pnl": 140,
       "memo": "",
       "chart_data": {
         "dates": [
@@ -1220,8 +1019,7 @@
           "type": "call_sell",
           "strike": 8300,
           "contracts": 1,
-          "premium": 330,
-          "current_price_pt": 0.1
+          "premium": 330
         }
       ],
       "total_premium": 330,
@@ -1343,12 +1141,12 @@
           "2026/06/04"
         ],
         "closes": [
-          4944,
+          4944.0,
           5021.9,
           5092.9,
           5201.8,
           5197.5,
-          5421,
+          5421.0,
           5436.5,
           4816.6,
           4720.3,
@@ -1363,7 +1161,7 @@
           5121.3,
           4978.7,
           5083.7,
-          5072,
+          5072.0,
           5157.7,
           5304.5,
           5254.6,
@@ -1371,7 +1169,7 @@
           5272.8,
           5327.1,
           5391.8,
-          5201,
+          5201.0,
           5212.2,
           5155.7,
           5237.1,
@@ -1406,7 +1204,7 @@
           4916.5,
           4865.4,
           4755.4,
-          4789,
+          4789.0,
           4759.8,
           4776.3,
           4728.8,
@@ -1428,10 +1226,10 @@
           4544.5,
           4569.1,
           4556.4,
-          4535,
+          4535.0,
           4481.5,
           4532.4,
-          4593,
+          4593.0,
           4506.3,
           4519.9,
           4466.9,
@@ -1841,8 +1639,7 @@
           "type": "call_sell",
           "strike": 253,
           "contracts": 3,
-          "premium": 690,
-          "current_price_pt": 0.03
+          "premium": 690
         }
       ],
       "total_premium": 690,
@@ -1865,7 +1662,7 @@
       ],
       "expected_return_pct": 41,
       "monthly_return_pct": 15.52,
-      "current_pnl": 600,
+      "current_pnl": 570,
       "memo": "",
       "chart_data": {
         "dates": [
@@ -1962,7 +1759,7 @@
           63.78,
           64.95,
           64.96,
-          65,
+          65.0,
           64.68,
           64.57,
           64.2,
@@ -1981,7 +1778,7 @@
           84.42,
           85.93,
           86.64,
-          87,
+          87.0,
           79.8,
           83.9,
           82.5,
@@ -2000,7 +1797,7 @@
           81.75,
           82.42,
           83.5,
-          78,
+          78.0,
           80.93,
           82.63,
           84.43,
@@ -2071,8 +1868,7 @@
           "type": "call_sell",
           "strike": 240,
           "contracts": 2,
-          "premium": 360,
-          "current_price_pt": 0.01
+          "premium": 360
         }
       ],
       "total_premium": 360,
@@ -2170,7 +1966,7 @@
           82.49,
           86.78,
           85.06,
-          88,
+          88.0,
           89.53,
           90.51,
           86.53,
@@ -2241,8 +2037,7 @@
           "type": "put_sell",
           "strike": 45,
           "contracts": 3,
-          "premium": 390,
-          "current_price_pt": 0.01
+          "premium": 390
         }
       ],
       "total_premium": 390,
@@ -2265,7 +2060,7 @@
       ],
       "expected_return_pct": 31.1,
       "monthly_return_pct": 14.14,
-      "current_pnl": 360,
+      "current_pnl": 300,
       "memo": "",
       "chart_data": {
         "dates": [
@@ -2343,7 +2138,7 @@
           84.42,
           85.93,
           86.64,
-          87,
+          87.0,
           79.8,
           83.9,
           82.5,
@@ -2362,7 +2157,7 @@
           81.75,
           82.42,
           83.5,
-          78,
+          78.0,
           80.93,
           82.63,
           84.43,
@@ -2433,8 +2228,7 @@
           "type": "put_sell",
           "strike": 3000,
           "contracts": 1,
-          "premium": 220,
-          "current_price_pt": 3.2
+          "premium": 220
         }
       ],
       "total_premium": 220,
@@ -2457,7 +2251,7 @@
       ],
       "expected_return_pct": 7.03,
       "monthly_return_pct": 2.85,
-      "current_pnl": -100,
+      "current_pnl": 20,
       "memo": "",
       "chart_data": {
         "dates": [
@@ -2530,7 +2324,7 @@
         ],
         "closes": [
           5391.8,
-          5201,
+          5201.0,
           5212.2,
           5155.7,
           5237.1,
@@ -2565,7 +2359,7 @@
           4916.5,
           4865.4,
           4755.4,
-          4789,
+          4789.0,
           4759.8,
           4776.3,
           4728.8,
@@ -2587,10 +2381,10 @@
           4544.5,
           4569.1,
           4556.4,
-          4535,
+          4535.0,
           4481.5,
           4532.4,
-          4593,
+          4593.0,
           4506.3,
           4519.9,
           4466.9,
@@ -2633,8 +2427,7 @@
           "type": "call_sell",
           "strike": 5.5,
           "contracts": 3,
-          "premium": 390,
-          "current_price_pt": 0.005
+          "premium": 390
         }
       ],
       "total_premium": 390,
@@ -2657,7 +2450,7 @@
       ],
       "expected_return_pct": 49.68,
       "monthly_return_pct": 21.91,
-      "current_pnl": 240,
+      "current_pnl": 180,
       "memo": "",
       "chart_data": {
         "dates": [
@@ -2814,14 +2607,14 @@
           "strike": 177.5,
           "contracts": 1,
           "premium": 170,
-          "current_price_pt": 0.15
+          "current_price_pt": 0.17
         },
         {
           "type": "put_sell",
           "strike": 60,
           "contracts": 1,
           "premium": 150,
-          "current_price_pt": 0.12
+          "current_price_pt": 0.15
         }
       ],
       "total_premium": 320,
@@ -2844,7 +2637,7 @@
       ],
       "expected_return_pct": 33.97,
       "monthly_return_pct": 23.18,
-      "current_pnl": 50,
+      "current_pnl": 0,
       "memo": "",
       "chart_data": {
         "dates": [
@@ -2959,7 +2752,7 @@
           "strike": 4.65,
           "contracts": 1,
           "premium": 160,
-          "current_price_pt": 0.012
+          "current_price_pt": 0.016
         }
       ],
       "total_premium": 160,
@@ -2970,7 +2763,7 @@
           "label": "만기 시 $4.65 미만",
           "profit": 160,
           "profit_krw": 240000,
-          "return_pct": 33,
+          "return_pct": 33.0,
           "type": "win"
         },
         {
@@ -2980,9 +2773,9 @@
           "type": "loss"
         }
       ],
-      "expected_return_pct": 33,
+      "expected_return_pct": 33.0,
       "monthly_return_pct": 17.68,
-      "current_pnl": 40,
+      "current_pnl": 0,
       "memo": "",
       "chart_data": {
         "dates": [
@@ -3109,7 +2902,7 @@
           "strike": 2.1,
           "contracts": 1,
           "premium": 140,
-          "current_price_pt": 0.012
+          "current_price_pt": 0.014
         }
       ],
       "total_premium": 140,
@@ -3132,7 +2925,7 @@
       ],
       "expected_return_pct": 49.3,
       "monthly_return_pct": 17.4,
-      "current_pnl": 20,
+      "current_pnl": 0,
       "memo": "",
       "chart_data": {
         "dates": [
@@ -3252,7 +3045,7 @@
           3.291,
           3.151,
           3.014,
-          3,
+          3.0,
           3.077,
           3.268,
           3.28,
@@ -3299,7 +3092,7 @@
           "strike": 6625,
           "contracts": 1,
           "premium": 137.5,
-          "current_price_pt": 4.4
+          "current_price_pt": 2.75
         }
       ],
       "total_premium": 137.5,
@@ -3322,7 +3115,7 @@
       ],
       "expected_return_pct": 3.89,
       "monthly_return_pct": 7.3,
-      "current_pnl": -83,
+      "current_pnl": 0,
       "memo": "",
       "chart_data": {
         "dates": [
@@ -3339,11 +3132,11 @@
           "2026/06/04"
         ],
         "closes": [
-          7378,
+          7378.0,
           7451.75,
-          7491,
-          7537,
-          7540,
+          7491.0,
+          7537.0,
+          7540.0,
           7581.75,
           7595.75,
           7613.25,
@@ -3367,7 +3160,7 @@
         "expiry_date": "2026-06-18",
         "entry_date": "2026-06-02"
       },
-      "entry_price": 7617,
+      "entry_price": 7617.0,
       "strategy_num": 156
     },
     {
@@ -3389,14 +3182,14 @@
           "strike": 1480,
           "contracts": 3,
           "premium": 150,
-          "current_price_pt": 0.5
+          "current_price_pt": 1.0
         },
         {
           "type": "put_sell",
           "strike": 1000,
           "contracts": 3,
           "premium": 150,
-          "current_price_pt": 3.3
+          "current_price_pt": 1.0
         }
       ],
       "total_premium": 300,
@@ -3418,12 +3211,293 @@
         }
       ],
       "expected_return_pct": 33.41,
-      "monthly_return_pct": null,
-      "current_pnl": -270,
+      "monthly_return_pct": 12.53,
+      "current_pnl": 0,
+      "memo": "",
+      "chart_data": {
+        "dates": [
+          "2026/03/16",
+          "2026/03/17",
+          "2026/03/18",
+          "2026/03/19",
+          "2026/03/20",
+          "2026/03/23",
+          "2026/03/24",
+          "2026/03/25",
+          "2026/03/26",
+          "2026/03/27",
+          "2026/03/30",
+          "2026/03/31",
+          "2026/04/01",
+          "2026/04/02",
+          "2026/04/06",
+          "2026/04/07",
+          "2026/04/08",
+          "2026/04/09",
+          "2026/04/10",
+          "2026/04/13",
+          "2026/04/14",
+          "2026/04/15",
+          "2026/04/16",
+          "2026/04/17",
+          "2026/04/20",
+          "2026/04/21",
+          "2026/04/22",
+          "2026/04/23",
+          "2026/04/24",
+          "2026/04/27",
+          "2026/04/28",
+          "2026/04/29",
+          "2026/04/30",
+          "2026/05/01",
+          "2026/05/04",
+          "2026/05/05",
+          "2026/05/06",
+          "2026/05/07",
+          "2026/05/08",
+          "2026/05/11",
+          "2026/05/12",
+          "2026/05/13",
+          "2026/05/14",
+          "2026/05/15",
+          "2026/05/18",
+          "2026/05/19",
+          "2026/05/20",
+          "2026/05/22",
+          "2026/05/26",
+          "2026/05/27",
+          "2026/05/28",
+          "2026/05/29",
+          "2026/06/01",
+          "2026/06/02",
+          "2026/06/03",
+          "2026/06/04"
+        ],
+        "closes": [
+          1121.6,
+          1131.4,
+          1141.2,
+          1147.6,
+          1142.6,
+          1147.0,
+          1143.4,
+          1152.2,
+          1154.2,
+          1144.4,
+          1144.6,
+          1158.2,
+          1156.0,
+          1153.6,
+          1157.4,
+          1150.6,
+          1152.4,
+          1152.6,
+          1158.2,
+          1149.6,
+          1143.2,
+          1152.4,
+          1151.6,
+          1152.2,
+          1152.6,
+          1162.2,
+          1151.6,
+          1149.2,
+          1150.4,
+          1161.4,
+          1162.0,
+          1166.0,
+          1167.6,
+          1177.0,
+          1192.4,
+          1184.2,
+          1169.0,
+          1167.0,
+          1184.6,
+          1190.2,
+          1201.6,
+          1203.4,
+          1175.2,
+          1162.6,
+          1195.2,
+          1197.2,
+          1185.2,
+          1180.2,
+          1171.2,
+          1173.0,
+          1185.2,
+          1181.0,
+          1178.4,
+          1165.2,
+          1154.2,
+          1150.4
+        ],
+        "strike_lines": [
+          {
+            "price": 1480,
+            "label": "콜 행사가 $1,480",
+            "color": "#e06070",
+            "dash": true
+          },
+          {
+            "price": 1000,
+            "label": "풋 행사가 $1,000",
+            "color": "#e06070",
+            "dash": true
+          }
+        ],
+        "profit_zone": {
+          "min": 1000,
+          "max": 1480,
+          "label": "수익 구간"
+        },
+        "expiry_date": "2026-08-21",
+        "entry_date": "2026-06-02"
+      },
+      "entry_price": 1184.25,
+      "strategy_num": 157
+    },
+    {
+      "id": "p158",
+      "number": 158,
+      "sub": null,
+      "shared_date": "2026-06-09",
+      "status": "active",
+      "notion_url": "https://www.notion.so/37adf6df17a281c4a6bceb844f8c1b26",
+      "strategy_type": "strangle",
+      "underlying": "크루드 오일",
+      "underlying_en": "Crude Oil",
+      "expiry_month": "8월물",
+      "expiry_date": "2026-07-16",
+      "current_price": 91.4,
+      "legs": [
+        {
+          "type": "call_sell",
+          "strike": 161,
+          "contracts": 1,
+          "premium": 160,
+          "current_price_pt": 0.16
+        },
+        {
+          "type": "put_sell",
+          "strike": 53,
+          "contracts": 1,
+          "premium": 170,
+          "current_price_pt": 0.17
+        }
+      ],
+      "total_premium": 330,
+      "margin": 1144,
+      "margin_krw": 1716000,
+      "profit_scenarios": [],
+      "expected_return_pct": 28.85,
+      "monthly_return_pct": 23.39,
+      "current_pnl": 0,
       "memo": "",
       "chart_data": null,
-      "entry_price": null,
-      "strategy_num": 157
+      "entry_price": 91.4,
+      "strategy_num": 158
+    },
+    {
+      "id": "p159",
+      "number": 159,
+      "sub": null,
+      "shared_date": "2026-06-09",
+      "status": "active",
+      "notion_url": "https://www.notion.so/37adf6df17a281b4b195c4af7ed03d40",
+      "strategy_type": "naked_call",
+      "underlying": "천연가스",
+      "underlying_en": "Natural Gas",
+      "expiry_month": "8월물",
+      "expiry_date": "2026-07-28",
+      "current_price": 3.2,
+      "legs": [
+        {
+          "type": "call_sell",
+          "strike": 4.55,
+          "contracts": 1,
+          "premium": 100,
+          "current_price_pt": 0.01
+        }
+      ],
+      "total_premium": 100,
+      "margin": 356,
+      "margin_krw": 534000,
+      "profit_scenarios": [],
+      "expected_return_pct": 28.09,
+      "monthly_return_pct": 17.2,
+      "current_pnl": 0,
+      "memo": "",
+      "chart_data": null,
+      "entry_price": 3.2,
+      "strategy_num": 159
+    },
+    {
+      "id": "p160",
+      "number": 160,
+      "sub": null,
+      "shared_date": "2026-06-09",
+      "status": "active",
+      "notion_url": "https://www.notion.so/37adf6df17a281f0ab79f8036e2ba013",
+      "strategy_type": "naked_put",
+      "underlying": "천연가스",
+      "underlying_en": "Natural Gas",
+      "expiry_month": "9월물",
+      "expiry_date": "2026-08-26",
+      "current_price": 3.2,
+      "legs": [
+        {
+          "type": "put_sell",
+          "strike": 2.1,
+          "contracts": 1,
+          "premium": 100,
+          "current_price_pt": 0.01
+        }
+      ],
+      "total_premium": 100,
+      "margin": 239,
+      "margin_krw": 358500,
+      "profit_scenarios": [],
+      "expected_return_pct": 41.84,
+      "monthly_return_pct": 16.09,
+      "current_pnl": 0,
+      "memo": "",
+      "chart_data": null,
+      "entry_price": 3.2,
+      "strategy_num": 160
+    },
+    {
+      "id": "p161",
+      "number": 161,
+      "sub": null,
+      "shared_date": "2026-06-09",
+      "status": "active",
+      "notion_url": "https://www.notion.so/37adf6df17a2814b940fe543b3da7a13",
+      "strategy_type": "naked_call",
+      "underlying": "대두",
+      "underlying_en": "Soybean",
+      "expiry_month": "9월물",
+      "expiry_date": "2026-08-21",
+      "current_price": 1150,
+      "legs": [
+        {
+          "type": "call_sell",
+          "strike": 1400,
+          "contracts": 3,
+          "premium": 150,
+          "current_price_pt": 1.0
+        }
+      ],
+      "total_premium": 150,
+      "margin": 822,
+      "margin_krw": 1233000,
+      "profit_scenarios": [],
+      "expected_return_pct": 18.25,
+      "monthly_return_pct": 7.5,
+      "current_pnl": 0,
+      "memo": "",
+      "chart_data": null,
+      "entry_price": 1150,
+      "strategy_num": 161
     }
   ]
 }
