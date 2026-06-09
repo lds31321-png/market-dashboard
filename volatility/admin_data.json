@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "exported_at": "2026-06-08T11:21:32.183Z",
+    "exported_at": "2026-06-09T04:18:21.399Z",
     "source": "admin.html",
     "version": 1,
     "keys": [
@@ -1848,140 +1848,107 @@
   "sv_phase_note": "1. S&P500\n* 국면변화 : DSR 하락에 따라 경고국면 진입\n* 신규진입 : \n사이징 0.9 x 거리 0.9 = 콜, 풋 기준물량의 0.81배 진입(축소)\n* 기존포지션 : \n0.0배→0.0배 = 콜 노출량의 0.0배 유지\n0.0배→0.0배 = 풋 노출량의 0.0배 유지\n* 노출캡 : 콜, 풋 1.0%(축소)\n\n2. 호주달러\n* 국면변화 : DSR 하락에 따라 경고국면 진입\n* 신규진입 : \n사이징 0.7 x 거리 0.8 = 콜, 풋 기준물량의 0.56배 진입(축소)\n* 기존포지션 : \n0.0배→0.0배 = 콜 노출량의 0.0배 유지\n0.0배→0.3배 = 풋 노출량의 0.3배 축소\n* 노출캡 : 콜, 풋 1.0%(유지)\n\n3. 대두 (*** 생존경보 발동_2단계(개별_풋) ***)\n* 국면변화 : 지표 불안 속 경고국면 내 변동\n* 신규진입 : \n사이징 0.7 x 거리 0.8 = 콜, 풋 기준물량의 0.56배 진입(유지)\n* 기존포지션 : \n0.0배→0.0배 = 콜 노출량의 0.0배 유지\n0.5배→0.3배 = 풋 노출량의 0.2배 완화(생존경보_재진입유보)\n* 노출캡 : 콜, 풋 1.0%(유지)\n\n4. 밀\n* 국면변화 : DSR 안정에 따른 일반국면 진입\n* 신규진입 : \n사이징 1.0 x 거리 1.0 = 콜, 풋 기준물량의 1.0배 진입(완화)\n* 기존포지션 : \n0.0배→0.0배 = 콜 노출량의 0.0배 유지\n0.2배→0.0배 = 풋 노출량의 0.2배 완화\n* 노출캡 : 콜, 풋 1.5%(완화)",
   "sv_phase_note_updated": "1780916773578",
   "weekly_picks": {
-    "title": "06월 02일 추천 포지션",
-    "updated": "06월 02일",
+    "title": "06월 09일 추천 포지션",
     "strategies": [
       {
-        "date": "06월 02일",
+        "date": "06월 09일",
         "stratType": "양매도",
         "commodities": "크루드 오일",
         "legs": [
           {
-            "date": "06월 02일",
+            "date": "06월 09일",
             "name": "크루드 오일",
             "month": "08월물",
-            "strike": "177.5",
+            "strike": "161",
             "optType": "콜옵션 매도",
+            "premium": "0.16",
+            "contracts": 1,
+            "premUsd": 160
+          },
+          {
+            "date": "06월 09일",
+            "name": "크루드 오일",
+            "month": "08월물",
+            "strike": "53",
+            "optType": "풋옵션 매도",
             "premium": "0.17",
             "contracts": 1,
             "premUsd": 170
-          },
-          {
-            "date": "06월 02일",
-            "name": "크루드 오일",
-            "month": "08월물",
-            "strike": "60",
-            "optType": "풋옵션 매도",
-            "premium": "0.15",
-            "contracts": 1,
-            "premUsd": 150
           }
         ],
-        "margin": 942,
-        "totalPremUsd": 320,
-        "returnPct": "34.0",
+        "margin": 1144,
+        "totalPremUsd": 330,
+        "returnPct": 28.85,
         "expiry": "2026-07-16",
-        "daysLeft": 44
+        "daysLeft": 37
       },
       {
-        "date": "06월 02일",
+        "date": "06월 09일",
         "stratType": "콜 매도",
         "commodities": "천연가스",
         "legs": [
           {
-            "date": "06월 02일",
+            "date": "06월 09일",
             "name": "천연가스",
             "month": "08월물",
-            "strike": "4.65",
+            "strike": "4.55",
             "optType": "콜옵션 매도",
-            "premium": "0.016",
+            "premium": "0.01",
             "contracts": 1,
-            "premUsd": 160
+            "premUsd": 100
           }
         ],
-        "margin": 485,
-        "totalPremUsd": 160,
-        "returnPct": "33.0",
+        "margin": 356,
+        "totalPremUsd": 100,
+        "returnPct": 28.09,
         "expiry": "2026-07-28",
-        "daysLeft": 56
+        "daysLeft": 49
       },
       {
-        "date": "06월 02일",
+        "date": "06월 09일",
         "stratType": "풋 매도",
         "commodities": "천연가스",
         "legs": [
           {
-            "date": "06월 02일",
+            "date": "06월 09일",
             "name": "천연가스",
             "month": "09월물",
-            "strike": "2.10",
+            "strike": "2.1",
             "optType": "풋옵션 매도",
-            "premium": "0.014",
+            "premium": "0.01",
             "contracts": 1,
-            "premUsd": 140
+            "premUsd": 100
           }
         ],
-        "margin": 284,
-        "totalPremUsd": 140,
-        "returnPct": "49.3",
+        "margin": 239,
+        "totalPremUsd": 100,
+        "returnPct": 41.84,
         "expiry": "2026-08-26",
-        "daysLeft": 85
+        "daysLeft": 78
       },
       {
-        "date": "06월 02일",
-        "stratType": "풋 매도",
-        "commodities": "S&P500",
-        "legs": [
-          {
-            "date": "06월 02일",
-            "name": "s&p500",
-            "month": "06월물",
-            "strike": "6625",
-            "optType": "풋옵션 매도",
-            "premium": "2.75",
-            "contracts": 1,
-            "premUsd": 137.5
-          }
-        ],
-        "margin": 3533,
-        "totalPremUsd": 138,
-        "returnPct": "3.9",
-        "expiry": "2026-06-18",
-        "daysLeft": 16
-      },
-      {
-        "date": "06월 02일",
-        "stratType": "양매도",
+        "date": "06월 09일",
+        "stratType": "콜 매도",
         "commodities": "대두",
         "legs": [
           {
-            "date": "06월 02일",
+            "date": "06월 09일",
             "name": "대두",
             "month": "09월물",
-            "strike": "1480",
+            "strike": "1400",
             "optType": "콜옵션 매도",
-            "premium": "1`0",
-            "contracts": 3,
-            "premUsd": 150
-          },
-          {
-            "date": "06월 02일",
-            "name": "대두",
-            "month": "09월물",
-            "strike": "1000",
-            "optType": "풋옵션 매도",
-            "premium": "1`0",
+            "premium": "1.0",
             "contracts": 3,
             "premUsd": 150
           }
         ],
-        "margin": 898,
-        "totalPremUsd": 300,
-        "returnPct": "33.4",
+        "margin": 822,
+        "totalPremUsd": 150,
+        "returnPct": 18.25,
         "expiry": "2026-08-21",
-        "daysLeft": 79
+        "daysLeft": 73
       }
     ],
-    "raw": "06월 02일, 크루드 오일, 08월물, 행사가 177.5, 콜옵션 매도, 0.17, 1계약 추천\n06월 02일, 크루드 오일, 08월물, 행사가 60, 풋옵션 매도, 0.15, 1계약 추천\n증거금 942 만기일 26 07 16 잔존일 44\n06월 02일, 천연가스, 08월물, 행사가 4.65, 콜옵션 매도, 0.016, 1계약 추천\n증거금 485 만기일 26 07 28 잔존일 56\n06월 02일, 천연가스, 09월물, 행사가 2.10, 풋옵션 매도, 0.014, 1계약 추천\n증거금 284 만기일 26 08 26 잔존일 85\n06월 02일, s&p500, 06월물, 행사가 6625, 풋옵션 매도, 2.75, 1계약 추천\n증거금 3533 만기일 26 06 18 잔존일 16\n06월 02일, 대두, 09월물, 행사가 1480, 콜옵션 매도, 1`0, 3계약 추천\n06월 02일, 대두, 09월물, 행사가 1000, 풋옵션 매도, 1`0, 3계약 추천\n증거금 898 만기일 26 08 21 잔존일 79"
+    "updated_at": "2026-06-09T05:04:01.256818Z"
   }
 }
