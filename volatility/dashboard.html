@@ -1488,7 +1488,8 @@ function openModal(id){
               // 진입일(shared_date) 기준 시작점: 진입일 20 거래일 전부터
               if(p.shared_date){
                 const entryIso=p.shared_date; // YYYY-MM-DD
-                const entryIdx=dates.findIndex(dt=>dt.replace(/\//g,'-')>=entryIso);
+                let entryIdx=dates.findIndex(dt=>dt.replace(/\//g,'-')>=entryIso);
+                if(entryIdx<0) entryIdx=dates.length;
                 if(entryIdx>0){
                   const startIdx=Math.max(0,entryIdx-80);
                   dates=dates.slice(startIdx);
