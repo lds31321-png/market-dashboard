@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "exported_at": "2026-06-11T11:56:18.388Z",
+    "exported_at": "2026-06-11T12:17:28.652Z",
     "source": "admin.html",
     "version": 1,
     "keys": [
@@ -1859,7 +1859,7 @@
     }
   ],
   "sv_phase_note": "시장국면 안내\n\n1. 신규 진입에서 나타내는 '기준물량의 0.x배 진입'은 개인의 1회 진입 노출량을 0.x배만큼 축소 진입 검토를 의미\nex) 1회 진입 기준 물량이 100불이고 0.81배 축소 진입일 경우 \n       : 81불 진입 권장\n\n2. 기존포지션의 '노출량의 0.x배 축소'는 전일 종가와 현재가의 평균으로 기존 초기 보유 포지션 노출량의 0.x배 만큼을 청산하여 포지션 축소 검토를 의미\nex)  기존 초기 보유 포지션 노출량 100불이고 0.3배 축소일 경우\n       : 30불 청산하여 노출량 70불로 축소\n\n3. 노출캡의 x.x%는 상관성이 높은 섹터내 모든 거래종목의 동일방향 총 노출량을 캡 x.x% 이내로 제한 검토를 의미\nex) 운용자금이 1만불이고 노출캡이 1.5%일 겨우\n      : 동일섹터 단일방향 노출캡 150불",
-  "sv_phase_note_updated": "1781178885851",
+  "sv_phase_note_updated": "1781180175908",
   "weekly_picks": {
     "title": "06월 09일 추천 포지션",
     "strategies": [
@@ -1962,10 +1962,10 @@
         "daysLeft": 73
       }
     ],
-    "updated_at": "2026-06-11T12:11:45.874417Z"
+    "updated_at": "2026-06-11T12:17:53.438781Z"
   },
   "option_holdings": {
-    "updated": "2026-06-11T11:56:06.330Z",
+    "updated": "2026-06-11T12:17:22.163Z",
     "exchange_rate": 1500,
     "margin_won": 30056800,
     "deposit_won": 50000000,
@@ -2484,22 +2484,6 @@
     ],
     "closed": [
       {
-        "code": "OZSQ26_P1060",
-        "underlying": "대두",
-        "month": 8,
-        "mLabel": "08월물",
-        "cp": "P",
-        "cpKo": "풋",
-        "strike": "1060",
-        "entry": 1.125,
-        "exit": 3.375,
-        "contracts": 2,
-        "pnl": -225,
-        "reason": "손절",
-        "is_stoploss": true,
-        "no_entry": false
-      },
-      {
         "code": "OESM26_P6625",
         "underlying": "S&P500",
         "month": 6,
@@ -2511,6 +2495,22 @@
         "exit": 4,
         "contracts": 1,
         "pnl": -62.5,
+        "reason": "손절",
+        "is_stoploss": true,
+        "no_entry": false
+      },
+      {
+        "code": "OZSQ26_P1060",
+        "underlying": "대두",
+        "month": 8,
+        "mLabel": "08월물",
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "1060",
+        "entry": 1.125,
+        "exit": 3.375,
+        "contracts": 2,
+        "pnl": -225,
         "reason": "손절",
         "is_stoploss": true,
         "no_entry": false
