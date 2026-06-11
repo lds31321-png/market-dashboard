@@ -759,7 +759,7 @@ function buildStrangleBar(entry, current, putStrike, callStrike){
 
 
 /* [배지] 시장국면·생존경보 — positions.json meta.market_state 스냅숏 (직트 관리자 로직 산출값) */
-function msBadges(u){try{var s=(meta.market_state||{})[u];if(!s)return '';
+function msBadges(u){return '';/* [2026-06-10] 위험 배지 줄(국면·경보·꼬리위험) 제거 — 무료 대시보드 단순화 */try{var s=(meta.market_state||{})[u];if(!s)return '';
 var ph=s.phase||'안전';var pc=ph==='위기'?['#9a3a12','rgba(154,58,18,.10)']:ph==='주의'?['#c8803a','rgba(200,128,58,.12)']:['#8a8480','rgba(0,0,0,.05)'];
 var lv=s.alert||0;var ac=lv>=3?['#9a3a12','rgba(154,58,18,.10)']:lv>=1?['#c8803a','rgba(200,128,58,.12)']:['#8a8480','rgba(0,0,0,.05)'];
 var h='<span class="ms-b'+(ph!=='안전'?' ms-abn':'')+'" style="--p:'+pc[1]+';font-size:12px;font-weight:700;color:'+pc[0]+';background:'+pc[1]+';padding:3px 9px;border-radius:999px;white-space:nowrap;">국면 '+ph+'</span>'
