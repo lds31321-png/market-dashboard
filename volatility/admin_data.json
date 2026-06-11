@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "exported_at": "2026-06-10T09:32:14.572Z",
+    "exported_at": "2026-06-11T11:56:18.388Z",
     "source": "admin.html",
     "version": 1,
     "keys": [
@@ -10,42 +10,43 @@
       "st_detail_v3",
       "sv_phase_note",
       "sv_phase_note_updated",
-      "weekly_picks"
+      "weekly_picks",
+      "option_holdings"
     ]
   },
   "sv_admin_alerts": {
-    "OZS": {
+    "OGC": {
       "call": 0,
-      "put": 2
+      "put": 1
     }
   },
   "sv_rm_data": {
     "OES": {
-      "psr": 1.1,
-      "isr": 1.11,
+      "psr": 1.38,
+      "isr": 1.39,
       "lmr": 0.92,
-      "dsr": -1.43,
-      "ivl": 0.32,
+      "dsr": -0.78,
+      "ivl": 0.43,
       "tail": false,
       "phase_admin": "WARNING",
-      "sizing_admin": 0.7,
-      "sizingCall_admin": 0.7,
-      "sizingPut_admin": 0.7,
-      "dist_admin": 0.8,
-      "distCall_admin": 0.8,
-      "distPut_admin": 0.8,
-      "decelCall_admin": 0,
-      "decelPut_admin": 30,
+      "sizing_admin": 0.9,
+      "sizingCall_admin": 0.9,
+      "sizingPut_admin": 0.9,
+      "dist_admin": 0.9,
+      "distCall_admin": 0.9,
+      "distPut_admin": 0.9,
+      "decelCall_admin": 10,
+      "decelPut_admin": 10,
       "capCall_admin": 0.01,
       "capPut_admin": 0.01,
       "tailCall_admin": false,
       "tailPut_admin": false
     },
     "OEUU": {
-      "psr": 0.82,
-      "isr": 1.3,
+      "psr": 0.69,
+      "isr": 1.11,
       "lmr": 0.84,
-      "dsr": -0.88,
+      "dsr": 0.27,
       "ivl": 0.15,
       "tail": false,
       "phase_admin": "NORMAL",
@@ -63,32 +64,32 @@
       "tailPut_admin": false
     },
     "OADU": {
-      "psr": 0.82,
-      "isr": 0.99,
+      "psr": 0.9,
+      "isr": 1.04,
       "lmr": 0.89,
-      "dsr": -1.34,
-      "ivl": 0.17,
+      "dsr": -0.44,
+      "ivl": 0.23,
       "tail": false,
       "phase_admin": "WARNING",
-      "sizing_admin": 0.7,
-      "sizingCall_admin": 0.7,
-      "sizingPut_admin": 0.7,
-      "dist_admin": 0.8,
-      "distCall_admin": 0.8,
-      "distPut_admin": 0.8,
-      "decelCall_admin": 0,
-      "decelPut_admin": 30,
+      "sizing_admin": 0.9,
+      "sizingCall_admin": 0.9,
+      "sizingPut_admin": 0.9,
+      "dist_admin": 0.9,
+      "distCall_admin": 0.9,
+      "distPut_admin": 0.9,
+      "decelCall_admin": 10,
+      "decelPut_admin": 10,
       "capCall_admin": 0.01,
       "capPut_admin": 0.01,
       "tailCall_admin": false,
       "tailPut_admin": false
     },
     "OZN": {
-      "psr": 0.73,
-      "isr": 0.97,
+      "psr": 0.69,
+      "isr": 0.62,
       "lmr": 1.02,
-      "dsr": -0.6,
-      "ivl": 0.34,
+      "dsr": -0.2,
+      "ivl": 0.33,
       "tail": false,
       "phase_admin": "NORMAL",
       "sizing_admin": 1,
@@ -105,11 +106,11 @@
       "tailPut_admin": false
     },
     "OGC": {
-      "psr": 1.17,
-      "isr": 0.99,
+      "psr": 1.36,
+      "isr": 1.45,
       "lmr": 0.94,
-      "dsr": -1.68,
-      "ivl": 0.28,
+      "dsr": -1.45,
+      "ivl": 0.37,
       "tail": false,
       "phase_admin": "WARNING",
       "sizing_admin": 0.7,
@@ -119,7 +120,7 @@
       "distCall_admin": 0.8,
       "distPut_admin": 0.8,
       "decelCall_admin": 0,
-      "decelPut_admin": 50,
+      "decelPut_admin": 30,
       "capCall_admin": 0.01,
       "capPut_admin": 0.01,
       "tailCall_admin": false,
@@ -127,10 +128,10 @@
     },
     "OCL": {
       "psr": 0.64,
-      "isr": 0.37,
+      "isr": 0.56,
       "lmr": 1.21,
-      "dsr": -0.42,
-      "ivl": 0.17,
+      "dsr": 0.38,
+      "ivl": 0.22,
       "tail": false,
       "phase_admin": "WARNING",
       "sizing_admin": 0.9,
@@ -147,11 +148,11 @@
       "tailPut_admin": false
     },
     "ONG": {
-      "psr": 0.72,
-      "isr": 0.63,
-      "lmr": 0.93,
-      "dsr": -1.04,
-      "ivl": 0.05,
+      "psr": 0.56,
+      "isr": 0.5,
+      "lmr": 0.92,
+      "dsr": -0.17,
+      "ivl": 0.06,
       "tail": false,
       "phase_admin": "NORMAL",
       "sizing_admin": 1,
@@ -168,11 +169,11 @@
       "tailPut_admin": false
     },
     "OZS": {
-      "psr": 0.99,
-      "isr": 0.79,
-      "lmr": 1.02,
-      "dsr": -0.58,
-      "ivl": 0.3,
+      "psr": 0.61,
+      "isr": 0.77,
+      "lmr": 1.03,
+      "dsr": 0.38,
+      "ivl": 0.31,
       "tail": false,
       "phase_admin": "WARNING",
       "sizing_admin": 0.9,
@@ -189,11 +190,11 @@
       "tailPut_admin": false
     },
     "OZW": {
-      "psr": 0.36,
-      "isr": 0.39,
+      "psr": 0.27,
+      "isr": 0.36,
       "lmr": 1.06,
-      "dsr": 0.32,
-      "ivl": 0.27,
+      "dsr": 0.26,
+      "ivl": 0.28,
       "tail": false,
       "phase_admin": "NORMAL",
       "sizing_admin": 1,
@@ -214,212 +215,220 @@
     {
       "rank": 1,
       "name": "크루드 오일",
-      "avgPct": 26.64,
+      "avgPct": 30.1,
       "call": {
         "month": "08월물",
-        "pct": 29.46,
-        "strike": "122.50",
-        "price": "0.79(0.14)",
+        "pct": 28.56,
+        "strike": "124.50",
+        "price": "0.96(0.14)",
         "qty": "0.39(1)",
-        "margin": 2226,
-        "profit": 495962
+        "margin": 2872,
+        "profit": 602688
       },
       "put": {
         "month": "09월물",
-        "pct": 13.94,
-        "strike": "54.50",
-        "price": "0.215(0.07)",
+        "pct": 14.25,
+        "strike": "56.00",
+        "price": "0.235(0.08)",
         "qty": "0.39(1)",
-        "margin": 671,
-        "profit": 134977
+        "margin": 729,
+        "profit": 147533
       }
     },
     {
       "rank": 2,
       "name": "천연가스",
-      "avgPct": 18.08,
+      "avgPct": 13.74,
       "call": {
-        "month": "08월물",
-        "pct": 11.8,
-        "strike": "5.10",
-        "price": "0.004(0.006)",
+        "month": "09월물",
+        "pct": 13.56,
+        "strike": "5.60",
+        "price": "0.006(0.009)",
         "qty": "1.5(1)",
-        "margin": 196,
-        "profit": 87600
+        "margin": 166,
+        "profit": 131400
       },
       "put": {
-        "month": "07월물",
-        "pct": 34.2,
-        "strike": "2.70",
-        "price": "0.0095(0.014)",
+        "month": "09월물",
+        "pct": 19.88,
+        "strike": "2.20",
+        "price": "0.014(0.017)",
         "qty": "1.5(1)",
-        "margin": 538,
-        "profit": 208050
+        "margin": 272,
+        "profit": 306600
       }
     },
     {
       "rank": 3,
-      "name": "옥수수",
-      "avgPct": 9.32,
+      "name": "골드",
+      "avgPct": 10.95,
       "call": {
         "month": "08월물",
-        "pct": 12.63,
-        "strike": "540.00",
-        "price": "0.9375(0.86)",
-        "qty": "4.25(4)",
-        "margin": 237,
-        "profit": 290859
-      },
-      "put": {
-        "month": "09월물",
-        "pct": 13.39,
-        "strike": "280.00",
-        "price": "0.135(0.14)",
-        "qty": "4.25(4)",
-        "margin": 21,
-        "profit": 41884
-      }
-    },
-    {
-      "rank": 4,
-      "name": "골드",
-      "avgPct": 8.94,
-      "call": {
-        "month": "07월물",
-        "pct": 7.58,
-        "strike": "4740.00",
-        "price": "3.45(0.4)",
+        "pct": 6.51,
+        "strike": "4955.00",
+        "price": "6.75(0.78)",
         "qty": "0.14(1)",
-        "margin": 9027,
-        "profit": 105777
+        "margin": 6589,
+        "profit": 206955
       },
       "put": null
     },
     {
-      "rank": 5,
+      "rank": 4,
       "name": "S&P500",
-      "avgPct": 8.52,
+      "avgPct": 9.46,
       "call": null,
       "put": {
         "month": "09월물",
-        "pct": 8.8,
-        "strike": "6100.00",
-        "price": "42.5(2.14)",
-        "qty": "0.16(1)",
-        "margin": 7234,
-        "profit": 651525
+        "pct": 9.78,
+        "strike": "6050.00",
+        "price": "48.75(2.71)",
+        "qty": "0.18(1)",
+        "margin": 7543,
+        "profit": 747338
+      }
+    },
+    {
+      "rank": 5,
+      "name": "옥수수",
+      "avgPct": 9.1,
+      "call": {
+        "month": "08월물",
+        "pct": 11.17,
+        "strike": "540.00",
+        "price": "0.8125(0.86)",
+        "qty": "4.25(4)",
+        "margin": 235,
+        "profit": 252078
+      },
+      "put": {
+        "month": "09월물",
+        "pct": 12.96,
+        "strike": "285.00",
+        "price": "0.135(0.14)",
+        "qty": "4.25(4)",
+        "margin": 22,
+        "profit": 41884
       }
     },
     {
       "rank": 6,
       "name": "밀",
-      "avgPct": 4.92,
+      "avgPct": 4.74,
       "call": {
-        "month": "08월물",
-        "pct": 10.28,
-        "strike": "770.00",
-        "price": "1.1875(1.42)",
+        "month": "09월물",
+        "pct": 8.33,
+        "strike": "805.00",
+        "price": "1.9375(1.72)",
         "qty": "2.39(2)",
-        "margin": 374,
-        "profit": 207183
+        "margin": 476,
+        "profit": 338036
       },
       "put": null
     },
     {
       "rank": 7,
       "name": "대두",
-      "avgPct": 4.08,
+      "avgPct": 4.11,
       "call": {
         "month": "09월물",
-        "pct": 8.57,
-        "strike": "1400.00",
-        "price": "1.125(1.93)",
+        "pct": 8.74,
+        "strike": "1390.00",
+        "price": "1.375(2.36)",
         "qty": "1.91(1)",
-        "margin": 259,
-        "profit": 174105
+        "margin": 318,
+        "profit": 212795
       },
       "put": {
         "month": "09월물",
-        "pct": 2.96,
-        "strike": "820.00",
-        "price": "0.1875(0.32)",
+        "pct": 3.12,
+        "strike": "830.00",
+        "price": "0.135(0.23)",
         "qty": "1.91(1)",
-        "margin": 90,
-        "profit": 29018
+        "margin": 51,
+        "profit": 20893
       }
     },
     {
       "rank": 8,
-      "name": "유로FX",
-      "avgPct": 3.75,
+      "name": "엔화",
+      "avgPct": 3.37,
       "call": {
         "month": "07월물",
-        "pct": 4.79,
-        "strike": "1.20",
-        "price": "0.000225(0.00044)",
-        "qty": "1.95(1)",
-        "margin": 715,
-        "profit": 80072
-      },
-      "put": {
-        "month": "08월물",
-        "pct": 4.46,
-        "strike": "1.07",
-        "price": "0.0002(0.00039)",
-        "qty": "1.95(1)",
-        "margin": 255,
-        "profit": 71175
-      }
-    },
-    {
-      "rank": 9,
-      "name": "엔화",
-      "avgPct": 2.67,
-      "call": {
-        "month": "08월물",
-        "pct": 4.18,
-        "strike": "6700.00",
-        "price": "7(12.57)",
+        "pct": 5.04,
+        "strike": "6550.00",
+        "price": "4.75(8.53)",
         "qty": "1.8(1)",
-        "margin": 1045,
-        "profit": 229950
+        "margin": 1597,
+        "profit": 156038
       },
       "put": null
     },
     {
-      "rank": 10,
+      "rank": 9,
       "name": "10년국채",
-      "avgPct": 2.63,
+      "avgPct": 2.78,
       "call": {
-        "month": "09월물",
-        "pct": 3.44,
-        "strike": "114.50",
-        "price": "4(4.98)",
+        "month": "08월물",
+        "pct": 3.49,
+        "strike": "113.00",
+        "price": "3(3.74)",
         "qty": "2.49(2)",
-        "margin": 721,
-        "profit": 227213
+        "margin": 878,
+        "profit": 170409
       },
       "put": {
         "month": "09월물",
-        "pct": 3.41,
+        "pct": 3.24,
         "strike": "102.50",
         "price": "3(3.74)",
         "qty": "2.49(2)",
-        "margin": 537,
+        "margin": 572,
         "profit": 170409
+      }
+    },
+    {
+      "rank": 10,
+      "name": "유로FX",
+      "avgPct": 2.64,
+      "call": {
+        "month": "09월물",
+        "pct": 3.29,
+        "strike": "1.23",
+        "price": "0.000425(0.00083)",
+        "qty": "1.95(1)",
+        "margin": 538,
+        "profit": 151247
+      },
+      "put": {
+        "month": "09월물",
+        "pct": 4.31,
+        "strike": "1.06",
+        "price": "0.000325(0.00063)",
+        "qty": "1.95(1)",
+        "margin": 308,
+        "profit": 115659
       }
     },
     {
       "rank": 11,
       "name": "호주달러",
-      "avgPct": 1.74,
+      "avgPct": 1.49,
       "call": null,
-      "put": null
+      "put": {
+        "month": "09월물",
+        "pct": 3.53,
+        "strike": "0.60",
+        "price": "0.00025(0.00025)",
+        "qty": "2.21(2)",
+        "margin": 220,
+        "profit": 89790
+      }
     }
   ],
   "st_detail_v3": [
     {
-      "rank": 0,
+      "rank": 4,
       "name": "S&P500",
       "avgPct": 0,
       "months": [
@@ -428,1160 +437,518 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "7850",
-              "lossProb": "3%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "0.30",
-              "margin": 3341
-            },
-            {
-              "type": "콜",
-              "strike": "7700",
-              "lossProb": "20%",
+              "daysSig": "X",
+              "daysLeft": 7,
+              "yieldSig": "X",
+              "yieldPct": "1.99%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "콜",
-              "strike": "7650",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "풋",
-              "strike": "6600",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "강보합"
+              "strike": "7750",
+              "price": "0.525(0.09)",
+              "qty": "0.18(1)",
+              "margin": 5002,
+              "profit": 8048,
+              "lossPct": "3.00%"
             },
             {
               "type": "풋",
-              "strike": "7000",
-              "lossProb": "10%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "14.90",
-              "margin": 9629
-            },
-            {
-              "type": "풋",
-              "strike": "7100",
-              "lossProb": "20%",
+              "daysSig": "X",
+              "daysLeft": 7,
+              "yieldSig": "O",
+              "yieldPct": "32.19%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "강보합"
+              "strike": "6950",
+              "price": "19.1(2.71)",
+              "qty": "0.18(1)",
+              "margin": 12673,
+              "profit": 292803,
+              "lossPct": "10.00%"
             }
-          ],
-          "expiry": "2026-06-18",
-          "underlying_month": "06월물"
+          ]
         },
         {
           "label": "S&P500 09월물 (기초자산 09월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "8750",
-              "lossProb": "3%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "2.65",
-              "margin": 2077
-            },
-            {
-              "type": "콜",
-              "strike": "8250",
-              "lossProb": "20%",
+              "daysSig": "O",
+              "daysLeft": 99,
+              "yieldSig": "X",
+              "yieldPct": "1.81%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "콜",
-              "strike": "8150",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "풋",
-              "strike": "5200",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "강보합"
+              "strike": "8700",
+              "price": "2.8(0.47)",
+              "qty": "0.18(1)",
+              "margin": 2296,
+              "profit": 42924,
+              "lossPct": "3.00%"
             },
             {
               "type": "풋",
-              "strike": "6100",
-              "lossProb": "10%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "42.50",
-              "margin": 7234
-            },
-            {
-              "type": "풋",
-              "strike": "6400",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "강보합"
+              "daysSig": "O",
+              "daysLeft": 99,
+              "yieldSig": "O",
+              "yieldPct": "9.78%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 14,
+              "recommended": true,
+              "strike": "6050",
+              "price": "48.75(2.71)",
+              "qty": "0.18(1)",
+              "margin": 7543,
+              "profit": 747338,
+              "lossPct": "10.00%"
             }
-          ],
-          "expiry": "2026-09-18",
-          "underlying_month": "09월물"
+          ]
         },
         {
           "label": "S&P500 12월물 (기초자산 12월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "9400",
-              "lossProb": "3%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "4.13",
-              "margin": 1454
-            },
-            {
-              "type": "콜",
-              "strike": "8650",
-              "lossProb": "20%",
+              "daysSig": "O",
+              "daysLeft": 190,
+              "yieldSig": "X",
+              "yieldPct": "2.12%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "콜",
-              "strike": "8500",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "풋",
-              "strike": "4700",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "강보합"
+              "strike": "9300",
+              "price": "4.475(0.74)",
+              "qty": "0.18(1)",
+              "margin": 1646,
+              "profit": 68602,
+              "lossPct": "3.00%"
             },
             {
               "type": "풋",
-              "strike": "5600",
-              "lossProb": "10%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "57.25",
-              "margin": 5588
-            },
-            {
-              "type": "풋",
-              "strike": "6150",
-              "lossProb": "20%",
+              "daysSig": "O",
+              "daysLeft": 190,
+              "yieldSig": "O",
+              "yieldPct": "8.87%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "강보합"
+              "strike": "5500",
+              "price": "59.75(2.71)",
+              "qty": "0.18(1)",
+              "margin": 5311,
+              "profit": 915968,
+              "lossPct": "10.00%"
             }
-          ],
-          "expiry": "2026-12-18",
-          "underlying_month": "12월물"
+          ]
         }
       ]
     },
     {
-      "rank": 0,
-      "name": "유로",
-      "avgPct": 0,
-      "months": [
-        {
-          "label": "유로 07월물 (기초자산 09월물)",
-          "rows": [
-            {
-              "type": "콜",
-              "strike": "1.22",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "0.00023",
-              "margin": 715
-            },
-            {
-              "type": "콜",
-              "strike": "1.195",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "1.19",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "1.105",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "0.00003",
-              "margin": 548
-            },
-            {
-              "type": "풋",
-              "strike": "1.125",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "1.13",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
-            }
-          ],
-          "expiry": "2026-07-02",
-          "underlying_month": "09월물"
-        },
-        {
-          "label": "유로 08월물 (기초자산 09월물)",
-          "rows": [
-            {
-              "type": "콜",
-              "strike": "1.25",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "0.00038",
-              "margin": 506
-            },
-            {
-              "type": "콜",
-              "strike": "1.215",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "1.21",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "1.07",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "0.00020",
-              "margin": 255
-            },
-            {
-              "type": "풋",
-              "strike": "1.105",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "1.115",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
-            }
-          ],
-          "expiry": "2026-08-07",
-          "underlying_month": "09월물"
-        },
-        {
-          "label": "유로 09월물 (기초자산 09월물)",
-          "rows": [
-            {
-              "type": "콜",
-              "strike": "1.265",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "0.00050",
-              "margin": 461
-            },
-            {
-              "type": "콜",
-              "strike": "1.23",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "1.22",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "1.055",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "0.00028",
-              "margin": 261
-            },
-            {
-              "type": "풋",
-              "strike": "1.095",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "1.105",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
-            }
-          ],
-          "expiry": "2026-09-04",
-          "underlying_month": "09월물"
-        }
-      ]
-    },
-    {
-      "rank": 0,
+      "rank": 11,
       "name": "호주달러",
       "avgPct": 0,
       "months": [
         {
-          "label": "호주달러 07월물 (기초자산 09월물)",
+          "label": "호주달러 07월물 (기초자산 07월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "0.76",
-              "lossProb": "3%",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 21,
+              "yieldSig": "X",
+              "yieldPct": "-0.09%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "콜",
-              "strike": "0.74",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "하락",
-              "price": "0.00003",
-              "margin": 659
-            },
-            {
-              "type": "콜",
-              "strike": "0.735",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "하락"
+              "strike": "0.7350",
+              "price": "0.000025(0.00002)",
+              "qty": "2.21(2)",
+              "margin": 816,
+              "profit": 8979,
+              "lossPct": "20.00%"
             },
             {
               "type": "풋",
-              "strike": "0.65",
-              "lossProb": "3%",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 21,
+              "yieldSig": "X",
+              "yieldPct": "-0.14%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "하락",
-              "price": "0.00003",
-              "margin": 440
-            },
-            {
-              "type": "풋",
-              "strike": "0.675",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "풋",
-              "strike": "0.675",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "하락"
+              "strike": "0.6500",
+              "price": "0.000025(0.00002)",
+              "qty": "2.21(2)",
+              "margin": 503,
+              "profit": 8979,
+              "lossPct": "3.00%"
             }
-          ],
-          "expiry": "2026-07-02",
-          "underlying_month": "09월물"
+          ]
         },
         {
-          "label": "호주달러 08월물 (기초자산 09월물)",
+          "label": "호주달러 08월물 (기초자산 08월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "0.785",
-              "lossProb": "3%",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 57,
+              "yieldSig": "X",
+              "yieldPct": "0.49%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "콜",
-              "strike": "0.755",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "하락",
-              "price": "0.00008",
-              "margin": 426
-            },
-            {
-              "type": "콜",
-              "strike": "0.75",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "하락"
+              "strike": "0.7550",
+              "price": "0.000075(0.00007)",
+              "qty": "2.21(2)",
+              "margin": 480,
+              "profit": 26937,
+              "lossPct": "20.00%"
             },
             {
               "type": "풋",
-              "strike": "0.615",
-              "lossProb": "3%",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 57,
+              "yieldSig": "X",
+              "yieldPct": "1.34%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "하락",
-              "price": "0.00009",
-              "margin": 223
-            },
-            {
-              "type": "풋",
-              "strike": "0.66",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "풋",
-              "strike": "0.665",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "하락"
+              "strike": "0.6150",
+              "price": "0.0000875(0.00009)",
+              "qty": "2.21(2)",
+              "margin": 227,
+              "profit": 31427,
+              "lossPct": "3.00%"
             }
-          ],
-          "expiry": "2026-08-07",
-          "underlying_month": "09월물"
+          ]
         },
         {
           "label": "호주달러 09월물 (기초자산 09월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "0.795",
-              "lossProb": "3%",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 85,
+              "yieldSig": "X",
+              "yieldPct": "0.61%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "콜",
-              "strike": "0.765",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "하락",
-              "price": "0.00023",
-              "margin": 384
-            },
-            {
-              "type": "콜",
-              "strike": "0.755",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "하락"
+              "strike": "0.7650",
+              "price": "0.0001(0.0001)",
+              "qty": "2.21(2)",
+              "margin": 404,
+              "profit": 35916,
+              "lossPct": "20.00%"
             },
             {
               "type": "풋",
-              "strike": "0.6",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "하락",
-              "price": "0.00020",
-              "margin": 179
-            },
-            {
-              "type": "풋",
-              "strike": "0.65",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "풋",
-              "strike": "0.66",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "하락"
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 85,
+              "yieldSig": "◇",
+              "yieldPct": "3.53%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 14,
+              "recommended": true,
+              "strike": "0.6000",
+              "price": "0.00025(0.00025)",
+              "qty": "2.21(2)",
+              "margin": 220,
+              "profit": 89790,
+              "lossPct": "3.00%"
             }
-          ],
-          "expiry": "2026-09-04",
-          "underlying_month": "09월물"
+          ]
         }
       ]
     },
     {
-      "rank": 0,
-      "name": "엔",
-      "avgPct": 0,
-      "months": [
-        {
-          "label": "엔 07월물 (기초자산 09월물)",
-          "rows": [
-            {
-              "type": "콜",
-              "strike": "6750",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "6600",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "3.0",
-              "margin": 1456
-            },
-            {
-              "type": "콜",
-              "strike": "6550",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "6000",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "0.5",
-              "margin": 1499
-            },
-            {
-              "type": "풋",
-              "strike": "6100",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "6150",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
-            }
-          ],
-          "expiry": "2026-07-02",
-          "underlying_month": "09월물"
-        },
-        {
-          "label": "엔 08월물 (기초자산 09월물)",
-          "rows": [
-            {
-              "type": "콜",
-              "strike": "6950",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "6700",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "7.0",
-              "margin": 1045
-            },
-            {
-              "type": "콜",
-              "strike": "6650",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "5850",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "3.3",
-              "margin": 850
-            },
-            {
-              "type": "풋",
-              "strike": "6000",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "6050",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
-            }
-          ],
-          "expiry": "2026-08-07",
-          "underlying_month": "09월물"
-        },
-        {
-          "label": "엔 09월물 (기초자산 09월물)",
-          "rows": [
-            {
-              "type": "콜",
-              "strike": "7100",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "6800",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "9.5",
-              "margin": 990
-            },
-            {
-              "type": "콜",
-              "strike": "6700",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "5750",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "3.3",
-              "margin": 686
-            },
-            {
-              "type": "풋",
-              "strike": "5950",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "6000",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
-            }
-          ],
-          "expiry": "2026-09-04",
-          "underlying_month": "09월물"
-        }
-      ]
-    },
-    {
-      "rank": 0,
-      "name": "10년국채",
-      "avgPct": 0,
-      "months": [
-        {
-          "label": "10년국채 07월물 (기초자산 09월물)",
-          "rows": [
-            {
-              "type": "콜",
-              "strike": "113",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "112",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "1.0",
-              "margin": 1030
-            },
-            {
-              "type": "콜",
-              "strike": "111.5",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "105.5",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "0.0",
-              "margin": 836
-            },
-            {
-              "type": "풋",
-              "strike": "106.5",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "107",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            }
-          ],
-          "expiry": "2026-06-26",
-          "underlying_month": "09월물"
-        },
-        {
-          "label": "10년국채 08월물 (기초자산 09월물)",
-          "rows": [
-            {
-              "type": "콜",
-              "strike": "115",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "113.5",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "2.0",
-              "margin": 756
-            },
-            {
-              "type": "콜",
-              "strike": "112.5",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "103.5",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "1.0",
-              "margin": 595
-            },
-            {
-              "type": "풋",
-              "strike": "105",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "106",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            }
-          ],
-          "expiry": "2026-07-24",
-          "underlying_month": "09월물"
-        },
-        {
-          "label": "10년국채 09월물 (기초자산 09월물)",
-          "rows": [
-            {
-              "type": "콜",
-              "strike": "116",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "114.5",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "4.0",
-              "margin": 721
-            },
-            {
-              "type": "콜",
-              "strike": "113.5",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "102.5",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "3.0",
-              "margin": 537
-            },
-            {
-              "type": "풋",
-              "strike": "104",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "105",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            }
-          ],
-          "expiry": "2026-08-21",
-          "underlying_month": "09월물"
-        }
-      ]
-    },
-    {
-      "rank": 0,
+      "rank": 3,
       "name": "골드",
       "avgPct": 0,
       "months": [
         {
-          "label": "골드 07월물 (기초자산 08월물)",
+          "label": "골드 07월물 (기초자산 07월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "4945",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "콜",
-              "strike": "4740",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "콜",
-              "strike": "4660",
-              "lossProb": "20%",
-              "recommended": false,
               "trend": "하락",
-              "price": "3.5",
-              "margin": 9027
+              "daysSig": "X",
+              "daysLeft": 14,
+              "yieldSig": "O",
+              "yieldPct": "7.29%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 0,
+              "recommended": false,
+              "strike": "4675",
+              "price": "2.55(0.3)",
+              "qty": "0.14(1)",
+              "margin": 7410,
+              "profit": 78183,
+              "lossPct": "10.00%"
             },
             {
               "type": "풋",
-              "strike": "3605",
-              "lossProb": "1%",
-              "recommended": false,
               "trend": "하락",
-              "price": "5.7",
-              "margin": 6379
-            },
-            {
-              "type": "풋",
-              "strike": "3885",
-              "lossProb": "10%",
+              "daysSig": "X",
+              "daysLeft": 14,
+              "yieldSig": "O",
+              "yieldPct": "26.60%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "풋",
-              "strike": "3960",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "하락"
+              "strike": "3510",
+              "price": "7.4(0.98)",
+              "qty": "0.17(1)",
+              "margin": 5938,
+              "profit": 226884,
+              "lossPct": "1.00%"
             }
-          ],
-          "expiry": "2026-06-25",
-          "underlying_month": "08월물"
+          ]
         },
         {
           "label": "골드 08월물 (기초자산 08월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "5390",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "콜",
-              "strike": "5005",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "콜",
-              "strike": "4870",
-              "lossProb": "20%",
-              "recommended": false,
               "trend": "하락",
-              "price": "7.9",
-              "margin": 7693
+              "daysSig": "O",
+              "daysLeft": 47,
+              "yieldSig": "O",
+              "yieldPct": "6.51%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 14,
+              "recommended": true,
+              "strike": "4955",
+              "price": "6.75(0.78)",
+              "qty": "0.14(1)",
+              "margin": 6589,
+              "profit": 206955,
+              "lossPct": "10.00%"
             },
             {
               "type": "풋",
-              "strike": "3355",
-              "lossProb": "1%",
-              "recommended": false,
               "trend": "하락",
-              "price": "8.9",
-              "margin": 5491
-            },
-            {
-              "type": "풋",
-              "strike": "3685",
-              "lossProb": "10%",
+              "daysSig": "O",
+              "daysLeft": 47,
+              "yieldSig": "O",
+              "yieldPct": "12.41%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "풋",
-              "strike": "3795",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "하락"
+              "strike": "3215",
+              "price": "10(1.08)",
+              "qty": "0.17(1)",
+              "margin": 5129,
+              "profit": 306600,
+              "lossPct": "1.00%"
             }
-          ],
-          "expiry": "2026-07-28",
-          "underlying_month": "08월물"
+          ]
         },
         {
-          "label": "골드 09월물 (기초자산 10월물)",
+          "label": "골드 09월물 (기초자산 09월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "5695",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "콜",
-              "strike": "5220",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "콜",
-              "strike": "5060",
-              "lossProb": "20%",
-              "recommended": false,
               "trend": "하락",
-              "price": "11.9",
-              "margin": 8493
+              "daysSig": "O",
+              "daysLeft": 76,
+              "yieldSig": "O",
+              "yieldPct": "5.55%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
+              "recommended": false,
+              "strike": "5180",
+              "price": "10.55(0.94)",
+              "qty": "0.14(1)",
+              "margin": 7480,
+              "profit": 323463,
+              "lossPct": "10.00%"
             },
             {
               "type": "풋",
-              "strike": "3210",
-              "lossProb": "1%",
-              "recommended": false,
               "trend": "하락",
-              "price": "10.2",
-              "margin": 6067
-            },
-            {
-              "type": "풋",
-              "strike": "3570",
-              "lossProb": "10%",
+              "daysSig": "O",
+              "daysLeft": 76,
+              "yieldSig": "O",
+              "yieldPct": "7.34%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "풋",
-              "strike": "3720",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "하락"
+              "strike": "3035",
+              "price": "9.9(1.08)",
+              "qty": "0.17(1)",
+              "margin": 5305,
+              "profit": 303534,
+              "lossPct": "1.00%"
             }
-          ],
-          "expiry": "2026-08-26",
-          "underlying_month": "10월물"
+          ]
         }
       ]
     },
     {
-      "rank": 0,
-      "name": "원유",
+      "rank": 1,
+      "name": "크루드 오일",
       "avgPct": 0,
       "months": [
         {
-          "label": "원유 07월물 (기초자산 07월물)",
+          "label": "크루드 오일 07월물 (기초자산 07월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "104.5",
-              "lossProb": "3%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "0.24",
-              "margin": 2553
-            },
-            {
-              "type": "콜",
-              "strike": "100",
-              "lossProb": "10%",
+              "daysSig": "X",
+              "daysLeft": 5,
+              "yieldSig": "O",
+              "yieldPct": "61.86%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "콜",
-              "strike": "98.5",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "풋",
-              "strike": "75.5",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "강보합"
+              "strike": "105.5",
+              "price": "0.4(0.14)",
+              "qty": "0.39(1)",
+              "margin": 3851,
+              "profit": 251120,
+              "lossPct": "3.00%"
             },
             {
               "type": "풋",
-              "strike": "79",
-              "lossProb": "10%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "0.25",
-              "margin": 3913
-            },
-            {
-              "type": "풋",
-              "strike": "81.5",
-              "lossProb": "20%",
+              "daysSig": "X",
+              "daysLeft": 5,
+              "yieldSig": "O",
+              "yieldPct": "36.77%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "강보합"
+              "strike": "83.0",
+              "price": "0.355(0.12)",
+              "qty": "0.39(1)",
+              "margin": 5744,
+              "profit": 222869,
+              "lossPct": "10.00%"
             }
-          ],
-          "expiry": "2026-06-16",
-          "underlying_month": "07월물"
+          ]
         },
         {
-          "label": "원유 08월물 (기초자산 08월물)",
+          "label": "크루드 오일 08월물 (기초자산 08월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "122.5",
-              "lossProb": "3%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "0.79",
-              "margin": 2226
-            },
-            {
-              "type": "콜",
-              "strike": "111.5",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "콜",
-              "strike": "106.5",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "풋",
-              "strike": "56",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "강보합"
+              "daysSig": "O",
+              "daysLeft": 35,
+              "yieldSig": "O",
+              "yieldPct": "28.56%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 14,
+              "recommended": true,
+              "strike": "124.5",
+              "price": "0.96(0.14)",
+              "qty": "0.39(1)",
+              "margin": 2872,
+              "profit": 602688,
+              "lossPct": "3.00%"
             },
             {
               "type": "풋",
-              "strike": "65.5",
-              "lossProb": "10%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "0.24",
-              "margin": 1439
-            },
-            {
-              "type": "풋",
-              "strike": "69",
-              "lossProb": "20%",
+              "daysSig": "O",
+              "daysLeft": 35,
+              "yieldSig": "O",
+              "yieldPct": "12.41%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "강보합"
+              "strike": "67.5",
+              "price": "0.255(0.09)",
+              "qty": "0.39(1)",
+              "margin": 1740,
+              "profit": 160089,
+              "lossPct": "10.00%"
             }
-          ],
-          "expiry": "2026-07-16",
-          "underlying_month": "08월물"
+          ]
         },
         {
-          "label": "원유 09월물 (기초자산 09월물)",
+          "label": "크루드 오일 09월물 (기초자산 09월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "135",
-              "lossProb": "3%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "0.93",
-              "margin": 1566
-            },
-            {
-              "type": "콜",
-              "strike": "118.5",
-              "lossProb": "10%",
+              "daysSig": "O",
+              "daysLeft": 67,
+              "yieldSig": "O",
+              "yieldPct": "26.73%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "콜",
-              "strike": "110.5",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "풋",
-              "strike": "42",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "강보합"
+              "strike": "137.0",
+              "price": "1.16(0.14)",
+              "qty": "0.39(1)",
+              "margin": 1938,
+              "profit": 728248,
+              "lossPct": "3.00%"
             },
             {
               "type": "풋",
-              "strike": "54.5",
-              "lossProb": "10%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "0.22",
-              "margin": 671
-            },
-            {
-              "type": "풋",
-              "strike": "63",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "강보합"
+              "daysSig": "O",
+              "daysLeft": 67,
+              "yieldSig": "O",
+              "yieldPct": "14.25%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 14,
+              "recommended": true,
+              "strike": "56.0",
+              "price": "0.235(0.08)",
+              "qty": "0.39(1)",
+              "margin": 729,
+              "profit": 147533,
+              "lossPct": "10.00%"
             }
-          ],
-          "expiry": "2026-08-17",
-          "underlying_month": "09월물"
+          ]
         }
       ]
     },
     {
-      "rank": 0,
+      "rank": 2,
       "name": "천연가스",
       "avgPct": 0,
       "months": [
@@ -1590,164 +957,128 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "4.3",
-              "lossProb": "1%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "0.001",
-              "margin": 464
-            },
-            {
-              "type": "콜",
-              "strike": "3.85",
-              "lossProb": "10%",
+              "daysSig": "X",
+              "daysLeft": 14,
+              "yieldSig": "X",
+              "yieldPct": "1.60%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "콜",
-              "strike": "3.7",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "강보합"
+              "strike": "4.30",
+              "price": "0.0005(0.001)",
+              "qty": "1.5(1)",
+              "margin": 270,
+              "profit": 10950,
+              "lossPct": "1.00%"
             },
             {
               "type": "풋",
-              "strike": "2.4",
-              "lossProb": "3%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "0.010",
-              "margin": 538
-            },
-            {
-              "type": "풋",
-              "strike": "2.7",
-              "lossProb": "20%",
+              "daysSig": "X",
+              "daysLeft": 14,
+              "yieldSig": "O",
+              "yieldPct": "15.70%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "풋",
-              "strike": "2.75",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "강보합"
+              "strike": "2.70",
+              "price": "0.006(0.009)",
+              "qty": "1.5(1)",
+              "margin": 778,
+              "profit": 131400,
+              "lossPct": "20.00%"
             }
-          ],
-          "expiry": "2026-06-25",
-          "underlying_month": "07월물"
+          ]
         },
         {
           "label": "천연가스 08월물 (기초자산 08월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "5.1",
-              "lossProb": "1%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "0.004",
-              "margin": 196
-            },
-            {
-              "type": "콜",
-              "strike": "4.4",
-              "lossProb": "10%",
+              "daysSig": "O",
+              "daysLeft": 47,
+              "yieldSig": "O",
+              "yieldPct": "12.84%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 14,
               "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "콜",
-              "strike": "4.15",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "강보합"
+              "strike": "5.15",
+              "price": "0.004(0.006)",
+              "qty": "1.5(1)",
+              "margin": 184,
+              "profit": 87600,
+              "lossPct": "1.00%"
             },
             {
               "type": "풋",
-              "strike": "1.95",
-              "lossProb": "3%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "0.011",
-              "margin": 238
-            },
-            {
-              "type": "풋",
-              "strike": "2.4",
-              "lossProb": "20%",
+              "daysSig": "O",
+              "daysLeft": 47,
+              "yieldSig": "O",
+              "yieldPct": "18.89%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 14,
               "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "풋",
-              "strike": "2.55",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "강보합"
+              "strike": "2.40",
+              "price": "0.009(0.014)",
+              "qty": "1.5(1)",
+              "margin": 294,
+              "profit": 197100,
+              "lossPct": "20.00%"
             }
-          ],
-          "expiry": "2026-07-28",
-          "underlying_month": "08월물"
+          ]
         },
         {
           "label": "천연가스 09월물 (기초자산 09월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "5.55",
-              "lossProb": "1%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "0.005",
-              "margin": 198
-            },
-            {
-              "type": "콜",
-              "strike": "4.65",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "콜",
-              "strike": "4.35",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "강보합"
+              "daysSig": "O",
+              "daysLeft": 76,
+              "yieldSig": "O",
+              "yieldPct": "13.56%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 16,
+              "recommended": true,
+              "strike": "5.60",
+              "price": "0.006(0.009)",
+              "qty": "1.5(1)",
+              "margin": 166,
+              "profit": 131400,
+              "lossPct": "1.00%"
             },
             {
               "type": "풋",
-              "strike": "1.7",
-              "lossProb": "3%",
-              "recommended": false,
               "trend": "강보합",
-              "price": "0.016",
-              "margin": 252
-            },
-            {
-              "type": "풋",
-              "strike": "2.2",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "강보합"
-            },
-            {
-              "type": "풋",
-              "strike": "2.35",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "강보합"
+              "daysSig": "O",
+              "daysLeft": 76,
+              "yieldSig": "O",
+              "yieldPct": "19.88%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 16,
+              "recommended": true,
+              "strike": "2.20",
+              "price": "0.014(0.017)",
+              "qty": "1.5(1)",
+              "margin": 272,
+              "profit": 306600,
+              "lossPct": "20.00%"
             }
-          ],
-          "expiry": "2026-08-26",
-          "underlying_month": "09월물"
+          ]
         }
       ]
     },
     {
-      "rank": 0,
+      "rank": 7,
       "name": "대두",
       "avgPct": 0,
       "months": [
@@ -1756,164 +1087,518 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "1320",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "1260",
-              "lossProb": "10%",
-              "recommended": false,
               "trend": "약보합",
-              "price": "0.063",
-              "margin": 340
-            },
-            {
-              "type": "콜",
-              "strike": "1240",
-              "lossProb": "20%",
+              "daysSig": "O",
+              "daysLeft": 15,
+              "yieldSig": "X",
+              "yieldPct": "2.33%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "약보합"
+              "strike": "1250",
+              "price": "0.1875(0.32)",
+              "qty": "1.91(1)",
+              "margin": 549,
+              "profit": 29018,
+              "lossPct": "10.00%"
             },
             {
               "type": "풋",
-              "strike": "950",
-              "lossProb": "3%",
-              "recommended": false,
               "trend": "약보합",
-              "price": "0.031",
-              "margin": 195
-            },
-            {
-              "type": "풋",
-              "strike": "1030",
-              "lossProb": "20%",
+              "daysSig": "O",
+              "daysLeft": 15,
+              "yieldSig": "X",
+              "yieldPct": "-1.42%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "1050",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
+              "strike": "970",
+              "price": "0.03125(0.05)",
+              "qty": "1.91(1)",
+              "margin": 201,
+              "profit": 4836,
+              "lossPct": "3.00%"
             }
-          ],
-          "expiry": "2026-06-26",
-          "underlying_month": "07월물"
+          ]
         },
         {
           "label": "대두 08월물 (기초자산 08월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "1420",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "1340",
-              "lossProb": "10%",
-              "recommended": false,
               "trend": "약보합",
-              "price": "0.625",
-              "margin": 298
-            },
-            {
-              "type": "콜",
-              "strike": "1300",
-              "lossProb": "20%",
+              "daysSig": "O",
+              "daysLeft": 43,
+              "yieldSig": "O",
+              "yieldPct": "5.97%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 14,
               "recommended": false,
-              "trend": "약보합"
+              "strike": "1330",
+              "price": "0.75(1.29)",
+              "qty": "1.91(1)",
+              "margin": 403,
+              "profit": 116070,
+              "lossPct": "10.00%"
             },
             {
               "type": "풋",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 43,
+              "yieldSig": "X",
+              "yieldPct": "0.38%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 0,
+              "recommended": false,
               "strike": "880",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "0.135",
-              "margin": 110
-            },
-            {
-              "type": "풋",
-              "strike": "990",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "1010",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
+              "price": "0.0725(0.12)",
+              "qty": "1.91(1)",
+              "margin": 117,
+              "profit": 11220,
+              "lossPct": "3.00%"
             }
-          ],
-          "expiry": "2026-07-24",
-          "underlying_month": "08월물"
+          ]
         },
         {
           "label": "대두 09월물 (기초자산 09월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "1510",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "1400",
-              "lossProb": "10%",
-              "recommended": false,
               "trend": "약보합",
-              "price": "1.125",
-              "margin": 259
-            },
-            {
-              "type": "콜",
-              "strike": "1340",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
+              "daysSig": "O",
+              "daysLeft": 71,
+              "yieldSig": "O",
+              "yieldPct": "8.74%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 16,
+              "recommended": true,
+              "strike": "1390",
+              "price": "1.375(2.36)",
+              "qty": "1.91(1)",
+              "margin": 318,
+              "profit": 212795,
+              "lossPct": "10.00%"
             },
             {
               "type": "풋",
-              "strike": "820",
-              "lossProb": "3%",
-              "recommended": false,
               "trend": "약보합",
-              "price": "0.188",
-              "margin": 90
-            },
-            {
-              "type": "풋",
-              "strike": "950",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "980",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
+              "daysSig": "O",
+              "daysLeft": 71,
+              "yieldSig": "◇",
+              "yieldPct": "3.12%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 14,
+              "recommended": true,
+              "strike": "830",
+              "price": "0.135(0.23)",
+              "qty": "1.91(1)",
+              "margin": 51,
+              "profit": 20893,
+              "lossPct": "3.00%"
             }
-          ],
-          "expiry": "2026-08-21",
-          "underlying_month": "09월물"
+          ]
         }
       ]
     },
     {
-      "rank": 0,
+      "rank": 9,
+      "name": "10년국채",
+      "avgPct": 0,
+      "months": [
+        {
+          "label": "10년국채 07월물 (기초자산 07월물)",
+          "rows": [
+            {
+              "type": "콜",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 15,
+              "yieldSig": "X",
+              "yieldPct": "2.11%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
+              "recommended": false,
+              "strike": "111.5",
+              "price": "1(1.25)",
+              "qty": "2.49(2)",
+              "margin": 1197,
+              "profit": 56803,
+              "lossPct": "10.00%"
+            },
+            {
+              "type": "풋",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 15,
+              "yieldSig": "X",
+              "yieldPct": "-0.77%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
+              "recommended": false,
+              "strike": "105.5",
+              "price": "#DIV/0!",
+              "qty": "2.49(2)",
+              "margin": 778,
+              "profit": 0,
+              "lossPct": "3.00%"
+            }
+          ]
+        },
+        {
+          "label": "10년국채 08월물 (기초자산 08월물)",
+          "rows": [
+            {
+              "type": "콜",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 43,
+              "yieldSig": "◇",
+              "yieldPct": "3.49%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 14,
+              "recommended": true,
+              "strike": "113.0",
+              "price": "3(3.74)",
+              "qty": "2.49(2)",
+              "margin": 878,
+              "profit": 170409,
+              "lossPct": "10.00%"
+            },
+            {
+              "type": "풋",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 43,
+              "yieldSig": "X",
+              "yieldPct": "1.61%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 0,
+              "recommended": false,
+              "strike": "103.5",
+              "price": "1(1.25)",
+              "qty": "2.49(2)",
+              "margin": 546,
+              "profit": 56803,
+              "lossPct": "3.00%"
+            }
+          ]
+        },
+        {
+          "label": "10년국채 09월물 (기초자산 09월물)",
+          "rows": [
+            {
+              "type": "콜",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 71,
+              "yieldSig": "◇",
+              "yieldPct": "3.43%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 12,
+              "recommended": false,
+              "strike": "114.5",
+              "price": "4(4.98)",
+              "qty": "2.49(2)",
+              "margin": 734,
+              "profit": 227213,
+              "lossPct": "10.00%"
+            },
+            {
+              "type": "풋",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 71,
+              "yieldSig": "◇",
+              "yieldPct": "3.24%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 14,
+              "recommended": true,
+              "strike": "102.5",
+              "price": "3(3.74)",
+              "qty": "2.49(2)",
+              "margin": 572,
+              "profit": 170409,
+              "lossPct": "3.00%"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rank": 10,
+      "name": "유로FX",
+      "avgPct": 0,
+      "months": [
+        {
+          "label": "유로FX 07월물 (기초자산 07월물)",
+          "rows": [
+            {
+              "type": "콜",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 21,
+              "yieldSig": "X",
+              "yieldPct": "2.11%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
+              "recommended": false,
+              "strike": "1.1950",
+              "price": "0.00015(0.00029)",
+              "qty": "1.95(1)",
+              "margin": 1069,
+              "profit": 53381,
+              "lossPct": "20.00%"
+            },
+            {
+              "type": "풋",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 21,
+              "yieldSig": "X",
+              "yieldPct": "0.41%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
+              "recommended": false,
+              "strike": "1.1050",
+              "price": "0.0000375(0.00007)",
+              "qty": "1.95(1)",
+              "margin": 589,
+              "profit": 13345,
+              "lossPct": "3.00%"
+            }
+          ]
+        },
+        {
+          "label": "유로FX 08월물 (기초자산 08월물)",
+          "rows": [
+            {
+              "type": "콜",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 57,
+              "yieldSig": "◇",
+              "yieldPct": "2.95%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 12,
+              "recommended": false,
+              "strike": "1.2150",
+              "price": "0.000325(0.00063)",
+              "qty": "1.95(1)",
+              "margin": 672,
+              "profit": 115659,
+              "lossPct": "20.00%"
+            },
+            {
+              "type": "풋",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 57,
+              "yieldSig": "◇",
+              "yieldPct": "2.77%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 12,
+              "recommended": false,
+              "strike": "1.0750",
+              "price": "0.00015(0.00029)",
+              "qty": "1.95(1)",
+              "margin": 299,
+              "profit": 53381,
+              "lossPct": "3.00%"
+            }
+          ]
+        },
+        {
+          "label": "유로FX 09월물 (기초자산 09월물)",
+          "rows": [
+            {
+              "type": "콜",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 85,
+              "yieldSig": "◇",
+              "yieldPct": "3.29%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 14,
+              "recommended": true,
+              "strike": "1.2300",
+              "price": "0.000425(0.00083)",
+              "qty": "1.95(1)",
+              "margin": 538,
+              "profit": 151247,
+              "lossPct": "20.00%"
+            },
+            {
+              "type": "풋",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 85,
+              "yieldSig": "◇",
+              "yieldPct": "4.31%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 14,
+              "recommended": true,
+              "strike": "1.0600",
+              "price": "0.000325(0.00063)",
+              "qty": "1.95(1)",
+              "margin": 308,
+              "profit": 115659,
+              "lossPct": "3.00%"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "name": "엔화",
+      "avgPct": 0,
+      "months": [
+        {
+          "label": "엔화 07월물 (기초자산 07월물)",
+          "rows": [
+            {
+              "type": "콜",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 21,
+              "yieldSig": "O",
+              "yieldPct": "5.04%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 16,
+              "recommended": true,
+              "strike": "6550",
+              "price": "4.75(8.53)",
+              "qty": "1.8(1)",
+              "margin": 1597,
+              "profit": 156038,
+              "lossPct": "10.00%"
+            },
+            {
+              "type": "풋",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 21,
+              "yieldSig": "X",
+              "yieldPct": "2.30%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 0,
+              "recommended": false,
+              "strike": "6000",
+              "price": "2.25(4.04)",
+              "qty": "1.8(1)",
+              "margin": 1563,
+              "profit": 73913,
+              "lossPct": "3.00%"
+            }
+          ]
+        },
+        {
+          "label": "엔화 08월물 (기초자산 08월물)",
+          "rows": [
+            {
+              "type": "콜",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 57,
+              "yieldSig": "◇",
+              "yieldPct": "4.18%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
+              "recommended": false,
+              "strike": "6700",
+              "price": "7.5(13.47)",
+              "qty": "1.8(1)",
+              "margin": 1144,
+              "profit": 246375,
+              "lossPct": "10.00%"
+            },
+            {
+              "type": "풋",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 57,
+              "yieldSig": "X",
+              "yieldPct": "2.08%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 0,
+              "recommended": false,
+              "strike": "5850",
+              "price": "3.5(6.29)",
+              "qty": "1.8(1)",
+              "margin": 1031,
+              "profit": 114975,
+              "lossPct": "3.00%"
+            }
+          ]
+        },
+        {
+          "label": "엔화 09월물 (기초자산 09월물)",
+          "rows": [
+            {
+              "type": "콜",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 85,
+              "yieldSig": "◇",
+              "yieldPct": "4.60%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 12,
+              "recommended": false,
+              "strike": "6750",
+              "price": "11.5(13.67)",
+              "qty": "1.8(1)",
+              "margin": 1081,
+              "profit": 377775,
+              "lossPct": "10.00%"
+            },
+            {
+              "type": "풋",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 85,
+              "yieldSig": "X",
+              "yieldPct": "2.01%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
+              "recommended": false,
+              "strike": "5750",
+              "price": "3.5(6.29)",
+              "qty": "1.8(1)",
+              "margin": 716,
+              "profit": 114975,
+              "lossPct": "3.00%"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rank": 6,
       "name": "밀",
       "avgPct": 0,
       "months": [
@@ -1922,164 +1607,128 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "765",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "695",
-              "lossProb": "10%",
-              "recommended": false,
               "trend": "약보합",
-              "price": "0.250",
-              "margin": 438
-            },
-            {
-              "type": "콜",
-              "strike": "670",
-              "lossProb": "20%",
+              "daysSig": "O",
+              "daysLeft": 15,
+              "yieldSig": "◇",
+              "yieldPct": "4.96%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "약보합"
+              "strike": "690",
+              "price": "0.375(0.45)",
+              "qty": "2.39(2)",
+              "margin": 635,
+              "profit": 65426,
+              "lossPct": "10.00%"
             },
             {
               "type": "풋",
-              "strike": "480",
-              "lossProb": "3%",
-              "recommended": false,
               "trend": "약보합",
-              "price": "0.031",
-              "margin": 259
-            },
-            {
-              "type": "풋",
-              "strike": "520",
-              "lossProb": "20%",
+              "daysSig": "O",
+              "daysLeft": 15,
+              "yieldSig": "X",
+              "yieldPct": "-0.67%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "530",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
+              "strike": "485",
+              "price": "0.03125(0.04)",
+              "qty": "2.39(2)",
+              "margin": 429,
+              "profit": 5452,
+              "lossPct": "3.00%"
             }
-          ],
-          "expiry": "2026-06-26",
-          "underlying_month": "07월물"
+          ]
         },
         {
-          "label": "밀 08월물 (기초자산 09월물)",
+          "label": "밀 08월물 (기초자산 08월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "915",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "770",
-              "lossProb": "10%",
-              "recommended": false,
               "trend": "약보합",
-              "price": "1.188",
-              "margin": 374
-            },
-            {
-              "type": "콜",
-              "strike": "735",
-              "lossProb": "20%",
+              "daysSig": "O",
+              "daysLeft": 43,
+              "yieldSig": "O",
+              "yieldPct": "8.06%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 14,
               "recommended": false,
-              "trend": "약보합"
+              "strike": "765",
+              "price": "1.125(1.35)",
+              "qty": "2.39(2)",
+              "margin": 461,
+              "profit": 196279,
+              "lossPct": "10.00%"
             },
             {
               "type": "풋",
-              "strike": "430",
-              "lossProb": "3%",
-              "recommended": false,
               "trend": "약보합",
-              "price": "0.063",
-              "margin": 75
-            },
-            {
-              "type": "풋",
-              "strike": "500",
-              "lossProb": "20%",
+              "daysSig": "O",
+              "daysLeft": 43,
+              "yieldSig": "X",
+              "yieldPct": "2.26%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "515",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
+              "strike": "435",
+              "price": "0.135(0.16)",
+              "qty": "2.39(2)",
+              "margin": 116,
+              "profit": 23553,
+              "lossPct": "3.00%"
             }
-          ],
-          "expiry": "2026-07-24",
-          "underlying_month": "09월물"
+          ]
         },
         {
           "label": "밀 09월물 (기초자산 09월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "990",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "810",
-              "lossProb": "10%",
-              "recommended": false,
               "trend": "약보합",
-              "price": "1.938",
-              "margin": 392
-            },
-            {
-              "type": "콜",
-              "strike": "765",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
+              "daysSig": "O",
+              "daysLeft": 71,
+              "yieldSig": "O",
+              "yieldPct": "8.33%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 16,
+              "recommended": true,
+              "strike": "805",
+              "price": "1.9375(1.72)",
+              "qty": "2.39(2)",
+              "margin": 476,
+              "profit": 338036,
+              "lossPct": "10.00%"
             },
             {
               "type": "풋",
-              "strike": "390",
-              "lossProb": "3%",
-              "recommended": false,
               "trend": "약보합",
-              "price": "0.063",
-              "margin": 33
-            },
-            {
-              "type": "풋",
-              "strike": "475",
-              "lossProb": "20%",
+              "daysSig": "O",
+              "daysLeft": 71,
+              "yieldSig": "X",
+              "yieldPct": "0.09%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "495",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
+              "strike": "395",
+              "price": "0.0625(0.07)",
+              "qty": "2.39(2)",
+              "margin": 63,
+              "profit": 10904,
+              "lossPct": "3.00%"
             }
-          ],
-          "expiry": "2026-08-21",
-          "underlying_month": "09월물"
+          ]
         }
       ]
     },
     {
-      "rank": 0,
+      "rank": 5,
       "name": "옥수수",
       "avgPct": 0,
       "months": [
@@ -2088,165 +1737,129 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "530",
-              "lossProb": "1%",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 15,
+              "yieldSig": "O",
+              "yieldPct": "6.58%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
               "strike": "490",
-              "lossProb": "10%",
-              "recommended": false,
+              "price": "0.25(0.27)",
+              "qty": "4.25(4)",
+              "margin": 289,
+              "profit": 77563,
+              "lossPct": "10.00%"
+            },
+            {
+              "type": "풋",
               "trend": "약보합",
-              "price": "0.313",
-              "margin": 268
-            },
-            {
-              "type": "콜",
-              "strike": "475",
-              "lossProb": "20%",
+              "daysSig": "O",
+              "daysLeft": 15,
+              "yieldSig": "X",
+              "yieldPct": "-3.32%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": 0,
               "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "340",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "0.031",
-              "margin": 89
-            },
-            {
-              "type": "풋",
-              "strike": "375",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "385",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
+              "strike": "345",
+              "price": "0.03125(0.03)",
+              "qty": "4.25(4)",
+              "margin": 86,
+              "profit": 9695,
+              "lossPct": "3.00%"
             }
-          ],
-          "expiry": "2026-06-26",
-          "underlying_month": "07월물"
+          ]
         },
         {
-          "label": "옥수수 08월물 (기초자산 09월물)",
+          "label": "옥수수 08월물 (기초자산 08월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "600",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
+              "trend": "약보합",
+              "daysSig": "O",
+              "daysLeft": 43,
+              "yieldSig": "O",
+              "yieldPct": "11.17%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 16,
+              "recommended": true,
               "strike": "540",
-              "lossProb": "10%",
-              "recommended": false,
+              "price": "0.8125(0.86)",
+              "qty": "4.25(4)",
+              "margin": 235,
+              "profit": 252078,
+              "lossPct": "10.00%"
+            },
+            {
+              "type": "풋",
               "trend": "약보합",
-              "price": "0.938",
-              "margin": 237
-            },
-            {
-              "type": "콜",
-              "strike": "515",
-              "lossProb": "20%",
+              "daysSig": "O",
+              "daysLeft": 43,
+              "yieldSig": "◇",
+              "yieldPct": "4.95%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 12,
               "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "305",
-              "lossProb": "3%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "0.073",
-              "margin": 30
-            },
-            {
-              "type": "풋",
-              "strike": "355",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "370",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
+              "strike": "310",
+              "price": "0.135(0.14)",
+              "qty": "4.25(4)",
+              "margin": 53,
+              "profit": 41884,
+              "lossPct": "3.00%"
             }
-          ],
-          "expiry": "2026-07-24",
-          "underlying_month": "09월물"
+          ]
         },
         {
           "label": "옥수수 09월물 (기초자산 09월물)",
           "rows": [
             {
               "type": "콜",
-              "strike": "645",
-              "lossProb": "1%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "570",
-              "lossProb": "10%",
-              "recommended": false,
               "trend": "약보합",
-              "price": "1.250",
-              "margin": 241
-            },
-            {
-              "type": "콜",
-              "strike": "540",
-              "lossProb": "20%",
+              "daysSig": "O",
+              "daysLeft": 71,
+              "yieldSig": "O",
+              "yieldPct": "9.82%",
+              "rankSig": "◇",
+              "monthRank": 2,
+              "evalScore": 14,
               "recommended": false,
-              "trend": "약보합"
+              "strike": "565",
+              "price": "1.25(0.86)",
+              "qty": "4.25(4)",
+              "margin": 289,
+              "profit": 387813,
+              "lossPct": "10.00%"
             },
             {
               "type": "풋",
-              "strike": "280",
-              "lossProb": "3%",
-              "recommended": false,
               "trend": "약보합",
-              "price": "0.135",
-              "margin": 21
-            },
-            {
-              "type": "풋",
-              "strike": "340",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "355",
-              "lossProb": "30%",
-              "recommended": false,
-              "trend": "약보합"
+              "daysSig": "O",
+              "daysLeft": 71,
+              "yieldSig": "O",
+              "yieldPct": "12.96%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": 16,
+              "recommended": true,
+              "strike": "285",
+              "price": "0.135(0.14)",
+              "qty": "4.25(4)",
+              "margin": 22,
+              "profit": 41884,
+              "lossPct": "3.00%"
             }
-          ],
-          "expiry": "2026-08-21",
-          "underlying_month": "09월물"
+          ]
         }
       ]
     }
   ],
-  "sv_phase_note": "시장국면 안내\n1. 신규 진입에서 나타내는 '기준물량의 0.x배 진입'은 개인의 1회 진입 노출량을 0.x배만큼 축소 진입 검토를 의미\n2. 기존포지션의 '노출량의 0.x배 축소'는 전일 안내치 기준 변화된 수치를 반영해서 보유 포지션 노출량의 0.x배 만큼을 청산하여 포지션 축소 검토를 의미\n3. 노출캡의 x.x%는 상관성이 높은 섹터내 모든 거래종목의 동일방향 총 노출량을 캡 x.x% 이내로 제한 검토를 의미\n\n아래는 전일 안내치 대비 변화한 종목에 대해서 정리한 내용입니다.\nㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n\n1. S&P500\n* 국면변화 : 지표 심화 영향 경고국면내 축소 강화\n* 신규진입 : \n사이징 0.7 x 거리 0.8 = 콜, 풋 기준물량의 0.56배 진입(축소)\n* 기존포지션 : \n0.0배→0.0배 = 콜 노출량의 0.0배 유지\n0.2배→0.3배 = 풋 노출량의 0.1배 축소\n* 노출캡 : 콜, 풋 1.0%(유지)\n\n2. 호주달러\n* 국면변화 : DSR 심화에 따라 경고국면 내 축소 강화\n* 신규진입 : \n사이징 0.7 x 거리 0.8 = 콜, 풋 기준물량의 0.56배 진입(축소)\n* 기존포지션 : \n0.1배→0.0배 = 콜 노출량의 0.1배 완화\n0.1배→0.3배 = 풋 노출량의 0.2배 축소\n* 노출캡 : 콜, 풋 1.0%(유지)\n\n3. 금\n* 국면변화 : DSR 하락에 따라 경고국면 진입\n* 신규진입 : \n사이징 0.7 x 거리 0.8 = 콜, 풋 기준물량의 0.56배 진입(축소)\n* 기존포지션 : \n0.0배→0.0배 = 콜 노출량의 0.0배 유지\n0.0배→0.5배 = 풋 노출량의 0.5배 축소\n* 노출캡 : 콜, 풋 1.0%(축소)\n\n4. 대두\n* 국면변화 : 지표 완화에 따라 경고국면 내 완화\n* 신규진입 : \n사이징 0.9 x 거리 0.9 = 콜, 풋 기준물량의 0.81배 진입(완화)\n* 기존포지션 : \n0.0배→0.1배 = 콜 노출량의 0.1배 축소\n0.3배→0.1배 = 풋 노출량의 0.2배 완화\n* 노출캡 : 콜, 풋 1.0%(유지)",
-  "sv_phase_note_updated": "1781074730390",
+  "sv_phase_note": "시장국면 안내\n\n1. 신규 진입에서 나타내는 '기준물량의 0.x배 진입'은 개인의 1회 진입 노출량을 0.x배만큼 축소 진입 검토를 의미\nex) 1회 진입 기준 물량이 100불이고 0.81배 축소 진입일 경우 \n       : 81불 진입 권장\n\n2. 기존포지션의 '노출량의 0.x배 축소'는 전일 종가와 현재가의 평균으로 기존 초기 보유 포지션 노출량의 0.x배 만큼을 청산하여 포지션 축소 검토를 의미\nex)  기존 초기 보유 포지션 노출량 100불이고 0.3배 축소일 경우\n       : 30불 청산하여 노출량 70불로 축소\n\n3. 노출캡의 x.x%는 상관성이 높은 섹터내 모든 거래종목의 동일방향 총 노출량을 캡 x.x% 이내로 제한 검토를 의미\nex) 운용자금이 1만불이고 노출캡이 1.5%일 겨우\n      : 동일섹터 단일방향 노출캡 150불",
+  "sv_phase_note_updated": "1781178885851",
   "weekly_picks": {
     "title": "06월 09일 추천 포지션",
     "strategies": [
@@ -2349,6 +1962,559 @@
         "daysLeft": 73
       }
     ],
-    "updated_at": "2026-06-11T00:54:08.883018Z"
+    "updated_at": "2026-06-11T11:57:36.454362Z"
+  },
+  "option_holdings": {
+    "updated": "2026-06-11T11:56:06.330Z",
+    "exchange_rate": 1500,
+    "margin_won": 30056800,
+    "deposit_won": 50000000,
+    "margin_pct": 60.1,
+    "holdings": [
+      {
+        "code": "OCLN26_C187.5",
+        "underlying": "크루드 오일",
+        "mLabel": "07월물",
+        "month": 7,
+        "cp": "C",
+        "cpKo": "콜",
+        "strike": "187.5",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.19,
+        "cur": 0.01,
+        "opt_mv": -10,
+        "pnl": 180,
+        "closable": 1
+      },
+      {
+        "code": "OCLN26_C194.0",
+        "underlying": "크루드 오일",
+        "mLabel": "07월물",
+        "month": 7,
+        "cp": "C",
+        "cpKo": "콜",
+        "strike": "194.0",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.22,
+        "cur": 0.01,
+        "opt_mv": -10,
+        "pnl": 210,
+        "closable": 1
+      },
+      {
+        "code": "OCLN26_P53.5",
+        "underlying": "크루드 오일",
+        "mLabel": "07월물",
+        "month": 7,
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "53.5",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.21,
+        "cur": 0.01,
+        "opt_mv": -10,
+        "pnl": 200,
+        "closable": 1
+      },
+      {
+        "code": "OCLN26_P61.0",
+        "underlying": "크루드 오일",
+        "mLabel": "07월물",
+        "month": 7,
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "61.0",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.21,
+        "cur": 0.01,
+        "opt_mv": -10,
+        "pnl": 200,
+        "closable": 1
+      },
+      {
+        "code": "OCLN26_P69.5",
+        "underlying": "크루드 오일",
+        "mLabel": "07월물",
+        "month": 7,
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "69.5",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.2,
+        "cur": 0.04,
+        "opt_mv": -40,
+        "pnl": 160,
+        "closable": 1
+      },
+      {
+        "code": "OCLQ26_C161.0",
+        "underlying": "크루드 오일",
+        "mLabel": "08월물",
+        "month": 8,
+        "cp": "C",
+        "cpKo": "콜",
+        "strike": "161.0",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.16,
+        "cur": 0.23,
+        "opt_mv": -230,
+        "pnl": -70,
+        "closable": 1
+      },
+      {
+        "code": "OCLQ26_C177.5",
+        "underlying": "크루드 오일",
+        "mLabel": "08월물",
+        "month": 8,
+        "cp": "C",
+        "cpKo": "콜",
+        "strike": "177.5",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.17,
+        "cur": 0.14,
+        "opt_mv": -140,
+        "pnl": 30,
+        "closable": 1
+      },
+      {
+        "code": "OCLQ26_P60.0",
+        "underlying": "크루드 오일",
+        "mLabel": "08월물",
+        "month": 8,
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "60.0",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.15,
+        "cur": 0.11,
+        "opt_mv": -110,
+        "pnl": 40,
+        "closable": 1
+      },
+      {
+        "code": "OCLU26_P53.0",
+        "underlying": "크루드 오일",
+        "mLabel": "09월물",
+        "month": 9,
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "53.0",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.17,
+        "cur": 0.18,
+        "opt_mv": -180,
+        "pnl": -10,
+        "closable": 1
+      },
+      {
+        "code": "OESM26_P6625",
+        "underlying": "S&P500",
+        "mLabel": "06월물",
+        "month": 6,
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "6625",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 2.75,
+        "cur": 6.4,
+        "opt_mv": -320,
+        "pnl": -182.5,
+        "closable": 1
+      },
+      {
+        "code": "OESU26_P3850",
+        "underlying": "S&P500",
+        "mLabel": "09월물",
+        "month": 9,
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "3850",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 19,
+        "cur": 6.2,
+        "opt_mv": -310,
+        "pnl": 640,
+        "closable": 1
+      },
+      {
+        "code": "OGCN26_C5740",
+        "underlying": "골드",
+        "mLabel": "07월물",
+        "month": 7,
+        "cp": "C",
+        "cpKo": "콜",
+        "strike": "5740",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 2.1,
+        "cur": 0.2,
+        "opt_mv": -20,
+        "pnl": 190,
+        "closable": 1
+      },
+      {
+        "code": "OGCN26_C6500",
+        "underlying": "골드",
+        "mLabel": "07월물",
+        "month": 7,
+        "cp": "C",
+        "cpKo": "콜",
+        "strike": "6500",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 2,
+        "cur": 0.1,
+        "opt_mv": -10,
+        "pnl": 190,
+        "closable": 1
+      },
+      {
+        "code": "OGCN26_C8500",
+        "underlying": "골드",
+        "mLabel": "07월물",
+        "month": 7,
+        "cp": "C",
+        "cpKo": "콜",
+        "strike": "8500",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 2,
+        "cur": 0.1,
+        "opt_mv": -10,
+        "pnl": 190,
+        "closable": 1
+      },
+      {
+        "code": "OGCN26_C8600",
+        "underlying": "골드",
+        "mLabel": "07월물",
+        "month": 7,
+        "cp": "C",
+        "cpKo": "콜",
+        "strike": "8600",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 2,
+        "cur": 0.1,
+        "opt_mv": -10,
+        "pnl": 190,
+        "closable": 1
+      },
+      {
+        "code": "OGCN26_P2850",
+        "underlying": "골드",
+        "mLabel": "07월물",
+        "month": 7,
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "2850",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 1.2,
+        "cur": 0.5,
+        "opt_mv": -50,
+        "pnl": 70,
+        "closable": 1
+      },
+      {
+        "code": "ONGN26_C4.30",
+        "underlying": "천연가스",
+        "mLabel": "07월물",
+        "month": 7,
+        "cp": "C",
+        "cpKo": "콜",
+        "strike": "4.30",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.02,
+        "cur": 0.001,
+        "opt_mv": -10,
+        "pnl": 190,
+        "closable": 1
+      },
+      {
+        "code": "ONGN26_C4.55",
+        "underlying": "천연가스",
+        "mLabel": "07월물",
+        "month": 7,
+        "cp": "C",
+        "cpKo": "콜",
+        "strike": "4.55",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.02,
+        "cur": 0.001,
+        "opt_mv": -10,
+        "pnl": 190,
+        "closable": 1
+      },
+      {
+        "code": "ONGN26_C4.75",
+        "underlying": "천연가스",
+        "mLabel": "07월물",
+        "month": 7,
+        "cp": "C",
+        "cpKo": "콜",
+        "strike": "4.75",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.02,
+        "cur": 0.001,
+        "opt_mv": -10,
+        "pnl": 190,
+        "closable": 1
+      },
+      {
+        "code": "ONGN26_P2.30",
+        "underlying": "천연가스",
+        "mLabel": "07월물",
+        "month": 7,
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "2.30",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.02,
+        "cur": 0.001,
+        "opt_mv": -10,
+        "pnl": 190,
+        "closable": 1
+      },
+      {
+        "code": "ONGQ26_C4.55",
+        "underlying": "천연가스",
+        "mLabel": "08월물",
+        "month": 8,
+        "cp": "C",
+        "cpKo": "콜",
+        "strike": "4.55",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.01,
+        "cur": 0.01,
+        "opt_mv": -100,
+        "pnl": 0,
+        "closable": 1
+      },
+      {
+        "code": "ONGQ26_C4.65",
+        "underlying": "천연가스",
+        "mLabel": "08월물",
+        "month": 8,
+        "cp": "C",
+        "cpKo": "콜",
+        "strike": "4.65",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.016,
+        "cur": 0.008,
+        "opt_mv": -80,
+        "pnl": 80,
+        "closable": 1
+      },
+      {
+        "code": "ONGQ26_P2.35",
+        "underlying": "천연가스",
+        "mLabel": "08월물",
+        "month": 8,
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "2.35",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.016,
+        "cur": 0.007,
+        "opt_mv": -70,
+        "pnl": 90,
+        "closable": 1
+      },
+      {
+        "code": "ONGU26_P2.10",
+        "underlying": "천연가스",
+        "mLabel": "09월물",
+        "month": 9,
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "2.10",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 2,
+        "avg": 0.012,
+        "cur": 0.009,
+        "opt_mv": -180,
+        "pnl": 60,
+        "closable": 2
+      },
+      {
+        "code": "OZSN26_P1000",
+        "underlying": "대두",
+        "mLabel": "07월물",
+        "month": 7,
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "1000",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 1,
+        "avg": 0.875,
+        "cur": 0.25,
+        "opt_mv": -12.5,
+        "pnl": 31.25,
+        "closable": 1
+      },
+      {
+        "code": "OZSQ26_P1020",
+        "underlying": "대두",
+        "mLabel": "08월물",
+        "month": 8,
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "1020",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 2,
+        "avg": 1.125,
+        "cur": 1.75,
+        "opt_mv": -175,
+        "pnl": -62.5,
+        "closable": 2
+      },
+      {
+        "code": "OZSQ26_P1060",
+        "underlying": "대두",
+        "mLabel": "08월물",
+        "month": 8,
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "1060",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 2,
+        "avg": 1.125,
+        "cur": 5.125,
+        "opt_mv": -512.5,
+        "pnl": -400,
+        "closable": 2
+      },
+      {
+        "code": "OZSU26_C1400",
+        "underlying": "대두",
+        "mLabel": "09월물",
+        "month": 9,
+        "cp": "C",
+        "cpKo": "콜",
+        "strike": "1400",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 3,
+        "avg": 1,
+        "cur": 1.25,
+        "opt_mv": -187.5,
+        "pnl": -37.5,
+        "closable": 3
+      },
+      {
+        "code": "OZSU26_C1480",
+        "underlying": "대두",
+        "mLabel": "09월물",
+        "month": 9,
+        "cp": "C",
+        "cpKo": "콜",
+        "strike": "1480",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 3,
+        "avg": 1,
+        "cur": 0.625,
+        "opt_mv": -93.75,
+        "pnl": 56.25,
+        "closable": 3
+      },
+      {
+        "code": "OZSU26_P1000",
+        "underlying": "대두",
+        "mLabel": "09월물",
+        "month": 9,
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "1000",
+        "ccy": "USD",
+        "side": "매도",
+        "contracts": 3,
+        "avg": 1,
+        "cur": 2.875,
+        "opt_mv": -431.25,
+        "pnl": -281.25,
+        "closable": 3
+      }
+    ],
+    "closed": [
+      {
+        "code": "OZSQ26_P1060",
+        "underlying": "대두",
+        "month": 8,
+        "mLabel": "08월물",
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "1060",
+        "entry": 1.125,
+        "exit": 3.375,
+        "contracts": 2,
+        "pnl": -225,
+        "reason": "손절",
+        "is_stoploss": true,
+        "no_entry": false
+      },
+      {
+        "code": "OESM26_P6625",
+        "underlying": "S&P500",
+        "month": 6,
+        "mLabel": "06월물",
+        "cp": "P",
+        "cpKo": "풋",
+        "strike": "6625",
+        "entry": 2.75,
+        "exit": 4,
+        "contracts": 1,
+        "pnl": -62.5,
+        "reason": "손절",
+        "is_stoploss": true,
+        "no_entry": false
+      }
+    ]
   }
 }
