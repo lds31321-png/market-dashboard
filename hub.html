@@ -10,7 +10,7 @@
 /* [2026-06-11] 로컬(localhost) 검수 시 대시보드 링크를 루트 작업본으로 전환 (라이브는 volatility/ 하위폴더 유지) */
 !function(){var h=location.hostname;if(h!=='localhost'&&h!=='127.0.0.1')return;function fx(){var as=document.querySelectorAll('a[href]');for(var i=0;i<as.length;i++){var a=as[i],u=a.getAttribute('href')||'';if(u.indexOf('volatility/volatility_dashboard_v3.html')>=0)a.setAttribute('href','volatility_dashboard_v3.html');}}document.readyState==='loading'?document.addEventListener('DOMContentLoaded',fx):fx();}();
 </script>
-<title>직트 트레이딩 데스크</title>
+<title>직트&레이 트레이딩 룸</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
@@ -27,6 +27,7 @@
   .hub-header{
     text-align:center;
     margin-bottom:14px;
+    position:relative;
   }
   .hub-logo{
     font-size:15px;
@@ -142,7 +143,8 @@
   }
   /* [2026-06-12] 최신 데이터로 업데이트 버튼 — 좌측 상단, 흰 배경+살몬, 펄스 */
   .jikt-refresh-btn{
-    position:fixed; top:18px; left:18px; z-index:9999;
+    position:absolute; left:calc(100% + 28px); top:50%; transform:translateY(-50%); z-index:9999;
+    white-space:nowrap;
     display:inline-flex; align-items:center; gap:8px;
     background:#ffffff; color:#d9664a;
     border:1.6px solid #d9664a; border-radius:999px;
@@ -162,12 +164,11 @@
 </head>
 <body>
 
-<button class="jikt-refresh-btn" onclick="jiktRefresh()">🔄 최신 데이터로 업데이트</button>
-
 <div class="hub-header">
   <div class="hub-logo">JIKT · OPTION SELLING</div>
-  <div class="hub-title">직트 트레이딩 데스크</div>
+  <div class="hub-title">직트&레이 트레이딩 룸</div>
   <div class="hub-sub" style="font-size:16px;font-weight:700;color:#55504c">수익은 시장이 주고, 손실은 우리가 통제합니다</div>
+  <button class="jikt-refresh-btn" onclick="jiktRefresh()">최신 데이터로 업데이트</button>
 </div>
 
 <div class="hub-flow">
