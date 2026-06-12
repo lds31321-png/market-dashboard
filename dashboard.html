@@ -2375,4 +2375,42 @@ function wfScroll(targetId, stripId, activeId){
 <script>
 loadPositions();
 </script>
+<script>
+/* 버전 알림 플로팅 버튼 — 새 배포 감지 시 새로고침 버튼 표시(자동 새로고침 아님, 루프 위험 0) */
+(function(){
+  try{
+    var LOADED=null, BTN=null;
+    function verURL(){
+      var dir=location.pathname.replace(/[^/]*$/,'');
+      return (/\/volatility\/$/.test(dir)? dir+'../ver.txt' : dir+'ver.txt');
+    }
+    function getVer(cb){
+      try{
+        fetch(verURL()+'?t='+Date.now(),{cache:'no-store'})
+          .then(function(r){return r.ok?r.text():null;})
+          .then(function(t){cb(t?t.trim():null);})
+          .catch(function(){cb(null);});
+      }catch(e){cb(null);}
+    }
+    function showBtn(sv){
+      if(BTN||!document.body) return;
+      BTN=document.createElement('button');
+      BTN.textContent='🔄 새 버전 — 새로고침';
+      BTN.setAttribute('style','position:fixed;left:16px;bottom:16px;z-index:2147483647;padding:11px 17px;border:0;border-radius:24px;background:#d9664a;color:#fff;font-size:14px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.28);cursor:pointer');
+      BTN.onclick=function(){location.replace(location.pathname+'?v='+encodeURIComponent(sv));};
+      document.body.appendChild(BTN);
+    }
+    function check(){
+      getVer(function(sv){
+        if(!sv) return;
+        if(LOADED===null){LOADED=sv;return;}
+        if(sv!==LOADED) showBtn(sv);
+      });
+    }
+    check();
+    window.addEventListener('focus',check);
+    document.addEventListener('visibilitychange',function(){if(!document.hidden)check();});
+  }catch(e){}
+})();
+</script>
 </html>
