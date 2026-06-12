@@ -902,13 +902,13 @@ function ohClosedBlock(items, rate, mode){
   h+='<button onclick="ohToggle(\'ohclosed\',this)" style="'+btnStyle+'display:flex;align-items:center;gap:8px;width:100%;justify-content:space-between;padding:11px 14px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;"><span>'+btnText+'</span><span class="oh-caret" style="font-size:12px;">▸</span></button>';
   h+='<div id="ohclosed" style="display:none;margin-top:10px;overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-family:var(--mono);"><thead><tr>';
   if(mode==='full'){ h+=ohTh('종목')+ohTh('전략')+ohTh('월물')+ohTh('청산일')+ohTh('손익','right')+ohTh('사유'); }
-  else { h+=ohTh('종목')+ohTh('구분')+ohTh('진입→청산(pt)','right')+ohTh('실현손익','right')+ohTh('사유'); }
+  else { h+=ohTh('종목')+ohTh('구분')+ohTh('진입(pt)','right')+ohTh('청산(pt)','right')+ohTh('계약수','right')+ohTh('실현손익','right')+ohTh('사유'); }
   h+='</tr></thead><tbody>';
   items.forEach(function(x){
     var rcol=x.is_stoploss?'#c0402a':'var(--t2)';
     var reasonTd='<td style="padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:13px;color:'+rcol+';white-space:nowrap;font-weight:'+(x.is_stoploss?'700':'400')+';">'+hEsc(x.reason||'-')+'</td>';
     if(mode==='full'){ h+='<tr>'+ohCell(x.name,'left',true)+ohCell(x.strat)+ohCell(x.month)+ohCell(x.date)+ohPnlTd(x.pnl,rate)+reasonTd+'</tr>'; }
-    else { var premStr=(x.entry!=null&&x.exit!=null)?(x.entry+' → '+x.exit+(x.contracts&&x.contracts>1?(' ×'+x.contracts):'')):'-'; h+='<tr>'+ohCell(x.name,'left',true)+ohCell(x.sub||'-')+ohCell(premStr,'right')+ohPnlTd(x.pnl,rate)+reasonTd+'</tr>'; }
+    else { var enTxt=(x.entry!=null)?String(x.entry):'-'; var exTxt=(x.exit!=null)?String(x.exit):'-'; var ctTxt=(x.contracts?x.contracts:1)+'계약'; h+='<tr>'+ohCell(x.name,'left',true)+ohCell(x.sub||'-')+ohCell(enTxt,'right')+ohCell(exTxt,'right')+ohCell(ctTxt,'right')+ohPnlTd(x.pnl,rate)+reasonTd+'</tr>'; }
   });
   h+='</tbody></table></div></div>';
   return h;
