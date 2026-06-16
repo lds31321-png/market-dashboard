@@ -1062,11 +1062,15 @@ function buildPositionChart(p, canvasId){
   // 과거 데이터 라벨 — 진입일부터만 표시(진입 전 과거 구간 잘라냄). 진입 직후라 점이 적으면 최근 약 15개 확보
   const _allL=cd.dates.map(d=>fmtLabel(d));
   const _allC=[...cd.closes];
-  const _enIso=(cd.entry_date||cd.dates[0]||'').replace(/-/g,'/').slice(0,10);
+  const _enIso=(cd.entry_date||'').replace(/-/g,'/').slice(0,10);
   let _enIdx=cd.dates.findIndex(d=>(d||'').slice(0,10)===_enIso);
-  if(_enIdx<0)_enIdx=0;
-  let _sIdx=_enIdx;
-  if(_allL.length-1-_enIdx<4)_sIdx=Math.max(0,_allL.length-15);
+  let _sIdx;
+  if(_enIdx<0 || _allL.length-1-_enIdx<4){
+    // 진입일을 못 찾거나(옛 데이터) 진입 직후라 점이 적으면 → 최근 약 15개만
+    _sIdx=Math.max(0,_allL.length-15);
+  } else {
+    _sIdx=_enIdx; // 진입일~오늘
+  }
   const histLabels=_allL.slice(_sIdx);
   const histCloses=_allC.slice(_sIdx);
 
