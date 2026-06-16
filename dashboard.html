@@ -1045,7 +1045,7 @@ function renderCards(pos){
 // ── 포지션 차트 그리기 ──
 function buildPositionChart(p, canvasId){
   const cd=p.chart_data;
-  if(!cd||!cd.dates||!cd.closes)return;
+  if(!cd||!cd.dates||!cd.closes||!cd.dates.length||!cd.closes.length)return;
   const canvas=document.getElementById(canvasId);
   if(!canvas)return;
   if(posCharts[canvasId]){posCharts[canvasId].destroy();}
@@ -1092,7 +1092,7 @@ function buildPositionChart(p, canvasId){
   const daysLeft=Math.max(0,Math.round((new Date(p.expiry_date)-new Date())/86400000));
 
   // y축 범위: 행사가 포함해서 넉넉하게
-  const allPrices=[...histCloses,...cd.strike_lines.map(sl=>sl.price)];
+  const allPrices=[...histCloses,...(cd.strike_lines||[]).map(sl=>(sl&&sl.price!=null)?sl.price:sl)];
   const mn=Math.min(...allPrices), mx=Math.max(...allPrices);
   const pad=(mx-mn)*0.12;
   const yMin=mn-pad, yMax=mx+pad;
@@ -1464,7 +1464,7 @@ function openModal(id){
 
 
   // ── 차트 범례 ──
-  const strikeLabelShort=p.chart_data?.strike_lines?.map(sl=>'$'+sl.price.toLocaleString()).join(' / ')||'';
+  const strikeLabelShort=p.chart_data?.strike_lines?.map(sl=>'$'+((sl&&sl.price!=null)?sl.price:sl).toLocaleString()).join(' / ')||'';
   const legendHtml=p.chart_data?`<div class="chart-legend">
     <span class="cleg"><span style="display:inline-block;width:18px;height:2px;background:#0077cc;vertical-align:middle"></span> 가격</span>
     <span class="cleg"><span style="display:inline-block;width:18px;height:0;border-top:2px dashed #cc2222;vertical-align:middle"></span> 행사가 ${strikeLabelShort}</span>
