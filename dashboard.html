@@ -593,16 +593,16 @@ let adminData={};  // admin_data.json (option_holdings 등)
 
 // ── 포지션 데이터 로드 ──
 function loadPositions(){
-  fetch('/api/pnl_positions?t='+Date.now())
+  fetch('/api/pnl_positions?t='+Date.now(),{cache:'no-store'})
     .then(r=>r.ok?r.json():null).catch(()=>null)
-    .then(d=>d||fetch('pnl_positions.json?t='+Date.now()).then(r=>r.ok?r.json():null).catch(()=>null))
+    .then(d=>d||fetch('pnl_positions.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null))
     .then(d=>{
       if(d&&d.positions){
         allPos=d.positions;
         meta=d.meta||{};
         renderCards(allPos);
         // admin_data.json(보유·청산·증거금)도 읽어서 렌더
-        fetch('admin_data.json?t='+Date.now()).then(r=>r.ok?r.json():null).catch(()=>null)
+        fetch('admin_data.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null)
           .then(ad=>{
             adminData=ad||{};
             try{renderHoldings();}catch(e){console.error('[holdings]',e);}
@@ -1622,12 +1622,21 @@ function openModal(id){
         buildPositionChart(ep,`posChart_${p.id}`);
       };
       if(_code){
-        fetch(`data/${_code}_data.json?t=${Date.now()}`)
+        fetch(`data/${_code}_data.json?t=${Date.now()}`,{cache:'no-store'})
           .then(r=>r.ok?r.json():null).catch(()=>null)
           .then(d=>{
             if(d&&d.chart&&d.chart.dates&&(d.chart.close||d.chart.closes)){
               const cl=d.chart.close||d.chart.closes;
               let dates=d.chart.dates, closes=cl;
+
+              // [안전망] data/ 파일이 진입일까지 못 미치면(배포 누락·캐시 지연 등)
+              //   진입일~오늘 구간이 통째로 빠져 옛 현재가만 점으로 찍히는 문제 방지 →
+              //   이 경우 포지션 자체 데이터(pnl_positions.json의 chart_data)로 그린다.
+              const _lastIso=(dates[dates.length-1]||'').replace(/\//g,'-').slice(0,10);
+              if(p.shared_date && _lastIso && _lastIso < p.shared_date){
+                buildPositionChart(p,`posChart_${p.id}`);
+                return;
+              }
 
               // 만기일 이후 데이터 제거 (활성/만기 공통)
               if(p.expiry_date){
