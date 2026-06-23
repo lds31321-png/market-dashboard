@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "exported_at": "2026-06-23T12:07:19.456Z",
+    "exported_at": "2026-06-23T12:19:02.313Z",
     "source": "admin.html",
     "version": 1,
     "keys": [
@@ -2229,76 +2229,86 @@
   "sv_phase_note": "시장국면 안내\n\n1. 신규 진입에 적용되는 사이징과 거리는 각각 '기준수량의 0.x배 진입'과 '기준행사가 프리의 0.x배 진입'을 의미하며 종합적으로 '1회 진입 기준 총 노출량의 0.x * 0.x배 진입'로 개인 1회 진입 노출량을  축소 진입 검토를 의미\nex) 기준계약수 : 10계약, 기준행사가프리 : 10불, 사이징 0.9배, 거리 0.9배일 경우, 기존 10계약 x 10불 = 100불에서\n1회 진입 기준 총 노출은 (10계약 x 0.9) x (10불 x 0.9)\n                                              = 9 x 9 = 81불 진입 권장으로 조정\n\n2. 기존포지션의 '노출량의 0.x배 축소'는 전일 종가와 현재가의 평균으로 기존 초기 보유 포지션 노출량의 0.x배 만큼을 청산하여 포지션 축소 검토를 의미\nex)  기존 초기 보유 포지션 노출량 100불이고 0.3배 축소일 경우\n       : 30불 청산하여 노출량 70불로 축소\n\n3. 노출캡의 x.x%는 상관성이 높은 섹터내 모든 거래종목의 동일방향 총 노출량을 캡 x.x% 이내로 제한 검토를 의미\nex) 운용자금이 1만불이고 노출캡이 1.5%일 경우\n      : 동일섹터 단일방향 노출캡 150불 제한",
   "sv_phase_note_updated": "1782212693845",
   "weekly_picks": {
-    "title": "06월 16일 추천 포지션",
+    "title": "06월 23일 추천 포지션",
     "strategies": [
       {
-        "date": "06월 16일",
-        "stratType": "콜 매도",
+        "date": "06월 23일",
+        "stratType": "양매도",
         "commodities": "천연가스",
         "legs": [
           {
-            "date": "06월 16일",
-            "name": "천연가스",
-            "month": "09월물",
-            "strike": "5",
-            "optType": "콜옵션 매도",
-            "premium": "0.008",
-            "contracts": 1,
-            "premUsd": 80
-          }
-        ],
-        "margin": 243,
-        "totalPremUsd": 80,
-        "returnPct": 32.92,
-        "expiry": "2026-08-26",
-        "daysLeft": 71
-      },
-      {
-        "date": "06월 16일",
-        "stratType": "풋 매도",
-        "commodities": "천연가스",
-        "legs": [
-          {
-            "date": "06월 16일",
+            "date": "06월 23일",
             "name": "천연가스",
             "month": "08월물",
-            "strike": "2.5",
-            "optType": "풋옵션 매도",
-            "premium": "0.013",
+            "strike": "4.5",
+            "optType": "콜옵션 매도",
+            "premium": "0.01",
             "contracts": 1,
-            "premUsd": 130
+            "premUsd": 100.0
+          },
+          {
+            "date": "06월 23일",
+            "name": "천연가스",
+            "month": "08월물",
+            "strike": "2.55",
+            "optType": "풋옵션 매도",
+            "premium": "0.01",
+            "contracts": 1,
+            "premUsd": 100.0
           }
         ],
-        "margin": 424,
-        "totalPremUsd": 130,
-        "returnPct": 30.66,
+        "margin": 387,
+        "totalPremUsd": 200.0,
+        "returnPct": 51.68,
         "expiry": "2026-07-28",
-        "daysLeft": 42
+        "daysLeft": 35
       },
       {
-        "date": "06월 16일",
+        "date": "06월 23일",
+        "stratType": "콜 매도",
+        "commodities": "크루드 오일",
+        "legs": [
+          {
+            "date": "06월 23일",
+            "name": "크루드 오일",
+            "month": "10월물",
+            "strike": "147.0",
+            "optType": "콜옵션 매도",
+            "premium": "0.14",
+            "contracts": 1,
+            "premUsd": 140.0
+          }
+        ],
+        "margin": 586,
+        "totalPremUsd": 140.0,
+        "returnPct": 23.89,
+        "expiry": "2026-09-17",
+        "daysLeft": 86
+      },
+      {
+        "date": "06월 23일",
         "stratType": "콜 매도",
         "commodities": "골드",
         "legs": [
           {
-            "date": "06월 16일",
+            "date": "06월 23일",
             "name": "골드",
             "month": "08월물",
-            "strike": "5730",
+            "strike": "5370.0",
             "optType": "콜옵션 매도",
-            "premium": "2.2",
+            "premium": "1.5",
             "contracts": 1,
-            "premUsd": 220
+            "premUsd": 150.0
           }
         ],
-        "margin": 3858,
-        "totalPremUsd": 220,
-        "returnPct": 5.7,
+        "margin": 3737,
+        "totalPremUsd": 150.0,
+        "returnPct": 4.01,
         "expiry": "2026-07-28",
-        "daysLeft": 42
+        "daysLeft": 35
       }
     ],
-    "updated_at": "2026-06-19T14:38:38.970293Z"
+    "updated_at": "2026-06-23T15:42:49.861330Z"
   },
   "option_holdings": {
     "updated": "2026-06-23T11:06:08.819Z",
