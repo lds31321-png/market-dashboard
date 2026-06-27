@@ -24,22 +24,22 @@
   --t1:#FFFFFF;          /* 주 텍스트 (웜 블랙) */
   --t2:#B0B8C1;          /* 보조 텍스트 */
   --t3:#8B95A1;          /* 흐린 텍스트 */
-  --accent:#3182F6;      /* 살몬/테라코타 — Claude 액센트 */
-  --accent-a:rgba(49,130,246,.10);
-  --accent-b:rgba(49,130,246,.06);
-  --profit:#F04452;      /* 수익 — 다크 그린 */
-  --profit-bg:rgba(240,68,82,.07);
-  --profit-border:rgba(240,68,82,.2);
+  --accent:#4593FC;      /* 살몬/테라코타 — Claude 액센트 */
+  --accent-a:rgba(69,147,252,.10);
+  --accent-b:rgba(69,147,252,.06);
+  --profit:#FF8080;      /* 수익 — 다크 그린 */
+  --profit-bg:rgba(255,128,128,.07);
+  --profit-border:rgba(255,128,128,.2);
   --loss:#4593FC;        /* 손실 — 다크 블루 */
   --loss-bg:rgba(69,147,252,.07);
   --loss-border:rgba(69,147,252,.2);
   /* 레거시 변수 (차트/바 내부 참조) */
-  --cyan:#4593FC;--green:#F04452;--yellow:#FFB020;--orange:#3182F6;--red:#F04452;--purple:#A78BFA;
-  --cyan-a:rgba(69,147,252,.08);--green-a:rgba(240,68,82,.08);
-  --yellow-a:rgba(255,176,32,.08);--orange-a:rgba(49,130,246,.08);
-  --red-a:rgba(240,68,82,.08);--purple-a:rgba(167,139,250,.08);
+  --cyan:#4593FC;--green:#FF8080;--yellow:#FFB020;--orange:#4593FC;--red:#FF8080;--purple:#A78BFA;
+  --cyan-a:rgba(69,147,252,.08);--green-a:rgba(255,128,128,.08);
+  --yellow-a:rgba(255,176,32,.08);--orange-a:rgba(69,147,252,.08);
+  --red-a:rgba(255,128,128,.08);--purple-a:rgba(167,139,250,.08);
   --grad-title:linear-gradient(135deg,#FFFFFF 0%,#8B95A1 100%);
-  --grad-green:linear-gradient(135deg,#F04452 0%,#4593FC 100%);
+  --grad-green:linear-gradient(135deg,#FF8080 0%,#4593FC 100%);
   --mono:'IBM Plex Mono',monospace;
   --sans:'IBM Plex Sans KR','Noto Sans KR',sans-serif;
   --font-h:'IBM Plex Sans KR','Noto Sans KR',sans-serif;
@@ -61,7 +61,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 .hdr-home:hover{background:var(--accent);color:#fff;}
 .hdr-r{display:flex;align-items:center;gap:12px;}
 .hdr-meta{font-size:11px;color:var(--t3);font-family:var(--mono);text-align:right;line-height:1.6;}
-.dot{width:6px;height:6px;border-radius:50%;background:#F04452;box-shadow:0 0 5px rgba(240,68,82,.5);}
+.dot{width:6px;height:6px;border-radius:50%;background:#FF8080;box-shadow:0 0 5px rgba(255,128,128,.5);}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 .dot{animation:pulse 2.5s ease-in-out infinite;}
 
@@ -80,8 +80,8 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 /* ── 배지 ── */
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;font-family:var(--mono);}
 .b-green{background:var(--profit-bg);color:var(--profit);border:1px solid var(--profit-border);}
-.b-orange,.b-accent{background:var(--accent-a);color:var(--accent);border:1px solid rgba(49,130,246,.2);}
-.b-red{background:var(--red-a);color:var(--red);border:1px solid rgba(240,68,82,.2);}
+.b-orange,.b-accent{background:var(--accent-a);color:var(--accent);border:1px solid rgba(69,147,252,.2);}
+.b-red{background:var(--red-a);color:var(--red);border:1px solid rgba(255,128,128,.2);}
 .b-purple{background:var(--purple-a);color:var(--purple);border:1px solid rgba(167,139,250,.2);}
 .b-cyan{background:var(--cyan-a);color:var(--cyan);border:1px solid rgba(69,147,252,.2);}
 .b-gray,.b-neutral{background:rgba(0,0,0,.04);color:var(--t2);border:1px solid var(--b1);}
@@ -116,7 +116,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 .safety-big-unit{font-size:12px;color:var(--purple);font-family:var(--mono);font-weight:600;}
 .safety-big-label{font-size:11px;color:var(--t2);font-family:var(--mono);}
 .safety-bar-outer{position:relative;height:22px;border-radius:6px;overflow:hidden;margin-bottom:6px;background:rgba(0,0,0,.05);}
-.sb-profit{position:absolute;top:0;left:0;height:100%;background:rgba(240,68,82,.22);border-radius:6px 0 0 6px;}
+.sb-profit{position:absolute;top:0;left:0;height:100%;background:rgba(255,128,128,.22);border-radius:6px 0 0 6px;}
 .sb-loss-right{position:absolute;top:0;right:0;height:100%;background:rgba(69,147,252,.28);border-radius:0 6px 6px 0;}
 .sb-loss-left{position:absolute;top:0;left:0;height:100%;background:rgba(69,147,252,.28);}
 .sb-cursor{position:absolute;top:0;bottom:0;width:2px;background:var(--accent);border-radius:2px;transform:translateX(-50%);}
@@ -130,7 +130,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 .sd-loss{font-size:11px;color:var(--loss);}
 .safety-track{position:relative;height:24px;border-radius:6px;overflow:hidden;margin-bottom:4px;background:rgba(0,0,0,.05);}
 .st-entry{position:absolute;top:0;left:0;height:100%;background:rgba(255,220,210,0.8);}
-.st-profit{position:absolute;top:0;height:100%;background:rgba(240,68,82,.18);}
+.st-profit{position:absolute;top:0;height:100%;background:rgba(255,128,128,.18);}
 .st-loss{position:absolute;top:0;right:0;height:100%;background:rgba(69,147,252,.25);}
 .st-pin{position:absolute;top:0;bottom:0;width:2px;transform:translateX(-50%);}
 .st-pin.entry{background:rgba(0,0,0,.15);border-radius:2px;}
@@ -151,12 +151,12 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 
 /* 현재 평가손익 */
 .pnl-row{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:8px;margin-bottom:12px;}
-.pnl-row.profit{background:rgba(49,130,246,.07);border:1px solid rgba(49,130,246,.2);}
+.pnl-row.profit{background:var(--profit-bg);border:1px solid var(--profit-border);}
 .pnl-row.loss{background:var(--loss-bg);border:1px solid var(--loss-border);}
 .pnl-row.neutral{background:rgba(0,0,0,.03);border:1px solid var(--b1);}
 .pnl-label{font-size:15px;color:var(--t2);font-family:var(--mono);}
 .pnl-val{font-size:18px;font-weight:700;font-family:var(--mono);white-space:nowrap;}
-.pnl-val.profit{color:#3182F6;}
+.pnl-val.profit{color:var(--profit);}
 .pnl-val.loss{color:#4593FC;}
 .pnl-val.neutral{color:var(--t3);}
 
@@ -189,18 +189,18 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 .action-btn{display:flex;align-items:center;justify-content:center;padding:14px 20px;border-radius:var(--r);background:var(--card);text-decoration:none;font-size:14px;font-weight:600;font-family:var(--mono);color:var(--t1);cursor:pointer;border:1.5px solid;transition:all .2s;box-shadow:var(--shadow-sm);}
 .action-btn:hover{transform:translateY(-1px);}
 .action-btn.btn-cyan{border-color:#4593FC;color:#4593FC;animation:pulse-cyan 2.5s ease-in-out infinite;}
-.action-btn.btn-green{border-color:#F04452;color:#F04452;animation:pulse-green 2.5s ease-in-out infinite;}
+.action-btn.btn-green{border-color:#FF8080;color:#FF8080;animation:pulse-green 2.5s ease-in-out infinite;}
 .action-btn.btn-purple{border-color:#A78BFA;color:#A78BFA;animation:pulse-purple 2.5s ease-in-out infinite;}
 @keyframes pulse-cyan{0%,100%{box-shadow:0 0 0 0 rgba(69,147,252,.35);}50%{box-shadow:0 0 0 6px rgba(69,147,252,0);}}
-@keyframes pulse-green{0%,100%{box-shadow:0 0 0 0 rgba(240,68,82,.35);}50%{box-shadow:0 0 0 6px rgba(240,68,82,0);}}
+@keyframes pulse-green{0%,100%{box-shadow:0 0 0 0 rgba(255,128,128,.35);}50%{box-shadow:0 0 0 6px rgba(255,128,128,0);}}
 @keyframes pulse-purple{0%,100%{box-shadow:0 0 0 0 rgba(167,139,250,.35);}50%{box-shadow:0 0 0 6px rgba(167,139,250,0);}}
-.action-btn.btn-orange{border-color:#3182F6;color:#3182F6;animation:pulse-orange 2.5s ease-in-out infinite;}
-@keyframes pulse-orange{0%,100%{box-shadow:0 0 0 0 rgba(49,130,246,.35);}50%{box-shadow:0 0 0 6px rgba(49,130,246,0);}}
-@keyframes pulse-new{0%,100%{box-shadow:0 0 0 0 rgba(49,130,246,.6);}50%{box-shadow:0 0 0 8px rgba(49,130,246,0);}}
+.action-btn.btn-orange{border-color:#4593FC;color:#4593FC;animation:pulse-orange 2.5s ease-in-out infinite;}
+@keyframes pulse-orange{0%,100%{box-shadow:0 0 0 0 rgba(69,147,252,.35);}50%{box-shadow:0 0 0 6px rgba(69,147,252,0);}}
+@keyframes pulse-new{0%,100%{box-shadow:0 0 0 0 rgba(69,147,252,.6);}50%{box-shadow:0 0 0 8px rgba(69,147,252,0);}}
 @keyframes pulse-title{0%,100%{opacity:1;}50%{opacity:.45;}}
 .rec-row{cursor:pointer;transition:background .15s;}
-.rec-row:hover td{background:rgba(49,130,246,.06);}
-.new-pos{border:2px solid #3182F6!important;animation:pulse-new 2s ease-in-out infinite;}
+.rec-row:hover td{background:rgba(69,147,252,.06);}
+.new-pos{border:2px solid #4593FC!important;animation:pulse-new 2s ease-in-out infinite;}
 
 /* ── 브리핑 모달 ── */
 .br-modal{background:var(--card);border:1px solid var(--b1);border-radius:16px;width:100%;max-width:640px;max-height:88vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.18);}
@@ -316,8 +316,8 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 .sc-win{background:var(--profit-bg);border:1px solid var(--profit-border);}
 .sc-row{font-size:12px;font-family:var(--mono);padding:4px 0;font-weight:500;}
 .sc-row.w{color:var(--profit)}.sc-row.l{color:var(--loss);}
-.risk-box{background:rgba(240,68,82,.05);border-left:2px solid var(--red);border-radius:0 6px 6px 0;padding:12px 14px;font-size:12px;color:var(--t1);line-height:1.75;}
-.notion-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--accent);text-decoration:none;margin-top:14px;padding:9px 14px;border:1px solid rgba(49,130,246,.3);border-radius:6px;transition:background .15s;font-family:var(--mono);font-weight:600;}
+.risk-box{background:rgba(255,128,128,.05);border-left:2px solid var(--red);border-radius:0 6px 6px 0;padding:12px 14px;font-size:12px;color:var(--t1);line-height:1.75;}
+.notion-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--accent);text-decoration:none;margin-top:14px;padding:9px 14px;border:1px solid rgba(69,147,252,.3);border-radius:6px;transition:background .15s;font-family:var(--mono);font-weight:600;}
 .notion-btn:hover{background:var(--accent-b);}
 .disclaimer{font-size:10px;color:var(--t3);margin-top:12px;line-height:1.6;}
 
@@ -333,7 +333,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 .wf-arrow{color:var(--t3);font-size:10px;padding:0 3px;flex-shrink:0;}
 .guide-btn{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;border:1px solid var(--b1);background:transparent;color:var(--t3);font-size:10px;font-family:var(--mono);cursor:pointer;transition:all .15s;margin-left:5px;vertical-align:middle;}
 .guide-btn:hover{border-color:var(--accent);color:var(--accent);}
-.guide-panel{display:none;background:var(--accent-b);border:1px solid rgba(49,130,246,.15);border-radius:6px;padding:10px 12px;margin-top:8px;font-size:11px;color:var(--t2);line-height:1.75;}
+.guide-panel{display:none;background:var(--accent-b);border:1px solid rgba(69,147,252,.15);border-radius:6px;padding:10px 12px;margin-top:8px;font-size:11px;color:var(--t2);line-height:1.75;}
 .guide-panel.open{display:block;}
 .guide-panel strong{color:var(--accent);}
 
@@ -367,12 +367,12 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 <style>
 /* [2026-06-27] 토스풍 은은한 배경 그라데이션 + 마우스 따라오는 물결 글로우 */
 #fd-ambient{position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(1200px 600px at 18% -8%,rgba(49,130,246,.08),transparent 60%),
-             radial-gradient(1000px 560px at 100% 108%,rgba(49,130,246,.05),transparent 60%);}
+  background:radial-gradient(1200px 600px at 18% -8%,rgba(69,147,252,.08),transparent 60%),
+             radial-gradient(1000px 560px at 100% 108%,rgba(69,147,252,.05),transparent 60%);}
 #fd-glow{position:fixed;left:0;top:0;width:520px;height:520px;margin:-260px 0 0 -260px;
   border-radius:50%;z-index:-1;pointer-events:none;opacity:0;transition:opacity .45s;
   will-change:transform;filter:blur(12px);
-  background:radial-gradient(circle,rgba(49,130,246,.12),rgba(49,130,246,.04) 38%,transparent 66%);}
+  background:radial-gradient(circle,rgba(69,147,252,.12),rgba(69,147,252,.04) 38%,transparent 66%);}
 @media (max-width:640px){#fd-glow{display:none;}}
 </style>
 <div id="fd-ambient"></div>
@@ -521,7 +521,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
       </div>
       <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
         <span style="font-size:12px;color:#FFFFFF;font-family:var(--mono);display:flex;align-items:center;gap:7px">
-          <span style="display:inline-block;width:22px;height:2px;background:#F04452;border-radius:1px;"></span>누적 수익률
+          <span style="display:inline-block;width:22px;height:2px;background:#FF8080;border-radius:1px;"></span>누적 수익률
         </span>
         <span style="font-size:12px;color:#FFFFFF;font-family:var(--mono);display:flex;align-items:center;gap:7px">
           <span style="display:inline-block;width:20px;height:0;border-top:2px dashed rgba(232,201,106,.75)"></span>최고점
@@ -679,7 +679,7 @@ function getSafetyBar(p){
     const cs=p.legs.find(l=>l.type==='call_sell');
     const ps=p.legs.find(l=>l.type==='put_sell');
     return `<div class="safety-wrap">
-      <div class="safety-label"><span style="color:#5080CC">$${ps.strike} ← 손실</span><span style="color:#FF8080">수익 구간</span><span style="color:#5080CC">손실 → $${cs.strike}</span></div>
+      <div class="safety-label"><span style="color:#4593FC">$${ps.strike} ← 손실</span><span style="color:#FF8080">수익 구간</span><span style="color:#4593FC">손실 → $${cs.strike}</span></div>
       <div class="safety-track">
         <div style="position:absolute;left:0;width:12%;height:100%;background:rgba(80,128,204,.35)"></div>
         <div style="position:absolute;left:12%;right:12%;height:100%;background:linear-gradient(90deg,rgba(255,240,240,.9),rgba(255,150,150,.75),rgba(255,240,240,.9))"></div>
@@ -692,7 +692,7 @@ function getSafetyBar(p){
   const cp=p.current_price||0;
   const safeW=cp?Math.min(88,Math.max(15,(leg.strike-cp)/leg.strike*100)):75;
   return `<div class="safety-wrap">
-    <div class="safety-label"><span style="color:#FF8080">현재 안전 구간 ($${cp?.toLocaleString()})</span><span style="color:#5080CC">$${leg.strike.toLocaleString()} 이상 손실</span></div>
+    <div class="safety-label"><span style="color:#FF8080">현재 안전 구간 ($${cp?.toLocaleString()})</span><span style="color:#4593FC">$${leg.strike.toLocaleString()} 이상 손실</span></div>
     <div class="safety-track">
       <div style="width:${safeW}%;height:100%;background:linear-gradient(90deg,rgba(255,240,240,.7),rgba(255,150,150,.85));border-radius:4px"></div>
     </div>
@@ -818,14 +818,14 @@ window.ohToggle=function(id,btn){ var el=document.getElementById(id); if(!el)ret
 /* 추천표(이번 주 신규 추천 종목)와 동일한 표 스타일 */
 function ohTh(t,al){ return '<th style="text-align:'+(al||'left')+';font-size:13px;font-weight:600;color:var(--t2);padding:8px 13px;border-bottom:1.5px solid var(--b1);white-space:nowrap;letter-spacing:.02em;">'+t+'</th>'; }
 function ohCell(v,al,bold){ return '<td style="text-align:'+(al||'left')+';padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:14px;color:var(--t1);white-space:nowrap;'+(bold?'font-weight:700;':'')+'">'+hEsc(v)+'</td>'; }
-/* 수익=빨강(#3182F6), 손실=파랑(#4593FC) */
-function ohPnlInner(usd,rate){ var man=Math.round((usd||0)*rate/10000); var sgn=usd>0?'+':usd<0?'-':''; var col=usd>0?'#3182F6':usd<0?'#4593FC':'var(--t3)'; return '<span style="color:'+col+';font-weight:700;">'+sgn+Math.abs(man).toLocaleString('ko-KR')+'만원 <span style="font-size:11px;color:var(--t3);font-weight:600;">('+sgn+'$'+Math.abs(usd||0).toLocaleString()+')</span></span>'; }
+/* 수익=빨강(#4593FC), 손실=파랑(#4593FC) */
+function ohPnlInner(usd,rate){ var man=Math.round((usd||0)*rate/10000); var sgn=usd>0?'+':usd<0?'-':''; var col=usd>0?'#4593FC':usd<0?'#4593FC':'var(--t3)'; return '<span style="color:'+col+';font-weight:700;">'+sgn+Math.abs(man).toLocaleString('ko-KR')+'만원 <span style="font-size:11px;color:var(--t3);font-weight:600;">('+sgn+'$'+Math.abs(usd||0).toLocaleString()+')</span></span>'; }
 function ohPnlTd(usd,rate){ return '<td style="text-align:right;padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:14px;white-space:nowrap;">'+ohPnlInner(usd,rate)+'</td>'; }
 
 /* === 1-3 종목별 평가손익 요약 (유료 대시보드와 동일 디자인) === */
 function ohPc(v){ return v>0?'#c83030':v<0?'#4593FC':'var(--t2)'; }
 function ohUF(usd,rate){ var man=Math.round((usd||0)*rate/10000); return (man>=0?'+':'-')+Math.abs(man).toLocaleString('ko-KR')+'만원'; }
-function ohSumTh(arr){ return '<tr>'+arr.map(function(t,i){return '<th style="padding:10px 12px;text-align:'+(i?'right':'left')+';font-weight:700;color:#3182F6;border-bottom:2px solid rgba(49,130,246,.25);white-space:nowrap;">'+t+'</th>';}).join('')+'</tr>'; }
+function ohSumTh(arr){ return '<tr>'+arr.map(function(t,i){return '<th style="padding:10px 12px;text-align:'+(i?'right':'left')+';font-weight:700;color:#4593FC;border-bottom:2px solid rgba(69,147,252,.25);white-space:nowrap;">'+t+'</th>';}).join('')+'</tr>'; }
 function ohSumTd(t,a,c,b){ return '<td style="padding:9px 12px;text-align:'+(a||'left')+';font-weight:'+(b||400)+';color:'+(c||'var(--t1)')+';border-bottom:1px solid rgba(0,0,0,.05);white-space:nowrap;">'+t+'</td>'; }
 function ohBarCell(v,mx){ var t=mx>0?Math.abs(v)/mx:0, w=Math.max(4,Math.round(100*t)); var c=v>=0?(t>=.66?['#F2BFBF','#D05C5C']:t>=.33?['#F6D1D1','#DD7878']:['#FADEDE','#E89696']):(t>=.66?['#BBD3EF','#4E80C0']:t>=.33?['#C9DDF2','#5F90CC']:['#D5E4F6','#8FB2DD']); return '<td style="padding:9px 12px;width:38%;border-bottom:1px solid rgba(0,0,0,.05)"><div style="height:10px;border-radius:999px;background:rgba(0,0,0,.04);overflow:hidden"><div style="height:100%;width:'+w+'%;border-radius:999px;background:linear-gradient(90deg,'+c[0]+','+c[1]+')"></div></div></td>'; }
 function ohSummary(groups,rate){
@@ -834,23 +834,23 @@ function ohSummary(groups,rate){
   var tE=0,tW=0,tA=0; groups.forEach(function(g){ tE+=g.ev; tW+=g.weight; tA+=g.tot; });
   var h='<div style="border:1px solid var(--b1);border-radius:12px;padding:14px 16px;margin-bottom:16px;background:var(--card);box-shadow:var(--shadow-sm);">';
   h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">'
-    +'<span style="font-size:14px;font-weight:800;color:#3182F6;background:rgba(49,130,246,.15);padding:4px 12px;border-radius:6px;border:1px solid rgba(49,130,246,.30);">1-3</span>'
+    +'<span style="font-size:14px;font-weight:800;color:#4593FC;background:rgba(69,147,252,.15);padding:4px 12px;border-radius:6px;border:1px solid rgba(69,147,252,.30);">1-3</span>'
     +'<span style="font-size:15px;font-weight:700;color:var(--t1);letter-spacing:.02em;">종목별 평가손익</span>'
     +'<span style="font-size:12px;color:var(--t3);">보유 종목 · 수익 빨강 / 손실 파랑</span></div>';
   h+='<table style="width:100%;border-collapse:collapse;font-family:var(--mono);">'+ohSumTh(['종목','','평가손익','매매비중','총 손익']);
   groups.forEach(function(g){ h+='<tr>'+ohSumTd(hEsc(g.name),'left','var(--t1)',700)+ohBarCell(g.ev,mxE)+ohSumTd(ohUF(g.ev,rate),'right',ohPc(g.ev),700)+ohSumTd(g.weight.toFixed(2)+'%','right')+ohSumTd(ohUF(g.tot,rate),'right',ohPc(g.tot),700)+'</tr>'; });
-  h+='<tr style="background:rgba(49,130,246,.05)">'+ohSumTd('총 합계','left','#3182F6',800)+ohSumTd('','left')+ohSumTd(ohUF(tE,rate),'right',ohPc(tE),800)+ohSumTd(tW.toFixed(2)+'%','right','var(--t1)',800)+ohSumTd(ohUF(tA,rate),'right',ohPc(tA),800)+'</tr>';
+  h+='<tr style="background:rgba(69,147,252,.05)">'+ohSumTd('총 합계','left','#4593FC',800)+ohSumTd('','left')+ohSumTd(ohUF(tE,rate),'right',ohPc(tE),800)+ohSumTd(tW.toFixed(2)+'%','right','var(--t1)',800)+ohSumTd(ohUF(tA,rate),'right',ohPc(tA),800)+'</tr>';
   h+='</table></div>';
   return h;
 }
 function ohHeldToggle(label, inner){
-  return '<button onclick="ohToggle(\'ohheld\',this)" style="background:rgba(49,130,246,.12);border:1px solid rgba(49,130,246,.30);color:#F04452;display:flex;align-items:center;gap:8px;width:100%;justify-content:space-between;padding:11px 14px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;"><span>'+label+'</span><span class="oh-caret" style="font-size:12px;">▸</span></button>'
+  return '<button onclick="ohToggle(\'ohheld\',this)" style="background:rgba(69,147,252,.12);border:1px solid rgba(69,147,252,.30);color:#FF8080;display:flex;align-items:center;gap:8px;width:100%;justify-content:space-between;padding:11px 14px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:10px;"><span>'+label+'</span><span class="oh-caret" style="font-size:12px;">▸</span></button>'
     +'<div id="ohheld" style="display:none;margin-bottom:6px;overflow-x:auto;">'+inner+'</div>';
 }
 
 function renderHoldings(){
   var host=document.getElementById('holdingsContent'); if(!host) return;
-  if(!document.getElementById('oh-style')){var st=document.createElement('style');st.id='oh-style';st.textContent='@keyframes ohpulse{0%,100%{box-shadow:0 0 0 0 rgba(49,130,246,.5)}50%{box-shadow:0 0 0 7px rgba(49,130,246,0)}}@keyframes ohpulse2{0%,100%{box-shadow:0 0 0 0 rgba(49,130,246,.35)}50%{box-shadow:0 0 0 6px rgba(49,130,246,0)}}';document.head.appendChild(st);}
+  if(!document.getElementById('oh-style')){var st=document.createElement('style');st.id='oh-style';st.textContent='@keyframes ohpulse{0%,100%{box-shadow:0 0 0 0 rgba(69,147,252,.5)}50%{box-shadow:0 0 0 7px rgba(69,147,252,0)}}@keyframes ohpulse2{0%,100%{box-shadow:0 0 0 0 rgba(69,147,252,.35)}50%{box-shadow:0 0 0 6px rgba(69,147,252,0)}}';document.head.appendChild(st);}
   var oh=(adminData&&adminData.option_holdings)||null;
   var rate=(oh&&oh.exchange_rate)||hRate();
   var hasOH = oh && ((oh.holdings&&oh.holdings.length)||(oh.closed&&oh.closed.length));
@@ -913,7 +913,7 @@ function ohClosedBlock(items, rate, mode){
     h+='<div style="font-size:15px;font-weight:700;color:var(--t1);margin:2px 0 8px;">청산 내역 <span style="color:var(--t3);font-weight:600;">(0)</span></div><div style="color:var(--t3);font-size:13px;">청산된 포지션이 없습니다.</div></div>';
     return h;
   }
-  var btnStyle=stop?'background:rgba(49,130,246,.10);border:1.5px solid #3182F6;animation:ohpulse .7s ease-in-out infinite;color:#F04452;':'background:rgba(0,0,0,.04);border:1px solid var(--b1);color:var(--t1);';
+  var btnStyle=stop?'background:rgba(69,147,252,.10);border:1.5px solid #4593FC;animation:ohpulse .7s ease-in-out infinite;color:#FF8080;':'background:rgba(0,0,0,.04);border:1px solid var(--b1);color:var(--t1);';
   var btnText=stop?('금일 손절·청산 종목 있음 ('+items.length+')'):('청산 내역 ('+items.length+')');
   h+='<button onclick="ohToggle(\'ohclosed\',this)" style="'+btnStyle+'display:flex;align-items:center;gap:8px;width:100%;justify-content:space-between;padding:11px 14px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;"><span>'+btnText+'</span><span class="oh-caret" style="font-size:12px;">▸</span></button>';
   h+='<div id="ohclosed" style="display:none;margin-top:10px;overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-family:var(--mono);"><thead><tr>';
@@ -921,7 +921,7 @@ function ohClosedBlock(items, rate, mode){
   else { h+=ohTh('종목')+ohTh('구분')+ohTh('진입(pt)','right')+ohTh('청산(pt)','right')+ohTh('계약수','right')+ohTh('실현손익','right')+ohTh('사유'); }
   h+='</tr></thead><tbody>';
   items.forEach(function(x){
-    var rcol=x.is_stoploss?'#F04452':'var(--t2)';
+    var rcol=x.is_stoploss?'#FF8080':'var(--t2)';
     var reasonTd='<td style="padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:13px;color:'+rcol+';white-space:nowrap;font-weight:'+(x.is_stoploss?'700':'400')+';">'+hEsc(x.reason||'-')+'</td>';
     if(mode==='full'){ h+='<tr>'+ohCell(x.name,'left',true)+ohCell(x.strat)+ohCell(x.month)+ohCell(x.date)+ohPnlTd(x.pnl,rate)+reasonTd+'</tr>'; }
     else { var enTxt=(x.entry!=null)?String(x.entry):'-'; var exTxt=(x.exit!=null)?String(x.exit):'-'; var ctTxt=(x.contracts?x.contracts:1)+'계약'; h+='<tr>'+ohCell(x.name,'left',true)+ohCell(x.sub||'-')+ohCell(enTxt,'right')+ohCell(exTxt,'right')+ohCell(ctTxt,'right')+ohPnlTd(x.pnl,rate)+reasonTd+'</tr>'; }
@@ -985,7 +985,7 @@ function renderCards(pos){
       const pnlKrw=Math.round(Math.abs(p.current_pnl)*rate/10000);
       const cls=p.current_pnl>0?'profit':p.current_pnl<0?'loss':'neutral';
       const sign=p.current_pnl>0?'+':p.current_pnl<0?'-':'';
-      const pnlColor=p.current_pnl>0?'var(--accent)':p.current_pnl<0?'#4593FC':'var(--t3)';
+      const pnlColor=p.current_pnl>0?'var(--profit)':p.current_pnl<0?'#4593FC':'var(--t3)';
       pnlHtml=`<div class="pnl-row ${cls}"><span class="pnl-label">현재 평가손익</span><span class="pnl-val ${cls}" style="color:${pnlColor};">${sign}${pnlKrw}만원 <span style="font-size:12px;opacity:.8;">(${sign}$${Math.abs(p.current_pnl).toLocaleString()})</span></span></div>`;
     } else {
       const pnlMsg=isExpired?'만기청산':'업데이트 예정';
@@ -1005,12 +1005,12 @@ function renderCards(pos){
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
         <div style="display:flex;flex-direction:column;min-width:0;"><span style="font-size:20px;font-weight:700;color:var(--t1);letter-spacing:-.02em;white-space:nowrap;">${p.underlying}</span>${isExpired?'':msBadges(p.underlying)}</div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;margin-left:8px;">
-          <span style="font-size:13px;font-weight:500;color:var(--accent);font-family:var(--mono);background:var(--accent-b);padding:4px 10px;border-radius:4px;border:1px solid rgba(49,130,246,.18);white-space:nowrap;">${SL[p.strategy_type]||p.strategy_type}</span>
-          ${isNew?`<span style="font-size:12px;font-weight:700;color:#fff;background:#3182F6;padding:4px 10px;border-radius:4px;letter-spacing:.02em;">신규 진입</span>`:''}
+          <span style="font-size:13px;font-weight:500;color:var(--accent);font-family:var(--mono);background:var(--accent-b);padding:4px 10px;border-radius:4px;border:1px solid rgba(69,147,252,.18);white-space:nowrap;">${SL[p.strategy_type]||p.strategy_type}</span>
+          ${isNew?`<span style="font-size:12px;font-weight:700;color:#fff;background:#4593FC;padding:4px 10px;border-radius:4px;letter-spacing:.02em;">신규 진입</span>`:''}
           ${isExpired
             ? `<span style="font-size:12px;font-weight:500;color:var(--t3);font-family:var(--mono);background:rgba(0,0,0,.05);padding:3px 8px;border-radius:4px;">만기청산</span>`
             : d<=5
-              ? `<span style="font-size:12px;font-weight:600;color:var(--red);font-family:var(--mono);background:rgba(240,68,82,.08);padding:3px 8px;border-radius:4px;">D-${d}</span>`
+              ? `<span style="font-size:12px;font-weight:600;color:var(--red);font-family:var(--mono);background:rgba(255,128,128,.08);padding:3px 8px;border-radius:4px;">D-${d}</span>`
               : ''
           }
         </div>
@@ -1027,9 +1027,9 @@ function renderCards(pos){
           <div style="font-size:14px;color:var(--t2);font-family:var(--mono);margin-bottom:6px;white-space:nowrap;">투자금(증거금)</div>
           <div style="font-size:20px;font-weight:700;font-family:var(--mono);color:var(--t1);line-height:1.2;">${marginKrw}만원</div>
         </div>
-        <div style="background:rgba(49,130,246,.05);border-radius:8px;padding:10px 12px;border:1px solid rgba(49,130,246,.12);min-width:0;">
+        <div style="background:rgba(255,128,128,.06);border-radius:8px;padding:10px 12px;border:1px solid rgba(255,128,128,.18);min-width:0;">
           <div style="font-size:14px;color:var(--t2);font-family:var(--mono);margin-bottom:6px;">최대 가능 수익</div>
-          <div style="font-size:20px;font-weight:700;font-family:var(--mono);color:var(--accent);line-height:1.2;">+${premiumKrw}만원</div>
+          <div style="font-size:20px;font-weight:700;font-family:var(--mono);color:var(--profit);line-height:1.2;">+${premiumKrw}만원</div>
         </div>
       </div>
 
@@ -1043,7 +1043,7 @@ function renderCards(pos){
           <span style="font-size:17px;font-weight:700;font-family:var(--mono);color:${isExpired?'var(--t3)':d<=5?'#e06070':d<=20?'#e8956a':'var(--accent)'};">${isExpired?'만기청산':`D-${d}`}</span>
         </div>
         <div style="height:7px;background:rgba(0,0,0,.07);border-radius:6px;overflow:hidden;">
-          <div style="height:100%;border-radius:6px;background:linear-gradient(90deg,rgba(49,130,246,0.35),rgba(49,130,246,1.0));width:${Math.min(pc,100)}%;transition:width .3s;"></div>
+          <div style="height:100%;border-radius:6px;background:linear-gradient(90deg,rgba(69,147,252,0.35),rgba(69,147,252,1.0));width:${Math.min(pc,100)}%;transition:width .3s;"></div>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--t3);font-family:var(--mono);margin-top:4px;">
           <span>진입 ${p.shared_date.slice(5).replace('-','/')}</span>
@@ -1420,7 +1420,7 @@ function openModal(id){
     const ps=p.legs.find(l=>l.type==='put_sell');
     const upPct=cp?((cs.strike-cp)/cp*100).toFixed(0):'?';
     const dnPct=cp?((cp-ps.strike)/cp*100).toFixed(0):'?';
-    keyMsg=`${p.underlying}가 <span style="color:#FF8080;font-weight:800">${upPct}% 급등</span> 또는 <span style="color:#5080CC;font-weight:800">${dnPct}% 급락</span>하지 않으면 수익이 확정돼요`;
+    keyMsg=`${p.underlying}가 <span style="color:#FF8080;font-weight:800">${upPct}% 급등</span> 또는 <span style="color:#4593FC;font-weight:800">${dnPct}% 급락</span>하지 않으면 수익이 확정돼요`;
     safeBar='';
   } else {
     const leg=p.legs.find(l=>l.type==='call_sell')||p.legs[0];
@@ -1445,8 +1445,8 @@ function openModal(id){
   // ── 수익 시나리오 ──
   const scenHtml=p.profit_scenarios.map(s=>{
     const isW=s.type.startsWith('win');
-    const bgS=isW?'rgba(49,130,246,.06)':'rgba(69,147,252,.06)';
-    const borderS=isW?'rgba(49,130,246,.18)':'rgba(69,147,252,.18)';
+    const bgS=isW?'rgba(69,147,252,.06)':'rgba(69,147,252,.06)';
+    const borderS=isW?'rgba(69,147,252,.18)':'rgba(69,147,252,.18)';
     const colorS=isW?'var(--accent)':'var(--loss)';
     const icon=isW?'✓':'✗';
     const result=s.profit!=null
@@ -1465,9 +1465,9 @@ function openModal(id){
     const sign=p.current_pnl>0?'+':p.current_pnl<0?'-':'';
     const pnlKrw=Math.round(Math.abs(p.current_pnl)*rate/10000);
     const bg=isProfit?'rgba(255,220,220,.12)':'rgba(200,220,255,.12)';
-    const border=isProfit?'rgba(49,130,246,.2)':'rgba(69,147,252,.2)';
+    const border=isProfit?'rgba(69,147,252,.2)':'rgba(69,147,252,.2)';
     const color=isProfit?'var(--accent)':'var(--loss)';
-    const bg2=isProfit?'rgba(49,130,246,.07)':'rgba(69,147,252,.07)';
+    const bg2=isProfit?'rgba(69,147,252,.07)':'rgba(69,147,252,.07)';
     pnlBlock=`<div style="background:${bg2};border:1px solid ${border};border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
       <span style="font-size:13px;color:var(--t2);font-family:var(--mono);">현재 평가손익</span>
       <span style="font-size:16px;font-weight:700;font-family:var(--mono);color:${color};white-space:nowrap;">${sign}${pnlKrw}만원 <span style="font-size:12px;opacity:.75;">(${sign}$${Math.abs(p.current_pnl).toLocaleString()})</span></span>
@@ -1518,12 +1518,12 @@ function openModal(id){
           <div style="font-size:19px;font-weight:700;font-family:var(--mono);color:var(--t1);">${marginKrwM}만원</div>
           <div style="font-size:13px;color:var(--t3);font-family:var(--mono);margin-top:4px;">총 증거금</div>
         </div>
-        <div style="flex:1;padding:10px 12px;border-radius:8px;background:rgba(49,130,246,.07);border:1px solid rgba(49,130,246,.2);text-align:center;">
+        <div style="flex:1;padding:10px 12px;border-radius:8px;background:rgba(255,128,128,.06);border:1px solid rgba(255,128,128,.18);text-align:center;">
           <div style="font-size:13px;color:var(--t3);font-family:var(--mono);margin-bottom:5px;">최대 가능 수익</div>
-          <div style="font-size:19px;font-weight:700;font-family:var(--mono);color:var(--accent);">+${premiumKrwM}만원</div>
+          <div style="font-size:19px;font-weight:700;font-family:var(--mono);color:var(--profit);">+${premiumKrwM}만원</div>
           <div style="font-size:13px;color:var(--t3);font-family:var(--mono);margin-top:4px;">원화 기대수익</div>
         </div>
-        <div style="flex:1;padding:10px 12px;border-radius:8px;background:rgba(49,130,246,.07);border:1px solid rgba(49,130,246,.2);text-align:center;">
+        <div style="flex:1;padding:10px 12px;border-radius:8px;background:rgba(69,147,252,.07);border:1px solid rgba(69,147,252,.2);text-align:center;">
           <div style="font-size:13px;color:var(--t3);font-family:var(--mono);margin-bottom:5px;">증거금 대비</div>
           <div style="font-size:19px;font-weight:700;font-family:var(--mono);color:var(--accent);">${rs2}</div>
           <div style="font-size:13px;color:var(--t3);font-family:var(--mono);margin-top:4px;">잠재수익률</div>
@@ -1745,8 +1745,8 @@ function renderPosKpi(){
   const lossCount   = a.filter(p => (p.current_pnl||0) < 0).length;
   const neutralCount = a.length - profitCount - lossCount;
 
-  // 색상 (수익=연빨강 #FF8080, 손실=연파랑 #5080CC)
-  const pnlColor = activePnlKrw > 0 ? '#FF8080' : activePnlKrw < 0 ? '#5080CC' : 'var(--t3)';
+  // 색상 (수익=연빨강 #FF8080, 손실=연파랑 #4593FC)
+  const pnlColor = activePnlKrw > 0 ? '#FF8080' : activePnlKrw < 0 ? '#4593FC' : 'var(--t3)';
   const pnlSign  = activePnlKrw > 0 ? '+' : activePnlKrw < 0 ? '-' : '';
 
   // 증거금 비율 (총 예탁금 대비) — 관리자 입력 pct 우선
@@ -1803,7 +1803,7 @@ function renderHistMetrics(){
     <div class="metric"><div class="metric-label">총 전략 수</div><div class="metric-val mv-cyan">${totalCount}</div><div class="metric-sub">1번~${totalCount}번 (${activeCount}개 진행 중)</div></div>
     <div class="metric"><div class="metric-label">승률</div><div class="metric-val" style="color:#FF8080">${(tW/tN*100).toFixed(1)}%</div><div class="metric-sub">${tW}승 ${tL}패 (진행중 포함)</div></div>
     <div class="metric"><div class="metric-label">총 수익 합계</div><div class="metric-val" style="font-size:18px;color:#FF8080">+${Math.round((tw+eWamt+aWamt)/10000)}만원</div><div class="metric-sub">진행중 포함</div></div>
-    <div class="metric"><div class="metric-label">총 손실 합계</div><div class="metric-val" style="font-size:18px;color:#5080CC">-${Math.round((tl+eLamt+aLamt)/10000)}만원</div><div class="metric-sub">진행중 포함</div></div>
+    <div class="metric"><div class="metric-label">총 손실 합계</div><div class="metric-val" style="font-size:18px;color:#4593FC">-${Math.round((tl+eLamt+aLamt)/10000)}만원</div><div class="metric-sub">진행중 포함</div></div>
   `;
 }
 function renderTimeline(){
@@ -1817,7 +1817,7 @@ function renderTimeline(){
 function showDotTip(n,pnl){
   const el=document.getElementById('dotTooltip');
   const sign=pnl>0?'+':'';
-  const color=pnl>0?'#FF8080':pnl<0?'#5080CC':'var(--t3)';
+  const color=pnl>0?'#FF8080':pnl<0?'#4593FC':'var(--t3)';
   el.innerHTML=`<span style="color:var(--t2)">${n}번 전략:</span> <strong style="color:${color}">${sign}${comma(pnl)}원</strong>`;
 }
 function hideDotTip(){document.getElementById('dotTooltip').innerHTML='';}
@@ -1826,9 +1826,9 @@ function getStory(s){
   const strikes=s.legs.filter(l=>l.type&&l.type.includes('매도')).map(l=>l.strike).join(', ');
   if(n===0) return {text:'상세 데이터를 준비 중이에요.',color:'var(--t3)'};
   if(r==='loss'){
-    if(n>=7) return {text:`<span class="hl">${n}번의 계약 조정</span>으로 방어했으나 결국 손절 마감. 가격이 예상 범위를 크게 벗어난 전략.`,color:'#5080CC'};
-    if(n>=4) return {text:`진입 후 <span class="hl">${n}번의 추가 주문</span>으로 방어했으나 결국 손절 마감.`,color:'#5080CC'};
-    return {text:`진입 후 가격이 예상 범위를 벗어나 손절 마감.`,color:'#5080CC'};
+    if(n>=7) return {text:`<span class="hl">${n}번의 계약 조정</span>으로 방어했으나 결국 손절 마감. 가격이 예상 범위를 크게 벗어난 전략.`,color:'#4593FC'};
+    if(n>=4) return {text:`진입 후 <span class="hl">${n}번의 추가 주문</span>으로 방어했으나 결국 손절 마감.`,color:'#4593FC'};
+    return {text:`진입 후 가격이 예상 범위를 벗어나 손절 마감.`,color:'#4593FC'};
   }
   if(n===1) return {text:`단 <span class="hl">1번의 주문</span>만으로 만기까지 수익 구간 유지. 가장 깔끔한 패턴.`,color:'#FF8080'};
   if(n===2) return {text:`<span class="hl">2개 주문</span>으로 양방향 커버하며 만기 수익 확정.`,color:'#FF8080'};
@@ -1883,8 +1883,8 @@ function buildDetailRow(s, pnl, pct){
   // 청산 손익 박스
   const pnlKRW = Math.round(hist?.pnl || 0);
   const pnlColor = isWin ? 'var(--accent)' : isLoss ? 'var(--loss)' : 'var(--t3)';
-  const pnlBg = isWin ? 'rgba(49,130,246,.06)' : isLoss ? 'rgba(69,147,252,.06)' : 'rgba(0,0,0,.03)';
-  const pnlBorder = isWin ? 'rgba(49,130,246,.18)' : isLoss ? 'rgba(69,147,252,.18)' : 'var(--b1)';
+  const pnlBg = isWin ? 'rgba(69,147,252,.06)' : isLoss ? 'rgba(69,147,252,.06)' : 'rgba(0,0,0,.03)';
+  const pnlBorder = isWin ? 'rgba(69,147,252,.18)' : isLoss ? 'rgba(69,147,252,.18)' : 'var(--b1)';
   const resultText = isWin ? '수익 청산' : isLoss ? '손절 청산' : '만기 무손익';
 
   // story
@@ -2009,7 +2009,7 @@ function renderHistory(filter){
           pnlText=`<span style="color:${clr};font-weight:600;">${sgn}${Math.round(Math.abs(pnl)*rate/10000)}만원 (${sgn}$${Math.abs(pnl).toLocaleString()})</span>`;
         }
         const dLabel=isExp?'만기청산':`잔존 ${d2}일`;
-        const rowBg=isExp?'background:rgba(0,0,0,.02);':'background:rgba(49,130,246,.04);';
+        const rowBg=isExp?'background:rgba(0,0,0,.02);':'background:rgba(69,147,252,.04);';
         const numColor=isExp?'var(--t3)':'var(--accent)';
         const statusLabel=isExp?'만기청산':'진행 중';
         const statusBadge=isExp?'style="font-size:13px;color:var(--t3);font-family:var(--mono);"':'style="font-size:13px;color:var(--accent);font-family:var(--mono);font-weight:600;"';
@@ -2036,7 +2036,7 @@ function renderHistory(filter){
           <td class="mono" style="color:${numColor};font-weight:700;font-size:14px;">${x.n}번 <span style="font-size:12px;color:var(--t3);font-weight:400;">(${statusLabel})</span></td>
           <td class="mono">${pnlText}<div style="font-size:13px;color:var(--t2);font-family:var(--mono);margin-top:4px;">${pos.underlying} · ${dLabel}</div></td>
           <td class="mono">${x.cumKrw!==undefined?comma(x.cumKrw)+'원':'—'}</td>
-          <td class="mono" style="color:${(x.cumPct||0)>=0?'#FF8080':'#5080CC'}">${x.cumPct!==undefined?(x.cumPct>=0?'+':'')+x.cumPct.toFixed(2)+'%':'—'}</td>
+          <td class="mono" style="color:${(x.cumPct||0)>=0?'#FF8080':'#4593FC'}">${x.cumPct!==undefined?(x.cumPct>=0?'+':'')+x.cumPct.toFixed(2)+'%':'—'}</td>
           <td>${x.pnlKrw!==undefined?(x.pnlKrw>0?'<span class="badge b-green">수익</span>':x.pnlKrw<0?'<span class="badge b-red">손실</span>':'<span class="badge b-gray">대기</span>'):'—'}</td>
         </tr>`;
       }).join('')
@@ -2056,7 +2056,7 @@ function renderHistory(filter){
       <td class="mono" style="color:${isExpiredHist?'var(--t3)':'var(--t1)'}">${x.n}번${isExpiredHist?` <span style="font-size:12px;color:var(--t3);font-family:var(--mono);font-weight:400;">(만기청산)</span>`:''}</td>
       <td class="mono ${cls}">${sign}${comma(x.pnl)}원<div class="inline-bar" style="width:${bw}%;background:${bc};height:3px;border-radius:2px;margin-top:4px;"></div></td>
       <td class="mono">${comma(x.cum)}원</td>
-      <td class="mono" style="color:${x.pct>=0?'#FF8080':'#5080CC'}">${(x.pct*100).toFixed(2)}%</td>
+      <td class="mono" style="color:${x.pct>=0?'#FF8080':'#4593FC'}">${(x.pct*100).toFixed(2)}%</td>
       <td style="display:flex;align-items:center;gap:8px;">${pill}</td>
     </tr>`;
     return mainRow + buildDetailRow(x, x.pnl, x.pct);
@@ -2076,9 +2076,9 @@ function buildStatCharts(){
   // ── 라이트 테마 공통 색상 ──
   const tc  = '#B0B8C1';   // tick 텍스트
   const gc  = 'rgba(0,0,0,.06)'; // grid
-  const winC  = '#3182F6';
+  const winC  = '#4593FC';
   const lossC = '#4593FC';
-  const acC   = '#3182F6';
+  const acC   = '#4593FC';
 
   Chart.defaults.color       = tc;
   Chart.defaults.borderColor = gc;
@@ -2221,8 +2221,8 @@ function buildStatCharts(){
         fill:true,
         backgroundColor:ctx=>{
           const g=ctx.chart.ctx.createLinearGradient(0,0,0,300);
-          g.addColorStop(0,'rgba(49,130,246,.18)');
-          g.addColorStop(1,'rgba(49,130,246,.01)');
+          g.addColorStop(0,'rgba(69,147,252,.18)');
+          g.addColorStop(1,'rgba(69,147,252,.01)');
           return g;
         },
         tension:.32
@@ -2262,8 +2262,8 @@ function buildStatCharts(){
       labels:[`수익 (${_tW}번)`,`손실 (${_tL}번)`,...(_tZ?[`무손익 (${_tZ}번)`]:[])],
       datasets:[{
         data:[_tW,_tL,...(_tZ?[_tZ]:[])],
-        backgroundColor:['rgba(49,130,246,.65)','rgba(69,147,252,.55)',...(ZEROS?['rgba(160,152,148,.35)']:[])],
-        borderColor:['rgba(49,130,246,.9)','rgba(69,147,252,.9)',...(ZEROS?['rgba(160,152,148,.5)']:[])],
+        backgroundColor:['rgba(69,147,252,.65)','rgba(69,147,252,.55)',...(ZEROS?['rgba(160,152,148,.35)']:[])],
+        borderColor:['rgba(69,147,252,.9)','rgba(69,147,252,.9)',...(ZEROS?['rgba(160,152,148,.5)']:[])],
         borderWidth:1.5,hoverOffset:8
       }]
     },
@@ -2283,7 +2283,7 @@ function buildStatCharts(){
         ctx.save();
         ctx.textAlign='center';ctx.textBaseline='middle';
         ctx.font='bold 24px IBM Plex Mono,monospace';
-        ctx.fillStyle='#3182F6';
+        ctx.fillStyle='#4593FC';
         ctx.fillText((_tW/_tN*100).toFixed(1)+'%',cx,cy-10);
         ctx.font='13px IBM Plex Sans KR,Noto Sans KR,sans-serif';
         ctx.fillStyle='#a89e98';
@@ -2294,7 +2294,7 @@ function buildStatCharts(){
   });
 
   document.getElementById('donut-legend').innerHTML=[
-    {label:`수익 ${_tW}번`,color:'#3182F6'},
+    {label:`수익 ${_tW}번`,color:'#4593FC'},
     {label:`손실 ${_tL}번`,color:lossC},
     ...(_tZ?[{label:`무손익 ${_tZ}번`,color:'#a89e98'}]:[])
   ].map(l=>`
@@ -2319,8 +2319,8 @@ function buildStatCharts(){
           const bx=x-width/2,r=5;
           const g=ctx.createLinearGradient(0,barTop,0,barBot);
           if(isWin){
-            g.addColorStop(0,'rgba(49,130,246,.25)');
-            g.addColorStop(1,'rgba(49,130,246,.6)');
+            g.addColorStop(0,'rgba(69,147,252,.25)');
+            g.addColorStop(1,'rgba(69,147,252,.6)');
           } else {
             g.addColorStop(0,'rgba(69,147,252,.3)');
             g.addColorStop(1,'rgba(69,147,252,.65)');
@@ -2365,7 +2365,7 @@ function buildStatCharts(){
         legend:{display:true,position:'bottom',labels:{
           color:tc,font:{size:12,family:'IBM Plex Mono'},padding:14,
           generateLabels:()=>[
-            {text:'수익',fillStyle:'rgba(49,130,246,.65)',strokeStyle:'transparent',lineWidth:0,datasetIndex:0},
+            {text:'수익',fillStyle:'rgba(69,147,252,.65)',strokeStyle:'transparent',lineWidth:0,datasetIndex:0},
             {text:'손실',fillStyle:'rgba(69,147,252,.55)',strokeStyle:'transparent',lineWidth:0,datasetIndex:1}
           ]
         }},
