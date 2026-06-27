@@ -81,7 +81,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;font-family:var(--mono);}
 .b-green{background:var(--profit-bg);color:var(--profit);border:1px solid var(--profit-border);}
 .b-orange,.b-accent{background:var(--accent-a);color:var(--accent);border:1px solid rgba(69,147,252,.2);}
-.b-red{background:var(--red-a);color:var(--red);border:1px solid rgba(255,128,128,.2);}
+.b-red{background:rgba(69,147,252,.1);color:#4593FC;border:1px solid rgba(69,147,252,.25);}
 .b-purple{background:var(--purple-a);color:var(--purple);border:1px solid rgba(167,139,250,.2);}
 .b-cyan{background:var(--cyan-a);color:var(--cyan);border:1px solid rgba(69,147,252,.2);}
 .b-gray,.b-neutral{background:rgba(0,0,0,.04);color:var(--t2);border:1px solid var(--b1);}
@@ -819,7 +819,7 @@ window.ohToggle=function(id,btn){ var el=document.getElementById(id); if(!el)ret
 function ohTh(t,al){ return '<th style="text-align:'+(al||'left')+';font-size:13px;font-weight:600;color:var(--t2);padding:8px 13px;border-bottom:1.5px solid var(--b1);white-space:nowrap;letter-spacing:.02em;">'+t+'</th>'; }
 function ohCell(v,al,bold){ return '<td style="text-align:'+(al||'left')+';padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:14px;color:var(--t1);white-space:nowrap;'+(bold?'font-weight:700;':'')+'">'+hEsc(v)+'</td>'; }
 /* 수익=빨강(#4593FC), 손실=파랑(#4593FC) */
-function ohPnlInner(usd,rate){ var man=Math.round((usd||0)*rate/10000); var sgn=usd>0?'+':usd<0?'-':''; var col=usd>0?'#4593FC':usd<0?'#4593FC':'var(--t3)'; return '<span style="color:'+col+';font-weight:700;">'+sgn+Math.abs(man).toLocaleString('ko-KR')+'만원 <span style="font-size:11px;color:var(--t3);font-weight:600;">('+sgn+'$'+Math.abs(usd||0).toLocaleString()+')</span></span>'; }
+function ohPnlInner(usd,rate){ var man=Math.round((usd||0)*rate/10000); var sgn=usd>0?'+':usd<0?'-':''; var col=usd>0?'#FF8080':usd<0?'#4593FC':'var(--t3)'; return '<span style="color:'+col+';font-weight:700;">'+sgn+Math.abs(man).toLocaleString('ko-KR')+'만원 <span style="font-size:11px;color:var(--t3);font-weight:600;">('+sgn+'$'+Math.abs(usd||0).toLocaleString()+')</span></span>'; }
 function ohPnlTd(usd,rate){ return '<td style="text-align:right;padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:14px;white-space:nowrap;">'+ohPnlInner(usd,rate)+'</td>'; }
 
 /* === 1-3 종목별 평가손익 요약 (유료 대시보드와 동일 디자인) === */
@@ -1122,7 +1122,7 @@ function buildPositionChart(p, canvasId){
       // 흰 배경 채우기
       const {ctx:c,chartArea:{left,right,top,bottom}}=chart;
       c.save();
-      c.fillStyle='#1E2027';
+      c.fillStyle='#ffffff';
       c.fillRect(left,top,right-left,bottom-top);
       c.restore();
     },
@@ -1465,9 +1465,9 @@ function openModal(id){
     const sign=p.current_pnl>0?'+':p.current_pnl<0?'-':'';
     const pnlKrw=Math.round(Math.abs(p.current_pnl)*rate/10000);
     const bg=isProfit?'rgba(255,220,220,.12)':'rgba(200,220,255,.12)';
-    const border=isProfit?'rgba(69,147,252,.2)':'rgba(69,147,252,.2)';
-    const color=isProfit?'var(--accent)':'var(--loss)';
-    const bg2=isProfit?'rgba(69,147,252,.07)':'rgba(69,147,252,.07)';
+    const border=isProfit?'rgba(255,128,128,.25)':'rgba(69,147,252,.2)';
+    const color=isProfit?'var(--profit)':'var(--loss)';
+    const bg2=isProfit?'rgba(255,128,128,.07)':'rgba(69,147,252,.07)';
     pnlBlock=`<div style="background:${bg2};border:1px solid ${border};border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
       <span style="font-size:13px;color:var(--t2);font-family:var(--mono);">현재 평가손익</span>
       <span style="font-size:16px;font-weight:700;font-family:var(--mono);color:${color};white-space:nowrap;">${sign}${pnlKrw}만원 <span style="font-size:12px;opacity:.75;">(${sign}$${Math.abs(p.current_pnl).toLocaleString()})</span></span>
@@ -1523,9 +1523,9 @@ function openModal(id){
           <div style="font-size:19px;font-weight:700;font-family:var(--mono);color:var(--profit);">+${premiumKrwM}만원</div>
           <div style="font-size:13px;color:var(--t3);font-family:var(--mono);margin-top:4px;">원화 기대수익</div>
         </div>
-        <div style="flex:1;padding:10px 12px;border-radius:8px;background:rgba(69,147,252,.07);border:1px solid rgba(69,147,252,.2);text-align:center;">
+        <div style="flex:1;padding:10px 12px;border-radius:8px;background:rgba(255,128,128,.06);border:1px solid rgba(255,128,128,.18);text-align:center;">
           <div style="font-size:13px;color:var(--t3);font-family:var(--mono);margin-bottom:5px;">증거금 대비</div>
-          <div style="font-size:19px;font-weight:700;font-family:var(--mono);color:var(--accent);">${rs2}</div>
+          <div style="font-size:19px;font-weight:700;font-family:var(--mono);color:var(--profit);">${rs2}</div>
           <div style="font-size:13px;color:var(--t3);font-family:var(--mono);margin-top:4px;">잠재수익률</div>
         </div>
         <div style="flex:1;padding:10px 12px;border-radius:8px;background:rgba(0,0,0,.03);border:1px solid rgba(0,0,0,.06);text-align:center;">
@@ -1568,7 +1568,7 @@ function openModal(id){
               const hasPnl=p.current_pnl&&p.current_pnl!==0;
               const sellLegs=p.legs.filter(x=>x.type.includes('sell'));
               const legPnlKRW=hasPnl&&isSell?Math.round(p.current_pnl*(meta.exchange_rate||1500)/Math.max(sellLegs.length,1)):0;
-              const pnlColor=legPnlKRW>=0?'var(--accent)':'var(--loss)';
+              const pnlColor=legPnlKRW>=0?'var(--profit)':'var(--loss)';
               const pnlSign=legPnlKRW>=0?'+':'';
               const pnlCell=!isSell
                 ?'<span style="color:var(--t3);font-size:11px;">매수 레그</span>'
@@ -2005,7 +2005,7 @@ function renderHistory(filter){
           pnlText=isExp?`<span style="color:var(--t3);font-size:14px;font-family:var(--mono);">만기청산</span>`:`<span style="color:var(--t2);font-size:14px;font-family:var(--mono);">업데이트 예정</span>`;
         }else{
           const sgn=pnl>0?'+':pnl<0?'-':'';
-          const clr=pnl>0?'var(--accent)':pnl<0?'var(--loss)':'var(--t3)';
+          const clr=pnl>0?'var(--profit)':pnl<0?'var(--loss)':'var(--t3)';
           pnlText=`<span style="color:${clr};font-weight:600;">${sgn}${Math.round(Math.abs(pnl)*rate/10000)}만원 (${sgn}$${Math.abs(pnl).toLocaleString()})</span>`;
         }
         const dLabel=isExp?'만기청산':`잔존 ${d2}일`;
