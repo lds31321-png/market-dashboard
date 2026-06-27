@@ -511,7 +511,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
   <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px" id="stat-kpi-row"></div>
 
   <!-- 누적 수익 곡선 — 풀 width -->
-  <div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);
+  <div style="background:#1E2027;border:1px solid rgba(255,255,255,.08);border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.3);
     margin-bottom:16px;overflow:hidden;box-shadow:0 2px 20px rgba(0,0,0,.2)">
     <div style="display:flex;align-items:center;justify-content:space-between;
       padding:16px 22px 12px;border-bottom:1px solid rgba(99,120,180,.12)">
@@ -521,7 +521,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
       </div>
       <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
         <span style="font-size:12px;color:#FFFFFF;font-family:var(--mono);display:flex;align-items:center;gap:7px">
-          <span style="display:inline-block;width:22px;height:2px;background:#FF8080;border-radius:1px;"></span>누적 수익률
+          <span style="display:inline-block;width:22px;height:2px;background:#4593FC;border-radius:1px;"></span>누적 수익률
         </span>
         <span style="font-size:12px;color:#FFFFFF;font-family:var(--mono);display:flex;align-items:center;gap:7px">
           <span style="display:inline-block;width:20px;height:0;border-top:2px dashed rgba(232,201,106,.75)"></span>최고점
@@ -535,7 +535,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
   <div style="display:grid;grid-template-columns:1fr 1.8fr;gap:12px;margin-bottom:16px">
 
     <!-- 승패 도넛 -->
-    <div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);overflow:hidden">
+    <div style="background:#1E2027;border:1px solid rgba(255,255,255,.08);border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.3);overflow:hidden">
       <div style="padding:14px 20px 10px;border-bottom:1px solid rgba(99,120,180,.1)">
         <div style="font-size:15px;font-weight:700;color:var(--t1);font-family:var(--font-h)">승패 비율</div>
         <div style="font-size:13px;color:#FFFFFF;margin-top:3px">전략 결과 분포</div>
@@ -548,7 +548,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
     <div style="display:flex;flex-direction:column;gap:12px">
 
       <!-- 구간별 승패 -->
-      <div style="flex:1;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);overflow:hidden">
+      <div style="flex:1;background:#1E2027;border:1px solid rgba(255,255,255,.08);border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.3);overflow:hidden">
         <div style="padding:14px 20px 10px;border-bottom:1px solid rgba(99,120,180,.1)">
           <div style="font-size:15px;font-weight:700;color:var(--t1);font-family:var(--font-h)">구간별 승패</div>
           <div style="font-size:13px;color:#FFFFFF;margin-top:3px">30번 단위 · 어떤 구간도 손실이 더 많지 않음</div>
@@ -2075,7 +2075,7 @@ function buildStatCharts(){
 
   // ── 라이트 테마 공통 색상 ──
   const tc  = '#B0B8C1';   // tick 텍스트
-  const gc  = 'rgba(0,0,0,.06)'; // grid
+  const gc  = 'rgba(255,255,255,.07)'; // grid
   const winC  = '#4593FC';
   const lossC = '#4593FC';
   const acC   = '#4593FC';
@@ -2086,8 +2086,8 @@ function buildStatCharts(){
   Chart.defaults.font.size   = 11;
 
   const tipBase = {
-    backgroundColor:'rgba(255,253,250,.97)',
-    borderColor:'rgba(0,0,0,.1)', borderWidth:1,
+    backgroundColor:'rgba(30,32,39,.97)',
+    borderColor:'rgba(255,255,255,.12)', borderWidth:1,
     titleColor:'#FFFFFF', titleFont:{size:12,family:'IBM Plex Mono'},
     bodyColor:'#B0B8C1',  bodyFont:{size:12,family:'IBM Plex Mono'},
     padding:12, cornerRadius:8,
@@ -2173,7 +2173,7 @@ function buildStatCharts(){
     {label:'손익비',      val:pf.toFixed(2),                      unit:'x',   sub:'수익합 ÷ 손실합',       color:pf>=1?acC:lossC},
   ];
   document.getElementById('stat-kpi-row').innerHTML=kpis.map(k=>`
-    <div style="background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:12px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,.06);">
+    <div style="background:#1E2027;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px 18px;box-shadow:0 4px 16px rgba(0,0,0,.3);">
       <div style="font-size:14px;color:#B0B8C1;margin-bottom:10px;">${k.label}</div>
       <div style="display:flex;align-items:baseline;gap:3px;margin-bottom:6px;line-height:1;">
         <span style="font-size:26px;font-weight:700;font-family:var(--mono);color:${k.color};">${k.val}</span>
