@@ -16,8 +16,10 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{
-    background:#f0e9e1;
+    background:#17171C;
     min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -34,19 +36,19 @@
     font-size:15px;
     font-weight:800;
     letter-spacing:0.12em;
-    color:#d9664a;
+    color:#3182F6;
     margin-bottom:12px;
   }
   .hub-title{
     font-size:32px;
     font-weight:800;
-    color:#1a1816;
+    color:#FFFFFF;
     line-height:1.2;
     margin-bottom:10px;
   }
   .hub-sub{
     font-size:15px;
-    color:#7a736e;
+    color:#8B95A1;
     font-weight:500;
   }
   .hub-flow{
@@ -60,9 +62,9 @@
   .hub-flow .f{
     font-size:15px;
     font-weight:700;
-    color:#d9664a;
-    background:rgba(217,102,74,.08);
-    border:1px solid rgba(217,102,74,.28);
+    color:#3182F6;
+    background:rgba(49,130,246,.12);
+    border:1px solid rgba(49,130,246,.35);
     padding:6px 16px;
     border-radius:999px;
     white-space:nowrap;
@@ -70,7 +72,7 @@
   .hub-flow .a{
     font-size:17px;
     font-weight:800;
-    color:#d9664a;
+    color:#3182F6;
   }
   .card-grid{
     display:grid;
@@ -80,9 +82,9 @@
     max-width:1180px;
   }
   .hub-card{
-    background:#ffffff;
+    background:#1E2027;
     border-radius:16px;
-    border:1.5px solid #e8e0d8;
+    border:1.5px solid rgba(255,255,255,.08);
     padding:30px 28px;
     text-decoration:none;
     display:flex;
@@ -93,8 +95,8 @@
   }
   .hub-card:hover{
     transform:translateY(-3px);
-    box-shadow:0 8px 32px rgba(217,102,74,0.12);
-    border-color:#d9664a;
+    box-shadow:0 8px 32px rgba(49,130,246,0.20);
+    border-color:#3182F6;
   }
   .card-step{
     display:flex;
@@ -104,7 +106,7 @@
   .card-step .n{
     width:28px;height:28px;
     display:flex;align-items:center;justify-content:center;
-    background:#d9664a;color:#fff;
+    background:#3182F6;color:#fff;
     font-size:15px;font-weight:900;
     border-radius:8px;
     font-family:'IBM Plex Mono',monospace;
@@ -113,33 +115,33 @@
   .card-step .t{
     font-size:15px;
     font-weight:800;
-    color:#d9664a;
+    color:#3182F6;
     letter-spacing:0.02em;
   }
   .card-title{
     font-size:21px;
     font-weight:800;
-    color:#1a1816;
+    color:#FFFFFF;
     line-height:1.25;
   }
   .card-desc{
     font-size:15px;
-    color:#55504c;
+    color:#B0B8C1;
     line-height:1.7;
   }
   .card-items{
     margin-top:2px;
     padding-top:12px;
-    border-top:1px solid rgba(0,0,0,.07);
+    border-top:1px solid rgba(255,255,255,.08);
     font-size:15px;
-    color:#8a8480;
+    color:#8B95A1;
     line-height:1.7;
   }
   .card-arrow{
     margin-top:auto;
     padding-top:10px;
     font-size:20px;
-    color:#d9664a;
+    color:#3182F6;
     font-weight:700;
   }
   /* [2026-06-12] 최신 데이터로 업데이트 버튼 — 좌측 상단, 흰 배경+살몬, 펄스 */
@@ -147,19 +149,19 @@
     position:absolute; left:calc(100% + 28px); top:50%; transform:translateY(-50%); z-index:9999;
     white-space:nowrap;
     display:inline-flex; align-items:center; gap:8px;
-    background:#ffffff; color:#d9664a;
-    border:1.6px solid #d9664a; border-radius:999px;
+    background:#1E2027; color:#3182F6;
+    border:1.6px solid #3182F6; border-radius:999px;
     padding:11px 18px; font-size:14px; font-weight:800;
     font-family:'Noto Sans KR',sans-serif; cursor:pointer;
-    box-shadow:0 0 0 0 rgba(217,102,74,.5);
+    box-shadow:0 0 0 0 rgba(49,130,246,.5);
     animation:jiktPulse 1.8s infinite;
     transition:background .15s, color .15s;
   }
-  .jikt-refresh-btn:hover{ background:#d9664a; color:#ffffff; animation:none; }
+  .jikt-refresh-btn:hover{ background:#3182F6; color:#ffffff; animation:none; }
   @keyframes jiktPulse{
-    0%{ box-shadow:0 0 0 0 rgba(217,102,74,.5); }
-    70%{ box-shadow:0 0 0 16px rgba(217,102,74,0); }
-    100%{ box-shadow:0 0 0 0 rgba(217,102,74,0); }
+    0%{ box-shadow:0 0 0 0 rgba(49,130,246,.5); }
+    70%{ box-shadow:0 0 0 16px rgba(49,130,246,0); }
+    100%{ box-shadow:0 0 0 0 rgba(49,130,246,0); }
   }
   /* ===== [2026-06-26] 모바일 최적화 — 폰 전용 레이아웃 ===== */
   @media (max-width:640px){
@@ -178,7 +180,7 @@
     .hub-flow .a{ font-size:15px; }
     .card-grid{ grid-template-columns:1fr; gap:15px; max-width:460px; }
     .hub-card{ padding:22px 20px; gap:9px; border-radius:14px; }
-    .hub-card:hover{ transform:none; box-shadow:none; border-color:#e8e0d8; }
+    .hub-card:hover{ transform:none; box-shadow:none; border-color:rgba(255,255,255,.08); }
     .card-step .n{ width:26px; height:26px; font-size:14px; }
     .card-step .t{ font-size:14px; }
     .card-title{ font-size:19px; }
@@ -191,14 +193,25 @@
     .hub-flow .f{ font-size:12px; padding:4px 10px; }
     .hub-card{ padding:18px 16px; }
   }
+  /* [2026-06-27] 토스풍 은은한 배경 그라데이션 + 마우스 따라오는 물결 글로우 */
+  #hub-ambient{position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:radial-gradient(1200px 600px at 18% -8%,rgba(49,130,246,.10),transparent 60%),
+               radial-gradient(1000px 560px at 100% 108%,rgba(49,130,246,.07),transparent 60%);}
+  #hub-glow{position:fixed;left:0;top:0;width:560px;height:560px;margin:-280px 0 0 -280px;
+    border-radius:50%;z-index:-1;pointer-events:none;opacity:0;transition:opacity .45s;
+    will-change:transform;filter:blur(10px);
+    background:radial-gradient(circle,rgba(49,130,246,.18),rgba(49,130,246,.06) 35%,transparent 65%);}
+  @media (max-width:640px){ #hub-glow{display:none;} }
 </style>
 </head>
 <body>
+<div id="hub-ambient"></div>
+<div id="hub-glow"></div>
 
 <div class="hub-header">
   <div class="hub-logo">JIKT · OPTION SELLING</div>
   <div class="hub-title">직트&레이 트레이딩 룸</div>
-  <div class="hub-sub" style="font-size:16px;font-weight:700;color:#55504c">수익은 시장이 주고, 손실은 우리가 통제합니다</div>
+  <div class="hub-sub" style="font-size:16px;font-weight:700;color:#B0B8C1">수익은 시장이 주고, 손실은 우리가 통제합니다</div>
   <button class="jikt-refresh-btn" onclick="jiktRefresh()">최신 데이터로 업데이트</button>
 </div>
 
@@ -238,6 +251,17 @@
 /* [2026-06-12] 최신 데이터로 업데이트 — 클릭 시 캐시 우회 강제 새로고침. 그 경유로 들어가는 대시보드 링크도 캐시버스트 */
 function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.now()); }catch(e){ location.reload(); } }
 (function(){ try{ var m=location.search.match(/[?&]v=([^&]+)/); if(m){ var ts=m[1]; document.querySelectorAll('a.hub-card').forEach(function(a){ var h=a.getAttribute('href'); if(!h) return; a.setAttribute('href', h+(h.indexOf('?')>=0?'&':'?')+'v='+ts); }); } }catch(e){} })();
+</script>
+
+<script>
+/* [2026-06-27] 마우스 따라 물결처럼 번지는 블루 글로우 */
+(function(){
+  var g=document.getElementById('hub-glow'); if(!g) return;
+  var tx=0,ty=0,cx=0,cy=0,on=false;
+  window.addEventListener('mousemove',function(e){ tx=e.clientX; ty=e.clientY; if(!on){on=true; g.style.opacity='1';} });
+  window.addEventListener('mouseout',function(e){ if(!e.relatedTarget){ on=false; g.style.opacity='0'; } });
+  (function loop(){ cx+=(tx-cx)*0.12; cy+=(ty-cy)*0.12; g.style.transform='translate('+cx+'px,'+cy+'px)'; requestAnimationFrame(loop); })();
+})();
 </script>
 
 </body>
