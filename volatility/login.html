@@ -6,26 +6,26 @@
 <title>로그인 — 직트 종합 옵션 대시보드</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Nunito','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f7f3ed;color:#2b2424;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;word-break:keep-all}
-  .card{background:#fff;border-radius:18px;padding:48px 40px;max-width:420px;width:100%;box-shadow:0 8px 32px rgba(0,0,0,.08);border:1px solid rgba(217,102,74,.10)}
+  body{font-family:'Nunito','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#17171C;color:#E8EAED;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;word-break:keep-all;position:relative;overflow:hidden}
+  .card{position:relative;z-index:1;background:#1E2027;border-radius:18px;padding:48px 40px;max-width:420px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.08)}
   .logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px}
-  .logo-mark{width:48px;height:48px;background:linear-gradient(135deg,#d9664a 0%,#c25538 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:18px;letter-spacing:.5px}
-  .logo-title{font-size:20px;font-weight:900;color:#2b2424;letter-spacing:-.02em}
-  h1{font-size:24px;font-weight:900;color:#2b2424;text-align:center;margin-top:24px;letter-spacing:-.02em}
-  .sub{font-size:14px;color:#7a7368;text-align:center;margin-top:8px;margin-bottom:32px;line-height:1.7}
+  .logo-mark{width:48px;height:48px;background:linear-gradient(135deg,#3182F6 0%,#1B64DA 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:18px;letter-spacing:.5px}
+  .logo-title{font-size:20px;font-weight:900;color:#FFFFFF;letter-spacing:-.02em}
+  h1{font-size:24px;font-weight:900;color:#FFFFFF;text-align:center;margin-top:24px;letter-spacing:-.02em}
+  .sub{font-size:14px;color:#8B95A1;text-align:center;margin-top:8px;margin-bottom:32px;line-height:1.7}
   .btn-social{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px 20px;border-radius:12px;border:none;font-size:15px;font-weight:800;cursor:pointer;transition:all .15s;font-family:inherit;margin-bottom:12px;text-decoration:none}
   .btn-kakao{background:#FEE500;color:#371D1E}
   .btn-kakao:hover{background:#fed800;transform:translateY(-1px);box-shadow:0 4px 12px rgba(254,229,0,.4)}
   .btn-google{background:#fff;color:#3c4043;border:1.5px solid #dadce0}
   .btn-google:hover{background:#f8f9fa;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
-  .divider{display:flex;align-items:center;gap:12px;margin:24px 0;color:#a89e95;font-size:12px}
-  .divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(0,0,0,.10)}
-  .notice{background:rgba(217,102,74,.06);border-left:3px solid #d9664a;padding:14px 16px;border-radius:8px;margin-top:24px;font-size:12px;color:#5a544f;line-height:1.7}
-  .notice b{color:#d9664a}
-  .footer{margin-top:32px;text-align:center;font-size:11px;color:#a89e95;line-height:1.8}
-  .footer a{color:#d9664a;text-decoration:none;font-weight:700}
+  .divider{display:flex;align-items:center;gap:12px;margin:24px 0;color:#8B95A1;font-size:12px}
+  .divider::before,.divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.12)}
+  .notice{background:rgba(49,130,246,.08);border:1px solid rgba(49,130,246,.28);padding:14px 16px;border-radius:10px;margin-top:24px;font-size:12px;color:#B0B8C1;line-height:1.7}
+  .notice b{color:#3182F6}
+  .footer{margin-top:32px;text-align:center;font-size:11px;color:#8B95A1;line-height:1.8}
+  .footer a{color:#3182F6;text-decoration:none;font-weight:700}
   .footer a:hover{text-decoration:underline}
-  .err{display:none;background:#ffefef;border-left:3px solid #c83030;padding:12px 14px;border-radius:6px;margin-bottom:18px;font-size:13px;color:#c83030;font-weight:700}
+  .err{display:none;background:rgba(240,68,82,.12);border:1px solid rgba(240,68,82,.38);padding:12px 14px;border-radius:8px;margin-bottom:18px;font-size:13px;color:#F04452;font-weight:700}
   .err.show{display:block}
   /* [2026-06-27] 모바일: 카드 여백 축소(글자 폭 확보) — 사업자 정보 한 줄 유지 */
   @media (max-width:480px){
@@ -33,9 +33,20 @@
     .card{padding:34px 20px}
     .footer{font-size:11px}
   }
+  /* [2026-06-27] 토스풍 은은한 배경 그라데이션 + 마우스 따라오는 물결 글로우 */
+  #lg-ambient{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(900px 500px at 25% -10%,rgba(49,130,246,.10),transparent 60%),
+               radial-gradient(800px 460px at 100% 110%,rgba(49,130,246,.07),transparent 60%);}
+  #lg-glow{position:fixed;left:0;top:0;width:520px;height:520px;margin:-260px 0 0 -260px;
+    border-radius:50%;z-index:0;pointer-events:none;opacity:0;transition:opacity .45s;
+    will-change:transform;filter:blur(10px);
+    background:radial-gradient(circle,rgba(49,130,246,.18),rgba(49,130,246,.06) 35%,transparent 65%);}
+  @media (max-width:640px){ #lg-glow{display:none;} }
 </style>
 </head>
 <body>
+<div id="lg-ambient"></div>
+<div id="lg-glow"></div>
 <div class="card">
   <div class="logo">
     <div class="logo-title">직트 옵션 대시보드</div>
@@ -110,6 +121,16 @@ window.JIKT_API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';   /* TODO:
     if (fromParam) url += '?state=' + encodeURIComponent(fromParam);
     location.href = url;
   });
+})();
+</script>
+<script>
+/* [2026-06-27] 마우스 따라 물결처럼 번지는 블루 글로우 */
+(function(){
+  var g=document.getElementById('lg-glow'); if(!g) return;
+  var tx=0,ty=0,cx=0,cy=0,on=false;
+  window.addEventListener('mousemove',function(e){ tx=e.clientX; ty=e.clientY; if(!on){on=true; g.style.opacity='1';} });
+  window.addEventListener('mouseout',function(e){ if(!e.relatedTarget){ on=false; g.style.opacity='0'; } });
+  (function loop(){ cx+=(tx-cx)*0.12; cy+=(ty-cy)*0.12; g.style.transform='translate('+cx+'px,'+cy+'px)'; requestAnimationFrame(loop); })();
 })();
 </script>
 </body>
