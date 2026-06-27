@@ -6,7 +6,7 @@
 <title>로그인 — 직트 종합 옵션 대시보드</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Nunito','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f7f3ed;color:#2b2424;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  body{font-family:'Nunito','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f7f3ed;color:#2b2424;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;word-break:keep-all}
   .card{background:#fff;border-radius:18px;padding:48px 40px;max-width:420px;width:100%;box-shadow:0 8px 32px rgba(0,0,0,.08);border:1px solid rgba(217,102,74,.10)}
   .logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px}
   .logo-mark{width:48px;height:48px;background:linear-gradient(135deg,#d9664a 0%,#c25538 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:18px;letter-spacing:.5px}
@@ -27,12 +27,17 @@
   .footer a:hover{text-decoration:underline}
   .err{display:none;background:#ffefef;border-left:3px solid #c83030;padding:12px 14px;border-radius:6px;margin-bottom:18px;font-size:13px;color:#c83030;font-weight:700}
   .err.show{display:block}
+  /* [2026-06-27] 모바일: 카드 여백 축소(글자 폭 확보) — 사업자 정보 한 줄 유지 */
+  @media (max-width:480px){
+    body{padding:16px}
+    .card{padding:34px 20px}
+    .footer{font-size:11px}
+  }
 </style>
 </head>
 <body>
 <div class="card">
   <div class="logo">
-    <div class="logo-mark">CL</div>
     <div class="logo-title">직트 옵션 대시보드</div>
   </div>
 
