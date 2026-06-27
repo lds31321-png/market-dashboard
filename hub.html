@@ -23,214 +23,125 @@
     align-items:center;
     justify-content:center;
     font-family:'Noto Sans KR',sans-serif;
-    padding:40px 20px;
+    padding:48px 20px;
     word-break:keep-all;
   }
-  .hub-header{
-    text-align:center;
-    margin-bottom:14px;
-    position:relative;
-  }
+  .hub{ width:100%; max-width:560px; }
+  .hub-header{ text-align:center; margin-bottom:24px; }
   .hub-logo{
-    font-size:15px;
-    font-weight:800;
-    letter-spacing:0.12em;
-    color:#d9664a;
-    margin-bottom:12px;
+    font-size:13px; font-weight:800; letter-spacing:0.12em;
+    color:#cf5f44; margin-bottom:10px;
   }
   .hub-title{
-    font-size:32px;
-    font-weight:800;
-    color:#1a1816;
-    line-height:1.2;
-    margin-bottom:10px;
+    font-size:30px; font-weight:800; color:#1f1b18;
+    line-height:1.2; letter-spacing:-0.01em;
   }
   .hub-sub{
-    font-size:16px;
-    color:#55504c;
-    font-weight:700;
+    font-size:15px; color:#7a716a; font-weight:500; margin-top:9px;
   }
-  .hub-flow{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    margin:18px 0 34px;
-    flex-wrap:wrap;
+  .hub-refresh{
+    display:inline-flex; align-items:center; gap:7px;
+    margin-top:16px;
+    font-size:13px; font-weight:700; color:#cf5f44;
+    background:#ffffff; border:1.5px solid #e6bcb0; border-radius:999px;
+    padding:9px 18px; cursor:pointer; font-family:inherit;
+    transition:background .15s, color .15s, border-color .15s;
   }
-  .hub-flow .f{
-    font-size:15px;
-    font-weight:700;
-    color:#d9664a;
-    background:rgba(217,102,74,.08);
-    border:1px solid rgba(217,102,74,.28);
-    padding:6px 16px;
-    border-radius:999px;
-    white-space:nowrap;
-  }
-  .hub-flow .a{
-    font-size:17px;
-    font-weight:800;
-    color:#d9664a;
-  }
-  .card-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(310px,1fr));
-    gap:24px;
-    width:100%;
-    max-width:1180px;
-  }
+  .hub-refresh:hover{ background:#cf5f44; color:#ffffff; border-color:#cf5f44; }
+  .hub-refresh svg{ flex-shrink:0; }
+
+  .card-list{ display:flex; flex-direction:column; gap:13px; }
   .hub-card{
-    background:#ffffff;
-    border-radius:16px;
-    border:1.5px solid #e8e0d8;
-    padding:30px 28px;
-    text-decoration:none;
-    display:flex;
-    flex-direction:column;
-    gap:11px;
-    transition:transform 0.15s, box-shadow 0.15s, border-color 0.15s;
-    cursor:pointer;
+    display:flex; align-items:center; gap:14px;
+    background:#ffffff; border:1.5px solid #ece3da; border-radius:18px;
+    padding:20px 18px; text-decoration:none;
+    transition:transform .15s, box-shadow .15s, border-color .15s;
   }
   .hub-card:hover{
-    transform:translateY(-3px);
-    box-shadow:0 8px 32px rgba(217,102,74,0.12);
-    border-color:#d9664a;
+    transform:translateY(-2px);
+    box-shadow:0 8px 24px rgba(207,95,68,0.12);
+    border-color:#cf5f44;
   }
+  .card-main{ flex:1; min-width:0; }
   .card-step{
-    display:flex;
-    align-items:center;
-    gap:9px;
+    display:flex; align-items:center; gap:8px;
+    font-size:13px; font-weight:700; color:#cf5f44; margin-bottom:7px;
   }
   .card-step .n{
-    width:28px;height:28px;
-    display:flex;align-items:center;justify-content:center;
-    background:#d9664a;color:#fff;
-    font-size:15px;font-weight:900;
-    border-radius:8px;
+    width:22px; height:22px; border-radius:7px;
+    background:#cf5f44; color:#fff;
+    font-size:13px; font-weight:900;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
     font-family:'IBM Plex Mono',monospace;
-    flex-shrink:0;
   }
-  .card-step .t{
-    font-size:15px;
-    font-weight:800;
-    color:#d9664a;
-    letter-spacing:0.02em;
-  }
-  .card-title{
-    font-size:21px;
-    font-weight:800;
-    color:#1a1816;
-    line-height:1.25;
-  }
-  .card-desc{
-    font-size:15px;
-    color:#55504c;
-    line-height:1.7;
-  }
-  .card-items{
-    margin-top:auto;
-    padding-top:12px;
-    border-top:1px solid rgba(0,0,0,.07);
-    font-size:15px;
-    color:#8a8480;
-    line-height:1.7;
-  }
-  .card-arrow{
-    padding-top:10px;
-    font-size:20px;
-    color:#d9664a;
-    font-weight:700;
-  }
-  /* [2026-06-12] 최신 데이터로 업데이트 버튼 — 좌측 상단, 흰 배경+살몬, 펄스 */
-  .jikt-refresh-btn{
-    position:absolute; left:calc(100% + 28px); top:50%; transform:translateY(-50%); z-index:9999;
-    white-space:nowrap;
-    display:inline-flex; align-items:center; gap:8px;
-    background:#ffffff; color:#d9664a;
-    border:1.6px solid #d9664a; border-radius:999px;
-    padding:11px 18px; font-size:14px; font-weight:800;
-    font-family:'Noto Sans KR',sans-serif; cursor:pointer;
-    box-shadow:0 0 0 0 rgba(217,102,74,.5);
-    animation:jiktPulse 1.8s infinite;
-    transition:background .15s, color .15s;
-  }
-  .jikt-refresh-btn:hover{ background:#d9664a; color:#ffffff; animation:none; }
-  @keyframes jiktPulse{
-    0%{ box-shadow:0 0 0 0 rgba(217,102,74,.5); }
-    70%{ box-shadow:0 0 0 16px rgba(217,102,74,0); }
-    100%{ box-shadow:0 0 0 0 rgba(217,102,74,0); }
-  }
-  /* ===== [2026-06-26] 모바일 최적화 — 폰 전용 레이아웃 ===== */
-  @media (max-width:640px){
-    body{ padding:26px 16px 44px; justify-content:flex-start; }
-    .hub-header{ margin-bottom:4px; }
-    .hub-logo{ font-size:13px; letter-spacing:.1em; margin-bottom:8px; }
-    .hub-title{ font-size:25px; line-height:1.25; }
+  .card-title{ font-size:20px; font-weight:800; color:#1f1b18; line-height:1.3; }
+  .card-desc{ font-size:14px; color:#7a716a; line-height:1.55; margin-top:7px; }
+  .card-tags{ font-size:12.5px; color:#a89e95; line-height:1.5; margin-top:9px; }
+  .card-chev{ font-size:28px; color:#cf5f44; flex-shrink:0; line-height:1; font-weight:400; }
+
+  @media (max-width:520px){
+    body{ padding:30px 16px 40px; justify-content:flex-start; }
+    .hub-header{ margin-bottom:18px; }
+    .hub-title{ font-size:25px; }
     .hub-sub{ font-size:14px; }
-    /* 새로고침 버튼: 헤더 옆(화면 밖) → 헤더 아래 가운데로 이동 */
-    .jikt-refresh-btn{
-      position:static; left:auto; top:auto; transform:none;
-      margin:14px auto 0; padding:10px 16px; font-size:13px;
-    }
-    .hub-flow{ gap:7px; margin:16px 0 24px; }
-    .hub-flow .f{ font-size:13px; padding:5px 13px; }
-    .hub-flow .a{ font-size:15px; }
-    .card-grid{ grid-template-columns:1fr; gap:15px; max-width:460px; }
-    .hub-card{ padding:22px 20px; gap:9px; border-radius:14px; }
-    .hub-card:hover{ transform:none; box-shadow:none; border-color:#e8e0d8; }
-    .card-step .n{ width:26px; height:26px; font-size:14px; }
-    .card-step .t{ font-size:14px; }
-    .card-title{ font-size:19px; }
-    .card-desc{ font-size:14px; line-height:1.6; }
-    .card-items{ font-size:13px; line-height:1.6; }
-    .card-arrow{ font-size:18px; }
-  }
-  @media (max-width:380px){
-    .hub-title{ font-size:22px; }
-    .hub-flow .f{ font-size:12px; padding:4px 10px; }
-    .hub-card{ padding:18px 16px; }
+    .hub-refresh{ margin-top:14px; padding:8px 16px; }
+    .hub-card{ padding:17px 16px; gap:12px; }
+    .hub-card:hover{ transform:none; box-shadow:none; border-color:#ece3da; }
+    .card-step{ font-size:12px; }
+    .card-title{ font-size:18px; }
+    .card-desc{ font-size:13px; }
+    .card-tags{ font-size:11.5px; }
+    .card-chev{ font-size:25px; }
   }
 </style>
 </head>
 <body>
 
-<div class="hub-header">
-  <div class="hub-logo">JIKT · OPTION SELLING</div>
-  <div class="hub-title">직트&레이 트레이딩 룸</div>
-  <div class="hub-sub">수익은 시장이 주고, 손실은 우리가 통제합니다</div>
-  <button class="jikt-refresh-btn" onclick="jiktRefresh()">최신 데이터로 업데이트</button>
-</div>
+<div class="hub">
 
-<div class="hub-flow">
-  <span class="f">1 체험 · 연습</span><span class="a">→</span><span class="f">2 실전 운용</span><span class="a">→</span><span class="f">3 거시 대비</span>
-</div>
+  <div class="hub-header">
+    <div class="hub-logo">JIKT · OPTION SELLING</div>
+    <div class="hub-title">직트&레이 트레이딩 룸</div>
+    <div class="hub-sub">수익은 시장이 주고, 손실은 우리가 통제합니다</div>
+    <button class="hub-refresh" onclick="jiktRefresh()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/></svg>
+      최신 데이터로 업데이트
+    </button>
+  </div>
 
-<div class="card-grid">
+  <div class="card-list">
 
-  <a class="hub-card" href="dashboard.html">
-    <div class="card-step"><span class="n">1</span><span class="t">체험 · 연습 단계</span></div>
-    <div class="card-title">무료 포지션 공유</div>
-    <div class="card-desc">공유되는 실제 포지션을 따라 진입하며 옵션 매도를 직접 경험하는 연습 공간입니다.</div>
-    <div class="card-items">진행 포지션 · 추천 종목 · 수익률 · 전략 히스토리</div>
-    <div class="card-arrow">→</div>
-  </a>
+    <a class="hub-card" href="dashboard.html">
+      <div class="card-main">
+        <div class="card-step"><span class="n">1</span> 체험 · 연습 단계</div>
+        <div class="card-title">무료 포지션 공유</div>
+        <div class="card-desc">공유 포지션을 따라 진입하며 옵션 매도를 직접 경험하는 연습 공간</div>
+        <div class="card-tags">진행 포지션 · 추천 종목 · 수익률 · 전략 히스토리</div>
+      </div>
+      <div class="card-chev">›</div>
+    </a>
 
-  <a class="hub-card" href="volatility/volatility_dashboard_v3.html">
-    <div class="card-step"><span class="n">2</span><span class="t">실전 운용 단계</span></div>
-    <div class="card-title">종합 옵션 대시보드</div>
-    <div class="card-desc">위험·자금·전략 — 내 자금에 맞는 최적의 진입·관리 정보를 제공하는 실전 운용 영역입니다.</div>
-    <div class="card-items">종목 4단계 분석 · 최종 진입 정보 · 종합 순위표 · 생존경보 · 매매 현황·복기</div>
-    <div class="card-arrow">→</div>
-  </a>
+    <a class="hub-card" href="volatility/volatility_dashboard_v3.html">
+      <div class="card-main">
+        <div class="card-step"><span class="n">2</span> 실전 운용 단계</div>
+        <div class="card-title">종합 옵션 대시보드</div>
+        <div class="card-desc">위험·자금·전략, 내 자금에 맞는 진입·관리 정보를 제공하는 실전 운용</div>
+        <div class="card-tags">종목 4단계 분석 · 최종 진입 정보 · 종합 순위표 · 생존경보 · 매매 현황·복기</div>
+      </div>
+      <div class="card-chev">›</div>
+    </a>
 
-  <a class="hub-card" href="https://lds31321-png.github.io/market-dashboard/" target="_blank" rel="noopener">
-    <div class="card-step"><span class="n">3</span><span class="t">거시 대비 단계</span></div>
-    <div class="card-title">글로벌 대시보드</div>
-    <div class="card-desc">거시경제를 점검해 큰 변동성을 미리 파악하고 대비하는 영역입니다.</div>
-    <div class="card-items">변동성 예측 헤드라인 · 7종목 시나리오 분석 · EIA·FRED 공식 데이터</div>
-    <div class="card-arrow">→</div>
-  </a>
+    <a class="hub-card" href="https://lds31321-png.github.io/market-dashboard/" target="_blank" rel="noopener">
+      <div class="card-main">
+        <div class="card-step"><span class="n">3</span> 거시 대비 단계</div>
+        <div class="card-title">글로벌 대시보드</div>
+        <div class="card-desc">거시경제를 점검해 큰 변동성을 미리 파악하고 대비하는 영역</div>
+        <div class="card-tags">변동성 예측 헤드라인 · 7종목 시나리오 분석 · EIA·FRED 공식 데이터</div>
+      </div>
+      <div class="card-chev">›</div>
+    </a>
+
+  </div>
 
 </div>
 
