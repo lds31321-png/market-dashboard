@@ -27,11 +27,20 @@
   .footer a:hover{text-decoration:underline}
   .err{display:none;background:rgba(240,68,82,.12);border:1px solid rgba(240,68,82,.38);padding:12px 14px;border-radius:8px;margin-bottom:18px;font-size:13px;color:#F04452;font-weight:700}
   .err.show{display:block}
-  /* [2026-06-27] 모바일: 카드 여백 축소(글자 폭 확보) — 사업자 정보 한 줄 유지 */
+  .lg-main{display:contents}
+  /* [2026-06-28] 모바일: 토스풍 풀스크린 레이아웃 (PC 불변, @media 안에서만) */
   @media (max-width:480px){
-    body{padding:16px}
-    .card{padding:34px 20px}
-    .footer{font-size:11px}
+    body{padding:0;align-items:stretch;justify-content:flex-start;}
+    .card{max-width:none;width:100%;min-height:100vh;min-height:100dvh;border:none;border-radius:0;box-shadow:none;background:transparent;padding:26px 22px 22px;display:flex;flex-direction:column;}
+    .lg-main{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;}
+    .logo{margin-bottom:0;}
+    .logo-title{font-size:18px;}
+    h1{font-size:26px;margin-top:30px;}
+    .sub{font-size:13.5px;margin-top:12px;margin-bottom:0;line-height:1.7;}
+    #btn-kakao{margin-top:38px;}
+    .btn-social{height:54px;padding:0;border-radius:15px;font-size:15.5px;margin-bottom:11px;}
+    .btn-google{margin-bottom:0;}
+    .footer{margin-top:0;padding-top:24px;font-size:10.5px;}
   }
   /* [2026-06-27] 토스풍 은은한 배경 그라데이션 + 마우스 따라오는 물결 글로우 */
   #lg-ambient{position:fixed;inset:0;z-index:0;pointer-events:none;
@@ -48,6 +57,7 @@
 <div id="lg-ambient"></div>
 <div id="lg-glow"></div>
 <div class="card">
+  <div class="lg-main">
   <div class="logo">
     <div class="logo-title">직트 옵션 대시보드</div>
   </div>
@@ -73,6 +83,8 @@
     </svg>
     구글로 시작하기
   </a>
+
+  </div>
 
   <div class="footer">
     © 2026 직트 · 사업자 782-08-02561 · 대표 임대성<br>
