@@ -144,6 +144,8 @@
     color:#3182F6;
     font-weight:700;
   }
+  /* 모바일 전용 아이콘 — PC에선 숨김(영향 0) */
+  .hub-card-ic{display:none;}
   /* [2026-06-12] 최신 데이터로 업데이트 버튼 — 좌측 상단, 흰 배경+살몬, 펄스 */
   .jikt-refresh-btn{
     position:absolute; left:calc(100% + 28px); top:50%; transform:translateY(-50%); z-index:9999;
@@ -187,6 +189,15 @@
     .card-desc{ font-size:14px; line-height:1.6; }
     .card-items{ font-size:13px; line-height:1.6; }
     .card-arrow{ font-size:18px; }
+    /* [2026-06-28] 풀 토스: 모바일 전용 아이콘 + 카드 토스 레이아웃 (PC 불변) */
+    .hub-card-ic{ display:flex; align-items:center; justify-content:center; position:absolute; left:16px; top:16px; width:42px; height:42px; border-radius:12px; background:rgba(49,130,246,.13); color:#3182F6; }
+    .hub-card-ic svg{ width:22px; height:22px; }
+    .hub-card{ position:relative; padding:16px 16px 16px 68px; border-radius:16px; }
+    .card-step .n{ width:20px; height:20px; font-size:12px; border-radius:6px; }
+    .card-arrow{ position:absolute; top:17px; right:16px; padding:0; margin:0; color:#5a6675; font-size:20px; }
+    .hub-flow{ gap:6px; }
+    .hub-flow .f{ font-size:11px; padding:4px 9px; }
+    .hub-flow .a{ font-size:12px; }
   }
   @media (max-width:380px){
     .hub-title{ font-size:22px; }
@@ -222,6 +233,7 @@
 <div class="card-grid">
 
   <a class="hub-card" href="dashboard.html">
+    <span class="hub-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 19.5c0-3.4 2.8-5.3 6.2-5.3s6.2 1.9 6.2 5.3"/><path d="M16.5 5.6a3 3 0 0 1 0 5.6"/><path d="M18.2 14.4c2.4.5 4 2.2 4 5.1"/></svg></span>
     <div class="card-step"><span class="n">1</span><span class="t">체험 · 연습 단계</span></div>
     <div class="card-title">무료 포지션 공유</div>
     <div class="card-desc">공유되는 실제 포지션을 따라 진입하며 옵션 매도를 직접 경험하는 연습 공간입니다.</div>
@@ -230,6 +242,7 @@
   </a>
 
   <a class="hub-card" href="volatility/volatility_dashboard_v3.html">
+    <span class="hub-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg></span>
     <div class="card-step"><span class="n">2</span><span class="t">실전 운용 단계</span></div>
     <div class="card-title">종합 옵션 대시보드</div>
     <div class="card-desc">위험·자금·전략 — 내 자금에 맞는 최적의 진입·관리 정보를 제공하는 실전 운용 영역입니다.</div>
@@ -238,6 +251,7 @@
   </a>
 
   <a class="hub-card" href="https://lds31321-png.github.io/market-dashboard/" target="_blank" rel="noopener">
+    <span class="hub-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.7 2.6 15.3 0 18c-2.6-2.7-2.6-15.3 0-18Z"/></svg></span>
     <div class="card-step"><span class="n">3</span><span class="t">거시 대비 단계</span></div>
     <div class="card-title">글로벌 대시보드</div>
     <div class="card-desc">거시경제를 점검해 큰 변동성을 미리 파악하고 대비하는 영역입니다.</div>
