@@ -428,6 +428,13 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
   #overlay .modal-body{padding:14px !important;}
   #overlay .modal-body > div:nth-child(2){flex-wrap:wrap !important;gap:9px !important;}
   #overlay .modal-body > div:nth-child(2) > *{flex:1 1 calc(50% - 5px) !important;min-width:0 !important;}
+  /* 차트 밸런스 (세로 너무 길던 것 → 가로형) */
+  #overlay div:has(> canvas){height:215px !important;}
+  /* 스탯 토스 폰트·박스 */
+  #overlay .modal-body > div:nth-child(2) > div{border-radius:12px !important;padding:13px 14px !important;}
+  #overlay .modal-body > div:nth-child(2) > div > div:nth-child(1),
+  #overlay .modal-body > div:nth-child(2) > div > div:nth-child(3){font-size:11.5px !important;}
+  #overlay .modal-body > div:nth-child(2) > div > div:nth-child(2){font-size:22px !important;margin:3px 0 !important;}
 }
 
 .ms-abn{animation:msPulse 1.5s ease-in-out infinite}
