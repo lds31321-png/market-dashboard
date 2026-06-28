@@ -379,41 +379,55 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
   .metric-val{font-size:25px;}
   .pos-hero .metric:first-child .metric-val{font-size:33px;}
   .pos-grid{grid-template-columns:1fr;}
+  /* 포지션 카드 안쪽 토스 정리 */
+  .pos-card{border-radius:16px !important;}
+  .pos-card > div:nth-child(3) > div{border-radius:11px !important;padding:12px 13px !important;}
+  .pos-card .pnl-row{display:flex !important;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border-radius:11px;padding:11px 13px;margin-bottom:12px;}
+  .pos-card > div:last-child{justify-content:center !important;background:rgba(69,147,252,.10) !important;border-radius:12px !important;padding:12px !important;border-top:none !important;margin-top:6px;}
+  .pos-card > div:last-child > span{display:none !important;}
+  .pos-card > div:last-child > a{font-weight:800 !important;font-size:14px !important;}
   /* 표 → 카드 (라벨-값 리스트). JS가 라벨 붙인 표만 변환 */
-  .page table.tbl-carded thead{display:none;}
-  .page table.tbl-carded tr[data-thead-row]{display:none;}
-  .page table.tbl-carded,.page table.tbl-carded tbody,.page table.tbl-carded tr,.page table.tbl-carded td{display:block;width:auto;}
-  .page table.tbl-carded tr{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:9px 15px;margin-bottom:10px;}
-  .page table.tbl-carded td{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0 !important;border:none !important;border-bottom:1px solid rgba(255,255,255,.05) !important;font-size:13.5px !important;white-space:normal !important;text-align:right;}
-  .page table.tbl-carded td:last-child{border-bottom:none !important;}
-  .page table.tbl-carded td[data-hide]{display:none !important;}
-  .page table.tbl-carded td[data-label]::before{content:attr(data-label);color:#8B95A1;font-weight:600;text-align:left;white-space:nowrap;}
+  table.tbl-carded thead{display:none;}
+  table.tbl-carded tr[data-thead-row]{display:none;}
+  table.tbl-carded,table.tbl-carded tbody,table.tbl-carded tr,table.tbl-carded td{display:block;width:auto;}
+  table.tbl-carded tr{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:9px 15px;margin-bottom:10px;}
+  table.tbl-carded td{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0 !important;border:none !important;border-bottom:1px solid rgba(255,255,255,.05) !important;font-size:13.5px !important;white-space:normal !important;text-align:right;}
+  table.tbl-carded td:last-child{border-bottom:none !important;}
+  table.tbl-carded td[data-hide]{display:none !important;}
+  table.tbl-carded td[data-label]::before{content:attr(data-label);color:#8B95A1;font-weight:600;text-align:left;white-space:nowrap;}
   /* 추천 종목: 종목+구분 헤더 + 2열 라벨-값 그리드 (토스 시세풍) */
-  .page table.tbl-rec thead,.page table.tbl-rec tr[data-thead-row]{display:none;}
-  .page table.tbl-rec,.page table.tbl-rec tbody{display:block;}
-  .page table.tbl-rec tr{display:grid;grid-template-columns:1fr 1fr;gap:9px 16px;align-items:baseline;border-bottom:1px solid rgba(255,255,255,.07);padding:15px 0;}
-  .page table.tbl-rec tr:last-child{border-bottom:none;}
-  .page table.tbl-rec td{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:0 !important;border:none !important;font-size:13px !important;color:#fff;white-space:nowrap !important;}
-  .page table.tbl-rec td[data-label]::before{content:attr(data-label);color:#8B95A1;font-weight:500;}
-  .page table.tbl-rec td[data-hide],.page table.tbl-rec td[data-label="진입일"]{display:none !important;}
-  .page table.tbl-rec td[data-label="종목"]{grid-column:1;grid-row:1;display:block;font-size:17px !important;font-weight:800;color:#fff;}
-  .page table.tbl-rec td[data-label="종목"]::before{display:none;}
-  .page table.tbl-rec td[data-label="구분"]{grid-column:2;grid-row:1;justify-self:end;display:inline-block;font-size:12px !important;font-weight:700;color:#4593FC;background:rgba(69,147,252,.13);border-radius:6px;padding:4px 10px;}
-  .page table.tbl-rec td[data-label="구분"]::before{display:none;}
-  .page table.tbl-rec td[data-label="청산가능"]{display:none !important;}
-  .page table.tbl-rec tr,.page table.tbl-rec td:not([data-label="구분"]){background:transparent !important;}
+  table.tbl-rec thead,table.tbl-rec tr[data-thead-row]{display:none;}
+  table.tbl-rec,table.tbl-rec tbody{display:block;}
+  table.tbl-rec tr{display:grid;grid-template-columns:1fr 1fr;gap:9px 16px;align-items:baseline;border-bottom:1px solid rgba(255,255,255,.07);padding:15px 0;}
+  table.tbl-rec tr:last-child{border-bottom:none;}
+  table.tbl-rec td{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:0 !important;border:none !important;font-size:13px !important;color:#fff;white-space:nowrap !important;}
+  table.tbl-rec td[data-label]::before{content:attr(data-label);color:#8B95A1;font-weight:500;}
+  table.tbl-rec td[data-hide],table.tbl-rec td[data-label="진입일"]{display:none !important;}
+  table.tbl-rec td[data-label="종목"]{grid-column:1;grid-row:1;display:block;font-size:17px !important;font-weight:800;color:#fff;}
+  table.tbl-rec td[data-label="종목"]::before{display:none;}
+  table.tbl-rec td[data-label="구분"]{grid-column:2;grid-row:1;justify-self:end;display:inline-block;font-size:12px !important;font-weight:700;color:#4593FC;background:rgba(69,147,252,.13);border-radius:6px;padding:4px 10px;}
+  table.tbl-rec td[data-label="구분"]::before{display:none;}
+  table.tbl-rec td[data-label="청산가능"]{display:none !important;}
+  table.tbl-rec tr,table.tbl-rec td:not([data-label="구분"]){background:transparent !important;}
   /* 종목별 평가손익: 한 줄 리스트 */
-  .page table.tbl-eval thead,.page table.tbl-eval tr[data-thead-row]{display:none;}
-  .page table.tbl-eval,.page table.tbl-eval tbody{display:block;}
-  .page table.tbl-eval tr{display:flex;align-items:center;padding:13px 2px;border-bottom:1px solid rgba(255,255,255,.06);}
-  .page table.tbl-eval tr:last-child{border-bottom:none;}
-  .page table.tbl-eval td{padding:0 !important;border:none !important;font-size:14px !important;white-space:nowrap !important;}
-  .page table.tbl-eval td::before{display:none !important;}
-  .page table.tbl-eval td[data-label="매매비중"]::before{display:inline !important;content:"비중 ";color:#6B7480;font-weight:500;}
-  .page table.tbl-eval td[data-hide],.page table.tbl-eval td[data-label="총 손익"]{display:none !important;}
-  .page table.tbl-eval td[data-label="종목"]{font-weight:700;color:#fff;font-size:15px !important;}
-  .page table.tbl-eval td[data-label="평가손익"]{font-weight:800;margin-left:auto;}
-  .page table.tbl-eval td[data-label="매매비중"]{color:#8B95A1;font-size:12.5px !important;margin-left:12px;}
+  table.tbl-eval thead,table.tbl-eval tr[data-thead-row]{display:none;}
+  table.tbl-eval,table.tbl-eval tbody{display:block;}
+  table.tbl-eval tr{display:flex;align-items:center;padding:13px 2px;border-bottom:1px solid rgba(255,255,255,.06);}
+  table.tbl-eval tr:last-child{border-bottom:none;}
+  table.tbl-eval td{padding:0 !important;border:none !important;font-size:14px !important;white-space:nowrap !important;}
+  table.tbl-eval td::before{display:none !important;}
+  table.tbl-eval td[data-label="매매비중"]::before{display:inline !important;content:"비중 ";color:#6B7480;font-weight:500;}
+  table.tbl-eval td[data-hide],table.tbl-eval td[data-label="총 손익"]{display:none !important;}
+  table.tbl-eval td[data-label="종목"]{font-weight:700;color:#fff;font-size:15px !important;}
+  table.tbl-eval td[data-label="평가손익"]{font-weight:800;margin-left:auto;}
+  table.tbl-eval td[data-label="매매비중"]{color:#8B95A1;font-size:12.5px !important;margin-left:12px;}
+  /* 상세 모달 토스 모바일 (PC 불변, @media만) */
+  #overlay{padding:10px !important;}
+  #overlay .modal{width:100% !important;max-width:none !important;max-height:92vh !important;border-radius:16px !important;}
+  #overlay .modal-head{padding:14px 14px 12px !important;}
+  #overlay .modal-body{padding:14px !important;}
+  #overlay .modal-body > div:nth-child(2){flex-wrap:wrap !important;gap:9px !important;}
+  #overlay .modal-body > div:nth-child(2) > *{flex:1 1 calc(50% - 5px) !important;min-width:0 !important;}
 }
 
 .ms-abn{animation:msPulse 1.5s ease-in-out infinite}
@@ -2473,6 +2487,7 @@ loadPositions();
 (function(){
   function lbl(){
     document.querySelectorAll('table').forEach(function(t){
+      if(t.classList.contains('tbl-rec')||t.classList.contains('tbl-eval')||t.classList.contains('tbl-carded'))return;
       var hr=t.querySelector('thead tr');
       if(!hr){ hr=[].find.call(t.querySelectorAll('tr'),function(r){return r.querySelector('th');}); }
       if(!hr) return;
@@ -2491,6 +2506,7 @@ loadPositions();
   }
   if(document.readyState!=='loading') lbl(); else document.addEventListener('DOMContentLoaded',lbl);
   setTimeout(lbl,600); setTimeout(lbl,1500);
+  try{var mo=new MutationObserver(function(m){for(var i=0;i<m.length;i++){if(m[i].addedNodes&&m[i].addedNodes.length){lbl();break;}}});mo.observe(document.body,{childList:true,subtree:true});}catch(e){}
 })();
 </script>
 </html>
