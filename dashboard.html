@@ -370,8 +370,8 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
   .hdr-home::after{content:'\2190';font-size:18px;color:#4593FC;}
   .page{padding:14px;}
   .action-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
-  .action-btn{display:flex;align-items:center;justify-content:center;text-align:center;min-height:44px;border-radius:12px;font-size:12.5px;padding:7px 8px;line-height:1.3;}
-  .action-row .action-btn:first-child{grid-column:1 / -1;}
+  .action-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:52px;border-radius:12px;font-size:12.5px;padding:7px 8px;line-height:1.35;}
+  .action-btn .abtn-sub{display:block;}
   .pos-hero{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
   .pos-hero .metric:first-child{grid-column:1 / -1;}
   .metric{border-radius:16px;padding:17px 16px;}
@@ -400,6 +400,8 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
   .page table.tbl-rec td[data-label="종목"]::before{display:none;}
   .page table.tbl-rec td[data-label="구분"]{grid-column:2;grid-row:1;justify-self:end;display:inline-block;font-size:12px !important;font-weight:700;color:#4593FC;background:rgba(69,147,252,.13);border-radius:6px;padding:4px 10px;}
   .page table.tbl-rec td[data-label="구분"]::before{display:none;}
+  .page table.tbl-rec td[data-label="청산가능"]{display:none !important;}
+  .page table.tbl-rec tr,.page table.tbl-rec td:not([data-label="구분"]){background:transparent !important;}
   /* 종목별 평가손익: 한 줄 리스트 */
   .page table.tbl-eval thead,.page table.tbl-eval tr[data-thead-row]{display:none;}
   .page table.tbl-eval,.page table.tbl-eval tbody{display:block;}
@@ -461,7 +463,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 
   <!-- 액션 버튼 박스 -->
   <div class="action-row">
-    <a class="action-btn btn-orange" href="https://bramble-gardenia-301.notion.site/334df6df17a280788263f467bfbd57aa?source=copy_link" target="_blank" rel="noopener">노션 (전략 자세히 보기)</a>
+    <a class="action-btn btn-orange" href="https://bramble-gardenia-301.notion.site/334df6df17a280788263f467bfbd57aa?source=copy_link" target="_blank" rel="noopener">노션 <span class="abtn-sub">(전략 자세히 보기)</span></a>
     <a class="action-btn btn-orange" href="https://naver.me/5nheicte" target="_blank" rel="noopener">거래 시작하기</a>
     <button class="action-btn btn-orange" onclick="openBriefingModal()">전략 브리핑</button>
     <a class="action-btn btn-orange" href="https://lds31321-png.github.io/market-dashboard/" target="_blank" rel="noopener">글로벌 시장 현황</a>
