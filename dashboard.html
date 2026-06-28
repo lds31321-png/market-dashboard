@@ -358,6 +358,27 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
   .modal-grid{grid-template-columns:1fr 1fr;}
   .pos-grid{grid-template-columns:1fr;}
 }
+/* [2026-06-28] 토스 모바일: 서브텍스트 절제 + 메인 키우기 + 보기 최적화 (PC 불변, @media만) */
+@media(max-width:640px){
+  body{word-break:keep-all;overflow-x:hidden;}
+  .hdr{height:48px;}
+  .hdr-title{font-size:16px;}
+  .hdr-sub,.hdr-meta{display:none;}
+  .nav{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .nav::-webkit-scrollbar{display:none;}
+  .nav-inner{flex-wrap:nowrap;width:max-content;min-width:100%;}
+  .nav-tab{white-space:nowrap;flex-shrink:0;font-size:14.5px;padding:0 13px;}
+  .page{padding:14px;}
+  .action-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+  .action-btn{display:flex;align-items:center;justify-content:center;text-align:center;height:44px;border-radius:12px;font-size:13px;padding:0 8px;line-height:1.25;}
+  .pos-hero{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+  .pos-hero .metric:first-child{grid-column:1 / -1;}
+  .metric{border-radius:16px;padding:17px 16px;}
+  .metric-sub{display:none;}
+  .metric-val{font-size:25px;}
+  .pos-hero .metric:first-child .metric-val{font-size:33px;}
+  .pos-grid{grid-template-columns:1fr;}
+}
 
 .ms-abn{animation:msPulse 1.5s ease-in-out infinite}
 @keyframes msPulse{0%,100%{box-shadow:0 0 0 0 var(--p,rgba(0,0,0,0))}50%{box-shadow:0 0 0 4px var(--p,rgba(0,0,0,0))}}
