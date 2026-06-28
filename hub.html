@@ -206,14 +206,20 @@
     .card-title{ font-size:17px; }
     .card-desc{ font-size:13px; line-height:1.75; margin-top:11px; }
     .card-items{ font-size:12px; line-height:1.7; margin-top:13px; padding-top:12px; }
-    .hub-card{ padding:18px 18px 18px 70px; }
-    .hub-card-ic{ top:18px; }
-    .card-arrow{ top:18px; right:17px; }
+    /* [2026-06-28] 폰별 아이콘 겹침 방지 — 절대위치 → 그리드(어떤 폭에서도 안 겹침) */
+    .hub-card{ display:grid; grid-template-columns:42px 1fr auto; column-gap:13px; align-items:center; padding:18px 17px; position:static; border-radius:16px; }
+    .hub-card-ic{ position:static; left:auto; top:auto; grid-column:1; grid-row:1 / span 2; align-self:center; }
+    .card-step{ grid-column:2; grid-row:1; }
+    .card-title{ grid-column:2 / span 2; grid-row:2; }
+    .card-desc{ grid-column:1 / -1; grid-row:3; }
+    .card-items{ grid-column:1 / -1; grid-row:4; }
+    .card-arrow{ position:static; top:auto; right:auto; grid-column:3; grid-row:1 / span 2; align-self:center; margin:0; padding:0; color:#5a6675; font-size:20px; }
   }
   @media (max-width:380px){
     .hub-title{ font-size:22px; }
-    .hub-flow .f{ font-size:12px; padding:4px 10px; }
-    .hub-card{ padding:18px 16px; }
+    .hub-flow .f{ font-size:10.5px; padding:4px 8px; }
+    .hub-flow .a{ font-size:11px; }
+    .hub-card{ padding:18px 15px; }
   }
   /* [2026-06-27] 토스풍 은은한 배경 그라데이션 + 마우스 따라오는 물결 글로우 */
   #hub-ambient{position:fixed;inset:0;z-index:-1;pointer-events:none;
