@@ -378,6 +378,15 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
   .metric-val{font-size:25px;}
   .pos-hero .metric:first-child .metric-val{font-size:33px;}
   .pos-grid{grid-template-columns:1fr;}
+  /* 표 → 카드 (라벨-값 리스트). JS가 라벨 붙인 표만 변환 */
+  .page table.tbl-carded thead{display:none;}
+  .page table.tbl-carded tr[data-thead-row]{display:none;}
+  .page table.tbl-carded,.page table.tbl-carded tbody,.page table.tbl-carded tr,.page table.tbl-carded td{display:block;width:auto;}
+  .page table.tbl-carded tr{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:9px 15px;margin-bottom:10px;}
+  .page table.tbl-carded td{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0 !important;border:none !important;border-bottom:1px solid rgba(255,255,255,.05) !important;font-size:13.5px !important;white-space:normal !important;text-align:right;}
+  .page table.tbl-carded td:last-child{border-bottom:none !important;}
+  .page table.tbl-carded td[data-hide]{display:none !important;}
+  .page table.tbl-carded td[data-label]::before{content:attr(data-label);color:#8B95A1;font-weight:600;text-align:left;white-space:nowrap;}
 }
 
 .ms-abn{animation:msPulse 1.5s ease-in-out infinite}
@@ -2430,6 +2439,30 @@ loadPositions();
   window.addEventListener('mousemove',function(e){ tx=e.clientX; ty=e.clientY; if(!on){on=true; g.style.opacity='1';} });
   window.addEventListener('mouseout',function(e){ if(!e.relatedTarget){ on=false; g.style.opacity='0'; } });
   (function loop(){ cx+=(tx-cx)*0.12; cy+=(ty-cy)*0.12; g.style.transform='translate('+cx+'px,'+cy+'px)'; requestAnimationFrame(loop); })();
+})();
+</script>
+<script>
+/* [2026-06-28] 모바일 표→카드: 각 셀에 컬럼명 라벨 부여(헤더 있는 표만). PC엔 영향 없음(@media에서만 사용) */
+(function(){
+  function lbl(){
+    document.querySelectorAll('table').forEach(function(t){
+      var hr=t.querySelector('thead tr');
+      if(!hr){ hr=[].find.call(t.querySelectorAll('tr'),function(r){return r.querySelector('th');}); }
+      if(!hr) return;
+      var h=[].map.call(hr.children,function(x){return x.textContent.trim();});
+      if(!h.length) return;
+      [].forEach.call(t.querySelectorAll('tr'),function(tr){
+        if(tr===hr||tr.querySelector('th')){ tr.setAttribute('data-thead-row','1'); return; }
+        [].forEach.call(tr.children,function(td,i){
+          if(h[i]&&h[i].length) td.setAttribute('data-label',h[i]);
+          else td.setAttribute('data-hide','1');
+        });
+      });
+      t.classList.add('tbl-carded');
+    });
+  }
+  if(document.readyState!=='loading') lbl(); else document.addEventListener('DOMContentLoaded',lbl);
+  setTimeout(lbl,600); setTimeout(lbl,1500);
 })();
 </script>
 </html>
