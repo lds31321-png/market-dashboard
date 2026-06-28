@@ -1705,7 +1705,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-input').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});trOnTabEnter()">매매 현황</div>
   <div class="nav-tab" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:none;');document.getElementById('page-input').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});">매매 복기</div>
   <div class="nav-tab nav-tab-guide" style="order:-1" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:none;');document.getElementById('page-input').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:block;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});">사용 가이드</div>
-  <a href="https://lds31321-png.github.io/market-dashboard/hub.html" style="margin-left:auto;align-self:center;order:99;display:inline-flex;align-items:center;gap:4px;padding:7px 15px;border:1.5px solid #4593FC;border-radius:8px;color:#4593FC;font-size:15px;font-weight:700;text-decoration:none;background:#1E2027;transition:all .15s" onmouseover="this.style.background='#4593FC';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='#4593FC'">← 메인으로</a>
+  <a href="https://lds31321-png.github.io/market-dashboard/hub.html" style="margin-left:auto;align-self:center;order:99;display:inline-flex;align-items:center;gap:4px;padding:7px 15px;border:1.5px solid #4593FC;border-radius:8px;color:#fff;font-size:15px;font-weight:700;text-decoration:none;background:#4593FC;transition:all .15s" onmouseover="this.style.background='#fff';this.style.color='#4593FC'" onmouseout="this.style.background='#4593FC';this.style.color='#fff'">← 메인으로</a>
   </div>
 </div>
 
@@ -3625,7 +3625,7 @@ input[type=range] { background: transparent !important; border: none !important;
         <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
           <button onclick="togglePasteArea()" style="display:inline-flex;align-items:center;justify-content:center;padding:0 18px;height:34px;border-radius:7px;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s;background:rgba(69,147,252,.08);color:#4593FC;border:1px solid rgba(69,147,252,.40)" onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'">+ 데이터 붙여넣기</button>
           <button onclick="clearPositions()" class="btn-danger" style="display:inline-flex;align-items:center;justify-content:center;height:34px;padding:0 14px;border-radius:7px;font-size:15px;cursor:pointer;transition:all .15s">초기화</button>
-          <a href="예시_당일보유포지션_1316창.xlsx" download style="display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 16px;border-radius:7px;border:1.5px solid #4593FC;background:#4593FC;color:#fff;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .15s" onmouseover="this.style.background='#c45a3e'" onmouseout="this.style.background='#4593FC'">예시 파일 다운로드</a>
+          <a href="예시_당일보유포지션_1316창.xlsx" download style="display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 16px;border-radius:7px;border:1.5px solid #4593FC;background:#4593FC;color:#fff;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .15s" onmouseover="this.style.background='#fff';this.style.color='#4593FC'" onmouseout="this.style.background='#4593FC';this.style.color='#fff'">예시 파일 다운로드</a>
           <span style="font-size:15px;color:var(--t3)">읽기 완료 — 위험·자금 / 매매 현황 모두 반영</span>
         </div>
         <div id="pt-paste-wrap" style="display:none">
@@ -3985,7 +3985,7 @@ input[type=range] { background: transparent !important; border: none !important;
         </div>
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
           <button onclick="toggleRVPaste()" class="pos-add-btn" style="display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 20px;font-size:15px;font-weight:700;background:rgba(69,147,252,.08);color:#4593FC;border:1px solid rgba(69,147,252,.40);border-radius:7px">+ 데이터 붙여넣기</button>
-          <a href="예시_기간별거래데이터_1310창.xlsx" download style="display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 16px;border-radius:7px;border:1.5px solid #4593FC;background:#4593FC;color:#fff;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .15s" onmouseover="this.style.background='#c45a3e'" onmouseout="this.style.background='#4593FC'">예시 파일 다운로드</a>
+          <a href="예시_기간별거래데이터_1310창.xlsx" download style="display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 16px;border-radius:7px;border:1.5px solid #4593FC;background:#4593FC;color:#fff;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .15s" onmouseover="this.style.background='#fff';this.style.color='#4593FC'" onmouseout="this.style.background='#4593FC';this.style.color='#fff'">예시 파일 다운로드</a>
           <button onclick="clearReviewData()" class="btn-danger" style="display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 14px;border-radius:6px;font-size:15px;cursor:pointer">초기화</button>
         </div>
         <div id="rv-paste-wrap" style="display:none;margin-top:10px">
@@ -4340,7 +4340,7 @@ input[type=range] { background: transparent !important; border: none !important;
           border:2px solid #4593FC;background:#4593FC;color:#fff;
           font-size:15px;font-weight:900;cursor:pointer;font-family:var(--font-n);
           box-shadow:0 2px 8px rgba(69,147,252,.30);transition:all .15s;letter-spacing:-.01em"
-          onmouseover="this.style.background='#c25538';this.style.boxShadow='0 4px 12px rgba(69,147,252,.45)'"
+          onmouseover="this.style.background='#3a82e8';this.style.boxShadow='0 4px 12px rgba(69,147,252,.45)'"
           onmouseout="this.style.background='#4593FC';this.style.boxShadow='0 2px 8px rgba(69,147,252,.30)'">
           <span>직트_레이 AI 피드백 받기</span>
         </button>
@@ -4475,7 +4475,7 @@ input[type=range] { background: transparent !important; border: none !important;
         color:#fff;font-size:15px;font-weight:800;
         cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;
         transition:all .2s;letter-spacing:.03em;font-family:var(--font-n)"
-        onmouseover="this.style.background='#c8553a';this.style.transform='translateY(-1px)'"
+        onmouseover="this.style.background='#3a82e8';this.style.transform='translateY(-1px)'"
         onmouseout="this.style.background='#4593FC';this.style.transform='translateY(0)'">
         <span>카페 복기 이미지 생성 & 다운로드</span>
       </button>
@@ -5015,7 +5015,7 @@ input[type=range] { background: transparent !important; border: none !important;
         <!-- 버튼 행 -->
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
           <button onclick="toggleTRPaste()" class="pos-add-btn btn-primary" style="display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 20px;font-size:15px;font-weight:700;background:#4593FC;color:#fff">+ 데이터 붙여넣기</button>
-          <a href="예시_기간별거래데이터_1310창.xlsx" download style="display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 16px;border-radius:7px;border:1.5px solid #4593FC;background:#4593FC;color:#fff;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .15s" onmouseover="this.style.background='#c45a3e'" onmouseout="this.style.background='#4593FC'">예시 파일 다운로드</a>
+          <a href="예시_기간별거래데이터_1310창.xlsx" download style="display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 16px;border-radius:7px;border:1.5px solid #4593FC;background:#4593FC;color:#fff;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .15s" onmouseover="this.style.background='#fff';this.style.color='#4593FC'" onmouseout="this.style.background='#4593FC';this.style.color='#fff'">예시 파일 다운로드</a>
           <button onclick="trClearHTS()" class="btn-danger" style="display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 14px;border-radius:6px;font-size:15px;cursor:pointer">초기화</button>
         </div>
         <!-- 붙여넣기 영역 (토글) -->
@@ -5459,7 +5459,7 @@ input[type=range] { background: transparent !important; border: none !important;
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
         <button onclick="inToggle1316Paste()" class="hint-glow-salmon" style="display:inline-flex;align-items:center;justify-content:center;padding:0 18px;height:34px;border-radius:7px;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s;background:rgba(69,147,252,.08);color:#4593FC;border:1px solid rgba(69,147,252,.40)" onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'">+ 데이터 붙여넣기</button>
         <button onclick="inClear1316()" class="btn-danger" style="display:inline-flex;align-items:center;justify-content:center;height:34px;padding:0 14px;border-radius:7px;font-size:15px;cursor:pointer;transition:all .15s">초기화</button>
-          <a href="예시_당일보유포지션_1316창.xlsx" download style="display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 16px;border-radius:7px;border:1.5px solid #4593FC;background:#4593FC;color:#fff;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .15s" onmouseover="this.style.background='#c45a3e'" onmouseout="this.style.background='#4593FC'">⬇ 예시 파일</a>
+          <a href="예시_당일보유포지션_1316창.xlsx" download style="display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 16px;border-radius:7px;border:1.5px solid #4593FC;background:#4593FC;color:#fff;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .15s" onmouseover="this.style.background='#fff';this.style.color='#4593FC'" onmouseout="this.style.background='#4593FC';this.style.color='#fff'">⬇ 예시 파일</a>
         <span id="in-1316-status" style="font-size:15px;color:var(--t3);margin-left:6px"></span>
       </div>
       <div id="in-1316-paste-wrap" style="display:none">
@@ -5529,7 +5529,7 @@ input[type=range] { background: transparent !important; border: none !important;
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
         <button onclick="inToggle1310Paste()" class="hint-glow-salmon" style="display:inline-flex;align-items:center;justify-content:center;padding:0 18px;height:34px;border-radius:7px;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s;background:rgba(69,147,252,.08);color:#4593FC;border:1px solid rgba(69,147,252,.40)" onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'">+ 데이터 붙여넣기</button>
         <button onclick="inClear1310()" class="btn-danger" style="display:inline-flex;align-items:center;justify-content:center;height:34px;padding:0 14px;border-radius:7px;font-size:15px;cursor:pointer;transition:all .15s">초기화</button>
-          <a href="예시_기간별거래데이터_1310창.xlsx" download style="display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 16px;border-radius:7px;border:1.5px solid #4593FC;background:#4593FC;color:#fff;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .15s" onmouseover="this.style.background='#c45a3e'" onmouseout="this.style.background='#4593FC'">⬇ 예시 파일</a>
+          <a href="예시_기간별거래데이터_1310창.xlsx" download style="display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 16px;border-radius:7px;border:1.5px solid #4593FC;background:#4593FC;color:#fff;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;transition:all .15s" onmouseover="this.style.background='#fff';this.style.color='#4593FC'" onmouseout="this.style.background='#4593FC';this.style.color='#fff'">⬇ 예시 파일</a>
         <span id="in-1310-status" style="font-size:15px;color:var(--t3);margin-left:6px"></span>
       </div>
       <div id="in-1310-paste-wrap" style="display:none">
@@ -6140,7 +6140,7 @@ body{padding-bottom:0}
 
 /* 51차: 점검 영역 번호 배지 + ? 도움말 버튼 + 설명글 */
 .uvp-q-no{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;margin-right:7px;background:#4593FC;color:#fff;font-size:13px;font-weight:900;border-radius:6px;font-family:'IBM Plex Mono',monospace;vertical-align:middle}
-.uvp-q-help-btn{width:20px;height:20px;margin-left:5px;border-radius:50%;border:1.5px solid #FF8A3D;background:rgba(255,138,61,.10);color:#FF8A3D;font-size:13px;font-weight:900;line-height:1;cursor:pointer;padding:0;vertical-align:middle;transition:transform .15s}
+.uvp-q-help-btn{width:20px;height:20px;margin-left:5px;border-radius:50%;border:1.5px solid #4593FC;background:rgba(69,147,252,.10);color:#4593FC;font-size:13px;font-weight:900;line-height:1;cursor:pointer;padding:0;vertical-align:middle;transition:transform .15s}
 .uvp-q-help-btn:hover{transform:scale(1.12);background:rgba(255,138,61,.2)}
 .uvp-q-help{grid-column:1/-1;margin-top:8px;padding:11px 14px;background:rgba(69,147,252,.06);border:1px solid rgba(69,147,252,.18);border-radius:8px;font-size:14px;line-height:1.65;color:var(--t2)}
 
