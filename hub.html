@@ -214,6 +214,13 @@
     .card-desc{ grid-column:1 / -1; grid-row:3; }
     .card-items{ grid-column:1 / -1; grid-row:4; }
     .card-arrow{ position:static; top:auto; right:auto; grid-column:3; grid-row:1 / span 2; align-self:center; margin:0; padding:0; color:#5a6675; font-size:20px; }
+    /* [2026-06-28] 모바일 집중도: 서브텍스트 절제 + 메인 키우기 + 설명 2줄 + 얇은 꺾쇠 */
+    .hub-logo{ display:none; }
+    .card-items{ display:none; }
+    .card-title{ grid-column:2; font-size:20px; }
+    .card-desc{ grid-column:2 / -1; margin-top:10px; font-size:13.5px; line-height:1.65; }
+    .card-arrow{ display:flex; align-items:center; justify-content:center; font-size:0; }
+    .card-arrow::after{ content:'\203A'; font-size:24px; color:#5a6675; font-weight:400; line-height:1; }
   }
   @media (max-width:380px){
     .hub-title{ font-size:22px; }
