@@ -2494,10 +2494,10 @@ function buildStatCharts(){
             {text:'손실',fillStyle:'rgba(69,147,252,.55)',strokeStyle:'transparent',lineWidth:0,datasetIndex:1}
           ]
         }},
-        tooltip:{...tipBase,mode:'index',intersect:false}
+        tooltip:{enabled:false}
       },
       scales:{
-        x:{ticks:{color:tc,font:{size:_mbS?9:12,family:'IBM Plex Mono'},maxRotation:_mbS?0:0,autoSkip:false},grid:{display:false},border:{display:false}},
+        x:{ticks:{color:tc,font:{size:_mbS?9:12,family:'IBM Plex Mono'},maxRotation:0,autoSkip:false},grid:{display:false},border:{display:false}},
         y:{ticks:{color:tc,font:{size:_mbS?9:11,family:'IBM Plex Mono'},stepSize:_mbS?10:5},grid:{color:gc},border:{display:false},min:0,max:30}
       }
     },
