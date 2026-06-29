@@ -435,7 +435,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
   /* 차트 카드 — 좌우 꽉 차게(패딩 최소) */
   #overlay .modal-body > div:first-child > div:nth-child(2){padding:6px 6px 4px !important;border-radius:12px !important;}
   /* 차트 높이 — 가로형으로(세로 더 낮춤) */
-  #overlay div:has(> canvas){height:280px !important;}
+  #overlay div:has(> canvas){height:260px !important;}
   /* 스탯 토스 폰트·박스 */
   #overlay .modal-body > div:nth-child(2) > div{border-radius:12px !important;padding:13px 14px !important;}
   #overlay .modal-body > div:nth-child(2) > div > div:nth-child(1),
@@ -1316,19 +1316,23 @@ function buildPositionChart(p, canvasId){
         c.strokeStyle='rgba(10,10,10,0.88)';
         c.lineWidth=2.5;
         c.setLineDash([]);
-        c.beginPath();c.moveTo(xp,top);c.lineTo(xp,bottom+30);c.stroke();
+        const _mbE=window.matchMedia('(max-width:640px)').matches;
+        // 모바일: 선을 축까지만(바깥 여백 제거), 배지는 플롯 안쪽 하단으로
+        c.beginPath();c.moveTo(xp,top);c.lineTo(xp,_mbE?bottom:bottom+30);c.stroke();
 
-        // 만기일 배지 — 최하단
+        // 만기일 배지
         c.font='bold 11px IBM Plex Sans KR,Noto Sans KR,sans-serif';
         c.textAlign='center';c.textBaseline='middle';
         const lbl='만기일';
         const lw=c.measureText(lbl).width+16;
+        const _mbRectY=_mbE?bottom-26:bottom+10;
+        const _mbTxtY=_mbE?bottom-16:bottom+20;
         c.fillStyle='rgba(10,10,10,0.92)';
         c.beginPath();
-        c.roundRect?c.roundRect(xp-lw/2,bottom+10,lw,20,4):c.rect(xp-lw/2,bottom+10,lw,20);
+        c.roundRect?c.roundRect(xp-lw/2,_mbRectY,lw,20,4):c.rect(xp-lw/2,_mbRectY,lw,20);
         c.fill();
         c.fillStyle='#fff';
-        c.fillText(lbl,xp,bottom+20);
+        c.fillText(lbl,xp,_mbTxtY);
 
         // 잔존일 화살표 (→ N일) — 중간 하단
         const lastXp=x.getPixelForValue(histLabels.length-1);
@@ -1437,7 +1441,7 @@ function buildPositionChart(p, canvasId){
           callbacks:{title:t=>`${t[0].label}`,label:c=>`  종가: $${c.parsed.y.toLocaleString()}`}
         }
       },
-      layout:(window.matchMedia('(max-width:640px)').matches?{padding:{right:56,left:3,top:6,bottom:36}}:{padding:{right:68,left:4,top:10,bottom:44}}),
+      layout:(window.matchMedia('(max-width:640px)').matches?{padding:{right:56,left:3,top:6,bottom:22}}:{padding:{right:68,left:4,top:10,bottom:44}}),
       scales:{
         x:{ticks:{color:'#555',font:{size:10,family:'IBM Plex Mono'},maxTicksLimit:9},grid:{color:'rgba(0,0,0,.06)',drawBorder:false}},
         y:{ticks:{color:'#555',font:{size:10,family:'IBM Plex Mono'},callback:v=>'$'+v.toLocaleString()},
