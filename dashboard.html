@@ -633,7 +633,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
       </div>
       <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
         <span style="font-size:12px;color:#FFFFFF;font-family:var(--mono);display:flex;align-items:center;gap:7px">
-          <span style="display:inline-block;width:22px;height:2px;background:#4593FC;border-radius:1px;"></span>누적 수익률
+          <span style="display:inline-block;width:22px;height:2px;background:#FF8080;border-radius:1px;"></span>누적 수익률
         </span>
         <span style="font-size:12px;color:#FFFFFF;font-family:var(--mono);display:flex;align-items:center;gap:7px">
           <span style="display:inline-block;width:20px;height:0;border-top:2px dashed rgba(232,201,106,.75)"></span>최고점
@@ -2269,7 +2269,7 @@ function buildStatCharts(){
   const _finalCumPct = _ac/_dp*100;
   const _finalCumAmt = Math.round(_ac/10000);
   const _cumSign = _finalCumPct >= 0 ? '+' : '';
-  const _cumColor = _finalCumPct >= 0 ? 'var(--accent)' : '#4593FC';
+  const _cumColor = _finalCumPct >= 0 ? '#FF8080' : '#4593FC';
   const _cumEl = document.getElementById('heroCumPct');
   if(_cumEl){ _cumEl.textContent=_cumSign+_finalCumPct.toFixed(2); _cumEl.style.color=_cumColor; }
   const _amtEl = document.getElementById('heroCumAmt');
@@ -2341,16 +2341,16 @@ function buildStatCharts(){
       datasets:[{
         label:'누적 수익률',
         data:cumVals,
-        borderColor:winC,
+        borderColor:'#FF8080',
         borderWidth:2,
         pointRadius:0,
         pointHoverRadius:5,
-        pointHoverBackgroundColor:winC,
+        pointHoverBackgroundColor:'#FF8080',
         fill:true,
         backgroundColor:ctx=>{
           const g=ctx.chart.ctx.createLinearGradient(0,0,0,300);
-          g.addColorStop(0,'rgba(69,147,252,.18)');
-          g.addColorStop(1,'rgba(69,147,252,.01)');
+          g.addColorStop(0,'rgba(255,128,128,.20)');
+          g.addColorStop(1,'rgba(255,128,128,.01)');
           return g;
         },
         tension:.32
@@ -2377,7 +2377,7 @@ function buildStatCharts(){
       },
       scales:{
         x:{ticks:{color:tc,font:{size:_mbS?9:11,family:'IBM Plex Mono'},maxTicksLimit:_mbS?6:16,maxRotation:_mbS?0:50,autoSkip:true},grid:{color:gc},border:{display:false}},
-        y:{position:'right',ticks:{color:tc,font:{size:_mbS?9:11,family:'IBM Plex Mono'},maxTicksLimit:_mbS?6:undefined,callback:v=>(v>=0?'+':'')+v.toFixed(1)+'%'},grid:{color:gc},border:{display:false}}
+        y:{position:'right',ticks:{color:tc,font:{size:_mbS?9:11,family:'IBM Plex Mono'},maxTicksLimit:_mbS?6:undefined,callback:v=>(v>=0?'+':'')+v.toFixed(0)+'%'},grid:{color:gc},border:{display:false}}
       }
     },
     plugins:[peakLinePlugin]
@@ -2390,8 +2390,8 @@ function buildStatCharts(){
       labels:[`수익 (${_tW}번)`,`손실 (${_tL}번)`,...(_tZ?[`무손익 (${_tZ}번)`]:[])],
       datasets:[{
         data:[_tW,_tL,...(_tZ?[_tZ]:[])],
-        backgroundColor:['rgba(69,147,252,.65)','rgba(69,147,252,.55)',...(ZEROS?['rgba(160,152,148,.35)']:[])],
-        borderColor:['rgba(69,147,252,.9)','rgba(69,147,252,.9)',...(ZEROS?['rgba(160,152,148,.5)']:[])],
+        backgroundColor:['rgba(255,128,128,.65)','rgba(69,147,252,.55)',...(ZEROS?['rgba(160,152,148,.35)']:[])],
+        borderColor:['rgba(255,128,128,.9)','rgba(69,147,252,.9)',...(ZEROS?['rgba(160,152,148,.5)']:[])],
         borderWidth:1.5,hoverOffset:8
       }]
     },
@@ -2411,7 +2411,7 @@ function buildStatCharts(){
         ctx.save();
         ctx.textAlign='center';ctx.textBaseline='middle';
         ctx.font='bold 24px IBM Plex Mono,monospace';
-        ctx.fillStyle='#4593FC';
+        ctx.fillStyle='#FF8080';
         ctx.fillText((_tW/_tN*100).toFixed(1)+'%',cx,cy-10);
         ctx.font='13px IBM Plex Sans KR,Noto Sans KR,sans-serif';
         ctx.fillStyle='#a89e98';
@@ -2422,7 +2422,7 @@ function buildStatCharts(){
   });
 
   document.getElementById('donut-legend').innerHTML=[
-    {label:`수익 ${_tW}번`,color:'#4593FC'},
+    {label:`수익 ${_tW}번`,color:'#FF8080'},
     {label:`손실 ${_tL}번`,color:lossC},
     ...(_tZ?[{label:`무손익 ${_tZ}번`,color:'#a89e98'}]:[])
   ].map(l=>`
@@ -2447,11 +2447,11 @@ function buildStatCharts(){
           const bx=x-width/2,r=5;
           const g=ctx.createLinearGradient(0,barTop,0,barBot);
           if(isWin){
-            g.addColorStop(0,'rgba(69,147,252,.25)');
-            g.addColorStop(1,'rgba(69,147,252,.6)');
+            g.addColorStop(0,'rgba(255,128,128,.30)');
+            g.addColorStop(1,'rgba(255,128,128,.72)');
           } else {
-            g.addColorStop(0,'rgba(69,147,252,.3)');
-            g.addColorStop(1,'rgba(69,147,252,.65)');
+            g.addColorStop(0,'rgba(69,147,252,.30)');
+            g.addColorStop(1,'rgba(69,147,252,.72)');
           }
           ctx.save();
           ctx.fillStyle=g;
@@ -2463,7 +2463,7 @@ function buildStatCharts(){
           ctx.save();
           ctx.textAlign='center';ctx.textBaseline='bottom';
           ctx.font='bold '+(_mbS?9:12)+'px IBM Plex Mono,monospace';
-          ctx.fillStyle=isWin?'rgba(200,85,60,.9)':'rgba(69,147,252,.9)';
+          ctx.fillStyle=isWin?'#FF8080':'#4593FC';
           ctx.fillText(v+'번',x,barTop-4);
           ctx.restore();
         });
@@ -2493,8 +2493,8 @@ function buildStatCharts(){
         legend:{display:true,position:'bottom',labels:{
           color:tc,font:{size:_mbS?10:12,family:'IBM Plex Mono'},padding:_mbS?10:14,
           generateLabels:()=>[
-            {text:'수익',fillStyle:'rgba(69,147,252,.65)',strokeStyle:'transparent',lineWidth:0,datasetIndex:0},
-            {text:'손실',fillStyle:'rgba(69,147,252,.55)',strokeStyle:'transparent',lineWidth:0,datasetIndex:1}
+            {text:'수익',fillStyle:'#FF8080',strokeStyle:'transparent',lineWidth:0,fontColor:'#B0B8C1',datasetIndex:0},
+            {text:'손실',fillStyle:'#4593FC',strokeStyle:'transparent',lineWidth:0,fontColor:'#B0B8C1',datasetIndex:1}
           ]
         }},
         tooltip:{enabled:false}
