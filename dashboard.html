@@ -2123,7 +2123,7 @@ function renderHistory(filter){
         }else{
           const sgn=pnl>0?'+':pnl<0?'-':'';
           const clr=pnl>0?'var(--profit)':pnl<0?'var(--loss)':'var(--t3)';
-          pnlText=`<span style="color:${clr};font-weight:600;">${sgn}${Math.round(Math.abs(pnl)*rate/10000)}만원 (${sgn}$${Math.abs(pnl).toLocaleString()})</span>`;
+          pnlText=`<span style="color:${clr};font-weight:600;">${sgn}${Math.round(Math.abs(pnl)*rate/10000)}만원</span>`;
         }
         const dLabel=isExp?'만기청산':`잔존 ${d2}일`;
         const rowBg=isExp?'background:rgba(0,0,0,.02);':'background:rgba(69,147,252,.04);';
