@@ -412,15 +412,15 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
   /* 종목별 평가손익: 한 줄 리스트 */
   table.tbl-eval thead,table.tbl-eval tr[data-thead-row]{display:none;}
   table.tbl-eval,table.tbl-eval tbody{display:block;}
-  table.tbl-eval tr{display:flex;align-items:center;padding:13px 2px;border-bottom:1px solid rgba(255,255,255,.06);}
+  table.tbl-eval tr{display:flex;align-items:center;gap:8px;padding:13px 2px;border-bottom:1px solid rgba(255,255,255,.06);}
   table.tbl-eval tr:last-child{border-bottom:none;}
   table.tbl-eval td{padding:0 !important;border:none !important;font-size:14px !important;white-space:nowrap !important;}
   table.tbl-eval td::before{display:none !important;}
   table.tbl-eval td[data-label="매매비중"]::before{display:inline !important;content:"비중 ";color:#6B7480;font-weight:500;}
   table.tbl-eval td[data-hide],table.tbl-eval td[data-label="총 손익"]{display:none !important;}
-  table.tbl-eval td[data-label="종목"]{font-weight:700;color:#fff;font-size:15px !important;}
-  table.tbl-eval td[data-label="평가손익"]{font-weight:800;margin-left:auto;}
-  table.tbl-eval td[data-label="매매비중"]{color:#8B95A1;font-size:12.5px !important;margin-left:12px;}
+  table.tbl-eval td[data-label="종목"]{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;font-weight:700;color:#fff;font-size:14.5px !important;}
+  table.tbl-eval td[data-label="평가손익"]{font-weight:800;flex-shrink:0;min-width:62px;text-align:right;}
+  table.tbl-eval td[data-label="매매비중"]{color:#8B95A1;font-size:11.5px !important;flex-shrink:0;min-width:72px;text-align:right;}
   /* 상세 모달 토스 모바일 (PC 불변, @media만) */
   #overlay{padding:10px !important;}
   #overlay .modal{width:100% !important;max-width:none !important;max-height:92vh !important;border-radius:16px !important;}
@@ -428,6 +428,10 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
   #overlay .modal-body{padding:14px !important;}
   #overlay .modal-body > div:nth-child(2){flex-wrap:wrap !important;gap:9px !important;}
   #overlay .modal-body > div:nth-child(2) > *{flex:1 1 calc(50% - 5px) !important;min-width:0 !important;}
+  /* 지표 2x2: 살몬(수익)끼리 아래줄로 묶기 — 무채색(투자금·만기) 위 / 살몬(최대수익·증거금대비) 아래 */
+  #overlay .modal-body > div:nth-child(2) > div:nth-child(4){order:2 !important;}
+  #overlay .modal-body > div:nth-child(2) > div:nth-child(2){order:3 !important;}
+  #overlay .modal-body > div:nth-child(2) > div:nth-child(3){order:4 !important;}
   /* 차트 섹션 제목 여백 압축 */
   #overlay .modal-body > div:first-child > div:first-child{margin-bottom:8px !important;padding-bottom:7px !important;}
   /* 범례 숨김 — 차트 안 배지로 이미 표시(중복 여백 제거, 차트 위주) */
@@ -493,10 +497,10 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 
   <!-- 액션 버튼 박스 -->
   <div class="action-row">
-    <a class="action-btn btn-orange" href="https://bramble-gardenia-301.notion.site/334df6df17a280788263f467bfbd57aa?source=copy_link" target="_blank" rel="noopener">노션<span class="abtn-sub">&nbsp;(전략 자세히 보기)</span></a>
+    <a class="action-btn btn-orange" href="https://bramble-gardenia-301.notion.site/334df6df17a280788263f467bfbd57aa?source=copy_link" target="_blank" rel="noopener" style="display:none;">노션<span class="abtn-sub">&nbsp;(전략 자세히 보기)</span></a>
     <a class="action-btn btn-orange" href="https://naver.me/5nheicte" target="_blank" rel="noopener">거래 시작하기</a>
     <button class="action-btn btn-orange" onclick="openBriefingModal()">전략 브리핑</button>
-    <a class="action-btn btn-orange" href="https://lds31321-png.github.io/market-dashboard/" target="_blank" rel="noopener">글로벌 시장 현황</a>
+    <a class="action-btn btn-orange" href="https://lds31321-png.github.io/market-dashboard/" target="_blank" rel="noopener" style="grid-column:1 / -1;">글로벌 시장 현황</a>
   </div>
 
   <!-- 포지션 현황 KPI -->
@@ -1067,7 +1071,7 @@ function renderCards(pos){
 
     // 현재 평가손익
     let pnlHtml='';
-    if(p.current_pnl!=null){
+    if(p.current_pnl!=null && p.current_price!=null){
       const pnlKrw=Math.round(Math.abs(p.current_pnl)*rate/10000);
       const cls=p.current_pnl>0?'profit':p.current_pnl<0?'loss':'neutral';
       const sign=p.current_pnl>0?'+':p.current_pnl<0?'-':'';
@@ -1140,7 +1144,7 @@ function renderCards(pos){
       <!-- 하단 -->
       <div style="display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid var(--b1);">
         <span style="font-size:14px;color:var(--t2);font-family:var(--mono);">클릭하면 차트 포함 상세 보기</span>
-        <a href="${p.notion_url}" target="_blank" onclick="event.stopPropagation()" style="font-size:14px;color:var(--accent);font-family:var(--mono);text-decoration:none;font-weight:600;">노션 →</a>
+        <a onclick="event.stopPropagation();openModal('${p.id}')" style="font-size:14px;color:var(--accent);font-family:var(--mono);text-decoration:none;font-weight:600;cursor:pointer;">자세히 보기 →</a>
       </div>
     </div>`;
   }).join('');
@@ -1560,7 +1564,7 @@ function openModal(id){
 
   // ── 현재 평가손익 ──
   let pnlBlock='';
-  if(p.current_pnl!=null){
+  if(p.current_pnl!=null && p.current_price!=null){
     const isProfit=p.current_pnl>0;
     const sign=p.current_pnl>0?'+':p.current_pnl<0?'-':'';
     const pnlKrw=Math.round(Math.abs(p.current_pnl)*rate/10000);
@@ -1694,11 +1698,11 @@ function openModal(id){
 
 
 
-    <!-- 노션 버튼 (강조) -->
-    <a href="${p.notion_url}" target="_blank"
-       style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;background:var(--accent);color:#fff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;font-family:var(--mono);transition:opacity .15s;margin-bottom:14px;"
+    <!-- 포지션 목록으로 돌아가기 버튼 -->
+    <a onclick="closeModal()"
+       style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;background:var(--accent);color:#fff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:600;font-family:var(--mono);transition:opacity .15s;margin-bottom:14px;cursor:pointer;"
        onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
-      노션에서 시황 분석 전체 보기 →
+      ← 포지션 목록으로
     </a>
 
     <div style="font-size:11px;color:var(--t3);line-height:1.6;text-align:center;">본 내용은 교육 목적의 전략 공유입니다. 투자 권유가 아니며, 파생상품 거래의 모든 책임은 투자자 본인에게 있습니다.</div>
