@@ -440,6 +440,9 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
   #stat-kpi-row > div > div:last-child{white-space:nowrap;}
   .stat-hdr-sub{display:none !important;}
   .hero-tag{display:block;margin-top:3px;white-space:nowrap;}
+  /* [2026-06-30] 수익 통계 차트 영역: 도넛+구간별 2열 → 1열 쌓기(좌측 잘림 해결) + 차트 좌우 여백 축소 */
+  .stat-2col{grid-template-columns:1fr !important;}
+  .chart-canvas-wrap{padding:12px 6px 8px !important;}
   /* 상세 모달 토스 모바일 (PC 불변, @media만) */
   #overlay{padding:10px !important;}
   #overlay .modal{width:100% !important;max-width:none !important;max-height:92vh !important;border-radius:16px !important;}
@@ -637,11 +640,11 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
         </span>
       </div>
     </div>
-    <div style="padding:16px 20px 12px;position:relative;height:300px"><canvas id="cumChart"></canvas></div>
+    <div class="chart-canvas-wrap" style="padding:16px 20px 12px;position:relative;height:300px"><canvas id="cumChart"></canvas></div>
   </div>
 
   <!-- 2열: 승패도넛 + 구간별 -->
-  <div style="display:grid;grid-template-columns:1fr 1.8fr;gap:12px;margin-bottom:16px">
+  <div class="stat-2col" style="display:grid;grid-template-columns:1fr 1.8fr;gap:12px;margin-bottom:16px">
 
     <!-- 승패 도넛 -->
     <div style="background:#1E2027;border:1px solid rgba(255,255,255,.08);border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.3);overflow:hidden">
