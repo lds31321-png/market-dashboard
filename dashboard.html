@@ -434,8 +434,8 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
   #overlay .modal-body > div:first-child > div:nth-child(2) > div:first-child{display:none !important;}
   /* 차트 카드 — 좌우 꽉 차게(패딩 최소) */
   #overlay .modal-body > div:first-child > div:nth-child(2){padding:6px 6px 4px !important;border-radius:12px !important;}
-  /* 차트 높이 — 세로 과함 완화 */
-  #overlay div:has(> canvas){height:330px !important;}
+  /* 차트 높이 — 가로형으로(세로 더 낮춤) */
+  #overlay div:has(> canvas){height:280px !important;}
   /* 스탯 토스 폰트·박스 */
   #overlay .modal-body > div:nth-child(2) > div{border-radius:12px !important;padding:13px 14px !important;}
   #overlay .modal-body > div:nth-child(2) > div > div:nth-child(1),
@@ -1437,7 +1437,7 @@ function buildPositionChart(p, canvasId){
           callbacks:{title:t=>`${t[0].label}`,label:c=>`  종가: $${c.parsed.y.toLocaleString()}`}
         }
       },
-      layout:{padding:{right:68,left:4,top:10,bottom:44}},
+      layout:(window.matchMedia('(max-width:640px)').matches?{padding:{right:56,left:3,top:6,bottom:36}}:{padding:{right:68,left:4,top:10,bottom:44}}),
       scales:{
         x:{ticks:{color:'#555',font:{size:10,family:'IBM Plex Mono'},maxTicksLimit:9},grid:{color:'rgba(0,0,0,.06)',drawBorder:false}},
         y:{ticks:{color:'#555',font:{size:10,family:'IBM Plex Mono'},callback:v=>'$'+v.toLocaleString()},
