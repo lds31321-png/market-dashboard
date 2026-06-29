@@ -55,6 +55,10 @@ html.theme-blue .macro-item, html.theme-blue .headline-news, html.theme-blue .al
 html.theme-blue .scenario-card{border-color:rgba(69,147,252,.22) !important;border-left-color:rgba(69,147,252,.5) !important;}
 html.theme-blue a.tb-btn{color:#4593FC !important;border-color:#4593FC !important;}
 html.theme-blue .macro-item, html.theme-blue .headline-news, html.theme-blue .alert-banner, html.theme-blue .price-hero, html.theme-blue .hm, html.theme-blue .chart-wrap, html.theme-blue .factor-card, html.theme-blue .scenario-card, html.theme-blue .cal-card, html.theme-blue .season-card, html.theme-blue .footer-card, html.theme-blue .macro-card, html.theme-blue .vol-card, html.theme-blue .news-card{background:var(--card) !important;border-color:var(--border) !important;}
+html.theme-blue .topbar, html.theme-blue .asset-nav, html.theme-blue .cal-dow{background:var(--card) !important;border-color:var(--border) !important;}
+html.theme-blue .cal-cell{background:var(--bg2) !important;border-color:var(--border) !important;}
+html.theme-blue .other-month{background:var(--bg) !important;}
+html.theme-blue .alert-text, html.theme-blue .cm-text, html.theme-blue .fp, html.theme-blue .hn-desc, html.theme-blue .ht1-reason, html.theme-blue .vt-basis, html.theme-blue .vt-basis-expanded{color:rgba(176,184,193,0.92) !important;}
 html.theme-blue th{background:rgba(69,147,252,.10) !important;}
 html.theme-blue button:not(#themeToggle){background:rgba(69,147,252,.12) !important;border-color:rgba(69,147,252,.30) !important;}
 html.theme-blue .hn-tag{color:#4593FC !important;}
@@ -2972,8 +2976,7 @@ function _jiktBarRecolor(blue){
     var orig=el.dataset.jw; if(!orig) return;
     if(blue){
       var m=orig.match(/[\d.]+/g); if(!m||m.length<3) return;
-      var bl='rgb('+m[2]+','+m[1]+','+m[0]+')'; /* 웜→파랑: R/B 스왑(명도 유지) */
-      if(isVal){el.style.setProperty('color',bl,'important');}else{el.style.setProperty('background',bl,'important');}
+      if(isVal){var blv='rgb('+m[2]+','+Math.max(135,m[1])+',255)';el.style.setProperty('color',blv,'important');}else{var bl='rgb('+m[2]+','+m[1]+','+m[0]+')';el.style.setProperty('background',bl,'important');}
     }else{
       if(isVal){el.style.removeProperty('color');el.style.color=orig;}else{el.style.removeProperty('background');el.style.backgroundColor=orig;}
     }
