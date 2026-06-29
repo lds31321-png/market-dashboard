@@ -511,6 +511,15 @@ body{
   #page-input .in-cur-lbl{flex-wrap:wrap;gap:6px 10px;}
   /* ④ 하단 워터마크 줄 — 좌우 텍스트 겹침 방지(세로 정렬) */
   .footer{flex-direction:column;gap:2px;padding:12px 16px !important;font-size:11px !important;line-height:1.5;}
+  /* ⑤ 플로팅 버튼(카카오·챗봇) 우측 하단 코너 정렬·축소 — 콘텐츠 가림 방지 */
+  #kakao-floating{bottom:78px !important;right:14px !important;width:46px !important;height:46px !important;}
+  #kakao-floating svg{width:26px !important;height:26px !important;}
+  #chatbase-bubble-button,div[id^="chatbase-bubble-button"]{width:48px !important;height:48px !important;right:14px !important;bottom:16px !important;}
+  /* ⑥ 토스 밸런스 — 데이터 입력 카드 여백·헤더 번호 축소 */
+  #page-input{padding:14px 14px !important;gap:12px !important;}
+  #page-input .instep-hd{padding:14px 14px 12px !important;}
+  #page-input .instep-hd>div:first-child>div:first-child{width:32px !important;height:32px !important;}
+  #page-input .card-b{padding:12px 14px !important;}
 }
 .nav-tab{padding:0 22px;height:50px;font-size:17px;font-weight:600;color:var(--t3);cursor:pointer;border-bottom:3px solid transparent;transition:all .22s;user-select:none;font-family:var(--sans);letter-spacing:.01em;position:relative;display:flex;align-items:center;}
 .nav-tab:hover{color:var(--t2);background:rgba(69,147,252,.04);}
@@ -6212,8 +6221,8 @@ body{padding-bottom:0}
 .uvp-face-q .uvp-ftb tr:nth-child(2) td{padding-top:5px!important}
 </style>
 <div id="protect-footer">
-  <div class="pf-row pf-biz">© 2026 <b>직트</b><span class="sep">|</span>사업자 782-08-02561<span class="sep">|</span>통신판매 제2025-고양일산동-0262호<span class="sep">|</span>대표 임대성<span class="sep">|</span>고양시 일산동구 중앙로 1080, 402동 4층 402-S91호<span class="sep">|</span>문의 031-900-9227<a class="pf-link" href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener noreferrer">카톡 오픈채팅</a></div>
-  <div class="pf-row pf-disclaim">⚠️ 본 서비스는 투자 참고용 분석 도구이며 매수·매도 추천이 아닙니다. 투자 판단과 손실 책임은 사용자 본인에게 있으며, 어떠한 수익도 보장하지 않습니다.</div>
+  <div class="pf-row pf-biz">© 2026 <b>직트</b><span class="sep">|</span>사업자 782-08-02561<span class="sep">|</span>통신판매 제2025-고양일산동-0262호<span class="sep">|</span>대표 임대성<span class="sep">|</span>고양시 일산동구 중앙로 1080, 402동 4층 402-S91호<span class="sep">|</span>문의 031-900-9227</div>
+  <div class="pf-row pf-disclaim">⚠️ 투자 참고용 분석 도구이며 매수·매도 추천이 아닙니다. 투자 판단·손실 책임은 본인에게 있으며 수익을 보장하지 않습니다.</div>
   <div class="pf-row pf-copy">무단 복제·배포는 저작권법으로 보호됩니다<span class="sep">|</span><a class="pf-link" href="./terms.html" target="_blank" rel="noopener noreferrer">이용약관</a><span class="sep">|</span><a class="pf-link" href="./refund.html" target="_blank" rel="noopener noreferrer">환불정책</a><span class="sep">|</span><a class="pf-link" href="./privacy.html" target="_blank" rel="noopener noreferrer">개인정보처리방침</a></div>
 </div>
 
