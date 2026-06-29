@@ -434,6 +434,12 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
   table.tbl-hist tr.hist-card td:nth-child(2) .h-clo-sub{display:block !important;}
   table.tbl-hist tr.hist-card td:nth-child(3){grid-column:1;grid-row:3;color:#5a6675 !important;font-size:11.5px !important;}
   table.tbl-hist tr.hist-card td:nth-child(4){grid-column:2;grid-row:3;justify-self:end;color:#5a6675 !important;font-size:11.5px !important;}
+  /* [2026-06-29] 수익 통계 탭 모바일 — KPI 2열 + 손익비 전폭, 헤더/꼬리말 줄바꿈 정리 */
+  #stat-kpi-row{grid-template-columns:1fr 1fr !important;}
+  #stat-kpi-row > div:last-child{grid-column:1 / -1;}
+  #stat-kpi-row > div > div:last-child{white-space:nowrap;}
+  .stat-hdr-sub{display:none !important;}
+  .hero-tag{display:block;margin-top:3px;white-space:nowrap;}
   /* 상세 모달 토스 모바일 (PC 불변, @media만) */
   #overlay{padding:10px !important;}
   #overlay .modal{width:100% !important;max-width:none !important;max-height:92vh !important;border-radius:16px !important;}
@@ -584,7 +590,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
     <div>
       <div style="font-size:16px;font-weight:600;color:var(--t1);letter-spacing:-.02em;">수익 통계</div>
-      <div style="font-size:11px;color:var(--t3);margin-top:3px;font-family:var(--mono);">전략 현황 · 전체 운용 기간 성과 분석</div>
+      <div class="stat-hdr-sub" style="font-size:11px;color:var(--t3);margin-top:3px;font-family:var(--mono);">전략 현황 · 전체 운용 기간 성과 분석</div>
     </div>
     <button onclick="switchTab('t1',document.querySelectorAll('.nav-tab')[0])"
       style="padding:6px 16px;border-radius:6px;border:1px solid var(--b2);background:transparent;color:var(--t2);font-size:12px;cursor:pointer;font-family:var(--mono);transition:all .15s;"
@@ -605,7 +611,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
       </div>
       <div style="font-size:14px;color:var(--t2);line-height:1.6;">
         누적 순수익 <span id="heroCumAmt" style="color:var(--accent);font-weight:600;font-family:var(--mono);">+2,846만원</span>
-        <span style="color:var(--t3);font-size:11px;"> · 시장 방향과 무관하게 꾸준히</span>
+        <span class="hero-tag" style="color:var(--t3);font-size:11px;"> · 시장 방향과 무관하게 꾸준히</span>
       </div>
     </div>
   </div>
@@ -2284,10 +2290,10 @@ function buildStatCharts(){
 
   // ── KPI 카드 ──
   const kpis=[
-    {label:'총 전략 수',  val:String(_tN),                        unit:'번',  sub:`1번~${_tN}번 (${_aPos.length}개 진행 중)`, color:acC},
-    {label:'승률',        val:(_tW/_tN*100).toFixed(1),           unit:'%',   sub:`${_tW}승 ${_tL}패 (진행중 포함)`,          color:winC},
-    {label:'평균 수익',   val:'+'+Math.round(winAvg/10000),       unit:'만원',sub:'수익 전략 1회 평균',     color:acC},
-    {label:'평균 손실',   val:'-'+Math.round(lossAvg/10000),      unit:'만원',sub:'손실 전략 1회 평균',     color:lossC},
+    {label:'총 전략 수',  val:String(_tN),                        unit:'번',  sub:`${_aPos.length}개 진행중`, color:acC},
+    {label:'승률',        val:(_tW/_tN*100).toFixed(1),           unit:'%',   sub:`${_tW}승 ${_tL}패`,          color:winC},
+    {label:'평균 수익',   val:'+'+Math.round(winAvg/10000),       unit:'만원',sub:'수익 1회 평균',     color:'#FF8080'},
+    {label:'평균 손실',   val:'-'+Math.round(lossAvg/10000),      unit:'만원',sub:'손실 1회 평균',     color:lossC},
     {label:'손익비',      val:pf.toFixed(2),                      unit:'x',   sub:'수익합 ÷ 손실합',       color:pf>=1?acC:lossC},
   ];
   document.getElementById('stat-kpi-row').innerHTML=kpis.map(k=>`
