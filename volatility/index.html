@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260630-031939">
-<script>!function(){try{var t="20260630-031939";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
+<meta name="jikt-build" content="20260630-033633">
+<script>!function(){try{var t="20260630-033633";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
 <script>!function(){try{var t=location.hash||"";if(t.indexOf("token=")>=0){var e=new URLSearchParams(t.replace(/^#/,"")),a=e.get("token"),o=e.get("uid");if(a&&(localStorage.setItem("jikt_token",a),o&&localStorage.setItem("jikt_uid",o),location.hostname.indexOf("github.io")>=0))return void location.replace("../hub.html");try{var i=new URL(location.href);i.hash="",i.searchParams.delete("login"),history.replaceState(null,"",i.pathname+i.search)}catch(t){try{location.hash=""}catch(t){}}}var n=location.hostname.indexOf("github.io")>=0,c=localStorage.getItem("jikt_token");n&&!c&&location.replace("login.html")}catch(t){}}();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -524,6 +524,7 @@ body{
   #page-input .card-b{padding:12px 14px !important;}
   /* ⑧ 모바일: 1316/1310 입력 섹션 숨김 — 자금설정만 노출(PC 불변) */
   #in-sec-b,#in-sec-c{display:none !important;}
+  #page-input .in-hero-sub{font-size:13px !important;}
 }
 .nav-tab{padding:0 22px;height:50px;font-size:17px;font-weight:600;color:var(--t3);cursor:pointer;border-bottom:3px solid transparent;transition:all .22s;user-select:none;font-family:var(--sans);letter-spacing:.01em;position:relative;display:flex;align-items:center;}
 .nav-tab:hover{color:var(--t2);background:rgba(69,147,252,.04);}
@@ -819,6 +820,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .pos-empty{text-align:center;padding:40px;color:var(--t3);font-size:15px;}
 .sv-lv-btn{font-size:15px!important;padding:0 5px!important;min-width:18px!important;height:20px!important;line-height:20px!important;border-radius:4px!important;cursor:pointer;font-weight:700!important;transition:all .15s;display:inline-flex;align-items:center;justify-content:center;}
 .footer{padding:14px 24px;border-top:1px solid var(--b1);font-size:15px;color:var(--t3);font-family:var(--mono);display:flex;justify-content:space-between;}
+.footer{display:none !important;}
 
 /* ══ 전체 탭 글꼴 크기 1단계 업스케일 ══ */
 [style*="font-size:15px"]  { font-size: 15px !important; }
@@ -5369,7 +5371,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:10px 16px;background:linear-gradient(90deg,rgba(69,147,252,.06),rgba(69,147,252,.01));border:1px solid rgba(69,147,252,.18);border-radius:10px;flex-wrap:wrap">
     <div style="flex:1;min-width:0">
       <div style="font-size:22px;font-weight:800;color:var(--t1);font-family:var(--font-n)">데이터 입력</div>
-      <div style="font-size:15px;color:var(--t2);font-weight:500;margin-top:3px">한 곳에서 입력하면 모든 탭에 자동 반영됩니다.</div>
+      <div class="in-hero-sub" style="font-size:15px;color:var(--t2);font-weight:500;margin-top:3px">한 곳에서 입력하면 모든 탭에 자동 반영됩니다.</div>
     </div>
   </div>
 
