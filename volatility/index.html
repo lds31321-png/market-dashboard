@@ -494,6 +494,22 @@ body{
 .page.active{display:flex;}
 @media(max-width:900px){.hdr,.nav,.alert-band{padding-left:16px;padding-right:16px;}.page{padding:16px;}}
 @media(max-width:600px){.hdr,.nav,.alert-band{padding-left:12px;padding-right:12px;}.page{padding:12px;}.row2,.row3,.row4,.row5{grid-template-columns:1fr;}.row21{grid-template-columns:1fr;}}
+/* [모바일 최적화 2026-06-29] 데이터 입력 탭 — PC 불변(@media만), #page-input 한정 */
+@media(max-width:640px){
+  /* ② 상단 탭 가로 스크롤 — 끝 탭("매매…") 잘림 방지 */
+  .nav-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-left:12px !important;padding-right:12px !important;}
+  .nav-scroll::-webkit-scrollbar{display:none;}
+  .nav-scroll .nav-tab{flex:0 0 auto;padding:0 13px !important;font-size:15px !important;}
+  .nav-scroll>a{flex:0 0 auto;margin-left:8px !important;}
+  /* ① 스텝 헤더 줄바꿈 — 글자 세로 쪼개짐 방지 */
+  #page-input .instep-hd{flex-wrap:wrap;gap:8px 10px;align-items:flex-start;}
+  #page-input .instep-hd>div:first-child{flex-wrap:wrap;gap:6px 10px;align-items:center;min-width:0;}
+  #page-input .instep-hd span[style*="font-size:24px"]{font-size:17px !important;}
+  /* ③ 예탁금/환율·증거금 입력칸 1열 + 원/달러 토글 줄바꿈 — 찌그러짐 방지 */
+  #page-input .in-grid2{grid-template-columns:1fr !important;}
+  #page-input .in-grid3{grid-template-columns:1fr !important;}
+  #page-input .in-cur-lbl{flex-wrap:wrap;gap:6px 10px;}
+}
 .nav-tab{padding:0 22px;height:50px;font-size:17px;font-weight:600;color:var(--t3);cursor:pointer;border-bottom:3px solid transparent;transition:all .22s;user-select:none;font-family:var(--sans);letter-spacing:.01em;position:relative;display:flex;align-items:center;}
 .nav-tab:hover{color:var(--t2);background:rgba(69,147,252,.04);}
 .nav-tab.active{color:var(--t1);border-bottom-color:#4593FC;font-weight:700;}
@@ -1698,7 +1714,7 @@ input[type=range] { background: transparent !important; border: none !important;
 <script>!function(){if(!window.matchMedia||!window.matchMedia("(max-width:640px)").matches){var e=document.getElementById("vol-fx");if(e){var i=e.getContext("2d"),t=Math.min(window.devicePixelRatio||1,2);m(),window.addEventListener("resize",m);var n=window.innerWidth/2,r=window.innerHeight/2,o=n,a=r,d=!1,w=[],l=[],h=0,f=0,s=0;window.addEventListener("mousemove",function(e){n=e.clientX,r=e.clientY,d=!0;var i=performance.now();s=i,i-h>60&&(h=i,l.push({x:n,y:r,t:i}),l.length>60&&l.shift())},{passive:!0}),window.addEventListener("mouseout",function(e){e.relatedTarget||(d=!1)});var c=10,v=34,g=function(){return window.innerWidth},u=function(){return window.innerHeight};requestAnimationFrame(function e(t){if(i.clearRect(0,0,g(),u()),o+=.12*(n-o),a+=.12*(r-a),d){var h=i.createRadialGradient(o,a,0,o,a,240);h.addColorStop(0,"rgba(83,160,255,0.18)"),h.addColorStop(.4,"rgba(69,147,252,0.07)"),h.addColorStop(1,"rgba(69,147,252,0)"),i.fillStyle=h,i.fillRect(o-240,a-240,480,480)}if(d&&t-s<1800&&t-f>2e3&&l.length){for(var m=l[0],x=0;x<l.length&&!(t-l[x].t<=400);x++)m=l[x];w.push({x:m.x,y:m.y,t:t}),f=t}for(var p=w.length-1;p>=0;p--){var y=w[p],M=(t-y.t)/2400;if(M>=1)w.splice(p,1);else for(var b=300*M,R=1-M,S=Math.floor((y.y-b-v)/c)*c;S<y.y+b+v;S+=c)if(!(S<0||S>u()))for(var C=Math.floor((y.x-b-v)/c)*c;C<y.x+b+v;C+=c)if(!(C<0||C>g())){var E=C-y.x,H=S-y.y,W=Math.sqrt(E*E+H*H),q=Math.abs(W-b);if(q<v){var F=R*(1-q/v)*.3;F>.015&&(i.fillStyle="rgba(83,160,255,"+F.toFixed(3)+")",i.fillRect(C,S,8,8))}}}requestAnimationFrame(e)})}}function m(){e.width=window.innerWidth*t,e.height=window.innerHeight*t,e.style.width=window.innerWidth+"px",e.style.height=window.innerHeight+"px",i.setTransform(t,0,0,t,0,0)}}();</script>
 <div class="hdr"><div style="display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1156px;margin:0 auto;padding:0 28px"><div class="hdr-l"><div><div class="hdr-title">종합 옵션 대시보드</div><div class="hdr-sub" data-47차-목적="부제-버전만">v3.0</div></div></div><div class="hdr-r"><div class="hdr-meta" id="hdrMeta">로딩 중...</div><div class="dot"></div></div></div></div>
 <div class="nav">
-  <div style="display:flex;width:100%;max-width:1156px;margin:0 auto;padding:0 28px">
+  <div class="nav-scroll" style="display:flex;width:100%;max-width:1156px;margin:0 auto;padding:0 28px">
   <div class="nav-tab active" onclick="document.getElementById('page-overview').setAttribute('style','display:none;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:none;');document.getElementById('page-input').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});">데이터 입력</div>
   <div class="nav-tab nav-tab-market" onclick="document.getElementById('page-overview').setAttribute('style','display:flex;flex-direction:column;gap:14px;padding:20px 28px;max-width:1156px;margin:0 auto;width:100%;');document.getElementById('page-alert').setAttribute('style','display:none;');document.getElementById('page-strike').setAttribute('style','display:none;');document.getElementById('page-position').setAttribute('style','display:none;');document.getElementById('page-backtest').setAttribute('style','display:none;');document.getElementById('page-guide').setAttribute('style','display:none;');document.getElementById('page-review').setAttribute('style','display:none;');document.getElementById('page-strategy').setAttribute('style','display:none;');document.getElementById('page-trade').setAttribute('style','display:none;');document.getElementById('page-input').setAttribute('style','display:none;');document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active');});this.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});">시장 현황</div>
 
@@ -5343,7 +5359,7 @@ input[type=range] { background: transparent !important; border: none !important;
   </div>
 
   <div class="card" id="in-sec-a" style="border:1px solid rgba(69,147,252,.35);background:rgba(69,147,252,.03)">
-    <div style="padding:18px 16px 14px;border-bottom:1px solid rgba(69,147,252,.2);display:flex;justify-content:space-between;align-items:center">
+    <div class="instep-hd" style="padding:18px 16px 14px;border-bottom:1px solid rgba(69,147,252,.2);display:flex;justify-content:space-between;align-items:center">
       <div style="display:flex;align-items:center;gap:12px">
         <div style="width:40px;height:40px;border-radius:8px;background:rgba(69,147,252,.12);border:1.5px solid rgba(69,147,252,.38);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#4593FC;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite 0s;">1</div>
         <span style="font-size:24px;font-weight:800;color:var(--t1)">자금 설정</span>
@@ -5354,9 +5370,9 @@ input[type=range] { background: transparent !important; border: none !important;
     </div>
     <div id="desc-in-a1" style="display:none;position:relative;margin:0;padding:56px 28px 24px;background:#1E2027;border-top:1px solid rgba(69,147,252,.25);border-bottom:1px solid rgba(69,147,252,.25);border-left:0px solid #4593FC;font-size:15px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-in-a1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(69,147,252,.45);background:rgba(69,147,252,.10);color:#4593FC;font-size:15px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(69,147,252,.20)'" onmouseout="this.style.background='rgba(69,147,252,.10)'">페이지 닫기</button><div style="font-weight:900;color:#4593FC;margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">1단계 — 시작</div><div style="margin-bottom:14px;padding:12px 16px;background:rgba(69,147,252,.06);border:1px solid rgba(69,147,252,.30);border-radius:8px;font-size:15px;color:var(--t1);line-height:1.7"><span style="font-weight:800;color:#4593FC">[한 줄 요약]</span> 본인 <b style="color:#4593FC">계좌 정보</b>를 한 곳에 입력하여 → 종합 옵션 대시보드의 <b style="color:#4593FC">다섯 탭에 모든 정보가 자동 반영</b>되도록 시작점을 설정합니다.</div><div style="margin-bottom:18px;font-size:15px;color:var(--t1);line-height:1.7"><b style="color:#4593FC">본인 계좌 정보</b>를 한 곳에 입력하시면 → <b style="color:#4593FC">시장 현황·매매 전략·위험·자금·매매 현황·매매 복기</b> 다섯 탭이 모두 자동 반영됩니다.<br>종합 옵션 대시보드를 이용하는 <b style="color:#4593FC">첫 시작점</b>이며, 모든 분석의 기준점이 되는 시작 영역입니다.</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">입력 항목</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:15px;line-height:1.85">· <b style="color:#4593FC">예탁금</b> — 현재 HTS 계좌에 예치되어 있는 금액 입력<br>· <b style="color:#4593FC">환율</b> — 금일 환율 입력 (원화 모드 / 달러 모드 선택 가능)<br>· <b style="color:#4593FC">위탁·유지증거금</b> — HTS 1316창에서 확인 후 입력</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="padding-left:14px;color:var(--t2);font-size:15px;line-height:1.85">· 한 번 입력으로 <b style="color:#4593FC">시장 현황·매매 전략·위험·자금 관리·매매 현황·매매 복기</b> 여섯 탭의 모든 정보가 자동 계산됩니다<br>· 시장 변동이나 자본 변경 시 해당 영역의 값만 수정하면 <b style="color:#4593FC">전체 탭이 재계산되어 출력</b>됩니다</div></div>
     <div class="card-b" style="padding:14px 16px">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div class="in-grid2" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
         <div class="pos-field">
-          <div class="pos-lbl" style="color:var(--t1);font-weight:700;display:flex;align-items:center;gap:10px;justify-content:space-between">
+          <div class="pos-lbl in-cur-lbl" style="color:var(--t1);font-weight:700;display:flex;align-items:center;gap:10px;justify-content:space-between">
             <span>예탁금 <span style="font-size:15px;font-weight:500;color:var(--t3)">(오늘 실제 계좌 잔고)</span></span>
             <!-- [v12 2026-05-17] 통화 선택 라디오 — 원화 / 달러 -->
             <span style="display:inline-flex;gap:8px;font-size:15px;font-weight:600">
@@ -5381,7 +5397,7 @@ input[type=range] { background: transparent !important; border: none !important;
         </div>
       </div>
       <div style="height:1px;background:var(--b1);margin-bottom:10px"></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+      <div class="in-grid3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
         <div class="pos-field">
           <div class="pos-lbl">관리목표(%)</div>
           <div style="position:relative">
@@ -5411,7 +5427,7 @@ input[type=range] { background: transparent !important; border: none !important;
   </div>
 
   <div class="card" id="in-sec-b" style="border:1px solid rgba(69,147,252,.35);background:rgba(69,147,252,.03)">
-    <div style="padding:18px 16px 14px;border-bottom:1px solid rgba(69,147,252,.2);display:flex;justify-content:space-between;align-items:center">
+    <div class="instep-hd" style="padding:18px 16px 14px;border-bottom:1px solid rgba(69,147,252,.2);display:flex;justify-content:space-between;align-items:center">
       <div style="display:flex;align-items:center;gap:12px">
         <div style="width:40px;height:40px;border-radius:8px;background:rgba(69,147,252,.12);border:1.5px solid rgba(69,147,252,.38);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#4593FC;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite 0s;">2</div>
         <span style="font-size:24px;font-weight:800;color:var(--t1)">당일 보유 포지션 — HTS 1316창</span>
@@ -5476,7 +5492,7 @@ input[type=range] { background: transparent !important; border: none !important;
   </div>
 
   <div class="card" id="in-sec-c" style="border:1px solid rgba(69,147,252,.35);background:rgba(69,147,252,.03)">
-    <div style="padding:18px 16px 14px;border-bottom:1px solid rgba(69,147,252,.2);display:flex;justify-content:space-between;align-items:center">
+    <div class="instep-hd" style="padding:18px 16px 14px;border-bottom:1px solid rgba(69,147,252,.2);display:flex;justify-content:space-between;align-items:center">
       <div style="display:flex;align-items:center;gap:12px">
         <div style="width:40px;height:40px;border-radius:8px;background:rgba(69,147,252,.12);border:1.5px solid rgba(69,147,252,.38);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:#4593FC;flex-shrink:0;animation:pulse-t2 2.4s ease-in-out infinite 0s;">3</div>
         <span style="font-size:24px;font-weight:800;color:var(--t1)">기간별 거래 데이터 — HTS 1310창</span>
@@ -6129,7 +6145,7 @@ input[type=range] { background: transparent !important; border: none !important;
 #protect-footer .sep{color:rgba(255,255,255,.35);margin:0 6px}
 body{padding-bottom:0}
 @media print{#protect-footer{display:none}body{padding-bottom:0}}
-@media (max-width:700px){#protect-footer{font-size:15px;padding:5px 8px;line-height:1.5}body{padding-bottom:84px}#protect-footer .sep{display:none}#protect-footer .pf-row{display:block;margin:2px 0}}
+@media (max-width:700px){#protect-footer{font-size:12px;padding:8px 10px;line-height:1.6}body{padding-bottom:0}#protect-footer .sep{display:none}#protect-footer .pf-row{display:block;margin:3px 0}#protect-footer .pf-link{margin-left:0;display:inline-block}}
 
 /* 51차: 종합판단 점검표 가독성 — 테두리 제거·중앙정렬·영역 배경 그룹 */
 .uvp-face-q .uvp-ftb td{border:none!important;text-align:center!important;padding:6px 8px!important}
