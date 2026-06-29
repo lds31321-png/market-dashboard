@@ -6058,6 +6058,10 @@ input[type=range] { background: transparent !important; border: none !important;
   bottom: 130px !important;
   right: 100px !important;
 }
+/* [2026-06-30 모바일] 챗봇 버튼 우측 하단 코너 — 데스크톱 불변 */
+@media(max-width:640px){
+  #chatbase-bubble-button{bottom:16px !important;right:14px !important;left:auto !important;width:48px !important;height:48px !important;}
+}
 /* 챗베이스 인사 메시지 말풍선 숨김 */
 #chatbase-message-bubbles,
 #chatbase-message-bubbles-window,
