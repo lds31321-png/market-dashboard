@@ -6,9 +6,18 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
+<meta name="jikt-build" content="20260630-020050">
 <script>
-/* [자동 최신화] 새 배포(ver.txt) 감지 시 캐시 우회 1회 강제 새로고침 — 어느 브라우저서든 배포 즉시 반영 */
-(function(){try{fetch('ver.txt?t='+Date.now()).then(function(r){return r.ok?r.text():null;}).then(function(v){if(!v)return;v=v.trim();var cur=(location.search.match(/[?&]v=([^&]+)/)||[])[1];if(cur!==v){location.replace(location.pathname+'?v='+encodeURIComponent(v));}}).catch(function(){});}catch(e){}})();
+/* [자동 최신화 v2] 배포 시 주입된 빌드버전과 서버 ver.txt 비교 → 다르면 캐시 우회 1회 새로고침(무한루프 방지) */
+(function(){try{
+  var BUILD='20260630-020050';
+  if(BUILD.charAt(0)==='_')return; /* 미배포(로컬)면 스킵 */
+  fetch('ver.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null;}).then(function(v){
+    if(!v)return; v=v.trim(); if(!v||v===BUILD)return;
+    try{ if(sessionStorage.getItem('jr_'+v))return; sessionStorage.setItem('jr_'+v,'1'); }catch(e){}
+    location.replace(location.pathname+'?v='+encodeURIComponent(v));
+  }).catch(function(){});
+}catch(e){}})();
 </script>
 <title>직트 무료 포지션 공유</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
