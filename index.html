@@ -42,8 +42,9 @@ html.theme-blue{
 --glow-purple:rgba(69,147,252,0.10);--glow-cyan:rgba(69,147,252,0.08);
 }
 /* [테마 토글] 하드코딩 웜 잔재 → 파랑 덮어쓰기 (추가만, 기존 규칙 불변) */
-html.theme-blue .sb-bar, html.theme-blue .factor-bar{background:#4593FC !important;}
-html.theme-blue .sb-val, html.theme-blue .mi-val, html.theme-blue .cal-popup-val{color:#4593FC !important;border-color:rgba(69,147,252,.28) !important;}
+/* 바: JS 파랑 농담 그라데이션으로 처리 */
+html.theme-blue .sb-val, html.theme-blue .mi-val{border-color:rgba(69,147,252,.28) !important;}
+html.theme-blue .cal-popup-val{color:#4593FC !important;}
 html.theme-blue .tb-btn{color:#4593FC !important;border-color:#4593FC !important;background:transparent !important;}
 html.theme-blue .cal-leg-dot, html.theme-blue .mi-src-dot{background:#4593FC !important;}
 html.theme-blue .scenario-card, html.theme-blue .alert-banner, html.theme-blue .price-hero, html.theme-blue .headline-news, html.theme-blue .headline-top1, html.theme-blue .cal-guide-wrap, html.theme-blue .footer{border-color:rgba(69,147,252,.22) !important;}
@@ -2957,8 +2958,22 @@ function closeCalPopup(){
 </script>
 
 <script>
-function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggle('theme-blue');try{localStorage.setItem('jikt_global_theme',blue?'blue':'warm');}catch(e){}var b=document.getElementById('themeToggle');if(b)b.textContent=blue?'← 이전 색상':'토스 색상';}
-(function(){var t='warm';try{t=localStorage.getItem('jikt_global_theme')||'warm';}catch(e){}if(t==='blue')document.documentElement.classList.add('theme-blue');document.addEventListener('DOMContentLoaded',function(){var b=document.getElementById('themeToggle');if(b)b.textContent=(t==='blue')?'← 이전 색상':'토스 색상';});})();
+function _jiktBarRecolor(blue){
+  document.querySelectorAll('.sb-bar,.factor-bar,.sb-val,.mi-val').forEach(function(el){
+    var isVal=el.classList.contains('sb-val')||el.classList.contains('mi-val');
+    if(el.dataset.jw===undefined){el.dataset.jw=isVal?(el.style.color||''):(el.style.backgroundColor||'');}
+    var orig=el.dataset.jw; if(!orig) return;
+    if(blue){
+      var m=orig.match(/[\d.]+/g); if(!m||m.length<3) return;
+      var bl='rgb('+m[2]+','+m[1]+','+m[0]+')'; /* 웜→파랑: R/B 스왑(명도 유지) */
+      if(isVal){el.style.setProperty('color',bl,'important');}else{el.style.setProperty('background',bl,'important');}
+    }else{
+      if(isVal){el.style.removeProperty('color');el.style.color=orig;}else{el.style.removeProperty('background');el.style.backgroundColor=orig;}
+    }
+  });
+}
+function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggle('theme-blue');try{localStorage.setItem('jikt_global_theme',blue?'blue':'warm');}catch(e){}var b=document.getElementById('themeToggle');if(b)b.textContent=blue?'← 이전 색상':'토스 색상';_jiktBarRecolor(blue);}
+(function(){var t='warm';try{t=localStorage.getItem('jikt_global_theme')||'warm';}catch(e){}var blue=(t==='blue');if(blue)document.documentElement.classList.add('theme-blue');document.addEventListener('DOMContentLoaded',function(){var b=document.getElementById('themeToggle');if(b)b.textContent=blue?'← 이전 색상':'토스 색상';_jiktBarRecolor(blue);});})();
 </script>
 </body>
 </html>
