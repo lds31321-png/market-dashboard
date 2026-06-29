@@ -1445,10 +1445,10 @@ function buildPositionChart(p, canvasId){
           callbacks:{title:t=>`${t[0].label}`,label:c=>`  종가: $${c.parsed.y.toLocaleString()}`}
         }
       },
-      layout:(window.matchMedia('(max-width:640px)').matches?{padding:{right:28,left:4,top:10,bottom:24}}:{padding:{right:68,left:4,top:10,bottom:44}}),
+      layout:(window.matchMedia('(max-width:640px)').matches?{padding:{right:28,left:2,top:10,bottom:24}}:{padding:{right:68,left:4,top:10,bottom:44}}),
       scales:{
         x:{ticks:{color:'#555',font:{size:_mbS?8:10,family:'IBM Plex Mono'},maxTicksLimit:_mbS?6:9,maxRotation:_mbS?0:50,autoSkip:true},grid:{color:'rgba(0,0,0,.06)',drawBorder:false}},
-        y:{ticks:{color:'#555',font:{size:_mbS?8:10,family:'IBM Plex Mono'},maxTicksLimit:_mbS?6:undefined,callback:v=>'$'+v.toLocaleString()},
+        y:{ticks:{color:'#555',font:{size:_mbS?8:10,family:'IBM Plex Mono'},maxTicksLimit:_mbS?6:undefined,padding:_mbS?2:3,callback:v=>_mbS?('$'+(Math.abs(v)>=10?Math.round(v):Math.round(v*10)/10).toLocaleString()):('$'+v.toLocaleString())},
           grid:{color:'rgba(0,0,0,.06)',drawBorder:false},min:yMin,max:yMax}
       }
     },
