@@ -2049,7 +2049,7 @@ function mkCandle(id,labels,closes,color,unit){
 function mkScenario(id,lbl,base,bull,bear,unit){
   if(CH[id]){CH[id].destroy()}
   var _dk=document.documentElement.classList.contains('theme-blue');
-  GC=_dk?'rgba(255,255,255,0.07)':'rgba(0,0,0,0.056)'; TC=_dk?'#8B95A1':'#7a736e';
+  var GC=_dk?'rgba(255,255,255,0.07)':'rgba(0,0,0,0.056)', TC=_dk?'#8B95A1':'#7a736e';
   const ctx=document.getElementById(id);if(!ctx)return;
   CH[id]=new Chart(ctx,{type:'line',data:{labels:lbl,datasets:[
     {label:'기본',data:base,borderColor:_dk?'#B0B8C1':'#c8803a',borderWidth:2,tension:0.3,pointRadius:2,pointBackgroundColor:_dk?'#B0B8C1':'#c8803a',fill:false},
