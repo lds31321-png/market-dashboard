@@ -1932,7 +1932,7 @@ const M=['3월','4월','5월','6월','7월','8월','9월','10월','11월','12월
 function saveKeys(){const e=document.getElementById('eia-input').value.trim(),f=document.getElementById('fred-input').value.trim();if(e)localStorage.setItem(KEYS.EIA,e);if(f)localStorage.setItem(KEYS.FRED,f);document.getElementById('setup-overlay').style.display='none';loadAllData()}
 function skipSetup(){document.getElementById('setup-overlay').style.display='none';document.getElementById('notice-fallback').classList.add('show');applyFallback();buildAllCharts('oil')}
 function showSetup(){document.getElementById('setup-overlay').style.display='flex';document.getElementById('eia-input').value=getKey('EIA');document.getElementById('fred-input').value=getKey('FRED')}
-function setStatus(c,t){document.getElementById('status-dot').className='ldot '+c;document.getElementById('status-text').textContent=t}
+function setStatus(c,t){var _d=document.getElementById('status-dot');if(_d)_d.className='ldot '+c;var _t=document.getElementById('status-text');if(_t)_t.textContent=t}
 
 // ═══ TABS ═══
 let curAsset='oil';
