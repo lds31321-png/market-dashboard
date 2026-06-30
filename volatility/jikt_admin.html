@@ -74,7 +74,7 @@
     </div>
 
     <div class="panel active" id="panel-users">
-      <div id="visits-box" style="margin-bottom:18px;padding:14px 16px;background:rgba(69,147,252,.05);border:1px solid rgba(69,147,252,.15);border-radius:10px;font-size:13px;color:#cfd6df">방문 통계 로딩 중...</div>
+      <div id="visits-box" style="margin-bottom:18px;padding:14px 16px;background:rgba(69,147,252,.05);border:1px solid rgba(69,147,252,.15);border-radius:10px;font-size:13px;color:#2a2f3a">방문 통계 로딩 중...</div>
       <h2>회원 목록 <span class="meta" id="users-meta"></span></h2>
       <div style="margin:2px 0 14px;font-size:12.5px;color:#8B95A1;line-height:2">
         <span class="badge badge-paid">유료</span> 결제(30일 부여)된 회원 &nbsp;·&nbsp;
@@ -192,8 +192,8 @@ window.JIKT_API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';   /* TODO 
       if (!res || !res.ok || !res.stats) { box.textContent = '방문 통계 불러오기 실패'; return; }
       var s = res.stats, today = s[0] || {unique:0,total:0};
       var rows = s.map(function(d){ return '<tr><td style="padding:4px 10px">'+d.date+'</td><td style="padding:4px 10px;text-align:right;font-weight:700;color:#4593FC">'+d.unique+'</td><td style="padding:4px 10px;text-align:right">'+d.total+'</td></tr>'; }).join('');
-      box.innerHTML = '<div style="font-weight:800;color:#fff;margin-bottom:8px">방문 통계 — 오늘 순방문 <span style="color:#4593FC">'+today.unique+'명</span> · 총 <span style="color:#4593FC">'+today.total+'회</span></div>'
-        + '<table style="width:100%;border-collapse:collapse;font-size:12.5px"><tr style="color:#8B95A1"><th style="text-align:left;padding:4px 10px">날짜</th><th style="text-align:right;padding:4px 10px">순방문자</th><th style="text-align:right;padding:4px 10px">총 방문</th></tr>'+rows+'</table>';
+      box.innerHTML = '<div style="font-weight:800;color:#1a2330;margin-bottom:8px">방문 통계 — 오늘 순방문 <span style="color:#4593FC">'+today.unique+'명</span> · 총 <span style="color:#4593FC">'+today.total+'회</span></div>'
+        + '<table style="width:100%;border-collapse:collapse;font-size:12.5px"><tr style="color:#6b7280"><th style="text-align:left;padding:4px 10px">날짜</th><th style="text-align:right;padding:4px 10px">순방문자</th><th style="text-align:right;padding:4px 10px">총 방문</th></tr>'+rows+'</table>';
     }).catch(function(){ box.textContent = '방문 통계 오류'; });
   }
 
