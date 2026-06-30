@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260630-173823">
-<script>!function(){try{var t="20260630-173823";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
+<meta name="jikt-build" content="20260630-175250">
+<script>!function(){try{var t="20260630-175250";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
 <script>!function(){try{var t=location.hash||"";if(t.indexOf("token=")>=0){var e=new URLSearchParams(t.replace(/^#/,"")),a=e.get("token"),o=e.get("uid");if(a&&(localStorage.setItem("jikt_token",a),o&&localStorage.setItem("jikt_uid",o),location.hostname.indexOf("github.io")>=0))return void location.replace("../hub.html");try{var i=new URL(location.href);i.hash="",i.searchParams.delete("login"),history.replaceState(null,"",i.pathname+i.search)}catch(t){try{location.hash=""}catch(t){}}}var n=location.hostname.indexOf("github.io")>=0,c=localStorage.getItem("jikt_token");n&&!c&&location.replace("login.html")}catch(t){}}();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -6249,12 +6249,14 @@ body{padding-bottom:0}
 .jikt-lock-ico{width:48px;height:48px;border-radius:50%;background:rgba(69,147,252,.14);border:1.5px solid rgba(69,147,252,.42);display:flex;align-items:center;justify-content:center;color:#4593FC;flex-shrink:0;}
 .jikt-lock-ico svg{width:22px;height:22px;}
 .jikt-lock-h{font-size:18px;font-weight:800;color:var(--t1,#fff);}
-.jikt-lock-d{font-size:14px;line-height:1.75;color:var(--t2,#B0B8C1);max-width:460px;word-break:keep-all;}
+.jikt-lock-d{font-size:14px;line-height:1.8;color:var(--t2,#B0B8C1);max-width:470px;word-break:keep-all;text-wrap:balance;}
+.jikt-lock-d br{display:block;content:"";margin-top:4px;}
 .jikt-lock-cta{display:inline-flex;align-items:center;gap:6px;height:48px;padding:0 26px;border-radius:11px;background:#4593FC;color:#fff;font-size:15px;font-weight:800;text-decoration:none;box-shadow:0 6px 18px rgba(69,147,252,.28);transition:all .15s;}
 .jikt-lock-cta:hover{background:#3182F6;transform:translateY(-1px);}
 .jikt-lock-note{font-size:12.5px;color:var(--t3,#8B95A1);}
-.jikt-lock-help{margin-top:7px;padding-top:13px;border-top:1px solid rgba(255,255,255,.10);font-size:12px;color:var(--t3,#8B95A1);line-height:1.85;max-width:460px;word-break:keep-all;}
-.jikt-lock-help a{color:#4593FC;font-weight:700;text-decoration:none;}
+.jikt-lock-help{margin-top:9px;padding-top:14px;border-top:1px solid rgba(255,255,255,.10);font-size:13.5px;color:var(--t3,#8B95A1);line-height:1.9;max-width:460px;word-break:keep-all;}
+.jikt-lock-help a{display:inline-block;margin-top:5px;padding:6px 16px;border:1px solid rgba(69,147,252,.45);border-radius:8px;background:rgba(69,147,252,.10);color:#4593FC;font-weight:800;font-size:15px;text-decoration:none;}
+.jikt-lock-help a:hover{background:rgba(69,147,252,.20);}
 .jikt-lock-help a:hover{text-decoration:underline;}
 @media(max-width:640px){.jikt-lock{padding:44px 16px 28px;gap:11px;}.jikt-lock-h{font-size:16px;}.jikt-lock-d{font-size:13px;}.jikt-lock-cta{height:46px;font-size:14px;padding:0 20px;}}
 </style>
