@@ -220,42 +220,44 @@
     will-change:transform;filter:blur(10px);
     background:radial-gradient(circle,rgba(49,130,246,.18),rgba(49,130,246,.06) 35%,transparent 65%);}
   @media (max-width:640px){ #hub-glow{display:none;} }
-  /* [2026-06-30] 옵션투자준비 체크리스트 안내 팝업 */
-  .jintro-wrap{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(10,11,15,.72);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);}
+  /* [2026-06-30] 옵션투자준비 체크리스트 안내 팝업 (토스풍) */
+  .jintro-wrap{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(8,9,12,.64);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
   .jintro-wrap.on{display:flex;}
-  .jintro-box{position:relative;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;background:#1E2027;border:1.5px solid rgba(49,130,246,.30);border-radius:18px;padding:34px 30px 26px;box-shadow:0 24px 70px rgba(0,0,0,.5);}
-  .jintro-x{position:absolute;top:14px;right:15px;width:34px;height:34px;border:none;background:rgba(255,255,255,.06);color:#8B95A1;font-size:22px;line-height:1;border-radius:9px;cursor:pointer;transition:all .15s;}
+  .jintro-box{position:relative;width:100%;max-width:420px;max-height:90vh;overflow-y:auto;background:#1E2027;border:1px solid rgba(255,255,255,.06);border-radius:22px;padding:40px 30px 22px;box-shadow:0 30px 80px rgba(0,0,0,.55);}
+  .jintro-x{position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:rgba(255,255,255,.05);color:#8B95A1;font-size:19px;line-height:1;border-radius:50%;cursor:pointer;transition:all .15s;}
   .jintro-x:hover{background:rgba(255,255,255,.12);color:#fff;}
-  .jintro-tag{font-size:13px;font-weight:800;letter-spacing:.04em;color:#3182F6;margin-bottom:8px;}
-  .jintro-h{font-size:23px;font-weight:800;color:#fff;line-height:1.25;margin-bottom:14px;padding-right:30px;}
-  .jintro-quote{font-size:14.5px;line-height:1.75;color:#B0B8C1;word-break:keep-all;padding:14px 16px;background:rgba(49,130,246,.06);border:1px solid rgba(49,130,246,.22);border-radius:10px;margin-bottom:18px;}
-  .jintro-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
-  .jintro-step{display:flex;gap:11px;align-items:flex-start;}
-  .jintro-step .sn{flex-shrink:0;width:24px;height:24px;border-radius:7px;background:rgba(49,130,246,.14);border:1px solid rgba(49,130,246,.40);color:#3182F6;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;}
-  .jintro-step .sx{font-size:14px;color:#cfd6de;line-height:1.55;word-break:keep-all;}
-  .jintro-step .sx b{color:#fff;font-weight:800;}
-  .jintro-step .sx .soon{color:#8B95A1;font-weight:600;}
-  .jintro-benefit{font-size:14px;line-height:1.8;color:#B0B8C1;word-break:keep-all;padding-top:15px;border-top:1px solid rgba(255,255,255,.08);margin-bottom:20px;}
-  .jintro-benefit .pt{color:#3182F6;font-weight:800;}
-  .jintro-benefit .cp{color:#FF8080;font-weight:800;}
-  .jintro-btns{display:flex;flex-direction:column;gap:10px;}
-  .jintro-cta{display:flex;align-items:center;justify-content:center;height:50px;border-radius:12px;background:#3182F6;color:#fff;font-size:15.5px;font-weight:800;text-decoration:none;box-shadow:0 6px 18px rgba(49,130,246,.30);transition:all .15s;}
-  .jintro-cta:hover{background:#1f6fe5;transform:translateY(-1px);}
-  .jintro-kakao{display:flex;align-items:center;justify-content:center;height:46px;border-radius:12px;background:rgba(49,130,246,.10);border:1px solid rgba(49,130,246,.40);color:#3182F6;font-size:14.5px;font-weight:800;text-decoration:none;transition:all .15s;}
-  .jintro-kakao:hover{background:rgba(49,130,246,.18);}
-  .jintro-closetxt{display:block;margin:14px auto 0;background:none;border:none;color:#8B95A1;font-size:13.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
-  .jintro-closetxt:hover{color:#cfd6de;}
-  .jintro-keybene{font-size:14.5px;color:#cfd6de;text-align:center;padding:12px;background:rgba(255,128,128,.07);border:1px solid rgba(255,128,128,.25);border-radius:10px;margin-bottom:14px;word-break:keep-all;}
-  .jintro-keybene .cp{color:#FF8080;font-weight:800;}
-  .jintro-keybene .kbhook{font-size:13px;font-weight:700;color:#3182F6;margin-bottom:6px;}
-  .jintro-keybene .kbmain{font-size:16px;font-weight:800;color:#fff;margin-bottom:4px;line-height:1.4;}
-  .jintro-keybene .kbsub{color:#8B95A1;font-size:13px;font-weight:600;}
-  .jintro-more{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;height:40px;margin-bottom:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10);border-radius:10px;color:#B0B8C1;font-size:13.5px;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;}
-  .jintro-more:hover{background:rgba(255,255,255,.08);color:#fff;}
-  .jintro-more .chev{font-size:12px;transition:transform .2s;}
+  .jintro-tag{font-size:13px;font-weight:700;color:#3182F6;margin-bottom:12px;}
+  .jintro-h{font-size:27px;font-weight:800;color:#fff;line-height:1.32;letter-spacing:-.02em;margin-bottom:14px;}
+  .jintro-sub{font-size:15px;line-height:1.65;color:#9aa3ad;word-break:keep-all;margin-bottom:14px;}
+  .jintro-coupon{display:inline-flex;align-items:center;font-size:12.5px;font-weight:600;color:#cfd6de;background:rgba(255,255,255,.045);border-radius:999px;padding:7px 14px;margin-bottom:24px;word-break:keep-all;line-height:1.4;}
+  .jintro-coupon b{color:#fff;font-weight:800;}
+  .jintro-more{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 2px;background:none;border:none;border-top:1px solid rgba(255,255,255,.07);color:#cfd6de;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
+  .jintro-more .chev{font-size:11px;color:#8B95A1;transition:transform .2s;}
   .jintro-more.open .chev{transform:rotate(180deg);}
-  .jintro-detail{margin-bottom:14px;}
-  @media(max-width:640px){.jintro-box{padding:26px 18px 20px;max-height:90vh;}.jintro-h{font-size:19px;}.jintro-quote{font-size:13px;padding:12px 14px;}.jintro-cta{height:48px;font-size:15px;}}
+  .jintro-detail{padding:2px 0 16px;}
+  .jintro-dlead{font-size:14px;line-height:1.7;color:#9aa3ad;word-break:keep-all;margin-bottom:16px;}
+  .jintro-flow{display:flex;flex-direction:column;}
+  .jintro-fstep{display:flex;gap:13px;}
+  .jintro-fstep .fn{flex-shrink:0;display:flex;flex-direction:column;align-items:center;}
+  .jintro-fstep .fc{width:25px;height:25px;border-radius:50%;background:rgba(49,130,246,.15);border:1px solid rgba(49,130,246,.45);color:#3182F6;font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;}
+  .jintro-fstep .fl{flex:1;width:2px;background:rgba(255,255,255,.08);margin:2px 0;}
+  .jintro-fstep:last-child .fl{display:none;}
+  .jintro-fstep .ft{padding-bottom:16px;font-size:13.5px;line-height:1.62;color:#B0B8C1;word-break:keep-all;}
+  .jintro-fstep .ft b{color:#fff;font-weight:700;}
+  .jintro-fstep .ft .cp{color:#fff;font-weight:800;}
+  .jintro-btns{display:flex;flex-direction:column;gap:9px;margin-top:4px;}
+  .jintro-cta{display:flex;align-items:center;justify-content:center;height:54px;border-radius:14px;background:#3182F6;color:#fff;font-size:16px;font-weight:700;text-decoration:none;transition:background .15s;}
+  .jintro-cta:hover{background:#1f6fe5;}
+  .jintro-kakao{display:flex;align-items:center;justify-content:center;height:50px;border-radius:14px;background:rgba(255,255,255,.05);color:#cfd6de;font-size:14.5px;font-weight:700;text-decoration:none;transition:all .15s;}
+  .jintro-kakao:hover{background:rgba(255,255,255,.09);color:#fff;}
+  .jintro-foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px;}
+  .jintro-hide{display:flex;align-items:center;gap:7px;font-size:13px;color:#8B95A1;cursor:pointer;user-select:none;}
+  .jintro-hide input{appearance:none;-webkit-appearance:none;width:17px;height:17px;border:1.5px solid rgba(255,255,255,.25);border-radius:5px;cursor:pointer;position:relative;flex-shrink:0;transition:all .15s;margin:0;}
+  .jintro-hide input:checked{background:#3182F6;border-color:#3182F6;}
+  .jintro-hide input:checked::after{content:"";position:absolute;left:5px;top:2px;width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);}
+  .jintro-closetxt{background:none;border:none;color:#8B95A1;font-size:13px;cursor:pointer;font-family:inherit;}
+  .jintro-closetxt:hover{color:#cfd6de;}
+  @media(max-width:640px){.jintro-box{padding:34px 22px 20px;border-radius:20px;}.jintro-h{font-size:23px;}.jintro-sub{font-size:14px;}.jintro-cta{height:52px;}}
 </style>
 </head>
 <body>
@@ -373,43 +375,51 @@ function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.n
 <div id="jikt-intro-modal" class="jintro-wrap">
   <div class="jintro-box">
     <button class="jintro-x" data-jclose aria-label="닫기">×</button>
-    <div class="jintro-tag">옵션 교육 안내</div>
-    <div class="jintro-h">옵션투자준비 체크리스트</div>
-    <div class="jintro-quote">옵션 매도에 대한 지식과 운용 방향성·사고방식을 올바르게 이해하고 있는지 점검하고, 이를 바탕으로 필요한 교육과정을 추천해 드리는 과정입니다.</div>
-    <div class="jintro-keybene">
-      <div class="kbhook">작성은 3분이면 충분합니다</div>
-      <div class="kbmain">제출만으로 <span class="cp">트레이딩키 5만원 할인쿠폰</span></div>
-      <div class="kbsub">첫 1회 · 1개월 내 사용</div>
-    </div>
-    <button class="jintro-more" data-jmore aria-expanded="false"><span class="mtxt">자세히 보기</span> <span class="chev">▾</span></button>
+    <div class="jintro-tag">옵션 투자 자가진단</div>
+    <div class="jintro-h">나는 투자를 시작하기에<br>적합한 사람일까요?</div>
+    <div class="jintro-sub">단 3분이면 자가진단이 끝납니다.<br>자기객관화를 통해 나의 투자 준비 수준을 점검해 보세요.</div>
+    <div class="jintro-coupon">진단 결과 <b>[2단계: 추천]</b>&nbsp;시, 트레이딩키 5만원 할인쿠폰</div>
+
+    <button class="jintro-more" data-jmore aria-expanded="false"><span class="mtxt">체크리스트가 무엇인가요?</span> <span class="chev">▾</span></button>
     <div class="jintro-detail" data-jdetail hidden>
-      <div class="jintro-steps">
-        <div class="jintro-step"><span class="sn">1</span><span class="sx"><b>온라인 강의</b> — 옵션·투자 기초부터 심화까지, 실전 준비 과정</span></div>
-        <div class="jintro-step"><span class="sn">2</span><span class="sx"><b>트레이딩키</b> (옵션투자 정보제공) — 실전 투자 정보 제공 · 현재 운영 중</span></div>
-        <div class="jintro-step"><span class="sn">3</span><span class="sx"><b>원칙설계 워크샵</b> <span class="soon">· 2026년 4분기 예정</span></span></div>
+      <div class="jintro-dlead">옵션투자준비 체크리스트는 옵션 매도에 대한 이해와 실전 운용 준비 정도를 스스로 점검하는 자가진단입니다. 실력을 평가하거나 정답을 가리는 시험이 아닙니다.</div>
+      <div class="jintro-flow">
+        <div class="jintro-fstep"><div class="fn"><div class="fc">1</div><div class="fl"></div></div><div class="ft"><b>작성</b> — 아래 '체크리스트 작성하기'를 눌러 구글폼에 응답합니다. (약 3분)</div></div>
+        <div class="jintro-fstep"><div class="fn"><div class="fc">2</div><div class="fl"></div></div><div class="ft"><b>제출</b> — 응답을 제출하시면 입력하신 이메일로 진단 결과가 회신됩니다.</div></div>
+        <div class="jintro-fstep"><div class="fn"><div class="fc">3</div><div class="fl"></div></div><div class="ft"><b>결과 확인</b> — 진단 결과에 따라 나에게 맞는 교육 단계가 추천됩니다.</div></div>
+        <div class="jintro-fstep"><div class="fn"><div class="fc">4</div><div class="fl"></div></div><div class="ft"><b>혜택</b> — 결과가 <span class="cp">[2단계: 추천]</span>인 경우 인증해 주시면, 첫 1회에 한해 1개월 내 사용 가능한 <span class="cp">트레이딩키 5만원 할인쿠폰</span>을 드립니다.</div></div>
+        <div class="jintro-fstep"><div class="fn"><div class="fc">5</div><div class="fl"></div></div><div class="ft"><b>문의</b> — 추가 문의는 카카오톡 1:1 채팅으로 안내해 드립니다.</div></div>
       </div>
-      <div class="jintro-benefit">트레이딩키 참여는 옵션투자준비 체크리스트 작성·제출이 필요합니다.<br>이메일 회신의 <span class="pt">[2단계: 추천]</span>을 인증하시면, 첫 1회에 한해 1개월 내 사용 가능한 <span class="cp">트레이딩키 5만원 할인쿠폰</span>을 드립니다.</div>
     </div>
+
     <div class="jintro-btns">
       <a class="jintro-cta" href="https://forms.gle/uFwfnCBEis8ThqGV6" target="_blank" rel="noopener noreferrer">체크리스트 작성하기 →</a>
-      <a class="jintro-kakao" href="https://open.kakao.com/o/sQK7Yx1g" target="_blank" rel="noopener noreferrer">카카오톡 1:1 문의 →</a>
+      <a class="jintro-kakao" href="https://open.kakao.com/o/sQK7Yx1g" target="_blank" rel="noopener noreferrer">카카오톡 1:1 문의</a>
     </div>
-    <button class="jintro-closetxt" data-jclose>닫고 둘러보기</button>
+
+    <div class="jintro-foot">
+      <label class="jintro-hide"><input type="checkbox" data-jhide12>12시간 동안 보지 않기</label>
+      <button class="jintro-closetxt" data-jclose>닫기</button>
+    </div>
   </div>
 </div>
 <script>
 /* [2026-06-30] 안내 팝업 — 진입 시 항상 표시 */
 (function(){
   var w=document.getElementById('jikt-intro-modal'); if(!w) return;
+  var KEY='jikt_intro_hide_until';
+  try{ var until=parseInt(localStorage.getItem(KEY)||'0',10); if(until && Date.now()<until) return; }catch(e){}
   function close(){ w.classList.remove('on'); document.body.style.overflow=''; }
   w.addEventListener('click',function(e){ if(e.target===w) close(); });
   w.querySelectorAll('[data-jclose]').forEach(function(b){ b.addEventListener('click',close); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
-  var mb=w.querySelector('[data-jmore]'), dt=w.querySelector('[data-jdetail]'), mt=w.querySelector('.mtxt');
+  var cb=w.querySelector('[data-jhide12]');
+  if(cb){ cb.addEventListener('change',function(){ try{ if(cb.checked){ localStorage.setItem(KEY, String(Date.now()+12*3600*1000)); } else { localStorage.removeItem(KEY); } }catch(e){} }); }
+  var mb=w.querySelector('[data-jmore]'), dt=w.querySelector('[data-jdetail]');
   if(mb&&dt){ mb.addEventListener('click',function(){
     var hidden=dt.hasAttribute('hidden');
-    if(hidden){ dt.removeAttribute('hidden'); mb.classList.add('open'); mb.setAttribute('aria-expanded','true'); if(mt)mt.textContent='접기'; }
-    else{ dt.setAttribute('hidden',''); mb.classList.remove('open'); mb.setAttribute('aria-expanded','false'); if(mt)mt.textContent='자세히 보기'; }
+    if(hidden){ dt.removeAttribute('hidden'); mb.classList.add('open'); mb.setAttribute('aria-expanded','true'); }
+    else{ dt.setAttribute('hidden',''); mb.classList.remove('open'); mb.setAttribute('aria-expanded','false'); }
   }); }
   w.classList.add('on'); document.body.style.overflow='hidden';
 })();
