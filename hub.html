@@ -275,27 +275,46 @@
   @keyframes jcbPulse{0%{box-shadow:0 0 0 0 rgba(49,130,246,.30);}70%{box-shadow:0 0 0 12px rgba(49,130,246,0);}100%{box-shadow:0 0 0 0 rgba(49,130,246,0);}}
   .jcb-wrap{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(8,9,12,.64);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
   .jcb-wrap.on{display:flex;}
-  .jcb-box{position:relative;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;background:#1E2027;border:1px solid rgba(255,255,255,.06);border-radius:22px;padding:38px 28px 22px;box-shadow:0 30px 80px rgba(0,0,0,.55);}
+  .jcb-box{position:relative;width:100%;max-width:720px;max-height:90vh;overflow-y:auto;background:#1E2027;border:1px solid rgba(255,255,255,.06);border-radius:22px;padding:36px 32px 24px;box-shadow:0 30px 80px rgba(0,0,0,.55);}
   .jcb-x{position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:rgba(255,255,255,.05);color:#8B95A1;font-size:19px;border-radius:50%;cursor:pointer;}
   .jcb-x:hover{background:rgba(255,255,255,.12);color:#fff;}
   .jcb-tag{font-size:13px;font-weight:700;color:#3182F6;margin-bottom:8px;}
-  .jcb-h{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:10px;}
+  .jcb-h{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:14px;}
   .jcb-h b{color:#5aa0ff;}
-  .jcb-sub{font-size:14px;line-height:1.65;color:#9aa3ad;word-break:keep-all;margin-bottom:6px;}
-  .jcb-group-h{font-size:13px;font-weight:800;color:#3182F6;margin:20px 0 2px;}
-  .jcb-row{display:flex;align-items:center;gap:13px;padding:13px 0;border-top:1px solid rgba(255,255,255,.06);}
-  .jcb-row .amt{flex-shrink:0;width:62px;text-align:center;}
-  .jcb-row .amt .a{font-size:16px;font-weight:800;color:#fff;line-height:1.15;}
-  .jcb-row .amt .p{font-size:11px;font-weight:700;color:#3182F6;}
-  .jcb-row .meta{flex:1;min-width:0;}
-  .jcb-row .nm{font-size:14.5px;font-weight:700;color:#fff;}
-  .jcb-row .nm .evt{font-size:11px;font-weight:700;color:#FF8080;background:rgba(255,128,128,.12);border-radius:5px;padding:2px 6px;margin-left:5px;}
-  .jcb-row .cond{font-size:12.5px;color:#9aa3ad;margin-top:2px;word-break:keep-all;}
-  .jcb-row .dur{font-size:12px;color:#8B95A1;margin-top:1px;}
-  .jcb-note{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);font-size:12.5px;line-height:1.7;color:#8B95A1;word-break:keep-all;}
-  .jcb-closetxt{display:block;margin:16px auto 0;background:none;border:none;color:#8B95A1;font-size:13px;cursor:pointer;}
+  .jcb-calc{margin-bottom:8px;padding:15px 18px;background:rgba(49,130,246,.06);border:1px solid rgba(49,130,246,.20);border-radius:14px;}
+  .jcb-calc-top{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px;color:#9aa3ad;margin-bottom:9px;}
+  .jcb-calc-top .dc{color:#5aa0ff;font-weight:800;}
+  .jcb-bar{position:relative;height:30px;border-radius:8px;background:rgba(255,255,255,.07);overflow:hidden;}
+  .jcb-bar-fill{position:absolute;left:0;top:0;bottom:0;width:65%;background:linear-gradient(90deg,#3182F6,#5aa0ff);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800;}
+  .jcb-bar-pay{position:absolute;right:10px;top:0;bottom:0;display:flex;align-items:center;color:#cfd6de;font-size:12.5px;font-weight:700;}
+  .jcb-calc-formula{margin-top:9px;font-size:12.5px;color:#8B95A1;text-align:center;word-break:keep-all;}
+  .jcb-calc-formula b{color:#cfd6de;font-weight:700;}
+  .jcb-groups{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;margin-top:8px;}
+  .jcb-group-h{font-size:13px;font-weight:800;color:#3182F6;margin:8px 0 2px;}
+  .jcc{display:flex;align-items:center;gap:11px;width:100%;text-align:left;padding:13px 2px;background:none;border:none;border-top:1px solid rgba(255,255,255,.07);cursor:pointer;font-family:inherit;}
+  .jcc .amt{flex-shrink:0;width:52px;text-align:center;}
+  .jcc .amt .a{font-size:15px;font-weight:800;color:#fff;line-height:1.15;}
+  .jcc .amt .p{font-size:11px;font-weight:700;color:#3182F6;}
+  .jcc .meta{flex:1;min-width:0;}
+  .jcc .nm{font-size:14px;font-weight:700;color:#fff;word-break:keep-all;}
+  .jcc .nm .evt{font-size:10.5px;font-weight:700;color:#FF8080;background:rgba(255,128,128,.12);border-radius:5px;padding:2px 5px;margin-left:4px;white-space:nowrap;}
+  .jcc .dur{font-size:12px;color:#8B95A1;margin-top:2px;}
+  .jcc .chev{flex-shrink:0;color:#3182F6;display:inline-flex;animation:jbob 1.3s ease-in-out infinite;}
+  .jcc .chev svg{width:18px;height:18px;}
+  .jcc.open .chev{animation:none;transform:rotate(180deg);}
+  .jcc-body{padding:0 2px 14px 65px;}
+  .jcc-body .d{font-size:13px;line-height:1.7;color:#9aa3ad;word-break:keep-all;margin-bottom:9px;}
+  .jcc-body .d b{color:#cfd6de;font-weight:700;}
+  .jcc-body .stp{font-size:12.5px;line-height:1.85;color:#B0B8C1;word-break:keep-all;margin-bottom:12px;}
+  .jcc-body .stp b{color:#3182F6;font-weight:800;}
+  .jcc-cta{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 16px;border-radius:10px;background:rgba(49,130,246,.12);border:1px solid rgba(49,130,246,.40);color:#3182F6;font-size:13px;font-weight:800;text-decoration:none;}
+  .jcc-cta:hover{background:rgba(49,130,246,.20);}
+  .jcb-foot-cta{display:flex;align-items:center;justify-content:center;height:52px;border-radius:14px;background:#3182F6;color:#fff;font-size:15.5px;font-weight:800;text-decoration:none;margin-top:24px;}
+  .jcb-foot-cta:hover{background:#1f6fe5;}
+  .jcb-note{margin-top:16px;font-size:12.5px;line-height:1.75;color:#8B95A1;word-break:keep-all;}
+  .jcb-closetxt{display:block;margin:14px auto 0;background:none;border:none;color:#8B95A1;font-size:13px;cursor:pointer;}
   .jcb-closetxt:hover{color:#cfd6de;}
-  @media(max-width:640px){.jcb-banner{flex-wrap:wrap;gap:8px;padding:14px 16px;}.jcb-banner .go{margin-left:0;width:100%;}.jcb-box{padding:32px 18px 20px;}.jcb-h{font-size:22px;}}
+  @media(max-width:640px){.jcb-banner{flex-wrap:wrap;gap:8px;padding:14px 16px;}.jcb-banner .go{margin-left:0;width:100%;}.jcb-box{padding:30px 18px 20px;max-width:460px;}.jcb-h{font-size:22px;}.jcb-groups{grid-template-columns:1fr;gap:8px;}.jcc-body{padding-left:60px;}}
 </style>
 </head>
 <body>
@@ -476,17 +495,35 @@ function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.n
     <div class="jcb-h">최대 <b>65% 할인</b>받기</div>
     <div class="jcb-sub">정가 200,000원 → 최저 70,000원<br>쿠폰은 합산 적용되며, 라이브 클래스 결제 시 등록합니다.</div>
 
-    <div class="jcb-group-h">신규 가입자</div>
-    <div class="jcb-row"><div class="amt"><div class="a">3만원</div><div class="p">15%</div></div><div class="meta"><div class="nm">신규가입 환영</div><div class="cond">가입 시 1회 자동 지급</div><div class="dur">사용기간 12개월</div></div></div>
-    <div class="jcb-row"><div class="amt"><div class="a">5만원</div><div class="p">25%</div></div><div class="meta"><div class="nm">옵션투자준비 체크리스트</div><div class="cond">진단 결과 [2단계: 추천] 인증 시</div><div class="dur">사용기간 3개월</div></div></div>
-    <div class="jcb-row"><div class="amt"><div class="a">5만원</div><div class="p">25%</div></div><div class="meta"><div class="nm">대시보드 피드백 <span class="evt">오픈이벤트</span></div><div class="cond">피드백 5건 이상 작성 시</div><div class="dur">사용기간 1개월</div></div></div>
+    <div class="jcb-calc">
+      <div class="jcb-calc-top"><span>정가 200,000원</span><span class="dc">− 130,000원</span></div>
+      <div class="jcb-bar"><div class="jcb-bar-fill">65% 할인</div><div class="jcb-bar-pay">결제 70,000원</div></div>
+      <div class="jcb-calc-formula">환영 <b>3만</b> + 체크리스트 <b>5만</b> + 대시보드 피드백 <b>5만</b> = <b>13만원</b> 할인</div>
+    </div>
 
-    <div class="jcb-group-h">기존 가입자</div>
-    <div class="jcb-row"><div class="amt"><div class="a">3만원</div><div class="p">15%</div></div><div class="meta"><div class="nm">투자토론</div><div class="cond">투자토론 참여 시</div><div class="dur">사용기간 3개월</div></div></div>
-    <div class="jcb-row"><div class="amt"><div class="a">5만원</div><div class="p">25%</div></div><div class="meta"><div class="nm">매매복기</div><div class="cond">매매복기 작성 시</div><div class="dur">사용기간 3개월</div></div></div>
-    <div class="jcb-row"><div class="amt"><div class="a">5만원</div><div class="p">25%</div></div><div class="meta"><div class="nm">대시보드 피드백 <span class="evt">오픈이벤트</span></div><div class="cond">피드백 5건 이상 작성 시</div><div class="dur">사용기간 1개월</div></div></div>
+    <div class="jcb-groups">
+      <div>
+        <div class="jcb-group-h">신규 가입자</div>
+        <button class="jcc" data-acc aria-expanded="false"><div class="amt"><div class="a">3만원</div><div class="p">15%</div></div><div class="meta"><div class="nm">신규가입 환영</div><div class="dur">사용기간 12개월</div></div><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="jcc-body" hidden><div class="d">가입과 동시에 자동으로 지급되는 환영 쿠폰입니다. 별도 조건이 없습니다.</div><div class="stp"><b>받기</b> 회원가입 시 자동 발급<br><b>사용</b> 라이브 클래스 결제 시 쿠폰 입력란에 등록</div><a class="jcc-cta" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener noreferrer">라이브 클래스에서 사용하기 →</a></div>
+        <button class="jcc" data-acc aria-expanded="false"><div class="amt"><div class="a">5만원</div><div class="p">25%</div></div><div class="meta"><div class="nm">옵션투자준비 체크리스트</div><div class="dur">사용기간 3개월</div></div><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="jcc-body" hidden><div class="d">자가진단(체크리스트) 결과가 <b>[2단계: 추천]</b>이면 발급되는 쿠폰입니다.</div><div class="stp"><b>1</b> 체크리스트 작성·제출 (약 3분)<br><b>2</b> 이메일로 진단 결과 수신<br><b>3</b> 결과가 [2단계: 추천]이면 캡처·복사해 1:1 카톡 인증<br><b>4</b> 1:1 카톡으로 쿠폰코드 수령<br><b>5</b> 라이브 클래스 결제 시 입력</div><a class="jcc-cta" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener noreferrer">라이브 클래스에서 사용하기 →</a></div>
+        <button class="jcc" data-acc aria-expanded="false"><div class="amt"><div class="a">5만원</div><div class="p">25%</div></div><div class="meta"><div class="nm">대시보드 피드백 <span class="evt">오픈이벤트</span></div><div class="dur">사용기간 1개월</div></div><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="jcc-body" hidden><div class="d">무료 오픈 기간에 <b>피드백 5건 이상</b>(불편 사항·질문 포함)을 남기시면 발급됩니다. 7월 등록(결제) 시 사용할 수 있습니다.</div><div class="stp"><b>1</b> 무료 기간 대시보드 사용<br><b>2</b> 피드백 5건 이상 작성<br><b>3</b> 쿠폰 발급<br><b>4</b> 7월 결제 시 입력</div><a class="jcc-cta" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener noreferrer">라이브 클래스에서 사용하기 →</a></div>
+      </div>
+      <div>
+        <div class="jcb-group-h">기존 가입자</div>
+        <button class="jcc" data-acc aria-expanded="false"><div class="amt"><div class="a">3만원</div><div class="p">15%</div></div><div class="meta"><div class="nm">투자토론</div><div class="dur">사용기간 3개월</div></div><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="jcc-body" hidden><div class="d">투자토론에 참여하시면 발급되는 쿠폰입니다.</div><div class="stp"><b>1</b> 투자토론 참여<br><b>2</b> 쿠폰 발급<br><b>3</b> 라이브 클래스 결제 시 입력</div><a class="jcc-cta" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener noreferrer">라이브 클래스에서 사용하기 →</a></div>
+        <button class="jcc" data-acc aria-expanded="false"><div class="amt"><div class="a">5만원</div><div class="p">25%</div></div><div class="meta"><div class="nm">매매복기</div><div class="dur">사용기간 3개월</div></div><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="jcc-body" hidden><div class="d">매매복기를 작성하시면 발급되는 쿠폰입니다.</div><div class="stp"><b>1</b> 매매복기 작성<br><b>2</b> 쿠폰 발급<br><b>3</b> 라이브 클래스 결제 시 입력</div><a class="jcc-cta" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener noreferrer">라이브 클래스에서 사용하기 →</a></div>
+        <button class="jcc" data-acc aria-expanded="false"><div class="amt"><div class="a">5만원</div><div class="p">25%</div></div><div class="meta"><div class="nm">대시보드 피드백 <span class="evt">오픈이벤트</span></div><div class="dur">사용기간 1개월</div></div><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="jcc-body" hidden><div class="d">무료 오픈 기간에 <b>피드백 5건 이상</b>(불편 사항·질문 포함)을 남기시면 발급됩니다. 7월 등록(결제) 시 사용할 수 있습니다.</div><div class="stp"><b>1</b> 무료 기간 대시보드 사용<br><b>2</b> 피드백 5건 이상 작성<br><b>3</b> 쿠폰 발급<br><b>4</b> 7월 결제 시 입력</div><a class="jcc-cta" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener noreferrer">라이브 클래스에서 사용하기 →</a></div>
+      </div>
+    </div>
 
-    <div class="jcb-note">· 모든 쿠폰은 라이브 클래스 결제 화면의 쿠폰 입력란에 등록합니다.<br>· 신규가입 환영 쿠폰만 자동 지급되며, 나머지는 조건 충족 시 발급됩니다.<br>· 사용기간은 발급일 기준 사용 가능 기간입니다.</div>
+    <a class="jcb-foot-cta" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener noreferrer">라이브 클래스에서 쿠폰 사용하기 →</a>
+    <div class="jcb-note">· 모든 쿠폰은 라이브 클래스 결제 시 쿠폰 입력란에 등록합니다.<br>· 환영 쿠폰은 자동, 나머지는 조건 충족 시 발급됩니다.<br>· 사용기간은 발급일 기준입니다.</div>
     <button class="jcb-closetxt" data-jcclose>닫기</button>
   </div>
 </div>
@@ -501,6 +538,12 @@ function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.n
   w.addEventListener('click',function(e){ if(e.target===w) close(); });
   w.querySelectorAll('[data-jcclose]').forEach(function(x){ x.addEventListener('click',close); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+  w.querySelectorAll('[data-acc]').forEach(function(btn){ btn.addEventListener('click',function(){
+    var body=btn.nextElementSibling; if(!body) return;
+    var hid=body.hasAttribute('hidden');
+    if(hid){ body.removeAttribute('hidden'); btn.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+    else{ body.setAttribute('hidden',''); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+  }); });
 })();
 </script>
 </body>
