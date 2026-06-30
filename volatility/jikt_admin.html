@@ -210,6 +210,7 @@ window.JIKT_API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';   /* TODO 
           + '<td>'
           + (u.status==='active' ? '<button class="btn btn-danger" onclick="adminSuspend(\''+u.userId+'\')">정지</button>' : '<button class="btn btn-primary" onclick="adminReactivate(\''+u.userId+'\')">복구</button>')
           + ' <button class="btn btn-ghost" onclick="adminGrant(\''+u.userId+'\')">30일 부여</button>'
+          + ' <button class="btn btn-ghost" onclick="adminRevoke(\''+u.userId+'\')">유료 취소</button>'
           + '</td></tr>';
       }).join('');
       box.innerHTML = '<table><tr><th>이메일</th><th>이름</th><th>가입</th><th>플랜</th><th>만료</th><th>가입일</th><th>조작</th></tr>' + rows + '</table>';
@@ -276,6 +277,10 @@ window.JIKT_API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';   /* TODO 
     var days = prompt('며칠 부여? (기본 30)', '30');
     if (!days) return;
     api('POST', '/admin/users/' + uid + '/grant?days=' + days).then(function(){ loadUsers(); loadStats(); });
+  };
+  window.adminRevoke = function(uid){
+    if (!confirm('이 회원의 유료 권한을 취소(즉시 만료)할까요?')) return;
+    api('POST', '/admin/users/' + uid + '/revoke').then(function(){ loadUsers(); loadStats(); });
   };
   window.adminApproveDevice = function(uid){
     if (!confirm('재등록 승인하시겠어요? 회원이 다음 로그인 시 새 기기 등록됩니다.')) return;
