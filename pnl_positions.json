@@ -69,26 +69,19 @@
   },
   "positions": [
     {
-      "id": "p169",
-      "number": 169,
+      "id": "p171",
+      "number": 171,
       "sub": null,
       "shared_date": "2026-06-30",
       "status": "active",
       "notion_url": "",
-      "strategy_type": "strangle",
+      "strategy_type": "naked_put",
       "underlying": "크루드 오일",
       "underlying_en": "Crude Oil",
-      "expiry_month": "10월물",
+      "expiry_month": "09월물",
       "expiry_date": "2026-08-17",
-      "current_price": 69.4,
+      "current_price": 69.91,
       "legs": [
-        {
-          "type": "call_sell",
-          "strike": 94.5,
-          "contracts": 1,
-          "premium": 100.0,
-          "current_price_pt": 0.1
-        },
         {
           "type": "put_sell",
           "strike": 43.5,
@@ -97,12 +90,12 @@
           "current_price_pt": 0.12
         }
       ],
-      "total_premium": 220.0,
+      "total_premium": 120.0,
       "margin": 730,
       "margin_krw": 1095000,
       "profit_scenarios": [],
-      "expected_return_pct": 30.14,
-      "monthly_return_pct": 18.84,
+      "expected_return_pct": 16.44,
+      "monthly_return_pct": 10.28,
       "current_pnl": 0,
       "memo": "",
       "chart_data": {
@@ -123,67 +116,136 @@
           "2026/06/30"
         ],
         "closes": [
-          82.92,
-          84.6,
-          82.92,
-          80.05,
-          76.84,
-          74.21,
-          74.17,
-          72.28,
-          71.89,
-          69.44,
-          71.03,
-          68.6,
-          69.99,
-          69.4
+          84.74,
+          86.51,
+          84.54,
+          81.71,
+          78.17,
+          75.16,
+          75.11,
+          73.03,
+          72.54,
+          69.93,
+          71.52,
+          68.93,
+          70.41,
+          69.91
         ],
         "strike_lines": [
           {
-            "price": 94.5,
-            "label": "콜 행사가 $94.5",
-            "color": "#e06070",
-            "dash": true
-          },
-          {
             "price": 43.5,
-            "label": "풋 행사가 $43.5",
+            "label": "풋 매도 행사가 $43.5",
             "color": "#e06070",
             "dash": true
           }
         ],
         "profit_zone": {
           "min": 43.5,
-          "max": 94.5,
+          "max": 174.0,
           "label": "수익 구간"
         },
         "expiry_date": "2026-08-17",
         "entry_date": "2026-06-30"
       },
-      "entry_price": 69.4,
-      "strategy_num": 169
+      "entry_price": 69.91,
+      "strategy_num": 171
     },
     {
-      "id": "p168",
-      "number": 168,
+      "id": "p170",
+      "number": 170,
       "sub": null,
       "shared_date": "2026-06-30",
       "status": "active",
       "notion_url": "",
-      "strategy_type": "strangle",
+      "strategy_type": "naked_call",
+      "underlying": "크루드 오일",
+      "underlying_en": "Crude Oil",
+      "expiry_month": "08월물",
+      "expiry_date": "2026-07-16",
+      "current_price": 70.22,
+      "legs": [
+        {
+          "type": "call_sell",
+          "strike": 94.5,
+          "contracts": 1,
+          "premium": 100.0,
+          "current_price_pt": 0.1
+        }
+      ],
+      "total_premium": 100.0,
+      "margin": 1486,
+      "margin_krw": 2229000,
+      "profit_scenarios": [],
+      "expected_return_pct": 6.73,
+      "monthly_return_pct": 12.62,
+      "current_pnl": 0,
+      "memo": "",
+      "chart_data": {
+        "dates": [
+          "2026/06/09",
+          "2026/06/10",
+          "2026/06/11",
+          "2026/06/12",
+          "2026/06/15",
+          "2026/06/17",
+          "2026/06/18",
+          "2026/06/22",
+          "2026/06/23",
+          "2026/06/24",
+          "2026/06/25",
+          "2026/06/26",
+          "2026/06/29",
+          "2026/06/30"
+        ],
+        "closes": [
+          86.58,
+          88.34,
+          86.16,
+          83.35,
+          79.44,
+          76.01,
+          75.85,
+          73.86,
+          73.21,
+          70.34,
+          71.92,
+          69.23,
+          70.75,
+          70.22
+        ],
+        "strike_lines": [
+          {
+            "price": 94.5,
+            "label": "콜 매도 행사가 $94.5",
+            "color": "#e06070",
+            "dash": true
+          }
+        ],
+        "profit_zone": {
+          "min": 0,
+          "max": 94.5,
+          "label": "수익 구간"
+        },
+        "expiry_date": "2026-07-16",
+        "entry_date": "2026-06-30"
+      },
+      "entry_price": 70.22,
+      "strategy_num": 170
+    },
+    {
+      "id": "p169",
+      "number": 169,
+      "sub": null,
+      "shared_date": "2026-06-30",
+      "status": "active",
+      "notion_url": "",
+      "strategy_type": "naked_put",
       "underlying": "천연가스",
       "underlying_en": "Natural Gas",
       "expiry_month": "10월물",
       "expiry_date": "2026-09-25",
       "current_price": 3.147,
       "legs": [
-        {
-          "type": "call_sell",
-          "strike": 5.4,
-          "contracts": 1,
-          "premium": 110.0,
-          "current_price_pt": 0.011
-        },
         {
           "type": "put_sell",
           "strike": 2.0,
@@ -192,12 +254,12 @@
           "current_price_pt": 0.01
         }
       ],
-      "total_premium": 210.0,
+      "total_premium": 100.0,
       "margin": 205,
       "margin_krw": 307500,
       "profit_scenarios": [],
-      "expected_return_pct": 102.44,
-      "monthly_return_pct": 35.32,
+      "expected_return_pct": 48.78,
+      "monthly_return_pct": 16.82,
       "current_pnl": 0,
       "memo": "",
       "chart_data": {
@@ -235,27 +297,103 @@
         ],
         "strike_lines": [
           {
-            "price": 5.4,
-            "label": "콜 행사가 $5.4",
-            "color": "#e06070",
-            "dash": true
-          },
-          {
             "price": 2.0,
-            "label": "풋 행사가 $2",
+            "label": "풋 매도 행사가 $2",
             "color": "#e06070",
             "dash": true
           }
         ],
         "profit_zone": {
           "min": 2.0,
-          "max": 5.4,
+          "max": 8.0,
           "label": "수익 구간"
         },
         "expiry_date": "2026-09-25",
         "entry_date": "2026-06-30"
       },
       "entry_price": 3.147,
+      "strategy_num": 169
+    },
+    {
+      "id": "p168",
+      "number": 168,
+      "sub": null,
+      "shared_date": "2026-06-30",
+      "status": "active",
+      "notion_url": "",
+      "strategy_type": "naked_call",
+      "underlying": "천연가스",
+      "underlying_en": "Natural Gas",
+      "expiry_month": "09월물",
+      "expiry_date": "2026-09-25",
+      "current_price": 3.115,
+      "legs": [
+        {
+          "type": "call_sell",
+          "strike": 5.4,
+          "contracts": 1,
+          "premium": 110.0,
+          "current_price_pt": 0.011
+        }
+      ],
+      "total_premium": 110.0,
+      "margin": 252,
+      "margin_krw": 378000,
+      "profit_scenarios": [],
+      "expected_return_pct": 43.65,
+      "monthly_return_pct": 15.05,
+      "current_pnl": 0,
+      "memo": "",
+      "chart_data": {
+        "dates": [
+          "2026/06/09",
+          "2026/06/10",
+          "2026/06/11",
+          "2026/06/12",
+          "2026/06/15",
+          "2026/06/17",
+          "2026/06/18",
+          "2026/06/22",
+          "2026/06/23",
+          "2026/06/24",
+          "2026/06/25",
+          "2026/06/26",
+          "2026/06/29",
+          "2026/06/30"
+        ],
+        "closes": [
+          3.164,
+          3.207,
+          3.107,
+          3.126,
+          3.132,
+          3.147,
+          3.234,
+          3.234,
+          3.142,
+          3.218,
+          3.247,
+          3.226,
+          3.128,
+          3.115
+        ],
+        "strike_lines": [
+          {
+            "price": 5.4,
+            "label": "콜 매도 행사가 $5.4",
+            "color": "#e06070",
+            "dash": true
+          }
+        ],
+        "profit_zone": {
+          "min": 0,
+          "max": 5.4,
+          "label": "수익 구간"
+        },
+        "expiry_date": "2026-09-25",
+        "entry_date": "2026-06-30"
+      },
+      "entry_price": 3.115,
       "strategy_num": 168
     },
     {
