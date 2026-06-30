@@ -230,8 +230,10 @@
   .jintro-h{font-size:27px;font-weight:800;color:#fff;line-height:1.32;letter-spacing:-.02em;margin-bottom:14px;}
   .jintro-sub{font-size:15px;line-height:1.65;color:#9aa3ad;word-break:keep-all;margin-bottom:14px;}
   .jintro-coupon{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;text-align:center;font-size:24px;font-weight:800;color:#fff;letter-spacing:-.02em;background:rgba(49,130,246,.08);border:1.5px solid #3182F6;border-radius:14px;padding:18px 16px;margin-bottom:14px;word-break:keep-all;line-height:1.3;cursor:pointer;font-family:inherit;animation:jintroPulse 1.8s infinite;}
-  .jintro-coupon .chev{font-size:20px;font-weight:900;color:#3182F6;line-height:1;transition:transform .2s;flex-shrink:0;}
-  .jintro-coupon.open .chev{transform:rotate(180deg);}
+  .jintro-coupon .chev{display:inline-flex;align-items:center;color:#3182F6;flex-shrink:0;animation:jbob 1.3s ease-in-out infinite;}
+  .jintro-coupon .chev svg{width:24px;height:24px;}
+  .jintro-coupon.open .chev{animation:none;transform:rotate(180deg);}
+  @keyframes jbob{0%,100%{transform:translateY(-2px);}50%{transform:translateY(4px);}}
   @keyframes jintroPulse{0%{box-shadow:0 0 0 0 rgba(49,130,246,.45);}70%{box-shadow:0 0 0 13px rgba(49,130,246,0);}100%{box-shadow:0 0 0 0 rgba(49,130,246,0);}}
   .jintro-more{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 2px;background:none;border:none;border-top:1px solid rgba(255,255,255,.07);color:#cfd6de;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
   .jintro-more .chev{font-size:11px;color:#8B95A1;transition:transform .2s;}
@@ -260,6 +262,40 @@
   .jintro-closetxt{background:none;border:none;color:#8B95A1;font-size:13px;cursor:pointer;font-family:inherit;}
   .jintro-closetxt:hover{color:#cfd6de;}
   @media(max-width:640px){.jintro-box{padding:34px 22px 20px;border-radius:20px;}.jintro-h{font-size:23px;}.jintro-sub{font-size:14px;}.jintro-coupon{font-size:20px;padding:16px 14px;}.jintro-cta{height:52px;}}
+  /* [2026-06-30] 트레이딩 룸 할인 쿠폰 배너 + 모달 */
+  .jcb-banner{display:flex;align-items:center;gap:13px;width:100%;max-width:1180px;margin:0 auto 22px;padding:15px 22px;background:linear-gradient(90deg,rgba(49,130,246,.14),rgba(49,130,246,.04));border:1px solid rgba(49,130,246,.35);border-radius:14px;cursor:pointer;transition:all .15s;animation:jcbPulse 2.2s infinite;}
+  .jcb-banner:hover{border-color:#3182F6;}
+  .jcb-banner .ic{flex-shrink:0;color:#3182F6;display:inline-flex;}
+  .jcb-banner .ic svg{width:26px;height:26px;}
+  .jcb-banner .tx{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .jcb-banner .tx .t{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.01em;}
+  .jcb-banner .tx .t b{color:#5aa0ff;}
+  .jcb-banner .tx .s{font-size:13px;color:#9aa3ad;}
+  .jcb-banner .go{margin-left:auto;flex-shrink:0;color:#3182F6;font-weight:800;font-size:14px;white-space:nowrap;}
+  @keyframes jcbPulse{0%{box-shadow:0 0 0 0 rgba(49,130,246,.30);}70%{box-shadow:0 0 0 12px rgba(49,130,246,0);}100%{box-shadow:0 0 0 0 rgba(49,130,246,0);}}
+  .jcb-wrap{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(8,9,12,.64);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+  .jcb-wrap.on{display:flex;}
+  .jcb-box{position:relative;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;background:#1E2027;border:1px solid rgba(255,255,255,.06);border-radius:22px;padding:38px 28px 22px;box-shadow:0 30px 80px rgba(0,0,0,.55);}
+  .jcb-x{position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:rgba(255,255,255,.05);color:#8B95A1;font-size:19px;border-radius:50%;cursor:pointer;}
+  .jcb-x:hover{background:rgba(255,255,255,.12);color:#fff;}
+  .jcb-tag{font-size:13px;font-weight:700;color:#3182F6;margin-bottom:8px;}
+  .jcb-h{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:10px;}
+  .jcb-h b{color:#5aa0ff;}
+  .jcb-sub{font-size:14px;line-height:1.65;color:#9aa3ad;word-break:keep-all;margin-bottom:6px;}
+  .jcb-group-h{font-size:13px;font-weight:800;color:#3182F6;margin:20px 0 2px;}
+  .jcb-row{display:flex;align-items:center;gap:13px;padding:13px 0;border-top:1px solid rgba(255,255,255,.06);}
+  .jcb-row .amt{flex-shrink:0;width:62px;text-align:center;}
+  .jcb-row .amt .a{font-size:16px;font-weight:800;color:#fff;line-height:1.15;}
+  .jcb-row .amt .p{font-size:11px;font-weight:700;color:#3182F6;}
+  .jcb-row .meta{flex:1;min-width:0;}
+  .jcb-row .nm{font-size:14.5px;font-weight:700;color:#fff;}
+  .jcb-row .nm .evt{font-size:11px;font-weight:700;color:#FF8080;background:rgba(255,128,128,.12);border-radius:5px;padding:2px 6px;margin-left:5px;}
+  .jcb-row .cond{font-size:12.5px;color:#9aa3ad;margin-top:2px;word-break:keep-all;}
+  .jcb-row .dur{font-size:12px;color:#8B95A1;margin-top:1px;}
+  .jcb-note{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);font-size:12.5px;line-height:1.7;color:#8B95A1;word-break:keep-all;}
+  .jcb-closetxt{display:block;margin:16px auto 0;background:none;border:none;color:#8B95A1;font-size:13px;cursor:pointer;}
+  .jcb-closetxt:hover{color:#cfd6de;}
+  @media(max-width:640px){.jcb-banner{flex-wrap:wrap;gap:8px;padding:14px 16px;}.jcb-banner .go{margin-left:0;width:100%;}.jcb-box{padding:32px 18px 20px;}.jcb-h{font-size:22px;}}
 </style>
 </head>
 <body>
@@ -283,6 +319,12 @@
   <div class="st"><div class="c">2</div><div class="l">실전 운용</div></div>
   <div class="ln"></div>
   <div class="st"><div class="c">3</div><div class="l">거시 대비</div></div>
+</div>
+
+<div class="jcb-banner" id="jcb-banner" role="button" tabindex="0">
+  <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8z"/><path d="M14 6v12"/></svg></span>
+  <span class="tx"><span class="t">트레이딩 룸 <b>최대 65% 할인</b>받기</span><span class="s">정가 200,000원 → 최저 70,000원 · 쿠폰 합산 적용</span></span>
+  <span class="go">쿠폰 안내 보기 →</span>
 </div>
 
 <div class="card-grid">
@@ -380,7 +422,7 @@ function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.n
     <div class="jintro-tag">옵션 투자 자가진단</div>
     <div class="jintro-h">나는 투자를 시작하기에<br>적합한 사람일까?</div>
     <div class="jintro-sub">단 3분이면 자가진단이 끝납니다.<br>자기객관화를 통해 나의 투자 준비 수준을 점검해 보세요.</div>
-    <button class="jintro-coupon" data-jmore aria-expanded="false">5만원 할인쿠폰 받기 <span class="chev">▾</span></button>
+    <button class="jintro-coupon" data-jmore aria-expanded="false">5만원 할인쿠폰 받기 <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
     <div class="jintro-detail" data-jdetail hidden>
       <div class="jintro-dlead">옵션투자준비 체크리스트는 옵션 매도에 대한 이해와 실전 운용 준비 정도를 스스로 점검하는 3분 자가진단입니다. 아래 순서대로 진행하시면 됩니다.</div>
       <div class="jintro-flow">
@@ -423,6 +465,42 @@ function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.n
     else{ dt.setAttribute('hidden',''); mb.classList.remove('open'); mb.setAttribute('aria-expanded','false'); }
   }); }
   w.classList.add('on'); document.body.style.overflow='hidden';
+})();
+</script>
+
+<!-- [2026-06-30] 트레이딩 룸 할인 쿠폰 안내 모달 -->
+<div id="jcoupon-modal" class="jcb-wrap">
+  <div class="jcb-box">
+    <button class="jcb-x" data-jcclose aria-label="닫기">×</button>
+    <div class="jcb-tag">트레이딩 룸 할인 쿠폰</div>
+    <div class="jcb-h">최대 <b>65% 할인</b>받기</div>
+    <div class="jcb-sub">정가 200,000원 → 최저 70,000원<br>쿠폰은 합산 적용되며, 라이브 클래스 결제 시 등록합니다.</div>
+
+    <div class="jcb-group-h">신규 가입자</div>
+    <div class="jcb-row"><div class="amt"><div class="a">3만원</div><div class="p">15%</div></div><div class="meta"><div class="nm">신규가입 환영</div><div class="cond">가입 시 1회 자동 지급</div><div class="dur">사용기간 12개월</div></div></div>
+    <div class="jcb-row"><div class="amt"><div class="a">5만원</div><div class="p">25%</div></div><div class="meta"><div class="nm">옵션투자준비 체크리스트</div><div class="cond">진단 결과 [2단계: 추천] 인증 시</div><div class="dur">사용기간 3개월</div></div></div>
+    <div class="jcb-row"><div class="amt"><div class="a">5만원</div><div class="p">25%</div></div><div class="meta"><div class="nm">대시보드 피드백 <span class="evt">오픈이벤트</span></div><div class="cond">피드백 5건 이상 작성 시</div><div class="dur">사용기간 1개월</div></div></div>
+
+    <div class="jcb-group-h">기존 가입자</div>
+    <div class="jcb-row"><div class="amt"><div class="a">3만원</div><div class="p">15%</div></div><div class="meta"><div class="nm">투자토론</div><div class="cond">투자토론 참여 시</div><div class="dur">사용기간 3개월</div></div></div>
+    <div class="jcb-row"><div class="amt"><div class="a">5만원</div><div class="p">25%</div></div><div class="meta"><div class="nm">매매복기</div><div class="cond">매매복기 작성 시</div><div class="dur">사용기간 3개월</div></div></div>
+    <div class="jcb-row"><div class="amt"><div class="a">5만원</div><div class="p">25%</div></div><div class="meta"><div class="nm">대시보드 피드백 <span class="evt">오픈이벤트</span></div><div class="cond">피드백 5건 이상 작성 시</div><div class="dur">사용기간 1개월</div></div></div>
+
+    <div class="jcb-note">· 모든 쿠폰은 라이브 클래스 결제 화면의 쿠폰 입력란에 등록합니다.<br>· 신규가입 환영 쿠폰만 자동 지급되며, 나머지는 조건 충족 시 발급됩니다.<br>· 사용기간은 발급일 기준 사용 가능 기간입니다.</div>
+    <button class="jcb-closetxt" data-jcclose>닫기</button>
+  </div>
+</div>
+<script>
+/* [2026-06-30] 쿠폰 안내 배너→모달 */
+(function(){
+  var w=document.getElementById('jcoupon-modal'); if(!w) return;
+  var b=document.getElementById('jcb-banner');
+  function open(){ w.classList.add('on'); document.body.style.overflow='hidden'; }
+  function close(){ w.classList.remove('on'); document.body.style.overflow=''; }
+  if(b){ b.addEventListener('click',open); b.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } }); }
+  w.addEventListener('click',function(e){ if(e.target===w) close(); });
+  w.querySelectorAll('[data-jcclose]').forEach(function(x){ x.addEventListener('click',close); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
 })();
 </script>
 </body>
