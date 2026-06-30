@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "exported_at": "2026-06-30T06:11:08.645Z",
+    "exported_at": "2026-06-30T07:30:40.667Z",
     "source": "admin.html",
     "version": 1,
     "keys": [
@@ -2241,19 +2241,31 @@
     "strategies": [
       {
         "date": "06월 30일",
-        "stratType": "양매도",
+        "stratType": "콜 매도",
         "commodities": "천연가스",
         "legs": [
           {
             "date": "06월 30일",
             "name": "천연가스",
-            "month": "10월물",
+            "month": "09월물",
             "strike": "5.4",
             "optType": "콜옵션 매도",
             "premium": "0.011",
             "contracts": 1,
             "premUsd": 110.0
-          },
+          }
+        ],
+        "margin": 252,
+        "totalPremUsd": 110.0,
+        "returnPct": 43.65,
+        "expiry": "2026-09-25",
+        "daysLeft": 87
+      },
+      {
+        "date": "06월 30일",
+        "stratType": "풋 매도",
+        "commodities": "천연가스",
+        "legs": [
           {
             "date": "06월 30일",
             "name": "천연가스",
@@ -2266,30 +2278,42 @@
           }
         ],
         "margin": 205,
-        "totalPremUsd": 210.0,
-        "returnPct": 102.44,
+        "totalPremUsd": 100.0,
+        "returnPct": 48.78,
         "expiry": "2026-09-25",
         "daysLeft": 87
       },
       {
         "date": "06월 30일",
-        "stratType": "양매도",
+        "stratType": "콜 매도",
         "commodities": "크루드 오일",
         "legs": [
           {
             "date": "06월 30일",
             "name": "크루드 오일",
-            "month": "10월물",
+            "month": "08월물",
             "strike": "94.5",
             "optType": "콜옵션 매도",
             "premium": "0.1",
             "contracts": 1,
             "premUsd": 100.0
-          },
+          }
+        ],
+        "margin": 1486,
+        "totalPremUsd": 100.0,
+        "returnPct": 6.73,
+        "expiry": "2026-07-16",
+        "daysLeft": 16
+      },
+      {
+        "date": "06월 30일",
+        "stratType": "풋 매도",
+        "commodities": "크루드 오일",
+        "legs": [
           {
             "date": "06월 30일",
             "name": "크루드 오일",
-            "month": "10월물",
+            "month": "09월물",
             "strike": "43.5",
             "optType": "풋옵션 매도",
             "premium": "0.12",
@@ -2298,13 +2322,13 @@
           }
         ],
         "margin": 730,
-        "totalPremUsd": 220.0,
-        "returnPct": 30.14,
+        "totalPremUsd": 120.0,
+        "returnPct": 16.44,
         "expiry": "2026-08-17",
         "daysLeft": 48
       }
     ],
-    "updated_at": "2026-06-30T07:00:13.019384Z"
+    "updated_at": "2026-06-30T07:30:55.937264Z"
   },
   "option_holdings": {
     "updated": "2026-06-30T06:10:53.855Z",
