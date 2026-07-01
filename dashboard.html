@@ -1009,7 +1009,8 @@ function ohRenderPnl(pos,rate){
   var dep=(typeof meta!=='undefined'&&meta&&meta.total_deposit_krw)||50000000;
   var G={},order=[];
   act.forEach(function(p){ var k=p.underlying||'기타'; if(!G[k]){G[k]={n:k,ev:0,mk:0};order.push(k);} G[k].ev+=(p.current_pnl||0); G[k].mk+=(p.margin_krw||0); });
-  var realized={}; clo.forEach(function(p){ var k=p.underlying||'기타'; realized[k]=(realized[k]||0)+(p.current_pnl||0); });
+  var closedPnl=function(p){ return (p.current_pnl!=null)?p.current_pnl:((p.status==='expired')?(p.total_premium||0):0); };
+  var realized={}; clo.forEach(function(p){ var k=p.underlying||'기타'; realized[k]=(realized[k]||0)+closedPnl(p); });
   var groups=order.map(function(k){ var g=G[k]; return {name:k, ev:g.ev, weight:(g.mk/dep*100), tot:g.ev+(realized[k]||0)}; });
   groups.sort(function(a,b){ return b.ev-a.ev; });
   var totPnl=act.reduce(function(s,p){return s+(p.current_pnl||0);},0);
@@ -1021,7 +1022,7 @@ function ohRenderPnl(pos,rate){
   det+='<tr><td colspan="4" style="text-align:right;padding:11px 13px;border-top:2px solid var(--b1);font-weight:800;font-size:14px;color:var(--t1);">합계</td><td style="text-align:right;padding:11px 13px;border-top:2px solid var(--b1);font-size:15px;">'+ohPnlInner(totPnl,rate)+'</td><td colspan="2" style="border-top:2px solid var(--b1);"></td></tr></tbody></table>';
   var h=ohSummary(groups,rate);
   h+=act.length?ohHeldToggle('보유 종목 상세 ('+act.length+'개)',det):'';
-  h+=ohClosedBlock(clo.map(function(p){var rs=(p['청산사유']||p.close_reason||(p.status==='expired'?'만기 소멸':'-')); return {name:(p.underlying||'-'), strat:hStrat(p.strategy_type), month:(p.expiry_month||'-'), date:hMd(p.expiry_date||p.shared_date), pnl:p.current_pnl, reason:rs, is_stoploss:/손절/.test(rs)};}), rate, 'full');
+  h+=ohClosedBlock(clo.map(function(p){var rs=(p['청산사유']||p.close_reason||(p.status==='expired'?'만기 소멸':'-')); return {name:(p.underlying||'-'), strat:hStrat(p.strategy_type), month:(p.expiry_month||'-'), date:hMd(p.expiry_date||p.shared_date), pnl:closedPnl(p), reason:rs, is_stoploss:/손절/.test(rs)};}), rate, 'full');
   return h;
 }
 
