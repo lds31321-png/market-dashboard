@@ -978,6 +978,25 @@ function renderHoldings(){
   applyHoldingsGate();
 }
 
+/* [2026-07-01] 청산 내역 통합: pnl 만기청산 + 관리자 손절/청산을 하나로 합쳐 표시 */
+function buildClosedFull(oh, pos){
+  var cp=function(p){ return (p.current_pnl!=null)?p.current_pnl:((p.status==='expired')?(p.total_premium||0):0); };
+  var mkey=function(u,m){ return (u||'')+'|'+(parseInt(String(m).replace(/[^\d]/g,''),10)||0); };
+  var out=[], seen={};
+  (pos||[]).filter(function(p){return p.status==='expired'||p.status==='closed'||p.status==='청산';})
+    .sort(function(a,b){return (b.strategy_num||0)-(a.strategy_num||0);})
+    .forEach(function(p){ var rs=(p['청산사유']||p.close_reason||(p.status==='expired'?'만기 소멸':'-'));
+      seen[mkey(p.underlying,p.expiry_month)]=1;
+      out.push({name:(p.underlying||'-'), strat:hStrat(p.strategy_type), month:(p.expiry_month||'-'), date:hMd(p.expiry_date||p.shared_date), pnl:cp(p), reason:rs, is_stoploss:/손절/.test(rs)});
+    });
+  ((oh&&oh.closed)||[]).forEach(function(c){
+    if(seen[mkey(c.underlying,c.mLabel)]) return;
+    var strat=(c.cpKo==='콜'?'콜 매도':c.cpKo==='풋'?'풋 매도':(c.cpKo||'-'));
+    out.push({name:(c.underlying||c.code||'-'), strat:strat, month:(c.mLabel||'-'), date:(c.date?hMd(c.date):'-'), pnl:c.pnl, reason:(c.reason||'-'), is_stoploss:(c.is_stoploss||/손절/.test(c.reason||''))});
+  });
+  return out;
+}
+
 /* (A) HTS 옵션잔고 기반 — 관리자 입력이 있을 때 */
 function ohRenderHTS(oh,rate){
   var holds=(oh.holdings||[]).slice();
@@ -998,7 +1017,7 @@ function ohRenderHTS(oh,rate){
   det+='<tr><td colspan="7" style="text-align:right;padding:11px 13px;border-top:2px solid var(--b1);font-weight:800;font-size:14px;color:var(--t1);">합계 ('+totCt+'계약)</td><td style="text-align:right;padding:11px 13px;border-top:2px solid var(--b1);font-size:15px;">'+ohPnlInner(totPnl,rate)+'</td><td style="border-top:2px solid var(--b1);"></td></tr></tbody></table>';
   var h=ohSummary(groups,rate);
   h+=holds.length?ohHeldToggle('보유 종목 상세 ('+holds.length+'개 · '+totCt+'계약)',det):'';
-  h+=ohClosedBlock(closed.map(function(c){return {name:(c.underlying||c.code), sub:((c.mLabel&&c.mLabel!=='?'?c.mLabel+' ':'')+(c.cpKo||'')+(c.strike?(' '+c.strike):'')), entry:c.entry, exit:c.exit, contracts:c.contracts, pnl:c.pnl, reason:c.reason, is_stoploss:c.is_stoploss};}), rate, 'sub');
+  h+=ohClosedBlock(buildClosedFull(oh, (typeof allPos!=='undefined'?allPos:[])||[]), rate, 'full');
   return h;
 }
 
