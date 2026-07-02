@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <script>/*[JIKT 로그인 게이트]*/(function(){try{var h=location.hash||"";if(h.indexOf("token=")>=0){var p=new URLSearchParams(h.replace(/^#/,""));var tk=p.get("token"),uid=p.get("uid");if(tk){localStorage.setItem("jikt_token",tk);if(uid)localStorage.setItem("jikt_uid",uid);}try{var u=new URL(location.href);u.hash="";u.searchParams.delete("login");history.replaceState(null,"",u.pathname+u.search);}catch(e){try{location.hash="";}catch(_){}}}var live=location.hostname.indexOf("github.io")>=0;var token=localStorage.getItem("jikt_token");if(live&&!token){location.replace("volatility/login.html");}}catch(e){}})();</script>
+<script>/*[JIKT 방문기록 — 메인(트레이딩 룸) 접속도 카운트]*/(function(){try{var t=localStorage.getItem("jikt_token");if(!t)return;fetch("https://jikt-dashboard-api.eotjd3133.workers.dev/auth/me",{headers:{Authorization:"Bearer "+t}}).catch(function(){});}catch(e){}})();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
