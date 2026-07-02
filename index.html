@@ -625,8 +625,7 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
   <div><div class="topbar-logo">글로벌 시장 대시보드</div><div class="topbar-sub">EIA · FRED · World Bank · IMF · USDA 공식 데이터 기반</div></div>
   <div class="topbar-right">
     <!-- 상태배지·새로고침·API진단 삭제됨 (수동 데이터 운영) -->
-    <button id="themeToggle" onclick="toggleTheme()" style="padding:7px 15px;font-size:14px;border-radius:8px;border:1.5px solid var(--accent1);color:var(--accent1);background:transparent;cursor:pointer;font-weight:700;font-family:inherit;margin-right:8px">라이트 모드</button>
-    <a href="hub.html" class="tb-btn" style="padding:7px 15px;font-size:15px;border-radius:8px;border:1.5px solid #d9664a;color:#d9664a;background:#fff;text-decoration:none;font-weight:700" onmouseover="this.style.background='#d9664a';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='#d9664a'">← 메인으로</a>
+      <a href="hub.html" class="tb-btn" style="padding:7px 15px;font-size:15px;border-radius:8px;border:1.5px solid #d9664a;color:#d9664a;background:#fff;text-decoration:none;font-weight:700" onmouseover="this.style.background='#d9664a';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='#d9664a'">← 메인으로</a>
   </div>
 </div>
 
@@ -2992,7 +2991,7 @@ function _jiktBarRecolor(blue){
   });
 }
 function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggle('theme-blue');try{localStorage.setItem('jikt_global_theme',blue?'blue':'warm');}catch(e){}var b=document.getElementById('themeToggle');if(b)b.textContent=blue?'라이트 모드':'다크 모드';_jiktBarRecolor(blue);try{if(typeof buildAllCharts==='function'&&typeof curAsset!=='undefined')buildAllCharts(curAsset);}catch(e){}}
-(function(){var t='blue';try{t=localStorage.getItem('jikt_global_theme')||'blue';}catch(e){}var blue=(t==='blue');if(blue)document.documentElement.classList.add('theme-blue');document.addEventListener('DOMContentLoaded',function(){var b=document.getElementById('themeToggle');if(b)b.textContent=blue?'라이트 모드':'다크 모드';_jiktBarRecolor(blue);try{if(typeof buildAllCharts==='function'&&typeof curAsset!=='undefined')buildAllCharts(curAsset);}catch(e){}});})();
+(function(){var t='dark';try{t=localStorage.getItem('jikt_theme')||'dark';}catch(e){}var blue=(t!=='light');if(blue)document.documentElement.classList.add('theme-blue');document.addEventListener('DOMContentLoaded',function(){_jiktBarRecolor(blue);try{if(typeof buildAllCharts==='function'&&typeof curAsset!=='undefined')buildAllCharts(curAsset);}catch(e){}});})();
 </script>
 
 <canvas id="vol-fx" style="position:fixed;inset:0;z-index:-1;pointer-events:none"></canvas>
