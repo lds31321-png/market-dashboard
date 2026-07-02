@@ -31,7 +31,7 @@
   .jikt-theme-btn:hover{background:var(--pt);color:#fff;animation:none;}
   /* [2026-07-02] 라이트 모드 저대비 보정 — 틴트/카드 위 흰글씨를 어두운/포인트색으로 */
   html.theme-light .jintro-h,html.theme-light .tx .t,html.theme-light .jcc .nm,html.theme-light .jcg-sum .v,html.theme-light .jcg-sum .l,html.theme-light .jcg-sum .pct{color:var(--tx) !important;}
-  html.theme-light .jintro-coupon,html.theme-light .jcb-h,html.theme-light .amt .a,html.theme-light .ft .cp{color:var(--pt) !important;}
+  html.theme-light .jintro-coupon,html.theme-light .jcb-h,html.theme-light .amt .a,html.theme-light .ft b,html.theme-light .ft .cp,html.theme-light .tx .t b{color:var(--pt) !important;}
   body{
     background:var(--bg);
     min-height:100vh;
@@ -442,9 +442,11 @@ function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.n
   window.addEventListener('mouseout',function(e){if(!e.relatedTarget)on=false;});
   var GRID=10,DUR=2400,MAXR=300,BAND=34,W=function(){return window.innerWidth;},H=function(){return window.innerHeight;};
   function draw(now){
+    var _L=document.documentElement.classList.contains('theme-light');
+    var C1=_L?'224,138,106':'83,160,255', C2=_L?'217,102,74':'69,147,252';
     ctx.clearRect(0,0,W(),H());
     gx+=(mx-gx)*0.12;gy+=(my-gy)*0.12;
-    if(on){var g=ctx.createRadialGradient(gx,gy,0,gx,gy,240);g.addColorStop(0,'rgba(83,160,255,0.18)');g.addColorStop(0.4,'rgba(69,147,252,0.07)');g.addColorStop(1,'rgba(69,147,252,0)');ctx.fillStyle=g;ctx.fillRect(gx-240,gy-240,480,480);}
+    if(on){var g=ctx.createRadialGradient(gx,gy,0,gx,gy,240);g.addColorStop(0,'rgba('+C1+',0.18)');g.addColorStop(0.4,'rgba('+C2+',0.07)');g.addColorStop(1,'rgba('+C2+',0)');ctx.fillStyle=g;ctx.fillRect(gx-240,gy-240,480,480);}
     if(on&&now-lastMove<1800&&now-lastSpawn>2000&&trail.length){var tp=trail[0];for(var k=0;k<trail.length;k++){if(now-trail[k].t<=400)break;tp=trail[k];}ripples.push({x:tp.x,y:tp.y,t:now});lastSpawn=now;}
     for(var i=ripples.length-1;i>=0;i--){
       var rp=ripples[i],p=(now-rp.t)/DUR;
@@ -455,7 +457,7 @@ function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.n
         for(var xx=Math.floor((rp.x-R-BAND)/GRID)*GRID;xx<rp.x+R+BAND;xx+=GRID){
           if(xx<0||xx>W())continue;
           var dx=xx-rp.x,dy=yy-rp.y,d=Math.sqrt(dx*dx+dy*dy),off=Math.abs(d-R);
-          if(off<BAND){var a=al*(1-off/BAND)*0.30;if(a>0.015){ctx.fillStyle='rgba(83,160,255,'+a.toFixed(3)+')';ctx.fillRect(xx,yy,GRID-2,GRID-2);}}
+          if(off<BAND){var a=al*(1-off/BAND)*0.30;if(a>0.015){ctx.fillStyle='rgba('+C1+','+a.toFixed(3)+')';ctx.fillRect(xx,yy,GRID-2,GRID-2);}}
         }
       }
     }
