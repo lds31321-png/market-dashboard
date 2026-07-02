@@ -29,6 +29,9 @@
   }
   .jikt-theme-btn{position:absolute;left:calc(100% + 28px);top:calc(50% + 38px);transform:translateY(-50%);z-index:9999;white-space:nowrap;display:inline-flex;align-items:center;gap:7px;background:var(--card);color:var(--pt);border:1.6px solid var(--pt);border-radius:10px;padding:9px 15px;font-size:13px;font-weight:800;font-family:'Noto Sans KR',sans-serif;cursor:pointer;animation:jiktPulse 1.8s infinite;transition:background .15s,color .15s;}
   .jikt-theme-btn:hover{background:var(--pt);color:#fff;animation:none;}
+  /* [2026-07-02] 라이트 모드 저대비 보정 — 틴트/카드 위 흰글씨를 어두운/포인트색으로 */
+  html.theme-light .jintro-h,html.theme-light .tx .t,html.theme-light .jcc .nm,html.theme-light .jcg-sum .v,html.theme-light .jcg-sum .l,html.theme-light .jcg-sum .pct{color:var(--tx) !important;}
+  html.theme-light .jintro-coupon,html.theme-light .jcb-h,html.theme-light .amt .a,html.theme-light .ft .cp{color:var(--pt) !important;}
   body{
     background:var(--bg);
     min-height:100vh;
