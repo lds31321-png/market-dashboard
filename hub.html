@@ -559,5 +559,6 @@ function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.n
   });
 })();
 </script>
+<script>/*[JIKT 방문기록 — 메인(트레이딩 룸) 접속도 카운트]*/(function(){try{var t=localStorage.getItem("jikt_token");if(!t)return;fetch("https://jikt-dashboard-api.eotjd3133.workers.dev/auth/me",{headers:{Authorization:"Bearer "+t}}).catch(function(){});}catch(e){}})();</script>
 </body>
 </html>
