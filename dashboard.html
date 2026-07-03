@@ -234,6 +234,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 .rec-row{cursor:pointer;transition:background .15s;}
 .rec-row:hover td{background:rgba(var(--accent-rgb),.06);}
 .new-pos{border:2px solid #4593FC!important;animation:pulse-new 2s ease-in-out infinite;}
+html.theme-light .new-pos{border-color:var(--accent)!important;}
 
 /* ── 브리핑 모달 ── */
 .br-modal{background:var(--card);border:1px solid var(--b1);border-radius:16px;width:100%;max-width:640px;max-height:88vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.18);}
@@ -989,7 +990,7 @@ function ohSummary(groups,rate){
     +'<span style="font-size:12px;color:var(--t3);">보유 종목 · 수익 빨강 / 손실 파랑</span></div>';
   h+='<table style="width:100%;border-collapse:collapse;font-family:var(--mono);">'+ohSumTh(['종목','','평가손익','매매비중','총 손익']);
   groups.forEach(function(g){ h+='<tr>'+ohSumTd(hEsc(g.name),'left','var(--t1)',700)+ohBarCell(g.ev,mxE)+ohSumTd(ohUF(g.ev,rate),'right',ohPc(g.ev),700)+ohSumTd(g.weight.toFixed(2)+'%','right')+ohSumTd(ohUF(g.tot,rate),'right',ohPc(g.tot),700)+'</tr>'; });
-  h+='<tr style="background:rgba(var(--accent-rgb),.05)">'+ohSumTd('총 합계','left','#4593FC',800)+ohSumTd('','left')+ohSumTd(ohUF(tE,rate),'right',ohPc(tE),800)+ohSumTd(tW.toFixed(2)+'%','right','var(--t1)',800)+ohSumTd(ohUF(tA,rate),'right',ohPc(tA),800)+'</tr>';
+  h+='<tr style="background:rgba(var(--accent-rgb),.05)">'+ohSumTd('총 합계','left','var(--t1)',800)+ohSumTd('','left')+ohSumTd(ohUF(tE,rate),'right',ohPc(tE),800)+ohSumTd(tW.toFixed(2)+'%','right','var(--t1)',800)+ohSumTd(ohUF(tA,rate),'right',ohPc(tA),800)+'</tr>';
   h+='</table></div>';
   return h;
 }
@@ -2650,7 +2651,7 @@ loadPositions();
         for(var xx=Math.floor((rp.x-R-BAND)/GRID)*GRID;xx<rp.x+R+BAND;xx+=GRID){
           if(xx<0||xx>W())continue;
           var dx=xx-rp.x,dy=yy-rp.y,d=Math.sqrt(dx*dx+dy*dy),off=Math.abs(d-R);
-          if(off<BAND){var a=al*(1-off/BAND)*0.30;if(a>0.015){ctx.fillStyle='rgba(83,160,255,'+a.toFixed(3)+')';ctx.fillRect(xx,yy,GRID-2,GRID-2);}}
+          if(off<BAND){var a=al*(1-off/BAND)*0.30;if(a>0.015){ctx.fillStyle='rgba('+(document.documentElement.classList.contains('theme-light')?'224,138,106':'83,160,255')+','+a.toFixed(3)+')';ctx.fillRect(xx,yy,GRID-2,GRID-2);}}
         }
       }
     }
