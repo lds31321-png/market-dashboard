@@ -55,7 +55,7 @@
   --r:12px;
   --shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05);
   --shadow-sm:0 1px 3px rgba(0,0,0,.07);
-  --accent-rgb:69,147,252;
+  --accent-rgb:69,147,252;--loss-rgb:69,147,252;
 }
 
 /* [2026-07-03] 다크/라이트 토글 버튼 (헤더) */
@@ -66,7 +66,7 @@ html.theme-light{
   --bg:#f0e9e1; --card:#ffffff; --card2:#faf4ee;
   --b1:rgba(0,0,0,.07); --b2:rgba(0,0,0,.12);
   --t1:#1a1816; --t2:#5f574f; --t3:#8a8178;
-  --accent:#d9664a; --accent-a:rgba(217,102,74,.10); --accent-b:rgba(217,102,74,.06); --accent-rgb:217,102,74;
+  --accent:#d9664a; --accent-a:rgba(217,102,74,.10); --accent-b:rgba(217,102,74,.06); --accent-rgb:217,102,74; --loss-rgb:42,95,168;
   --profit:#d9664a; --profit-bg:rgba(217,102,74,.08); --profit-border:rgba(217,102,74,.22);
   --loss:#2a5fa8; --loss-bg:rgba(42,95,168,.07); --loss-border:rgba(42,95,168,.22);
   --cyan:#d9664a; --green:#d9664a; --yellow:#c8803a; --orange:#d9664a; --red:#d9664a; --purple:#8b6fc9;
@@ -2067,8 +2067,8 @@ function buildDetailRow(s, pnl, pct){
   // 청산 손익 박스
   const pnlKRW = Math.round(hist?.pnl || 0);
   const pnlColor = isWin ? 'var(--accent)' : isLoss ? 'var(--loss)' : 'var(--t3)';
-  const pnlBg = isWin ? 'rgba(var(--accent-rgb),.06)' : isLoss ? 'rgba(var(--accent-rgb),.06)' : 'rgba(0,0,0,.03)';
-  const pnlBorder = isWin ? 'rgba(var(--accent-rgb),.18)' : isLoss ? 'rgba(var(--accent-rgb),.18)' : 'var(--b1)';
+  const pnlBg = isWin ? 'rgba(var(--accent-rgb),.06)' : isLoss ? 'rgba(var(--loss-rgb),.06)' : 'rgba(0,0,0,.03)';
+  const pnlBorder = isWin ? 'rgba(var(--accent-rgb),.18)' : isLoss ? 'rgba(var(--loss-rgb),.18)' : 'var(--b1)';
   const resultText = isWin ? '수익 청산' : isLoss ? '손절 청산' : '만기 무손익';
 
   // story
@@ -2448,8 +2448,8 @@ function buildStatCharts(){
       labels:[`수익 (${_tW}번)`,`손실 (${_tL}번)`,...(_tZ?[`무손익 (${_tZ}번)`]:[])],
       datasets:[{
         data:[_tW,_tL,...(_tZ?[_tZ]:[])],
-        backgroundColor:['rgba(255,128,128,.65)','rgba(var(--accent-rgb),.55)',...(ZEROS?['rgba(160,152,148,.35)']:[])],
-        borderColor:['rgba(255,128,128,.9)','rgba(var(--accent-rgb),.9)',...(ZEROS?['rgba(160,152,148,.5)']:[])],
+        backgroundColor:['rgba(255,128,128,.65)','rgba(var(--loss-rgb),.55)',...(ZEROS?['rgba(160,152,148,.35)']:[])],
+        borderColor:['rgba(255,128,128,.9)','rgba(var(--loss-rgb),.9)',...(ZEROS?['rgba(160,152,148,.5)']:[])],
         borderWidth:1.5,hoverOffset:8
       }]
     },
