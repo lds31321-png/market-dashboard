@@ -2260,10 +2260,10 @@ function buildStatCharts(){
 
   // ── 라이트 테마 공통 색상 ──
   const tc  = '#B0B8C1';   // tick 텍스트
-  const gc  = 'rgba(255,255,255,.07)'; // grid
-  const winC  = '#4593FC';
-  const lossC = '#4593FC';
-  const acC   = '#4593FC';
+  const gc  = document.documentElement.classList.contains('theme-light') ? 'rgba(0,0,0,.06)' : 'rgba(255,255,255,.07)'; // grid
+  const winC  = 'var(--accent)';
+  const lossC = 'var(--loss)';
+  const acC   = 'var(--accent)';
 
   Chart.defaults.color       = tc;
   Chart.defaults.borderColor = gc;
