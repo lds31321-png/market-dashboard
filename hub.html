@@ -325,7 +325,131 @@
   .jcb-closetxt{display:block;margin:14px auto 0;background:none;border:none;color:#8B95A1;font-size:13px;cursor:pointer;}
   .jcb-closetxt:hover{color:#cfd6de;}
   @media(max-width:640px){.jcb-banner{flex-wrap:wrap;gap:8px;padding:14px 16px;}.jcb-banner .go{margin-left:0;width:100%;}.jcb-banner .s br{display:inline;}.jcb-banner .s .sep-dot{display:none;}.jcb-box{padding:30px 18px 20px;max-width:460px;}.jcb-h{font-size:22px;}.jcb-groups{grid-template-columns:1fr;gap:8px;}.jcc-body{padding-left:60px;}}
+  /* [2026-07-03] 다크/라이트 토글 버튼 — 최신데이터 버튼과 좌우 대칭(메인텍스트 왼쪽) */
+  .jikt-theme-btn{
+    position:absolute; right:calc(100% + 63px); top:50%; transform:translateY(-50%); z-index:9999;
+    white-space:nowrap; display:inline-flex; align-items:center; gap:8px;
+    background:#1E2027; color:#3182F6; border:1.6px solid #3182F6; border-radius:999px;
+    padding:11px 18px; font-size:14px; font-weight:800;
+    font-family:'Noto Sans KR',sans-serif; cursor:pointer;
+    box-shadow:0 0 0 0 rgba(49,130,246,.5); animation:jiktPulse 1.8s infinite;
+    transition:background .15s, color .15s;
+  }
+  .jikt-theme-btn:hover{ background:#3182F6; color:#ffffff; animation:none; }
+  @media (max-width:640px){
+    .jikt-theme-btn{ position:static; right:auto; top:auto; transform:none; margin:10px auto 0; padding:10px 16px; font-size:13px; }
+  }
+  /* ===== [2026-07-03] 라이트(클로드 웜) 테마 — CSS 전용, JS/차트 미변경 ===== */
+  html.theme-light body{ background:#f0e9e1; }
+  html.theme-light #hub-ambient{ background:
+    radial-gradient(1200px 600px at 18% -8%,rgba(217,102,74,.10),transparent 60%),
+    radial-gradient(1000px 560px at 100% 108%,rgba(200,128,58,.08),transparent 60%); }
+  html.theme-light #hub-glow{ background:radial-gradient(circle,rgba(217,102,74,.16),rgba(217,102,74,.05) 35%,transparent 65%); }
+  html.theme-light .hub-logo{ color:#d9664a; }
+  html.theme-light .hub-title{ color:#1a1816; }
+  html.theme-light .hub-header .hub-sub{ color:#6b625a !important; }
+  html.theme-light .hub-flow .f{ color:#c25a3f; background:rgba(217,102,74,.10); border-color:rgba(217,102,74,.32); }
+  html.theme-light .hub-flow .a{ color:#d9664a; }
+  html.theme-light .hub-card{ background:#ffffff; border-color:rgba(0,0,0,.09); }
+  html.theme-light .hub-card:hover{ box-shadow:0 8px 32px rgba(217,102,74,.18); border-color:#d9664a; }
+  html.theme-light .card-step .n{ background:#d9664a; color:#fff; }
+  html.theme-light .card-step .t{ color:#c25a3f; }
+  html.theme-light .card-title{ color:#1a1816; }
+  html.theme-light .card-desc{ color:#5f574f; }
+  html.theme-light .card-items{ color:#8a8178; border-top-color:rgba(0,0,0,.08); }
+  html.theme-light .card-arrow{ color:#d9664a; }
+  html.theme-light .jikt-refresh-btn{ background:#ffffff; color:#d9664a; border-color:#d9664a; animation:jiktPulseWarm 1.8s infinite; }
+  html.theme-light .jikt-refresh-btn:hover{ background:#d9664a; color:#fff; }
+  html.theme-light .jikt-theme-btn{ background:#ffffff; color:#d9664a; border-color:#d9664a; animation:jiktPulseWarm 1.8s infinite; }
+  html.theme-light .jikt-theme-btn:hover{ background:#d9664a; color:#fff; }
+  @keyframes jiktPulseWarm{ 0%{box-shadow:0 0 0 0 rgba(217,102,74,.5);} 70%{box-shadow:0 0 0 16px rgba(217,102,74,0);} 100%{box-shadow:0 0 0 0 rgba(217,102,74,0);} }
+  html.theme-light .jcb-banner{ background:linear-gradient(90deg,rgba(217,102,74,.13),rgba(217,102,74,.04)); border-color:rgba(217,102,74,.32); }
+  html.theme-light .jcb-banner:hover{ border-color:#d9664a; }
+  html.theme-light .jcb-banner .ic{ color:#d9664a; }
+  html.theme-light .jcb-banner .tx .t{ color:#1a1816; }
+  html.theme-light .jcb-banner .tx .t b{ color:#d9664a; }
+  html.theme-light .jcb-banner .tx .s{ color:#8a8178; }
+  html.theme-light .jcb-banner .go{ color:#d9664a; }
+  html.theme-light .jcb-banner .s .sep-dot{ color:#b3a99f; }
+
+  /* ===== [2026-07-03] 라이트 테마 — 팝업(자가진단·할인쿠폰) + 세부 텍스트 시안성 (CSS 전용) ===== */
+  /* 공통 펄스(웜) */
+  html.theme-light .jintro-coupon{ animation:jiktPulseWarm 1.8s infinite; }
+  html.theme-light .jcb-banner{ animation:jiktPulseWarm 2.2s infinite; }
+  /* --- 자가진단 팝업 --- */
+  html.theme-light .jintro-box{ background:#ffffff; border-color:rgba(0,0,0,.08); box-shadow:0 30px 80px rgba(120,90,70,.28); }
+  html.theme-light .jintro-x{ background:rgba(0,0,0,.05); color:#8a8178; }
+  html.theme-light .jintro-x:hover{ background:rgba(0,0,0,.10); color:#1a1816; }
+  html.theme-light .jintro-tag{ color:#d9664a; }
+  html.theme-light .jintro-h{ color:#1a1816; }
+  html.theme-light .jintro-sub{ color:#6b625a; }
+  html.theme-light .jintro-coupon{ background:rgba(217,102,74,.08); border-color:#d9664a; color:#d9664a; }
+  html.theme-light .jintro-coupon .chev{ color:#d9664a; }
+  html.theme-light .jintro-more{ color:#5f574f; border-top-color:rgba(0,0,0,.08); }
+  html.theme-light .jintro-more .chev{ color:#8a8178; }
+  html.theme-light .jintro-dlead{ color:#6b625a; }
+  html.theme-light .jintro-fstep .fc{ background:rgba(217,102,74,.14); border-color:rgba(217,102,74,.4); color:#d9664a; }
+  html.theme-light .jintro-fstep .fl{ background:rgba(0,0,0,.10); }
+  html.theme-light .jintro-fstep .ft{ color:#5f574f; }
+  html.theme-light .jintro-fstep .ft b{ color:#1a1816; }
+  html.theme-light .jintro-fstep .ft .cp{ color:#d9664a; }
+  html.theme-light .jintro-cta{ background:#d9664a; color:#fff; }
+  html.theme-light .jintro-cta:hover{ background:#c25a3f; }
+  html.theme-light .jintro-kakao{ background:rgba(0,0,0,.04); color:#5f574f; }
+  html.theme-light .jintro-kakao:hover{ background:rgba(0,0,0,.07); color:#1a1816; }
+  html.theme-light .jintro-hide{ color:#8a8178; }
+  html.theme-light .jintro-hide input{ border-color:rgba(0,0,0,.25); }
+  html.theme-light .jintro-hide input:checked{ background:#d9664a; border-color:#d9664a; }
+  html.theme-light .jintro-closetxt{ color:#8a8178; }
+  html.theme-light .jintro-closetxt:hover{ color:#5f574f; }
+  /* --- 할인쿠폰 팝업 --- */
+  html.theme-light .jcb-box{ background:#ffffff; border-color:rgba(0,0,0,.08); box-shadow:0 30px 80px rgba(120,90,70,.28); }
+  html.theme-light .jcb-x{ background:rgba(0,0,0,.05); color:#8a8178; }
+  html.theme-light .jcb-x:hover{ background:rgba(0,0,0,.10); color:#1a1816; }
+  html.theme-light .jcb-tag{ color:#d9664a; }
+  html.theme-light .jcb-h{ color:#1a1816; }
+  html.theme-light .jcb-h b{ color:#d9664a; }
+  html.theme-light .jcb-calc{ background:rgba(217,102,74,.06); border-color:rgba(217,102,74,.20); }
+  html.theme-light .jcb-calc-top{ color:#6b625a; }
+  html.theme-light .jcb-calc-top .dc{ color:#d9664a; }
+  html.theme-light .jcb-bar{ background:rgba(0,0,0,.07); }
+  html.theme-light .jcb-bar-fill{ background:linear-gradient(90deg,#d9664a,#e08a6e); }
+  html.theme-light .jcb-bar-pay{ color:#5f574f; }
+  html.theme-light .jcb-calc-formula{ color:#8a8178; }
+  html.theme-light .jcb-calc-formula b{ color:#5f574f; }
+  html.theme-light .jcb-group-h{ color:#d9664a; }
+  html.theme-light .jcc{ border-top-color:rgba(0,0,0,.08); }
+  html.theme-light .jcc .amt .a{ color:#1a1816; }
+  html.theme-light .jcc .amt .p{ color:#d9664a; }
+  html.theme-light .jcc .nm{ color:#1a1816; }
+  html.theme-light .jcc .dur{ color:#8a8178; }
+  html.theme-light .jcc .chev{ color:#d9664a; }
+  html.theme-light .jcc-body .d{ color:#6b625a; }
+  html.theme-light .jcc-body .d b{ color:#5f574f; }
+  html.theme-light .jcc-body .stp{ color:#5f574f; }
+  html.theme-light .jcc-body .stp b{ color:#d9664a; }
+  html.theme-light .jcc-cta{ background:rgba(217,102,74,.12); border-color:rgba(217,102,74,.40); color:#d9664a; }
+  html.theme-light .jcc-cta:hover{ background:rgba(217,102,74,.20); }
+  html.theme-light .jcc-kakao{ background:rgba(0,0,0,.05); border-color:rgba(0,0,0,.12); color:#5f574f; }
+  html.theme-light .jcc-kakao:hover{ background:rgba(0,0,0,.08); color:#1a1816; }
+  html.theme-light .jcg-sum{ background:rgba(217,102,74,.09); border-color:rgba(217,102,74,.30); }
+  html.theme-light .jcg-sum .l{ color:#6b625a; }
+  html.theme-light .jcg-sum .v{ color:#1a1816; }
+  html.theme-light .jcg-sum .v b{ color:#d9664a; }
+  html.theme-light .jcg-sum .v .pct{ color:#d9664a; }
+  html.theme-light .jcb-foot-cta{ background:#d9664a; color:#fff; }
+  html.theme-light .jcb-foot-cta:hover{ background:#c25a3f; }
+  html.theme-light .jcb-note{ color:#8a8178; }
+  html.theme-light .jcb-closetxt{ color:#8a8178; }
+  html.theme-light .jcb-closetxt:hover{ color:#5f574f; }
+
 </style>
+<script>
+(function(){try{var t=localStorage.getItem('jikt_theme')||'dark';if(t==='light')document.documentElement.classList.add('theme-light');}catch(e){}})();
+function jiktSyncThemeLabel(){var b=document.getElementById('jiktThemeBtn');if(!b)return;var light=document.documentElement.classList.contains('theme-light');var l=b.querySelector('.jt-label');if(l)l.textContent=light?'다크 모드':'라이트 모드';}
+function jiktToggleTheme(){var h=document.documentElement;var light=h.classList.toggle('theme-light');try{localStorage.setItem('jikt_theme',light?'light':'dark');}catch(e){}jiktSyncThemeLabel();}
+document.addEventListener('DOMContentLoaded',jiktSyncThemeLabel);
+</script>
 </head>
 <body>
 <div id="hub-ambient"></div>
@@ -336,6 +460,7 @@
   <div class="hub-title">직트&레이 트레이딩 룸</div>
   <div class="hub-sub" style="font-size:16px;font-weight:700;color:#B0B8C1">수익은 시장이 주고, 손실은 우리가 통제합니다</div>
   <button class="jikt-refresh-btn" onclick="jiktRefresh()"><svg class="refresh-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v6h-6"/></svg>최신 데이터로 업데이트</button>
+  <button class="jikt-theme-btn" id="jiktThemeBtn" onclick="jiktToggleTheme()"><span class="jt-label">라이트 모드</span></button>
 </div>
 
 <div class="hub-flow">
@@ -421,9 +546,9 @@ function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.n
   window.addEventListener('mouseout',function(e){if(!e.relatedTarget)on=false;});
   var GRID=10,DUR=2400,MAXR=300,BAND=34,W=function(){return window.innerWidth;},H=function(){return window.innerHeight;};
   function draw(now){
-    ctx.clearRect(0,0,W(),H());
+    ctx.clearRect(0,0,W(),H());var _L=document.documentElement.classList.contains('theme-light'),C1=_L?'224,138,106':'83,160,255',C2=_L?'217,102,74':'69,147,252';
     gx+=(mx-gx)*0.12;gy+=(my-gy)*0.12;
-    if(on){var g=ctx.createRadialGradient(gx,gy,0,gx,gy,240);g.addColorStop(0,'rgba(83,160,255,0.18)');g.addColorStop(0.4,'rgba(69,147,252,0.07)');g.addColorStop(1,'rgba(69,147,252,0)');ctx.fillStyle=g;ctx.fillRect(gx-240,gy-240,480,480);}
+    if(on){var g=ctx.createRadialGradient(gx,gy,0,gx,gy,240);g.addColorStop(0,'rgba('+C1+',0.18)');g.addColorStop(0.4,'rgba('+C2+',0.07)');g.addColorStop(1,'rgba('+C2+',0)');ctx.fillStyle=g;ctx.fillRect(gx-240,gy-240,480,480);}
     if(on&&now-lastMove<1800&&now-lastSpawn>2000&&trail.length){var tp=trail[0];for(var k=0;k<trail.length;k++){if(now-trail[k].t<=400)break;tp=trail[k];}ripples.push({x:tp.x,y:tp.y,t:now});lastSpawn=now;}
     for(var i=ripples.length-1;i>=0;i--){
       var rp=ripples[i],p=(now-rp.t)/DUR;
@@ -434,7 +559,7 @@ function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.n
         for(var xx=Math.floor((rp.x-R-BAND)/GRID)*GRID;xx<rp.x+R+BAND;xx+=GRID){
           if(xx<0||xx>W())continue;
           var dx=xx-rp.x,dy=yy-rp.y,d=Math.sqrt(dx*dx+dy*dy),off=Math.abs(d-R);
-          if(off<BAND){var a=al*(1-off/BAND)*0.30;if(a>0.015){ctx.fillStyle='rgba(83,160,255,'+a.toFixed(3)+')';ctx.fillRect(xx,yy,GRID-2,GRID-2);}}
+          if(off<BAND){var a=al*(1-off/BAND)*0.30;if(a>0.015){ctx.fillStyle='rgba('+C1+','+a.toFixed(3)+')';ctx.fillRect(xx,yy,GRID-2,GRID-2);}}
         }
       }
     }
