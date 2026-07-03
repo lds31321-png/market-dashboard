@@ -510,9 +510,8 @@ html.theme-light .new-pos{border-color:var(--accent)!important;}
 </style>
 <script>
 (function(){try{var t=localStorage.getItem('jikt_theme')||'dark';if(t==='light')document.documentElement.classList.add('theme-light');}catch(e){}})();
-function jiktSyncThemeLabel(){var b=document.getElementById('jiktThemeBtn');if(!b)return;var light=document.documentElement.classList.contains('theme-light');var l=b.querySelector('.jt-label');if(l)l.textContent=light?'다크 모드':'라이트 모드';}
-function jiktToggleTheme(){var h=document.documentElement;var light=h.classList.toggle('theme-light');try{localStorage.setItem('jikt_theme',light?'light':'dark');}catch(e){}jiktSyncThemeLabel();}
-document.addEventListener('DOMContentLoaded',jiktSyncThemeLabel);
+// 메인(hub) 버튼에서 테마 변경 시 실시간 동기화: 다른 탭에서 jikt_theme 바뀌면 새로고침해 안전 반영
+window.addEventListener('storage',function(e){if(e.key==='jikt_theme'){var want=(e.newValue==='light');var cur=document.documentElement.classList.contains('theme-light');if(want!==cur){location.reload();}}});
 </script>
 </head>
 <body>
@@ -550,7 +549,7 @@ document.addEventListener('DOMContentLoaded',jiktSyncThemeLabel);
     <div class="nav-tab active" onclick="switchTab('t1',this)">포지션 현황</div>
     <div class="nav-tab" onclick="switchTab('t2',this)">매매 내역</div>
     <div class="nav-tab" onclick="switchTab('t3',this)">수익 통계</div>
-    <button class="hdr-theme" id="jiktThemeBtn" onclick="jiktToggleTheme()" style="margin-left:auto;align-self:center;"><span class="jt-label">라이트 모드</span></button><a href="hub.html" class="hdr-home" style="align-self:center;margin-right:28px;">← 메인으로</a>
+    <a href="hub.html" class="hdr-home" style="align-self:center;margin-left:auto;margin-right:28px;">← 메인으로</a>
   </div>
 </div>
 
