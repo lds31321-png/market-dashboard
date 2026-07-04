@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260704-193111">
-<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260704-193111";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
+<meta name="jikt-build" content="20260704-232443">
+<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260704-232443";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
 <script>!function(){try{var t=location.hash||"";if(t.indexOf("token=")>=0){var e=new URLSearchParams(t.replace(/^#/,"")),a=e.get("token"),o=e.get("uid");if(a&&(localStorage.setItem("jikt_token",a),o&&localStorage.setItem("jikt_uid",o),location.hostname.indexOf("github.io")>=0))return void location.replace("../hub.html");try{var i=new URL(location.href);i.hash="",i.searchParams.delete("login"),history.replaceState(null,"",i.pathname+i.search)}catch(t){try{location.hash=""}catch(t){}}}var n=location.hostname.indexOf("github.io")>=0,c=localStorage.getItem("jikt_token");n&&!c&&location.replace("login.html")}catch(t){}}();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -6280,13 +6280,34 @@ body{padding-bottom:0}
   /* C. 점검 카드(1~4): 라벨 위 / 내용 풀폭 아래 (토스식 세로 스택) */
   #page-overview .uvp-face-q{grid-template-columns:1fr !important;gap:7px !important;align-items:stretch !important;}
   #page-overview .uvp-face-q .ql{font-size:14px !important;padding-top:0 !important;}
-  /* D. 모든 점검표/최종진입정보표: 고정폭·줄바꿈 → 가로 잘림 완전 제거 */
-  #page-overview .uvp-ftb{table-layout:fixed !important;width:100% !important;}
-  #page-overview .uvp-ftb th,#page-overview .uvp-ftb td{
-    font-size:11.5px !important;padding:5px 4px !important;
-    white-space:normal !important;word-break:keep-all !important;
-    overflow:hidden !important;text-overflow:ellipsis !important;line-height:1.3 !important;
+  /* D. [토스 재설계 2026-07-04] 점검/진입 표 → 라벨→값 세로 카드 (폰트 14px, 시인성 최우선) */
+  #page-overview .uvp-ftb{display:block !important;width:100% !important;border:none !important;background:transparent !important;table-layout:auto !important;border-collapse:separate !important;}
+  #page-overview .uvp-ftb thead{display:none !important;}
+  #page-overview .uvp-ftb tbody{display:block !important;width:100% !important;}
+  #page-overview .uvp-ftb tr{display:block !important;width:100% !important;background:var(--card2) !important;border:1px solid var(--b1) !important;border-radius:12px !important;padding:2px 13px !important;margin:0 0 10px !important;box-sizing:border-box !important;}
+  #page-overview .uvp-ftb tr[data-ftb-head]{display:none !important;}
+  #page-overview .uvp-ftb td{
+    display:flex !important;justify-content:space-between !important;align-items:baseline !important;gap:14px !important;width:auto !important;
+    border:none !important;border-bottom:1px solid var(--b1) !important;
+    padding:9px 0 !important;font-size:14px !important;font-weight:700 !important;line-height:1.4 !important;
+    white-space:normal !important;word-break:keep-all !important;overflow:visible !important;text-overflow:clip !important;
+    text-align:right !important;color:var(--t1) !important;background:transparent !important;box-sizing:border-box !important;
   }
+  #page-overview .uvp-ftb tr td:last-child{border-bottom:none !important;}
+  #page-overview .uvp-ftb td::before{
+    content:attr(data-label);flex:0 0 auto;text-align:left;
+    color:var(--t2) !important;font-weight:600 !important;font-size:13px !important;white-space:nowrap;
+  }
+  #page-overview .uvp-ftb td[data-ftb-full],#page-overview .uvp-ftb td.note{
+    display:block !important;text-align:center !important;
+    color:var(--t2) !important;font-weight:600 !important;font-size:12.5px !important;padding:8px 0 2px !important;border-bottom:none !important;
+  }
+  #page-overview .uvp-ftb td[data-ftb-full]::before,#page-overview .uvp-ftb td.note::before{content:none !important;}
+  /* face 카드 안의 표도 동일(중앙정렬 !important 제압) */
+  #page-overview .uvp-face-final .uvp-ftb td,#page-overview .uvp-face-q .uvp-ftb td{text-align:right !important;padding:9px 0 !important;}
+  /* E. 차트 캔버스: 컨테이너 폭 안에서 가로 잘림 방지 */
+  #page-overview .chart-w{padding:8px 6px !important;overflow-x:auto !important;-webkit-overflow-scrolling:touch;}
+  #page-overview .chart-w canvas{max-width:100% !important;}
 }
 </style>
 <style>
@@ -6302,5 +6323,6 @@ body{padding-bottom:0}
   }
 }
 </style>
+<script>!function(){function t(t){(t||document).querySelectorAll("#page-overview .uvp-ftb").forEach(function(t){var e=t.rows?[].slice.call(t.rows):[].slice.call(t.querySelectorAll("tr"));if(e.length){var n=e[0],a=[].slice.call(n.children).map(function(t){return(t.textContent||"").trim()});n.setAttribute("data-ftb-head","1"),e.slice(1).forEach(function(t){[].slice.call(t.children).forEach(function(t,e){t.classList.contains("note")||t.hasAttribute("colspan")?t.setAttribute("data-ftb-full","1"):void 0===a[e]||t.hasAttribute("data-label")||t.setAttribute("data-label",a[e])})})}})}function e(){try{t(document)}catch(t){}}window.__ftbLabelize=t,"loading"!==document.readyState?e():document.addEventListener("DOMContentLoaded",e);var n=document.getElementById("page-overview");if(n&&window.MutationObserver){var a=!1;new MutationObserver(function(){a||(a=!0,setTimeout(function(){a=!1;try{t(n)}catch(t){}},80))}).observe(n,{childList:!0,subtree:!0})}}();</script>
 </body>
 </html>
