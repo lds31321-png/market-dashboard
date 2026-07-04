@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260705-003057">
-<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260705-003057";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
+<meta name="jikt-build" content="20260705-013450">
+<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260705-013450";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
 <script>!function(){try{var t=location.hash||"";if(t.indexOf("token=")>=0){var e=new URLSearchParams(t.replace(/^#/,"")),a=e.get("token"),o=e.get("uid");if(a&&(localStorage.setItem("jikt_token",a),o&&localStorage.setItem("jikt_uid",o),location.hostname.indexOf("github.io")>=0))return void location.replace("../hub.html");try{var i=new URL(location.href);i.hash="",i.searchParams.delete("login"),history.replaceState(null,"",i.pathname+i.search)}catch(t){try{location.hash=""}catch(t){}}}var n=location.hostname.indexOf("github.io")>=0,c=localStorage.getItem("jikt_token");n&&!c&&location.replace("login.html")}catch(t){}}();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -6338,6 +6338,44 @@ body{padding-bottom:0}
   #page-overview #uvp-face-chart-slot{width:100% !important;max-width:100% !important;overflow:hidden !important;}
   #page-overview #uvp-face-chart-slot > *,#page-overview #uvp-chart-series,#page-overview [data-uvpwrap]{width:100% !important;max-width:100% !important;}
   #page-overview #uvp-face-chart-slot canvas,#page-overview [data-uvpwrap] canvas{max-width:100% !important;}
+}
+</style>
+<style>
+/* [2026-07-05 v3 토스네이티브] 상세뷰 박스 제거·여백/구분선 중심·중복 통합·헤더 겹침 수정. PC 불변(@media+#page-overview) */
+@media(max-width:640px){
+  /* 헤더: sticky 해제(겹침 방지) + 배경/테두리 제거 */
+  #ov-detail-header{position:static !important;background:transparent !important;border:none !important;box-shadow:none !important;-webkit-backdrop-filter:none !important;backdrop-filter:none !important;padding:8px 0 6px !important;margin-bottom:2px !important;}
+  /* 종합판단 배지줄 제거(중복 + 겹침 원인) */
+  #page-overview .uvp-face-badges{display:none !important;}
+  /* #uvp-face / 권장대응 박스 제거 → 여백 */
+  #page-overview #uvp-face{background:transparent !important;border:none !important;padding:0 !important;}
+  #page-overview #uvp-face-act-box{background:transparent !important;padding:2px 0 18px !important;margin:0 !important;border-bottom:1px solid var(--b1) !important;border-radius:0 !important;}
+  #page-overview #uvp-face-act-box > div{gap:16px !important;}
+  #page-overview #uvp-face-act-cap{font-size:12px !important;color:var(--t3) !important;font-weight:700 !important;margin-bottom:6px !important;}
+  #page-overview #uvp-face-act{font-size:19px !important;line-height:1.35 !important;}
+  #page-overview #uvp-face-act-why{font-size:12.5px !important;color:var(--t3) !important;margin-top:10px !important;word-break:keep-all !important;line-height:1.5 !important;}
+  /* 진입 정보(최종) 제목 */
+  #page-overview #uvp-face-final > div{font-size:16px !important;color:var(--t1) !important;margin:16px 0 4px !important;}
+  /* 중복 제거: 진입 설계(3)·진입 규모(4) 숨김 → '진입 정보'로 통합 */
+  #page-overview #uvp-face-q4{display:none !important;}
+  #page-overview .uvp-face-q:has(#uvp-face-a3){display:none !important;}
+  /* 섹션 라벨 → 토스식 헤더(여백·굵게·번호 숨김) */
+  #page-overview .uvp-face-q{display:block !important;margin:0 !important;}
+  #page-overview .uvp-face-q .ql{display:block !important;font-size:17px !important;font-weight:800 !important;color:var(--t1) !important;padding-top:22px !important;margin-bottom:2px !important;border-top:1px solid var(--b1) !important;white-space:normal !important;}
+  #page-overview .uvp-q-no{display:none !important;}
+  /* 표: 박스 제거 → 얇은 구분선 리스트, 폰트 15px */
+  #page-overview .uvp-ftb tr{background:transparent !important;border:none !important;border-radius:0 !important;padding:0 !important;margin:0 !important;}
+  #page-overview .uvp-ftb td{border:none !important;border-bottom:1px solid var(--b1) !important;padding:13px 0 !important;font-size:15px !important;}
+  #page-overview .uvp-ftb td::before{font-size:15px !important;color:var(--t2) !important;font-weight:400 !important;}
+  #page-overview .uvp-ftb tr td:last-child{border-bottom:1px solid var(--b1) !important;}
+  /* 진입 정보 콜/풋 = 카드 제목화 */
+  #page-overview #uvp-face-final .uvp-ftb td[data-label="구분"]{font-size:16px !important;font-weight:800 !important;color:var(--t1) !important;padding:18px 0 4px !important;border-bottom:none !important;}
+  /* 차트 위 여백 */
+  #page-overview #uvp-face-chart-slot{margin-top:18px !important;}
+  /* 차트 섹션: 박스 제거 + 장황한 설명/달력 줄 제거 */
+  #page-overview #uvp-chart-series.uxc-card{background:transparent !important;border:none !important;padding:0 !important;box-shadow:none !important;}
+  #page-overview .uxc-cap{display:none !important;}
+  #page-overview #uvp-chart1-info{display:none !important;}
 }
 </style>
 <style>
