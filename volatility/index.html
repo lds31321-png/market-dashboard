@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260704-232443">
-<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260704-232443";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
+<meta name="jikt-build" content="20260705-003057">
+<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260705-003057";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
 <script>!function(){try{var t=location.hash||"";if(t.indexOf("token=")>=0){var e=new URLSearchParams(t.replace(/^#/,"")),a=e.get("token"),o=e.get("uid");if(a&&(localStorage.setItem("jikt_token",a),o&&localStorage.setItem("jikt_uid",o),location.hostname.indexOf("github.io")>=0))return void location.replace("../hub.html");try{var i=new URL(location.href);i.hash="",i.searchParams.delete("login"),history.replaceState(null,"",i.pathname+i.search)}catch(t){try{location.hash=""}catch(t){}}}var n=location.hostname.indexOf("github.io")>=0,c=localStorage.getItem("jikt_token");n&&!c&&location.replace("login.html")}catch(t){}}();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -6165,6 +6165,7 @@ html.jikt-locked-chat #chatbase-bubble-button,html.jikt-locked-chat div[id^="cha
 <style>
 #protect-footer{position:static;margin-top:auto;background:rgba(var(--bg-rgb),0.96);border-top:1px solid var(--b2);color:var(--t1);font-size:15px;text-align:center;padding:7px 14px;z-index:100;font-family:'Noto Sans KR',sans-serif;line-height:1.55;user-select:none;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 #protect-footer .pf-row{display:block;margin:1px 0}
+#protect-footer .pf-seg{white-space:nowrap;display:inline-block}
 #protect-footer .pf-biz{color:var(--t1)}
 #protect-footer .pf-disclaim{color:var(--t1);font-weight:600}
 #protect-footer .pf-copy{color:var(--t1);opacity:.7}
@@ -6173,7 +6174,7 @@ html.jikt-locked-chat #chatbase-bubble-button,html.jikt-locked-chat div[id^="cha
 #protect-footer .sep{color:var(--t3);margin:0 6px}
 body{padding-bottom:0}
 @media print{#protect-footer{display:none}body{padding-bottom:0}}
-@media (max-width:700px){#protect-footer{font-size:11px;padding:9px 12px;line-height:1.65}body{padding-bottom:0}#protect-footer .sep{margin:0 4px;color:var(--t3)}#protect-footer .pf-row{display:block;margin:4px 0}#protect-footer .pf-link{margin-left:4px;display:inline-block}}
+@media (max-width:700px){#protect-footer{font-size:10.5px;padding:10px 14px;line-height:1.75;letter-spacing:-.01em}body{padding-bottom:0}#protect-footer .sep{margin:0 5px;color:var(--t3)}#protect-footer .pf-row{display:block;margin:5px 0;word-break:keep-all}#protect-footer .pf-link{margin-left:5px;display:inline-block}}
 
 /* 51차: 종합판단 점검표 가독성 — 테두리 제거·중앙정렬·영역 배경 그룹 */
 .uvp-face-q .uvp-ftb td{border:none!important;text-align:center!important;padding:6px 8px!important}
@@ -6238,7 +6239,7 @@ body{padding-bottom:0}
 .uvp-face-q .uvp-ftb tr:nth-child(2) td{padding-top:5px!important}
 </style>
 <div id="protect-footer">
-  <div class="pf-row pf-biz">© 2026 <b>직트</b><span class="sep">|</span>사업자 782-08-02561<span class="sep">|</span>통신판매 제2025-고양일산동-0262호<span class="sep">|</span>대표 임대성<span class="sep">|</span>고양시 일산동구 중앙로 1080, 402동 4층 402-S91호<span class="sep">|</span>문의 010-2649-0502</div>
+  <div class="pf-row pf-biz"><span class="pf-seg">© 2026 <b>직트</b></span><span class="sep">|</span><span class="pf-seg">사업자 782-08-02561</span><span class="sep">|</span><span class="pf-seg">통신판매 제2025-고양일산동-0262호</span><span class="sep">|</span><span class="pf-seg">대표 임대성</span><span class="sep">|</span><span class="pf-seg">고양시 일산동구 중앙로 1080, 402동 4층 402-S91호</span><span class="sep">|</span><span class="pf-seg">문의 010-2649-0502</span></div>
   <div class="pf-row pf-disclaim">⚠️ 투자 참고용 분석 도구이며 매수·매도 추천이 아닙니다. 투자 판단·손실 책임은 본인에게 있으며 수익을 보장하지 않습니다.</div>
   <div class="pf-row pf-copy">무단 복제·배포는 저작권법으로 보호됩니다<span class="sep">|</span><a class="pf-link" href="./terms.html" target="_blank" rel="noopener noreferrer">이용약관</a><span class="sep">|</span><a class="pf-link" href="./refund.html" target="_blank" rel="noopener noreferrer">환불정책</a><span class="sep">|</span><a class="pf-link" href="./privacy.html" target="_blank" rel="noopener noreferrer">개인정보처리방침</a></div>
 </div>
@@ -6308,6 +6309,35 @@ body{padding-bottom:0}
   /* E. 차트 캔버스: 컨테이너 폭 안에서 가로 잘림 방지 */
   #page-overview .chart-w{padding:8px 6px !important;overflow-x:auto !important;-webkit-overflow-scrolling:touch;}
   #page-overview .chart-w canvas{max-width:100% !important;}
+}
+</style>
+<style>
+/* [2026-07-04 v2 토스] 시장현황 상세뷰 정리 — 헤더 압축·상세분석 제거·최종진입 밸런스·차트 폭. PC 불변(@media+#page-overview 한정) */
+@media(max-width:640px){
+  /* F. 상세뷰 헤더: 한 줄 압축, 우측 스텝이동 버튼군 숨김(줄바꿈 제거) */
+  #ov-detail-header{flex-wrap:nowrap !important;gap:8px !important;padding:10px 13px !important;}
+  #ov-detail-header > div:last-child{display:none !important;}
+  #ov-detail-header > div{flex-wrap:nowrap !important;min-width:0 !important;overflow:hidden;}
+  #page-overview .ov-detail-inst-name{font-size:18px !important;}
+  #page-overview .ov-detail-inst-code{font-size:12px !important;margin-top:0 !important;white-space:nowrap !important;}
+  /* G. 4단계 상세 분석(장황) 모바일 완전 제거 */
+  #page-overview #uvp-face-evi-btn{display:none !important;}
+  #page-overview #uvp-evidence{display:none !important;}
+  #page-overview .uvp-q-help-btn{display:none !important;}
+  /* H. 권장 대응·근거: 폰트 정리 + 깔끔한 줄바꿈 */
+  #page-overview #uvp-face-act-cap{font-size:13px !important;}
+  #page-overview #uvp-face-act{font-size:16px !important;line-height:1.5 !important;}
+  #page-overview #uvp-face-act-why{word-break:keep-all !important;line-height:1.5 !important;}
+  /* I. 최종 진입 정보 밸런스: 제목 축소·부제 숨김, 중복 종목 숨김, 구분을 카드 제목화 */
+  #page-overview #uvp-face-final > div{font-size:15px !important;margin-bottom:8px !important;}
+  #page-overview #uvp-face-final > div > span{display:none !important;}
+  #page-overview #uvp-face-final .uvp-ftb td[data-label="종목"]{display:none !important;}
+  #page-overview #uvp-face-final .uvp-ftb td[data-label="구분"]{justify-content:flex-start !important;font-size:15px !important;color:var(--t1) !important;padding:6px 0 6px !important;}
+  #page-overview #uvp-face-final .uvp-ftb td[data-label="구분"]::before{display:none !important;}
+  /* J. 차트: 폭 100%·가로 잘림 제거(무료 대시보드 방식) */
+  #page-overview #uvp-face-chart-slot{width:100% !important;max-width:100% !important;overflow:hidden !important;}
+  #page-overview #uvp-face-chart-slot > *,#page-overview #uvp-chart-series,#page-overview [data-uvpwrap]{width:100% !important;max-width:100% !important;}
+  #page-overview #uvp-face-chart-slot canvas,#page-overview [data-uvpwrap] canvas{max-width:100% !important;}
 }
 </style>
 <style>
