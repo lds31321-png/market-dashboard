@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260705-174246">
-<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260705-174246";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
+<meta name="jikt-build" content="20260705-195911">
+<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260705-195911";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
 <script>!function(){try{var t=location.hash||"";if(t.indexOf("token=")>=0){var e=new URLSearchParams(t.replace(/^#/,"")),a=e.get("token"),o=e.get("uid");if(a&&(localStorage.setItem("jikt_token",a),o&&localStorage.setItem("jikt_uid",o),location.hostname.indexOf("github.io")>=0))return void location.replace("../hub.html");try{var i=new URL(location.href);i.hash="",i.searchParams.delete("login"),history.replaceState(null,"",i.pathname+i.search)}catch(t){try{location.hash=""}catch(t){}}}var n=location.hostname.indexOf("github.io")>=0,c=localStorage.getItem("jikt_token");n&&!c&&location.replace("login.html")}catch(t){}}();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -4587,6 +4587,10 @@ input[type=range] { background: transparent !important; border: none !important;
   #page-strategy .st-cardhd>div{flex-wrap:wrap;}
   #page-strategy .st-substep{display:none !important;}
   #page-strategy .btn-q{display:none !important;}
+  /* [토스 2026-07-05 1단계] 한국어 단어 단위 줄바꿈 + 새로고침 숨김 + 범례 폰트 */
+  #page-strategy{word-break:keep-all;}
+  #page-strategy .st-refresh-btn{display:none !important;}
+  #page-strategy .st-legend{font-size:13px !important;line-height:1.7;}
 }
 </style>
 <!-- ══════════════════════════════════════════════════════════════ -->
@@ -4630,7 +4634,7 @@ input[type=range] { background: transparent !important; border: none !important;
         <span class="st-substep" style="font-size:15px;font-weight:800;color:var(--cyan);background:rgba(var(--cyan-rgb),.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(var(--cyan-rgb),.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">1-1</span>
         <span style="font-size:18px;font-weight:800;color:var(--t1)">종합 순위표</span>
         <button onclick="(function(){var b=document.getElementById('desc-st-a1');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q" title="이 영역 안내 펼치기" style="margin-left:2px">1</button>
-        <span style="font-size:15px;color:var(--t2);font-weight:600">
+        <span class="st-legend" style="font-size:15px;color:var(--t2);font-weight:600">
           <span style="color:var(--t3);font-weight:700"></span> 적극(1~4위)&nbsp;
           <span style="color:var(--orange);font-weight:700"></span> 신중(5~8위)&nbsp;
           <span style="color:var(--purple);font-weight:700"></span> 비권장(9~11위)
@@ -4638,7 +4642,7 @@ input[type=range] { background: transparent !important; border: none !important;
       </div>
       <div style="display:flex;gap:6px">
         <span style="font-size:15px;color:var(--t3);font-family:var(--mono)" id="st-rank-date-tag">admin에서 순위 데이터 입력 후 표시</span>
-        <button onclick="stRefreshRank()"
+        <button onclick="stRefreshRank()" class="st-refresh-btn"
           style="padding:4px 10px;border-radius:5px;border:1px solid rgba(var(--cyan-rgb),.35);background:rgba(var(--cyan-rgb),.10);color:var(--cyan);font-size:15px;cursor:pointer;transition:all .15s"
           onmouseover="this.style.color='var(--cyan)';this.style.borderColor='rgba(var(--cyan-rgb),.35)'"
           onmouseout="this.style.color='var(--t3)';this.style.borderColor='rgba(var(--cyan-rgb),.20)'">↻ 새로고침</button>
@@ -4696,7 +4700,7 @@ input[type=range] { background: transparent !important; border: none !important;
       </div>
       <div style="display:flex;gap:6px">
         <span style="font-size:15px;color:var(--t3);font-family:var(--mono)" id="st-detail-date-tag">데이터 없음</span>
-        <button onclick="stRefreshDetail()"
+        <button onclick="stRefreshDetail()" class="st-refresh-btn"
           style="padding:4px 10px;border-radius:5px;border:1px solid rgba(var(--cyan-rgb),.35);background:rgba(var(--cyan-rgb),.10);color:var(--cyan);font-size:15px;cursor:pointer;transition:all .15s"
           onmouseover="this.style.color='var(--cyan)';this.style.borderColor='rgba(var(--cyan-rgb),.35)'"
           onmouseout="this.style.color='var(--t3)';this.style.borderColor='rgba(var(--cyan-rgb),.20)'">↻ 새로고침</button>
