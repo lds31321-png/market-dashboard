@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260705-172601">
-<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260705-172601";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
+<meta name="jikt-build" content="20260705-174246">
+<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260705-174246";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
 <script>!function(){try{var t=location.hash||"";if(t.indexOf("token=")>=0){var e=new URLSearchParams(t.replace(/^#/,"")),a=e.get("token"),o=e.get("uid");if(a&&(localStorage.setItem("jikt_token",a),o&&localStorage.setItem("jikt_uid",o),location.hostname.indexOf("github.io")>=0))return void location.replace("../hub.html");try{var i=new URL(location.href);i.hash="",i.searchParams.delete("login"),history.replaceState(null,"",i.pathname+i.search)}catch(t){try{location.hash=""}catch(t){}}}var n=location.hostname.indexOf("github.io")>=0,c=localStorage.getItem("jikt_token");n&&!c&&location.replace("login.html")}catch(t){}}();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -4581,6 +4581,13 @@ input[type=range] { background: transparent !important; border: none !important;
 #page-strategy .st-rank-row-bottom { background: rgba(148,163,184,.03); }
 /* 게이지 기준선 */
 #page-strategy .gauge-marker { background: rgba(0,0,0,.09); }
+/* [토스 2026-07-05] 매매전략 카드 헤더 — 모바일 세로쪼개짐 해결(PC 불변, @media만) */
+@media(max-width:640px){
+  #page-strategy .st-cardhd{flex-direction:column !important;align-items:flex-start !important;gap:10px !important;}
+  #page-strategy .st-cardhd>div{flex-wrap:wrap;}
+  #page-strategy .st-substep{display:none !important;}
+  #page-strategy .btn-q{display:none !important;}
+}
 </style>
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!--  매매 전략 탭                                                  -->
@@ -4618,9 +4625,9 @@ input[type=range] { background: transparent !important; border: none !important;
   </div>
 
   <div class="card" id="st-card-b1" style="border:1.5px solid rgba(148,163,184,.2)">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid rgba(148,163,184,.15)">
+    <div class="st-cardhd" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid rgba(148,163,184,.15)">
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:15px;font-weight:800;color:var(--cyan);background:rgba(var(--cyan-rgb),.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(var(--cyan-rgb),.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">1-1</span>
+        <span class="st-substep" style="font-size:15px;font-weight:800;color:var(--cyan);background:rgba(var(--cyan-rgb),.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(var(--cyan-rgb),.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">1-1</span>
         <span style="font-size:18px;font-weight:800;color:var(--t1)">종합 순위표</span>
         <button onclick="(function(){var b=document.getElementById('desc-st-a1');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q" title="이 영역 안내 펼치기" style="margin-left:2px">1</button>
         <span style="font-size:15px;color:var(--t2);font-weight:600">
@@ -4680,9 +4687,9 @@ input[type=range] { background: transparent !important; border: none !important;
   </div>
 
   <div class="card" id="st-card-c1" style="border:1.5px solid rgba(255,255,255,.1)">
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid rgba(255,255,255,.1)">
+    <div class="st-cardhd" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid rgba(255,255,255,.1)">
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:15px;font-weight:800;color:var(--cyan);background:rgba(var(--cyan-rgb),.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(var(--cyan-rgb),.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">2-1</span>
+        <span class="st-substep" style="font-size:15px;font-weight:800;color:var(--cyan);background:rgba(var(--cyan-rgb),.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(var(--cyan-rgb),.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">2-1</span>
         <span style="font-size:15px;font-weight:700;color:var(--t1)">종목별 상세 현황</span>
         <span style="font-size:15px;color:var(--t3)">종목명 클릭 → 월물별 펼치기</span>
         <button onclick="(function(){var b=document.getElementById('desc-st-b1');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q" title="이 영역 안내 펼치기" style="margin-left:2px">2</button>
@@ -4888,7 +4895,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <!-- D 영역 본문 카드 (D-1 서브 배지 + 가이드 + 본문) -->
   <div class="card" style="background:var(--card);border:1px solid rgba(var(--cyan-rgb),.18);border-radius:10px;padding:16px 18px">
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-      <span style="font-size:15px;font-weight:800;color:var(--cyan);background:rgba(var(--cyan-rgb),.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(var(--cyan-rgb),.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">4-1</span>
+      <span class="st-substep" style="font-size:15px;font-weight:800;color:var(--cyan);background:rgba(var(--cyan-rgb),.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(var(--cyan-rgb),.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">4-1</span>
       <span style="font-size:15px;font-weight:700;color:var(--t1)">시장 위험 단계 카드</span>
       <button onclick="(function(){var b=document.getElementById('desc-st-c1');b.style.display=b.style.display==='none'?'block':'none';})()" class="btn-q" title="이 영역 안내 펼치기" style="margin-left:2px">3</button>
     </div>
@@ -4948,7 +4955,7 @@ input[type=range] { background: transparent !important; border: none !important;
   <section id="uxcPhaseNoteSection" data-47차-목적="시장국면변동사유-매매전략탭하단" style="margin:24px 0 16px;background:var(--card);border:1px solid rgba(var(--cyan-rgb),.18);border-radius:12px;padding:14px 18px">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;gap:10px;flex-wrap:wrap">
       <div style="display:flex;align-items:center;gap:10px">
-        <span style="font-size:15px;font-weight:800;color:var(--cyan);background:rgba(var(--cyan-rgb),.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(var(--cyan-rgb),.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">4-2</span>
+        <span class="st-substep" style="font-size:15px;font-weight:800;color:var(--cyan);background:rgba(var(--cyan-rgb),.15);padding:4px 12px;border-radius:4px;border:1px solid rgba(var(--cyan-rgb),.30);animation:pulse-t2 2.4s ease-in-out infinite 0s">4-2</span>
         <span style="font-size:15px;font-weight:800;color:var(--t1)">📝 시장국면 변동 사유</span>
       </div>
       <span id="uxc-phase-note-date" style="font-size:15px;color:var(--t3);font-family:var(--mono)">데이터 없음</span>
