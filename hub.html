@@ -450,13 +450,13 @@
   @media (max-width:640px){
     /* 부제 삭제 */
     .hub-sub{display:none !important;}
-    /* 로고 표시(작게) */
-    .hub-logo{display:block !important;font-size:11px !important;letter-spacing:.12em !important;margin-bottom:8px !important;}
+    /* 영어 로고 삭제(겹침 원인) */
+    .hub-logo{display:none !important;}
     /* 최신 데이터 버튼 중앙 유지 */
     .jikt-refresh-btn{margin:0 auto !important;}
-    /* 라이트/다크 토글 → 우측 상단 작은 버튼 */
-    .hub-header{position:relative !important;}
-    .jikt-theme-btn{position:absolute !important;top:0 !important;right:0 !important;margin:0 !important;padding:5px 11px !important;font-size:11px !important;border-radius:999px !important;animation:none !important;z-index:20 !important;}
+    /* 라이트/다크 토글 → 우측 상단 작은 버튼 (상단 여백 확보로 제목과 겹침 방지, 폰 폭 무관) */
+    .hub-header{position:relative !important;padding-top:30px !important;}
+    .jikt-theme-btn{position:absolute !important;top:2px !important;right:0 !important;margin:0 !important;padding:4px 9px !important;font-size:10.5px !important;border-radius:999px !important;animation:none !important;z-index:20 !important;}
     /* 쿠폰 카드: 세로 스택 + 가격 위계 + CTA 버튼 */
     .jcb-banner{flex-direction:column !important;align-items:stretch !important;gap:9px !important;animation:none !important;padding:14px 15px !important;}
     .jcb-banner .tx{gap:8px !important;}
