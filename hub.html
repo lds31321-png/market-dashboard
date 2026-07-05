@@ -443,6 +443,32 @@
   html.theme-light .jcb-closetxt{ color:#8a8178; }
   html.theme-light .jcb-closetxt:hover{ color:#5f574f; }
 
+  /* [2026-07-05 토스 메인 재설계] 쿠폰 아이콘 제목 옆 정렬 (양 테마 공통) */
+  .jcb-banner .t{display:inline-flex;align-items:center;gap:8px;}
+  .jcb-banner .t .ic{color:#3182F6;flex-shrink:0;line-height:0;}
+  .jcb-banner .t .ic svg{width:20px;height:20px;}
+  @media (max-width:640px){
+    /* 부제 삭제 */
+    .hub-sub{display:none !important;}
+    /* 로고 표시(작게) */
+    .hub-logo{display:block !important;font-size:11px !important;letter-spacing:.12em !important;margin-bottom:8px !important;}
+    /* 최신 데이터 버튼 중앙 유지 */
+    .jikt-refresh-btn{margin:0 auto !important;}
+    /* 라이트/다크 토글 → 우측 상단 작은 버튼 */
+    .hub-header{position:relative !important;}
+    .jikt-theme-btn{position:absolute !important;top:0 !important;right:0 !important;margin:0 !important;padding:5px 11px !important;font-size:11px !important;border-radius:999px !important;animation:none !important;z-index:20 !important;}
+    /* 쿠폰 카드: 세로 스택 + 가격 위계 + CTA 버튼 */
+    .jcb-banner{flex-direction:column !important;align-items:stretch !important;gap:9px !important;animation:none !important;padding:14px 15px !important;}
+    .jcb-banner .tx{gap:8px !important;}
+    .jcb-banner .t{font-size:15px !important;}
+    .jcb-banner .s br{display:none !important;}
+    .jcb-banner .s .sep-dot{display:inline !important;}
+    .jcb-old{text-decoration:line-through;color:#9aa3ad;}
+    .jcb-new{font-weight:800;color:#fff;}
+    html.theme-light .jcb-new{color:#1a1816;}
+    .jcb-banner .go{margin:0 !important;width:100% !important;background:#3182F6 !important;color:#fff !important;border-radius:10px !important;padding:11px !important;text-align:center !important;font-size:14px !important;}
+  }
+
 </style>
 <script>
 (function(){try{var t=localStorage.getItem('jikt_theme')||'dark';if(t==='light')document.documentElement.classList.add('theme-light');}catch(e){}})();
@@ -476,8 +502,7 @@ document.addEventListener('DOMContentLoaded',jiktSyncThemeLabel);
 </div>
 
 <div class="jcb-banner" id="jcb-banner" role="button" tabindex="0">
-  <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8z"/><path d="M14 6v12"/></svg></span>
-  <span class="tx"><span class="t">트레이딩 룸 <b>최대 65% 할인</b>받기</span><span class="s">정가 200,000원 → 최저 70,000원<span class="sep-dot"> · </span><br>쿠폰 합산 적용</span></span>
+  <span class="tx"><span class="t"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8z"/><path d="M14 6v12"/></svg></span>트레이딩 룸 <b>최대 65% 할인</b></span><span class="s">정가 <span class="jcb-old">200,000원</span> → 최저 <span class="jcb-new">70,000원</span><span class="sep-dot"> · </span>쿠폰 합산</span></span>
   <span class="go">쿠폰 안내 보기 →</span>
 </div>
 
