@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260707-110810">
-<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260707-110810";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
+<meta name="jikt-build" content="20260707-115208">
+<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260707-115208";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
 <script>!function(){try{var t=location.hash||"";if(t.indexOf("token=")>=0){var e=new URLSearchParams(t.replace(/^#/,"")),a=e.get("token"),o=e.get("uid");if(a&&(localStorage.setItem("jikt_token",a),o&&localStorage.setItem("jikt_uid",o),location.hostname.indexOf("github.io")>=0))return void location.replace("../hub.html");try{var i=new URL(location.href);i.hash="",i.searchParams.delete("login"),history.replaceState(null,"",i.pathname+i.search)}catch(t){try{location.hash=""}catch(t){}}}var n=location.hostname.indexOf("github.io")>=0,c=localStorage.getItem("jikt_token");n&&!c&&location.replace("login.html")}catch(t){}}();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -6567,11 +6567,12 @@ body{padding-bottom:0}
     display:flex !important; flex-direction:column !important;
     gap:8px !important; width:100% !important;
   }
-  /* 각 서브카드: 전체폭 카드 형태(패딩/배경/라운드/좌정렬) */
+  /* 각 서브카드: 전체폭 카드 형태(패딩/배경/라운드/좌정렬).
+     [batch3 #1] 세로 패딩 축소(11px) → 중앙 여백 줄이고 좌정렬 스캔성 강화. */
   #page-position #pt-margin-status > div > div:first-child > div{
     width:100% !important; box-sizing:border-box !important;
     flex:none !important; min-width:0 !important;
-    padding:14px 16px !important; margin:0 !important;
+    padding:11px 16px !important; margin:0 !important;
     background:var(--card) !important;
     border:1px solid var(--b1) !important; border-radius:12px !important;
     text-align:left !important; align-items:flex-start !important;
@@ -6580,21 +6581,86 @@ body{padding-bottom:0}
   #page-position #pt-margin-status > div > div:first-child > div > div{
     text-align:left !important; width:100% !important;
   }
+  /* [batch3 #1] 라벨 12px, 값 21px, 서브 11.5px — 좌정렬 타이트 Toss 카드 */
   #page-position #pt-margin-status > div > div:first-child > div > div:first-child{
-    font-size:12.5px !important; color:var(--t3) !important; font-weight:600 !important;
-    margin-bottom:4px !important; line-height:1.3 !important;
+    font-size:12px !important; color:var(--t3) !important; font-weight:600 !important;
+    margin-bottom:3px !important; line-height:1.3 !important;
   }
   #page-position #pt-margin-status > div > div:first-child > div > div:nth-child(2){
-    font-size:22px !important; font-weight:800 !important; line-height:1.2 !important;
+    font-size:21px !important; font-weight:800 !important; line-height:1.15 !important;
     color:var(--t1) !important;
   }
   #page-position #pt-margin-status > div > div:first-child > div > div:nth-child(3){
-    font-size:12px !important; color:var(--t3) !important; font-weight:500 !important;
-    margin-top:4px !important; line-height:1.35 !important;
+    font-size:11.5px !important; color:var(--t3) !important; font-weight:500 !important;
+    margin-top:3px !important; line-height:1.3 !important;
   }
   /* 진행바 블록(두 번째 자식): 전체폭 + 상단 여백 */
   #page-position #pt-margin-status > div > div:nth-child(2){
-    width:100% !important; box-sizing:border-box !important; margin-top:10px !important;
+    width:100% !important; box-sizing:border-box !important; margin-top:12px !important;
+  }
+  /* [batch3 #2] 진행바 라벨행(0%/목표/위험/100%) — 폰트 축소해 정렬 유지 */
+  #page-position #pt-margin-status > div > div:nth-child(2) > div:first-child{
+    font-size:12px !important;
+  }
+  /* [batch3 #2] 진행바 트랙(두께 up) — 더 시각적으로. JS가 채우는 width는 그대로. */
+  #page-position #pt-margin-status > div > div:nth-child(2) > div:nth-child(2){
+    height:13px !important;
+  }
+  /* [batch3 #3] 가이드 범례 축약: 작은 2줄 legend(11.5px, t3, tight) */
+  #page-position #pt-margin-status > div > div:nth-child(2) > div:nth-child(3){
+    gap:4px 12px !important; margin-top:8px !important;
+    font-size:11.5px !important; line-height:1.35 !important;
+  }
+  #page-position #pt-margin-status > div > div:nth-child(2) > div:nth-child(3) > span{
+    font-size:11.5px !important; color:var(--t3) !important;
+  }
+
+  /* ── [batch3 2026-07-07] 추가 모바일 정리/리디자인 ─────────────────── */
+
+  /* [batch3 #4] 생존경보 필터(#pt-ocl-alert-badge): '생존경보' 라벨은 윗줄 전체폭,
+     [전체 자동 연동] 버튼 + [리스크 기준] details가 같은 줄에 나란히. 버튼 패딩/폰트 축소. */
+  #page-position #pt-ocl-alert-badge{ align-items:center !important; column-gap:8px !important; }
+  #page-position #pt-ocl-alert-badge > span:first-child{
+    flex:1 0 100% !important; margin-bottom:2px !important;   /* 라벨 → 전체폭(윗줄) */
+  }
+  #page-position #pt-ocl-alert-badge > button{
+    font-size:13px !important; padding:5px 10px !important;
+    flex:0 1 auto !important; white-space:nowrap !important;
+  }
+  #page-position #pt-ocl-alert-badge > details{
+    margin-left:0 !important; flex:0 1 auto !important;
+  }
+  #page-position #pt-ocl-alert-badge > details > summary{
+    font-size:13px !important; padding:5px 10px !important; white-space:nowrap !important;
+  }
+  /* 버튼-details 사이 빈 span(간격용)은 접어서 두 버튼이 한 줄에 붙게 */
+  #page-position #pt-ocl-alert-badge > span:nth-child(3){ display:none !important; }
+
+  /* [batch3 #5] 매트릭스 표(#pt-master-body) 값열 폭 균등화.
+     콜매도/풋매도 등 쌍열을 동일 폭으로 고정하고, '진입후 …' 뱃지는 아래로 wrap 허용.
+     → 콜매도 열만 넓어지던 불균형 해소. 종목(첫열) 고정은 기존 규칙 유지. */
+  #page-position #pt-master-body table td:not(:first-child),
+  #page-position #pt-master-body table th:not(:first-child){
+    width:88px !important; min-width:88px !important; max-width:88px !important;
+    box-sizing:border-box !important;
+  }
+  #page-position #pt-master-body table td:not(:first-child){
+    white-space:normal !important;   /* 값열은 wrap 허용(첫열 nowrap은 기존 규칙 유지) */
+  }
+  #page-position #pt-master-body table td:not(:first-child) > div{
+    white-space:normal !important;   /* '진입후 1.12%' 뱃지가 셀 폭 안에서 아래로 접히게 */
+  }
+
+  /* [batch3 #8] '총 추가 노출 …' 박스(#pt-sim-body 내): 좌정렬·전체폭·wrap 허용 → 우측 잘림 방지.
+     (id 없어 CSS 구조 선택 어려워 아래 <script>에서 인라인 적용. 여긴 보강용 안전규칙만.) */
+}
+
+/* [batch3 #6] 스크롤 힌트 파란색+큰 폰트로 재스타일 — @media 안에서 기존 .rd07-scroll-hint 규칙을
+   덮어쓰기 위해 별도 @media 블록(뒤에 와서 우선). 넛지 애니메이션(rd07HintNudge)은 유지. */
+@media(max-width:640px){
+  #page-position .rd07-scroll-hint{
+    color:var(--cyan) !important; font-size:14px !important; font-weight:700 !important;
+    letter-spacing:.03em !important; margin:2px 0 8px !important;
   }
 }
 /* [batch2 #7] 스크롤 힌트 넛지 keyframes — @media 밖(참조는 모바일에서만 적용됨). PC 무영향. */
@@ -6651,7 +6717,9 @@ body{padding-bottom:0}
       '매매 비중 · 위험노출 · 경보단계',                  /* 6 */
       '진입 예정 종목 추가 →',                           /* 7 (C테이블 가이드 박스; '포지션 추가'와 구분) */
       '필터 조건으로 단계별 카드 조회',                   /* 9 */
-      '위험 단계 카드만 표시'                             /* 10 */
+      '위험 단계 카드만 표시',                            /* 10 */
+      '진입 예정 포지션 추가 → C 테이블'                  /* [batch3 #7] 진입 시뮬(#pt-sec-e) 별도 가이드 DIV.
+                                                            live DOM 확인: matchCount=1, leaf DIV, 타이틀/데이터 아님 */
     ];
 
     function runHide(){
@@ -6673,16 +6741,29 @@ body{padding-bottom:0}
         for(var s=0;s<spans.length;s++){ if(ownText(spans[s])==='통합 뷰') hideEl(spans[s]); }
       }catch(e){}
 
-      /* [batch2 #9] '총 추가 노출' 박스는 이제 '보이게' 유지 — 이전 숨김 로직 제거.
-         (CSS/JS로 재노출 강제하지 않고, 그냥 건드리지 않음. 혹시 과거에 숨겨졌다면 아래서 복구) */
+      /* [batch2 #9 / batch3 #8] '총 추가 노출 …' 박스: 보이게 유지 + 좌정렬·전체폭·wrap.
+         id가 없어 CSS 구조선택이 취약 → 여기서 인라인 적용(멱등: dataset.rd08la로 1회만).
+         과거 숨김(rd07hid) 흔적 있으면 복구. 우측 잘림 방지. */
       try{
         var sim9=document.getElementById('pt-sim-body');
         if(sim9){
           var ds9=sim9.querySelectorAll('div');
           for(var d9=0;d9<ds9.length;d9++){
             var dv9=ds9[d9];
-            if(ownText(dv9).indexOf('총 추가 노출')>=0 && dv9.dataset && dv9.dataset.rd07hid==='1'){
-              dv9.style.display=''; dv9.dataset.rd07hid='';   /* 과거 숨김 복구 */
+            if(ownText(dv9).indexOf('총 추가 노출')>=0){
+              if(dv9.dataset && dv9.dataset.rd07hid==='1'){
+                dv9.style.display=''; dv9.dataset.rd07hid='';   /* 과거 숨김 복구 */
+              }
+              if(mq.matches && dv9.dataset && dv9.dataset.rd08la!=='1'){
+                dv9.style.textAlign='left';
+                dv9.style.width='100%';
+                dv9.style.boxSizing='border-box';
+                dv9.style.whiteSpace='normal';
+                dv9.style.wordBreak='keep-all';
+                dv9.style.marginLeft='0';
+                dv9.style.marginRight='0';
+                dv9.dataset.rd08la='1';
+              }
             }
           }
         }
