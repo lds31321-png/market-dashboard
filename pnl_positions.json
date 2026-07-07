@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_updated": "2026-07-06",
+    "last_updated": "2026-07-07",
     "base_currency": "USD",
     "exchange_rate": 1500,
     "total_deposit_krw": 50000000,
@@ -69,6 +69,346 @@
   },
   "positions": [
     {
+      "id": "p176",
+      "number": 176,
+      "sub": null,
+      "shared_date": "2026-07-07",
+      "status": "active",
+      "notion_url": "",
+      "strategy_type": "strangle",
+      "underlying": "골드",
+      "underlying_en": "Gold",
+      "expiry_month": "08월물",
+      "expiry_date": "2026-07-28",
+      "current_price": 3990.2,
+      "legs": [
+        {
+          "type": "put_sell",
+          "strike": 3370.0,
+          "contracts": 1,
+          "premium": 110.0,
+          "current_price_pt": 1.1
+        },
+        {
+          "type": "call_sell",
+          "strike": 4890.0,
+          "contracts": 1,
+          "premium": 100.0,
+          "current_price_pt": 1.0
+        }
+      ],
+      "total_premium": 210.0,
+      "margin": 5226,
+      "margin_krw": 7839000,
+      "profit_scenarios": [],
+      "expected_return_pct": 4.02,
+      "monthly_return_pct": 5.74,
+      "current_pnl": 0,
+      "memo": "",
+      "chart_data": {
+        "dates": [
+          "2026/06/17",
+          "2026/06/18",
+          "2026/06/22",
+          "2026/06/23",
+          "2026/06/24",
+          "2026/06/25",
+          "2026/06/26",
+          "2026/06/29",
+          "2026/06/30"
+        ],
+        "closes": [
+          4381.4,
+          4245.9,
+          4202.7,
+          4149.4,
+          4008.8,
+          4047.6,
+          4096.3,
+          4038.9,
+          3990.2
+        ],
+        "strike_lines": [
+          {
+            "price": 3370.0,
+            "label": "풋 행사가 $3,370",
+            "color": "#e06070",
+            "dash": true
+          },
+          {
+            "price": 4890.0,
+            "label": "콜 행사가 $4,890",
+            "color": "#e06070",
+            "dash": true
+          }
+        ],
+        "profit_zone": {
+          "min": 3370.0,
+          "max": 4890.0,
+          "label": "수익 구간"
+        },
+        "expiry_date": "2026-07-28",
+        "entry_date": "2026-07-07"
+      },
+      "entry_price": 4381.4,
+      "strategy_num": 176
+    },
+    {
+      "id": "p175",
+      "number": 175,
+      "sub": null,
+      "shared_date": "2026-07-07",
+      "status": "active",
+      "notion_url": "",
+      "strategy_type": "strangle",
+      "underlying": "대두",
+      "underlying_en": "Soybean",
+      "expiry_month": "09월물",
+      "expiry_date": "2026-08-21",
+      "current_price": 1127.5,
+      "legs": [
+        {
+          "type": "call_sell",
+          "strike": 1450.0,
+          "contracts": 3,
+          "premium": 150.0,
+          "current_price_pt": 1.0
+        },
+        {
+          "type": "put_sell",
+          "strike": 1060.0,
+          "contracts": 3,
+          "premium": 187.5,
+          "current_price_pt": 1.25
+        }
+      ],
+      "total_premium": 337.5,
+      "margin": 1228,
+      "margin_krw": 1842000,
+      "profit_scenarios": [],
+      "expected_return_pct": 27.48,
+      "monthly_return_pct": 18.32,
+      "current_pnl": 0,
+      "memo": "",
+      "chart_data": {
+        "dates": [
+          "2026/06/17",
+          "2026/06/18",
+          "2026/06/22",
+          "2026/06/23",
+          "2026/06/24",
+          "2026/06/25",
+          "2026/06/26",
+          "2026/06/29",
+          "2026/06/30"
+        ],
+        "closes": [
+          1136.5,
+          1128.5,
+          1126.0,
+          1127.25,
+          1120.0,
+          1141.25,
+          1141.5,
+          1124.0,
+          1127.5
+        ],
+        "strike_lines": [
+          {
+            "price": 1450.0,
+            "label": "콜 행사가 $1,450",
+            "color": "#e06070",
+            "dash": true
+          },
+          {
+            "price": 1060.0,
+            "label": "풋 행사가 $1,060",
+            "color": "#e06070",
+            "dash": true
+          }
+        ],
+        "profit_zone": {
+          "min": 1060.0,
+          "max": 1450.0,
+          "label": "수익 구간"
+        },
+        "expiry_date": "2026-08-21",
+        "entry_date": "2026-07-07"
+      },
+      "entry_price": 1136.5,
+      "strategy_num": 175
+    },
+    {
+      "id": "p174",
+      "number": 174,
+      "sub": null,
+      "shared_date": "2026-07-07",
+      "status": "active",
+      "notion_url": "",
+      "strategy_type": "naked_call",
+      "underlying": "크루드 오일",
+      "underlying_en": "Crude Oil",
+      "expiry_month": "10월물",
+      "expiry_date": "2026-09-17",
+      "current_price": 69.4,
+      "legs": [
+        {
+          "type": "call_sell",
+          "strike": 127.5,
+          "contracts": 1,
+          "premium": 100.0,
+          "current_price_pt": 0.1
+        },
+        {
+          "type": "call_sell",
+          "strike": 42.0,
+          "contracts": 1,
+          "premium": 90.0,
+          "current_price_pt": 0.09
+        }
+      ],
+      "total_premium": 190.0,
+      "margin": 438,
+      "margin_krw": 657000,
+      "profit_scenarios": [],
+      "expected_return_pct": 43.38,
+      "monthly_return_pct": 18.08,
+      "current_pnl": 0,
+      "memo": "",
+      "chart_data": {
+        "dates": [
+          "2026/06/17",
+          "2026/06/18",
+          "2026/06/22",
+          "2026/06/23",
+          "2026/06/24",
+          "2026/06/25",
+          "2026/06/26",
+          "2026/06/29",
+          "2026/06/30"
+        ],
+        "closes": [
+          74.21,
+          74.17,
+          72.28,
+          71.89,
+          69.44,
+          71.03,
+          68.6,
+          69.99,
+          69.4
+        ],
+        "strike_lines": [
+          {
+            "price": 127.5,
+            "label": "콜 매도 행사가 $127.5",
+            "color": "#e06070",
+            "dash": true
+          },
+          {
+            "price": 42.0,
+            "label": "콜 매도 행사가 $42",
+            "color": "#e06070",
+            "dash": true
+          }
+        ],
+        "profit_zone": {
+          "min": 0,
+          "max": 127.5,
+          "label": "수익 구간"
+        },
+        "expiry_date": "2026-09-17",
+        "entry_date": "2026-07-07"
+      },
+      "entry_price": 69.4,
+      "strategy_num": 174
+    },
+    {
+      "id": "p173",
+      "number": 173,
+      "sub": null,
+      "shared_date": "2026-07-07",
+      "status": "active",
+      "notion_url": "",
+      "strategy_type": "strangle",
+      "underlying": "천연가스",
+      "underlying_en": "Natural Gas",
+      "expiry_month": "10월물",
+      "expiry_date": "2026-09-25",
+      "current_price": 3.147,
+      "legs": [
+        {
+          "type": "call_sell",
+          "strike": 5.1,
+          "contracts": 1,
+          "premium": 80.0,
+          "current_price_pt": 0.008
+        },
+        {
+          "type": "put_sell",
+          "strike": 2.05,
+          "contracts": 1,
+          "premium": 80.0,
+          "current_price_pt": 0.008
+        }
+      ],
+      "total_premium": 160.0,
+      "margin": 201,
+      "margin_krw": 301500,
+      "profit_scenarios": [],
+      "expected_return_pct": 79.6,
+      "monthly_return_pct": 29.85,
+      "current_pnl": 0,
+      "memo": "",
+      "chart_data": {
+        "dates": [
+          "2026/06/17",
+          "2026/06/18",
+          "2026/06/22",
+          "2026/06/23",
+          "2026/06/24",
+          "2026/06/25",
+          "2026/06/26",
+          "2026/06/29",
+          "2026/06/30"
+        ],
+        "closes": [
+          3.186,
+          3.268,
+          3.266,
+          3.177,
+          3.252,
+          3.277,
+          3.255,
+          3.158,
+          3.147
+        ],
+        "strike_lines": [
+          {
+            "price": 5.1,
+            "label": "콜 행사가 $5.1",
+            "color": "#e06070",
+            "dash": true
+          },
+          {
+            "price": 2.05,
+            "label": "풋 행사가 $2.05",
+            "color": "#e06070",
+            "dash": true
+          }
+        ],
+        "profit_zone": {
+          "min": 2.05,
+          "max": 5.1,
+          "label": "수익 구간"
+        },
+        "expiry_date": "2026-09-25",
+        "entry_date": "2026-07-07"
+      },
+      "entry_price": 3.147,
+      "strategy_num": 173
+    },
+    {
       "id": "p172",
       "number": 172,
       "sub": null,
@@ -100,7 +440,6 @@
       "memo": "",
       "chart_data": {
         "dates": [
-          "2026/06/15",
           "2026/06/17",
           "2026/06/18",
           "2026/06/22",
@@ -112,7 +451,6 @@
           "2026/06/30"
         ],
         "closes": [
-          3.169,
           3.186,
           3.268,
           3.266,
@@ -174,7 +512,6 @@
       "memo": "",
       "chart_data": {
         "dates": [
-          "2026/06/15",
           "2026/06/17",
           "2026/06/18",
           "2026/06/22",
@@ -186,7 +523,6 @@
           "2026/06/30"
         ],
         "closes": [
-          78.17,
           75.16,
           75.11,
           73.03,
@@ -248,7 +584,6 @@
       "memo": "",
       "chart_data": {
         "dates": [
-          "2026/06/15",
           "2026/06/17",
           "2026/06/18",
           "2026/06/22",
@@ -260,7 +595,6 @@
           "2026/06/30"
         ],
         "closes": [
-          79.44,
           76.01,
           75.85,
           73.86,
@@ -322,7 +656,6 @@
       "memo": "",
       "chart_data": {
         "dates": [
-          "2026/06/15",
           "2026/06/17",
           "2026/06/18",
           "2026/06/22",
@@ -334,7 +667,6 @@
           "2026/06/30"
         ],
         "closes": [
-          3.169,
           3.186,
           3.268,
           3.266,
