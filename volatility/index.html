@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260707-200143">
-<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260707-200143";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
+<meta name="jikt-build" content="20260707-202752">
+<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260707-202752";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
 <script>!function(){try{var t=location.hash||"";if(t.indexOf("token=")>=0){var e=new URLSearchParams(t.replace(/^#/,"")),a=e.get("token"),o=e.get("uid");if(a&&(localStorage.setItem("jikt_token",a),o&&localStorage.setItem("jikt_uid",o),location.hostname.indexOf("github.io")>=0))return void location.replace("../hub.html");try{var i=new URL(location.href);i.hash="",i.searchParams.delete("login"),history.replaceState(null,"",i.pathname+i.search)}catch(t){try{location.hash=""}catch(t){}}}var n=location.hostname.indexOf("github.io")>=0,c=localStorage.getItem("jikt_token");n&&!c&&location.replace("login.html")}catch(t){}}();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -813,10 +813,12 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .pos-add-btn{height:32px;padding:0 18px;border-radius:6px;border:1px solid rgba(var(--cyan-rgb),.35);background:var(--cyan);color:#fff;font-size:15px;font-weight:700;cursor:pointer;}
 .pos-list{display:flex;flex-direction:column;gap:10px;}
 .pos-card{background:var(--card2);border:1.5px solid rgba(var(--cyan-rgb),.22);border-radius:10px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.07);}
-.pos-card.danger-3{border-color:#F04452;box-shadow:0 0 0 1px rgba(240,68,82,.35),0 4px 18px rgba(240,68,82,.2);}
-.pos-card.danger-2{border-color:#FF8A3D !important;border-width:2px !important;box-shadow:0 0 0 1px rgba(255,138,61,.35),0 4px 18px rgba(255,138,61,.18);}
+.pos-card.danger-3{border-color:#F04452;border-width:2px !important;box-shadow:0 0 0 1px rgba(240,68,82,.35),0 4px 18px rgba(240,68,82,.2);}
+.pos-card.danger-2{border-color:rgba(255,176,32,.85) !important;border-width:2px !important;box-shadow:none !important;}
+html.theme-light .pos-card.danger-2{border-color:rgba(200,128,58,.85) !important;}
 .pos-card.danger-1{border-color:#FFB020 !important;border-width:2px !important;box-shadow:0 0 0 1px rgba(255,176,32,.30);}
-.pos-card.safe{border-color:rgba(255,255,255,.14);}
+.pos-card.safe{border-color:rgba(255,255,255,.22) !important;}
+html.theme-light .pos-card.safe{border-color:rgba(0,0,0,.15) !important;}
 @keyframes posLossPulse{0%,100%{box-shadow:0 0 0 0 rgba(var(--cyan-rgb),0)}50%{box-shadow:0 0 0 3px rgba(var(--cyan-rgb),.45)}}
 .pos-card.loss{animation:posLossPulse 1.8s ease-in-out infinite;}
 .pos-card.safe.loss{border-color:var(--cyan) !important;}
@@ -6769,8 +6771,8 @@ body{padding-bottom:0}
   #page-position #pt-master-body table thead tr:last-child th:nth-child(3),
   #page-position #pt-master-body table thead tr:last-child th:nth-child(4){
     max-width:none !important;
-    width:auto !important; min-width:96px !important;
-    white-space:nowrap !important;
+    width:132px !important; min-width:132px !important;   /* [batch8 2026-07-07] 값열 6개 균등폭 132px */
+    white-space:normal !important; word-break:keep-all !important; overflow-wrap:normal !important;
     box-sizing:border-box !important;
   }
   /* 값 셀 내부: 메인 %(div) + '진입후 X.XX%' 뱃지(flex div>span·span) 전부 한 줄 강제.
@@ -6810,8 +6812,8 @@ body{padding-bottom:0}
   #page-position #pt-master-body table td:nth-child(8),
   #page-position #pt-master-body table th:nth-child(7),
   #page-position #pt-master-body table th:nth-child(8){
-    max-width:none !important; width:auto !important; min-width:104px !important;
-    white-space:normal !important; word-break:keep-all !important; overflow-wrap:break-word !important;
+    max-width:none !important; width:132px !important; min-width:132px !important;   /* [batch8 2026-07-07] 값열 6개 균등폭 132px */
+    white-space:normal !important; word-break:keep-all !important; overflow-wrap:normal !important;
     box-sizing:border-box !important; line-height:1.3 !important;
   }
   #page-position #pt-master-body table td:nth-child(7) > div,
