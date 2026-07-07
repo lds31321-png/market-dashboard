@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260707-213050">
-<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260707-213050";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
+<meta name="jikt-build" content="20260707-214457">
+<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260707-214457";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
 <script>!function(){try{var t=location.hash||"";if(t.indexOf("token=")>=0){var e=new URLSearchParams(t.replace(/^#/,"")),a=e.get("token"),o=e.get("uid");if(a&&(localStorage.setItem("jikt_token",a),o&&localStorage.setItem("jikt_uid",o),location.hostname.indexOf("github.io")>=0))return void location.replace("../hub.html");try{var i=new URL(location.href);i.hash="",i.searchParams.delete("login"),history.replaceState(null,"",i.pathname+i.search)}catch(t){try{location.hash=""}catch(t){}}}var n=location.hostname.indexOf("github.io")>=0,c=localStorage.getItem("jikt_token");n&&!c&&location.replace("login.html")}catch(t){}}();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -6825,6 +6825,54 @@ body{padding-bottom:0}
     white-space:normal !important; word-break:keep-all !important;
   }
 }
+
+/* ── [trade1 2026-07-07] 매매 현황 탭(#page-trade) 모바일(≤640px) 표 char-wrap 수정 + 배지/보조문구 정리 ──────────
+   위험탭 정리 인프라(declutter) 재사용·확장. 맨 뒤 별도 @media 블록 → 기존 '#page-trade table{width:max-content;min-width:100%}'(2026-07-01)를
+   소스순서로 덮어씀. #page-trade 스코프 한정, MOBILE ONLY(≤640px), PC 무영향. 문제 시 이 블록 + 아래 [trade1] <script>만 삭제하면 원복. */
+@media(max-width:640px){
+  /* [trade1 T1] 세 표(종목별 평가손익=#trx-inst-tbl, 월별 수익률=#trx-month-tbl, 포지션 테이블=#tr-card-c1 table)
+     char-wrap 수정. ROOT CAUSE: 2026-07-01 규칙 '#page-trade table{width:max-content;min-width:100%}'의 min-width:100% 가
+     표를 뷰포트폭(≥360px)으로 강제하면서, 빈 막대열(2번째 컬럼)이 여백을 흡수 → 값열이 글자폭으로 짓눌려
+     '평/가/손/익', '20/25/년/07/월', '+2/42/만/원', '콜 매/도' 처럼 글자단위 줄바꿈.
+     FIX(위험탭 batch6/batch8과 동일 원리): table-layout:auto + width:auto + min-width:0 으로 콘텐츠 자연폭 복원,
+     모든 셀 white-space:nowrap + max-width:none → 값·헤더가 한 줄. 표는 부모(overflow-x:auto)로 가로 스크롤.
+     라이브 360px 클론 검증(2026-07-07): inst/month 데이터셀 높이 44px(1줄), pos 셀 전부 nowrap 1줄
+     (첫열 종목명/코드 2줄은 의도된 스택). char-wrap 소멸. */
+  #page-trade #trx-inst-tbl,
+  #page-trade #trx-month-tbl,
+  #page-trade #tr-card-c1 table{
+    table-layout:auto !important; width:auto !important; min-width:0 !important;
+  }
+  #page-trade #trx-inst-tbl th,  #page-trade #trx-inst-tbl td,
+  #page-trade #trx-month-tbl th, #page-trade #trx-month-tbl td,
+  #page-trade #tr-card-c1 table th, #page-trade #tr-card-c1 table td{
+    white-space:nowrap !important; max-width:none !important; word-break:keep-all !important;
+  }
+  /* [trade1 T2] 첫 열(종목 / 연도·월) sticky 고정 — 가로 스크롤 중에도 항상 보이게. 배경은 카드색(var). */
+  #page-trade #trx-inst-tbl th:first-child,  #page-trade #trx-inst-tbl td:first-child,
+  #page-trade #trx-month-tbl th:first-child, #page-trade #trx-month-tbl td:first-child,
+  #page-trade #tr-card-c1 table th:first-child, #page-trade #tr-card-c1 table td:first-child{
+    position:sticky !important; left:0 !important; z-index:2 !important;
+    background:var(--card) !important; white-space:nowrap !important;
+  }
+  /* [trade1 T2b] 종목별 평가손익(#trx-inst-card) / 월별 수익률(#trx-month-card)의 표 래퍼(.card-b)를 가로 스크롤 컨테이너로.
+     이 두 카드의 .card-b 는 기본 overflow-x:visible 이라 표가 카드(overflow:hidden)에서 그냥 잘림(스크롤 불가) →
+     overflow-x:auto 로 바꿔 카드 안에서 좌우 스와이프 + insertHintForTable 힌트 앵커가 되게 함.
+     포지션 테이블(#tr-card-c1)은 자체 래퍼가 이미 overflow-x:auto 라 불필요.
+     라이브 360px 클론 검증(2026-07-07): 세 표 모두 in-card 스크롤 + 힌트 삽입(totalHints=3). */
+  #page-trade #trx-inst-card .card-b,
+  #page-trade #trx-month-card .card-b{
+    overflow-x:auto !important; -webkit-overflow-scrolling:touch;
+  }
+  /* [trade1 T3] 스크롤 힌트(.rd07-scroll-hint) 파란색 스타일 — #page-position/#page-strategy와 동일(위험탭 batch3 #6). */
+  #page-trade .rd07-scroll-hint{
+    display:block; text-align:center;
+    color:var(--cyan) !important; font-size:14px !important; font-weight:700 !important;
+    letter-spacing:.03em !important; margin:2px 0 8px !important;
+    animation:rd07HintNudge 1.5s ease-in-out infinite; will-change:transform;
+  }
+}
+
 </style>
 <script>
 /* [위험탭 declutter 2026-07-07] 위험·자금 관리 탭 모바일(≤640px) 배지/보조문구/범례 숨김 + 표 스와이프 힌트 삽입.
@@ -7164,7 +7212,121 @@ body{padding-bottom:0}
       }catch(e){}
     }
 
-    function runAll(){ runHide(); addScrollHint(); addStrategyScrollHints(); }
+    /* ── [trade1 2026-07-07] 매매 현황 탭(#page-trade) 모바일(≤640px) 배지/보조문구/가이드박스 숨김 + 범례 압축 + 표 스와이프 힌트 ──────────
+       위험탭 정리(declutter) 헬퍼(ownText/smallestByOwn/hideEl/insertHintForTable) 재사용. #page-trade 스코프 한정.
+       HIDE만(display:none), DOM 삭제 없음. MOBILE ONLY(mq 640px). 재렌더 대응은 기존 MutationObserver→runAll.
+       라이브 DOM 검증(2026-07-07): 아래 각 항목 주석에 검증 결과 명시. PC 무영향.
+       문제 시 이 [trade1] 블록(함수 정의 + runAll의 runTrade() 호출)과 위 [trade1] CSS만 지우면 원복. */
+    var TRADE_TITLES=['현황판','증거금 사용률','종목별 평가손익','월별 수익률','월물별 포지션 현황','포지션 테이블'];
+
+    /* 파란 라운드 스텝배지 판별: 자식 없는 요소, 파란 배경(rgba(69,147,252,x)), 라운드 있음, 텍스트가 N 또는 N-M */
+    function tradeIsBadge(el){
+      if(!el || (el.children && el.children.length>0)) return false;
+      try{
+        var cs=getComputedStyle(el); var t=ownText(el);
+        return cs.backgroundColor.indexOf('69, 147, 252')>=0
+            && cs.borderRadius!=='0px'
+            && /^([0-9]|[0-9]\s*-\s*[0-9])$/.test(t);
+      }catch(e){ return false; }
+    }
+
+    /* [trade1] 매매 현황 탭 보조문구(설명 sub-text) — 고유 substring 기준 숨김.
+       라이브 DOM 확인(2026-07-07): 각 phrase 매칭 leaf 요소, 섹션 타이틀/데이터 아님. */
+    var TRADE_SUB_PHRASES=[
+      '데이터 입력 → 포트폴리오 확인 → 포지션 테이블',
+      '종목별 손익 · KPI · 누적 손익 곡선 · 포트폴리오 차트',
+      '종목·월물별 포지션 전체 조회',
+      '보유 종목 · 수익 빨강 / 손실 파랑',
+      '월간 투자성과 · 수익 빨강 / 손실 파랑'
+    ];
+
+    function runTrade(){
+      if(!mq.matches) return;
+      var root=document.getElementById('page-trade');
+      if(!root) return;
+
+      /* [trade1 #1] 보조문구 숨김 (섹션 타이틀 보호) */
+      for(var i=0;i<TRADE_SUB_PHRASES.length;i++){
+        try{
+          var el=smallestByOwn(root, TRADE_SUB_PHRASES[i]);
+          if(el && TRADE_TITLES.indexOf(ownText(el))<0) hideEl(el);
+        }catch(e){}
+      }
+
+      /* [trade1 #2] 섹션 타이틀 옆 스텝배지 숨김 — 보존 타이틀 6개에 직접 붙은 배지만.
+         Type B(작은 SPAN, 타이틀 바로 앞 형제): 1-1/1-2/1-3/1-4/2-1.
+         Type A(40x40 DIV, 타이틀의 부모의 앞 형제): 1(현황판)/2(월물별 포지션 현황).
+         라이브 DOM 검증(2026-07-07): 이 규칙으로 숨는 배지 = 1,1-1,1-2,1-3,1-4,2,2-1 (사용자 명시 목록과 일치).
+         데이터 입력 가이드 스텝번호(1~6, 1-1→HTS 거래 데이터)는 next가 보존타이틀이 아니라 미해당. */
+      try{
+        var all=root.querySelectorAll('*');
+        for(var a=0;a<all.length;a++){
+          var e2=all[a];
+          if(e2.children.length!==0) continue;
+          if(TRADE_TITLES.indexOf(ownText(e2))<0) continue;
+          var prev=e2.previousElementSibling;
+          if(tradeIsBadge(prev)) hideEl(prev);
+          var par=e2.parentElement;
+          var pprev=par?par.previousElementSibling:null;
+          if(tradeIsBadge(pprev)) hideEl(pprev);
+        }
+      }catch(e){}
+
+      /* [trade1 #3] 증거금 가이드 박스 숨김: '자금 설정 · HTS 1316 · HTS 1310 … 한 번에 입력' + '데이터 입력 탭 →' 버튼을
+         함께 감싸는 가장 안쪽 박스 전체. (위험탭 batch2 #1과 동일 접근. <b>데이터 입력 탭</b> 이 끼어 own 매칭 불가 → textContent 사용) */
+      try{
+        var HP='HTS 1316', HP2='한 번에 입력';
+        var boxes=root.querySelectorAll('div');
+        for(var b=0;b<boxes.length;b++){
+          var box=boxes[b];
+          if((box.textContent||'').indexOf(HP)>=0 && (box.textContent||'').indexOf(HP2)>=0){
+            var btn=null, bl=box.querySelectorAll('button');
+            for(var q=0;q<bl.length;q++){ if((bl[q].textContent||'').indexOf('데이터 입력 탭')>=0){ btn=bl[q]; break; } }
+            if(btn){
+              var tighter=false;
+              for(var c=0;c<box.children.length;c++){
+                var ch=box.children[c];
+                if((ch.textContent||'').indexOf(HP)>=0 && ch.contains(btn)){ tighter=true; break; }
+              }
+              if(!tighter) hideEl(box);
+            }
+          }
+        }
+      }catch(e){}
+
+      /* [trade1 #4] 증거금 사용률 범례 압축(라이트터치): #tr-margin-card 안 진입 고려/신중/비권장 span을 담은 flex 행을
+         폰트·gap 축소로 컴팩트화. 데이터 삭제 없음. 멱등(dataset.trd1lg).
+         라이브 DOM 확인(2026-07-07): 3개 가이드 span 공통 부모 = 6-child flex DIV(원금/신중 진입/사용률 포함). id 없어 JS 타겟. */
+      try{
+        var mc=document.getElementById('tr-margin-card');
+        if(mc){
+          var legs=[], sp=mc.querySelectorAll('span');
+          for(var s=0;s<sp.length;s++){ var t=ownText(sp[s]); if(/진입 고려|진입 신중|진입 비권장/.test(t)) legs.push(sp[s]); }
+          if(legs.length){
+            var lp=legs[0].parentElement, same=true;
+            for(var g=0;g<legs.length;g++){ if(legs[g].parentElement!==lp){ same=false; break; } }
+            if(same && lp && !(lp.dataset && lp.dataset.trd1lg==='1')){
+              lp.style.fontSize='11.5px';
+              lp.style.gap='4px 10px';
+              lp.style.lineHeight='1.35';
+              lp.style.marginTop='6px';
+              for(var c2=0;c2<lp.children.length;c2++){ lp.children[c2].style.fontSize='11.5px'; }
+              if(lp.dataset) lp.dataset.trd1lg='1';
+            }
+          }
+        }
+      }catch(e){}
+
+      /* [trade1 #5] 세 표 스와이프 힌트: insertHintForTable(위험탭 batch9) 재사용 — 실제 가로 오버플로 시에만 삽입, 멱등.
+         종목별 평가손익(#trx-inst-tbl), 월별 수익률(#trx-month-tbl), 포지션 테이블(#tr-card-c1 table). */
+      try{
+        var it=document.getElementById('trx-inst-tbl'); if(it) insertHintForTable(it);
+        var mt=document.getElementById('trx-month-tbl'); if(mt) insertHintForTable(mt);
+        var pc=document.getElementById('tr-card-c1'); var ptbl=pc?pc.querySelector('table'):null; if(ptbl) insertHintForTable(ptbl);
+      }catch(e){}
+    }
+
+    function runAll(){ runHide(); addScrollHint(); addStrategyScrollHints(); runTrade(); }
 
     var timer;
     function sched(){ clearTimeout(timer); timer=setTimeout(runAll,150); }
