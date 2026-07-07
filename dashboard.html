@@ -1840,7 +1840,12 @@ function openModal(id){
               //   진입일~오늘 구간이 통째로 빠져 옛 현재가만 점으로 찍히는 문제 방지 →
               //   이 경우 포지션 자체 데이터(pnl_positions.json의 chart_data)로 그린다.
               const _lastIso=(dates[dates.length-1]||'').replace(/\//g,'-').slice(0,10);
-              if(p.shared_date && _lastIso && _lastIso < p.shared_date){
+              // [2026-07-07 수정] 가격이력 파일이 공유일에 못 미쳐도, 포지션 자체 데이터가 '실제로 더 최신'일 때만 폴백.
+              //   (기존엔 파일<공유일이면 무조건 짧은 데이터로 폴백 → 신규 포지션 차트가 좁아짐.
+              //    파일·포지션이 같은 날짜에서 끝나면 긴 이력을 그대로 써서 차트를 정상 비율로 그린다)
+              const _pd=(p.chart_data&&p.chart_data.dates)||[];
+              const _posLastIso=(_pd[_pd.length-1]||'').replace(/\//g,'-').slice(0,10);
+              if(p.shared_date && _lastIso && _lastIso < p.shared_date && _posLastIso && _posLastIso > _lastIso){
                 buildPositionChart(p,`posChart_${p.id}`);
                 return;
               }

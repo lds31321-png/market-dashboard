@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260707-153558">
-<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260707-153558";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
+<meta name="jikt-build" content="20260707-161632">
+<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260707-161632";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
 <script>!function(){try{var t=location.hash||"";if(t.indexOf("token=")>=0){var e=new URLSearchParams(t.replace(/^#/,"")),a=e.get("token"),o=e.get("uid");if(a&&(localStorage.setItem("jikt_token",a),o&&localStorage.setItem("jikt_uid",o),location.hostname.indexOf("github.io")>=0))return void location.replace("../hub.html");try{var i=new URL(location.href);i.hash="",i.searchParams.delete("login"),history.replaceState(null,"",i.pathname+i.search)}catch(t){try{location.hash=""}catch(t){}}}var n=location.hostname.indexOf("github.io")>=0,c=localStorage.getItem("jikt_token");n&&!c&&location.replace("login.html")}catch(t){}}();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -6727,6 +6727,19 @@ body{padding-bottom:0}
   #page-position #pt-pos-filter > div:first-child > label{
     display:flex !important; width:100% !important; justify-content:flex-start !important;
   }
+
+  /* ── [batch5 2026-07-07] 경보단계별 추정손실(7·8열) 제거 + 종목열 폭 확대 ──────────
+     Task1의 셀 숨김은 아래 <script> [batch5]에서 JS로 처리(colspan/rowspan 그리드 인식).
+     여기 CSS는 Task2(종목 첫열) 전용: batch4 #2(76px)를 소스순서로 덮어써 이름이 한 줄에 들어오게. */
+  /* [batch5 T2] 종목(첫열) 폭 98px·폰트 13px·keep-all → S&P500/천연가스/원유/대두 등 한 줄 유지, sticky 유지. */
+  #page-position #pt-master-body table th:first-child,
+  #page-position #pt-master-body table td:first-child{
+    width:98px !important; min-width:98px !important; max-width:98px !important;
+    white-space:normal !important; word-break:keep-all !important;
+    font-size:13px !important; line-height:1.25 !important;
+    box-sizing:border-box !important;
+    position:sticky !important; left:0 !important; z-index:3 !important;
+  }
 }
 </style>
 <script>
@@ -6938,22 +6951,43 @@ body{padding-bottom:0}
         }
       }catch(e){}
 
-      /* [batch4 #4] '경보단계별 추정손실' 콜/풋 열의 플레이스홀더 셀('경보 설정 후 자동 계산')이
-         모바일에서 한 글자씩 세로로 깨져 보임 → 열 통째 숨김은 colspan 합계행(콜풋 합산)이 있어 위험하므로,
-         해당 텍스트를 가진 셀만 정상 줄바꿈으로 스타일(word-break:keep-all, white-space:normal, 11px).
-         라이브 DOM 확인: 매칭 10셀 전부 6·7번째 열(콜/풋)뿐 — 실데이터/타이틀 미해당. 멱등(dataset). */
+      /* [batch4 #4 → batch5로 교체] 아래 [batch5 T1] 참조.
+         (기존: '경보 설정 후 자동 계산' 셀을 restyle만 했음 → 이제 열 통째 숨김으로 변경) */
+
+      /* ── [batch5 2026-07-07] Task1: 경보단계별 추정손실(논리 7·8열) 전체 숨김 ──────────
+         매트릭스 표에서 종목/매매비중/평가손익/생존경보 이후의 마지막 2개 논리열(추정손실 콜/풋)을 제거.
+         플레이스홀더('경보 설정 후 자동 계산')뿐 실데이터가 없어 사용자 요청으로 삭제.
+         핵심: 합계·콜+풋 합산 행은 colspan이 달라 nth-child가 어긋남 → colspan+rowspan 인식 그리드로
+               '논리 열 시작번호 >= 7' 인 셀(th/td)만 정확히 숨긴다(display:none).
+         라이브 DOM 검증(2026-07-07): 숨김 대상 = 헤더 '경보단계별 추정손실'(row0,cs2),
+               서브헤더 '콜'·'풋'(row1, 7·8열), 데이터행 '경보 설정 후 자동 계산' ×각2, 합계행 '—'×2,
+               콜+풋 합산행 '—'×1(cs2). 생존경보(6열)·평가손익(4·5열)·매매비중(2·3열)·%데이터는 미해당.
+         멱등: 셀 dataset.rd08ph='1' 로 1회만. 재렌더 대응: 아래 MutationObserver가 runAll 재호출. */
       try{
-        var mb4=document.getElementById('pt-master-body');
-        if(mb4){
-          var cells4=mb4.querySelectorAll('table td');
-          for(var q4=0;q4<cells4.length;q4++){
-            var cell4=cells4[q4];
-            if(cell4.textContent.indexOf('경보 설정 후')>=0){
-              if(cell4.dataset && cell4.dataset.rd08ph==='1') continue;
-              cell4.style.whiteSpace='normal';
-              cell4.style.wordBreak='keep-all';
-              cell4.style.fontSize='11px';
-              if(cell4.dataset) cell4.dataset.rd08ph='1';
+        var mb5=document.getElementById('pt-master-body');
+        if(mb5){
+          var tbl5=mb5.querySelector('table');
+          if(tbl5){
+            var trs5=tbl5.querySelectorAll('tr');
+            var occ5={};                      /* 점유 그리드: "r,c" → true */
+            for(var r5=0;r5<trs5.length;r5++){
+              var cells5=trs5[r5].children;
+              var c5=0;
+              for(var k5=0;k5<cells5.length;k5++){
+                var cell5=cells5[k5];
+                while(occ5[r5+','+c5]) c5++;
+                var cs5=cell5.colSpan||1, rs5=cell5.rowSpan||1;
+                var colStart5=c5+1;           /* 1-based 논리 열 시작번호 */
+                for(var rr5=r5;rr5<r5+rs5;rr5++)
+                  for(var cc5=c5;cc5<c5+cs5;cc5++) occ5[rr5+','+cc5]=true;
+                if(colStart5>=7){             /* 7·8열(추정손실)만 */
+                  if(!(cell5.dataset && cell5.dataset.rd08ph==='1')){
+                    cell5.style.display='none';
+                    if(cell5.dataset) cell5.dataset.rd08ph='1';
+                  }
+                }
+                c5+=cs5;
+              }
             }
           }
         }
