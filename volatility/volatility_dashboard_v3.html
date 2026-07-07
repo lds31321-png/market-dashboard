@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260707-204015">
-<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260707-204015";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
+<meta name="jikt-build" content="20260707-212025">
+<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260707-212025";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
 <script>!function(){try{var t=location.hash||"";if(t.indexOf("token=")>=0){var e=new URLSearchParams(t.replace(/^#/,"")),a=e.get("token"),o=e.get("uid");if(a&&(localStorage.setItem("jikt_token",a),o&&localStorage.setItem("jikt_uid",o),location.hostname.indexOf("github.io")>=0))return void location.replace("../hub.html");try{var i=new URL(location.href);i.hash="",i.searchParams.delete("login"),history.replaceState(null,"",i.pathname+i.search)}catch(t){try{location.hash=""}catch(t){}}}var n=location.hostname.indexOf("github.io")>=0,c=localStorage.getItem("jikt_token");n&&!c&&location.replace("login.html")}catch(t){}}();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -6527,7 +6527,8 @@ body{padding-bottom:0}
    #page-position 스코프 한정. PC/데스크톱 무영향. 문제 시 이 <style>+아래 <script>만 삭제하면 원복. */
 @media(max-width:640px){
   /* FIX A: 매트릭스 표 좌우 스와이프 힌트 (JS가 삽입한 .rd07-scroll-hint) */
-  #page-position .rd07-scroll-hint{
+  #page-position .rd07-scroll-hint,
+  #page-strategy .rd07-scroll-hint{
     display:block; text-align:center; font-size:12px; color:var(--t3);
     margin:2px 0 6px; font-weight:500; letter-spacing:.02em;
     /* [batch2 #7] 좌우 화살표 은은한 넛지 애니메이션으로 스와이프 가능 신호 */
@@ -6660,7 +6661,8 @@ body{padding-bottom:0}
 /* [batch3 #6] 스크롤 힌트 파란색+큰 폰트로 재스타일 — @media 안에서 기존 .rd07-scroll-hint 규칙을
    덮어쓰기 위해 별도 @media 블록(뒤에 와서 우선). 넛지 애니메이션(rd07HintNudge)은 유지. */
 @media(max-width:640px){
-  #page-position .rd07-scroll-hint{
+  #page-position .rd07-scroll-hint,
+  #page-strategy .rd07-scroll-hint{
     color:var(--cyan) !important; font-size:14px !important; font-weight:700 !important;
     letter-spacing:.03em !important; margin:2px 0 8px !important;
   }
@@ -7106,7 +7108,63 @@ body{padding-bottom:0}
     /* [batch2 #8] 매트릭스 표(#pt-master-body) + 진입 시뮬 표(#pt-sim-body) 둘 다 힌트 삽입 */
     function addScrollHint(){ insertHint('pt-master-body'); insertHint('pt-sim-body'); }
 
-    function runAll(){ runHide(); addScrollHint(); }
+    /* ── [batch9 2026-07-07] 매매 전략 탭(#page-strategy) 가로 스크롤 표에도 스와이프 힌트 추가 ──────
+       대상 1: 종합 순위표(#st-rank-table) — 래퍼 .card-b(overflow-x:auto)에 가로 오버플로 시.
+       대상 2: 종목별 상세 현황(#st-detail-list 내부, 상세보기=월물 펼치기 시 동적 렌더되는 표들) —
+               각 표는 <div style="overflow-x:auto"> 래퍼에 감싸져 있음.
+       MOBILE ONLY(mq 640px). 실제로 가로 스크롤 되는 표만(scrollWidth>clientWidth+2 또는 래퍼 overflow-x:auto)
+       힌트 삽입. 카드리스트로 변환된 비스크롤 표는 오버플로 검사에서 자동 제외.
+       멱등: 래퍼 바로 앞이 이미 .rd07-scroll-hint면 skip + 표 dataset.rd09hint로 중복 방지.
+       동적 렌더(상세보기) 대응: runAll()이 디바운스 MutationObserver로 재호출됨. PC 무영향.
+       문제 시 이 함수 + runAll의 addStrategyScrollHints() 호출만 지우면 원복. */
+    function insertHintForTable(tbl){
+      if(!mq.matches) return;
+      try{
+        if(!tbl) return;
+        /* 표의 가로 스크롤 래퍼(overflow-x:auto|scroll) 탐색 — 없으면 표 자신을 앵커로 */
+        var anchor=tbl, wrap=null;
+        try{
+          var p=tbl.parentNode;
+          for(var k=0;k<4 && p; k++){
+            var ox=getComputedStyle(p).overflowX;
+            if(ox==='auto'||ox==='scroll'){ anchor=p; wrap=p; break; }
+            p=p.parentNode;
+          }
+        }catch(e){}
+        /* 실제로 가로로 넘치는(=스와이프가 의미있는) 표만 힌트 삽입 */
+        var probe=wrap||tbl;
+        var overflow=(probe.scrollWidth > probe.clientWidth + 2);
+        if(!overflow) return;
+        /* 멱등: 이미 힌트가 붙어있으면 skip */
+        if(tbl.dataset && tbl.dataset.rd09hint==='1') return;
+        var prev=anchor.previousElementSibling;
+        if(prev && prev.classList && prev.classList.contains('rd07-scroll-hint')){
+          if(tbl.dataset) tbl.dataset.rd09hint='1';
+          return;
+        }
+        var hint=document.createElement('div');
+        hint.className='rd07-scroll-hint';
+        hint.textContent='← 좌우로 밀어서 전체 보기 →';
+        if(anchor.parentNode) anchor.parentNode.insertBefore(hint, anchor);
+        if(tbl.dataset) tbl.dataset.rd09hint='1';
+      }catch(e){}
+    }
+    function addStrategyScrollHints(){
+      if(!mq.matches) return;
+      try{
+        /* 대상 1: 종합 순위표 — display:none(데이터 없음)이면 skip */
+        var rt=document.getElementById('st-rank-table');
+        if(rt && getComputedStyle(rt).display!=='none') insertHintForTable(rt);
+        /* 대상 2: 종목별 상세 현황(상세보기) — 동적 렌더된 모든 표 */
+        var dl=document.getElementById('st-detail-list');
+        if(dl){
+          var dts=dl.querySelectorAll('table');
+          for(var i=0;i<dts.length;i++) insertHintForTable(dts[i]);
+        }
+      }catch(e){}
+    }
+
+    function runAll(){ runHide(); addScrollHint(); addStrategyScrollHints(); }
 
     var timer;
     function sched(){ clearTimeout(timer); timer=setTimeout(runAll,150); }
