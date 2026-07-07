@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260707-115208">
-<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260707-115208";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
+<meta name="jikt-build" content="20260707-125850">
+<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260707-125850";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
 <script>!function(){try{var t=location.hash||"";if(t.indexOf("token=")>=0){var e=new URLSearchParams(t.replace(/^#/,"")),a=e.get("token"),o=e.get("uid");if(a&&(localStorage.setItem("jikt_token",a),o&&localStorage.setItem("jikt_uid",o),location.hostname.indexOf("github.io")>=0))return void location.replace("../hub.html");try{var i=new URL(location.href);i.hash="",i.searchParams.delete("login"),history.replaceState(null,"",i.pathname+i.search)}catch(t){try{location.hash=""}catch(t){}}}var n=location.hostname.indexOf("github.io")>=0,c=localStorage.getItem("jikt_token");n&&!c&&location.replace("login.html")}catch(t){}}();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -6669,6 +6669,65 @@ body{padding-bottom:0}
   25%{ transform:translateX(-4px); opacity:1; }
   75%{ transform:translateX(4px); opacity:1; }
 }
+
+/* ── [batch4 2026-07-07] 매트릭스 표 가독성 + 진입시뮬 총합 셀 + 표시모드 라디오 ──────────
+   맨 뒤에 별도 @media 블록으로 배치 → batch3 규칙(값열 88px 등)을 소스순서로 덮어씀.
+   #page-position 스코프 한정, MOBILE ONLY, PC 무영향. 문제 시 이 블록만 삭제하면 원복. */
+@media(max-width:640px){
+  /* [batch4 #2] 종목(첫열) 좁게 + 이름 줄바꿈 허용 + sticky 유지.
+     batch2/07-06 규칙(td/th:first-child sticky)과 batch3의 값열 규칙을 보강/덮어씀. */
+  #page-position #pt-master-body table th:first-child,
+  #page-position #pt-master-body table td:first-child{
+    width:76px !important; min-width:76px !important; max-width:76px !important;
+    white-space:normal !important; word-break:keep-all !important;
+    box-sizing:border-box !important;
+    position:sticky !important; left:0 !important; z-index:3 !important;
+  }
+
+  /* [batch4 #3] 헤더 셀: 말줄임(…) 제거 → 줄바꿈 + 작은 폰트로 전부 읽히게.
+     매매 비중 / 현재 평가손익 / 생존경보 / 경보단계별 추정손실 / '진입전 → 진입후…' 서브 모두 포함. */
+  #page-position #pt-master-body table th{
+    white-space:normal !important; text-overflow:clip !important; overflow:visible !important;
+    word-break:keep-all !important;
+    font-size:11px !important; line-height:1.25 !important;
+  }
+
+  /* [batch4 #5] 생존경보 열(6번째 셀 = 콜/풋 1·2·3 뱃지) 넓혀 좌우 잘림 방지.
+     batch3의 값열 88px보다 뒤에 와서 우선 적용. 헤더는 ROW0 4번째 th(생존경보). */
+  #page-position #pt-master-body table td:nth-child(6){
+    width:120px !important; min-width:120px !important; max-width:120px !important;
+    overflow:visible !important;
+  }
+  #page-position #pt-master-body table thead tr:first-child th:nth-child(4){
+    min-width:120px !important; overflow:visible !important;
+  }
+  /* 뱃지 행이 셀 안에서 잘리지 않게(콜 1 2 3 / 풋 1 2 3 각각 한 줄) */
+  #page-position #pt-master-body table td:nth-child(6) > div{
+    white-space:nowrap !important; overflow:visible !important;
+  }
+
+  /* [batch4 #7] 진입 예정 포지션 표(#pt-sim-body) 합계행의 '총 추가 노출' 값 셀:
+     뒤 빈 셀(colspan)이 값을 오른쪽 끝에서 밀어내 잘려 보임 →
+     값 셀을 스크롤 뷰포트 오른쪽 끝에 sticky 고정(항상 보이게, 숨기지 않음). 우측정렬. */
+  #page-position #pt-sim-body table tr:last-child td:nth-last-child(2){
+    position:sticky !important; right:0 !important; z-index:2 !important;
+    text-align:right !important; white-space:nowrap !important; overflow:visible !important;
+    background:var(--card2) !important; box-shadow:-1px 0 0 var(--b1) !important;
+  }
+
+  /* [batch4 #8] 표시 모드 필터: 라벨(표시 모드) 윗줄 + 라디오 2개(손익 마이너스만/전체 보기)
+     각각 전체폭 세로 스택, 좌정렬. #pt-pos-filter의 첫 번째 div가 해당 그룹(라이브 DOM 확인). */
+  #page-position #pt-pos-filter > div:first-child{
+    display:flex !important; flex-direction:column !important;
+    align-items:stretch !important; width:100% !important; gap:6px !important;
+  }
+  #page-position #pt-pos-filter > div:first-child > span{
+    display:block !important; width:100% !important; text-align:left !important;
+  }
+  #page-position #pt-pos-filter > div:first-child > label{
+    display:flex !important; width:100% !important; justify-content:flex-start !important;
+  }
+}
 </style>
 <script>
 /* [위험탭 declutter 2026-07-07] 위험·자금 관리 탭 모바일(≤640px) 배지/보조문구/범례 숨김 + 표 스와이프 힌트 삽입.
@@ -6851,6 +6910,52 @@ body{padding-bottom:0}
           if(!badge) continue;
           /* 배지 검증: 자식 없는 요소, 직접텍스트가 한 자리 숫자 1~4 */
           if(badge.children.length===0 && /^[1-4]$/.test(ownText(badge))) hideEl(badge);
+        }
+      }catch(e){}
+
+      /* ── [batch4 2026-07-07] 매트릭스 표 정리(텍스트 기준 → JS 필요) ─────────── */
+
+      /* [batch4 #1] 매트릭스 표(#pt-master-body) 종목(첫열) 셀의 코드+배수 서브라인 숨김.
+         각 첫열 셀 안, '직접 텍스트'에 '·'와 '×'가 모두 들어있는 요소만 숨김
+         (예: 'OES · ×50', 'OGC · ×100', 'ONG · ×10,000'). 종목 이름/데이터 %는 미해당.
+         라이브 DOM 확인: 12개(합계/콜풋합산 행 제외), 전부 코드+배수 서브라인. 이름/데이터 아님. */
+      try{
+        var mb1=document.getElementById('pt-master-body');
+        if(mb1){
+          var tbl1=mb1.querySelector('table');
+          if(tbl1){
+            var rows1=tbl1.querySelectorAll('tr');
+            for(var r1=0;r1<rows1.length;r1++){
+              if(!rows1[r1].querySelector('td')) continue;   /* 데이터 행만 */
+              var c01=rows1[r1].children[0]; if(!c01) continue;
+              var ds1=c01.querySelectorAll('*');
+              for(var e1=0;e1<ds1.length;e1++){
+                var o1=ownText(ds1[e1]);
+                if(o1.indexOf('·')>=0 && o1.indexOf('×')>=0) hideEl(ds1[e1]);  /* × = × */
+              }
+            }
+          }
+        }
+      }catch(e){}
+
+      /* [batch4 #4] '경보단계별 추정손실' 콜/풋 열의 플레이스홀더 셀('경보 설정 후 자동 계산')이
+         모바일에서 한 글자씩 세로로 깨져 보임 → 열 통째 숨김은 colspan 합계행(콜풋 합산)이 있어 위험하므로,
+         해당 텍스트를 가진 셀만 정상 줄바꿈으로 스타일(word-break:keep-all, white-space:normal, 11px).
+         라이브 DOM 확인: 매칭 10셀 전부 6·7번째 열(콜/풋)뿐 — 실데이터/타이틀 미해당. 멱등(dataset). */
+      try{
+        var mb4=document.getElementById('pt-master-body');
+        if(mb4){
+          var cells4=mb4.querySelectorAll('table td');
+          for(var q4=0;q4<cells4.length;q4++){
+            var cell4=cells4[q4];
+            if(cell4.textContent.indexOf('경보 설정 후')>=0){
+              if(cell4.dataset && cell4.dataset.rd08ph==='1') continue;
+              cell4.style.whiteSpace='normal';
+              cell4.style.wordBreak='keep-all';
+              cell4.style.fontSize='11px';
+              if(cell4.dataset) cell4.dataset.rd08ph='1';
+            }
+          }
         }
       }catch(e){}
     }
