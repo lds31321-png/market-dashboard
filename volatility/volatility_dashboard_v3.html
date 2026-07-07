@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260707-185214">
-<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260707-185214";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
+<meta name="jikt-build" content="20260707-190046">
+<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260707-190046";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
 <script>!function(){try{var t=location.hash||"";if(t.indexOf("token=")>=0){var e=new URLSearchParams(t.replace(/^#/,"")),a=e.get("token"),o=e.get("uid");if(a&&(localStorage.setItem("jikt_token",a),o&&localStorage.setItem("jikt_uid",o),location.hostname.indexOf("github.io")>=0))return void location.replace("../hub.html");try{var i=new URL(location.href);i.hash="",i.searchParams.delete("login"),history.replaceState(null,"",i.pathname+i.search)}catch(t){try{location.hash=""}catch(t){}}}var n=location.hostname.indexOf("github.io")>=0,c=localStorage.getItem("jikt_token");n&&!c&&location.replace("login.html")}catch(t){}}();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -6521,4 +6521,580 @@ body{padding-bottom:0}
 </style>
 <script>!function(){var e,t=window.matchMedia("(max-width:640px)");function r(e){try{if(e.querySelector(":scope > .pos-meta-row"))return;var t=e.querySelector(".pos-card-head");if(!t)return;var r=t.children[t.children.length-1];if(!r||r.children.length<2)return;var n=r.lastElementChild,o=e.querySelector(".pos-card-top");if(!o||o.parentNode!==e)return;var a=document.createElement("div");a.className="pos-meta-row",a.appendChild(n),e.insertBefore(a,o.nextSibling)}catch(e){}}function n(){t.matches&&document.querySelectorAll(".pos-card").forEach(r)}"loading"===document.readyState?document.addEventListener("DOMContentLoaded",n):n();try{new MutationObserver(function(){clearTimeout(e),e=setTimeout(n,150)}).observe(document.body,{childList:!0,subtree:!0})}catch(e){}}();</script>
 <style>
-/* [위
+/* [위험탭 declutter 2026-07-07] 위험·자금 관리 탭 모바일(≤640px) 정리용 스타일.
+   #page-position 스코프 한정. PC/데스크톱 무영향. 문제 시 이 <style>+아래 <script>만 삭제하면 원복. */
+@media(max-width:640px){
+  /* FIX A: 매트릭스 표 좌우 스와이프 힌트 (JS가 삽입한 .rd07-scroll-hint) */
+  #page-position .rd07-scroll-hint{
+    display:block; text-align:center; font-size:12px; color:var(--t3);
+    margin:2px 0 6px; font-weight:500; letter-spacing:.02em;
+    /* [batch2 #7] 좌우 화살표 은은한 넛지 애니메이션으로 스와이프 가능 신호 */
+    animation:rd07HintNudge 1.5s ease-in-out infinite;
+    will-change:transform;
+  }
+  /* FIX B: 표시 모드 필터 — 라벨→셀렉트 세로 스택, 셀렉트 전체폭, 간격 통일 */
+  #page-position #pt-pos-filter-inst,
+  #page-position #pt-pos-filter-month,
+  #page-position #pt-pos-filter-type{
+    display:block !important; width:100% !important; box-sizing:border-box !important;
+    margin:2px 0 8px !important; padding:8px 10px !important;
+  }
+  /* 셀렉트 바로 앞 라벨(span)을 블록으로 → 라벨 위, 셀렉트 아래 */
+  #page-position #pt-pos-filter-inst,
+  #page-position #pt-pos-filter-month,
+  #page-position #pt-pos-filter-type{ clear:both; }
+
+  /* ── [batch2 2026-07-07] 추가 모바일 정리/리디자인 ─────────────────── */
+
+  /* [batch2 #3] 설명 펼치기 토글 버튼(.btn-q) 숨김.
+     .btn-q 는 스타일시트에서 display:inline-flex !important 라 JS 인라인 숨김이 안 먹으므로 CSS로 처리.
+     #page-position 스코프 한정 → 다른 탭/PC 무영향. 표 데이터 버튼(클래스 없음)은 미해당. */
+  #page-position .btn-q{ display:none !important; }
+
+  /* [batch2 #6] 생존경보 필터 행(#pt-ocl-alert-badge): 오른쪽 버튼 잘림 방지 → wrap.
+     내부 요소가 넘치지 않게 전체폭 허용 + 줄바꿈. */
+  #page-position #pt-ocl-alert-badge{
+    display:flex !important; flex-wrap:wrap !important;
+    width:100% !important; box-sizing:border-box !important;
+    row-gap:6px !important;
+  }
+  #page-position #pt-ocl-alert-badge > *{ max-width:100%; }
+
+  /* [batch2 #10] 증거금 현황(#pt-margin-status) Toss 스타일 세로 스택 카드.
+     내부는 인라인 스타일(flex row)이라 !important 필수. 데이터는 그대로, 레이아웃만 재배치. */
+  /* 상단 카드 묶음(flex row)을 세로 스택 + 전체폭 */
+  #page-position #pt-margin-status > div > div:first-child{
+    display:flex !important; flex-direction:column !important;
+    gap:8px !important; width:100% !important;
+  }
+  /* 각 서브카드: 전체폭 카드 형태(패딩/배경/라운드/좌정렬).
+     [batch3 #1] 세로 패딩 축소(11px) → 중앙 여백 줄이고 좌정렬 스캔성 강화. */
+  #page-position #pt-margin-status > div > div:first-child > div{
+    width:100% !important; box-sizing:border-box !important;
+    flex:none !important; min-width:0 !important;
+    padding:11px 16px !important; margin:0 !important;
+    background:var(--card) !important;
+    border:1px solid var(--b1) !important; border-radius:12px !important;
+    text-align:left !important; align-items:flex-start !important;
+  }
+  /* 서브카드 안 3줄: 라벨(작은 회색) → 값(큰 볼드) → 서브(작은 회색) 위계 */
+  #page-position #pt-margin-status > div > div:first-child > div > div{
+    text-align:left !important; width:100% !important;
+  }
+  /* [batch3 #1] 라벨 12px, 값 21px, 서브 11.5px — 좌정렬 타이트 Toss 카드 */
+  #page-position #pt-margin-status > div > div:first-child > div > div:first-child{
+    font-size:12px !important; color:var(--t3) !important; font-weight:600 !important;
+    margin-bottom:3px !important; line-height:1.3 !important;
+  }
+  #page-position #pt-margin-status > div > div:first-child > div > div:nth-child(2){
+    font-size:21px !important; font-weight:800 !important; line-height:1.15 !important;
+    color:var(--t1) !important;
+  }
+  #page-position #pt-margin-status > div > div:first-child > div > div:nth-child(3){
+    font-size:11.5px !important; color:var(--t3) !important; font-weight:500 !important;
+    margin-top:3px !important; line-height:1.3 !important;
+  }
+  /* 진행바 블록(두 번째 자식): 전체폭 + 상단 여백 */
+  #page-position #pt-margin-status > div > div:nth-child(2){
+    width:100% !important; box-sizing:border-box !important; margin-top:12px !important;
+  }
+  /* [batch3 #2] 진행바 라벨행(0%/목표/위험/100%) — 폰트 축소해 정렬 유지 */
+  #page-position #pt-margin-status > div > div:nth-child(2) > div:first-child{
+    font-size:12px !important;
+  }
+  /* [batch3 #2] 진행바 트랙(두께 up) — 더 시각적으로. JS가 채우는 width는 그대로. */
+  #page-position #pt-margin-status > div > div:nth-child(2) > div:nth-child(2){
+    height:13px !important;
+  }
+  /* [batch3 #3] 가이드 범례 축약: 작은 2줄 legend(11.5px, t3, tight) */
+  #page-position #pt-margin-status > div > div:nth-child(2) > div:nth-child(3){
+    gap:4px 12px !important; margin-top:8px !important;
+    font-size:11.5px !important; line-height:1.35 !important;
+  }
+  #page-position #pt-margin-status > div > div:nth-child(2) > div:nth-child(3) > span{
+    font-size:11.5px !important; color:var(--t3) !important;
+  }
+
+  /* ── [batch3 2026-07-07] 추가 모바일 정리/리디자인 ─────────────────── */
+
+  /* [batch3 #4] 생존경보 필터(#pt-ocl-alert-badge): '생존경보' 라벨은 윗줄 전체폭,
+     [전체 자동 연동] 버튼 + [리스크 기준] details가 같은 줄에 나란히. 버튼 패딩/폰트 축소. */
+  #page-position #pt-ocl-alert-badge{ align-items:center !important; column-gap:8px !important; }
+  #page-position #pt-ocl-alert-badge > span:first-child{
+    flex:1 0 100% !important; margin-bottom:2px !important;   /* 라벨 → 전체폭(윗줄) */
+  }
+  #page-position #pt-ocl-alert-badge > button{
+    font-size:13px !important; padding:5px 10px !important;
+    flex:0 1 auto !important; white-space:nowrap !important;
+  }
+  #page-position #pt-ocl-alert-badge > details{
+    margin-left:0 !important; flex:0 1 auto !important;
+  }
+  #page-position #pt-ocl-alert-badge > details > summary{
+    font-size:13px !important; padding:5px 10px !important; white-space:nowrap !important;
+  }
+  /* 버튼-details 사이 빈 span(간격용)은 접어서 두 버튼이 한 줄에 붙게 */
+  #page-position #pt-ocl-alert-badge > span:nth-child(3){ display:none !important; }
+
+  /* [batch3 #5] 매트릭스 표(#pt-master-body) 값열 폭 균등화.
+     콜매도/풋매도 등 쌍열을 동일 폭으로 고정하고, '진입후 …' 뱃지는 아래로 wrap 허용.
+     → 콜매도 열만 넓어지던 불균형 해소. 종목(첫열) 고정은 기존 규칙 유지. */
+  #page-position #pt-master-body table td:not(:first-child),
+  #page-position #pt-master-body table th:not(:first-child){
+    width:88px !important; min-width:88px !important; max-width:88px !important;
+    box-sizing:border-box !important;
+  }
+  #page-position #pt-master-body table td:not(:first-child){
+    white-space:normal !important;   /* 값열은 wrap 허용(첫열 nowrap은 기존 규칙 유지) */
+  }
+  #page-position #pt-master-body table td:not(:first-child) > div{
+    white-space:normal !important;   /* '진입후 1.12%' 뱃지가 셀 폭 안에서 아래로 접히게 */
+  }
+
+  /* [batch3 #8] '총 추가 노출 …' 박스(#pt-sim-body 내): 좌정렬·전체폭·wrap 허용 → 우측 잘림 방지.
+     (id 없어 CSS 구조 선택 어려워 아래 <script>에서 인라인 적용. 여긴 보강용 안전규칙만.) */
+}
+
+/* [batch3 #6] 스크롤 힌트 파란색+큰 폰트로 재스타일 — @media 안에서 기존 .rd07-scroll-hint 규칙을
+   덮어쓰기 위해 별도 @media 블록(뒤에 와서 우선). 넛지 애니메이션(rd07HintNudge)은 유지. */
+@media(max-width:640px){
+  #page-position .rd07-scroll-hint{
+    color:var(--cyan) !important; font-size:14px !important; font-weight:700 !important;
+    letter-spacing:.03em !important; margin:2px 0 8px !important;
+  }
+}
+/* [batch2 #7] 스크롤 힌트 넛지 keyframes — @media 밖(참조는 모바일에서만 적용됨). PC 무영향. */
+@keyframes rd07HintNudge{
+  0%,100%{ transform:translateX(0); opacity:.75; }
+  25%{ transform:translateX(-4px); opacity:1; }
+  75%{ transform:translateX(4px); opacity:1; }
+}
+
+/* ── [batch4 2026-07-07] 매트릭스 표 가독성 + 진입시뮬 총합 셀 + 표시모드 라디오 ──────────
+   맨 뒤에 별도 @media 블록으로 배치 → batch3 규칙(값열 88px 등)을 소스순서로 덮어씀.
+   #page-position 스코프 한정, MOBILE ONLY, PC 무영향. 문제 시 이 블록만 삭제하면 원복. */
+@media(max-width:640px){
+  /* [batch4 #2] 종목(첫열) 좁게 + 이름 줄바꿈 허용 + sticky 유지.
+     batch2/07-06 규칙(td/th:first-child sticky)과 batch3의 값열 규칙을 보강/덮어씀. */
+  #page-position #pt-master-body table th:first-child,
+  #page-position #pt-master-body table td:first-child{
+    width:76px !important; min-width:76px !important; max-width:76px !important;
+    white-space:normal !important; word-break:keep-all !important;
+    box-sizing:border-box !important;
+    position:sticky !important; left:0 !important; z-index:3 !important;
+  }
+
+  /* [batch4 #3] 헤더 셀: 말줄임(…) 제거 → 줄바꿈 + 작은 폰트로 전부 읽히게.
+     매매 비중 / 현재 평가손익 / 생존경보 / 경보단계별 추정손실 / '진입전 → 진입후…' 서브 모두 포함. */
+  #page-position #pt-master-body table th{
+    white-space:normal !important; text-overflow:clip !important; overflow:visible !important;
+    word-break:keep-all !important;
+    font-size:11px !important; line-height:1.25 !important;
+  }
+
+  /* [batch4 #5] 생존경보 열(6번째 셀 = 콜/풋 1·2·3 뱃지) 넓혀 좌우 잘림 방지.
+     batch3의 값열 88px보다 뒤에 와서 우선 적용. 헤더는 ROW0 4번째 th(생존경보). */
+  #page-position #pt-master-body table td:nth-child(6){
+    width:120px !important; min-width:120px !important; max-width:120px !important;
+    overflow:visible !important;
+  }
+  #page-position #pt-master-body table thead tr:first-child th:nth-child(4){
+    min-width:120px !important; overflow:visible !important;
+  }
+  /* 뱃지 행이 셀 안에서 잘리지 않게(콜 1 2 3 / 풋 1 2 3 각각 한 줄) */
+  #page-position #pt-master-body table td:nth-child(6) > div{
+    white-space:nowrap !important; overflow:visible !important;
+  }
+
+  /* [batch4 #7] 진입 예정 포지션 표(#pt-sim-body) 합계행의 '총 추가 노출' 값 셀:
+     뒤 빈 셀(colspan)이 값을 오른쪽 끝에서 밀어내 잘려 보임 →
+     값 셀을 스크롤 뷰포트 오른쪽 끝에 sticky 고정(항상 보이게, 숨기지 않음). 우측정렬. */
+  #page-position #pt-sim-body table tr:last-child td:nth-last-child(2){
+    position:sticky !important; right:0 !important; z-index:2 !important;
+    text-align:right !important; white-space:nowrap !important; overflow:visible !important;
+    background:var(--card2) !important; box-shadow:-1px 0 0 var(--b1) !important;
+  }
+
+  /* [batch4 #8] 표시 모드 필터: 라벨(표시 모드) 윗줄 + 라디오 2개(손익 마이너스만/전체 보기)
+     각각 전체폭 세로 스택, 좌정렬. #pt-pos-filter의 첫 번째 div가 해당 그룹(라이브 DOM 확인). */
+  #page-position #pt-pos-filter > div:first-child{
+    display:flex !important; flex-direction:column !important;
+    align-items:stretch !important; width:100% !important; gap:6px !important;
+  }
+  #page-position #pt-pos-filter > div:first-child > span{
+    display:block !important; width:100% !important; text-align:left !important;
+  }
+  #page-position #pt-pos-filter > div:first-child > label{
+    display:flex !important; width:100% !important; justify-content:flex-start !important;
+  }
+
+  /* ── [batch5 2026-07-07] 경보단계별 추정손실(7·8열) 제거 + 종목열 폭 확대 ──────────
+     Task1의 셀 숨김은 아래 <script> [batch5]에서 JS로 처리(colspan/rowspan 그리드 인식).
+     여기 CSS는 Task2(종목 첫열) 전용: batch4 #2(76px)를 소스순서로 덮어써 이름이 한 줄에 들어오게. */
+  /* [batch5 T2] 종목(첫열) 폭 98px·폰트 13px·keep-all → S&P500/천연가스/원유/대두 등 한 줄 유지, sticky 유지. */
+  #page-position #pt-master-body table th:first-child,
+  #page-position #pt-master-body table td:first-child{
+    width:98px !important; min-width:98px !important; max-width:98px !important;
+    white-space:normal !important; word-break:keep-all !important;
+    font-size:13px !important; line-height:1.25 !important;
+    box-sizing:border-box !important;
+    position:sticky !important; left:0 !important; z-index:3 !important;
+  }
+}
+
+/* ── [batch6 2026-07-07] Task1: 매트릭스 값열 한 줄 표시 + Task2: 진입시뮬 총합 셀 좌정렬 ──────────
+   맨 뒤 별도 @media 블록 → batch3(값열 88px·white-space:normal)·batch4(#7 sticky-right)를
+   소스순서로 덮어씀. #page-position 스코프 한정, MOBILE ONLY(≤640px), PC 무영향.
+   문제 시 이 블록만 삭제하면 원복. */
+@media(max-width:640px){
+  /* [batch6 T1] 값열(콜/풋 매매비중=2·3, 콜/풋 평가손익=4·5) 한 줄 표시.
+     ROOT CAUSE: batch3 #5가 값열에 max-width:88px + white-space:normal 을 걸어
+       table-layout:fixed 상태에서 '0.54% / 진입후 / 1. / 1 / 2 / %' 처럼 글자단위 줄바꿈,
+       '+144만' / '원' 처럼 평가손익도 쪼개짐.
+     FIX 원리: fixed 레이아웃에서는 폭 지정이 잘 안 먹어 콘텐츠가 좁은 열에 갇힘 →
+       (1) 매트릭스 표를 table-layout:auto + width:auto 로 전환(값열이 nowrap 콘텐츠 폭에 맞게 자라남),
+       (2) 값열 셀·헤더에 white-space:nowrap + max-width 해제 + min-width:96px(균등),
+       (3) 값 셀 내부 메인%(div)·'진입후 X.XX%' 뱃지(flex div>span·span) 전부 nowrap·flex-wrap:nowrap.
+     표는 가로 스크롤(#pt-master-body overflow-x:auto)이라 열이 넓어져도 OK.
+     라이브 DOM 검증(2026-07-07, 360px 클론): 값셀 내부 div 46개 전부 1줄, 뱃지 1줄, 4개 값열 균등. */
+  #page-position #pt-master-body table{
+    table-layout:auto !important; width:auto !important;
+  }
+  #page-position #pt-master-body table td:nth-child(2),
+  #page-position #pt-master-body table td:nth-child(3),
+  #page-position #pt-master-body table td:nth-child(4),
+  #page-position #pt-master-body table td:nth-child(5),
+  #page-position #pt-master-body table thead tr:last-child th:nth-child(1),
+  #page-position #pt-master-body table thead tr:last-child th:nth-child(2),
+  #page-position #pt-master-body table thead tr:last-child th:nth-child(3),
+  #page-position #pt-master-body table thead tr:last-child th:nth-child(4){
+    max-width:none !important;
+    width:auto !important; min-width:96px !important;
+    white-space:nowrap !important;
+    box-sizing:border-box !important;
+  }
+  /* 값 셀 내부: 메인 %(div) + '진입후 X.XX%' 뱃지(flex div>span·span) 전부 한 줄 강제.
+     batch3 #5의 '> div{white-space:normal}' 을 덮어씀. flex 뱃지는 줄바꿈 금지. */
+  #page-position #pt-master-body table td:nth-child(2) > div,
+  #page-position #pt-master-body table td:nth-child(3) > div,
+  #page-position #pt-master-body table td:nth-child(4) > div,
+  #page-position #pt-master-body table td:nth-child(5) > div{
+    white-space:nowrap !important;
+    flex-wrap:nowrap !important;
+  }
+  #page-position #pt-master-body table td:nth-child(2) > div *,
+  #page-position #pt-master-body table td:nth-child(3) > div *,
+  #page-position #pt-master-body table td:nth-child(4) > div *,
+  #page-position #pt-master-body table td:nth-child(5) > div *{
+    white-space:nowrap !important;
+  }
+
+  /* [batch6 T2] 진입 예정 포지션 표(#pt-sim-body) 합계행 '총 추가 노출' 값 셀:
+     batch4 #7의 sticky-right·우측정렬 제거 → 좌정렬·자연 줄바꿈으로 전부 읽히게. */
+  #page-position #pt-sim-body table tr:last-child td:nth-last-child(2){
+    position:static !important; right:auto !important;
+    text-align:left !important; white-space:normal !important; word-break:keep-all !important;
+    box-shadow:none !important; background:transparent !important;
+  }
+  /* 라벨 셀(총 추가 노출)도 좌정렬로 통일 → '총 추가 노출 0.57% …' 자연스럽게 왼쪽에서 읽힘 */
+  #page-position #pt-sim-body table tr:last-child td:nth-last-child(3){
+    text-align:left !important; white-space:normal !important; word-break:keep-all !important;
+  }
+}
+</style>
+<script>
+/* [위험탭 declutter 2026-07-07] 위험·자금 관리 탭 모바일(≤640px) 배지/보조문구/범례 숨김 + 표 스와이프 힌트 삽입.
+   MOBILE ONLY(matchMedia 640px). #page-position 스코프 한정. HIDE만(display:none), DOM 삭제 없음.
+   재렌더 대응(디바운스 MutationObserver), try/catch, 처리표시(dataset)로 루프 방지. PC 무영향.
+   문제 시 이 <script>+위 <style>만 삭제하면 원복. */
+(function(){
+  try{
+    var mq=window.matchMedia('(max-width:640px)');
+
+    /* el의 '직접 텍스트'(텍스트노드 자식만) 정규화 */
+    function ownText(el){
+      var s='';
+      for(var i=0;i<el.childNodes.length;i++){ var n=el.childNodes[i]; if(n.nodeType===3) s+=n.textContent; }
+      return s.replace(/\s+/g,' ').trim();
+    }
+    /* 직접 텍스트에 phrase 포함하는 '가장 작은' 요소(자손 우선) */
+    function smallestByOwn(root, phrase){
+      var best=null;
+      var all=root.querySelectorAll('*');
+      for(var i=0;i<all.length;i++){
+        var el=all[i];
+        if(ownText(el).indexOf(phrase)>=0){
+          if(!best) best=el;
+          else if(best.contains(el)) best=el;  /* 더 안쪽 요소로 좁힘 */
+        }
+      }
+      return best;
+    }
+    function hideEl(el){
+      if(!el) return;
+      if(el.dataset && el.dataset.rd07hid==='1') return;
+      el.style.display='none';
+      if(el.dataset) el.dataset.rd07hid='1';
+    }
+
+    /* 보호할 섹션 타이틀 — 안전장치용(절대 숨기지 않음) */
+    var TITLES=['증거금 현황','포지션 종합 현황','종목별 노출 통합','진입 시뮬레이션','진입 예정 포지션','위험 포지션 카드'];
+
+    /* 숨길 보조문구/설명(긴 고유 substring 기준) */
+    var SUB_PHRASES=[
+      '위탁증거금 사용률 기준 신규 진입 가능',            /* 1 */
+      '목표 사용률 이하일 때 신규 진입 가능',             /* 2 */
+      '손익 · 추정손실 한눈',                             /* 3 (타이틀 '종목별 노출 통합' 회피) */
+      '포지션 위험노출 및 경보단계별 추정손실',           /* 4 */
+      '매매 비중 · 위험노출 · 경보단계',                  /* 6 */
+      '진입 예정 종목 추가 →',                           /* 7 (C테이블 가이드 박스; '포지션 추가'와 구분) */
+      '필터 조건으로 단계별 카드 조회',                   /* 9 */
+      '위험 단계 카드만 표시',                            /* 10 */
+      '진입 예정 포지션 추가 → C 테이블'                  /* [batch3 #7] 진입 시뮬(#pt-sec-e) 별도 가이드 DIV.
+                                                            live DOM 확인: matchCount=1, leaf DIV, 타이틀/데이터 아님 */
+    ];
+
+    function runHide(){
+      if(!mq.matches) return;
+      var root=document.getElementById('page-position');
+      if(!root) return;
+
+      /* 보조문구/설명 */
+      for(var i=0;i<SUB_PHRASES.length;i++){
+        try{
+          var el=smallestByOwn(root, SUB_PHRASES[i]);
+          if(el && TITLES.indexOf(ownText(el))<0) hideEl(el);
+        }catch(e){}
+      }
+
+      /* 5: '통합 뷰' — 직접 텍스트가 정확히 '통합 뷰'인 작은 span만 */
+      try{
+        var spans=root.querySelectorAll('span');
+        for(var s=0;s<spans.length;s++){ if(ownText(spans[s])==='통합 뷰') hideEl(spans[s]); }
+      }catch(e){}
+
+      /* [batch2 #9 / batch3 #8] '총 추가 노출 …' 박스: 보이게 유지 + 좌정렬·전체폭·wrap.
+         id가 없어 CSS 구조선택이 취약 → 여기서 인라인 적용(멱등: dataset.rd08la로 1회만).
+         과거 숨김(rd07hid) 흔적 있으면 복구. 우측 잘림 방지. */
+      try{
+        var sim9=document.getElementById('pt-sim-body');
+        if(sim9){
+          var ds9=sim9.querySelectorAll('div');
+          for(var d9=0;d9<ds9.length;d9++){
+            var dv9=ds9[d9];
+            if(ownText(dv9).indexOf('총 추가 노출')>=0){
+              if(dv9.dataset && dv9.dataset.rd07hid==='1'){
+                dv9.style.display=''; dv9.dataset.rd07hid='';   /* 과거 숨김 복구 */
+              }
+              if(mq.matches && dv9.dataset && dv9.dataset.rd08la!=='1'){
+                dv9.style.textAlign='left';
+                dv9.style.width='100%';
+                dv9.style.boxSizing='border-box';
+                dv9.style.whiteSpace='normal';
+                dv9.style.wordBreak='keep-all';
+                dv9.style.marginLeft='0';
+                dv9.style.marginRight='0';
+                dv9.dataset.rd08la='1';
+              }
+            }
+          }
+        }
+      }catch(e){}
+
+      /* 11: '노출 위험도' 범례 행 — '노출 위험도' span의 부모 flex 행 전체 */
+      try{
+        var all=root.querySelectorAll('*');
+        for(var a=0;a<all.length;a++){
+          if(ownText(all[a])==='노출 위험도' && all[a].parentNode){
+            var row=all[a].parentNode;
+            if(TITLES.indexOf(ownText(row))<0) hideEl(row);
+          }
+        }
+      }catch(e){}
+
+      /* 12: 단계번호 배지 N-1 (1-1,2-1,3-1,4-1) — 자식 없는 작은 요소, 직접텍스트 정확 매칭.
+         (한 자리 숫자 배지는 스텝/데이터와 혼동 위험이 있어 보수적으로 제외) */
+      try{
+        var all2=root.querySelectorAll('*');
+        for(var b=0;b<all2.length;b++){
+          var el2=all2[b];
+          if(el2.children.length===0){
+            var t=ownText(el2);
+            if(/^[1-4]\s*-\s*1$/.test(t)) hideEl(el2);
+          }
+        }
+      }catch(e){}
+
+      /* ── [batch2 2026-07-07] 추가 숨김 항목 ─────────────────────────── */
+
+      /* [batch2 #1] 증거금 현황 가이드 박스: '자금 설정 · HTS 1316 · HTS 1310' 텍스트 +
+         '데이터 입력 탭 →' 버튼을 함께 감싸는 박스 전체 숨김. (동일 텍스트 사본이 여러 개일 수 있어 모두 순회) */
+      try{
+        var A1P='자금 설정 · HTS 1316 · HTS 1310';
+        var A1all=root.querySelectorAll('div');
+        for(var a1=0;a1<A1all.length;a1++){
+          var box1=A1all[a1];
+          if(box1.textContent.indexOf(A1P)>=0){
+            /* 텍스트와 '데이터 입력 탭 →' 버튼을 모두 포함하는 '가장 안쪽' 박스 */
+            var btn1=null, bl=box1.querySelectorAll('button');
+            for(var q1=0;q1<bl.length;q1++){ if(bl[q1].textContent.indexOf('데이터 입력 탭')>=0){ btn1=bl[q1]; break; } }
+            if(btn1){
+              /* box1이 텍스트+버튼 공통 조상 중 가장 작은 것인지 확인: 자식 div로 더 좁혀지지 않으면 여기서 숨김 */
+              var tighter=false;
+              for(var c1=0;c1<box1.children.length;c1++){
+                var ch=box1.children[c1];
+                if(ch.textContent.indexOf(A1P)>=0 && ch.contains(btn1)){ tighter=true; break; }
+              }
+              if(!tighter){ hideEl(box1); }
+            }
+          }
+        }
+      }catch(e){}
+
+      /* [batch2 #2] 포지션 종합 현황 아래 '· 매매 비중 관리 +' 조각 숨김.
+         해당 라인은 6개 span으로 구성 → '매매 비중 관리' span과 그 앞 '·', 뒤 '+' span만 숨김(데이터 아님). */
+      try{
+        var mspan=null, sp=root.querySelectorAll('span');
+        for(var m2=0;m2<sp.length;m2++){ if(ownText(sp[m2])==='매매 비중 관리'){ mspan=sp[m2]; break; } }
+        if(mspan){
+          hideEl(mspan);
+          var prevS=mspan.previousElementSibling, nextS=mspan.nextElementSibling;
+          if(prevS && ownText(prevS)==='·') hideEl(prevS);
+          if(nextS && ownText(nextS)==='+') hideEl(nextS);
+        }
+      }catch(e){}
+
+      /* [batch2 #3] 설명 펼치기 토글 버튼(.btn-q, "이 영역 안내 펼치기")은 CSS로 숨김 처리.
+         (.btn-q 는 스타일시트에서 display:inline-flex !important 라 인라인 display:none 이 안 먹음
+          → 위 <style>의 '#page-position .btn-q{display:none !important}' 규칙으로 숨긴다.
+         표 내부 콜/풋 1·2·3 데이터 버튼은 클래스가 없어 영향 없음.) */
+
+      /* [batch2 #5] 섹션 타이틀 옆 장식용 원형(라운드) 단일숫자 배지 숨김.
+         안전: #pt-sec-c/d/e/f 의 헤더 flex행 첫 자식 div가 배지(40x40, br 8px, 숫자 1자리)일 때만.
+         스텝번호(리스트 안 1 DB금융투자…)는 이 경로에 없어 안전. */
+      try{
+        var SEC=['pt-sec-c','pt-sec-d','pt-sec-e','pt-sec-f'];
+        for(var s5=0;s5<SEC.length;s5++){
+          var sec=document.getElementById(SEC[s5]);
+          if(!sec) continue;
+          var hdr=sec.querySelector(':scope > div');           /* flex 헤더 행 */
+          if(!hdr) continue;
+          var badge=hdr.firstElementChild;
+          if(!badge) continue;
+          /* 배지 검증: 자식 없는 요소, 직접텍스트가 한 자리 숫자 1~4 */
+          if(badge.children.length===0 && /^[1-4]$/.test(ownText(badge))) hideEl(badge);
+        }
+      }catch(e){}
+
+      /* ── [batch4 2026-07-07] 매트릭스 표 정리(텍스트 기준 → JS 필요) ─────────── */
+
+      /* [batch4 #1] 매트릭스 표(#pt-master-body) 종목(첫열) 셀의 코드+배수 서브라인 숨김.
+         각 첫열 셀 안, '직접 텍스트'에 '·'와 '×'가 모두 들어있는 요소만 숨김
+         (예: 'OES · ×50', 'OGC · ×100', 'ONG · ×10,000'). 종목 이름/데이터 %는 미해당.
+         라이브 DOM 확인: 12개(합계/콜풋합산 행 제외), 전부 코드+배수 서브라인. 이름/데이터 아님. */
+      try{
+        var mb1=document.getElementById('pt-master-body');
+        if(mb1){
+          var tbl1=mb1.querySelector('table');
+          if(tbl1){
+            var rows1=tbl1.querySelectorAll('tr');
+            for(var r1=0;r1<rows1.length;r1++){
+              if(!rows1[r1].querySelector('td')) continue;   /* 데이터 행만 */
+              var c01=rows1[r1].children[0]; if(!c01) continue;
+              var ds1=c01.querySelectorAll('*');
+              for(var e1=0;e1<ds1.length;e1++){
+                var o1=ownText(ds1[e1]);
+                if(o1.indexOf('·')>=0 && o1.indexOf('×')>=0) hideEl(ds1[e1]);  /* × = × */
+              }
+            }
+          }
+        }
+      }catch(e){}
+
+      /* [batch4 #4 → batch5로 교체] 아래 [batch5 T1] 참조.
+         (기존: '경보 설정 후 자동 계산' 셀을 restyle만 했음 → 이제 열 통째 숨김으로 변경) */
+
+      /* ── [batch5 2026-07-07] Task1: 경보단계별 추정손실(논리 7·8열) 전체 숨김 ──────────
+         매트릭스 표에서 종목/매매비중/평가손익/생존경보 이후의 마지막 2개 논리열(추정손실 콜/풋)을 제거.
+         플레이스홀더('경보 설정 후 자동 계산')뿐 실데이터가 없어 사용자 요청으로 삭제.
+         핵심: 합계·콜+풋 합산 행은 colspan이 달라 nth-child가 어긋남 → colspan+rowspan 인식 그리드로
+               '논리 열 시작번호 >= 7' 인 셀(th/td)만 정확히 숨긴다(display:none).
+         라이브 DOM 검증(2026-07-07): 숨김 대상 = 헤더 '경보단계별 추정손실'(row0,cs2),
+               서브헤더 '콜'·'풋'(row1, 7·8열), 데이터행 '경보 설정 후 자동 계산' ×각2, 합계행 '—'×2,
+               콜+풋 합산행 '—'×1(cs2). 생존경보(6열)·평가손익(4·5열)·매매비중(2·3열)·%데이터는 미해당.
+         멱등: 셀 dataset.rd08ph='1' 로 1회만. 재렌더 대응: 아래 MutationObserver가 runAll 재호출. */
+      try{
+        var mb5=document.getElementById('pt-master-body');
+        if(mb5){
+          var tbl5=mb5.querySelector('table');
+          if(tbl5){
+            var trs5=tbl5.querySelectorAll('tr');
+            var occ5={};                      /* 점유 그리드: "r,c" → true */
+            for(var r5=0;r5<trs5.length;r5++){
+              var cells5=trs5[r5].children;
+              var c5=0;
+              for(var k5=0;k5<cells5.length;k5++){
+                var cell5=cells5[k5];
+                while(occ5[r5+','+c5]) c5++;
+                var cs5=cell5.colSpan||1, rs5=cell5.rowSpan||1;
+                var colStart5=c5+1;           /* 1-based 논리 열 시작번호 */
+                for(var rr5=r5;rr5<r5+rs5;rr5++)
+                  for(var cc5=c5;cc5<c5+cs5;cc5++) occ5[rr5+','+cc5]=true;
+                if(colStart5>=7){             /* 7·8열(추정손실)만 */
+                  if(!(cell5.dataset && cell5.dataset.rd08ph==='1')){
+                    cell5.style.display='none';
+                    if(cell5.dataset) cell5.dataset.rd08ph='1';
+                  }
+                }
+                c5+=cs5;
+              }
+            }
+          }
+        }
+      }catch(e){}
+    }
+
+    /* FIX A: 가로 스크롤 표 위에 좌우 스와이프 힌트 1회 삽입 (중복 방지, 재렌더 안전) */
+    function insertHint(containerId){
+      if(!mq.matches) return;
+      try{
+        var mb=document.getElementById(containerId);
+        if(!mb) return;
+        var tbl=mb.querySelector('table');
+        if(!tbl) return;
+        /* 힌트는 표의 스크롤 래퍼(있으면) 또는 표의 바로 앞에 삽입 */
+        var anchor=tbl;
+        try{
+          var p=tbl.parentNode;
+          for(var k=0;k<4 && p && p!==mb; k++){
+            var ox=getComputedStyle(p).overflowX;
+            if(ox==='auto'||ox==='scroll'){ anchor=p; break; }
+            p=p.parentNode;
+          }
+        }catch(e){}
+        var prev=anchor.previousElementSibling;
+        if(prev && prev.classList && prev.classList.contains('rd07-scroll-hint')) return;
+        if(mb.querySelector('.rd07-scroll-hint')) return;   /* 이미 있으면 skip */
+        var hint=document.createElement('div');
+        hint.className='rd07-scroll-hint';
+        hint.textContent='← 좌우로 밀어서 전체 보기 →';
+        anchor.parentNode.insertBefore(hint, anchor);
+      }catch(e){}
+    }
+    /* [batch2 #8] 매트릭스 표(#pt-master-body) + 진입 시뮬 표(#pt-sim-body) 둘 다 힌트 삽입 */
+    function addScrollHint(){ insertHint('pt-master-body'); insertHint('pt-sim-body'); }
+
+    function runAll(){ runHide(); addScrollHint(); }
+
+    var timer;
+    function sched(){ clearTimeout(timer); timer=setTimeout(runAll,150); }
+
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',runAll);
+    else runAll();
+
+    try{ new MutationObserver(sched).observe(document.body,{childList:true,subtree:true}); }catch(e){}
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
