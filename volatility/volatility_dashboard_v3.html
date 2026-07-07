@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260707-093832">
-<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260707-093832";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
+<meta name="jikt-build" content="20260707-101603">
+<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260707-101603";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
 <script>!function(){try{var t=location.hash||"";if(t.indexOf("token=")>=0){var e=new URLSearchParams(t.replace(/^#/,"")),a=e.get("token"),o=e.get("uid");if(a&&(localStorage.setItem("jikt_token",a),o&&localStorage.setItem("jikt_uid",o),location.hostname.indexOf("github.io")>=0))return void location.replace("../hub.html");try{var i=new URL(location.href);i.hash="",i.searchParams.delete("login"),history.replaceState(null,"",i.pathname+i.search)}catch(t){try{location.hash=""}catch(t){}}}var n=location.hostname.indexOf("github.io")>=0,c=localStorage.getItem("jikt_token");n&&!c&&location.replace("login.html")}catch(t){}}();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -6520,5 +6520,175 @@ body{padding-bottom:0}
 }
 </style>
 <script>!function(){var e,t=window.matchMedia("(max-width:640px)");function r(e){try{if(e.querySelector(":scope > .pos-meta-row"))return;var t=e.querySelector(".pos-card-head");if(!t)return;var r=t.children[t.children.length-1];if(!r||r.children.length<2)return;var n=r.lastElementChild,o=e.querySelector(".pos-card-top");if(!o||o.parentNode!==e)return;var a=document.createElement("div");a.className="pos-meta-row",a.appendChild(n),e.insertBefore(a,o.nextSibling)}catch(e){}}function n(){t.matches&&document.querySelectorAll(".pos-card").forEach(r)}"loading"===document.readyState?document.addEventListener("DOMContentLoaded",n):n();try{new MutationObserver(function(){clearTimeout(e),e=setTimeout(n,150)}).observe(document.body,{childList:!0,subtree:!0})}catch(e){}}();</script>
+<style>
+/* [위험탭 declutter 2026-07-07] 위험·자금 관리 탭 모바일(≤640px) 정리용 스타일.
+   #page-position 스코프 한정. PC/데스크톱 무영향. 문제 시 이 <style>+아래 <script>만 삭제하면 원복. */
+@media(max-width:640px){
+  /* FIX A: 매트릭스 표 좌우 스와이프 힌트 (JS가 삽입한 .rd07-scroll-hint) */
+  #page-position .rd07-scroll-hint{
+    display:block; text-align:center; font-size:12px; color:var(--t3);
+    margin:2px 0 6px; font-weight:500; letter-spacing:.02em;
+  }
+  /* FIX B: 표시 모드 필터 — 라벨→셀렉트 세로 스택, 셀렉트 전체폭, 간격 통일 */
+  #page-position #pt-pos-filter-inst,
+  #page-position #pt-pos-filter-month,
+  #page-position #pt-pos-filter-type{
+    display:block !important; width:100% !important; box-sizing:border-box !important;
+    margin:2px 0 8px !important; padding:8px 10px !important;
+  }
+  /* 셀렉트 바로 앞 라벨(span)을 블록으로 → 라벨 위, 셀렉트 아래 */
+  #page-position #pt-pos-filter-inst,
+  #page-position #pt-pos-filter-month,
+  #page-position #pt-pos-filter-type{ clear:both; }
+}
+</style>
+<script>
+/* [위험탭 declutter 2026-07-07] 위험·자금 관리 탭 모바일(≤640px) 배지/보조문구/범례 숨김 + 표 스와이프 힌트 삽입.
+   MOBILE ONLY(matchMedia 640px). #page-position 스코프 한정. HIDE만(display:none), DOM 삭제 없음.
+   재렌더 대응(디바운스 MutationObserver), try/catch, 처리표시(dataset)로 루프 방지. PC 무영향.
+   문제 시 이 <script>+위 <style>만 삭제하면 원복. */
+(function(){
+  try{
+    var mq=window.matchMedia('(max-width:640px)');
+
+    /* el의 '직접 텍스트'(텍스트노드 자식만) 정규화 */
+    function ownText(el){
+      var s='';
+      for(var i=0;i<el.childNodes.length;i++){ var n=el.childNodes[i]; if(n.nodeType===3) s+=n.textContent; }
+      return s.replace(/\s+/g,' ').trim();
+    }
+    /* 직접 텍스트에 phrase 포함하는 '가장 작은' 요소(자손 우선) */
+    function smallestByOwn(root, phrase){
+      var best=null;
+      var all=root.querySelectorAll('*');
+      for(var i=0;i<all.length;i++){
+        var el=all[i];
+        if(ownText(el).indexOf(phrase)>=0){
+          if(!best) best=el;
+          else if(best.contains(el)) best=el;  /* 더 안쪽 요소로 좁힘 */
+        }
+      }
+      return best;
+    }
+    function hideEl(el){
+      if(!el) return;
+      if(el.dataset && el.dataset.rd07hid==='1') return;
+      el.style.display='none';
+      if(el.dataset) el.dataset.rd07hid='1';
+    }
+
+    /* 보호할 섹션 타이틀 — 안전장치용(절대 숨기지 않음) */
+    var TITLES=['증거금 현황','포지션 종합 현황','종목별 노출 통합','진입 시뮬레이션','진입 예정 포지션','위험 포지션 카드'];
+
+    /* 숨길 보조문구/설명(긴 고유 substring 기준) */
+    var SUB_PHRASES=[
+      '위탁증거금 사용률 기준 신규 진입 가능',            /* 1 */
+      '목표 사용률 이하일 때 신규 진입 가능',             /* 2 */
+      '손익 · 추정손실 한눈',                             /* 3 (타이틀 '종목별 노출 통합' 회피) */
+      '포지션 위험노출 및 경보단계별 추정손실',           /* 4 */
+      '매매 비중 · 위험노출 · 경보단계',                  /* 6 */
+      '진입 예정 종목 추가 →',                           /* 7 (C테이블 가이드 박스; '포지션 추가'와 구분) */
+      '필터 조건으로 단계별 카드 조회',                   /* 9 */
+      '위험 단계 카드만 표시'                             /* 10 */
+    ];
+
+    function runHide(){
+      if(!mq.matches) return;
+      var root=document.getElementById('page-position');
+      if(!root) return;
+
+      /* 보조문구/설명 */
+      for(var i=0;i<SUB_PHRASES.length;i++){
+        try{
+          var el=smallestByOwn(root, SUB_PHRASES[i]);
+          if(el && TITLES.indexOf(ownText(el))<0) hideEl(el);
+        }catch(e){}
+      }
+
+      /* 5: '통합 뷰' — 직접 텍스트가 정확히 '통합 뷰'인 작은 span만 */
+      try{
+        var spans=root.querySelectorAll('span');
+        for(var s=0;s<spans.length;s++){ if(ownText(spans[s])==='통합 뷰') hideEl(spans[s]); }
+      }catch(e){}
+
+      /* 8: #pt-sim-body 내 '총 추가 노출' 힌트 박스 — DIV만(테이블 합계 TD/TR 등 데이터는 보존) */
+      try{
+        var sim=document.getElementById('pt-sim-body');
+        if(sim){
+          var ds=sim.querySelectorAll('div');
+          for(var d=0;d<ds.length;d++){
+            var dv=ds[d];
+            if(ownText(dv).indexOf('총 추가 노출')>=0 && !dv.querySelector('table')) hideEl(dv);
+          }
+        }
+      }catch(e){}
+
+      /* 11: '노출 위험도' 범례 행 — '노출 위험도' span의 부모 flex 행 전체 */
+      try{
+        var all=root.querySelectorAll('*');
+        for(var a=0;a<all.length;a++){
+          if(ownText(all[a])==='노출 위험도' && all[a].parentNode){
+            var row=all[a].parentNode;
+            if(TITLES.indexOf(ownText(row))<0) hideEl(row);
+          }
+        }
+      }catch(e){}
+
+      /* 12: 단계번호 배지 N-1 (1-1,2-1,3-1,4-1) — 자식 없는 작은 요소, 직접텍스트 정확 매칭.
+         (한 자리 숫자 배지는 스텝/데이터와 혼동 위험이 있어 보수적으로 제외) */
+      try{
+        var all2=root.querySelectorAll('*');
+        for(var b=0;b<all2.length;b++){
+          var el2=all2[b];
+          if(el2.children.length===0){
+            var t=ownText(el2);
+            if(/^[1-4]\s*-\s*1$/.test(t)) hideEl(el2);
+          }
+        }
+      }catch(e){}
+    }
+
+    /* FIX A: 매트릭스 표 좌우 스와이프 힌트 1회 삽입 (#pt-master-body 표 바로 위) */
+    function addScrollHint(){
+      if(!mq.matches) return;
+      try{
+        var mb=document.getElementById('pt-master-body');
+        if(!mb) return;
+        var tbl=mb.querySelector('table');
+        if(!tbl) return;
+        /* 힌트는 표의 스크롤 래퍼(있으면) 또는 표의 바로 앞에 삽입, 중복 방지 */
+        var anchor=tbl;
+        var par=tbl.parentNode;
+        /* overflow-x 스크롤 래퍼가 있으면 그 래퍼 앞에 삽입 */
+        try{
+          var p=tbl.parentNode;
+          for(var k=0;k<4 && p && p!==mb; k++){
+            var ox=getComputedStyle(p).overflowX;
+            if(ox==='auto'||ox==='scroll'){ anchor=p; break; }
+            p=p.parentNode;
+          }
+        }catch(e){}
+        var prev=anchor.previousElementSibling;
+        if(prev && prev.classList && prev.classList.contains('rd07-scroll-hint')) return;
+        if(mb.querySelector('.rd07-scroll-hint')) return;
+        var hint=document.createElement('div');
+        hint.className='rd07-scroll-hint';
+        hint.textContent='← 좌우로 밀어서 전체 보기 →';
+        anchor.parentNode.insertBefore(hint, anchor);
+      }catch(e){}
+    }
+
+    function runAll(){ runHide(); addScrollHint(); }
+
+    var timer;
+    function sched(){ clearTimeout(timer); timer=setTimeout(runAll,150); }
+
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',runAll);
+    else runAll();
+
+    try{ new MutationObserver(sched).observe(document.body,{childList:true,subtree:true}); }catch(e){}
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
