@@ -638,6 +638,18 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
   .sc-price{font-size:32px}
   .factor-title{font-size:17px}
 }
+
+/* [mobile-readability-2026-07-08] 문장별 줄바꿈 프로즈 + 제목 줄바꿈 보정 (<=600px 전용, 데스크톱 불변) */
+@media(max-width:600px){
+  .cm-text{line-height:1.65}
+  .hn-desc{line-height:1.65}
+  .cm-text br,.hn-desc br{display:block;content:"";margin-top:6px}
+  .mi-label{word-break:keep-all;font-size:13px;line-height:1.35}
+  .macro-grid-label{word-break:keep-all}
+  .sec-lbl{word-break:keep-all}
+  .pg-title{word-break:keep-all}
+  .hn-title{word-break:keep-all}
+}
 </style>
 </head>
 <body>
@@ -3075,6 +3087,80 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     requestAnimationFrame(draw);
   }
   requestAnimationFrame(draw);
+})();
+</script>
+
+<script>
+/* [mobile-readability-2026-07-08] 모바일 문장별 줄바꿈 - 프로즈만, <=600px 전용. 출처/배지/숫자/헤더 제외 */
+(function(){
+  try{
+    if(!window.matchMedia || !window.matchMedia('(max-width:600px)').matches) return;
+    var SEL = '.cm-text, .hn-desc';
+    var reA, reB;
+    try{
+      reA = new RegExp('(?<=[\uB2E4\uC694\uC8E0]\\.|\uB2C8\uB2E4\\.)\\s+');
+      reB = new RegExp('(?<=[\uAC00-\uD7A3])\\.\\s+(?=[\uAC00-\uD7A3A-Z])');
+    }catch(e){ return; }
+    function splitText(t){
+      var parts = t.split(reA);
+      var out = [];
+      parts.forEach(function(seg){
+        seg.split(reB).forEach(function(s){ out.push(s); });
+      });
+      var clean = [];
+      out.forEach(function(seg){
+        if(clean.length && /^\s*[\u2014\-\u00b7]\s*$/.test(seg)){ clean[clean.length-1] += ' ' + seg; }
+        else clean.push(seg);
+      });
+      return clean;
+    }
+    function splitProse(el){
+      try{
+        if(!el || el.dataset.sbr==='1') return;
+        var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+        var nodes = [], n;
+        while(n = walker.nextNode()){ nodes.push(n); }
+        nodes.forEach(function(tn){
+          var p = tn.parentNode;
+          if(p && p.nodeType===1){
+            var cls = (p.className && p.className.baseVal!==undefined) ? p.className.baseVal : (p.className||'');
+            if(/cm-src|src|badge|link|num|tag/i.test(cls)) return;
+            if(p.tagName==='A') return;
+          }
+          var t = tn.nodeValue;
+          if(!t || t.length < 6) return;
+          var clean = splitText(t);
+          if(clean.length <= 1) return;
+          var frag = document.createDocumentFragment();
+          clean.forEach(function(seg, i){
+            if(i>0) frag.appendChild(document.createElement('br'));
+            frag.appendChild(document.createTextNode(seg));
+          });
+          tn.parentNode.replaceChild(frag, tn);
+        });
+        el.dataset.sbr = '1';
+      }catch(e){}
+    }
+    function run(){
+      try{
+        var els = document.querySelectorAll(SEL);
+        for(var i=0;i<els.length;i++) splitProse(els[i]);
+      }catch(e){}
+    }
+    function start(){
+      run();
+      try{
+        var timer=null;
+        var mo=new MutationObserver(function(){
+          clearTimeout(timer);
+          timer=setTimeout(run, 300);
+        });
+        if(document.body) mo.observe(document.body, {childList:true, subtree:true});
+      }catch(e){}
+    }
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', start);
+    else start();
+  }catch(e){}
 })();
 </script>
 </body>
