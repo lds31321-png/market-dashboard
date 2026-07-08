@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "exported_at": "2026-07-07T09:52:16.846Z",
+    "exported_at": "2026-07-08T03:04:48.023Z",
     "source": "admin.html",
     "version": 1,
     "keys": [
@@ -15,13 +15,18 @@
       "option_holdings"
     ]
   },
-  "sv_admin_alerts": {},
+  "sv_admin_alerts": {
+    "OZS": {
+      "call": 2,
+      "put": 0
+    }
+  },
   "sv_rm_data": {
     "OES": {
-      "psr": 0.8,
-      "isr": 0.44,
-      "lmr": 0.92,
-      "dsr": 0.38,
+      "psr": 0.55,
+      "isr": 0.37,
+      "lmr": 0.93,
+      "dsr": 0.24,
       "ivl": 0.18,
       "tail": false,
       "phase_admin": "NORMAL",
@@ -40,10 +45,10 @@
     },
     "OEUU": {
       "psr": 0.83,
-      "isr": 0.89,
+      "isr": 0.73,
       "lmr": 0.87,
-      "dsr": 0.69,
-      "ivl": 0.04,
+      "dsr": 0.35,
+      "ivl": 0.06,
       "tail": false,
       "phase_admin": "NORMAL",
       "sizing_admin": 1,
@@ -60,11 +65,11 @@
       "tailPut_admin": false
     },
     "OADU": {
-      "psr": 0.68,
-      "isr": 1.15,
+      "psr": 0.82,
+      "isr": 1.11,
       "lmr": 0.92,
-      "dsr": 0.57,
-      "ivl": 0,
+      "dsr": 0.54,
+      "ivl": 0.01,
       "tail": false,
       "phase_admin": "NORMAL",
       "sizing_admin": 1,
@@ -81,11 +86,11 @@
       "tailPut_admin": false
     },
     "OZN": {
-      "psr": 0.64,
-      "isr": 1.75,
+      "psr": 0.74,
+      "isr": 2,
       "lmr": 1.02,
-      "dsr": -0.77,
-      "ivl": 0.11,
+      "dsr": -0.76,
+      "ivl": 0.19,
       "tail": false,
       "phase_admin": "WARNING",
       "sizing_admin": 0.9,
@@ -94,40 +99,40 @@
       "dist_admin": 0.9,
       "distCall_admin": 0.9,
       "distPut_admin": 0.9,
-      "decelCall_admin": 0,
-      "decelPut_admin": 0,
+      "decelCall_admin": 10,
+      "decelPut_admin": 10,
       "capCall_admin": 0.01,
       "capPut_admin": 0.01,
       "tailCall_admin": false,
       "tailPut_admin": false
     },
     "OGC": {
-      "psr": 0.89,
+      "psr": 0.72,
       "isr": 0.63,
-      "lmr": 0.92,
-      "dsr": 1.23,
+      "lmr": 0.9,
+      "dsr": 0.24,
       "ivl": 0.26,
       "tail": false,
-      "phase_admin": "WARNING",
-      "sizing_admin": 0.9,
-      "sizingCall_admin": 0.9,
-      "sizingPut_admin": 0.9,
-      "dist_admin": 0.9,
-      "distCall_admin": 0.9,
-      "distPut_admin": 0.9,
+      "phase_admin": "NORMAL",
+      "sizing_admin": 1,
+      "sizingCall_admin": 1,
+      "sizingPut_admin": 1,
+      "dist_admin": 1,
+      "distCall_admin": 1,
+      "distPut_admin": 1,
       "decelCall_admin": 0,
       "decelPut_admin": 0,
-      "capCall_admin": 0.01,
-      "capPut_admin": 0.01,
+      "capCall_admin": 0.015,
+      "capPut_admin": 0.015,
       "tailCall_admin": false,
       "tailPut_admin": false
     },
     "OCL": {
-      "psr": 0.39,
-      "isr": 0.49,
-      "lmr": 0.87,
-      "dsr": -0.32,
-      "ivl": 0.03,
+      "psr": 0.46,
+      "isr": 0.93,
+      "lmr": 0.9,
+      "dsr": 0.63,
+      "ivl": 0.1,
       "tail": false,
       "phase_admin": "NORMAL",
       "sizing_admin": 1,
@@ -144,10 +149,10 @@
       "tailPut_admin": false
     },
     "ONG": {
-      "psr": 0.7,
-      "isr": 0.62,
-      "lmr": 0.89,
-      "dsr": -0.63,
+      "psr": 0.37,
+      "isr": 0.23,
+      "lmr": 0.92,
+      "dsr": 0.48,
       "ivl": 0.02,
       "tail": false,
       "phase_admin": "NORMAL",
@@ -165,184 +170,176 @@
       "tailPut_admin": false
     },
     "OZS": {
-      "psr": 1.11,
-      "isr": 1.2,
-      "lmr": 0.9,
-      "dsr": 1.13,
-      "ivl": 0.42,
-      "tail": false,
-      "phase_admin": "NORMAL",
-      "sizing_admin": 1,
-      "sizingCall_admin": 1,
-      "sizingPut_admin": 1,
-      "dist_admin": 1,
-      "distCall_admin": 1,
-      "distPut_admin": 1,
-      "decelCall_admin": 0,
+      "psr": 1.28,
+      "isr": 1.74,
+      "lmr": 0.89,
+      "dsr": 1.68,
+      "ivl": 0.63,
+      "tail": true,
+      "phase_admin": "CRISIS",
+      "sizing_admin": 0,
+      "sizingCall_admin": 0,
+      "sizingPut_admin": 0.7,
+      "dist_admin": 0,
+      "distCall_admin": 0,
+      "distPut_admin": 0.8,
+      "decelCall_admin": 50,
       "decelPut_admin": 0,
-      "capCall_admin": 0.015,
-      "capPut_admin": 0.015,
-      "tailCall_admin": false,
+      "capCall_admin": 0.005,
+      "capPut_admin": 0.01,
+      "tailCall_admin": true,
       "tailPut_admin": false
     },
     "OZW": {
-      "psr": 0.92,
-      "isr": 0.82,
+      "psr": 0.79,
+      "isr": 0.9,
       "lmr": 1.04,
-      "dsr": 1.11,
-      "ivl": 0.33,
-      "tail": false,
-      "phase_admin": "NORMAL",
-      "sizing_admin": 1,
-      "sizingCall_admin": 1,
-      "sizingPut_admin": 1,
-      "dist_admin": 1,
-      "distCall_admin": 1,
-      "distPut_admin": 1,
-      "decelCall_admin": 0,
+      "dsr": 0.61,
+      "ivl": 0.4,
+      "tail": true,
+      "phase_admin": "CRISIS",
+      "sizing_admin": 0,
+      "sizingCall_admin": 0,
+      "sizingPut_admin": 0.7,
+      "dist_admin": 0,
+      "distCall_admin": 0,
+      "distPut_admin": 0.8,
+      "decelCall_admin": 30,
       "decelPut_admin": 0,
-      "capCall_admin": 0.015,
-      "capPut_admin": 0.015,
-      "tailCall_admin": false,
+      "capCall_admin": 0.005,
+      "capPut_admin": 0.01,
+      "tailCall_admin": true,
       "tailPut_admin": false
     }
   },
   "st_rank_v3": [
     {
       "rank": 1,
-      "name": "천연가스",
-      "avgPct": 13.15,
-      "call": {
-        "month": "10월물",
-        "pct": 12.66,
-        "strike": "5.35",
-        "price": "0.008(0.012)",
-        "qty": "1.48(1)",
-        "margin": 231,
-        "profit": 172864
-      },
-      "put": {
-        "month": "10월물",
-        "pct": 17.42,
-        "strike": "2.25",
-        "price": "0.0175(0.017)",
-        "qty": "1.48(1)",
-        "margin": 375,
-        "profit": 378140
-      }
-    },
-    {
-      "rank": 2,
       "name": "옥수수",
-      "avgPct": 11.52,
+      "avgPct": 17.26,
       "call": {
         "month": "08월물",
-        "pct": 25.58,
+        "pct": 34.33,
         "strike": "490.00",
         "price": "1.1875(0.86)",
         "qty": "4.67(4)",
-        "margin": 389,
+        "margin": 308,
         "profit": 404831
       },
       "put": {
         "month": "10월물",
-        "pct": 4.52,
-        "strike": "315.00",
+        "pct": 15.08,
+        "strike": "320.00",
         "price": "0.135(0.16)",
         "qty": "4.67(4)",
-        "margin": 56,
+        "margin": 17,
         "profit": 46023
       }
     },
     {
-      "rank": 3,
-      "name": "대두",
-      "avgPct": 9.99,
+      "rank": 2,
+      "name": "크루드 오일",
+      "avgPct": 15.84,
       "call": {
         "month": "09월물",
-        "pct": 19.26,
-        "strike": "1360.00",
-        "price": "2.625(0)",
-        "qty": "0(1)",
-        "margin": 444,
-        "profit": 482895
+        "pct": 25.43,
+        "strike": "94.00",
+        "price": "0.62(0.17)",
+        "qty": "0.72(1)",
+        "margin": 1820,
+        "profit": 651744
       },
-      "put": null
+      "put": {
+        "month": "10월물",
+        "pct": 7.69,
+        "strike": "29.50",
+        "price": "0.025(0.02)",
+        "qty": "0.72(1)",
+        "margin": 121,
+        "profit": 26280
+      }
+    },
+    {
+      "rank": 3,
+      "name": "천연가스",
+      "avgPct": 15.13,
+      "call": null,
+      "put": {
+        "month": "10월물",
+        "pct": 19.73,
+        "strike": "2.30",
+        "price": "0.018(0.017)",
+        "qty": "1.48(1)",
+        "margin": 345,
+        "profit": 388944
+      }
     },
     {
       "rank": 4,
-      "name": "크루드 오일",
-      "avgPct": 9.76,
-      "call": {
-        "month": "10월물",
-        "pct": 14.03,
-        "strike": "102.50",
-        "price": "0.305(0.17)",
-        "qty": "0.72(1)",
-        "margin": 897,
-        "profit": 320616
-      },
+      "name": "대두",
+      "avgPct": 9.33,
+      "call": null,
       "put": {
         "month": "09월물",
-        "pct": 6.69,
-        "strike": "39.50",
-        "price": "0.04(0.03)",
-        "qty": "0.72(1)",
-        "margin": 405,
-        "profit": 42048
+        "pct": 8.31,
+        "strike": "1030.00",
+        "price": "0.625(0.5)",
+        "qty": "2.02(2)",
+        "margin": 232,
+        "profit": 114975
       }
     },
     {
       "rank": 5,
       "name": "밀",
-      "avgPct": 7.91,
+      "avgPct": 9.04,
       "call": {
         "month": "08월물",
-        "pct": 19.13,
+        "pct": 18.08,
         "strike": "695.00",
-        "price": "1.625(1.39)",
-        "qty": "2.27(2)",
-        "margin": 722,
-        "profit": 298935
+        "price": "1.5(0)",
+        "qty": "0(1)",
+        "margin": 747,
+        "profit": 275940
       },
       "put": null
     },
     {
       "rank": 6,
       "name": "골드",
-      "avgPct": 5.53,
+      "avgPct": 5.49,
       "call": {
-        "month": "08월물",
-        "pct": 6.54,
-        "strike": "4620.00",
-        "price": "3.75(0.87)",
+        "month": "09월물",
+        "pct": 5.74,
+        "strike": "4850.00",
+        "price": "7.3(1.69)",
         "qty": "0.23(1)",
-        "margin": 8124,
-        "profit": 125925
+        "margin": 7750,
+        "profit": 245134
       },
       "put": {
         "month": "08월물",
-        "pct": 5.89,
-        "strike": "3415.00",
-        "price": "1.45(0.34)",
+        "pct": 6.2,
+        "strike": "3395.00",
+        "price": "1.6(0.37)",
         "qty": "0.23(1)",
-        "margin": 3446,
-        "profit": 48691
+        "margin": 3797,
+        "profit": 53728
       }
     },
     {
       "rank": 7,
       "name": "S&P500",
-      "avgPct": 4.25,
+      "avgPct": 3.97,
       "call": null,
       "put": {
         "month": "09월물",
-        "pct": 7.28,
+        "pct": 6.78,
         "strike": "6300.00",
-        "price": "20.75(3.36)",
+        "price": "21.875(3.36)",
         "qty": "0.21(1)",
-        "margin": 5843,
-        "profit": 318098
+        "margin": 6701,
+        "profit": 335344
       }
     },
     {
@@ -355,29 +352,29 @@
     {
       "rank": 9,
       "name": "엔화",
-      "avgPct": 1.93,
+      "avgPct": 1.57,
       "call": {
-        "month": "09월물",
-        "pct": 3.48,
-        "strike": "6650.00",
-        "price": "6(10.78)",
+        "month": "08월물",
+        "pct": 2.56,
+        "strike": "6550.00",
+        "price": "3(5.39)",
         "qty": "1.8(1)",
-        "margin": 1051,
-        "profit": 197100
+        "margin": 1348,
+        "profit": 98550
       },
       "put": null
     },
     {
       "rank": 10,
-      "name": "유로FX",
-      "avgPct": 1.07,
+      "name": "호주달러",
+      "avgPct": 1.01,
       "call": null,
       "put": null
     },
     {
       "rank": 11,
-      "name": "호주달러",
-      "avgPct": 0.94,
+      "name": "유로FX",
+      "avgPct": 1,
       "call": null,
       "put": null
     }
@@ -393,46 +390,46 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "8850",
+              "strike": "8750",
               "lossProb": "3%",
               "recommended": false,
               "trend": "강보합",
-              "price": "0.95",
-              "margin": 2041
+              "price": "1.05",
+              "margin": 2281
             },
             {
               "type": "콜",
-              "strike": "8350",
+              "strike": "8250",
               "lossProb": "20%",
               "recommended": false,
               "trend": "강보합"
             },
             {
               "type": "콜",
-              "strike": "8200",
+              "strike": "8150",
               "lossProb": "30%",
               "recommended": false,
               "trend": "강보합"
             },
             {
               "type": "풋",
-              "strike": "5250",
+              "strike": "5450",
               "lossProb": "1%",
               "recommended": false,
               "trend": "강보합"
             },
             {
               "type": "풋",
-              "strike": "6200",
+              "strike": "6300",
               "lossProb": "10%",
               "recommended": false,
               "trend": "강보합",
-              "price": "20.38",
-              "margin": 5843
+              "price": "21.88",
+              "margin": 6701
             },
             {
               "type": "풋",
-              "strike": "6500",
+              "strike": "6600",
               "lossProb": "20%",
               "recommended": false,
               "trend": "강보합"
@@ -446,46 +443,46 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "9600",
+              "strike": "9450",
               "lossProb": "3%",
               "recommended": false,
               "trend": "강보합",
-              "price": "1.98",
-              "margin": 1425
+              "price": "2.25",
+              "margin": 1547
             },
             {
               "type": "콜",
-              "strike": "8800",
+              "strike": "8750",
               "lossProb": "20%",
               "recommended": false,
               "trend": "강보합"
             },
             {
               "type": "콜",
-              "strike": "8650",
+              "strike": "8550",
               "lossProb": "30%",
               "recommended": false,
               "trend": "강보합"
             },
             {
               "type": "풋",
-              "strike": "4650",
+              "strike": "4800",
               "lossProb": "1%",
               "recommended": false,
               "trend": "강보합"
             },
             {
               "type": "풋",
-              "strike": "5500",
+              "strike": "5650",
               "lossProb": "10%",
               "recommended": false,
               "trend": "강보합",
-              "price": "33.50",
-              "margin": 4926
+              "price": "37.25",
+              "margin": 5237
             },
             {
               "type": "풋",
-              "strike": "6150",
+              "strike": "6250",
               "lossProb": "20%",
               "recommended": false,
               "trend": "강보합"
@@ -499,46 +496,46 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "10150",
+              "strike": "10000",
               "lossProb": "3%",
               "recommended": false,
               "trend": "강보합",
-              "price": "3.15",
-              "margin": 1190
+              "price": "4.10",
+              "margin": 1392
             },
             {
               "type": "콜",
-              "strike": "9200",
+              "strike": "9100",
               "lossProb": "20%",
               "recommended": false,
               "trend": "강보합"
             },
             {
               "type": "콜",
-              "strike": "8950",
+              "strike": "8900",
               "lossProb": "30%",
               "recommended": false,
               "trend": "강보합"
             },
             {
               "type": "풋",
-              "strike": "4200",
+              "strike": "4450",
               "lossProb": "1%",
               "recommended": false,
               "trend": "강보합"
             },
             {
               "type": "풋",
-              "strike": "4900",
+              "strike": "5050",
               "lossProb": "10%",
               "recommended": false,
               "trend": "강보합",
-              "price": "37.63",
-              "margin": 3631
+              "price": "41.88",
+              "margin": 3742
             },
             {
               "type": "풋",
-              "strike": "5850",
+              "strike": "6000",
               "lossProb": "20%",
               "recommended": false,
               "trend": "강보합"
@@ -559,23 +556,23 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "1.225",
+              "strike": "1.22",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
               "price": "0.00004",
-              "margin": 574
+              "margin": 793
             },
             {
               "type": "콜",
-              "strike": "1.195",
+              "strike": "1.19",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "콜",
-              "strike": "1.19",
+              "strike": "1.185",
               "lossProb": "30%",
               "recommended": false,
               "trend": "약보합"
@@ -586,12 +583,12 @@
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.00005",
-              "margin": 237
+              "price": "0.00003",
+              "margin": 205
             },
             {
               "type": "풋",
-              "strike": "1.105",
+              "strike": "1.1",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
@@ -612,23 +609,23 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "1.25",
+              "strike": "1.245",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.00025",
-              "margin": 472
+              "price": "0.00023",
+              "margin": 583
             },
             {
               "type": "콜",
-              "strike": "1.21",
+              "strike": "1.205",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "콜",
-              "strike": "1.205",
+              "strike": "1.2",
               "lossProb": "30%",
               "recommended": false,
               "trend": "약보합"
@@ -639,12 +636,12 @@
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.00006",
-              "margin": 217
+              "price": "0.00003",
+              "margin": 159
             },
             {
               "type": "풋",
-              "strike": "1.09",
+              "strike": "1.085",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
@@ -665,23 +662,23 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "1.275",
+              "strike": "1.265",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.00028",
-              "margin": 378
+              "price": "0.00025",
+              "margin": 423
             },
             {
               "type": "콜",
-              "strike": "1.235",
+              "strike": "1.23",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "콜",
-              "strike": "1.22",
+              "strike": "1.215",
               "lossProb": "30%",
               "recommended": false,
               "trend": "약보합"
@@ -693,7 +690,7 @@
               "recommended": false,
               "trend": "약보합",
               "price": "0.00008",
-              "margin": 169
+              "margin": 157
             },
             {
               "type": "풋",
@@ -725,12 +722,12 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "0.755",
+              "strike": "0.75",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
               "price": "0.00003",
-              "margin": 602
+              "margin": 764
             },
             {
               "type": "콜",
@@ -748,12 +745,12 @@
             },
             {
               "type": "풋",
-              "strike": "0.625",
+              "strike": "0.63",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.00005",
-              "margin": 276
+              "price": "0.00006",
+              "margin": 228
             },
             {
               "type": "풋",
@@ -778,16 +775,16 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "0.775",
+              "strike": "0.77",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.00008",
-              "margin": 485
+              "price": "0.00009",
+              "margin": 583
             },
             {
               "type": "콜",
-              "strike": "0.745",
+              "strike": "0.74",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
@@ -801,12 +798,12 @@
             },
             {
               "type": "풋",
-              "strike": "0.6",
+              "strike": "0.61",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.00006",
-              "margin": 210
+              "price": "0.00008",
+              "margin": 227
             },
             {
               "type": "풋",
@@ -831,12 +828,12 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "0.79",
+              "strike": "0.785",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
               "price": "0.00010",
-              "margin": 370
+              "margin": 399
             },
             {
               "type": "콜",
@@ -854,23 +851,23 @@
             },
             {
               "type": "풋",
-              "strike": "0.585",
+              "strike": "0.59",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.00009",
-              "margin": 157
+              "price": "0.00010",
+              "margin": 150
             },
             {
               "type": "풋",
-              "strike": "0.635",
+              "strike": "0.64",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "0.645",
+              "strike": "0.65",
               "lossProb": "30%",
               "recommended": false,
               "trend": "약보합"
@@ -891,49 +888,49 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "6800",
+              "strike": "6750",
               "lossProb": "1%",
               "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "콜",
-              "strike": "6600",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "약보합",
-              "price": "3.5",
-              "margin": 1300
+              "trend": "하락"
             },
             {
               "type": "콜",
               "strike": "6550",
+              "lossProb": "10%",
+              "recommended": false,
+              "trend": "하락"
+            },
+            {
+              "type": "콜",
+              "strike": "6500",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "하락",
+              "price": "3.0",
+              "margin": 1348
             },
             {
               "type": "풋",
               "strike": "5850",
               "lossProb": "3%",
               "recommended": false,
-              "trend": "약보합",
-              "price": "0.6",
-              "margin": 1141
+              "trend": "하락",
+              "price": "0.4",
+              "margin": 1216
             },
             {
               "type": "풋",
-              "strike": "6000",
+              "strike": "5950",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "하락"
             },
             {
               "type": "풋",
               "strike": "6000",
               "lossProb": "30%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "하락"
             }
           ],
           "expiry": "2026-08-07",
@@ -944,49 +941,49 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "6950",
+              "strike": "6900",
               "lossProb": "1%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "하락"
             },
             {
               "type": "콜",
-              "strike": "6700",
+              "strike": "6650",
               "lossProb": "10%",
               "recommended": false,
-              "trend": "약보합",
-              "price": "4.8",
-              "margin": 1051
+              "trend": "하락"
             },
             {
               "type": "콜",
               "strike": "6600",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "하락",
+              "price": "3.3",
+              "margin": 1085
             },
             {
               "type": "풋",
               "strike": "5700",
               "lossProb": "3%",
               "recommended": false,
-              "trend": "약보합",
+              "trend": "하락",
               "price": "0.9",
-              "margin": 892
+              "margin": 801
             },
             {
               "type": "풋",
               "strike": "5900",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "하락"
             },
             {
               "type": "풋",
               "strike": "5950",
               "lossProb": "30%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "하락"
             }
           ],
           "expiry": "2026-09-04",
@@ -997,49 +994,49 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "7200",
+              "strike": "7150",
               "lossProb": "1%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "하락"
             },
             {
               "type": "콜",
-              "strike": "6850",
+              "strike": "6800",
               "lossProb": "10%",
               "recommended": false,
-              "trend": "약보합",
-              "price": "6.0",
-              "margin": 884
+              "trend": "하락"
             },
             {
               "type": "콜",
-              "strike": "6750",
+              "strike": "6700",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "하락",
+              "price": "5.8",
+              "margin": 880
             },
             {
               "type": "풋",
-              "strike": "5650",
+              "strike": "5600",
               "lossProb": "3%",
               "recommended": false,
-              "trend": "약보합",
+              "trend": "하락",
               "price": "2.8",
-              "margin": 631
+              "margin": 543
+            },
+            {
+              "type": "풋",
+              "strike": "5850",
+              "lossProb": "20%",
+              "recommended": false,
+              "trend": "하락"
             },
             {
               "type": "풋",
               "strike": "5900",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
-            },
-            {
-              "type": "풋",
-              "strike": "5950",
               "lossProb": "30%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "하락"
             }
           ],
           "expiry": "2026-10-09",
@@ -1057,49 +1054,49 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "113.5",
+              "strike": "112.5",
               "lossProb": "3%",
               "recommended": false,
-              "trend": "하락"
+              "trend": "약보합"
             },
             {
               "type": "콜",
-              "strike": "112.5",
+              "strike": "111.5",
               "lossProb": "10%",
               "recommended": false,
-              "trend": "하락"
+              "trend": "약보합",
+              "price": "1.0",
+              "margin": 1254
             },
             {
               "type": "콜",
-              "strike": "112",
+              "strike": "111",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "하락",
-              "price": "0.0",
-              "margin": 1168
+              "trend": "약보합"
             },
             {
               "type": "풋",
               "strike": "106",
               "lossProb": "3%",
               "recommended": false,
-              "trend": "하락",
+              "trend": "약보합",
               "price": "0.0",
-              "margin": 836
+              "margin": 872
+            },
+            {
+              "type": "풋",
+              "strike": "106.5",
+              "lossProb": "10%",
+              "recommended": false,
+              "trend": "약보합"
             },
             {
               "type": "풋",
               "strike": "107",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "풋",
-              "strike": "107.5",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "하락"
+              "trend": "약보합"
             }
           ],
           "expiry": "2026-07-24",
@@ -1110,49 +1107,49 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "115",
+              "strike": "114.5",
               "lossProb": "3%",
               "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "콜",
-              "strike": "114",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "하락"
+              "trend": "약보합"
             },
             {
               "type": "콜",
               "strike": "113",
+              "lossProb": "10%",
+              "recommended": false,
+              "trend": "약보합",
+              "price": "2.0",
+              "margin": 883
+            },
+            {
+              "type": "콜",
+              "strike": "112.5",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "하락",
-              "price": "2.0",
-              "margin": 756
+              "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "104.5",
+              "strike": "104",
               "lossProb": "3%",
               "recommended": false,
-              "trend": "하락",
+              "trend": "약보합",
               "price": "1.0",
-              "margin": 647
+              "margin": 577
             },
             {
               "type": "풋",
               "strike": "105.5",
               "lossProb": "10%",
               "recommended": false,
-              "trend": "하락"
+              "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "106.5",
+              "strike": "106",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "하락"
+              "trend": "약보합"
             }
           ],
           "expiry": "2026-08-21",
@@ -1163,49 +1160,49 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "116.5",
+              "strike": "115.5",
               "lossProb": "3%",
               "recommended": false,
-              "trend": "하락"
-            },
-            {
-              "type": "콜",
-              "strike": "114.5",
-              "lossProb": "10%",
-              "recommended": false,
-              "trend": "하락"
+              "trend": "약보합"
             },
             {
               "type": "콜",
               "strike": "114",
+              "lossProb": "10%",
+              "recommended": false,
+              "trend": "약보합",
+              "price": "3.0",
+              "margin": 784
+            },
+            {
+              "type": "콜",
+              "strike": "113",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "하락",
-              "price": "4.0",
-              "margin": 755
+              "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "103",
+              "strike": "102.5",
               "lossProb": "3%",
               "recommended": false,
-              "trend": "하락",
+              "trend": "약보합",
               "price": "2.0",
-              "margin": 575
+              "margin": 525
             },
             {
               "type": "풋",
               "strike": "104",
               "lossProb": "10%",
               "recommended": false,
-              "trend": "하락"
+              "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "105.5",
+              "strike": "105",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "하락"
+              "trend": "약보합"
             }
           ],
           "expiry": "2026-09-25",
@@ -1223,46 +1220,46 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "4980",
+              "strike": "4835",
               "lossProb": "1%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "콜",
-              "strike": "4670",
+              "strike": "4555",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합",
-              "price": "4.3",
-              "margin": 8124
+              "price": "3.4",
+              "margin": 10010
             },
             {
               "type": "콜",
-              "strike": "4575",
+              "strike": "4475",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "3340",
+              "strike": "3395",
               "lossProb": "1%",
               "recommended": false,
               "trend": "약보합",
-              "price": "1.1",
-              "margin": 3446
+              "price": "1.6",
+              "margin": 3797
             },
             {
               "type": "풋",
-              "strike": "3700",
+              "strike": "3720",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "3800",
+              "strike": "3805",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
@@ -1276,46 +1273,46 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "5475",
+              "strike": "5275",
               "lossProb": "1%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "콜",
-              "strike": "4980",
+              "strike": "4850",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합",
-              "price": "7.6",
-              "margin": 6771
+              "price": "7.3",
+              "margin": 7750
             },
             {
               "type": "콜",
-              "strike": "4810",
+              "strike": "4700",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "3110",
+              "strike": "3170",
               "lossProb": "1%",
               "recommended": false,
               "trend": "약보합",
-              "price": "2.1",
-              "margin": 3149
+              "price": "3.2",
+              "margin": 3268
             },
             {
               "type": "풋",
-              "strike": "3505",
+              "strike": "3525",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "3665",
+              "strike": "3670",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
@@ -1329,46 +1326,46 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "5740",
+              "strike": "5565",
               "lossProb": "1%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "콜",
-              "strike": "5180",
+              "strike": "5035",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합",
-              "price": "11.1",
-              "margin": 7509
+              "price": "11.5",
+              "margin": 7997
             },
             {
               "type": "콜",
-              "strike": "4980",
+              "strike": "4855",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "2915",
+              "strike": "2975",
               "lossProb": "1%",
               "recommended": false,
               "trend": "약보합",
-              "price": "2.8",
-              "margin": 3609
+              "price": "4.3",
+              "margin": 3518
             },
             {
               "type": "풋",
-              "strike": "3345",
+              "strike": "3375",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "3535",
+              "strike": "3540",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
@@ -1389,46 +1386,46 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "91",
+              "strike": "87.5",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "콜",
-              "strike": "85.5",
+              "strike": "83",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.09",
-              "margin": 1130
+              "price": "0.26",
+              "margin": 1650
             },
             {
               "type": "콜",
-              "strike": "83",
+              "strike": "80.5",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "52.5",
+              "strike": "57.5",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
               "price": "0.03",
-              "margin": 779
+              "margin": 927
             },
             {
               "type": "풋",
-              "strike": "56",
+              "strike": "61",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "59.5",
+              "strike": "64",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
@@ -1442,46 +1439,46 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "107",
+              "strike": "104.5",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "콜",
-              "strike": "96",
+              "strike": "94",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.25",
-              "margin": 1263
+              "price": "0.62",
+              "margin": 1820
             },
             {
               "type": "콜",
-              "strike": "91",
+              "strike": "89",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "38",
+              "strike": "42.5",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.04",
-              "margin": 405
+              "price": "0.05",
+              "margin": 478
             },
             {
               "type": "풋",
-              "strike": "46.5",
+              "strike": "50",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "51",
+              "strike": "54.5",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
@@ -1495,46 +1492,46 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "120.5",
+              "strike": "117.5",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "콜",
-              "strike": "104.5",
+              "strike": "101.5",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.35",
-              "margin": 897
+              "price": "0.73",
+              "margin": 1334
             },
             {
               "type": "콜",
-              "strike": "97",
+              "strike": "94",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "26",
+              "strike": "29.5",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.02",
-              "margin": 107
+              "price": "0.03",
+              "margin": 121
             },
             {
               "type": "풋",
-              "strike": "38",
+              "strike": "41.5",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "46",
+              "strike": "49",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
@@ -1555,49 +1552,49 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "4.4",
+              "strike": "4.45",
               "lossProb": "1%",
               "recommended": false,
-              "trend": "강보합",
+              "trend": "상승",
               "price": "0.004",
-              "margin": 464
+              "margin": 407
             },
             {
               "type": "콜",
               "strike": "3.95",
               "lossProb": "10%",
               "recommended": false,
-              "trend": "강보합"
+              "trend": "상승"
             },
             {
               "type": "콜",
-              "strike": "3.8",
+              "strike": "3.85",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "강보합"
+              "trend": "상승"
             },
             {
               "type": "풋",
-              "strike": "2.35",
+              "strike": "2.45",
               "lossProb": "3%",
               "recommended": false,
-              "trend": "강보합",
-              "price": "0.009",
-              "margin": 678
-            },
-            {
-              "type": "풋",
-              "strike": "2.65",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "강보합"
+              "trend": "상승"
             },
             {
               "type": "풋",
               "strike": "2.75",
+              "lossProb": "20%",
+              "recommended": false,
+              "trend": "상승",
+              "price": "0.006",
+              "margin": 685
+            },
+            {
+              "type": "풋",
+              "strike": "2.85",
               "lossProb": "30%",
               "recommended": false,
-              "trend": "강보합"
+              "trend": "상승"
             }
           ],
           "expiry": "2026-07-28",
@@ -1611,46 +1608,46 @@
               "strike": "4.9",
               "lossProb": "1%",
               "recommended": false,
-              "trend": "강보합",
-              "price": "0.005",
-              "margin": 241
+              "trend": "상승",
+              "price": "0.006",
+              "margin": 225
             },
             {
               "type": "콜",
-              "strike": "4.2",
+              "strike": "4.3",
               "lossProb": "10%",
               "recommended": false,
-              "trend": "강보합"
+              "trend": "상승"
             },
             {
               "type": "콜",
               "strike": "4",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "강보합"
+              "trend": "상승"
             },
             {
               "type": "풋",
-              "strike": "1.95",
+              "strike": "2.05",
               "lossProb": "3%",
               "recommended": false,
-              "trend": "강보합",
-              "price": "0.014",
-              "margin": 383
+              "trend": "상승"
             },
             {
               "type": "풋",
-              "strike": "2.35",
+              "strike": "2.45",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "강보합"
+              "trend": "상승",
+              "price": "0.011",
+              "margin": 398
             },
             {
               "type": "풋",
-              "strike": "2.5",
+              "strike": "2.55",
               "lossProb": "30%",
               "recommended": false,
-              "trend": "강보합"
+              "trend": "상승"
             }
           ],
           "expiry": "2026-08-26",
@@ -1664,46 +1661,46 @@
               "strike": "5.35",
               "lossProb": "1%",
               "recommended": false,
-              "trend": "강보합",
+              "trend": "상승",
               "price": "0.008",
-              "margin": 231
+              "margin": 200
             },
             {
               "type": "콜",
               "strike": "4.5",
               "lossProb": "10%",
               "recommended": false,
-              "trend": "강보합"
+              "trend": "상승"
             },
             {
               "type": "콜",
-              "strike": "4.2",
+              "strike": "4.25",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "강보합"
+              "trend": "상승"
             },
             {
               "type": "풋",
-              "strike": "1.75",
+              "strike": "1.85",
               "lossProb": "3%",
               "recommended": false,
-              "trend": "강보합",
-              "price": "0.024",
-              "margin": 375
+              "trend": "상승"
             },
             {
               "type": "풋",
-              "strike": "2.25",
+              "strike": "2.3",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "강보합"
+              "trend": "상승",
+              "price": "0.018",
+              "margin": 345
             },
             {
               "type": "풋",
-              "strike": "2.35",
+              "strike": "2.4",
               "lossProb": "30%",
               "recommended": false,
-              "trend": "강보합"
+              "trend": "상승"
             }
           ],
           "expiry": "2026-09-24",
@@ -1721,49 +1718,49 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "1310",
+              "strike": "1360",
               "lossProb": "1%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "상승",
+              "price": "0.500",
+              "margin": 337
             },
             {
               "type": "콜",
-              "strike": "1260",
+              "strike": "1300",
               "lossProb": "10%",
               "recommended": false,
-              "trend": "약보합",
-              "price": "1.063",
-              "margin": 767
+              "trend": "상승"
             },
             {
               "type": "콜",
-              "strike": "1240",
+              "strike": "1280",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "상승"
             },
             {
               "type": "풋",
-              "strike": "990",
+              "strike": "1010",
               "lossProb": "3%",
               "recommended": false,
-              "trend": "약보합",
-              "price": "0.031",
-              "margin": 151
+              "trend": "상승"
             },
             {
               "type": "풋",
-              "strike": "1060",
+              "strike": "1080",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "상승",
+              "price": "0.188",
+              "margin": 422
             },
             {
               "type": "풋",
-              "strike": "1070",
+              "strike": "1100",
               "lossProb": "30%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "상승"
             }
           ],
           "expiry": "2026-07-24",
@@ -1774,49 +1771,49 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "1390",
+              "strike": "1440",
               "lossProb": "1%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "상승",
+              "price": "1.125",
+              "margin": 246
             },
             {
               "type": "콜",
-              "strike": "1320",
+              "strike": "1370",
               "lossProb": "10%",
               "recommended": false,
-              "trend": "약보합",
-              "price": "2.188",
-              "margin": 444
+              "trend": "상승"
             },
             {
               "type": "콜",
-              "strike": "1290",
+              "strike": "1330",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "상승"
             },
             {
               "type": "풋",
-              "strike": "930",
+              "strike": "920",
               "lossProb": "3%",
               "recommended": false,
-              "trend": "약보합",
-              "price": "0.135",
-              "margin": 65
+              "trend": "상승"
             },
             {
               "type": "풋",
-              "strike": "1020",
+              "strike": "1030",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "상승",
+              "price": "0.625",
+              "margin": 232
             },
             {
               "type": "풋",
-              "strike": "1040",
+              "strike": "1050",
               "lossProb": "30%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "상승"
             }
           ],
           "expiry": "2026-08-21",
@@ -1827,49 +1824,49 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "1490",
+              "strike": "1550",
               "lossProb": "1%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "상승",
+              "price": "1.313",
+              "margin": 231
             },
             {
               "type": "콜",
-              "strike": "1400",
+              "strike": "1450",
               "lossProb": "10%",
               "recommended": false,
-              "trend": "약보합",
-              "price": "2.688",
-              "margin": 360
+              "trend": "상승"
             },
             {
               "type": "콜",
-              "strike": "1350",
+              "strike": "1390",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "상승"
             },
             {
               "type": "풋",
-              "strike": "880",
+              "strike": "870",
               "lossProb": "3%",
               "recommended": false,
-              "trend": "약보합",
-              "price": "0.198",
-              "margin": 98
+              "trend": "상승"
             },
             {
               "type": "풋",
               "strike": "1000",
               "lossProb": "20%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "상승",
+              "price": "0.750",
+              "margin": 174
             },
             {
               "type": "풋",
-              "strike": "1020",
+              "strike": "1030",
               "lossProb": "30%",
               "recommended": false,
-              "trend": "약보합"
+              "trend": "상승"
             }
           ],
           "expiry": "2026-09-25",
@@ -1894,39 +1891,39 @@
             },
             {
               "type": "콜",
-              "strike": "690",
+              "strike": "695",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합",
-              "price": "1.188",
-              "margin": 722
+              "price": "1.500",
+              "margin": 747
             },
             {
               "type": "콜",
-              "strike": "670",
+              "strike": "675",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "510",
+              "strike": "520",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.063",
-              "margin": 484
-            },
-            {
-              "type": "풋",
-              "strike": "545",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
+              "price": "0.031",
+              "margin": 320
             },
             {
               "type": "풋",
               "strike": "555",
+              "lossProb": "20%",
+              "recommended": false,
+              "trend": "약보합"
+            },
+            {
+              "type": "풋",
+              "strike": "560",
               "lossProb": "30%",
               "recommended": false,
               "trend": "약보합"
@@ -1940,46 +1937,46 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "865",
+              "strike": "870",
               "lossProb": "1%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "콜",
-              "strike": "735",
+              "strike": "745",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합",
-              "price": "1.875",
-              "margin": 578
+              "price": "2.438",
+              "margin": 562
             },
             {
               "type": "콜",
-              "strike": "705",
+              "strike": "715",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "465",
+              "strike": "475",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.135",
-              "margin": 264
-            },
-            {
-              "type": "풋",
-              "strike": "520",
-              "lossProb": "20%",
-              "recommended": false,
-              "trend": "약보합"
+              "price": "0.063",
+              "margin": 181
             },
             {
               "type": "풋",
               "strike": "530",
+              "lossProb": "20%",
+              "recommended": false,
+              "trend": "약보합"
+            },
+            {
+              "type": "풋",
+              "strike": "540",
               "lossProb": "30%",
               "recommended": false,
               "trend": "약보합"
@@ -1993,46 +1990,46 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "950",
+              "strike": "965",
               "lossProb": "1%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "콜",
-              "strike": "800",
+              "strike": "810",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합",
-              "price": "2.063",
-              "margin": 397
+              "price": "2.688",
+              "margin": 396
             },
             {
               "type": "콜",
-              "strike": "750",
+              "strike": "760",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "445",
+              "strike": "450",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.135",
-              "margin": 130
+              "price": "0.063",
+              "margin": 100
             },
             {
               "type": "풋",
-              "strike": "510",
+              "strike": "520",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "525",
+              "strike": "535",
               "lossProb": "30%",
               "recommended": false,
               "trend": "약보합"
@@ -2053,46 +2050,46 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "515",
+              "strike": "525",
               "lossProb": "1%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "콜",
-              "strike": "480",
+              "strike": "490",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합",
-              "price": "1.250",
-              "margin": 389
+              "price": "1.188",
+              "margin": 308
             },
             {
               "type": "콜",
-              "strike": "470",
+              "strike": "480",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "350",
+              "strike": "360",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
               "price": "0.031",
-              "margin": 153
+              "margin": 33
             },
             {
               "type": "풋",
-              "strike": "385",
+              "strike": "390",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "390",
+              "strike": "400",
               "lossProb": "30%",
               "recommended": false,
               "trend": "약보합"
@@ -2106,46 +2103,46 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "565",
+              "strike": "575",
               "lossProb": "1%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "콜",
-              "strike": "515",
+              "strike": "525",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합",
-              "price": "1.625",
-              "margin": 330
+              "price": "1.875",
+              "margin": 301
             },
             {
               "type": "콜",
-              "strike": "490",
+              "strike": "505",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "320",
+              "strike": "325",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.135",
-              "margin": 122
+              "price": "0.073",
+              "margin": 64
             },
             {
               "type": "풋",
-              "strike": "360",
+              "strike": "370",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "375",
+              "strike": "380",
               "lossProb": "30%",
               "recommended": false,
               "trend": "약보합"
@@ -2159,46 +2156,46 @@
           "rows": [
             {
               "type": "콜",
-              "strike": "640",
+              "strike": "660",
               "lossProb": "1%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "콜",
-              "strike": "565",
+              "strike": "580",
               "lossProb": "10%",
               "recommended": false,
               "trend": "약보합",
-              "price": "1.750",
-              "margin": 244
+              "price": "2.188",
+              "margin": 258
             },
             {
               "type": "콜",
-              "strike": "545",
+              "strike": "555",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "315",
+              "strike": "320",
               "lossProb": "3%",
               "recommended": false,
               "trend": "약보합",
-              "price": "0.073",
-              "margin": 56
+              "price": "0.135",
+              "margin": 17
             },
             {
               "type": "풋",
-              "strike": "365",
+              "strike": "370",
               "lossProb": "20%",
               "recommended": false,
               "trend": "약보합"
             },
             {
               "type": "풋",
-              "strike": "375",
+              "strike": "385",
               "lossProb": "30%",
               "recommended": false,
               "trend": "약보합"
@@ -2210,8 +2207,8 @@
       ]
     }
   ],
-  "sv_phase_note": "***잠재적 꼬리위험 감지***\n\n전일 대두의 급등의 직접 원인은 고온·건조 같은 날씨 리스크와 USDA 보고서 전후의 수급 재평가였고, 7월은 원래 곡물시장이 날씨에 가장 민감한 구간입니다. 이에 따라 날씨 영향에 따른 우려가 지속된다면 추가 상승흐름이 발생할 수 있기 때문에 잠재적 꼬리위험이 감지되었다고 보고 단기적으로 대두를 비롯한 농산물의 콜 포지션 노출 관리를 더 보수적으로 할 필요가 있어보입니다.\n\nㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n시장국면 안내\n\n1. 신규 진입에 적용되는 사이징과 거리는 각각 '기준수량의 0.x배 진입'과 '기준행사가 프리의 0.x배 진입'을 의미하며 종합적으로 '1회 진입 기준 총 노출량의 0.x * 0.x배 진입'로 개인 1회 진입 노출량을  축소 진입 검토를 의미\nex) 기준계약수 : 10계약, 기준행사가프리 : 10불, 사이징 0.9배, 거리 0.9배일 경우, 기존 10계약 x 10불 = 100불에서\n1회 진입 기준 총 노출은 (10계약 x 0.9) x (10불 x 0.9)\n                                              = 9 x 9 = 81불 진입 권장으로 조정\n\n2. 기존포지션의 '노출량의 0.x배 축소'는 전일 종가와 현재가의 평균으로 기존 초기 보유 포지션 노출량의 0.x배 만큼을 청산하여 포지션 축소 검토를 의미\nex)  기존 초기 보유 포지션 노출량 100불이고 0.3배 축소일 경우\n       : 30불 청산하여 노출량 70불로 축소\n\n3. 노출캡의 x.x%는 상관성이 높은 섹터내 모든 거래종목의 동일방향 총 노출량을 캡 x.x% 이내로 제한 검토를 의미\nex) 운용자금이 1만불이고 노출캡이 1.5%일 경우\n      : 동일섹터 단일방향 노출캡 150불 제한",
-  "sv_phase_note_updated": "1783405228427",
+  "sv_phase_note": "***잠재적 꼬리위험 감지(밀_콜)***\n\n7 월은 밀도 대두와 같이 날씨 민감도가 가장 큰 구간이라, 날씨가 며칠만 더 악화되면 숏커버링 + 기술적 돌파로 급등이 오래 이어질 수 있습니다. 변동성 필터링 조건에 부합하였으며 이에 따라 날씨 영향에 따른 우려가 지속된다면 추가 상승흐름이 발생할 수 있기 때문에 잠재적 꼬리위험이 감지되었다고 보고 단기적으로 대두에 이어 밀도 콜 포지션 노출 관리를 더 보수적으로 할 필요가 있어보입니다.\n\nㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n시장국면 안내\n\n1. 신규 진입에 적용되는 사이징과 거리는 각각 '기준수량의 0.x배 진입'과 '기준행사가 프리의 0.x배 진입'을 의미하며 종합적으로 '1회 진입 기준 총 노출량의 0.x * 0.x배 진입'로 개인 1회 진입 노출량을  축소 진입 검토를 의미\nex) 기준계약수 : 10계약, 기준행사가프리 : 10불, 사이징 0.9배, 거리 0.9배일 경우, 기존 10계약 x 10불 = 100불에서\n1회 진입 기준 총 노출은 (10계약 x 0.9) x (10불 x 0.9)\n                                              = 9 x 9 = 81불 진입 권장으로 조정\n\n2. 기존포지션의 '노출량의 0.x배 축소'는 전일 종가와 현재가의 평균으로 기존 초기 보유 포지션 노출량의 0.x배 만큼을 청산하여 포지션 축소 검토를 의미\nex)  기존 초기 보유 포지션 노출량 100불이고 0.3배 축소일 경우\n       : 30불 청산하여 노출량 70불로 축소\n\n3. 노출캡의 x.x%는 상관성이 높은 섹터내 모든 거래종목의 동일방향 총 노출량을 캡 x.x% 이내로 제한 검토를 의미\nex) 운용자금이 1만불이고 노출캡이 1.5%일 경우\n      : 동일섹터 단일방향 노출캡 150불 제한",
+  "sv_phase_note_updated": "1783479848579",
   "weekly_picks": {
     "title": "07월 07일 추천 포지션",
     "strategies": [
@@ -2344,7 +2341,7 @@
         "daysLeft": 21
       }
     ],
-    "updated_at": "2026-07-08T02:46:28.750985Z"
+    "updated_at": "2026-07-08T03:04:59.647931Z"
   },
   "option_holdings": {
     "updated": "2026-07-07T06:21:50.120Z",
@@ -2928,38 +2925,38 @@
           "rows": [
             {
               "type": "콜",
-              "trend": "상승",
+              "trend": "강보합",
               "daysSig": "O",
-              "daysLeft": 73,
+              "daysLeft": 72,
               "yieldSig": "X",
-              "yieldPct": "1.17%",
+              "yieldPct": "0.90%",
               "rankSig": "X",
               "monthRank": 3,
               "evalScore": null,
               "recommended": false,
-              "strike": "8800",
-              "price": "1.225(0.25)",
+              "strike": "8750",
+              "price": "1.05(0.22)",
               "qty": "0.21(1)",
-              "margin": 2041,
-              "profit": 18779,
+              "margin": 2281,
+              "profit": 16097,
               "lossPct": "3.00%"
             },
             {
               "type": "풋",
-              "trend": "상승",
+              "trend": "강보합",
               "daysSig": "O",
-              "daysLeft": 73,
+              "daysLeft": 72,
               "yieldSig": "O",
-              "yieldPct": "7.28%",
+              "yieldPct": "6.78%",
               "rankSig": "O",
               "monthRank": 1,
               "evalScore": null,
               "recommended": true,
               "strike": "6300",
-              "price": "20.75(3.36)",
+              "price": "21.875(3.36)",
               "qty": "0.21(1)",
-              "margin": 5843,
-              "profit": 318098,
+              "margin": 6701,
+              "profit": 335344,
               "lossPct": "10.00%"
             }
           ]
@@ -2969,38 +2966,38 @@
           "rows": [
             {
               "type": "콜",
-              "trend": "상승",
+              "trend": "강보합",
               "daysSig": "O",
-              "daysLeft": 164,
+              "daysLeft": 163,
               "yieldSig": "X",
-              "yieldPct": "1.57%",
+              "yieldPct": "1.30%",
               "rankSig": "◇",
               "monthRank": 2,
               "evalScore": null,
               "recommended": false,
-              "strike": "9500",
-              "price": "2.5(0.52)",
+              "strike": "9450",
+              "price": "2.25(0.46)",
               "qty": "0.21(1)",
-              "margin": 1425,
-              "profit": 38325,
+              "margin": 1547,
+              "profit": 34493,
               "lossPct": "3.00%"
             },
             {
               "type": "풋",
-              "trend": "상승",
+              "trend": "강보합",
               "daysSig": "O",
-              "daysLeft": 164,
+              "daysLeft": 163,
               "yieldSig": "O",
-              "yieldPct": "6.74%",
+              "yieldPct": "6.54%",
               "rankSig": "X",
               "monthRank": 3,
               "evalScore": null,
               "recommended": false,
               "strike": "5650",
-              "price": "36.375(3.36)",
+              "price": "37.25(3.36)",
               "qty": "0.21(1)",
-              "margin": 4926,
-              "profit": 557629,
+              "margin": 5237,
+              "profit": 571043,
               "lossPct": "10.00%"
             }
           ]
@@ -3010,38 +3007,38 @@
           "rows": [
             {
               "type": "콜",
-              "trend": "상승",
+              "trend": "강보합",
               "daysSig": "O",
-              "daysLeft": 255,
+              "daysLeft": 254,
               "yieldSig": "X",
-              "yieldPct": "1.85%",
+              "yieldPct": "1.71%",
               "rankSig": "O",
               "monthRank": 1,
               "evalScore": null,
               "recommended": false,
-              "strike": "10050",
-              "price": "3.8(0.78)",
+              "strike": "10000",
+              "price": "4.1(0.84)",
               "qty": "0.21(1)",
-              "margin": 1190,
-              "profit": 58254,
+              "margin": 1392,
+              "profit": 62853,
               "lossPct": "3.00%"
             },
             {
               "type": "풋",
-              "trend": "상승",
+              "trend": "강보합",
               "daysSig": "O",
-              "daysLeft": 255,
+              "daysLeft": 254,
               "yieldSig": "O",
-              "yieldPct": "6.92%",
+              "yieldPct": "6.60%",
               "rankSig": "◇",
               "monthRank": 2,
               "evalScore": null,
               "recommended": false,
-              "strike": "5100",
-              "price": "42.75(3.36)",
+              "strike": "5050",
+              "price": "41.875(3.36)",
               "qty": "0.21(1)",
-              "margin": 3631,
-              "profit": 655358,
+              "margin": 3742,
+              "profit": 641944,
               "lossPct": "10.00%"
             }
           ]
@@ -3049,7 +3046,7 @@
       ]
     },
     {
-      "rank": 11,
+      "rank": 10,
       "name": "호주달러",
       "avgPct": 0,
       "months": [
@@ -3060,9 +3057,9 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 31,
+              "daysLeft": 30,
               "yieldSig": "X",
-              "yieldPct": "-0.08%",
+              "yieldPct": "-0.06%",
               "rankSig": "X",
               "monthRank": 3,
               "evalScore": null,
@@ -3070,7 +3067,7 @@
               "strike": "0.7300",
               "price": "0.000025(0.00003)",
               "qty": "2.46(2)",
-              "margin": 602,
+              "margin": 764,
               "profit": 8979,
               "lossPct": "20.00%"
             },
@@ -3078,9 +3075,9 @@
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 31,
+              "daysLeft": 30,
               "yieldSig": "X",
-              "yieldPct": "1.14%",
+              "yieldPct": "1.43%",
               "rankSig": "◇",
               "monthRank": 2,
               "evalScore": null,
@@ -3088,7 +3085,7 @@
               "strike": "0.6300",
               "price": "0.0000625(0.00008)",
               "qty": "2.46(2)",
-              "margin": 276,
+              "margin": 228,
               "profit": 22448,
               "lossPct": "3.00%"
             }
@@ -3101,17 +3098,17 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 59,
+              "daysLeft": 58,
               "yieldSig": "X",
-              "yieldPct": "0.60%",
+              "yieldPct": "0.51%",
               "rankSig": "◇",
               "monthRank": 2,
               "evalScore": null,
               "recommended": false,
-              "strike": "0.7450",
+              "strike": "0.7400",
               "price": "0.0000875(0.00011)",
               "qty": "2.46(2)",
-              "margin": 485,
+              "margin": 583,
               "profit": 31427,
               "lossPct": "20.00%"
             },
@@ -3119,9 +3116,9 @@
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 59,
+              "daysLeft": 58,
               "yieldSig": "X",
-              "yieldPct": "1.09%",
+              "yieldPct": "1.03%",
               "rankSig": "X",
               "monthRank": 3,
               "evalScore": null,
@@ -3129,7 +3126,7 @@
               "strike": "0.6100",
               "price": "0.000075(0.00009)",
               "qty": "2.46(2)",
-              "margin": 210,
+              "margin": 227,
               "profit": 26937,
               "lossPct": "3.00%"
             }
@@ -3142,36 +3139,36 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 94,
+              "daysLeft": 93,
               "yieldSig": "X",
-              "yieldPct": "0.71%",
+              "yieldPct": "0.57%",
               "rankSig": "O",
               "monthRank": 1,
               "evalScore": null,
               "recommended": false,
               "strike": "0.7550",
-              "price": "0.0001125(0.00014)",
+              "price": "0.0001(0.00012)",
               "qty": "2.46(2)",
-              "margin": 370,
-              "profit": 40406,
+              "margin": 399,
+              "profit": 35916,
               "lossPct": "20.00%"
             },
             {
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 94,
+              "daysLeft": 93,
               "yieldSig": "X",
-              "yieldPct": "1.17%",
+              "yieldPct": "1.51%",
               "rankSig": "O",
               "monthRank": 1,
               "evalScore": null,
               "recommended": false,
               "strike": "0.5900",
-              "price": "0.0000875(0.00011)",
+              "price": "0.0001(0.00012)",
               "qty": "2.46(2)",
-              "margin": 157,
-              "profit": 31427,
+              "margin": 150,
+              "profit": 35916,
               "lossPct": "3.00%"
             }
           ]
@@ -3190,36 +3187,36 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 21,
-              "yieldSig": "O",
-              "yieldPct": "6.54%",
-              "rankSig": "O",
-              "monthRank": 1,
+              "daysLeft": 20,
+              "yieldSig": "◇",
+              "yieldPct": "4.98%",
+              "rankSig": "X",
+              "monthRank": 3,
               "evalScore": null,
-              "recommended": true,
-              "strike": "4620",
-              "price": "3.75(0.87)",
+              "recommended": false,
+              "strike": "4555",
+              "price": "3.35(0.77)",
               "qty": "0.23(1)",
-              "margin": 8124,
-              "profit": 125925,
+              "margin": 10010,
+              "profit": 112493,
               "lossPct": "10.00%"
             },
             {
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 21,
+              "daysLeft": 20,
               "yieldSig": "O",
-              "yieldPct": "5.89%",
+              "yieldPct": "6.20%",
               "rankSig": "O",
               "monthRank": 1,
               "evalScore": null,
               "recommended": true,
-              "strike": "3415",
-              "price": "1.45(0.34)",
+              "strike": "3395",
+              "price": "1.6(0.37)",
               "qty": "0.23(1)",
-              "margin": 3446,
-              "profit": 48691,
+              "margin": 3797,
+              "profit": 53728,
               "lossPct": "1.00%"
             }
           ]
@@ -3231,36 +3228,36 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 50,
+              "daysLeft": 49,
               "yieldSig": "O",
-              "yieldPct": "6.31%",
-              "rankSig": "◇",
-              "monthRank": 2,
+              "yieldPct": "5.74%",
+              "rankSig": "O",
+              "monthRank": 1,
               "evalScore": null,
-              "recommended": false,
-              "strike": "4910",
-              "price": "7.15(1.65)",
+              "recommended": true,
+              "strike": "4850",
+              "price": "7.3(1.69)",
               "qty": "0.23(1)",
-              "margin": 6771,
-              "profit": 240097,
+              "margin": 7750,
+              "profit": 245134,
               "lossPct": "10.00%"
             },
             {
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 50,
+              "daysLeft": 49,
               "yieldSig": "O",
-              "yieldPct": "5.09%",
+              "yieldPct": "5.94%",
               "rankSig": "◇",
               "monthRank": 2,
               "evalScore": null,
               "recommended": false,
-              "strike": "3190",
-              "price": "2.7(0.62)",
+              "strike": "3170",
+              "price": "3.2(0.74)",
               "qty": "0.23(1)",
-              "margin": 3149,
-              "profit": 90666,
+              "margin": 3268,
+              "profit": 107456,
               "lossPct": "1.00%"
             }
           ]
@@ -3272,36 +3269,36 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 79,
+              "daysLeft": 78,
               "yieldSig": "O",
-              "yieldPct": "5.45%",
-              "rankSig": "X",
-              "monthRank": 3,
+              "yieldPct": "5.49%",
+              "rankSig": "◇",
+              "monthRank": 2,
               "evalScore": null,
               "recommended": false,
-              "strike": "5100",
-              "price": "10.8(1.72)",
+              "strike": "5035",
+              "price": "11.45(1.72)",
               "qty": "0.23(1)",
-              "margin": 7509,
-              "profit": 362664,
+              "margin": 7997,
+              "profit": 384491,
               "lossPct": "10.00%"
             },
             {
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 79,
+              "daysLeft": 78,
               "yieldSig": "◇",
-              "yieldPct": "3.91%",
+              "yieldPct": "4.61%",
               "rankSig": "X",
               "monthRank": 3,
               "evalScore": null,
               "recommended": false,
-              "strike": "2995",
-              "price": "3.75(0.87)",
+              "strike": "2975",
+              "price": "4.25(0.98)",
               "qty": "0.23(1)",
-              "margin": 3609,
-              "profit": 125925,
+              "margin": 3518,
+              "profit": 142715,
               "lossPct": "1.00%"
             }
           ]
@@ -3309,7 +3306,7 @@
       ]
     },
     {
-      "rank": 4,
+      "rank": 2,
       "name": "크루드 오일",
       "avgPct": 0,
       "months": [
@@ -3320,35 +3317,35 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "X",
-              "daysLeft": 9,
+              "daysLeft": 8,
               "yieldSig": "O",
-              "yieldPct": "16.82%",
+              "yieldPct": "58.41%",
               "rankSig": "O",
               "monthRank": 1,
               "evalScore": null,
               "recommended": false,
-              "strike": "83.5",
-              "price": "0.06(0.04)",
+              "strike": "83.0",
+              "price": "0.26(0.17)",
               "qty": "0.72(1)",
-              "margin": 1130,
-              "profit": 63072,
+              "margin": 1650,
+              "profit": 273312,
               "lossPct": "10.00%"
             },
             {
               "type": "풋",
               "trend": "약보합",
               "daysSig": "X",
-              "daysLeft": 9,
+              "daysLeft": 8,
               "yieldSig": "O",
-              "yieldPct": "11.56%",
+              "yieldPct": "10.93%",
               "rankSig": "O",
               "monthRank": 1,
               "evalScore": null,
               "recommended": false,
-              "strike": "54.0",
+              "strike": "57.5",
               "price": "0.03(0.02)",
               "qty": "0.72(1)",
-              "margin": 779,
+              "margin": 927,
               "profit": 31536,
               "lossPct": "3.00%"
             }
@@ -3361,36 +3358,36 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 41,
+              "daysLeft": 40,
               "yieldSig": "O",
-              "yieldPct": "11.70%",
-              "rankSig": "X",
-              "monthRank": 3,
+              "yieldPct": "25.43%",
+              "rankSig": "◇",
+              "monthRank": 2,
               "evalScore": null,
-              "recommended": false,
+              "recommended": true,
               "strike": "94.0",
-              "price": "0.205(0.15)",
+              "price": "0.62(0.17)",
               "qty": "0.72(1)",
-              "margin": 1263,
-              "profit": 215496,
+              "margin": 1820,
+              "profit": 651744,
               "lossPct": "10.00%"
             },
             {
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 41,
+              "daysLeft": 40,
               "yieldSig": "O",
-              "yieldPct": "6.69%",
-              "rankSig": "◇",
-              "monthRank": 2,
+              "yieldPct": "7.38%",
+              "rankSig": "X",
+              "monthRank": 3,
               "evalScore": null,
-              "recommended": true,
-              "strike": "39.5",
-              "price": "0.04(0.03)",
+              "recommended": false,
+              "strike": "42.5",
+              "price": "0.05(0.04)",
               "qty": "0.72(1)",
-              "margin": 405,
-              "profit": 42048,
+              "margin": 478,
+              "profit": 52560,
               "lossPct": "3.00%"
             }
           ]
@@ -3402,36 +3399,36 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 72,
+              "daysLeft": 71,
               "yieldSig": "O",
-              "yieldPct": "14.03%",
-              "rankSig": "◇",
-              "monthRank": 2,
+              "yieldPct": "22.87%",
+              "rankSig": "X",
+              "monthRank": 3,
               "evalScore": null,
-              "recommended": true,
-              "strike": "102.5",
-              "price": "0.305(0.17)",
+              "recommended": false,
+              "strike": "101.5",
+              "price": "0.725(0.17)",
               "qty": "0.72(1)",
-              "margin": 897,
-              "profit": 320616,
+              "margin": 1334,
+              "profit": 762120,
               "lossPct": "10.00%"
             },
             {
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 72,
+              "daysLeft": 71,
               "yieldSig": "O",
-              "yieldPct": "6.62%",
-              "rankSig": "X",
-              "monthRank": 3,
+              "yieldPct": "7.69%",
+              "rankSig": "◇",
+              "monthRank": 2,
               "evalScore": null,
-              "recommended": false,
-              "strike": "27.0",
-              "price": "0.02(0.01)",
+              "recommended": true,
+              "strike": "29.5",
+              "price": "0.025(0.02)",
               "qty": "0.72(1)",
-              "margin": 107,
-              "profit": 21024,
+              "margin": 121,
+              "profit": 26280,
               "lossPct": "3.00%"
             }
           ]
@@ -3439,7 +3436,7 @@
       ]
     },
     {
-      "rank": 1,
+      "rank": 3,
       "name": "천연가스",
       "avgPct": 0,
       "months": [
@@ -3448,37 +3445,37 @@
           "rows": [
             {
               "type": "콜",
-              "trend": "강보합",
+              "trend": "상승",
               "daysSig": "O",
-              "daysLeft": 21,
+              "daysLeft": 20,
               "yieldSig": "O",
-              "yieldPct": "8.32%",
+              "yieldPct": "11.80%",
               "rankSig": "X",
               "monthRank": 3,
               "evalScore": null,
               "recommended": false,
-              "strike": "4.50",
-              "price": "0.003(0.004)",
+              "strike": "4.45",
+              "price": "0.0035(0.005)",
               "qty": "1.48(1)",
-              "margin": 464,
-              "profit": 64824,
+              "margin": 407,
+              "profit": 75628,
               "lossPct": "1.00%"
             },
             {
               "type": "풋",
-              "trend": "강보합",
+              "trend": "상승",
               "daysSig": "O",
-              "daysLeft": 21,
+              "daysLeft": 20,
               "yieldSig": "O",
-              "yieldPct": "12.01%",
+              "yieldPct": "12.48%",
               "rankSig": "X",
               "monthRank": 3,
               "evalScore": null,
               "recommended": false,
-              "strike": "2.70",
+              "strike": "2.75",
               "price": "0.006(0.009)",
               "qty": "1.48(1)",
-              "margin": 678,
+              "margin": 685,
               "profit": 129648,
               "lossPct": "20.00%"
             }
@@ -3489,37 +3486,37 @@
           "rows": [
             {
               "type": "콜",
-              "trend": "강보합",
+              "trend": "상승",
               "daysSig": "O",
-              "daysLeft": 50,
+              "daysLeft": 49,
               "yieldSig": "O",
-              "yieldPct": "11.70%",
-              "rankSig": "◇",
-              "monthRank": 2,
+              "yieldPct": "15.51%",
+              "rankSig": "O",
+              "monthRank": 1,
               "evalScore": null,
               "recommended": false,
               "strike": "4.90",
-              "price": "0.005(0.007)",
+              "price": "0.006(0.009)",
               "qty": "1.48(1)",
-              "margin": 241,
-              "profit": 108040,
+              "margin": 225,
+              "profit": 129648,
               "lossPct": "1.00%"
             },
             {
               "type": "풋",
-              "trend": "강보합",
+              "trend": "상승",
               "daysSig": "O",
-              "daysLeft": 50,
+              "daysLeft": 49,
               "yieldSig": "O",
-              "yieldPct": "16.76%",
+              "yieldPct": "16.46%",
               "rankSig": "◇",
               "monthRank": 2,
               "evalScore": null,
               "recommended": false,
-              "strike": "2.40",
+              "strike": "2.45",
               "price": "0.011(0.016)",
               "qty": "1.48(1)",
-              "margin": 383,
+              "margin": 398,
               "profit": 237688,
               "lossPct": "20.00%"
             }
@@ -3530,38 +3527,38 @@
           "rows": [
             {
               "type": "콜",
-              "trend": "강보합",
+              "trend": "상승",
               "daysSig": "O",
-              "daysLeft": 79,
+              "daysLeft": 78,
               "yieldSig": "O",
-              "yieldPct": "12.66%",
-              "rankSig": "O",
-              "monthRank": 1,
+              "yieldPct": "14.81%",
+              "rankSig": "◇",
+              "monthRank": 2,
               "evalScore": null,
-              "recommended": true,
+              "recommended": false,
               "strike": "5.35",
               "price": "0.008(0.012)",
               "qty": "1.48(1)",
-              "margin": 231,
+              "margin": 200,
               "profit": 172864,
               "lossPct": "1.00%"
             },
             {
               "type": "풋",
-              "trend": "강보합",
+              "trend": "상승",
               "daysSig": "O",
-              "daysLeft": 79,
+              "daysLeft": 78,
               "yieldSig": "O",
-              "yieldPct": "17.42%",
+              "yieldPct": "19.73%",
               "rankSig": "O",
               "monthRank": 1,
               "evalScore": null,
               "recommended": true,
-              "strike": "2.25",
-              "price": "0.0175(0.017)",
+              "strike": "2.30",
+              "price": "0.018(0.017)",
               "qty": "1.48(1)",
-              "margin": 375,
-              "profit": 378140,
+              "margin": 345,
+              "profit": 388944,
               "lossPct": "20.00%"
             }
           ]
@@ -3569,7 +3566,7 @@
       ]
     },
     {
-      "rank": 3,
+      "rank": 4,
       "name": "대두",
       "avgPct": 0,
       "months": [
@@ -3578,39 +3575,39 @@
           "rows": [
             {
               "type": "콜",
-              "trend": "약보합",
+              "trend": "상승",
               "daysSig": "O",
-              "daysLeft": 17,
+              "daysLeft": 16,
               "yieldSig": "O",
-              "yieldPct": "12.97%",
-              "rankSig": "X",
-              "monthRank": 3,
+              "yieldPct": "12.25%",
+              "rankSig": "◇",
+              "monthRank": 2,
               "evalScore": null,
               "recommended": false,
-              "strike": "1300",
-              "price": "1.1875(0)",
+              "strike": "1360",
+              "price": "0.5(0)",
               "qty": "0(1)",
-              "margin": 767,
-              "profit": 218453,
-              "lossPct": "10.00%"
+              "margin": 337,
+              "profit": 91980,
+              "lossPct": "1.00%"
             },
             {
               "type": "풋",
-              "trend": "약보합",
+              "trend": "상승",
               "daysSig": "O",
-              "daysLeft": 17,
-              "yieldSig": "X",
-              "yieldPct": "-1.67%",
+              "daysLeft": 16,
+              "yieldSig": "◇",
+              "yieldPct": "2.84%",
               "rankSig": "X",
               "monthRank": 3,
               "evalScore": null,
               "recommended": false,
-              "strike": "980",
-              "price": "0.03125(0.03)",
+              "strike": "1080",
+              "price": "0.1875(0.15)",
               "qty": "2.02(2)",
-              "margin": 151,
-              "profit": 5749,
-              "lossPct": "3.00%"
+              "margin": 422,
+              "profit": 34493,
+              "lossPct": "20.00%"
             }
           ]
         },
@@ -3619,39 +3616,39 @@
           "rows": [
             {
               "type": "콜",
-              "trend": "약보합",
+              "trend": "상승",
               "daysSig": "O",
-              "daysLeft": 45,
+              "daysLeft": 44,
               "yieldSig": "O",
-              "yieldPct": "19.26%",
+              "yieldPct": "14.76%",
+              "rankSig": "O",
+              "monthRank": 1,
+              "evalScore": null,
+              "recommended": false,
+              "strike": "1440",
+              "price": "1.125(0)",
+              "qty": "0(1)",
+              "margin": 246,
+              "profit": 206955,
+              "lossPct": "1.00%"
+            },
+            {
+              "type": "풋",
+              "trend": "상승",
+              "daysSig": "O",
+              "daysLeft": 44,
+              "yieldSig": "O",
+              "yieldPct": "8.31%",
               "rankSig": "O",
               "monthRank": 1,
               "evalScore": null,
               "recommended": true,
-              "strike": "1360",
-              "price": "2.625(0)",
-              "qty": "0(1)",
-              "margin": 444,
-              "profit": 482895,
-              "lossPct": "10.00%"
-            },
-            {
-              "type": "풋",
-              "trend": "약보합",
-              "daysSig": "O",
-              "daysLeft": 45,
-              "yieldSig": "X",
-              "yieldPct": "0.65%",
-              "rankSig": "◇",
-              "monthRank": 2,
-              "evalScore": null,
-              "recommended": false,
-              "strike": "900",
-              "price": "0.0725(0.06)",
+              "strike": "1030",
+              "price": "0.625(0.5)",
               "qty": "2.02(2)",
-              "margin": 65,
-              "profit": 13337,
-              "lossPct": "3.00%"
+              "margin": 232,
+              "profit": 114975,
+              "lossPct": "20.00%"
             }
           ]
         },
@@ -3660,39 +3657,39 @@
           "rows": [
             {
               "type": "콜",
-              "trend": "약보합",
+              "trend": "상승",
               "daysSig": "O",
-              "daysLeft": 80,
+              "daysLeft": 79,
               "yieldSig": "O",
-              "yieldPct": "15.64%",
+              "yieldPct": "10.30%",
+              "rankSig": "X",
+              "monthRank": 3,
+              "evalScore": null,
+              "recommended": false,
+              "strike": "1550",
+              "price": "1.3125(0)",
+              "qty": "0(1)",
+              "margin": 231,
+              "profit": 241448,
+              "lossPct": "1.00%"
+            },
+            {
+              "type": "풋",
+              "trend": "상승",
+              "daysSig": "O",
+              "daysLeft": 79,
+              "yieldSig": "O",
+              "yieldPct": "7.53%",
               "rankSig": "◇",
               "monthRank": 2,
               "evalScore": null,
               "recommended": false,
-              "strike": "1450",
-              "price": "3.0625(0)",
-              "qty": "0(1)",
-              "margin": 360,
-              "profit": 563378,
-              "lossPct": "10.00%"
-            },
-            {
-              "type": "풋",
-              "trend": "약보합",
-              "daysSig": "O",
-              "daysLeft": 80,
-              "yieldSig": "X",
-              "yieldPct": "1.44%",
-              "rankSig": "O",
-              "monthRank": 1,
-              "evalScore": null,
-              "recommended": false,
-              "strike": "850",
-              "price": "0.135(0.11)",
+              "strike": "1000",
+              "price": "0.75(0.61)",
               "qty": "2.02(2)",
-              "margin": 98,
-              "profit": 24835,
-              "lossPct": "3.00%"
+              "margin": 174,
+              "profit": 137970,
+              "lossPct": "20.00%"
             }
           ]
         }
@@ -3710,35 +3707,35 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 17,
+              "daysLeft": 16,
               "yieldSig": "X",
-              "yieldPct": "-0.45%",
+              "yieldPct": "1.89%",
               "rankSig": "X",
               "monthRank": 3,
               "evalScore": null,
               "recommended": false,
-              "strike": "112.5",
-              "price": "0",
+              "strike": "111.5",
+              "price": "1(1.01)",
               "qty": "2.24(2)",
-              "margin": 1168,
-              "profit": 0,
+              "margin": 1254,
+              "profit": 56803,
               "lossPct": "10.00%"
             },
             {
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 17,
+              "daysLeft": 16,
               "yieldSig": "X",
-              "yieldPct": "-0.63%",
+              "yieldPct": "-0.64%",
               "rankSig": "X",
               "monthRank": 3,
               "evalScore": null,
               "recommended": false,
-              "strike": "106.5",
+              "strike": "106.0",
               "price": "0.00",
               "qty": "2.24(2)",
-              "margin": 836,
+              "margin": 872,
               "profit": 0,
               "lossPct": "3.00%"
             }
@@ -3751,17 +3748,17 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 45,
+              "daysLeft": 44,
               "yieldSig": "X",
-              "yieldPct": "2.49%",
+              "yieldPct": "2.18%",
               "rankSig": "O",
               "monthRank": 1,
               "evalScore": null,
               "recommended": false,
-              "strike": "113.5",
+              "strike": "113.0",
               "price": "2(2.02)",
               "qty": "2.24(2)",
-              "margin": 756,
+              "margin": 883,
               "profit": 113606,
               "lossPct": "10.00%"
             },
@@ -3769,17 +3766,17 @@
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 45,
+              "daysLeft": 44,
               "yieldSig": "X",
-              "yieldPct": "1.30%",
+              "yieldPct": "1.49%",
               "rankSig": "◇",
               "monthRank": 2,
               "evalScore": null,
               "recommended": false,
-              "strike": "104.5",
+              "strike": "104.0",
               "price": "1(1.01)",
               "qty": "2.24(2)",
-              "margin": 647,
+              "margin": 577,
               "profit": 56803,
               "lossPct": "3.00%"
             }
@@ -3792,17 +3789,17 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 80,
+              "daysLeft": 79,
               "yieldSig": "X",
-              "yieldPct": "2.18%",
+              "yieldPct": "2.13%",
               "rankSig": "◇",
               "monthRank": 2,
               "evalScore": null,
               "recommended": false,
-              "strike": "114.5",
+              "strike": "114.0",
               "price": "3(3.03)",
               "qty": "2.24(2)",
-              "margin": 755,
+              "margin": 784,
               "profit": 170409,
               "lossPct": "10.00%"
             },
@@ -3810,17 +3807,17 @@
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 80,
+              "daysLeft": 79,
               "yieldSig": "X",
-              "yieldPct": "1.84%",
+              "yieldPct": "2.04%",
               "rankSig": "O",
               "monthRank": 1,
               "evalScore": null,
               "recommended": false,
-              "strike": "103.0",
+              "strike": "102.5",
               "price": "2(2.02)",
               "qty": "2.24(2)",
-              "margin": 575,
+              "margin": 525,
               "profit": 113606,
               "lossPct": "3.00%"
             }
@@ -3829,7 +3826,7 @@
       ]
     },
     {
-      "rank": 10,
+      "rank": 11,
       "name": "유로FX",
       "avgPct": 0,
       "months": [
@@ -3840,35 +3837,35 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 31,
+              "daysLeft": 30,
               "yieldSig": "X",
-              "yieldPct": "0.02%",
+              "yieldPct": "0.21%",
               "rankSig": "X",
               "monthRank": 3,
               "evalScore": null,
               "recommended": false,
-              "strike": "1.1950",
-              "price": "0.000025(0.00005)",
+              "strike": "1.1900",
+              "price": "0.0000375(0.00007)",
               "qty": "1.95(1)",
-              "margin": 574,
-              "profit": 8897,
+              "margin": 793,
+              "profit": 13345,
               "lossPct": "20.00%"
             },
             {
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 31,
+              "daysLeft": 30,
               "yieldSig": "X",
-              "yieldPct": "0.06%",
-              "rankSig": "X",
-              "monthRank": 3,
+              "yieldPct": "0.07%",
+              "rankSig": "◇",
+              "monthRank": 2,
               "evalScore": null,
               "recommended": false,
               "strike": "1.0750",
               "price": "0.000025(0.00005)",
               "qty": "1.95(1)",
-              "margin": 237,
+              "margin": 205,
               "profit": 8897,
               "lossPct": "3.00%"
             }
@@ -3881,36 +3878,36 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 59,
+              "daysLeft": 58,
               "yieldSig": "X",
-              "yieldPct": "2.37%",
-              "rankSig": "◇",
-              "monthRank": 2,
+              "yieldPct": "2.23%",
+              "rankSig": "O",
+              "monthRank": 1,
               "evalScore": null,
               "recommended": false,
-              "strike": "1.2100",
-              "price": "0.0002(0.00039)",
+              "strike": "1.2050",
+              "price": "0.000225(0.00044)",
               "qty": "1.95(1)",
-              "margin": 472,
-              "profit": 71175,
+              "margin": 583,
+              "profit": 80072,
               "lossPct": "20.00%"
             },
             {
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 59,
+              "daysLeft": 58,
               "yieldSig": "X",
-              "yieldPct": "0.40%",
-              "rankSig": "◇",
-              "monthRank": 2,
+              "yieldPct": "0.04%",
+              "rankSig": "X",
+              "monthRank": 3,
               "evalScore": null,
               "recommended": false,
               "strike": "1.0500",
-              "price": "0.0000375(0.00007)",
+              "price": "0.000025(0.00005)",
               "qty": "1.95(1)",
-              "margin": 217,
-              "profit": 13345,
+              "margin": 159,
+              "profit": 8897,
               "lossPct": "3.00%"
             }
           ]
@@ -3922,17 +3919,17 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 94,
+              "daysLeft": 93,
               "yieldSig": "X",
-              "yieldPct": "2.39%",
-              "rankSig": "O",
-              "monthRank": 1,
+              "yieldPct": "2.16%",
+              "rankSig": "◇",
+              "monthRank": 2,
               "evalScore": null,
               "recommended": false,
-              "strike": "1.2350",
+              "strike": "1.2300",
               "price": "0.00025(0.00049)",
               "qty": "1.95(1)",
-              "margin": 378,
+              "margin": 423,
               "profit": 88969,
               "lossPct": "20.00%"
             },
@@ -3940,17 +3937,17 @@
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 94,
+              "daysLeft": 93,
               "yieldSig": "X",
-              "yieldPct": "1.21%",
+              "yieldPct": "1.31%",
               "rankSig": "O",
               "monthRank": 1,
               "evalScore": null,
               "recommended": false,
-              "strike": "1.0350",
+              "strike": "1.0300",
               "price": "0.000075(0.00015)",
               "qty": "1.95(1)",
-              "margin": 169,
+              "margin": 157,
               "profit": 26691,
               "lossPct": "3.00%"
             }
@@ -3968,38 +3965,38 @@
           "rows": [
             {
               "type": "콜",
-              "trend": "약보합",
+              "trend": "하락",
               "daysSig": "O",
-              "daysLeft": 31,
+              "daysLeft": 30,
               "yieldSig": "◇",
-              "yieldPct": "2.80%",
-              "rankSig": "X",
-              "monthRank": 3,
+              "yieldPct": "2.56%",
+              "rankSig": "O",
+              "monthRank": 1,
               "evalScore": null,
-              "recommended": false,
-              "strike": "6600",
-              "price": "3.25(5.84)",
+              "recommended": true,
+              "strike": "6550",
+              "price": "3(5.39)",
               "qty": "1.8(1)",
-              "margin": 1300,
-              "profit": 106763,
+              "margin": 1348,
+              "profit": 98550,
               "lossPct": "10.00%"
             },
             {
               "type": "풋",
-              "trend": "약보합",
+              "trend": "하락",
               "daysSig": "O",
-              "daysLeft": 31,
+              "daysLeft": 30,
               "yieldSig": "X",
-              "yieldPct": "0.01%",
+              "yieldPct": "0.14%",
               "rankSig": "X",
               "monthRank": 3,
               "evalScore": null,
               "recommended": false,
               "strike": "5850",
-              "price": "0.25(0.45)",
+              "price": "0.375(0.67)",
               "qty": "1.8(1)",
-              "margin": 1141,
-              "profit": 8213,
+              "margin": 1216,
+              "profit": 12319,
               "lossPct": "3.00%"
             }
           ]
@@ -4009,29 +4006,29 @@
           "rows": [
             {
               "type": "콜",
-              "trend": "약보합",
+              "trend": "하락",
               "daysSig": "O",
-              "daysLeft": 59,
-              "yieldSig": "◇",
-              "yieldPct": "3.48%",
-              "rankSig": "O",
-              "monthRank": 1,
+              "daysLeft": 58,
+              "yieldSig": "X",
+              "yieldPct": "1.79%",
+              "rankSig": "X",
+              "monthRank": 3,
               "evalScore": null,
-              "recommended": true,
+              "recommended": false,
               "strike": "6650",
-              "price": "6(10.78)",
+              "price": "3.25(5.84)",
               "qty": "1.8(1)",
-              "margin": 1051,
-              "profit": 197100,
+              "margin": 1085,
+              "profit": 106763,
               "lossPct": "10.00%"
             },
             {
               "type": "풋",
-              "trend": "약보합",
+              "trend": "하락",
               "daysSig": "O",
-              "daysLeft": 59,
+              "daysLeft": 58,
               "yieldSig": "X",
-              "yieldPct": "0.45%",
+              "yieldPct": "0.51%",
               "rankSig": "◇",
               "monthRank": 2,
               "evalScore": null,
@@ -4039,7 +4036,7 @@
               "strike": "5700",
               "price": "0.875(1.57)",
               "qty": "1.8(1)",
-              "margin": 892,
+              "margin": 801,
               "profit": 28744,
               "lossPct": "3.00%"
             }
@@ -4050,38 +4047,38 @@
           "rows": [
             {
               "type": "콜",
-              "trend": "약보합",
+              "trend": "하락",
               "daysSig": "O",
-              "daysLeft": 94,
+              "daysLeft": 93,
               "yieldSig": "◇",
-              "yieldPct": "2.94%",
+              "yieldPct": "2.53%",
               "rankSig": "◇",
               "monthRank": 2,
               "evalScore": null,
               "recommended": false,
               "strike": "6800",
-              "price": "6.75(12.12)",
+              "price": "5.75(10.33)",
               "qty": "1.8(1)",
-              "margin": 884,
-              "profit": 221738,
+              "margin": 880,
+              "profit": 188888,
               "lossPct": "10.00%"
             },
             {
               "type": "풋",
-              "trend": "약보합",
+              "trend": "하락",
               "daysSig": "O",
-              "daysLeft": 94,
+              "daysLeft": 93,
               "yieldSig": "X",
-              "yieldPct": "1.90%",
+              "yieldPct": "1.86%",
               "rankSig": "O",
               "monthRank": 1,
               "evalScore": null,
               "recommended": false,
-              "strike": "5650",
-              "price": "3.25(5.84)",
+              "strike": "5600",
+              "price": "2.75(4.94)",
               "qty": "1.8(1)",
-              "margin": 631,
-              "profit": 106763,
+              "margin": 543,
+              "profit": 90338,
               "lossPct": "3.00%"
             }
           ]
@@ -4100,36 +4097,36 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 17,
+              "daysLeft": 16,
               "yieldSig": "O",
-              "yieldPct": "19.13%",
+              "yieldPct": "18.08%",
               "rankSig": "O",
               "monthRank": 1,
               "evalScore": null,
               "recommended": true,
               "strike": "695",
-              "price": "1.625(1.39)",
-              "qty": "2.27(2)",
-              "margin": 722,
-              "profit": 298935,
+              "price": "1.5(0)",
+              "qty": "0(1)",
+              "margin": 747,
+              "profit": 275940,
               "lossPct": "10.00%"
             },
             {
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 17,
+              "daysLeft": 16,
               "yieldSig": "X",
-              "yieldPct": "1.37%",
-              "rankSig": "O",
-              "monthRank": 1,
+              "yieldPct": "-0.84%",
+              "rankSig": "X",
+              "monthRank": 3,
               "evalScore": null,
               "recommended": false,
-              "strike": "515",
-              "price": "0.135(0.14)",
-              "qty": "2.27(2)",
-              "margin": 484,
-              "profit": 24835,
+              "strike": "520",
+              "price": "0.03125(0.03)",
+              "qty": "2.02(2)",
+              "margin": 320,
+              "profit": 5749,
               "lossPct": "3.00%"
             }
           ]
@@ -4141,17 +4138,17 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 45,
+              "daysLeft": 44,
               "yieldSig": "O",
-              "yieldPct": "13.71%",
+              "yieldPct": "14.42%",
               "rankSig": "◇",
               "monthRank": 2,
               "evalScore": null,
               "recommended": false,
-              "strike": "740",
-              "price": "2.4375(1.39)",
-              "qty": "2.27(2)",
-              "margin": 578,
+              "strike": "745",
+              "price": "2.4375(0)",
+              "qty": "0(1)",
+              "margin": 562,
               "profit": 448403,
               "lossPct": "10.00%"
             },
@@ -4159,18 +4156,18 @@
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 45,
+              "daysLeft": 44,
               "yieldSig": "X",
-              "yieldPct": "0.95%",
-              "rankSig": "X",
-              "monthRank": 3,
+              "yieldPct": "0.05%",
+              "rankSig": "◇",
+              "monthRank": 2,
               "evalScore": null,
               "recommended": false,
-              "strike": "470",
-              "price": "0.135(0.14)",
-              "qty": "2.27(2)",
-              "margin": 264,
-              "profit": 24835,
+              "strike": "475",
+              "price": "0.0625(0.05)",
+              "qty": "2.02(2)",
+              "margin": 181,
+              "profit": 11498,
               "lossPct": "3.00%"
             }
           ]
@@ -4182,36 +4179,36 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 80,
+              "daysLeft": 79,
               "yieldSig": "O",
-              "yieldPct": "11.23%",
+              "yieldPct": "12.60%",
               "rankSig": "X",
               "monthRank": 3,
               "evalScore": null,
               "recommended": false,
               "strike": "810",
-              "price": "2.4375(1.39)",
-              "qty": "2.27(2)",
-              "margin": 397,
-              "profit": 448403,
+              "price": "2.6875(0)",
+              "qty": "0(1)",
+              "margin": 396,
+              "profit": 494393,
               "lossPct": "10.00%"
             },
             {
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 80,
+              "daysLeft": 79,
               "yieldSig": "X",
-              "yieldPct": "1.08%",
-              "rankSig": "◇",
-              "monthRank": 2,
+              "yieldPct": "0.05%",
+              "rankSig": "O",
+              "monthRank": 1,
               "evalScore": null,
               "recommended": false,
-              "strike": "445",
-              "price": "0.135(0.14)",
-              "qty": "2.27(2)",
-              "margin": 130,
-              "profit": 24835,
+              "strike": "450",
+              "price": "0.0625(0.05)",
+              "qty": "2.02(2)",
+              "margin": 100,
+              "profit": 11498,
               "lossPct": "3.00%"
             }
           ]
@@ -4219,7 +4216,7 @@
       ]
     },
     {
-      "rank": 2,
+      "rank": 1,
       "name": "옥수수",
       "avgPct": 0,
       "months": [
@@ -4230,9 +4227,9 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 17,
+              "daysLeft": 16,
               "yieldSig": "O",
-              "yieldPct": "25.58%",
+              "yieldPct": "34.33%",
               "rankSig": "O",
               "monthRank": 1,
               "evalScore": null,
@@ -4240,7 +4237,7 @@
               "strike": "490",
               "price": "1.1875(0.86)",
               "qty": "4.67(4)",
-              "margin": 389,
+              "margin": 308,
               "profit": 404831,
               "lossPct": "10.00%"
             },
@@ -4248,18 +4245,18 @@
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 17,
+              "daysLeft": 16,
               "yieldSig": "X",
-              "yieldPct": "0.73%",
+              "yieldPct": "-8.11%",
               "rankSig": "X",
               "monthRank": 3,
               "evalScore": null,
               "recommended": false,
-              "strike": "355",
-              "price": "0.0725(0.08)",
+              "strike": "360",
+              "price": "0.03125(0.04)",
               "qty": "4.67(4)",
-              "margin": 153,
-              "profit": 24716,
+              "margin": 33,
+              "profit": 10653,
               "lossPct": "3.00%"
             }
           ]
@@ -4271,36 +4268,36 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 45,
+              "daysLeft": 44,
               "yieldSig": "O",
-              "yieldPct": "20.86%",
+              "yieldPct": "20.56%",
               "rankSig": "◇",
               "monthRank": 2,
               "evalScore": null,
               "recommended": false,
-              "strike": "520",
-              "price": "2.125(0.86)",
+              "strike": "525",
+              "price": "1.875(0.86)",
               "qty": "4.67(4)",
-              "margin": 330,
-              "profit": 724434,
+              "margin": 301,
+              "profit": 639206,
               "lossPct": "10.00%"
             },
             {
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 45,
+              "daysLeft": 44,
               "yieldSig": "X",
-              "yieldPct": "2.05%",
+              "yieldPct": "0.68%",
               "rankSig": "◇",
               "monthRank": 2,
               "evalScore": null,
               "recommended": false,
               "strike": "325",
-              "price": "0.135(0.16)",
+              "price": "0.0725(0.08)",
               "qty": "4.67(4)",
-              "margin": 122,
-              "profit": 46023,
+              "margin": 64,
+              "profit": 24716,
               "lossPct": "3.00%"
             }
           ]
@@ -4312,35 +4309,35 @@
               "type": "콜",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 80,
+              "daysLeft": 79,
               "yieldSig": "O",
-              "yieldPct": "15.39%",
+              "yieldPct": "15.66%",
               "rankSig": "X",
               "monthRank": 3,
               "evalScore": null,
               "recommended": false,
-              "strike": "575",
-              "price": "2.0625(0.86)",
+              "strike": "580",
+              "price": "2.1875(0.86)",
               "qty": "4.67(4)",
-              "margin": 389,
-              "profit": 703127,
+              "margin": 308,
+              "profit": 745741,
               "lossPct": "10.00%"
             },
             {
               "type": "풋",
               "trend": "약보합",
               "daysSig": "O",
-              "daysLeft": 80,
-              "yieldSig": "◇",
-              "yieldPct": "4.52%",
+              "daysLeft": 79,
+              "yieldSig": "O",
+              "yieldPct": "15.08%",
               "rankSig": "O",
               "monthRank": 1,
               "evalScore": null,
               "recommended": true,
-              "strike": "315",
+              "strike": "320",
               "price": "0.135(0.16)",
               "qty": "4.67(4)",
-              "margin": 56,
+              "margin": 17,
               "profit": 46023,
               "lossPct": "3.00%"
             }
