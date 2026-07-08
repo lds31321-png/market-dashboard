@@ -530,6 +530,12 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 }
 @media(max-width:600px){
   .page{padding:12px 12px 40px}
+  /* [모바일최적화 2026-07-08] 데이터 출처 카드: 4열→2열, 헤더 단어단위 줄바꿈(세로쪼개짐 방지) */
+  .footer-grid{grid-template-columns:repeat(2,1fr) !important;gap:10px}
+  .footer-card{padding:12px 12px}
+  .footer-card-src{font-size:11px;letter-spacing:.02em;word-break:keep-all}
+  .footer-card-name{font-size:14px;word-break:keep-all}
+  .footer-card-desc{word-break:keep-all}
   .topbar{padding:8px 12px}
   .topbar-logo{font-size:14px}
   .topbar-right{gap:6px}
@@ -591,6 +597,47 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
 
 /* 51차: 헤드라인 섹션 하단 희미한 구분선 제거 */
 .headline-section{border-bottom:none!important}
+
+/* ══ [모바일최적화 2026-07-08 전체스윕] 섹션별 ≤600px 보정 — 데스크톱/PC 규칙 불변 ══ */
+@media(max-width:600px){
+  /* 1) 자산 네비: 라벨 단어단위, 가격/등락 숫자 줄바꿈 방지 */
+  .at-name{word-break:keep-all}
+  .at-price,.at-chg{white-space:nowrap}
+  /* 2) 가격 히어로 지표: 4열→2열 (값 넘침 방지) */
+  .ph-metrics{grid-template-columns:repeat(2,1fr)}
+  /* 3) 변동성 등급 테이블: 가로 스크롤(.vol-table-wrap overflow-x:auto 활용), 셀 nowrap */
+  .vol-table{min-width:600px}
+  .vol-table th,.vol-table td{padding:11px 12px}
+  .vt-schedule,.vt-src{white-space:nowrap;max-width:none}
+  /* 4) 요인 카드: 제목 단어단위, 충격강도/영향 행 넘침 방지 */
+  .factor-card{padding:18px}
+  .factor-title{font-size:18px;word-break:keep-all}
+  .factor-impact{flex-wrap:wrap;gap:6px}
+  /* 5) 시나리오 카드: 제목 단어단위 (이미 1열) */
+  .scenario-card{padding:20px}
+  .sc-title{word-break:keep-all}
+  /* 6) 차트: 컨테이너 패딩 축소, 헤더 줄바꿈 */
+  .chart-wrap{padding:16px 14px}
+  .chart-hd{flex-wrap:wrap;gap:8px}
+  /* 7) 계절성: 월 라벨/값 줄바꿈 방지(10\A6월 세로쪼개짐 방지) */
+  .sb-row{gap:10px}
+  .sb-label{white-space:nowrap;font-size:14px}
+  .sb-val{white-space:nowrap;font-size:14px}
+  /* 8) 캘린더/일정 카드: 영향 행 줄바꿈, 카드 패딩 축소 */
+  .cal-card{padding:18px}
+  .cal-impact{flex-wrap:wrap;gap:6px}
+  /* 9) 헤드라인/코멘터리: 제목 단어단위, 출처/데이터출처 줄 넘침 방지 */
+  .cm-title{word-break:keep-all}
+  .cm-src{word-break:break-all}
+  .data-source-line{word-break:break-word}
+}
+@media(max-width:380px){
+  /* 초소형: 지표/가격 추가 축소 */
+  .ph-metrics{gap:8px}
+  .hm-val{font-size:19px}
+  .sc-price{font-size:32px}
+  .factor-title{font-size:17px}
+}
 </style>
 </head>
 <body>
