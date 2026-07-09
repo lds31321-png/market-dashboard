@@ -1093,7 +1093,7 @@ function ohClosedBlock(items, rate, mode){
     h+='<div style="font-size:15px;font-weight:700;color:var(--t1);margin:2px 0 8px;">청산 내역 <span style="color:var(--t3);font-weight:600;">(0)</span></div><div style="color:var(--t3);font-size:13px;">청산된 포지션이 없습니다.</div></div>';
     return h;
   }
-  var btnStyle=stop?'background:rgba(var(--accent-rgb),.10);border:1.5px solid #4593FC;animation:ohpulse .7s ease-in-out infinite;color:#FF8080;':'background:rgba(0,0,0,.04);border:1px solid var(--b1);color:var(--t1);';
+  var btnStyle=stop?'background:rgba(var(--accent-rgb),.10);border:1.5px solid var(--accent);animation:ohpulse .7s ease-in-out infinite;color:var(--accent);':'background:rgba(0,0,0,.04);border:1px solid var(--b1);color:var(--t1);';
   var btnText=stop?('금일 손절·청산 종목 있음 ('+items.length+')'):('청산 내역 ('+items.length+')');
   h+='<button onclick="ohToggle(\'ohclosed\',this)" style="'+btnStyle+'display:flex;align-items:center;gap:8px;width:100%;justify-content:space-between;padding:11px 14px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;"><span>'+btnText+'</span><span class="oh-caret" style="font-size:12px;">▸</span></button>';
   h+='<div id="ohclosed" style="display:none;margin-top:10px;overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-family:var(--mono);"><thead><tr>';
