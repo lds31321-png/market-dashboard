@@ -497,7 +497,7 @@ document.addEventListener('DOMContentLoaded',jiktSyncThemeLabel);
   <div class="hub-title">직트&레이 트레이딩 룸</div>
   <div class="hub-sub" style="font-size:16px;font-weight:700;color:#B0B8C1">수익은 시장이 주고, 손실은 우리가 통제합니다</div>
   <button class="jikt-refresh-btn" onclick="jiktRefresh()"><svg class="refresh-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v6h-6"/></svg>최신 데이터로 업데이트</button>
-  <button class="jikt-viewmode-btn" id="jiktViewModeBtn" onclick="jiktToggleViewMode()"><span id="jiktViewModeLabel">🖥 PC 버전</span></button>
+  <button class="jikt-viewmode-btn" id="jiktViewModeBtn" onclick="jiktToggleViewMode()"><span id="jiktViewModeLabel">PC 버전</span></button>
   <button class="jikt-theme-btn" id="jiktThemeBtn" onclick="jiktToggleTheme()"><span class="jt-label">라이트 모드</span></button>
 </div>
 
@@ -724,7 +724,7 @@ function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.n
 <script>/*[JIKT 방문기록 — 메인(트레이딩 룸) 접속도 카운트]*/(function(){try{var t=localStorage.getItem("jikt_token");if(!t)return;fetch("https://jikt-dashboard-api.eotjd3133.workers.dev/auth/me",{headers:{Authorization:"Bearer "+t}}).catch(function(){});}catch(e){}})();</script>
 <script>
 function jiktToggleViewMode(){try{var m=(localStorage.getItem('jikt_view_mode')||'pc');m=(m==='pc')?'mobile':'pc';localStorage.setItem('jikt_view_mode',m);jiktUpdateViewModeLabel();}catch(e){}}
-function jiktUpdateViewModeLabel(){try{var m=(localStorage.getItem('jikt_view_mode')||'pc');var el=document.getElementById('jiktViewModeLabel');if(el)el.textContent=(m==='pc')?'🖥 PC 버전 · 탭하면 큰 글씨':'📱 큰 글씨 · 탭하면 PC 버전';}catch(e){}}
+function jiktUpdateViewModeLabel(){try{var m=(localStorage.getItem('jikt_view_mode')||'pc');var el=document.getElementById('jiktViewModeLabel');if(el)el.textContent=(m==='pc')?'PC 버전 · 탭하면 큰 글씨':'큰 글씨 · 탭하면 PC 버전';}catch(e){}}
 jiktUpdateViewModeLabel();
 </script>
 </body>
