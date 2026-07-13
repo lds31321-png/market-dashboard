@@ -2845,9 +2845,18 @@ loadPositions();
   /* 차트는 원래 흰 배경으로 만들어져 있다(PC도 같다) → 억지로 뒤집지 않고 카드처럼 감싸 자연스럽게 */
   #overlay .modal-body canvas{ max-width:100% !important; border-radius:9px !important;
     background:#FFFFFF !important; padding:6px !important; box-sizing:border-box !important; }
-  /* 값 4칸 → 2×2 타일, 무채색 */
+  /* ⚠ 값 4칸이 원본에서 **가로 한 줄**이라 폰에서 찌그러지고 가로 스크롤이 생겼다
+        → 2×2 로 접어 준다 (여백 8배수, 글자 14px 이상) */
+  #overlay .modal-body{ overflow-x:hidden !important; }
+  #overlay .modal-body > div{ max-width:100% !important; }
+  #overlay .modal-body > div:nth-child(2){
+    display:grid !important; grid-template-columns:1fr 1fr !important;
+    gap:8px !important; overflow:visible !important; }
   #overlay .modal-body > div > div{ background:#23262E !important; border:0 !important;
-    border-radius:9px !important; }
+    border-radius:8px !important; padding:16px !important; min-width:0 !important;
+    white-space:normal !important; word-break:keep-all !important; }
+  #overlay .modal-body > div > div > div{ white-space:normal !important;
+    word-break:keep-all !important; overflow-wrap:anywhere !important; }
   /* 포지션 정보 표 — ★ 레퍼런스 문서 4-3의 정답 그대로:
         flex·margin·float 은 큰글씨에서 전부 깨진다.
         **라벨 한 줄 / 값 그 아래 줄 우측정렬** (블록 2개) 이 유일하게 안 깨진다.
