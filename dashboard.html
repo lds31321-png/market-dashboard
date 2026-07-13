@@ -3914,39 +3914,76 @@ loadPositions();
    PC 는 건드리지 않는다(640px 이하에서만). */
 @media(max-width:640px){
 
-  /* 표를 라벨-값 한 줄 리스트로 */
+  /* 원본이 의도한 카드 모양 그대로:
+       종목명(크게) ─ 구분 배지(오른쪽)
+       그 아래로 라벨(좌) ─ 값(우) 한 줄씩.
+     상세 화면에서는 이 규칙이 먹지 않아 라벨/값이 위아래로 쪼개져 있었다 → 여기서 되살린다. */
   #overlay .tbl-rec{ display:block !important; width:100% !important; border-collapse:collapse !important; }
-  #overlay .tbl-rec thead{ display:none !important; }
-  #overlay .tbl-rec tbody,
-  #overlay .tbl-rec tr{ display:block !important; width:100% !important; }
+  #overlay .tbl-rec thead,
+  #overlay .tbl-rec tr[data-thead-row]{ display:none !important; }
+  #overlay .tbl-rec tbody{ display:block !important; }
+
+  #overlay .tbl-rec tr{
+    display:grid !important; grid-template-columns:1fr auto !important;
+    gap:8px 16px !important; align-items:baseline !important;
+    padding:16px 0 !important; margin:0 !important;
+    border:0 !important; border-bottom:1px solid rgba(255,255,255,.07) !important;
+    background:transparent !important;
+  }
+  #overlay .tbl-rec tr:last-child{ border-bottom:0 !important; }
+
+  /* 기본 칸 = 전체폭, 라벨(좌) — 값(우) */
   #overlay .tbl-rec td{
+    grid-column:1 / -1 !important;
     display:flex !important; align-items:center !important; justify-content:space-between !important;
     gap:16px !important; width:auto !important;
-    padding:12px 0 !important; margin:0 !important;
-    border:0 !important; border-bottom:0.5px solid rgba(255,255,255,.08) !important;
+    padding:5px 0 !important; margin:0 !important;
+    border:0 !important; background:transparent !important;
     min-height:32px !important; box-sizing:border-box !important;
-    font-size:15px !important; font-weight:700 !important; line-height:1.4 !important;
-    text-align:right !important; letter-spacing:normal !important; white-space:normal !important;
-    position:static !important; background:transparent !important;
+    font-size:15px !important; font-weight:700 !important; line-height:1.5 !important;
+    color:#F5F6F8 !important; text-align:right !important;
+    letter-spacing:normal !important; white-space:normal !important; position:static !important;
   }
   #overlay .tbl-rec td::before{
     content:attr(data-label) !important;
-    position:static !important; display:block !important;
-    flex:0 0 auto !important; float:none !important;
+    position:static !important; display:block !important; float:none !important;
+    flex:0 0 auto !important; margin:0 !important; padding:0 !important;
+    border:0 !important; border-radius:0 !important; background:transparent !important;
     color:#8B95A1 !important; font-size:14px !important; font-weight:500 !important;
     letter-spacing:normal !important; text-align:left !important; white-space:nowrap !important;
-    background:transparent !important; padding:0 !important; margin:0 !important;
-    border:0 !important; border-radius:0 !important; top:auto !important; right:auto !important;
   }
-  #overlay .tbl-rec tr:last-child td:last-child{ border-bottom:0 !important; }
-
-  /* 값이 <span> 으로 감싸인 행(구분 등)도 라벨은 왼쪽 끝, 값은 오른쪽 끝에 붙인다 */
-  #overlay .tbl-rec td::before{ margin-right:auto !important; }
   #overlay .tbl-rec td > *{
     display:inline-block !important; font-size:15px !important;
     margin-left:auto !important; text-align:right !important;
-    max-width:70% !important; word-break:keep-all !important;
+    max-width:75% !important; word-break:keep-all !important;
   }
+
+  /* 종목 = 카드 제목 (라벨 숨김) */
+  #overlay .tbl-rec td[data-label="종목"]{
+    grid-column:1 !important; grid-row:1 !important;
+    display:block !important; text-align:left !important;
+    font-size:19px !important; font-weight:800 !important; color:#fff !important;
+    padding:0 0 4px 0 !important;
+  }
+  #overlay .tbl-rec td[data-label="종목"]::before{ display:none !important; }
+  #overlay .tbl-rec td[data-label="종목"] > *{ margin-left:0 !important; text-align:left !important; }
+
+  /* 구분 = 오른쪽 배지 (라벨 숨김) */
+  #overlay .tbl-rec td[data-label="구분"]{
+    grid-column:2 !important; grid-row:1 !important; justify-self:end !important;
+    display:inline-block !important; width:auto !important;
+    font-size:14px !important; font-weight:700 !important;
+    padding:4px 10px !important; border-radius:6px !important;
+    background:rgba(255,255,255,.06) !important; text-align:center !important;
+    white-space:nowrap !important;
+  }
+  #overlay .tbl-rec td[data-label="구분"]::before{ display:none !important; }
+  #overlay .tbl-rec td[data-label="구분"] > *{ margin-left:0 !important; max-width:none !important; }
+
+  /* 숨김 칸은 그대로 숨긴다 */
+  #overlay .tbl-rec td[data-hide],
+  #overlay .tbl-rec td[data-label="진입일"],
+  #overlay .tbl-rec td[data-label="청산가능"]{ display:none !important; }
 
   /* 상단 요약 타일 — 글자 벌어짐(자간) 제거 */
   #overlay .modal *{ letter-spacing:normal !important; }
