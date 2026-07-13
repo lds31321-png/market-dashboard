@@ -3164,5 +3164,324 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   }catch(e){}
 })();
 </script>
+
+<style id="gm-css-2026-07-14">
+/* ============================================================
+   글로벌 원자재·금융 대시보드 — 모바일 재설계 (2026-07-14)
+   ⚠ 전부 @media(max-width:640px). PC 는 절대 건드리지 않는다.
+
+   ★ 레퍼런스 적용
+     C그룹 → **오늘의 시장 한 문장**을 맨 위 (차트만 두지 말고 해석을 붙인다)
+     E그룹 → 변동성 **높은 순 정렬 + 위험도 막대** (밀도 높은 시세 리스트의 정석)
+     #10/#14 → 긴 분석(요인·시나리오·캘린더·계절성)은 **아코디언으로 접는다**
+              (종목 하나가 8,025px → 접으면 첫 화면에 다 들어온다)
+   ★ 수치 기준 — 본문 14~16px · 여백 8배수 · 위계 3단 · 터치 32px
+   ★ 색 절제 — 등락 수익 #F06A6A / 손실 #4593FC. 위험도 막대는 회색. 그 외 무채색
+   ============================================================ */
+@media (max-width:640px){
+
+  body{ background:#14161A !important; }
+
+  /* 원본은 숨기고 다시 그린 것만 */
+  .headline-section,
+  .asset-nav,
+  body > .page{ display:none !important; }
+  .gm-wrap{ display:block !important; padding:16px !important; }
+
+  .gm-card{ background:#1E2027 !important; border:0.5px solid rgba(255,255,255,.08) !important;
+    border-radius:12px !important; padding:16px !important; margin:0 0 16px 0 !important; }
+  .gm-lbl{ font-size:14px !important; color:#8B95A1 !important; margin:0 !important; line-height:1.5 !important; }
+  .gm-said{ font-size:16px !important; color:#F5F6F8 !important; margin:8px 0 0 0 !important;
+    line-height:1.6 !important; word-break:keep-all !important; }
+  .gm-said b{ font-weight:800 !important; }
+  .gm-sec{ font-size:14px !important; color:#8B95A1 !important; margin:24px 0 8px 0 !important; }
+
+  /* 종목 카드 */
+  .gm-a{ background:#1E2027 !important; border:0.5px solid rgba(255,255,255,.08) !important;
+    border-radius:12px !important; padding:16px !important; margin:0 0 8px 0 !important; }
+  .gm-a.gm-open{ border-color:#4593FC !important; }
+  .gm-a-hd{ display:flex !important; align-items:flex-start !important;
+    justify-content:space-between !important; gap:16px !important;
+    cursor:pointer !important; min-height:32px !important; }
+  .gm-a-nm{ font-size:16px !important; font-weight:800 !important; color:#F5F6F8 !important;
+    margin:0 !important; line-height:1.4 !important; word-break:keep-all !important; }
+  .gm-a-nm i{ font-style:normal !important; font-size:14px !important; font-weight:400 !important;
+    color:#8B95A1 !important; }
+  .gm-a-meta{ font-size:14px !important; color:#8B95A1 !important; margin:6px 0 0 0 !important;
+    line-height:1.5 !important; word-break:keep-all !important; }
+  .gm-a-chg{ font-size:18px !important; font-weight:800 !important; margin:0 !important;
+    text-align:right !important; white-space:nowrap !important; }
+
+  /* 위험도 막대 — 회색 (색 절제) */
+  .gm-risk{ margin-top:16px !important; height:4px !important; background:#23262E !important;
+    border-radius:20px !important; overflow:hidden !important; }
+  .gm-risk > i{ display:block !important; height:100% !important; background:#5F6672 !important;
+    border-radius:20px !important; }
+
+  /* 펼친 내용 */
+  .gm-a-bd{ display:none !important; border-top:0.5px solid rgba(255,255,255,.08) !important;
+    margin-top:16px !important; padding-top:16px !important; }
+  .gm-a.gm-open .gm-a-bd{ display:block !important; }
+
+  /* 종목 안의 긴 분석 — 각각 접기 */
+  .gm-acc{ background:#23262E !important; border-radius:8px !important;
+    margin:0 0 8px 0 !important; overflow:hidden !important; }
+  .gm-acc-hd{ display:flex !important; align-items:center !important;
+    justify-content:space-between !important; padding:16px !important;
+    cursor:pointer !important; min-height:32px !important; gap:16px !important; }
+  .gm-acc-t{ font-size:14px !important; font-weight:800 !important; color:#F5F6F8 !important;
+    margin:0 !important; }
+  .gm-acc-bd{ display:none !important; padding:0 16px 16px !important; }
+  .gm-acc.gm-open .gm-acc-bd{ display:block !important; }
+  /* 원본 내용이 들어올 자리 — 글자·여백만 정리 */
+  .gm-acc-bd *{ max-width:100% !important; white-space:normal !important;
+    word-break:keep-all !important; overflow-wrap:anywhere !important;
+    font-size:14px !important; line-height:1.6 !important; }
+  .gm-acc-bd canvas{ max-width:100% !important; height:auto !important; }
+
+  .gm-chartbox{ background:#23262E !important; border-radius:8px !important;
+    padding:8px !important; margin:0 0 16px 0 !important; }
+  .gm-chartbox canvas{ max-width:100% !important; }
+}
+</style>
+
+<script id="gm-js-2026-07-14">
+/* 글로벌 대시보드 모바일 엔진
+   ⚠ 원본을 **꺼내오지 않고 복사**한다 → 원본이 다시 그려져도 안전.
+   ⚠ 종목 전환은 원본 함수(switchAsset)를 대신 눌러 준다. */
+(function(){
+  function isMob(){ try{ return window.matchMedia('(max-width:640px)').matches; }catch(e){ return false; } }
+  function T(e){ return e ? String(e.textContent||'').replace(/\s+/g,' ').trim() : ''; }
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function chgCol(t){ var s=String(t||'').trim();
+    return /^-/.test(s) ? '#4593FC' : (/^\+/.test(s) ? '#F06A6A' : '#8B95A1'); }
+
+  var sig='', openKey='';
+
+  /* 변동성 등급(★ 개수) → 0~100 */
+  function riskOf(name, volMap){
+    var v = volMap[name];
+    if(v == null) return 0;
+    return Math.round(v / 5 * 100);
+  }
+
+  function build(){
+    if(!isMob()) return;
+    var nav = document.querySelector('.asset-nav-inner');
+    if(!nav || !nav.children.length) return;
+
+    /* ── 변동성 표에서 종목별 ★ 등급 읽기 ── */
+    var volMap = {}, volNote = {};
+    try{
+      var tb = document.querySelector('.vol-table-wrap table');
+      if(tb){
+        Array.prototype.forEach.call(tb.querySelectorAll('tbody tr'), function(tr){
+          var td = tr.children;
+          if(td.length < 3) return;
+          var nm = T(td[0]).replace(/(WTI|FRED.*|EIA.*|Henry Hub|CME.*|ICE.*|LME.*|COMEX.*|NYMEX.*)$/,'').trim();
+          var st = (T(td[1]).match(/★/g) || []).length;
+          if(nm && st){ volMap[nm] = st; volNote[nm] = T(td[2]); }
+        });
+      }
+    }catch(e){}
+
+    /* ── 종목 목록 ── */
+    var assets = [];
+    Array.prototype.forEach.call(nav.children, function(t){
+      var oc = t.getAttribute('onclick') || '';
+      var key = (oc.match(/switchAsset\(\s*'([^']+)'/) || [])[1];
+      if(!key || key === 'calendar') return;
+      var nm = T(t.querySelector('.at-name'));
+      var px = T(t.querySelector('.at-price'));
+      var cg = T(t.querySelector('.at-chg'));
+      /* 변동성 표의 이름과 맞춘다 (부분 일치) */
+      var star = 0, note = '';
+      for(var k in volMap){
+        if(k.indexOf(nm) >= 0 || nm.indexOf(k) >= 0){ star = volMap[k]; note = volNote[k]; break; }
+      }
+      assets.push({ key:key, nm:nm, px:px, cg:cg, star:star, note:note, el:t });
+    });
+    if(!assets.length) return;
+
+    /* 변동성 높은 순 */
+    assets.sort(function(a,b){ return (b.star - a.star) || 0; });
+
+    var s2 = assets.map(function(a){ return a.nm + a.px + a.cg + a.star; }).join('|') + '#' + openKey;
+    if(s2 === sig && document.querySelector('.gm-wrap')) return;
+    sig = s2;
+
+    /* ── 오늘의 시장 한 문장 (레퍼런스 C) ── */
+    var head = '';
+    try{
+      var hn = document.querySelector('.headline-news');
+      head = T(hn).replace(/^핵심 헤드라인\s*—\s*/, '');
+      head = head.split('·').slice(0, 3).join(' · ');
+      if(head.length > 120) head = head.slice(0, 120) + '…';
+    }catch(e){}
+    var when = '';
+    try{
+      var ht = T(document.querySelector('.headline-top'));
+      when = (ht.match(/기준일:\s*([\d.]+\s*[\d:]*\s*\w*)/) || [])[1] || '';
+    }catch(e){}
+
+    /* ── 그리기 ── */
+    var h = '';
+
+    h += '<div class="gm-card">'
+       +   '<p class="gm-lbl">오늘의 시장</p>'
+       +   (head ? '<p class="gm-said">' + esc(head) + '</p>' : '')
+       +   (when ? '<p class="gm-lbl" style="margin-top:16px">' + esc(when) + ' · EIA · FRED · Reuters</p>' : '')
+       + '</div>';
+
+    var top2 = assets.filter(function(a){ return a.star >= 5; }).map(function(a){ return a.nm; });
+    if(top2.length){
+      h += '<div class="gm-card">'
+         +   '<p class="gm-lbl">향후 30일 변동성 전망</p>'
+         +   '<p class="gm-said">가장 흔들릴 종목은<br><b style="font-size:22px">' + esc(top2.slice(0,2).join(' · ')) + '</b></p>'
+         + '</div>';
+    }
+
+    h += '<p class="gm-sec">종목 ' + assets.length + '개 · 변동성 높은 순</p>';
+
+    assets.forEach(function(a){
+      var risk = a.star ? Math.round(a.star / 5 * 100) : 0;
+      var open = (openKey === a.key);
+      h += '<div class="gm-a' + (open ? ' gm-open' : '') + '" data-k="' + esc(a.key) + '">'
+         +   '<div class="gm-a-hd">'
+         +     '<div style="min-width:0">'
+         +       '<p class="gm-a-nm">' + esc(a.nm) + '</p>'
+         +       '<p class="gm-a-meta">' + esc([a.px, a.note].filter(Boolean).join(' · ')) + '</p>'
+         +     '</div>'
+         +     '<p class="gm-a-chg" style="color:' + chgCol(a.cg) + '">' + esc(a.cg) + '</p>'
+         +   '</div>'
+         +   (risk ? '<div class="gm-risk"><i style="width:' + risk + '%"></i></div>' : '')
+         +   '<div class="gm-a-bd" data-bd="' + esc(a.key) + '">'
+         +     (open ? '<p class="gm-lbl">여는 중…</p>' : '')
+         +   '</div>'
+         + '</div>';
+    });
+
+    var old  = document.querySelector('.gm-wrap');
+    var wrap = document.createElement('div');
+    wrap.className = 'gm-wrap';
+    wrap.innerHTML = h;
+    document.body.appendChild(wrap);
+    if(old) old.parentNode.removeChild(old);
+
+    /* 종목 카드 열기 */
+    wrap.querySelectorAll('.gm-a-hd').forEach(function(hd){
+      hd.addEventListener('click', function(){
+        var card = hd.parentElement;
+        var k = card.getAttribute('data-k');
+        if(openKey === k){ openKey = ''; sig=''; build(); return; }
+        openKey = k;
+        /* 원본 종목 전환 → 상세가 그려진다 */
+        try{ if(typeof window.switchAsset === 'function') window.switchAsset(k, null); }catch(e){}
+        sig = '';
+        build();
+        setTimeout(fillDetail, 500);
+        setTimeout(fillDetail, 1400);
+      });
+    });
+
+    if(openKey) setTimeout(fillDetail, 300);
+  }
+
+  /* 열린 종목의 상세를 채운다 — 원본을 **복사**해 온다 */
+  function fillDetail(){
+    try{
+      if(!isMob() || !openKey) return;
+      var bd = document.querySelector('.gm-a-bd[data-bd="' + openKey + '"]');
+      if(!bd || bd.getAttribute('data-done') === openKey) return;
+
+      /* 지금 화면에 그려져 있는 종목 페이지 */
+      var pages = document.querySelectorAll('.asset-page');
+      var pg = null;
+      for(var i=0;i<pages.length;i++){
+        if(pages[i].getBoundingClientRect().height > 0 || window.getComputedStyle(pages[i]).display !== 'none'){ pg = pages[i]; break; }
+      }
+      if(!pg) return;
+
+      var dh = '';
+
+      /* 1) 한 줄 결론 (원본 alert-banner) */
+      var al = pg.querySelector('.alert-banner');
+      if(al) dh += '<p class="gm-said" style="margin:0 0 16px">' + esc(T(al).slice(0, 140)) + '</p>';
+
+      /* 2) 차트 — 원본 캔버스를 복사하지 않고 **그 자리로 옮기지도 않는다**.
+            대신 원본 차트 영역을 복제(clone)해 넣는다. 캔버스는 그림이 안 따라오므로
+            아래 resize 로 다시 그리게 한다. */
+      var cr = pg.querySelector('.chart-row');
+      if(cr){
+        var cv = cr.querySelector('canvas');
+        if(cv){
+          dh += '<div class="gm-chartbox" data-chart="1"></div>';
+        }
+      }
+
+      /* 3) 긴 분석들 — 아코디언으로 접는다 */
+      var groups = [
+        ['요인별 영향도', '.factors-grid'],
+        ['시나리오 분석', '.scenario-grid'],
+        ['일정 · 이벤트',  '.calendar-grid'],
+        ['계절성 패턴',    '.season-grid'],
+        ['해설',          '.commentary-section']
+      ];
+      groups.forEach(function(g){
+        var el = pg.querySelector(g[1]);
+        if(!el) return;
+        var clone = el.cloneNode(true);
+        clone.querySelectorAll('canvas').forEach(function(x){ if(x.parentElement) x.parentElement.removeChild(x); });
+        dh += '<div class="gm-acc">'
+            +   '<div class="gm-acc-hd">'
+            +     '<p class="gm-acc-t">' + esc(g[0]) + '</p>'
+            +     '<span class="gm-chev" style="color:#8B95A1;font-size:14px">&#9662;</span>'
+            +   '</div>'
+            +   '<div class="gm-acc-bd">' + clone.innerHTML + '</div>'
+            + '</div>';
+      });
+
+      bd.innerHTML = dh;
+      bd.setAttribute('data-done', openKey);
+
+      /* 차트 — 원본 캔버스를 **옮겨온다**(복사는 그림이 안 따라온다).
+         원본 자리는 어차피 모바일에서 숨겨져 있으므로 안전하다. */
+      try{
+        var box = bd.querySelector('[data-chart]');
+        var cv2 = pg.querySelector('.chart-row canvas');
+        if(box && cv2){
+          box.appendChild(cv2);
+          var ch = (window.Chart && window.Chart.getChart) ? window.Chart.getChart(cv2) : null;
+          if(ch){ setTimeout(function(){ try{ ch.resize(); ch.update(); }catch(e){} }, 120); }
+        }
+      }catch(e){}
+
+      /* 아코디언 */
+      bd.querySelectorAll('.gm-acc-hd').forEach(function(hd){
+        hd.addEventListener('click', function(ev){
+          ev.stopPropagation();
+          var c = hd.parentElement;
+          var on = c.classList.toggle('gm-open');
+          var ch2 = c.querySelector('.gm-chev');
+          if(ch2) ch2.innerHTML = on ? '&#9652;' : '&#9662;';
+        });
+      });
+    }catch(e){}
+  }
+
+  function boot(){
+    build();
+    setInterval(build, 800);
+    setInterval(fillDetail, 900);
+    try{
+      var t=null;
+      new MutationObserver(function(){ clearTimeout(t); t=setTimeout(build,200); })
+        .observe(document.body, {childList:true, subtree:true});
+    }catch(e){}
+    window.addEventListener('resize', function(){ sig=''; build(); });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
 </body>
 </html>
