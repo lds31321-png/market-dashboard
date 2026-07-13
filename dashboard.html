@@ -1018,6 +1018,35 @@ function renderHoldings(){
   applyHoldingsGate();
 }
 
+/* [2026-07-13] 청산 내역 표에 행사가 · 옵션가(pt) 복구용 헬퍼 */
+var OH_MULT={'크루드 오일':1000,'천연가스':10000,'골드':100,'S&P500':50,'호주달러':100000,'10년국채':1000,'대두':50,'밀':50,'옥수수':50};
+function ohMult(u){ return OH_MULT[u]||1000; }
+function ohFmtPt(v){
+  if(v==null||!isFinite(v)) return '-';
+  var s=(Math.abs(v)<1)?Number(v).toFixed(4):Number(v).toFixed(3);
+  if(s.indexOf('.')>=0) s=s.replace(/0+$/,'').replace(/\.$/,'');
+  return s;
+}
+/* 다리(leg)별 행사가 문자열: 예) "185C" / "1.9P / 7C×2" / "220C×2 / 140C / 135C매수" */
+function ohLegsStrike(legs){
+  if(!legs||!legs.length) return '-';
+  return legs.map(function(l){
+    var t=String(l.type||'');
+    var cp=/put/.test(t)?'P':'C';
+    var buy=/buy/.test(t)?'매수':'';
+    var ct=(l.contracts&&l.contracts>1)?('×'+l.contracts):'';
+    return String(l.strike)+cp+ct+buy;
+  }).join(' / ');
+}
+/* 다리별 진입 옵션가(pt) = 프리미엄($) ÷ 계약수 ÷ 승수 */
+function ohLegsEntryPt(legs,u){
+  if(!legs||!legs.length) return '-';
+  var m=ohMult(u);
+  return legs.map(function(l){
+    var ct=l.contracts||1;
+    return ohFmtPt((l.premium||0)/ct/m);
+  }).join(' / ');
+}
 /* [2026-07-01] 청산 내역 통합: pnl 만기청산 + 관리자 손절/청산을 하나로 합쳐 표시 */
 function buildClosedFull(oh, pos){
   var cp=function(p){ return (p.current_pnl!=null)?p.current_pnl:((p.status==='expired')?(p.total_premium||0):0); };
@@ -1027,12 +1056,15 @@ function buildClosedFull(oh, pos){
     .sort(function(a,b){return (b.strategy_num||0)-(a.strategy_num||0);})
     .forEach(function(p){ var rs=(p['청산사유']||p.close_reason||(p.status==='expired'?'만기 소멸':'-'));
       seen[mkey(p.underlying,p.expiry_month)]=1;
-      out.push({name:(p.underlying||'-'), strat:hStrat(p.strategy_type), month:(p.expiry_month||'-'), date:hMd(p.expiry_date||p.shared_date), pnl:cp(p), reason:rs, is_stoploss:/손절/.test(rs)});
+      out.push({name:(p.underlying||'-'), strat:hStrat(p.strategy_type), month:(p.expiry_month||'-'), date:hMd(p.expiry_date||p.shared_date), sd:(p.expiry_date||p.shared_date||''), pnl:cp(p), reason:rs, is_stoploss:/손절/.test(rs),
+        strike:ohLegsStrike(p.legs), entryPt:ohLegsEntryPt(p.legs,p.underlying), exitPt:(p.status==='expired'?'0':'-')});
     });
   ((oh&&oh.closed)||[]).forEach(function(c){
     if(seen[mkey(c.underlying,c.mLabel)]) return;
     var strat=(c.cpKo==='콜'?'콜 매도':c.cpKo==='풋'?'풋 매도':(c.cpKo||'-'));
-    out.push({name:(c.underlying||c.code||'-'), strat:strat, month:(c.mLabel||'-'), date:(c.date?hMd(c.date):'-'), pnl:c.pnl, reason:(c.reason||'-'), is_stoploss:(c.is_stoploss||/손절/.test(c.reason||''))});
+    var ck=(c.strike!=null&&c.strike!=='')?(String(c.strike)+(c.cp||(c.cpKo==='풋'?'P':'C'))):'-';
+    out.push({name:(c.underlying||c.code||'-'), strat:strat, month:(c.mLabel||'-'), date:(c.date?hMd(c.date):'-'), sd:(c.date||''), pnl:c.pnl, reason:(c.reason||'-'), is_stoploss:(c.is_stoploss||/손절/.test(c.reason||'')),
+      strike:ck, entryPt:ohFmtPt(c.entry), exitPt:ohFmtPt(c.exit)});
   });
   return out;
 }
@@ -1081,12 +1113,24 @@ function ohRenderPnl(pos,rate){
   det+='<tr><td colspan="4" style="text-align:right;padding:11px 13px;border-top:2px solid var(--b1);font-weight:800;font-size:14px;color:var(--t1);">합계</td><td style="text-align:right;padding:11px 13px;border-top:2px solid var(--b1);font-size:15px;">'+ohPnlInner(totPnl,rate)+'</td><td colspan="2" style="border-top:2px solid var(--b1);"></td></tr></tbody></table>';
   var h=ohSummary(groups,rate);
   h+=act.length?ohHeldToggle('보유 종목 상세 ('+act.length+'개)',det):'';
-  h+=ohClosedBlock(clo.map(function(p){var rs=(p['청산사유']||p.close_reason||(p.status==='expired'?'만기 소멸':'-')); return {name:(p.underlying||'-'), strat:hStrat(p.strategy_type), month:(p.expiry_month||'-'), date:hMd(p.expiry_date||p.shared_date), pnl:closedPnl(p), reason:rs, is_stoploss:/손절/.test(rs)};}), rate, 'full');
+  h+=ohClosedBlock(clo.map(function(p){var rs=(p['청산사유']||p.close_reason||(p.status==='expired'?'만기 소멸':'-')); return {name:(p.underlying||'-'), strat:hStrat(p.strategy_type), month:(p.expiry_month||'-'), date:hMd(p.expiry_date||p.shared_date), sd:(p.expiry_date||p.shared_date||''), pnl:closedPnl(p), reason:rs, is_stoploss:/손절/.test(rs), strike:ohLegsStrike(p.legs), entryPt:ohLegsEntryPt(p.legs,p.underlying), exitPt:(p.status==='expired'?'0':'-')};}), rate, 'full');
   return h;
 }
 
+/* [2026-07-13] 청산 내역 "전체 보기" 토글 — 기본 5건만 노출 */
+window.ohClosedMore=function(btn){
+  var el=document.getElementById('ohclosed-more'); if(!el) return;
+  var open=(el.style.display!=='none');
+  var rows=el.querySelectorAll('tr');
+  for(var i=0;i<rows.length;i++){ rows[i].style.display=open?'none':''; }
+  el.style.display=open?'none':'';
+  btn.innerHTML=open?('전체 항목 열어 보기 (+'+btn.getAttribute('data-n')+'건)'):'접기';
+};
+
 /* 청산 토글 블록 (이모지 없음, 손절 있으면 펄스) */
 function ohClosedBlock(items, rate, mode){
+  /* [2026-07-13] 청산일 최신순 정렬 (최근 날짜가 맨 위) */
+  items=(items||[]).slice().sort(function(a,b){ return String(b.sd||'').localeCompare(String(a.sd||'')); });
   var stop=items.filter(function(x){return x.is_stoploss;}).length;
   var h='<div style="margin-top:22px;">';
   if(!items.length){
@@ -1097,16 +1141,29 @@ function ohClosedBlock(items, rate, mode){
   var btnText=stop?('금일 손절·청산 종목 있음 ('+items.length+')'):('청산 내역 ('+items.length+')');
   h+='<button onclick="ohToggle(\'ohclosed\',this)" style="'+btnStyle+'display:flex;align-items:center;gap:8px;width:100%;justify-content:space-between;padding:11px 14px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;"><span>'+btnText+'</span><span class="oh-caret" style="font-size:12px;">▸</span></button>';
   h+='<div id="ohclosed" style="display:none;margin-top:10px;overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-family:var(--mono);"><thead><tr>';
-  if(mode==='full'){ h+=ohTh('종목')+ohTh('전략')+ohTh('월물')+ohTh('청산일')+ohTh('손익','right')+ohTh('사유'); }
+  if(mode==='full'){ h+=ohTh('종목')+ohTh('전략')+ohTh('월물')+ohTh('행사가','right')+ohTh('진입(pt)','right')+ohTh('청산(pt)','right')+ohTh('청산일')+ohTh('손익','right')+ohTh('사유'); }
   else { h+=ohTh('종목')+ohTh('구분')+ohTh('진입(pt)','right')+ohTh('청산(pt)','right')+ohTh('계약수','right')+ohTh('실현손익','right')+ohTh('사유'); }
   h+='</tr></thead><tbody>';
-  items.forEach(function(x){
+  var ohRow=function(x){
     var rcol=x.is_stoploss?'#FF8080':'var(--t2)';
     var reasonTd='<td style="padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:13px;color:'+rcol+';white-space:nowrap;font-weight:'+(x.is_stoploss?'700':'400')+';">'+hEsc(x.reason||'-')+'</td>';
-    if(mode==='full'){ h+='<tr>'+ohCell(x.name,'left',true)+ohCell(x.strat)+ohCell(x.month)+ohCell(x.date)+ohPnlTd(x.pnl,rate)+reasonTd+'</tr>'; }
-    else { var enTxt=(x.entry!=null)?String(x.entry):'-'; var exTxt=(x.exit!=null)?String(x.exit):'-'; var ctTxt=(x.contracts?x.contracts:1)+'계약'; h+='<tr>'+ohCell(x.name,'left',true)+ohCell(x.sub||'-')+ohCell(enTxt,'right')+ohCell(exTxt,'right')+ohCell(ctTxt,'right')+ohPnlTd(x.pnl,rate)+reasonTd+'</tr>'; }
-  });
-  h+='</tbody></table></div></div>';
+    if(mode==='full'){ return '<tr>'+ohCell(x.name,'left',true)+ohCell(x.strat)+ohCell(x.month)+ohCell(x.strike||'-','right')+ohCell(x.entryPt||'-','right')+ohCell(x.exitPt||'-','right')+ohCell(x.date)+ohPnlTd(x.pnl,rate)+reasonTd+'</tr>'; }
+    var enTxt=(x.entry!=null)?String(x.entry):'-'; var exTxt=(x.exit!=null)?String(x.exit):'-'; var ctTxt=(x.contracts?x.contracts:1)+'계약';
+    return '<tr>'+ohCell(x.name,'left',true)+ohCell(x.sub||'-')+ohCell(enTxt,'right')+ohCell(exTxt,'right')+ohCell(ctTxt,'right')+ohPnlTd(x.pnl,rate)+reasonTd+'</tr>';
+  };
+  var LIM=5, head=items.slice(0,LIM), rest=items.slice(LIM);
+  head.forEach(function(x){ h+=ohRow(x); });
+  h+='</tbody>';
+  if(rest.length){
+    h+='<tbody id="ohclosed-more" style="display:none;">';
+    rest.forEach(function(x){ h+=ohRow(x); });
+    h+='</tbody>';
+  }
+  h+='</table>';
+  if(rest.length){
+    h+='<button onclick="ohClosedMore(this)" data-n="'+rest.length+'" style="margin-top:10px;width:100%;padding:10px 14px;border-radius:10px;background:rgba(0,0,0,.04);border:1px solid var(--b1);color:var(--t2);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">전체 항목 열어 보기 (+'+rest.length+'건)</button>';
+  }
+  h+='</div></div>';
   return h;
 }
 
