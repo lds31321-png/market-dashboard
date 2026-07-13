@@ -3211,6 +3211,10 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     line-height:1.5 !important; word-break:keep-all !important; }
   .gm-a-chg{ font-size:18px !important; font-weight:800 !important; margin:0 !important;
     text-align:right !important; white-space:nowrap !important; }
+  /* 등락률 + 펼침 화살표를 한 덩어리로 */
+  .gm-a-rt{ display:flex !important; align-items:center !important; gap:8px !important;
+    flex-shrink:0 !important; }
+  .gm-a-chev{ color:#8B95A1 !important; font-size:14px !important; line-height:1 !important; }
 
   /* 위험도 막대 — 회색 (색 절제) */
   /* 변동성 등급 막대 — 색은 쓰지 않고 밝기 차이로만 등급을 보여준다 */
@@ -3389,7 +3393,10 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
          +       '<p class="gm-a-nm">' + esc(a.nm) + '</p>'
          +       '<p class="gm-a-meta">' + esc([a.px, a.note].filter(Boolean).join(' · ')) + '</p>'
          +     '</div>'
-         +     '<p class="gm-a-chg" style="color:' + chgCol(a.cg) + '">' + esc(a.cg) + '</p>'
+         +     '<div class="gm-a-rt">'
+         +       '<p class="gm-a-chg" style="color:' + chgCol(a.cg) + '">' + esc(a.cg) + '</p>'
+         +       '<span class="gm-a-chev">' + (open ? '&#9652;' : '&#9662;') + '</span>'
+         +     '</div>'
          +   '</div>'
          +   (risk ? '<div class="gm-risk"><i style="width:' + risk + '%"></i></div>' : '')
          +   '<div class="gm-a-bd" data-bd="' + esc(a.key) + '">'
@@ -3419,14 +3426,43 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
       hd.addEventListener('click', function(){
         var card = hd.parentElement;
         var k = card.getAttribute('data-k');
-        if(openKey === k){ openKey = ''; sig=''; build(); return; }
+
+        /* ⚠ 여기서 build() 를 부르면 화면 12개를 통째로 다시 그린다.
+              → 화면이 번쩍이고 스크롤이 위로 튄다. 다시 그리지 말고 표시만 바꾼다. */
+        if(openKey === k){                       /* 같은 카드 = 접기 */
+          openKey = '';
+          card.classList.remove('gm-open');
+          var ar0 = card.querySelector('.gm-a-chev');
+          if(ar0) ar0.innerHTML = '&#9662;';
+          return;
+        }
+
+        /* 다른 카드는 접는다 */
+        var wrapNow = card.parentElement;
+        wrapNow.querySelectorAll('.gm-a.gm-open').forEach(function(x){
+          x.classList.remove('gm-open');
+          var a2 = x.querySelector('.gm-a-chev');
+          if(a2) a2.innerHTML = '&#9662;';
+        });
+
         openKey = k;
-        /* 원본 종목 전환 → 상세가 그려진다 */
+        card.classList.add('gm-open');
+        var ar = card.querySelector('.gm-a-chev');
+        if(ar) ar.innerHTML = '&#9652;';
+
+        /* 원본 종목 전환 → 상세 내용이 준비된다 (원본이 스크롤을 건드려도 되돌린다) */
+        var keepTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
         try{ if(typeof window.switchAsset === 'function') window.switchAsset(k, null); }catch(e){}
-        sig = '';
-        build();
-        setTimeout(fillDetail, 500);
-        setTimeout(fillDetail, 1400);
+        var restore = function(){
+          var now = document.documentElement.scrollTop || document.body.scrollTop || 0;
+          if(Math.abs(now - keepTop) > 40) window.scrollTo(0, keepTop);
+        };
+        restore();
+        setTimeout(restore, 60);
+
+        fillDetail();
+        setTimeout(fillDetail, 400);
+        setTimeout(fillDetail, 1200);
       });
     });
 
