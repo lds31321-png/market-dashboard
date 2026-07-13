@@ -3468,7 +3468,16 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
             var box = document.createElement('div');
             box.className = 'gm-chartbox';
             var head = wr.cloneNode(true);
-            head.querySelectorAll('canvas').forEach(function(x){ if(x.parentNode) x.parentNode.removeChild(x); });
+            /* 캔버스만 지우면 캔버스를 감싸던 **빈 상자**가 그대로 남아 큰 여백이 생긴다.
+               → 캔버스를 감싼 상자째로 지운다. */
+            head.querySelectorAll('canvas').forEach(function(x){
+              var host = x.parentNode;
+              if(host && host !== head && host.children.length === 1 && !T(host)){
+                if(host.parentNode) host.parentNode.removeChild(host);
+              } else if(x.parentNode){
+                x.parentNode.removeChild(x);
+              }
+            });
             box.innerHTML = head.innerHTML;           /* 차트 제목·설명은 복사 */
             var cv = wr.querySelector('canvas');
             if(cv){
