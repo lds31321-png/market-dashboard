@@ -2864,7 +2864,11 @@ loadPositions();
       var t = T(c);
       var o = {};
       o.nm   = T(c.children[0] && c.children[0].children[0]);          /* 종목 */
-      o.kind = T(c.children[0] && c.children[0].children[1]);          /* 양매도 (콜+풋) */
+      /* ⚠ '양매도 (콜+풋)' 처럼 길면 카드가 좁아 보인다 → 괄호 설명과 '만기청산' 꼬리표는 뗀다 */
+      o.kind = T(c.children[0] && c.children[0].children[1])
+                 .replace(/\s*\(.*?\)\s*/g, '')
+                 .replace(/만기청산|손절|청산/g, '')
+                 .trim();
       o.no   = T(c.children[1]);                                        /* #176번 · 07/07 공유 */
       var m;
       m = t.match(/투자금\(증거금\)\s*([^\s]+)/);        o.margin = m ? m[1] : '';
@@ -2885,9 +2889,24 @@ loadPositions();
     var held=[], closed=[];
     cards.forEach(function(c){ var o=readCard(c); (o.closed?closed:held).push(o); });
 
+    /* ⚠ 청산 카드에는 **손익 숫자가 없다** ("현재 평가손익: 만기청산" 이라고만 적혀 있음).
+          실현 손익은 **두 번째 표**(종목·구분·월물·행사가·계약·진입·청산·청산일·손익·사유)에 있다.
+          → 청산 목록은 카드가 아니라 **그 표**에서 읽는다. */
+    var closedRows = [];
+    var tbAll = pg.querySelectorAll('table.tbl-rec');
+    if(tbAll[1]){
+      Array.prototype.forEach.call(tbAll[1].querySelectorAll('tbody tr'), function(tr){
+        var td = tr.querySelectorAll('td');
+        if(td.length < 10) return;
+        closedRows.push({ nm:T(td[0]), gu:T(td[1]), mon:T(td[2]), strike:T(td[3]),
+                          qty:T(td[4]), inp:T(td[5]), out:T(td[6]), date:T(td[7]),
+                          pnl:T(td[8]), why:T(td[9]) });
+      });
+    }
+
     /* 신규 추천 표(위쪽 tbl-rec) 읽기 */
     var recs=[], recDate='';
-    var tb = pg.querySelector('table.tbl-rec');
+    var tb = tbAll[0];
     if(tb){
       var box = tb.closest('div') && tb.closest('div').previousElementSibling;
       var head = T(tb.parentElement) ;
@@ -2988,7 +3007,7 @@ loadPositions();
          +       '<div class="fm-tile"><p class="fm-dim">투자금(증거금)</p><p class="v">'+esc(o.margin)+'</p></div>'
          +       '<div class="fm-tile"><p class="fm-dim">최대 가능 수익</p><p class="v" style="color:'+pnlCol(o.maxp)+'">'+esc(o.maxp)+'</p></div>'
          +     '</div>'
-         +     '<p class="fm-dim" style="margin-top:8px">'+esc([o.no, o.exp?('만기 '+o.exp):'', o.pnlUsd].filter(Boolean).join(' · '))+'</p>'
+         +     '<p class="fm-dim fm-note" style="margin-top:8px">'+esc([o.no, o.exp?('만기 '+o.exp):'', o.pnlUsd].filter(Boolean).join(' · '))+'</p>'
          +     (o.href ? '<a class="fm-cta" href="'+esc(o.href)+'" style="background:#23262E;color:#8B95A1">자세히 보기 &rarr;</a>' : '')
          +   '</div>'
          + '</div>';
@@ -2998,10 +3017,11 @@ loadPositions();
     var sumClosed = '';
     var dm2 = T(hero).match(/\+누적\s*([+\-][\d,\.]+만)/);
     if(dm2) sumClosed = dm2[1] + '원';
+    var nCls = closedRows.length || closed.length;
     h += '<div class="fm-card fm-cls" style="margin-top:12px">'
        +   '<div class="fm-cls-hd">'
        +     '<div style="min-width:0">'
-       +       '<p class="fm-t">청산 내역 '+closed.length+'건</p>'
+       +       '<p class="fm-t">청산 내역 '+nCls+'건</p>'
        +       '<p class="fm-dim" style="margin-top:3px">끝난 포지션</p>'
        +     '</div>'
        +     '<div style="text-align:right;flex:0 0 auto">'
@@ -3010,13 +3030,14 @@ loadPositions();
        +     '</div>'
        +   '</div>'
        +   '<div class="fm-cls-bd">';
-    closed.forEach(function(o){
+    closedRows.forEach(function(o){
+      var money = (o.pnl.match(/^[+\-][\d,\.]+만원/)||[o.pnl])[0];   /* '+50만원 (+$330)' → '+50만원' */
       h +=   '<div class="fm-item">'
          +     '<div class="fm-item-hd">'
-         +       '<span class="fm-item-nm">'+esc(o.nm)+' <i>'+esc(o.kind.replace(/만기청산|손절|청산/g,'').trim())+'</i></span>'
-         +       '<span class="fm-item-mg" style="color:'+pnlCol(o.pnl)+';font-weight:800">'+esc(o.pnl)+'</span>'
+         +       '<span class="fm-item-nm">'+esc(o.nm)+' <i>'+esc(o.gu)+'</i></span>'
+         +       '<span class="fm-item-mg" style="color:'+pnlCol(money)+';font-weight:800">'+esc(money)+'</span>'
          +     '</div>'
-         +     '<p class="fm-item-sub">'+esc([o.mon, o.no, o.why].filter(Boolean).join(' · '))+'</p>'
+         +     '<p class="fm-item-sub">'+esc([o.mon, o.strike, o.date?(o.date+' 청산'):'', o.why].filter(Boolean).join(' · '))+'</p>'
          +   '</div>';
     });
     h +=   '</div>'
