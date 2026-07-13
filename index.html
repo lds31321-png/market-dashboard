@@ -3528,8 +3528,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
           }catch(e){}
         });
       };
-      setTimeout(redraw, 150);
-      setTimeout(redraw, 700);
+      [150, 700, 1500, 2600].forEach(function(ms){ setTimeout(redraw, ms); });
 
       /* 아코디언 */
       bd.querySelectorAll('.gm-acc-hd').forEach(function(hd){
@@ -3548,6 +3547,24 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     build();
     setInterval(build, 800);
     setInterval(fillDetail, 900);
+    /* 차트 지킴이 — 옮겨온 차트가 빈 채로 굳으면 다시 그린다 (2초마다 확인) */
+    setInterval(function(){
+      try{
+        if(!isMob()) return;
+        document.querySelectorAll('.gm-chartbox canvas').forEach(function(cv){
+          var r = cv.getBoundingClientRect();
+          if(r.width < 20 || r.height < 20) return;
+          var ch = (window.Chart && window.Chart.getChart) ? window.Chart.getChart(cv) : null;
+          if(!ch) return;
+          var ca = ch.chartArea;
+          var drawn = ca && (ca.right - ca.left) > 40;
+          /* 칸 폭과 차트가 그린 폭이 크게 어긋나면 좌표가 굳은 것 */
+          if(!drawn || Math.abs((ca.right - ca.left) - (r.width - 45)) > 60){
+            ch.resize(); ch.update();
+          }
+        });
+      }catch(e){}
+    }, 2000);
     try{
       var t=null;
       new MutationObserver(function(){ clearTimeout(t); t=setTimeout(build,200); })
