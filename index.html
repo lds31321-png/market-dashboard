@@ -3245,6 +3245,8 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   /* ⚠ 캔버스 크기를 CSS로 강제하면 Chart.js가 제 크기를 못 재고 0×0 으로 굳어 빈 그림이 된다.
         크기는 아래 자바스크립트가 직접 지정한다. 여기서는 넘치지만 않게 막는다. */
   .gm-chartbox canvas{ max-width:100% !important; }
+  /* 캔버스 전용 상자 — 높이가 고정돼 있어야 Chart.js가 그림을 그린다 */
+  .gm-cvhost{ position:relative !important; width:100% !important; height:200px !important; }
   .gm-chartbox *{ font-size:14px !important; line-height:1.5 !important;
     max-width:100% !important; white-space:normal !important; }
   .gm-chartbox .chart-title{ font-weight:800 !important; color:#F5F6F8 !important; }
@@ -3486,7 +3488,12 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
             var cv = wr.querySelector('canvas');
             if(cv){
               if(!cv.__gmHome) cv.__gmHome = cv.parentElement;
-              box.appendChild(cv);                    /* 캔버스는 이동 */
+              /* ⚠ 캔버스를 맨몸으로 두면 Chart.js가 부모 높이를 0으로 재서 그림이 안 나온다.
+                    → 높이가 고정된 전용 상자에 넣는다. */
+              var host2 = document.createElement('div');
+              host2.className = 'gm-cvhost';
+              host2.appendChild(cv);                  /* 캔버스는 이동 */
+              box.appendChild(host2);
               chartCvs.push(cv);
             }
             host.appendChild(box);
@@ -3527,7 +3534,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
           try{
             var ch = (window.Chart && window.Chart.getChart) ? window.Chart.getChart(cv) : null;
             if(!ch) return;
-            var box = cv.parentElement;
+            var box = cv.closest('.gm-chartbox');
             var bw  = box ? (box.clientWidth - 16) : 300;
             if(bw < 60) return;
             /* Chart.js가 박아 넣은 0px 인라인 크기를 지우고, 크기를 직접 알려준다 */
@@ -3563,7 +3570,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
         document.querySelectorAll('.gm-chartbox canvas').forEach(function(cv){
           var ch = (window.Chart && window.Chart.getChart) ? window.Chart.getChart(cv) : null;
           if(!ch) return;
-          var box = cv.parentElement;
+          var box = cv.closest('.gm-chartbox');
           var bw  = box ? (box.clientWidth - 16) : 0;
           if(bw < 60) return;                      /* 아직 화면에 자리가 없다 */
           var ca = ch.chartArea;
