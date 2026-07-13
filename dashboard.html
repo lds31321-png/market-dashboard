@@ -3163,11 +3163,24 @@ loadPositions();
         if(!body || body.querySelector('.fm-verdict')) return;
 
         var t = T(body);
-        /* 행사가 2개(또는 1개) 와 현재가를 읽는다 */
-        var strikes = (t.match(/\$[\d,\.]+/g) || []).map(function(s){ return parseFloat(s.replace(/[$,]/g,'')); });
+        /* ⚠ 현재가는 **차트 그림 안에만** 그려져 있어서 글자로는 못 읽는다.
+              → 차트가 쓰는 데이터에서 마지막 값을 직접 가져온다. */
         var cur = null;
-        var cm = t.match(/현재\s*\$?([\d,\.]+)/);
-        if(cm) cur = parseFloat(cm[1].replace(/,/g,''));
+        try{
+          var cv2 = body.querySelector('canvas');
+          var ch2 = (window.Chart && window.Chart.getChart && cv2) ? window.Chart.getChart(cv2) : null;
+          if(ch2 && ch2.data && ch2.data.datasets && ch2.data.datasets[0]){
+            var arr = ch2.data.datasets[0].data || [];
+            for(var i=arr.length-1; i>=0; i--){
+              var v0 = (arr[i] && typeof arr[i] === 'object') ? arr[i].y : arr[i];
+              if(v0 != null && !isNaN(v0)){ cur = parseFloat(v0); break; }
+            }
+          }
+        }catch(e){}
+        if(cur == null){
+          var cm = t.match(/현재\s*\$?([\d,\.]+)/);
+          if(cm) cur = parseFloat(cm[1].replace(/,/g,''));
+        }
 
         var msg = '', sub = '';
         var zone = (t.match(/행사가\s*\$?([\d,\.]+)\s*\/\s*\$?([\d,\.]+)/) || []);
