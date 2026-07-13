@@ -2804,22 +2804,35 @@ loadPositions();
   .fm-tile .v{ font-size:13px !important; font-weight:800 !important; color:#F5F6F8 !important;
     margin:3px 0 0 0 !important; word-break:keep-all !important; }
 
-  /* ── 카드 안 상세 (원본 팝업의 모든 항목을 용어 그대로) ── */
-  .fm-dsec{ font-size:10px !important; color:#8B95A1 !important; margin:0 0 6px 0 !important; }
-  /* 차트 — 원본이 이미 수익/손실 구간과 행사가 선을 그려 놨다. 그대로 쓴다 */
-  .fm-chart{ display:block !important; width:100% !important; height:auto !important;
-    border-radius:9px !important; background:#23262E !important; margin:0 !important; }
-  .fm-detail .fm-grid2{ margin-top:2px !important; }
-  .fm-detail .fm-tile .fm-dim{ font-size:9px !important; }
-  .fm-plrow{ display:flex !important; align-items:baseline !important;
-    justify-content:space-between !important; gap:10px !important;
-    background:#23262E !important; border-radius:8px !important;
-    padding:9px 10px !important; margin-top:7px !important; }
-  .fm-plval{ font-size:15px !important; font-weight:800 !important;
-    word-break:keep-all !important; }
-  .fm-note2{ margin-top:10px !important; padding-top:9px !important;
-    border-top:0.5px solid rgba(255,255,255,.08) !important;
-    font-size:9px !important; line-height:1.7 !important; }
+  /* ── 상세 팝업 — 아래에서 올라오는 시트로 ──
+        ⚠ 차트를 그림으로 못 떠서(빈 그림) 팝업을 그대로 쓴다. 대신 폰에 맞게 다듬는다. */
+  #overlay{ align-items:flex-end !important; padding:0 !important; }
+  #overlay .modal{ width:100% !important; max-width:none !important; max-height:92vh !important;
+    overflow-y:auto !important; -webkit-overflow-scrolling:touch !important;
+    background:#1E2027 !important; border:0 !important;
+    border-radius:16px 16px 0 0 !important; }
+  #overlay .modal-head{ padding:12px 13px 10px !important;
+    border-bottom:0.5px solid rgba(255,255,255,.08) !important; }
+  #overlay .modal-head::before{ content:''; display:block; width:34px; height:4px;
+    background:#3A3E48; border-radius:20px; margin:0 auto 12px; }
+  #overlay .modal-title{ font-size:16px !important; font-weight:800 !important;
+    color:#F5F6F8 !important; word-break:keep-all !important; }
+  #overlay .modal-date{ font-size:10px !important; color:#868F9C !important; margin-top:4px !important; }
+  #overlay .modal-close{ min-width:32px !important; min-height:32px !important; color:#8B95A1 !important; }
+  #overlay .modal-body{ padding:12px 13px 18px !important; }
+  #overlay .modal-body canvas{ max-width:100% !important; }
+  /* 값 4칸 → 2×2 타일, 무채색 */
+  #overlay .modal-body > div > div{ background:#23262E !important; border:0 !important;
+    border-radius:9px !important; }
+  /* 포지션 정보 표 — 가로 스크롤 없이 */
+  #overlay table{ width:100% !important; table-layout:fixed !important; border-collapse:collapse !important; }
+  #overlay table th{ font-size:9px !important; color:#8B95A1 !important; padding:5px 2px !important;
+    border:0 !important; border-bottom:0.5px solid rgba(255,255,255,.08) !important; }
+  #overlay table td{ font-size:10px !important; padding:6px 2px !important; border:0 !important;
+    border-bottom:0.5px solid rgba(255,255,255,.06) !important;
+    white-space:normal !important; word-break:keep-all !important; }
+  /* '← 포지션 목록으로' 는 시트를 닫으면 되니 숨긴다 */
+  #overlay .modal-body > a{ display:none !important; }
 
   /* ── 4) 청산 내역 (접힘) ── */
   .fm-cls-hd{ display:flex !important; align-items:center !important;
@@ -3029,10 +3042,16 @@ loadPositions();
          +     '</div>'
          +   '</div>'
          +   (o.prog ? '<div class="fm-bar"><span style="width:'+Math.min(100,o.prog)+'%"></span></div>' : '')
-         /* ⚠ 상세 내용(차트·잠재수익률·다리별 표)은 원래 **팝업 안**에만 있었다.
-               카드를 누르면 그 자리에서 다 보이도록, 펼칠 때 팝업 내용을 여기로 옮겨 담는다. */
-         +   '<div class="fm-pos-bd" data-pid="'+esc(o.pid)+'">'
-         +     '<div class="fm-detail"><p class="fm-dim">여는 중…</p></div>'
+         /* ⚠ 상세(차트·잠재수익률·포지션 정보)는 원래 팝업 안에만 있다.
+               ⚠ 캔버스를 그림으로 뜨려 했지만 **빈 그림**만 나왔다 (Chart.js 가 그린 내용을 버퍼에 안 남김).
+               → 팝업을 그대로 열되, 모바일에서는 **아래에서 올라오는 시트**로 보이게 다듬는다. */
+         +   '<div class="fm-pos-bd">'
+         +     '<div class="fm-grid2">'
+         +       '<div class="fm-tile"><p class="fm-dim">투자금(증거금)</p><p class="v">'+esc(o.margin)+'</p></div>'
+         +       '<div class="fm-tile"><p class="fm-dim">최대 가능 수익</p><p class="v" style="color:'+pnlCol(o.maxp)+'">'+esc(o.maxp)+'</p></div>'
+         +     '</div>'
+         +     '<p class="fm-dim fm-note" style="margin-top:8px">'+esc([o.no, o.exp?('만기 '+o.exp):'', o.pnlUsd].filter(Boolean).join(' · '))+'</p>'
+         +     (o.pid ? '<span class="fm-cta fm-detail-btn" data-pid="'+esc(o.pid)+'">차트 · 상세 보기 &rarr;</span>' : '')
          +   '</div>'
          + '</div>';
     });
@@ -3081,16 +3100,18 @@ loadPositions();
     pg.appendChild(wrap);                 /* 먼저 붙이고 */
     if(old) old.parentNode.removeChild(old);   /* 옛것은 마지막에 지운다 */
 
-    /* 접었다 펴기 — 펼칠 때 팝업 내용을 그대로 가져온다 */
+    /* 접었다 펴기 */
     wrap.querySelectorAll('.fm-pos-hd').forEach(function(hd){
       hd.addEventListener('click', function(){
-        var c  = hd.parentElement;
-        var on = c.classList.toggle('fm-open');
-        if(!on) return;
-        var bd  = c.querySelector('.fm-pos-bd');
-        var pid = bd ? bd.getAttribute('data-pid') : '';
-        if(!pid || bd.getAttribute('data-done')) return;
-        loadDetail(bd, pid);
+        hd.parentElement.classList.toggle('fm-open');
+      });
+    });
+    /* 상세 보기 → 원본 팝업을 연다 (차트가 살아있는 채로) */
+    wrap.querySelectorAll('.fm-detail-btn').forEach(function(b){
+      b.addEventListener('click', function(ev){
+        ev.stopPropagation();
+        var pid = b.getAttribute('data-pid');
+        try{ if(pid && typeof window.openModal === 'function') window.openModal(pid); }catch(e){}
       });
     });
 
@@ -3119,8 +3140,15 @@ loadPositions();
               var title = T(chartSec.children[0]);
               var legend = T(chartSec.children[1]);
               var src = '';
-              try{ src = cv.toDataURL('image/png'); }catch(e){}
-              if(src){
+              /* ⚠ 캔버스를 그냥 `toDataURL` 하면 **빈 그림**이 나온다.
+                    Chart.js 가 아직 다 안 그렸거나, 그린 내용을 버퍼에 남기지 않기 때문.
+                    → Chart.js 가 주는 `toBase64Image()` 를 쓴다. */
+              try{
+                var ch = (window.Chart && window.Chart.getChart) ? window.Chart.getChart(cv) : null;
+                if(ch && ch.toBase64Image) src = ch.toBase64Image('image/png', 1);
+              }catch(e){}
+              if(!src){ try{ src = cv.toDataURL('image/png'); }catch(e){} }
+              if(src && src.length > 8000){
                 dh += '<p class="fm-dsec">' + esc(title) + '</p>'
                     + '<img class="fm-chart" src="' + src + '" alt="' + esc(title) + '">'
                     + (legend ? '<p class="fm-dim" style="margin:6px 0 12px">' + esc(legend) + '</p>' : '');
@@ -3188,11 +3216,12 @@ loadPositions();
             }
 
             bd.innerHTML = '<div class="fm-detail">' + dh + '</div>';
-            bd.setAttribute('data-done','1');
+            /* ⚠ 차트가 아직 안 그려진 채로 담겼으면 '완료' 표시를 하지 않는다 → 다음에 다시 가져온다 */
+            if(bd.querySelector('img.fm-chart') || !cv) bd.setAttribute('data-done','1');
           }catch(e){ bd.innerHTML=''; }
           /* 팝업은 원래 닫혀 있었으면 닫아 준다 */
           try{ if(!wasOpen){ var cb = ov.querySelector('.modal-close'); if(cb) cb.click(); else ov.style.display='none'; } }catch(e){}
-        }, 450);   /* 차트가 그려질 시간을 준다 */
+        }, 1200);   /* ⚠ 차트 애니메이션이 끝날 시간을 넉넉히 준다 (450ms 로는 빈 그림이 나왔다) */
       }catch(e){ bd.innerHTML=''; }
     }
     [['.fm-newhd','.fm-new'], ['.fm-cls-hd','.fm-cls']].forEach(function(p){
