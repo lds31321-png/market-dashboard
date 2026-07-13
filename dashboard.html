@@ -979,6 +979,8 @@ window.ohToggle=function(id,btn){ var el=document.getElementById(id); if(!el)ret
 function ohTh(t,al){ return '<th style="text-align:'+(al||'left')+';font-size:13px;font-weight:600;color:var(--t2);padding:8px 13px;border-bottom:1.5px solid var(--b1);white-space:nowrap;letter-spacing:.02em;">'+t+'</th>'; }
 function ohCell(v,al,bold){ return '<td style="text-align:'+(al||'left')+';padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:14px;color:var(--t1);white-space:nowrap;'+(bold?'font-weight:700;':'')+'">'+hEsc(v)+'</td>'; }
 /* 수익=빨강(#4593FC), 손실=파랑(#4593FC) */
+/* [2026-07-13] HTML 그대로 넣는 셀 (줄바꿈·색상 표기용) — 값은 넣는 쪽에서 이스케이프 처리함 */
+function ohCellRaw(v,al,bold){ return '<td style="text-align:'+(al||'left')+';padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:14px;color:var(--t1);white-space:nowrap;vertical-align:top;line-height:1.7;'+(bold?'font-weight:700;':'')+'">'+(v==null?'-':v)+'</td>'; }
 function ohPnlInner(usd,rate){ var man=Math.round((usd||0)*rate/10000); var sgn=usd>0?'+':usd<0?'-':''; var col=usd>0?'#FF8080':usd<0?'#4593FC':'var(--t3)'; return '<span style="color:'+col+';font-weight:700;">'+sgn+Math.abs(man).toLocaleString('ko-KR')+'만원 <span style="font-size:11px;color:var(--t3);font-weight:600;">('+sgn+'$'+Math.abs(usd||0).toLocaleString()+')</span></span>'; }
 function ohPnlTd(usd,rate){ return '<td style="text-align:right;padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:14px;white-space:nowrap;">'+ohPnlInner(usd,rate)+'</td>'; }
 
@@ -1027,25 +1029,40 @@ function ohFmtPt(v){
   if(s.indexOf('.')>=0) s=s.replace(/0+$/,'').replace(/\.$/,'');
   return s;
 }
-/* 다리(leg)별 행사가 문자열: 예) "185C" / "1.9P / 7C×2" / "220C×2 / 140C / 135C매수" */
-function ohLegsStrike(legs){
-  if(!legs||!legs.length) return '-';
-  return legs.map(function(l){
-    var t=String(l.type||'');
-    var cp=/put/.test(t)?'P':'C';
-    var buy=/buy/.test(t)?'매수':'';
-    var ct=(l.contracts&&l.contracts>1)?('×'+l.contracts):'';
-    return String(l.strike)+cp+ct+buy;
-  }).join(' / ');
+/* [2026-07-13] 다리 정렬: 콜 먼저(위), 풋 나중(아래) */
+function ohLegsSorted(legs){
+  if(!legs||!legs.length) return [];
+  var call=[], put=[];
+  legs.forEach(function(l){ (/put/.test(String(l.type||''))?put:call).push(l); });
+  return call.concat(put);
 }
-/* 다리별 진입 옵션가(pt) = 프리미엄($) ÷ 계약수 ÷ 승수 */
+var OH_CCOL='#FF8080', OH_PCOL='#4593FC';  /* 콜=붉은톤, 풋=푸른톤 */
+/* 다리(leg)별 행사가 — 다리가 2개 이상이면 줄바꿈으로 세로 나열 (콜 위 / 풋 아래) */
+function ohLegsStrike(legs){
+  var L=ohLegsSorted(legs);
+  if(!L.length) return '-';
+  return L.map(function(l){
+    var t=String(l.type||'');
+    var isPut=/put/.test(t);
+    var cp=isPut?'P':'C';
+    var buy=/buy/.test(t)?' 매수':'';
+    var ct=(l.contracts&&l.contracts>1)?(' ×'+l.contracts):'';
+    var col=isPut?OH_PCOL:OH_CCOL;
+    return '<span style="color:'+col+';font-weight:700;">'+hEsc(String(l.strike)+cp)+'</span>'+hEsc(ct+buy);
+  }).join('<br>');
+}
+/* 다리별 진입 옵션가(pt) = 프리미엄($) ÷ 계약수 ÷ 승수 — 행사가와 같은 줄 수로 맞춤 */
 function ohLegsEntryPt(legs,u){
-  if(!legs||!legs.length) return '-';
+  var L=ohLegsSorted(legs);
+  if(!L.length) return '-';
   var m=ohMult(u);
-  return legs.map(function(l){
-    var ct=l.contracts||1;
-    return ohFmtPt((l.premium||0)/ct/m);
-  }).join(' / ');
+  return L.map(function(l){ return hEsc(ohFmtPt((l.premium||0)/(l.contracts||1)/m)); }).join('<br>');
+}
+/* 다리별 청산 옵션가(pt) — 만기소멸이면 다리마다 0, 그 외는 '-' */
+function ohLegsExitPt(legs,status){
+  var L=ohLegsSorted(legs);
+  if(!L.length) return '-';
+  return L.map(function(){ return (status==='expired')?'0':'-'; }).join('<br>');
 }
 /* [2026-07-01] 청산 내역 통합: pnl 만기청산 + 관리자 손절/청산을 하나로 합쳐 표시 */
 function buildClosedFull(oh, pos){
@@ -1057,14 +1074,17 @@ function buildClosedFull(oh, pos){
     .forEach(function(p){ var rs=(p['청산사유']||p.close_reason||(p.status==='expired'?'만기 소멸':'-'));
       seen[mkey(p.underlying,p.expiry_month)]=1;
       out.push({name:(p.underlying||'-'), strat:hStrat(p.strategy_type), month:(p.expiry_month||'-'), date:hMd(p.expiry_date||p.shared_date), sd:(p.expiry_date||p.shared_date||''), pnl:cp(p), reason:rs, is_stoploss:/손절/.test(rs),
-        strike:ohLegsStrike(p.legs), entryPt:ohLegsEntryPt(p.legs,p.underlying), exitPt:(p.status==='expired'?'0':'-')});
+        strike:ohLegsStrike(p.legs), entryPt:ohLegsEntryPt(p.legs,p.underlying), exitPt:ohLegsExitPt(p.legs,p.status)});
     });
   ((oh&&oh.closed)||[]).forEach(function(c){
     if(seen[mkey(c.underlying,c.mLabel)]) return;
     var strat=(c.cpKo==='콜'?'콜 매도':c.cpKo==='풋'?'풋 매도':(c.cpKo||'-'));
-    var ck=(c.strike!=null&&c.strike!=='')?(String(c.strike)+(c.cp||(c.cpKo==='풋'?'P':'C'))):'-';
+    var isPut=(c.cp==='P'||c.cpKo==='풋');
+    var ck=(c.strike!=null&&c.strike!=='')
+      ? ('<span style="color:'+(isPut?OH_PCOL:OH_CCOL)+';font-weight:700;">'+hEsc(String(c.strike)+(isPut?'P':'C'))+'</span>'+hEsc((c.contracts&&c.contracts>1)?(' ×'+c.contracts):''))
+      : '-';
     out.push({name:(c.underlying||c.code||'-'), strat:strat, month:(c.mLabel||'-'), date:(c.date?hMd(c.date):'-'), sd:(c.date||''), pnl:c.pnl, reason:(c.reason||'-'), is_stoploss:(c.is_stoploss||/손절/.test(c.reason||'')),
-      strike:ck, entryPt:ohFmtPt(c.entry), exitPt:ohFmtPt(c.exit)});
+      strike:ck, entryPt:hEsc(ohFmtPt(c.entry)), exitPt:hEsc(ohFmtPt(c.exit))});
   });
   return out;
 }
@@ -1113,7 +1133,7 @@ function ohRenderPnl(pos,rate){
   det+='<tr><td colspan="4" style="text-align:right;padding:11px 13px;border-top:2px solid var(--b1);font-weight:800;font-size:14px;color:var(--t1);">합계</td><td style="text-align:right;padding:11px 13px;border-top:2px solid var(--b1);font-size:15px;">'+ohPnlInner(totPnl,rate)+'</td><td colspan="2" style="border-top:2px solid var(--b1);"></td></tr></tbody></table>';
   var h=ohSummary(groups,rate);
   h+=act.length?ohHeldToggle('보유 종목 상세 ('+act.length+'개)',det):'';
-  h+=ohClosedBlock(clo.map(function(p){var rs=(p['청산사유']||p.close_reason||(p.status==='expired'?'만기 소멸':'-')); return {name:(p.underlying||'-'), strat:hStrat(p.strategy_type), month:(p.expiry_month||'-'), date:hMd(p.expiry_date||p.shared_date), sd:(p.expiry_date||p.shared_date||''), pnl:closedPnl(p), reason:rs, is_stoploss:/손절/.test(rs), strike:ohLegsStrike(p.legs), entryPt:ohLegsEntryPt(p.legs,p.underlying), exitPt:(p.status==='expired'?'0':'-')};}), rate, 'full');
+  h+=ohClosedBlock(clo.map(function(p){var rs=(p['청산사유']||p.close_reason||(p.status==='expired'?'만기 소멸':'-')); return {name:(p.underlying||'-'), strat:hStrat(p.strategy_type), month:(p.expiry_month||'-'), date:hMd(p.expiry_date||p.shared_date), sd:(p.expiry_date||p.shared_date||''), pnl:closedPnl(p), reason:rs, is_stoploss:/손절/.test(rs), strike:ohLegsStrike(p.legs), entryPt:ohLegsEntryPt(p.legs,p.underlying), exitPt:ohLegsExitPt(p.legs,p.status)};}), rate, 'full');
   return h;
 }
 
@@ -1147,7 +1167,7 @@ function ohClosedBlock(items, rate, mode){
   var ohRow=function(x){
     var rcol=x.is_stoploss?'#FF8080':'var(--t2)';
     var reasonTd='<td style="padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:13px;color:'+rcol+';white-space:nowrap;font-weight:'+(x.is_stoploss?'700':'400')+';">'+hEsc(x.reason||'-')+'</td>';
-    if(mode==='full'){ return '<tr>'+ohCell(x.name,'left',true)+ohCell(x.strat)+ohCell(x.month)+ohCell(x.strike||'-','right')+ohCell(x.entryPt||'-','right')+ohCell(x.exitPt||'-','right')+ohCell(x.date)+ohPnlTd(x.pnl,rate)+reasonTd+'</tr>'; }
+    if(mode==='full'){ return '<tr>'+ohCell(x.name,'left',true)+ohCell(x.strat)+ohCell(x.month)+ohCellRaw(x.strike||'-','right')+ohCellRaw(x.entryPt||'-','right')+ohCellRaw(x.exitPt||'-','right')+ohCell(x.date)+ohPnlTd(x.pnl,rate)+reasonTd+'</tr>'; }
     var enTxt=(x.entry!=null)?String(x.entry):'-'; var exTxt=(x.exit!=null)?String(x.exit):'-'; var ctTxt=(x.contracts?x.contracts:1)+'계약';
     return '<tr>'+ohCell(x.name,'left',true)+ohCell(x.sub||'-')+ohCell(enTxt,'right')+ohCell(exTxt,'right')+ohCell(ctTxt,'right')+ohPnlTd(x.pnl,rate)+reasonTd+'</tr>';
   };
