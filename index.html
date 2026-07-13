@@ -3278,7 +3278,11 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
         Array.prototype.forEach.call(tb.querySelectorAll('tbody tr'), function(tr){
           var td = tr.children;
           if(td.length < 3) return;
-          var nm = T(td[0]).replace(/(WTI|FRED.*|EIA.*|Henry Hub|CME.*|ICE.*|LME.*|COMEX.*|NYMEX.*)$/,'').trim();
+          /* '원유WTI' '나스닥 100FRED · NASDAQCOM' 처럼 종목명 뒤에 출처가 붙어 있다 → 떼어낸다 */
+          var nm = T(td[0])
+                     .replace(/(WTI|FRED.*|EIA.*|Henry Hub|CME.*|ICE.*|LME.*|COMEX.*|NYMEX.*)$/,'')
+                     .replace(/\s*100$/, '')      /* '나스닥 100' → '나스닥' (네비는 '나스닥') */
+                     .trim();
           var st = (T(td[1]).match(/★/g) || []).length;
           if(nm && st){ volMap[nm] = st; volNote[nm] = T(td[2]); }
         });
@@ -3303,8 +3307,9 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     });
     if(!assets.length) return;
 
-    /* 변동성 높은 순 */
-    assets.sort(function(a,b){ return (b.star - a.star) || 0; });
+    /* 변동성 높은 순 (같은 등급이면 원래 순서 유지 — 안정 정렬) */
+    assets.forEach(function(a, i){ a.ord = i; });
+    assets.sort(function(a,b){ return (b.star - a.star) || (a.ord - b.ord); });
 
     var s2 = assets.map(function(a){ return a.nm + a.px + a.cg + a.star; }).join('|') + '#' + openKey;
     if(s2 === sig && document.querySelector('.gm-wrap')) return;
@@ -3333,11 +3338,14 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
        +   (when ? '<p class="gm-lbl" style="margin-top:16px">' + esc(when) + ' · EIA · FRED · Reuters</p>' : '')
        + '</div>';
 
-    var top2 = assets.filter(function(a){ return a.star >= 5; }).map(function(a){ return a.nm; });
+    /* 최고 등급(★ 최다) 종목들 = 1순위 */
+    var maxStar = assets[0] ? assets[0].star : 0;
+    var top2 = assets.filter(function(a){ return a.star === maxStar && maxStar > 0; }).map(function(a){ return a.nm; });
     if(top2.length){
       h += '<div class="gm-card">'
          +   '<p class="gm-lbl">향후 30일 변동성 전망</p>'
-         +   '<p class="gm-said">가장 흔들릴 종목은<br><b style="font-size:22px">' + esc(top2.slice(0,2).join(' · ')) + '</b></p>'
+         +   '<p class="gm-said">가장 흔들릴 종목은<br><b style="font-size:22px">' + esc(top2.slice(0,3).join(' · ')) + '</b></p>'
+         +   '<p class="gm-lbl" style="margin-top:16px">별 ' + maxStar + '개 · 최고위험 등급</p>'
          + '</div>';
     }
 
