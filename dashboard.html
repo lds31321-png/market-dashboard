@@ -2893,11 +2893,27 @@ loadPositions();
       var head = T(tb.parentElement) ;
       var dm = T(pg).match(/(\d{4}년\s*\d+월\s*\d+일)\s*공유/);
       recDate = dm ? dm[1] : '';
+      /* ⚠ 원본 표는 8줄이지만 실제로는 4건이다.
+            양매도는 **콜 한 줄 + 풋 한 줄**로 나뉘어 있고, 증거금은 두 줄이 같은 값이다.
+            → 종목+월물로 묶어서 한 건으로 보여준다. */
+      var byKey = {};
       Array.prototype.forEach.call(tb.querySelectorAll('tbody tr'), function(tr){
         var td = tr.querySelectorAll('td');
         if(td.length < 8) return;
-        recs.push({ nm:T(td[1]), mon:T(td[2]), strike:T(td[3]), gu:T(td[4]),
-                    price:T(td[5]), qty:T(td[6]), margin:T(td[7]), exp:T(td[8]) });
+        var nm=T(td[1]), mon=T(td[2]), key=nm+'|'+mon;
+        if(!byKey[key]){
+          byKey[key] = { nm:nm, mon:mon, margin:T(td[7]), exp:T(td[8]), qty:T(td[6]), legs:[] };
+          recs.push(byKey[key]);
+        }
+        byKey[key].legs.push({ gu:T(td[4]), strike:T(td[3]), price:T(td[5]) });
+      });
+      recs.forEach(function(r){
+        /* 다리가 2개면 양매도, 1개면 그 구분 그대로 */
+        r.gu = (r.legs.length >= 2) ? '양매도' : (r.legs[0] ? r.legs[0].gu : '');
+        r.strike = r.legs.map(function(l){
+          return l.strike + (/콜/.test(l.gu) ? 'C' : (/풋/.test(l.gu) ? 'P' : ''));
+        }).join(' / ');
+        r.price = r.legs.map(function(l){ return l.price; }).join(' / ');
       });
     }
 
