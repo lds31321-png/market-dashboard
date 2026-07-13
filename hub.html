@@ -801,17 +801,10 @@ jiktUpdateViewModeLabel();
     top:14px !important; transform:none !important; width:16px !important; height:16px !important;
     stroke:#5F6672 !important; }
 
-  /* 1번 카드만 강조 — 파란 테두리 + '여기부터' 배지 + 시작 버튼 */
+  /* 1번 카드만 강조 — 파란 테두리 + 1번 숫자 강조 (원본에 없는 문구는 넣지 않는다) */
   .card-grid > .hub-card:first-child{ border:1px solid #4593FC !important; }
   .card-grid > .hub-card:first-child .card-step .n{ background:#2A4A7A !important; color:#8FC0FF !important; }
   .card-grid > .hub-card:first-child .card-chev{ display:none !important; }
-  .hm-badge{ position:absolute !important; right:12px !important; top:12px !important;
-    background:#16233A !important; color:#8FC0FF !important; font-size:10px !important;
-    border-radius:20px !important; padding:2px 8px !important; }
-  .hm-cta{ display:block !important; background:#2A4A7A !important; color:#8FC0FF !important;
-    text-align:center !important; border-radius:8px !important; font-size:13px !important;
-    font-weight:700 !important; padding:11px 0 !important; margin-top:9px !important;
-    min-height:36px !important; }
 
   /* --- 쿠폰 배너: 카드 아래로 (자리 이동은 아래 스크립트가 한다) --- */
   .jcb-banner{ flex-direction:row !important; align-items:center !important;
@@ -937,9 +930,9 @@ jiktUpdateViewModeLabel();
       }
     }catch(e){}
 
-    /* 2) [2026-07-14 수정] 원본에 없는 문구('여기부터' 배지 · '무료로 시작하기' 버튼)는 신설 금지 규칙에 따라 제거.
-          1번 카드 강조는 원본 요소(파란 테두리 + 1번 숫자 강조)만으로 표현한다.
-          이전 빌드에서 붙었던 요소가 남아 있으면 지운다. */
+    /* 2) [2026-07-14] 원본에 없는 문구는 신설하지 않는다.
+          1번 카드 강조는 원본 요소(파란 테두리 + 1번 숫자)만으로 표현한다.
+          이전 빌드에서 붙었던 덧붙임 요소가 남아 있으면 지운다. */
     try{
       document.querySelectorAll('.hm-badge, .hm-cta').forEach(function(el){ el.remove(); });
     }catch(e){}

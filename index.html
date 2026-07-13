@@ -3374,7 +3374,16 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     wrap.className = 'gm-wrap';
     wrap.innerHTML = h;
     document.body.appendChild(wrap);
-    if(old) old.parentNode.removeChild(old);
+    /* ⚠ 옛 화면을 지우기 전에, 빌려온 원본 캔버스를 집으로 돌려보낸다.
+         안 그러면 원본 차트가 화면과 함께 삭제되어 영영 복구되지 않는다. */
+    if(old){
+      try{
+        old.querySelectorAll('canvas').forEach(function(cv){
+          if(cv.__gmHome && cv.__gmHome.isConnected) cv.__gmHome.appendChild(cv);
+        });
+      }catch(e){}
+      old.parentNode.removeChild(old);
+    }
 
     /* 종목 카드 열기 */
     wrap.querySelectorAll('.gm-a-hd').forEach(function(hd){
@@ -3402,11 +3411,13 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
       var bd = document.querySelector('.gm-a-bd[data-bd="' + openKey + '"]');
       if(!bd || bd.getAttribute('data-done') === openKey) return;
 
-      /* 지금 화면에 그려져 있는 종목 페이지 */
-      var pages = document.querySelectorAll('.asset-page');
-      var pg = null;
-      for(var i=0;i<pages.length;i++){
-        if(pages[i].getBoundingClientRect().height > 0 || window.getComputedStyle(pages[i]).display !== 'none'){ pg = pages[i]; break; }
+      /* ⚠ 원본 종목 페이지는 내 CSS가 숨겨 놓았다(display:none).
+         "화면에 보이는 페이지"로 찾으면 하나도 못 찾아서 상세가 통째로 비어버린다.
+         숨겨져 있어도 내용은 그대로 있으므로 **id로 직접** 집는다. */
+      var pg = document.getElementById('page-' + openKey);
+      if(!pg){
+        /* 혹시 id 규칙이 다르면 active 표시된 것으로 대체 */
+        pg = document.querySelector('.asset-page.active') || document.querySelector('.asset-page');
       }
       if(!pg) return;
 
@@ -3452,12 +3463,14 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
       bd.innerHTML = dh;
       bd.setAttribute('data-done', openKey);
 
-      /* 차트 — 원본 캔버스를 **옮겨온다**(복사는 그림이 안 따라온다).
-         원본 자리는 어차피 모바일에서 숨겨져 있으므로 안전하다. */
+      /* 차트 — 원본 캔버스를 **옮겨온다**(복사하면 그림이 안 따라온다).
+         ⚠ 옮긴 캔버스는 화면이 다시 그려질 때 통째로 지워져 영영 사라진다.
+            → 원래 자리(집)를 기억시켜 두고, 지우기 전에 반드시 되돌려 놓는다. */
       try{
         var box = bd.querySelector('[data-chart]');
         var cv2 = pg.querySelector('.chart-row canvas');
         if(box && cv2){
+          if(!cv2.__gmHome) cv2.__gmHome = cv2.parentElement;
           box.appendChild(cv2);
           var ch = (window.Chart && window.Chart.getChart) ? window.Chart.getChart(cv2) : null;
           if(ch){ setTimeout(function(){ try{ ch.resize(); ch.update(); }catch(e){} }, 120); }
