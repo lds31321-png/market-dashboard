@@ -2804,30 +2804,22 @@ loadPositions();
   .fm-tile .v{ font-size:13px !important; font-weight:800 !important; color:#F5F6F8 !important;
     margin:3px 0 0 0 !important; word-break:keep-all !important; }
 
-  /* ── 카드 안 상세 (팝업에서 가져온 내용) ── */
-  .fm-detail{ font-size:11px !important; color:#F5F6F8 !important; }
-  .fm-detail *{ max-width:100% !important; white-space:normal !important;
-    word-break:keep-all !important; overflow-wrap:anywhere !important;
-    font-size:11px !important; line-height:1.6 !important; }
+  /* ── 카드 안 상세 (원본 팝업의 모든 항목을 용어 그대로) ── */
+  .fm-dsec{ font-size:10px !important; color:#8B95A1 !important; margin:0 0 6px 0 !important; }
+  /* 차트 — 원본이 이미 수익/손실 구간과 행사가 선을 그려 놨다. 그대로 쓴다 */
   .fm-chart{ display:block !important; width:100% !important; height:auto !important;
-    border-radius:9px !important; background:#23262E !important; margin:0 0 10px 0 !important; }
-  /* 값 4칸(투자금·최대수익·잠재수익률·만기까지) → 2×2 타일 */
-  .fm-detail > div{ margin:0 0 8px 0 !important; }
-  .fm-detail > div > div{ background:#23262E !important; border-radius:8px !important;
-    padding:8px 9px !important; margin:0 0 6px 0 !important; }
-  .fm-detail > div > div > div:first-child{ font-size:9px !important; color:#8B95A1 !important; }
-  /* 포지션 정보 표 → 가로 스크롤 없이 */
-  .fm-detail table{ width:100% !important; border-collapse:collapse !important;
-    table-layout:fixed !important; background:transparent !important; }
-  .fm-detail table th{ font-size:9px !important; color:#8B95A1 !important; font-weight:500 !important;
-    padding:5px 3px !important; text-align:left !important; border:0 !important;
-    border-bottom:0.5px solid rgba(255,255,255,.08) !important; background:transparent !important; }
-  .fm-detail table td{ font-size:10px !important; color:#F5F6F8 !important; padding:6px 3px !important;
-    border:0 !important; border-bottom:0.5px solid rgba(255,255,255,.06) !important;
-    background:transparent !important; }
-  /* 팝업 안 색은 전부 무채색으로 (색 절제) — 손익 숫자만 아래에서 되살린다 */
-  .fm-detail div, .fm-detail span, .fm-detail p, .fm-detail td, .fm-detail th{ color:#F5F6F8 !important; }
-  .fm-detail .fm-dim, .fm-detail small{ color:#868F9C !important; }
+    border-radius:9px !important; background:#23262E !important; margin:0 !important; }
+  .fm-detail .fm-grid2{ margin-top:2px !important; }
+  .fm-detail .fm-tile .fm-dim{ font-size:9px !important; }
+  .fm-plrow{ display:flex !important; align-items:baseline !important;
+    justify-content:space-between !important; gap:10px !important;
+    background:#23262E !important; border-radius:8px !important;
+    padding:9px 10px !important; margin-top:7px !important; }
+  .fm-plval{ font-size:15px !important; font-weight:800 !important;
+    word-break:keep-all !important; }
+  .fm-note2{ margin-top:10px !important; padding-top:9px !important;
+    border-top:0.5px solid rgba(255,255,255,.08) !important;
+    font-size:9px !important; line-height:1.7 !important; }
 
   /* ── 4) 청산 내역 (접힘) ── */
   .fm-cls-hd{ display:flex !important; align-items:center !important;
@@ -3116,26 +3108,86 @@ loadPositions();
             var body = ov.querySelector('.modal-body');
             if(!body){ bd.innerHTML=''; return; }
 
-            /* 1) 차트 → 그림으로 */
-            var img = '';
-            var cv = body.querySelector('canvas');
+            /* ── 원본 팝업의 모든 항목을 **용어 그대로** 옮겨 담는다 ── */
+            var secs = Array.prototype.slice.call(body.children);
+            var dh = '';
+
+            /* 1) 선물 가격 차트 — 원본이 이미 수익/손실 구간과 행사가 선을 그려 놨다 → 그대로 그림으로 */
+            var chartSec = secs[0];
+            var cv = chartSec ? chartSec.querySelector('canvas') : null;
             if(cv && cv.width > 10){
-              try{ img = '<img class="fm-chart" src="'+cv.toDataURL('image/png')+'" alt="선물 가격 차트">'; }catch(e){}
+              var title = T(chartSec.children[0]);
+              var legend = T(chartSec.children[1]);
+              var src = '';
+              try{ src = cv.toDataURL('image/png'); }catch(e){}
+              if(src){
+                dh += '<p class="fm-dsec">' + esc(title) + '</p>'
+                    + '<img class="fm-chart" src="' + src + '" alt="' + esc(title) + '">'
+                    + (legend ? '<p class="fm-dim" style="margin:6px 0 12px">' + esc(legend) + '</p>' : '');
+              }
             }
 
-            /* 2) 나머지 내용 복사 (차트 캔버스는 뺀다) */
-            var clone = body.cloneNode(true);
-            clone.querySelectorAll('canvas').forEach(function(x){
-              var holder = x.closest('div');
-              if(holder && holder.parentElement) holder.parentElement.removeChild(holder);
-              else if(x.parentElement) x.parentElement.removeChild(x);
-            });
-            /* 팝업에만 필요한 것들 제거 */
-            clone.querySelectorAll('a').forEach(function(x){
-              if(/포지션 목록으로/.test(x.textContent||'')) x.parentElement && x.parentElement.removeChild(x);
-            });
+            /* 2) 통계 4칸 (투자금 · 최대 가능 수익 · 증거금 대비 · 만기까지) */
+            var stat = secs[1];
+            if(stat){
+              dh += '<div class="fm-grid2">';
+              Array.prototype.forEach.call(stat.children, function(c){
+                var kids = Array.prototype.map.call(c.children, function(x){ return T(x); });
+                var lbl = kids[0]||'', val = kids[1]||'', sub = kids[2]||'';
+                var col = /수익|손익/.test(lbl) ? pnlCol(val) : '#F5F6F8';
+                dh += '<div class="fm-tile">'
+                    +   '<p class="fm-dim">' + esc(lbl) + '</p>'
+                    +   '<p class="v" style="color:' + col + '">' + esc(val) + '</p>'
+                    +   (sub ? '<p class="fm-dim" style="margin-top:2px">' + esc(sub) + '</p>' : '')
+                    + '</div>';
+              });
+              dh += '</div>';
+            }
 
-            bd.innerHTML = '<div class="fm-detail">' + img + clone.innerHTML + '</div>';
+            /* 3) 현재 평가손익 */
+            var pl = secs[2];
+            if(pl){
+              var plTxt = T(pl).replace(/^현재 평가손익\s*/, '');
+              var money = (plTxt.match(/^[+\-][\d,\.]+만원/) || [''])[0];
+              dh += '<div class="fm-plrow">'
+                  +   '<span class="fm-dim">현재 평가손익</span>'
+                  +   '<span class="fm-plval" style="color:' + pnlCol(money || plTxt) + '">' + esc(plTxt) + '</span>'
+                  + '</div>';
+            }
+
+            /* 4) 포지션 정보 — 표를 카드로 (폰에서 8칸 표는 못 읽는다) */
+            var posSec = secs[3];
+            var tbl = posSec ? posSec.querySelector('table') : null;
+            if(tbl){
+              dh += '<p class="fm-dsec" style="margin-top:12px">' + esc(T(posSec.children[0]) || '포지션 정보') + '</p>';
+              var ths = Array.prototype.map.call(tbl.querySelectorAll('th'), function(x){ return T(x); });
+              Array.prototype.forEach.call(tbl.querySelectorAll('tbody tr'), function(tr){
+                var td = Array.prototype.map.call(tr.children, function(x){ return T(x); });
+                var o = {}; ths.forEach(function(h, i){ o[h] = td[i] || ''; });
+                var pnl2 = o['평가손익'] || '';
+                dh += '<div class="fm-item">'
+                    +   '<div class="fm-item-hd">'
+                    +     '<span class="fm-item-nm">' + esc(o['구분']||'') + ' <i>' + esc(o['행사가']||'') + '</i></span>'
+                    +     '<span class="fm-item-mg" style="color:' + pnlCol(pnl2) + ';font-weight:800">' + esc(pnl2) + '</span>'
+                    +   '</div>'
+                    +   '<p class="fm-item-sub">'
+                    +     esc([o['종목'], o['월물'],
+                               o['진입가'] ? ('진입 ' + o['진입가']) : '',
+                               o['현재가'] ? ('현재 ' + o['현재가']) : '',
+                               o['보유 수량']].filter(Boolean).join(' · '))
+                    +   '</p>'
+                    + '</div>';
+              });
+            }
+
+            /* 5) 면책 문구 — 원문 그대로 */
+            var last = secs[secs.length - 1];
+            var note = last ? T(last) : '';
+            if(/교육 목적|투자 권유/.test(note)){
+              dh += '<p class="fm-dim fm-note2">' + esc(note) + '</p>';
+            }
+
+            bd.innerHTML = '<div class="fm-detail">' + dh + '</div>';
             bd.setAttribute('data-done','1');
           }catch(e){ bd.innerHTML=''; }
           /* 팝업은 원래 닫혀 있었으면 닫아 준다 */
