@@ -937,19 +937,11 @@ jiktUpdateViewModeLabel();
       }
     }catch(e){}
 
-    /* 2) 1번 카드에 '여기부터' 배지 + '무료로 시작하기' 버튼 */
+    /* 2) [2026-07-14 수정] 원본에 없는 문구('여기부터' 배지 · '무료로 시작하기' 버튼)는 신설 금지 규칙에 따라 제거.
+          1번 카드 강조는 원본 요소(파란 테두리 + 1번 숫자 강조)만으로 표현한다.
+          이전 빌드에서 붙었던 요소가 남아 있으면 지운다. */
     try{
-      var first=document.querySelector('.card-grid > .hub-card');
-      if(first && !first.querySelector('.hm-badge')){
-        var b=document.createElement('span');
-        b.className='hm-badge'; b.textContent='여기부터';
-        first.appendChild(b);
-      }
-      if(first && !first.querySelector('.hm-cta')){
-        var c=document.createElement('span');
-        c.className='hm-cta'; c.textContent='무료로 시작하기';
-        first.appendChild(c);
-      }
+      document.querySelectorAll('.hm-badge, .hm-cta').forEach(function(el){ el.remove(); });
     }catch(e){}
   }
 

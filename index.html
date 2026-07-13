@@ -3343,9 +3343,9 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     var top2 = assets.filter(function(a){ return a.star === maxStar && maxStar > 0; }).map(function(a){ return a.nm; });
     if(top2.length){
       h += '<div class="gm-card">'
-         +   '<p class="gm-lbl">향후 30일 변동성 전망</p>'
-         +   '<p class="gm-said">가장 흔들릴 종목은<br><b style="font-size:22px">' + esc(top2.slice(0,3).join(' · ')) + '</b></p>'
-         +   '<p class="gm-lbl" style="margin-top:16px">별 ' + maxStar + '개 · 최고위험 등급</p>'
+         +   '<p class="gm-lbl">향후 30일 변동성 전망 · 최고 등급</p>'
+         +   '<p class="gm-said"><b style="font-size:22px">' + esc(top2.slice(0,3).join(' · ')) + '</b></p>'
+         +   '<p class="gm-lbl" style="margin-top:16px">변동성 등급 ' + '★'.repeat(maxStar) + '</p>'
          + '</div>';
     }
 
@@ -3364,7 +3364,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
          +   '</div>'
          +   (risk ? '<div class="gm-risk"><i style="width:' + risk + '%"></i></div>' : '')
          +   '<div class="gm-a-bd" data-bd="' + esc(a.key) + '">'
-         +     (open ? '<p class="gm-lbl">여는 중…</p>' : '')
+         +     (open ? '<p class="gm-lbl">불러오는 중</p>' : '')
          +   '</div>'
          + '</div>';
     });

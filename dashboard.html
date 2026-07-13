@@ -3830,7 +3830,7 @@ loadPositions();
        +   '<p class="fs-lbl">누적 수익률</p>'
        +   '<p class="fs-v" style="color:'+pnlCol(g.rate)+'">'+esc(g.rate)+'</p>'
        +   (svg ? '<div class="fs-chart">'+svg+'</div>' : '')
-       +   (now ? '<p class="fs-said">'+esc(g.dep)+'이 <b>'+now.toLocaleString()+'만원</b>이 됐습니다</p>'
+       +   (now ? '<p class="fs-said">원금 '+esc(g.dep)+' → 현재 <b>'+now.toLocaleString()+'만원</b></p>'
                 : (g.money ? '<p class="fs-said">누적 순수익 <b>'+esc(g.money)+'</b></p>' : ''))
        + '</div>';
 
@@ -3845,17 +3845,17 @@ loadPositions();
          +   '<p class="fs-lbl">손익비</p>'
          +   '<p class="fs-v" style="color:#F5F6F8">'+esc(g.pf)+'배</p>'
          +   '<div class="fs-cmp">'
-         +     '<span class="fs-cmp-l">번 돈</span>'
+         +     '<span class="fs-cmp-l">총 수익</span>'
          +     '<span class="fs-cmp-t"><i style="width:'+Math.round(sumW/mxSum*100)+'%;background:rgba(240,106,106,.35)"></i></span>'
          +     '<span class="fs-cmp-v" style="color:#F06A6A">+'+Math.round(sumW).toLocaleString()+'만</span>'
          +   '</div>'
          +   '<div class="fs-cmp">'
-         +     '<span class="fs-cmp-l">잃은 돈</span>'
+         +     '<span class="fs-cmp-l">총 손실</span>'
          +     '<span class="fs-cmp-t"><i style="width:'+Math.round(sumL/mxSum*100)+'%;background:rgba(69,147,252,.35)"></i></span>'
          +     '<span class="fs-cmp-v" style="color:#4593FC">-'+Math.round(sumL).toLocaleString()+'만</span>'
          +   '</div>'
-         +   (pfNum ? '<p class="fs-said">잃은 돈보다 <b>'+pfNum.toFixed(1)+'배</b> 더 벌었습니다'
-                    + '<br><span style="color:#8B95A1">한 번 크게 벌 때 '+esc(g.avgW)+'만원, 잃을 때 '+esc(g.avgL)+'만원</span></p>' : '')
+         +   (pfNum ? '<p class="fs-said">총 수익 ÷ 총 손실 = <b>'+pfNum.toFixed(1)+'배</b>'
+                    + '<br><span style="color:#8B95A1">평균 수익 '+esc(g.avgW)+'만원 · 평균 손실 '+esc(g.avgL)+'만원</span></p>' : '')
          + '</div>';
     }
 
