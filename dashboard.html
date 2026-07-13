@@ -3530,23 +3530,27 @@ loadPositions();
       var nm   = (sub.split('·')[0] || '').trim();
       var days = (sub.match(/잔존\s*(\d+)일/) || [])[1] || '';
       rows.push({ no:no, live:live, nm:nm, days:days,
-                  pnl:pnl, cum:T(td[2]), rate:T(td[3]), res:T(td[4]),
-                  hidden: tr.getBoundingClientRect().height <= 0 });
+                  pnl:pnl, cum:T(td[2]), rate:T(td[3]), res:T(td[4]) });
     });
 
-    var vis = rows.filter(function(r){ return !r.hidden; });
-    if(!vis.length) vis = rows;
+    /* ⚠ 원본 표는 우리가 CSS 로 통째로 숨겼다 → '보이는 행'으로는 필터 여부를 알 수 없다
+          (전부 높이 0 이라 0건이 된다). → **결과 칸(수익/손실)으로 직접 걸러낸다.** */
+    var vis = rows.filter(function(r){
+      if(filt === 'win')  return r.res === '수익';
+      if(filt === 'loss') return r.res === '손실';
+      return true;
+    });
 
-    /* 승률 (레퍼런스 #38) */
-    var win = vis.filter(function(r){ return r.res === '수익'; }).length;
-    var los = vis.filter(function(r){ return r.res === '손실'; }).length;
+    /* 승률·곡선은 **필터와 무관하게 항상 전체 기준** (성과를 보여주는 게 목적) */
+    var win = rows.filter(function(r){ return r.res === '수익'; }).length;
+    var los = rows.filter(function(r){ return r.res === '손실'; }).length;
     var tot = win + los;
     var wr  = tot ? Math.round(win / tot * 100) : 0;
 
     /* 누적 수익률 곡선 (레퍼런스 #18) — 오래된 것 → 최신 순으로 뒤집는다 */
     var pts = [];
-    for(var i = vis.length - 1; i >= 0; i--){
-      var v = parseFloat(String(vis[i].rate).replace(/[^\d.\-]/g,''));
+    for(var i = rows.length - 1; i >= 0; i--){
+      var v = parseFloat(String(rows[i].rate).replace(/[^\d.\-]/g,''));
       if(!isNaN(v)) pts.push(v);
     }
     var svg = '';
@@ -3566,7 +3570,7 @@ loadPositions();
           + '</svg>';
     }
 
-    var last = vis[0] || {};
+    var last = rows[0] || {};
     var cumRate = last.rate || '';
     var cumMoney = last.cum || '';
 
@@ -3582,13 +3586,13 @@ loadPositions();
        +     '<i class="fh-bar-w" style="width:' + wr + '%"></i>'
        +     '<i class="fh-bar-l" style="width:' + (100 - wr) + '%"></i>'
        +   '</div>'
-       +   '<p class="fh-said">' + vis.length + '건 중 <b>' + win + '건이 수익</b>이었습니다 · 승률 <b>' + wr + '%</b></p>'
+       +   '<p class="fh-said">' + rows.length + '건 중 <b>' + win + '건이 수익</b>이었습니다 · 승률 <b>' + wr + '%</b></p>'
        +   (cumMoney ? '<p class="fh-lbl" style="margin-top:8px">누적 ' + esc(cumMoney) + '</p>' : '')
        + '</div>';
 
     /* 2) 필터 칩 */
     h += '<div class="fh-chips">'
-       +   '<button data-f="all"'  + (filt==='all' ?' class="on"':'') + '>전체 ' + vis.length + '</button>'
+       +   '<button data-f="all"'  + (filt==='all' ?' class="on"':'') + '>전체 ' + rows.length + '</button>'
        +   '<button data-f="win"'  + (filt==='win' ?' class="on"':'') + '>수익 ' + win + '</button>'
        +   '<button data-f="loss"' + (filt==='loss'?' class="on"':'') + '>손실 ' + los + '</button>'
        + '</div>';
@@ -3626,19 +3630,13 @@ loadPositions();
 
     /* 필터 — 원본 함수를 대신 눌러 준다 */
     wrap.querySelectorAll('.fh-chips button').forEach(function(b){
+      /* ⚠ 원본 필터 함수를 부를 필요가 없다. 우리가 직접 거른다.
+            (원본 표는 숨겨져 있어서 원본 필터가 걸렸는지 확인할 방법도 없다) */
       b.addEventListener('click', function(){
-        var fv = b.getAttribute('data-f');
-        filt = fv; shown = 20;
-        try{
-          var org = pg.querySelector('.filter-bar');
-          var btns = org ? org.querySelectorAll('button,[onclick]') : [];
-          for(var i=0;i<btns.length;i++){
-            var oc = btns[i].getAttribute('onclick') || '';
-            if(oc.indexOf("'" + fv + "'") >= 0){ btns[i].click(); break; }
-          }
-        }catch(e){}
+        filt = b.getAttribute('data-f');
+        shown = 20;
         sig = '';
-        setTimeout(build, 120);
+        build();
       });
     });
 
