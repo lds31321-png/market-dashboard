@@ -4005,4 +4005,48 @@ loadPositions();
   #overlay .modal .pnl-usd, #overlay .modal [class*="usd"]{ font-size:14px !important; }
 }
 </style>
+
+<script id="fd-js-2026-07-14">
+/* 글자 최소 크기 — 본문 14px 이상 (12px 이하 금지).
+   상세 화면에는 클래스 없는 요소가 많아 CSS 로는 못 잡는다.
+   모바일에서만, 실제로 14px 미만인 글자를 그때그때 끌어올린다. (PC 는 손대지 않는다) */
+(function(){
+  function isMob(){
+    try{ return window.matchMedia && window.matchMedia('(max-width:640px)').matches; }catch(e){ return false; }
+  }
+  function fdMinFont(){
+    try{
+      if(!isMob()) return;
+      var scope = document.querySelectorAll('#overlay .modal, .fm-wrap, .fh-wrap, .fs-wrap');
+      for(var s=0; s<scope.length; s++){
+        var list = scope[s].querySelectorAll('*');
+        for(var i=0; i<list.length; i++){
+          var e = list[i], tg = e.tagName;
+          if(tg==='CANVAS'||tg==='SVG'||tg==='PATH'||tg==='SCRIPT'||tg==='STYLE') continue;
+          var ch = e.childNodes, has = false;
+          for(var j=0; j<ch.length; j++){
+            if(ch[j].nodeType===3 && ch[j].textContent.trim()){ has = true; break; }
+          }
+          if(!has) continue;
+          var cs = window.getComputedStyle(e);
+          var fs = parseFloat(cs.fontSize);
+          if(!fs || fs >= 14) continue;
+          e.style.setProperty('font-size','14px','important');
+          var lh = parseFloat(cs.lineHeight);
+          if(!lh || lh < 19) e.style.setProperty('line-height','1.5','important');
+        }
+      }
+    }catch(e){}
+  }
+  function boot(){
+    fdMinFont();
+    setInterval(fdMinFont, 700);
+    document.addEventListener('click', function(){
+      [120, 500, 1200].forEach(function(ms){ setTimeout(fdMinFont, ms); });
+    }, true);
+    window.addEventListener('resize', fdMinFont);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
 </html>

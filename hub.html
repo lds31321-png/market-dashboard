@@ -960,10 +960,32 @@ jiktUpdateViewModeLabel();
     try{
       document.querySelectorAll('.hm-badge, .hm-cta').forEach(function(el){ el.remove(); });
     }catch(e){}
+
+    /* 3) 글자 최소 크기 — 본문 14px 이상. 팝업 안 클래스 없는 글자까지 잡는다. (PC 무영향) */
+    try{
+      var list = document.body.querySelectorAll('*');
+      for(var i=0;i<list.length;i++){
+        var e = list[i], tg = e.tagName;
+        if(tg==='CANVAS'||tg==='SVG'||tg==='PATH'||tg==='SCRIPT'||tg==='STYLE') continue;
+        var ch = e.childNodes, has = false;
+        for(var j=0;j<ch.length;j++){
+          if(ch[j].nodeType===3 && ch[j].textContent.trim()){ has = true; break; }
+        }
+        if(!has) continue;
+        var cs = window.getComputedStyle(e);
+        var fs = parseFloat(cs.fontSize);
+        if(!fs || fs >= 14) continue;
+        e.style.setProperty('font-size','14px','important');
+        var lh = parseFloat(cs.lineHeight);
+        if(!lh || lh < 19) e.style.setProperty('line-height','1.5','important');
+      }
+    }catch(e){}
   }
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', build);
   else build();
+  /* 팝업은 나중에 열리므로 클릭 뒤에도 다시 훑는다 */
+  document.addEventListener('click', function(){ [150, 600].forEach(function(ms){ setTimeout(build, ms); }); }, true);
   window.addEventListener('resize', build);
 })();
 </script>
