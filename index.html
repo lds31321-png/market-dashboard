@@ -3344,7 +3344,9 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     assets.forEach(function(a, i){ a.ord = i; });
     assets.sort(function(a,b){ return (b.star - a.star) || (a.ord - b.ord); });
 
-    var s2 = assets.map(function(a){ return a.nm + a.px + a.cg + a.star; }).join('|') + '#' + openKey;
+    /* ⚠ 여기에 openKey 를 넣으면 카드를 열 때마다 화면을 통째로 다시 그려 번쩍인다.
+          펼침 표시는 클릭이 직접 바꾸므로, 지문에는 **목록 내용만** 넣는다. */
+    var s2 = assets.map(function(a){ return a.nm + a.px + a.cg + a.star; }).join('|');
     if(s2 === sig && document.querySelector('.gm-wrap')) return;
     sig = s2;
 

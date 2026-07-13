@@ -3940,8 +3940,13 @@ loadPositions();
   }
   #overlay .tbl-rec tr:last-child td:last-child{ border-bottom:0 !important; }
 
-  /* 값 안의 작은 조각들도 한 줄에 */
-  #overlay .tbl-rec td > *{ display:inline !important; font-size:15px !important; }
+  /* 값이 <span> 으로 감싸인 행(구분 등)도 라벨은 왼쪽 끝, 값은 오른쪽 끝에 붙인다 */
+  #overlay .tbl-rec td::before{ margin-right:auto !important; }
+  #overlay .tbl-rec td > *{
+    display:inline-block !important; font-size:15px !important;
+    margin-left:auto !important; text-align:right !important;
+    max-width:70% !important; word-break:keep-all !important;
+  }
 
   /* 상단 요약 타일 — 글자 벌어짐(자간) 제거 */
   #overlay .modal *{ letter-spacing:normal !important; }
