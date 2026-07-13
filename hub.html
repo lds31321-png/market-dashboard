@@ -746,14 +746,15 @@ jiktUpdateViewModeLabel();
   /* --- 헤더: 제목 1줄 + 부제 1줄, 버튼은 우측 위 작은 칩 --- */
   .hub-header{ position:relative !important; padding-top:0 !important; margin-bottom:12px !important;
     text-align:left !important; display:block !important; }
-  .hub-logo{ display:block !important; font-size:9px !important; letter-spacing:.08em !important;
-    color:#4593FC !important; margin:0 0 6px 0 !important; }
-  .hub-title{ font-size:22px !important; line-height:1.3 !important; text-align:left !important;
-    color:#F5F6F8 !important; margin:0 !important; }
+  /* 로고 라벨 — 파란색을 여기저기 쓰면 정신없다. 회색으로 낮추고 파랑은 버튼 하나에만 남긴다 */
+  .hub-logo{ display:block !important; font-size:12px !important; letter-spacing:.08em !important;
+    color:#8B95A1 !important; margin:0 0 8px 0 !important; }
+  .hub-title{ font-size:24px !important; line-height:1.3 !important; text-align:left !important;
+    color:#F5F6F8 !important; margin:0 !important; font-weight:800 !important; }
   /* ⚠ 부제는 기존 모바일 규칙이 숨기고 있었다 → 다시 살린다 */
-  .hub-sub{ display:block !important; font-size:12px !important; font-weight:500 !important;
-    color:#8B95A1 !important; margin:5px 0 0 0 !important; text-align:left !important;
-    word-break:keep-all !important; }
+  .hub-sub{ display:block !important; font-size:14px !important; font-weight:500 !important;
+    color:#8B95A1 !important; margin:8px 0 0 0 !important; text-align:left !important;
+    line-height:1.5 !important; word-break:keep-all !important; }
 
   /* 버튼 2개(업데이트·PC버전)를 제목 위 한 줄로.
      ⚠ 처음엔 제목 오른쪽에 겹쳐 놓았더니 제목을 가렸다 → 제목 위 별도 줄로 뺀다.
@@ -762,11 +763,11 @@ jiktUpdateViewModeLabel();
     margin:0 0 10px 0 !important; }
   .jikt-refresh-btn, .jikt-viewmode-btn{
     position:static !important; transform:none !important; margin:0 !important;
-    min-height:32px !important; padding:0 10px !important; font-size:11px !important;
+    min-height:36px !important; padding:0 12px !important; font-size:14px !important;
     border-radius:8px !important; background:#1E2027 !important; color:#8B95A1 !important;
     border:0.5px solid rgba(255,255,255,.14) !important; white-space:nowrap !important;
     width:auto !important; max-width:none !important;
-    display:inline-flex !important; align-items:center !important; gap:5px !important; }
+    display:inline-flex !important; align-items:center !important; gap:6px !important; }
   .jikt-theme-btn{ display:none !important; }
 
   /* --- 단계 표시 2벌은 모두 숨긴다 (카드에 이미 1·2·3 이 있다) --- */
@@ -814,20 +815,23 @@ jiktUpdateViewModeLabel();
     background:#16233A !important; border:0 !important; border-radius:12px !important;
     padding:11px !important; margin:9px 0 0 0 !important; animation:none !important; }
   .jcb-banner .tx{ display:block !important; min-width:0 !important; gap:0 !important; }
-  .jcb-banner .t{ font-size:12px !important; color:#8FC0FF !important; font-weight:700 !important; }
-  .jcb-banner .t b{ color:#8FC0FF !important; }
+  /* 배너 제목은 흰색 — 파랑은 이 화면에서 '쿠폰 안내 보기' 버튼 하나만 쓴다 */
+  .jcb-banner .t{ font-size:15px !important; color:#F5F6F8 !important; font-weight:700 !important;
+    line-height:1.4 !important; }
+  .jcb-banner .t b{ color:#F5F6F8 !important; }
   .jcb-banner .ic{ display:none !important; }
-  .jcb-banner .s{ display:block !important; font-size:10px !important; color:#8B95A1 !important;
-    margin-top:2px !important; }
+  .jcb-banner .s{ display:block !important; font-size:14px !important; color:#8B95A1 !important;
+    margin-top:4px !important; line-height:1.5 !important; }
   .jcb-banner .s br{ display:none !important; }
   .jcb-banner .s .sep-dot{ display:inline !important; }
   .jcb-old{ text-decoration:line-through !important; color:#868F9C !important; }
   .jcb-new{ color:#F5F6F8 !important; font-weight:800 !important; }
   .jcb-banner .go{ margin:0 !important; width:auto !important; flex:0 0 auto !important;
-    background:transparent !important; color:#8FC0FF !important;
-    border:0.5px solid #2A4A7A !important; border-radius:8px !important;
-    padding:0 11px !important; min-height:32px !important; display:inline-flex !important;
-    align-items:center !important; font-size:11px !important; white-space:nowrap !important; }
+    background:#4593FC !important; color:#FFFFFF !important;
+    border:0 !important; border-radius:8px !important;
+    padding:0 14px !important; min-height:40px !important; display:inline-flex !important;
+    align-items:center !important; font-size:14px !important; font-weight:700 !important;
+    white-space:nowrap !important; }
 
   /* ============ 팝업 2개: 가운데 카드 → 아래에서 올라오는 시트 ============ */
   .jintro-wrap, .jcb-wrap{ align-items:flex-end !important; padding:0 !important; }
@@ -842,56 +846,60 @@ jiktUpdateViewModeLabel();
   .jintro-x, .jcb-x{ top:12px !important; right:12px !important; color:#8B95A1 !important;
     min-width:32px !important; min-height:32px !important; }
 
-  .jintro-tag, .jcb-tag{ font-size:10px !important; color:#8FC0FF !important; text-align:left !important; }
-  .jintro-h, .jcb-h{ font-size:18px !important; font-weight:700 !important; color:#F5F6F8 !important;
-    line-height:1.45 !important; text-align:left !important; margin-top:7px !important; }
+  .jintro-tag, .jcb-tag{ font-size:14px !important; color:#8B95A1 !important; text-align:left !important; }
+  .jintro-h, .jcb-h{ font-size:20px !important; font-weight:800 !important; color:#F5F6F8 !important;
+    line-height:1.35 !important; text-align:left !important; margin-top:8px !important; }
   .jcb-h b{ color:#F5F6F8 !important; }
-  .jintro-sub{ font-size:11px !important; color:#8B95A1 !important; line-height:1.7 !important;
+  .jintro-sub{ font-size:14px !important; color:#8B95A1 !important; line-height:1.6 !important;
     text-align:left !important; margin-top:8px !important; }
 
-  .jintro-coupon{ font-size:13px !important; padding:11px !important; min-height:36px !important;
-    background:#16233A !important; color:#8FC0FF !important; border:0 !important;
-    border-radius:8px !important; margin-top:12px !important; }
+  .jintro-coupon{ font-size:15px !important; padding:14px !important; min-height:40px !important;
+    background:#23262E !important; color:#F5F6F8 !important; border:0 !important;
+    border-radius:8px !important; margin-top:16px !important; font-weight:700 !important; }
   .jintro-detail{ background:#23262E !important; border-radius:10px !important;
-    padding:11px !important; margin-top:8px !important; }
-  .jintro-dlead{ font-size:10px !important; color:#8B95A1 !important; line-height:1.7 !important; }
-  .jintro-flow .ft{ font-size:10px !important; color:#F5F6F8 !important; line-height:1.6 !important; }
-  .jintro-flow .fc{ background:#2A4A7A !important; color:#8FC0FF !important; }
-  .jintro-cta{ height:auto !important; min-height:44px !important; background:#2A4A7A !important;
-    color:#8FC0FF !important; border-radius:8px !important; font-size:14px !important; }
+    padding:16px !important; margin-top:8px !important; }
+  .jintro-dlead{ font-size:14px !important; color:#8B95A1 !important; line-height:1.6 !important; }
+  .jintro-flow .ft{ font-size:14px !important; color:#F5F6F8 !important; line-height:1.5 !important; }
+  .jintro-flow .fc{ background:#2E323C !important; color:#C4CBD6 !important; }
+  /* 이 화면의 유일한 파란 주 버튼 */
+  .jintro-cta{ height:auto !important; min-height:48px !important; background:#4593FC !important;
+    color:#FFFFFF !important; border-radius:8px !important; font-size:16px !important;
+    font-weight:700 !important; }
 
   /* --- 쿠폰 팝업 --- */
-  .jcb-calc{ background:#23262E !important; border-radius:10px !important; padding:11px !important;
-    margin-top:10px !important; }
-  .jcb-calc-top{ font-size:12px !important; color:#8B95A1 !important; }
-  .jcb-calc-formula{ font-size:10px !important; color:#868F9C !important; margin-top:7px !important;
+  .jcb-calc{ background:#23262E !important; border-radius:10px !important; padding:16px !important;
+    margin-top:16px !important; }
+  .jcb-calc-top{ font-size:14px !important; color:#8B95A1 !important; }
+  .jcb-calc-formula{ font-size:14px !important; color:#8B95A1 !important; margin-top:8px !important;
     line-height:1.6 !important; word-break:keep-all !important; }
-  .jcb-calc-formula b{ color:#8FC0FF !important; }
-  .jcb-groups{ grid-template-columns:1fr !important; gap:0 !important; margin-top:13px !important; }
-  .jcb-group-h{ font-size:11px !important; color:#8FC0FF !important; margin:0 0 8px 0 !important; }
+  .jcb-calc-formula b{ color:#F5F6F8 !important; }
+  .jcb-groups{ grid-template-columns:1fr !important; gap:0 !important; margin-top:16px !important; }
+  .jcb-group-h{ font-size:14px !important; color:#8B95A1 !important; margin:0 0 8px 0 !important;
+    font-weight:700 !important; }
   .jcc{ background:#23262E !important; border:0 !important; border-radius:10px !important;
-    padding:10px !important; margin-bottom:7px !important; min-height:36px !important; }
+    padding:16px !important; margin-bottom:8px !important; min-height:36px !important; }
   .jcc[aria-expanded="true"]{ border:1px solid #4593FC !important; margin-bottom:0 !important; }
-  .jcc .amt .a{ font-size:15px !important; color:#4593FC !important; font-weight:700 !important; }
-  .jcc .amt .p{ font-size:10px !important; color:#868F9C !important; }
-  .jcc .meta .nm{ font-size:12px !important; color:#F5F6F8 !important; }
-  .jcc .meta .dur{ font-size:10px !important; color:#868F9C !important; }
+  .jcc .amt .a{ font-size:18px !important; color:#F5F6F8 !important; font-weight:800 !important; }
+  .jcc .amt .p{ font-size:14px !important; color:#8B95A1 !important; }
+  .jcc .meta .nm{ font-size:15px !important; color:#F5F6F8 !important; font-weight:700 !important; }
+  .jcc .meta .dur{ font-size:14px !important; color:#8B95A1 !important; }
   .jcc .chev{ color:#8B95A1 !important; }
   .jcc-body{ background:#23262E !important; border-radius:0 0 10px 10px !important;
-    padding:11px !important; margin-bottom:7px !important; }
-  .jcc-body .d{ font-size:10px !important; color:#8B95A1 !important; line-height:1.7 !important; }
-  .jcc-body .stp{ font-size:10px !important; color:#F5F6F8 !important; line-height:1.9 !important;
-    margin-top:9px !important; padding-top:9px !important;
+    padding:16px !important; margin-bottom:8px !important; }
+  .jcc-body .d{ font-size:14px !important; color:#8B95A1 !important; line-height:1.6 !important; }
+  .jcc-body .stp{ font-size:14px !important; color:#F5F6F8 !important; line-height:1.7 !important;
+    margin-top:16px !important; padding-top:16px !important;
     border-top:0.5px solid rgba(255,255,255,.07) !important; }
-  .jcc-body .stp b{ color:#8FC0FF !important; }
-  .jcc-btns{ display:flex !important; gap:7px !important; margin-top:10px !important; }
+  .jcc-body .stp b{ color:#F5F6F8 !important; }
+  .jcc-btns{ display:flex !important; gap:8px !important; margin-top:16px !important; }
   .jcc-kakao, .jcc-cta{ flex:1 1 0 !important; min-width:0 !important; text-align:center !important;
-    border-radius:8px !important; font-size:11px !important; min-height:36px !important;
+    border-radius:8px !important; font-size:14px !important; min-height:44px !important;
+    font-weight:700 !important;
     display:inline-flex !important; align-items:center !important; justify-content:center !important;
     white-space:normal !important; word-break:keep-all !important; }
   .jcc-kakao{ background:transparent !important; color:#8B95A1 !important;
     border:0.5px solid rgba(255,255,255,.14) !important; }
-  .jcc-cta{ background:#2A4A7A !important; color:#8FC0FF !important; border:0 !important; }
+  .jcc-cta{ background:#4593FC !important; color:#FFFFFF !important; border:0 !important; }
 
   /* 누를 수 있는 것 최소 32px */
   .hub-card, .jcb-banner .go, .jintro-coupon, .jcc, .jintro-cta{ min-height:32px !important; }
