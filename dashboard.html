@@ -1899,67 +1899,15 @@ function openModal(id){
         datasets:[{data:[118,25],backgroundColor:[gRed,gBlue],borderColor:['rgba(255,170,170,.35)','rgba(140,170,230,.35)'],borderWidth:1,hoverOffset:5}]
       },options:{responsive:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed}번 (${(c.parsed/_tN*100).toFixed(1)}%)`}}},cutout:'62%'}});
     }
-    // 가격 차트 — data/{CODE}_data.json 장기 데이터 우선 사용
+    /* [2026-07-13 근본수정] 카드 모달 가격 차트 — pnl_positions.json 의 chart_data 만 사용.
+       기존 버그: data/{CODE}_data.json 을 우선 사용했는데, 이 파일은 종목당 1개뿐이고
+                 "메인 월물" 하나만 담고 있었다. 그래서 크루드 9월물·10월물 카드가
+                 8월물 가격을 그렸고(예: 현재가 $70.22), 갱신도 6/30에서 멈춰 있었다.
+       수정: chart_data 는 pnl_차트_전체갱신.py 가 옵션 월물 → 기초자산 월물을 정확히
+             매칭해 만들고(진입 전 90거래일 + 진입 후 전체), 만기 정산까지 처리한다.
+             따라서 그 데이터 하나만 쓰는 게 맞다. */
     if(p.chart_data){
-      const _CODES={'크루드 오일':'OCL','천연가스':'ONG','대두':'OZS','밀':'OZW',
-        '옥수수':'OZC','S&P500':'OES','골드':'OGC','호주달러':'OADU',
-        '유로FX':'OEUU','10년국채':'OZN','엔화':'OJPU'};
-      const _code=_CODES[p.underlying];
-      const _drawChart=function(longDates,longCloses){
-        const ep=Object.assign({},p,{
-          chart_data:Object.assign({},p.chart_data,{dates:longDates,closes:longCloses})
-        });
-        buildPositionChart(ep,`posChart_${p.id}`);
-      };
-      if(_code){
-        fetch(`data/${_code}_data.json?t=${Date.now()}`,{cache:'no-store'})
-          .then(r=>r.ok?r.json():null).catch(()=>null)
-          .then(d=>{
-            if(d&&d.chart&&d.chart.dates&&(d.chart.close||d.chart.closes)){
-              const cl=d.chart.close||d.chart.closes;
-              let dates=d.chart.dates, closes=cl;
-
-              // [안전망] data/ 파일이 진입일까지 못 미치면(배포 누락·캐시 지연 등)
-              //   진입일~오늘 구간이 통째로 빠져 옛 현재가만 점으로 찍히는 문제 방지 →
-              //   이 경우 포지션 자체 데이터(pnl_positions.json의 chart_data)로 그린다.
-              const _lastIso=(dates[dates.length-1]||'').replace(/\//g,'-').slice(0,10);
-              // [2026-07-07 수정] 가격이력 파일이 공유일에 못 미쳐도, 포지션 자체 데이터가 '실제로 더 최신'일 때만 폴백.
-              //   (기존엔 파일<공유일이면 무조건 짧은 데이터로 폴백 → 신규 포지션 차트가 좁아짐.
-              //    파일·포지션이 같은 날짜에서 끝나면 긴 이력을 그대로 써서 차트를 정상 비율로 그린다)
-              const _pd=(p.chart_data&&p.chart_data.dates)||[];
-              const _posLastIso=(_pd[_pd.length-1]||'').replace(/\//g,'-').slice(0,10);
-              if(p.shared_date && _lastIso && _lastIso < p.shared_date && _posLastIso && _posLastIso > _lastIso){
-                buildPositionChart(p,`posChart_${p.id}`);
-                return;
-              }
-
-              // 만기일 이후 데이터 제거 (활성/만기 공통)
-              if(p.expiry_date){
-                const cutoffIso=p.expiry_date;
-                const cutIdx=dates.findIndex(dt=>dt.replace(/\//g,'-')>cutoffIso);
-                if(cutIdx>0){dates=dates.slice(0,cutIdx);closes=closes.slice(0,cutIdx);}
-              }
-
-              // 진입일(shared_date) 기준 시작점: 진입일 20 거래일 전부터
-              if(p.shared_date){
-                const entryIso=p.shared_date; // YYYY-MM-DD
-                let entryIdx=dates.findIndex(dt=>dt.replace(/\//g,'-')>=entryIso);
-                if(entryIdx<0) entryIdx=dates.length;
-                if(entryIdx>0){
-                  const startIdx=Math.max(0,entryIdx-80);
-                  dates=dates.slice(startIdx);
-                  closes=closes.slice(startIdx);
-                }
-              }
-
-              _drawChart(dates, closes);
-            } else {
-              buildPositionChart(p,`posChart_${p.id}`);
-            }
-          });
-      } else {
-        buildPositionChart(p,`posChart_${p.id}`);
-      }
+      buildPositionChart(p,`posChart_${p.id}`);
     }
   },50);
 }
