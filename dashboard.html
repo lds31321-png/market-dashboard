@@ -1455,13 +1455,16 @@ function buildPositionChart(p, canvasId){
       c.textAlign='center';c.textBaseline='middle';
 
       // 수익구간 텍스트
+      // ⚠ 모바일에서 가격선·행사가 라벨과 겹쳐 글자가 안 읽혔다 → 왼쪽 끝에 붙이고 살짝 작게
+      const _mbZ=window.matchMedia('(max-width:640px)').matches;
+      if(_mbZ){ c.font='bold 12px IBM Plex Sans KR,Noto Sans KR,sans-serif'; c.textAlign='left'; }
       {
         const y1=clamp(yPx(pMax),top,bottom);
         const y2=clamp(yPx(Math.max(pMin,yMin)),top,bottom);
         const midY=(y1+y2)/2;
         if(midY>top&&midY<bottom&&y2-y1>30){
           c.fillStyle='rgba(200,30,30,0.6)';
-          c.fillText('수익구간',(left+right)*0.38,midY);
+          c.fillText('수익구간', _mbZ ? (left+8) : (left+right)*0.38, midY);
         }
       }
       // 손실구간 위 텍스트
@@ -1470,7 +1473,7 @@ function buildPositionChart(p, canvasId){
         const midY=(top+y1)/2;
         if(midY>top&&midY<bottom&&y1-top>20){
           c.fillStyle='rgba(40,80,200,0.55)';
-          c.fillText('손실구간',(left+right)*0.5,midY);
+          c.fillText('손실구간', _mbZ ? (left+8) : (left+right)*0.5, midY);
         }
       }
       // 손실구간 아래 텍스트
@@ -1479,7 +1482,7 @@ function buildPositionChart(p, canvasId){
         const midY=(y1+bottom)/2;
         if(midY>top&&midY<bottom&&bottom-y1>20){
           c.fillStyle='rgba(40,80,200,0.55)';
-          c.fillText('손실구간',(left+right)*0.5,midY);
+          c.fillText('손실구간', _mbZ ? (left+8) : (left+right)*0.5, midY);
         }
       }
       c.restore();
@@ -1493,8 +1496,12 @@ function buildPositionChart(p, canvasId){
         c.lineWidth=2.5;
         c.setLineDash([]);
         const _mbE=window.matchMedia('(max-width:640px)').matches;
+        /* ⚠ 모바일에서 만기일 선이 차트 오른쪽 테두리와 겹쳐 안 보였다
+              → 진입선처럼 **점선**으로 그려서 확실히 구분되게 한다 */
+        if(_mbE){ c.setLineDash([6,4]); c.lineWidth=2; }
         // 모바일: 선을 축까지만(바깥 여백 제거), 배지는 플롯 안쪽 하단으로
         c.beginPath();c.moveTo(xp,top);c.lineTo(xp,_mbE?bottom:bottom+30);c.stroke();
+        c.setLineDash([]);
 
         // 만기일 배지
         c.font='bold 11px IBM Plex Sans KR,Noto Sans KR,sans-serif';
@@ -1514,9 +1521,10 @@ function buildPositionChart(p, canvasId){
         c.fillText(lbl,_mbTxtX,_mbTxtY);
 
         // 잔존일 화살표 (→ N일) — 중간 하단
+        // ⚠ 모바일에서 아래쪽 행사가 점선·라벨과 겹쳤다 → 위쪽(만기일 배지 아래)으로 올린다
         const lastXp=x.getPixelForValue(histLabels.length-1);
         const midX=(lastXp+xp)/2;
-        const arrowY=bottom-14;
+        const arrowY=_mbE ? (top+(bottom-top)*0.30+34) : (bottom-14);
 
         // 화살표 선
         c.strokeStyle='rgba(10,10,10,0.4)';
@@ -2731,9 +2739,11 @@ loadPositions();
   /* ── 카드 공통 ── */
   .fm-card{ background:#1E2027 !important; border:0.5px solid rgba(255,255,255,.08) !important;
     border-radius:12px !important; padding:12px !important; margin:0 0 8px 0 !important; }
-  .fm-lbl{ font-size:11px !important; color:#8B95A1 !important; margin:0 !important; }
-  .fm-dim{ font-size:10px !important; color:#868F9C !important; margin:0 !important; line-height:1.6 !important; }
-  .fm-t{ font-size:14px !important; font-weight:800 !important; color:#F5F6F8 !important; margin:0 !important; }
+  /* ★ 유튜브 원칙: 본문 최소 13px, 12px 이하 금지. 줄간격 1.4~1.6배.
+        예전에 9~10px 을 쓰던 것을 전부 12px 이상으로 올렸다. */
+  .fm-lbl{ font-size:12px !important; color:#8B95A1 !important; margin:0 !important; }
+  .fm-dim{ font-size:12px !important; color:#868F9C !important; margin:0 !important; line-height:1.6 !important; }
+  .fm-t{ font-size:15px !important; font-weight:800 !important; color:#F5F6F8 !important; margin:0 !important; }
 
   /* ── 1) 평가수익 (주인공) ── */
   .fm-hero .fm-v{ font-size:30px !important; font-weight:800 !important; margin:5px 0 0 0 !important;
@@ -2760,12 +2770,12 @@ loadPositions();
     margin:0 0 6px 0 !important; }
   .fm-item-hd{ display:flex !important; align-items:baseline !important;
     justify-content:space-between !important; gap:8px !important; }
-  .fm-item-nm{ font-size:12px !important; font-weight:800 !important; color:#F5F6F8 !important;
+  .fm-item-nm{ font-size:14px !important; font-weight:800 !important; color:#F5F6F8 !important;
     min-width:0 !important; word-break:keep-all !important; }
-  .fm-item-nm i{ font-style:normal !important; font-size:10px !important; font-weight:400 !important;
+  .fm-item-nm i{ font-style:normal !important; font-size:12px !important; font-weight:400 !important;
     color:#8B95A1 !important; }   /* ⚠ 구분(양매도)은 회색 — 파랑 금지 */
-  .fm-item-mg{ font-size:12px !important; color:#F5F6F8 !important; flex:0 0 auto !important; }
-  .fm-item-sub{ font-size:9px !important; color:#868F9C !important; margin-top:5px !important;
+  .fm-item-mg{ font-size:14px !important; color:#F5F6F8 !important; flex:0 0 auto !important; }
+  .fm-item-sub{ font-size:12px !important; color:#868F9C !important; margin-top:6px !important;
     line-height:1.6 !important; word-break:keep-all !important; }
 
   /* ── 3) 보유 포지션 카드 ── */
@@ -2777,16 +2787,16 @@ loadPositions();
   .fm-pos-hd{ display:flex !important; align-items:flex-start !important;
     justify-content:space-between !important; gap:10px !important; cursor:pointer !important;
     min-height:32px !important; }
-  .fm-pos-nm{ font-size:14px !important; font-weight:800 !important; color:#F5F6F8 !important;
+  .fm-pos-nm{ font-size:16px !important; font-weight:800 !important; color:#F5F6F8 !important;
     margin:0 !important; min-width:0 !important; word-break:keep-all !important; }
-  .fm-pos-nm i{ font-style:normal !important; font-size:10px !important; font-weight:400 !important;
+  .fm-pos-nm i{ font-style:normal !important; font-size:12px !important; font-weight:400 !important;
     color:#8B95A1 !important; }   /* ⚠ 회색 */
-  .fm-pos-meta{ font-size:10px !important; color:#868F9C !important; margin:3px 0 0 0 !important;
+  .fm-pos-meta{ font-size:12px !important; color:#868F9C !important; margin:4px 0 0 0 !important;
     line-height:1.6 !important; word-break:keep-all !important; }
   .fm-pos-r{ text-align:right !important; flex:0 0 auto !important; }
-  .fm-pnl{ font-size:15px !important; font-weight:800 !important; margin:0 !important;
+  .fm-pnl{ font-size:17px !important; font-weight:800 !important; margin:0 !important;
     white-space:normal !important; word-break:keep-all !important; }
-  .fm-pnl-s{ font-size:9px !important; color:#868F9C !important; margin:2px 0 0 0 !important; }
+  .fm-pnl-s{ font-size:12px !important; color:#868F9C !important; margin:3px 0 0 0 !important; }
 
   /* 진행 막대 — 회색 (색 절제) */
   .fm-bar{ margin-top:8px !important; height:3px !important; background:#23262E !important;
@@ -2799,10 +2809,10 @@ loadPositions();
     margin-top:10px !important; padding-top:10px !important; }
   .fm-pos.fm-open .fm-pos-bd{ display:block !important; }
   .fm-grid2{ display:grid !important; grid-template-columns:1fr 1fr !important; gap:7px !important; }
-  .fm-tile{ background:#23262E !important; border-radius:8px !important; padding:8px !important; }
-  .fm-tile .fm-dim{ font-size:9px !important; }
-  .fm-tile .v{ font-size:13px !important; font-weight:800 !important; color:#F5F6F8 !important;
-    margin:3px 0 0 0 !important; word-break:keep-all !important; }
+  .fm-tile{ background:#23262E !important; border-radius:8px !important; padding:9px 10px !important; }
+  .fm-tile .fm-dim{ font-size:12px !important; }
+  .fm-tile .v{ font-size:15px !important; font-weight:800 !important; color:#F5F6F8 !important;
+    margin:4px 0 0 0 !important; word-break:keep-all !important; }
 
   /* ── 상세 팝업 — 아래에서 올라오는 시트로 ──
         ⚠ 차트를 그림으로 못 떠서(빈 그림) 팝업을 그대로 쓴다. 대신 폰에 맞게 다듬는다. */
@@ -2826,15 +2836,38 @@ loadPositions();
   /* 값 4칸 → 2×2 타일, 무채색 */
   #overlay .modal-body > div > div{ background:#23262E !important; border:0 !important;
     border-radius:9px !important; }
-  /* 포지션 정보 표 — 가로 스크롤 없이 */
-  #overlay table{ width:100% !important; table-layout:fixed !important; border-collapse:collapse !important; }
-  #overlay table th{ font-size:9px !important; color:#8B95A1 !important; padding:5px 2px !important;
-    border:0 !important; border-bottom:0.5px solid rgba(255,255,255,.08) !important; }
-  #overlay table td{ font-size:10px !important; padding:6px 2px !important; border:0 !important;
+  /* 포지션 정보 표 — ★ 레퍼런스 문서 4-3의 정답 그대로:
+        flex·margin·float 은 큰글씨에서 전부 깨진다.
+        **라벨 한 줄 / 값 그 아래 줄 우측정렬** (블록 2개) 이 유일하게 안 깨진다.
+        ⚠ 글자는 12px 이상 (유튜브 원칙: 12px 이하 금지) */
+  #overlay table{ width:100% !important; table-layout:fixed !important; border-collapse:collapse !important;
+    display:block !important; }
+  #overlay table thead{ display:none !important; }   /* 헤더 줄은 라벨로 대체 */
+  #overlay table tbody{ display:block !important; }
+  #overlay table tr{ display:block !important; background:#23262E !important;
+    border-radius:9px !important; padding:10px 11px !important; margin:0 0 8px 0 !important;
+    border:0 !important; }
+  #overlay table td{ display:block !important; padding:5px 0 !important; border:0 !important;
     border-bottom:0.5px solid rgba(255,255,255,.06) !important;
+    text-align:right !important;                      /* 값은 오른쪽 */
+    font-size:13px !important; color:#F5F6F8 !important;
     white-space:normal !important; word-break:keep-all !important; }
+  #overlay table td:last-child{ border-bottom:0 !important; }
+  #overlay table td::before{ content:attr(data-label);
+    display:block !important; text-align:left !important;   /* 라벨은 왼쪽 윗줄 */
+    font-size:12px !important; font-weight:400 !important;
+    color:#8B95A1 !important; margin-bottom:2px !important; }
   /* '← 포지션 목록으로' 는 시트를 닫으면 되니 숨긴다 */
   #overlay .modal-body > a{ display:none !important; }
+  /* ★ 레퍼런스 C그룹: "차트만 두지 말고 해석을 한 줄 붙여라"
+        (예: "평균보다 10만원 많아요") → 차트 아래 결론 문장 */
+  .fm-verdict{ background:#23262E !important; border-radius:9px !important;
+    padding:11px 12px !important; margin:8px 0 12px 0 !important;
+    font-size:13px !important; line-height:1.6 !important; color:#F5F6F8 !important;
+    word-break:keep-all !important; }
+  .fm-verdict b{ font-weight:800 !important; }
+  .fm-verdict span{ display:block !important; margin-top:4px !important;
+    font-size:12px !important; color:#868F9C !important; }
 
   /* ── 4) 청산 내역 (접힘) ── */
   .fm-cls-hd{ display:flex !important; align-items:center !important;
@@ -3114,8 +3147,62 @@ loadPositions();
         ev.stopPropagation();
         var pid = b.getAttribute('data-pid');
         try{ if(pid && typeof window.openModal === 'function') window.openModal(pid); }catch(e){}
+        setTimeout(addVerdict, 600);   /* 차트 아래 결론 한 줄 */
       });
     });
+
+    /* ★ 레퍼런스 C그룹 원칙: 차트만 두지 말고 **자연어 결론 한 줄**을 붙인다.
+       옵션 매도는 "가격이 두 행사가 사이에 머물면 이긴다"가 전부다.
+       그 판단을 문장 하나로 대신 내려 준다. */
+    function addVerdict(){
+      try{
+        if(!isMob()) return;
+        var ov = document.getElementById('overlay');
+        if(!ov || window.getComputedStyle(ov).display === 'none') return;
+        var body = ov.querySelector('.modal-body');
+        if(!body || body.querySelector('.fm-verdict')) return;
+
+        var t = T(body);
+        /* 행사가 2개(또는 1개) 와 현재가를 읽는다 */
+        var strikes = (t.match(/\$[\d,\.]+/g) || []).map(function(s){ return parseFloat(s.replace(/[$,]/g,'')); });
+        var cur = null;
+        var cm = t.match(/현재\s*\$?([\d,\.]+)/);
+        if(cm) cur = parseFloat(cm[1].replace(/,/g,''));
+
+        var msg = '', sub = '';
+        var zone = (t.match(/행사가\s*\$?([\d,\.]+)\s*\/\s*\$?([\d,\.]+)/) || []);
+        var lo = zone[1] ? parseFloat(zone[1].replace(/,/g,'')) : null;
+        var hi = zone[2] ? parseFloat(zone[2].replace(/,/g,'')) : null;
+        if(lo && hi && lo > hi){ var tmp = lo; lo = hi; hi = tmp; }
+
+        var dd = (t.match(/D-(\d+)/) || [])[1];
+
+        if(lo && hi && cur != null){
+          if(cur > lo && cur < hi){
+            msg = '지금 가격은 <b>두 행사가 사이</b>에 있습니다.';
+            sub = '만기까지 이 구간을 지키면 받은 프리미엄이 전부 수익이 됩니다'
+                + (dd ? ' · 남은 기간 ' + dd + '일' : '');
+          } else {
+            msg = '지금 가격이 <b>행사가를 벗어나</b> 있습니다.';
+            sub = '만기까지 구간 안으로 돌아오지 않으면 손실이 납니다'
+                + (dd ? ' · 남은 기간 ' + dd + '일' : '');
+          }
+        } else if(lo && cur != null){
+          msg = (cur > lo) ? '지금 가격은 <b>행사가 위</b>에 있습니다.' : '지금 가격은 <b>행사가 아래</b>에 있습니다.';
+          sub = (dd ? '남은 기간 ' + dd + '일' : '');
+        }
+        if(!msg) return;
+
+        var v = document.createElement('div');
+        v.className = 'fm-verdict';
+        v.innerHTML = msg + (sub ? '<span>' + esc(sub) + '</span>' : '');
+
+        /* 차트 바로 아래에 넣는다 */
+        var chartSec = body.children[0];
+        if(chartSec && chartSec.nextSibling) body.insertBefore(v, chartSec.nextSibling);
+        else body.insertBefore(v, body.children[1] || null);
+      }catch(e){}
+    }
 
     /* 팝업을 열어 내용만 복사해 오고, 팝업은 바로 닫는다.
        ⚠ 원본을 **꺼내오지 않고 복사**한다 → 팝업이 다시 열려도 멀쩡하다.
