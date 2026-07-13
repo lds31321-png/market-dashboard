@@ -3241,7 +3241,27 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 
   .gm-chartbox{ background:#23262E !important; border-radius:8px !important;
     padding:8px !important; margin:0 0 16px 0 !important; }
-  .gm-chartbox canvas{ max-width:100% !important; }
+  .gm-chartbox canvas{ max-width:100% !important; width:100% !important; height:200px !important; }
+  .gm-chartbox *{ font-size:13px !important; line-height:1.5 !important;
+    max-width:100% !important; white-space:normal !important; }
+
+  /* 원본을 그대로 가져온 칸(제목·경고·현재가·출처·해설) — 내용은 손대지 않고 폭·글자만 맞춘다 */
+  .gm-raw{ background:#23262E !important; border-radius:8px !important;
+    padding:16px !important; margin:0 0 8px 0 !important; }
+  .gm-raw *{ max-width:100% !important; width:auto !important;
+    white-space:normal !important; word-break:keep-all !important; overflow-wrap:anywhere !important;
+    line-height:1.6 !important; }
+  .gm-raw, .gm-raw p, .gm-raw div, .gm-raw span, .gm-raw li{ font-size:14px !important; }
+  /* PC용 가로 격자는 모바일에서 한 줄씩 */
+  .gm-raw [class*="grid"], .gm-acc-bd [class*="grid"],
+  .gm-raw [style*="grid-template"], .gm-acc-bd [style*="grid-template"]{
+    display:block !important; }
+  .gm-raw [style*="display:flex"], .gm-acc-bd [style*="display:flex"]{ flex-wrap:wrap !important; }
+  /* 현재가는 값이 커야 읽힌다 (정보 위계 3단) */
+  .gm-raw .price-hero{ padding:0 !important; }
+  .gm-raw .ph-price, .gm-raw .price-val, .gm-raw [class*="price"] b{ font-size:26px !important; }
+  .gm-raw table{ width:100% !important; table-layout:fixed !important; }
+  .gm-raw canvas, .gm-acc-bd canvas{ display:none !important; }  /* 빈 캔버스 복제본 숨김 */
 }
 </style>
 
@@ -3421,61 +3441,80 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
       }
       if(!pg) return;
 
-      var dh = '';
+      /* ── 원본 자식을 **순서 그대로 전부** 담는다 ──
+         하드코딩 목록으로 고르면 제목·현재가·출처 같은 게 통째로 빠진다(실제로 빠졌다).
+         원본에 없는 제목을 내가 지어내지도 않는다. 섹션 제목은 원본 sec-lbl 문구를 그대로 쓴다. */
+      bd.innerHTML = '';
+      var LONG  = ['factors-grid','scenario-grid','calendar-grid','season-grid'];
+      var chartCvs = [];
+      var lbl = '';
 
-      /* 1) 한 줄 결론 (원본 alert-banner) */
-      var al = pg.querySelector('.alert-banner');
-      if(al) dh += '<p class="gm-said" style="margin:0 0 16px">' + esc(T(al).slice(0, 140)) + '</p>';
+      [].slice.call(pg.children).forEach(function(el){
+        var cls = ' ' + (el.className || '') + ' ';
+        var has = function(c){ return cls.indexOf(' ' + c + ' ') >= 0; };
 
-      /* 2) 차트 — 원본 캔버스를 복사하지 않고 **그 자리로 옮기지도 않는다**.
-            대신 원본 차트 영역을 복제(clone)해 넣는다. 캔버스는 그림이 안 따라오므로
-            아래 resize 로 다시 그리게 한다. */
-      var cr = pg.querySelector('.chart-row');
-      if(cr){
-        var cv = cr.querySelector('canvas');
-        if(cv){
-          dh += '<div class="gm-chartbox" data-chart="1"></div>';
+        /* 섹션 제목 → 바로 뒤 블록의 아코디언 제목으로 쓴다 (원문 그대로) */
+        if(has('sec-lbl')){ lbl = T(el); return; }
+
+        /* 차트 — 캔버스는 복사하면 그림이 안 따라온다 → 원본을 옮겨오고 집주소를 기억시킨다.
+           차트가 2개인 종목이 있으므로 전부 옮긴다. */
+        if(has('chart-row')){
+          var wraps = el.querySelectorAll('.chart-wrap');
+          if(!wraps.length) wraps = [el];
+          var host = document.createElement('div');
+          host.className = 'gm-charts';
+          [].slice.call(wraps).forEach(function(wr){
+            var box = document.createElement('div');
+            box.className = 'gm-chartbox';
+            var head = wr.cloneNode(true);
+            head.querySelectorAll('canvas').forEach(function(x){ if(x.parentNode) x.parentNode.removeChild(x); });
+            box.innerHTML = head.innerHTML;           /* 차트 제목·설명은 복사 */
+            var cv = wr.querySelector('canvas');
+            if(cv){
+              if(!cv.__gmHome) cv.__gmHome = cv.parentElement;
+              box.appendChild(cv);                    /* 캔버스는 이동 */
+              chartCvs.push(cv);
+            }
+            host.appendChild(box);
+          });
+          bd.appendChild(host);
+          return;
         }
-      }
 
-      /* 3) 긴 분석들 — 아코디언으로 접는다 */
-      var groups = [
-        ['요인별 영향도', '.factors-grid'],
-        ['시나리오 분석', '.scenario-grid'],
-        ['일정 · 이벤트',  '.calendar-grid'],
-        ['계절성 패턴',    '.season-grid'],
-        ['해설',          '.commentary-section']
-      ];
-      groups.forEach(function(g){
-        var el = pg.querySelector(g[1]);
-        if(!el) return;
-        var clone = el.cloneNode(true);
-        clone.querySelectorAll('canvas').forEach(function(x){ if(x.parentElement) x.parentElement.removeChild(x); });
-        dh += '<div class="gm-acc">'
-            +   '<div class="gm-acc-hd">'
-            +     '<p class="gm-acc-t">' + esc(g[0]) + '</p>'
-            +     '<span class="gm-chev" style="color:#8B95A1;font-size:14px">&#9662;</span>'
-            +   '</div>'
-            +   '<div class="gm-acc-bd">' + clone.innerHTML + '</div>'
-            + '</div>';
+        /* 긴 분석 블록 → 접어둔다 (제목은 원본 문구) */
+        var isLong = LONG.some(has);
+        if(isLong){
+          var t = lbl; lbl = '';
+          var acc = document.createElement('div'); acc.className = 'gm-acc';
+          var hd2 = document.createElement('div');  hd2.className = 'gm-acc-hd';
+          hd2.innerHTML = '<p class="gm-acc-t">' + esc(t || T(el).slice(0,14)) + '</p>'
+                        + '<span class="gm-chev" style="color:#8B95A1;font-size:14px">&#9662;</span>';
+          var bdy = document.createElement('div');  bdy.className = 'gm-acc-bd';
+          bdy.appendChild(el.cloneNode(true));
+          acc.appendChild(hd2); acc.appendChild(bdy);
+          bd.appendChild(acc);
+          return;
+        }
+
+        /* 나머지(제목·경고·현재가·출처·해설) → 원본 그대로. 절대 잘라내지 않는다. */
+        lbl = '';
+        var raw = document.createElement('div');
+        raw.className = 'gm-raw';
+        raw.appendChild(el.cloneNode(true));
+        bd.appendChild(raw);
       });
 
-      bd.innerHTML = dh;
       bd.setAttribute('data-done', openKey);
 
-      /* 차트 — 원본 캔버스를 **옮겨온다**(복사하면 그림이 안 따라온다).
-         ⚠ 옮긴 캔버스는 화면이 다시 그려질 때 통째로 지워져 영영 사라진다.
-            → 원래 자리(집)를 기억시켜 두고, 지우기 전에 반드시 되돌려 놓는다. */
-      try{
-        var box = bd.querySelector('[data-chart]');
-        var cv2 = pg.querySelector('.chart-row canvas');
-        if(box && cv2){
-          if(!cv2.__gmHome) cv2.__gmHome = cv2.parentElement;
-          box.appendChild(cv2);
-          var ch = (window.Chart && window.Chart.getChart) ? window.Chart.getChart(cv2) : null;
-          if(ch){ setTimeout(function(){ try{ ch.resize(); ch.update(); }catch(e){} }, 120); }
-        }
-      }catch(e){}
+      /* 옮겨온 차트들 다시 그리기 — resize 뒤에 반드시 update() (안 하면 선이 왼쪽에 몰린다) */
+      setTimeout(function(){
+        chartCvs.forEach(function(cv){
+          try{
+            var ch = (window.Chart && window.Chart.getChart) ? window.Chart.getChart(cv) : null;
+            if(ch){ ch.resize(); ch.update(); }
+          }catch(e){}
+        });
+      }, 150);
 
       /* 아코디언 */
       bd.querySelectorAll('.gm-acc-hd').forEach(function(hd){
