@@ -2820,7 +2820,9 @@ loadPositions();
   #overlay .modal-date{ font-size:10px !important; color:#868F9C !important; margin-top:4px !important; }
   #overlay .modal-close{ min-width:32px !important; min-height:32px !important; color:#8B95A1 !important; }
   #overlay .modal-body{ padding:12px 13px 18px !important; }
-  #overlay .modal-body canvas{ max-width:100% !important; }
+  /* 차트는 원래 흰 배경으로 만들어져 있다(PC도 같다) → 억지로 뒤집지 않고 카드처럼 감싸 자연스럽게 */
+  #overlay .modal-body canvas{ max-width:100% !important; border-radius:9px !important;
+    background:#FFFFFF !important; padding:6px !important; box-sizing:border-box !important; }
   /* 값 4칸 → 2×2 타일, 무채색 */
   #overlay .modal-body > div > div{ background:#23262E !important; border:0 !important;
     border-radius:9px !important; }
