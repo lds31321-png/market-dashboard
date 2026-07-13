@@ -755,16 +755,18 @@ jiktUpdateViewModeLabel();
     color:#8B95A1 !important; margin:5px 0 0 0 !important; text-align:left !important;
     word-break:keep-all !important; }
 
-  /* 버튼 2개(업데이트·PC버전)를 제목 오른쪽 위로. 테마 토글은 모바일 다크 전용이라 계속 숨김 */
+  /* 버튼 2개(업데이트·PC버전)를 제목 위 한 줄로.
+     ⚠ 처음엔 제목 오른쪽에 겹쳐 놓았더니 제목을 가렸다 → 제목 위 별도 줄로 뺀다.
+        (자리 이동은 아래 스크립트가 .hm-btnrow 를 만들어서 처리) */
+  .hm-btnrow{ display:flex !important; justify-content:flex-end !important; gap:6px !important;
+    margin:0 0 10px 0 !important; }
   .jikt-refresh-btn, .jikt-viewmode-btn{
-    position:absolute !important; top:0 !important; margin:0 !important;
+    position:static !important; transform:none !important; margin:0 !important;
     min-height:32px !important; padding:0 10px !important; font-size:11px !important;
     border-radius:8px !important; background:#1E2027 !important; color:#8B95A1 !important;
     border:0.5px solid rgba(255,255,255,.14) !important; white-space:nowrap !important;
+    width:auto !important; max-width:none !important;
     display:inline-flex !important; align-items:center !important; gap:5px !important; }
-  .jikt-refresh-btn{ right:0 !important; }
-  .jikt-viewmode-btn{ right:0 !important; top:38px !important; max-width:none !important;
-    width:auto !important; }
   .jikt-theme-btn{ display:none !important; }
 
   /* --- 단계 표시 2벌은 모두 숨긴다 (카드에 이미 1·2·3 이 있다) --- */
@@ -911,6 +913,20 @@ jiktUpdateViewModeLabel();
 
   function build(){
     if(!isMob()) return;
+
+    /* 0) 헤더 버튼 2개를 제목 위 한 줄로 모은다 (제목을 가리지 않게) */
+    try{
+      var hd=document.querySelector('.hub-header');
+      var rf=document.querySelector('.jikt-refresh-btn');
+      var vm=document.querySelector('.jikt-viewmode-btn');
+      if(hd && !hd.querySelector('.hm-btnrow')){
+        var row=document.createElement('div');
+        row.className='hm-btnrow';
+        hd.insertBefore(row, hd.firstChild);
+        if(rf) row.appendChild(rf);
+        if(vm) row.appendChild(vm);
+      }
+    }catch(e){}
 
     /* 1) 쿠폰 배너를 카드 3장 아래로 옮긴다 */
     try{
