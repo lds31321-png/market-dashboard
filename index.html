@@ -3244,6 +3244,23 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     font-size:14px !important; line-height:1.6 !important; }
   .gm-acc-bd canvas{ max-width:100% !important; height:auto !important; }
 
+  /* 카드 안에 또 카드가 들어와 폭이 좁아지면 제목이 어색하게 잘린다 → 안쪽 여백을 줄인다 */
+  .gm-acc-bd > * > *{ margin-left:0 !important; margin-right:0 !important; }
+  .gm-acc-bd [class*="card"],
+  .gm-acc-bd [class*="box"],
+  .gm-acc-bd [class*="item"],
+  .gm-acc-bd [class*="factor"],
+  .gm-acc-bd [class*="scen"]{ padding-left:12px !important; padding-right:12px !important;
+    margin-left:0 !important; margin-right:0 !important; }
+
+  /* 색 절제 — 파란 글씨가 사방에 흩어져 정신없다. 본문 제목은 흰색으로 통일.
+     방향·손익을 뜻하는 색(빨강·파랑 값)은 건드리지 않는다. */
+  .gm-acc-bd h1, .gm-acc-bd h2, .gm-acc-bd h3, .gm-acc-bd h4,
+  .gm-acc-bd [class*="title"], .gm-acc-bd [class*="ttl"],
+  .gm-acc-bd [class*="name"], .gm-acc-bd [class*="hd"] > b,
+  .gm-acc-bd strong{ color:#F5F6F8 !important; }
+  .gm-acc-bd a{ color:#8B95A1 !important; text-decoration:none !important; }
+
   .gm-chartbox{ background:#23262E !important; border-radius:8px !important;
     padding:8px !important; margin:0 0 16px 0 !important; }
   /* ⚠ 캔버스 크기를 CSS로 강제하면 Chart.js가 제 크기를 못 재고 0×0 으로 굳어 빈 그림이 된다.
