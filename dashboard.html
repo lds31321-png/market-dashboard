@@ -3658,4 +3658,246 @@ loadPositions();
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
 </script>
+
+<style id="fs-css-2026-07-13">
+/* ============================================================
+   무료 포지션 공유 — 수익 통계 탭(t3) 모바일 재설계 (2026-07-13)
+   ⚠ 전부 @media(max-width:640px). PC 는 건드리지 않는다.
+
+   ★ 레퍼런스 적용
+     C그룹 #2 보험료 → **"내 값 vs 기준" 2계열 바 + 자연어 결론 문장**
+                        ("평균보다 10만원 많아요" 처럼 차트만 두지 말고 해석을 붙인다)
+     B그룹          → 대표값 크게 → 아래로 분해
+     #38            → 승률 막대
+   ★ 수치 기준 — 본문 14~16px · 여백 8배수 · 위계 3단 · 터치 32px
+   ★ 색 절제 — 수익 #F06A6A / 손실 #4593FC. 그 외 무채색
+   ============================================================ */
+@media (max-width:640px){
+
+  /* 원본은 숨기고 다시 그린 것만 */
+  #t3 > div:not(.fs-wrap){ display:none !important; }
+  .fs-wrap{ display:block !important; }
+
+  .fs-card{ background:#1E2027 !important; border:0.5px solid rgba(255,255,255,.08) !important;
+    border-radius:12px !important; padding:16px !important; margin:0 0 16px 0 !important; }
+  .fs-lbl{ font-size:14px !important; color:#8B95A1 !important; margin:0 !important; line-height:1.5 !important; }
+  .fs-v{ font-size:32px !important; font-weight:800 !important; margin:8px 0 0 0 !important;
+    line-height:1.2 !important; word-break:keep-all !important; }
+  .fs-said{ margin:16px 0 0 0 !important; font-size:14px !important; color:#F5F6F8 !important;
+    line-height:1.5 !important; word-break:keep-all !important; }
+  .fs-said b{ font-weight:800 !important; }
+
+  /* 맨 위 한 문장 요약 */
+  .fs-top{ font-size:16px !important; color:#F5F6F8 !important; line-height:1.6 !important;
+    margin:0 !important; word-break:keep-all !important; }
+  .fs-top b{ font-size:22px !important; font-weight:800 !important; }
+
+  /* 곡선 */
+  .fs-chart{ margin-top:16px !important; background:#23262E !important;
+    border-radius:8px !important; height:110px !important; overflow:hidden !important; }
+  .fs-chart svg{ display:block !important; width:100% !important; height:100% !important; }
+
+  /* 승률 막대 */
+  .fs-bar{ margin-top:16px !important; height:6px !important; background:#23262E !important;
+    border-radius:20px !important; display:flex !important; overflow:hidden !important; }
+  .fs-bar > i{ display:block !important; height:100% !important; }
+
+  /* 2계열 비교 바 (레퍼런스 #2 — 벌 때 vs 잃을 때) */
+  .fs-cmp{ display:flex !important; align-items:center !important; gap:8px !important;
+    margin-top:8px !important; }
+  .fs-cmp-l{ font-size:14px !important; color:#8B95A1 !important;
+    flex:0 0 64px !important; white-space:nowrap !important; }
+  .fs-cmp-t{ flex:1 1 auto !important; min-width:0 !important; height:20px !important;
+    background:#23262E !important; border-radius:4px !important; overflow:hidden !important; }
+  .fs-cmp-t > i{ display:block !important; height:100% !important; }
+  .fs-cmp-v{ font-size:14px !important; font-weight:800 !important;
+    flex:0 0 72px !important; text-align:right !important; white-space:nowrap !important; }
+
+  /* 접었다 펴는 상세 지표 */
+  .fs-more-hd{ display:flex !important; align-items:center !important;
+    justify-content:space-between !important; cursor:pointer !important;
+    min-height:32px !important; gap:16px !important; }
+  .fs-more-bd{ display:none !important; margin-top:16px !important; }
+  .fs-card.fs-open .fs-more-bd{ display:block !important; }
+  .fs-row{ display:flex !important; align-items:baseline !important;
+    justify-content:space-between !important; padding:8px 0 !important; gap:16px !important;
+    border-bottom:0.5px solid rgba(255,255,255,.06) !important; }
+  .fs-row:last-child{ border-bottom:0 !important; }
+  .fs-row .v{ font-size:16px !important; font-weight:800 !important; color:#F5F6F8 !important;
+    word-break:keep-all !important; }
+}
+</style>
+
+<script id="fs-js-2026-07-13">
+/* 수익 통계 탭(t3) 모바일 엔진 — 원본을 읽기만 한다 */
+(function(){
+  function isMob(){ try{ return window.matchMedia('(max-width:640px)').matches; }catch(e){ return false; } }
+  function T(e){ return e ? String(e.textContent||'').replace(/\s+/g,' ').trim() : ''; }
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function pnlCol(t){ var s=String(t||'').trim();
+    return /^-/.test(s) ? '#4593FC' : (/^\+/.test(s) ? '#F06A6A' : '#F5F6F8'); }
+  function num(s){ var v=parseFloat(String(s||'').replace(/[^\d.\-]/g,'')); return isNaN(v)?0:v; }
+
+  var sig='';
+
+  function build(){
+    if(!isMob()) return;
+    var pg = document.getElementById('t3');
+    if(!pg || pg.getBoundingClientRect().height <= 0) return;
+
+    /* ── 원본에서 값 읽기 ── */
+    var whole = T(pg);
+    var g = {};
+    g.rate  = (whole.match(/누적 수익률\s*([+\-][\d.]+\s*%)/) || [])[1] || '';
+    g.money = (whole.match(/누적 순수익\s*([+\-][\d,]+만원)/) || [])[1] || '';
+    g.total = (whole.match(/총 전략 수\s*(\d+)\s*번/) || [])[1] || '';
+    g.live  = (whole.match(/(\d+)개 진행중/) || [])[1] || '';
+    g.wr    = (whole.match(/승률\s*([\d.]+)\s*%/) || [])[1] || '';
+    g.win   = (whole.match(/(\d+)승/) || [])[1] || '';
+    g.los   = (whole.match(/(\d+)패/) || [])[1] || '';
+    g.avgW  = (whole.match(/평균 수익\s*([+\-][\d,]+)\s*만원/) || [])[1] || '';
+    g.avgL  = (whole.match(/평균 손실\s*([+\-][\d,]+)\s*만원/) || [])[1] || '';
+    g.pf    = (whole.match(/손익비\s*([\d.]+)\s*x/i) || [])[1] || '';
+    g.dep   = (whole.match(/예탁금\s*([\d,]+만원)/) || [])[1] || '';
+
+    if(!g.rate || !g.total) return;   /* 아직 안 채워짐 */
+
+    var s2 = [g.rate,g.total,g.wr,g.pf,g.money].join('|');
+    if(s2 === sig && pg.querySelector('.fs-wrap')) return;
+    sig = s2;
+
+    /* 누적 곡선 — 원본 차트 데이터에서 가져온다 */
+    var svg = '';
+    try{
+      var cvs = pg.querySelectorAll('canvas');
+      for(var ci=0; ci<cvs.length; ci++){
+        var ch = (window.Chart && window.Chart.getChart) ? window.Chart.getChart(cvs[ci]) : null;
+        if(!ch || !ch.data || !ch.data.datasets || !ch.data.datasets[0]) continue;
+        var arr = ch.data.datasets[0].data || [];
+        var pts = [];
+        for(var i=0;i<arr.length;i++){
+          var v = (arr[i] && typeof arr[i]==='object') ? arr[i].y : arr[i];
+          if(v != null && !isNaN(v)) pts.push(parseFloat(v));
+        }
+        if(pts.length < 3) continue;
+        var mn=Math.min.apply(null,pts), mx=Math.max.apply(null,pts), rg=(mx-mn)||1;
+        var W=300,H=110,P=10;
+        var pl = pts.map(function(v,i2){
+          var x = P + (i2/(pts.length-1))*(W-P*2);
+          var y = (H-P) - ((v-mn)/rg)*(H-P*2);
+          return x.toFixed(1)+','+y.toFixed(1);
+        }).join(' ');
+        svg = '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">'
+            +   '<polyline points="'+pl+'" fill="none" stroke="'
+            +   (pts[pts.length-1] >= pts[0] ? '#F06A6A' : '#4593FC')
+            +   '" stroke-width="2" vector-effect="non-scaling-stroke"/>'
+            + '</svg>';
+        break;
+      }
+    }catch(e){}
+
+    var wrPct = num(g.wr);
+    var aw = Math.abs(num(g.avgW)), al = Math.abs(num(g.avgL));
+    var mxAvg = Math.max(aw, al) || 1;
+    var pfNum = num(g.pf);
+
+    /* 5,000만원 → 얼마가 됐나 */
+    var depN = num(g.dep), gain = num(g.money);
+    var now  = (depN && gain) ? (depN + gain) : 0;
+
+    /* ── 그리기 ── */
+    var h = '';
+
+    /* 0) 맨 위 한 문장 (3안에서 가져옴) */
+    if(g.total && g.win){
+      h += '<div class="fs-card">'
+         +   '<p class="fs-top">'
+         +     (g.dep ? esc(g.dep) + '으로 시작해<br>' : '')
+         +     '<b>' + esc(g.total) + '번 거래</b>했고<br>'
+         +     '<b style="color:#F06A6A">' + esc(g.win) + '번 이겼습니다</b>'
+         +   '</p>'
+         +   '<div class="fs-bar">'
+         +     '<i style="width:'+wrPct+'%;background:#F06A6A"></i>'
+         +     '<i style="width:'+(100-wrPct)+'%;background:#4593FC"></i>'
+         +   '</div>'
+         +   '<p class="fs-lbl" style="margin-top:8px">승률 ' + esc(g.wr) + '% · '
+         +     esc(g.win) + '승 ' + esc(g.los) + '패' + (g.live ? ' · ' + esc(g.live) + '개 진행중' : '') + '</p>'
+         + '</div>';
+    }
+
+    /* 1) 누적 수익 — 대표값 크게 + 곡선 + 결론 (레퍼런스 B + C) */
+    h += '<div class="fs-card">'
+       +   '<p class="fs-lbl">누적 수익률</p>'
+       +   '<p class="fs-v" style="color:'+pnlCol(g.rate)+'">'+esc(g.rate)+'</p>'
+       +   (svg ? '<div class="fs-chart">'+svg+'</div>' : '')
+       +   (now ? '<p class="fs-said">'+esc(g.dep)+'이 <b>'+now.toLocaleString()+'만원</b>이 됐습니다</p>'
+                : (g.money ? '<p class="fs-said">누적 순수익 <b>'+esc(g.money)+'</b></p>' : ''))
+       + '</div>';
+
+    /* 2) 손익비 — 2계열 비교 바 + 결론 (레퍼런스 #2 의 정석) */
+    if(g.pf && g.avgW && g.avgL){
+      h += '<div class="fs-card">'
+         +   '<p class="fs-lbl">손익비</p>'
+         +   '<p class="fs-v" style="color:#F5F6F8">'+esc(g.pf)+'배</p>'
+         +   '<div class="fs-cmp">'
+         +     '<span class="fs-cmp-l">벌 때</span>'
+         +     '<span class="fs-cmp-t"><i style="width:'+Math.round(aw/mxAvg*100)+'%;background:rgba(240,106,106,.35)"></i></span>'
+         +     '<span class="fs-cmp-v" style="color:#F06A6A">'+esc(g.avgW)+'만</span>'
+         +   '</div>'
+         +   '<div class="fs-cmp">'
+         +     '<span class="fs-cmp-l">잃을 때</span>'
+         +     '<span class="fs-cmp-t"><i style="width:'+Math.round(al/mxAvg*100)+'%;background:rgba(69,147,252,.35)"></i></span>'
+         +     '<span class="fs-cmp-v" style="color:#4593FC">'+esc(g.avgL)+'만</span>'
+         +   '</div>'
+         +   (pfNum ? '<p class="fs-said">한 번 잃어도 <b>거의 '+Math.round(pfNum)+'번</b> 벌어 메웁니다</p>' : '')
+         + '</div>';
+    }
+
+    /* 3) 자세한 지표 — 접었다 펴기 */
+    h += '<div class="fs-card fs-more">'
+       +   '<div class="fs-more-hd">'
+       +     '<p style="margin:0;font-size:16px;font-weight:800;color:#F5F6F8">자세한 지표</p>'
+       +     '<span class="fs-chev" style="color:#8B95A1;font-size:14px">&#9662;</span>'
+       +   '</div>'
+       +   '<div class="fs-more-bd">'
+       +     '<div class="fs-row"><span class="fs-lbl">총 전략 수</span><span class="v">'+esc(g.total)+'번</span></div>'
+       +     '<div class="fs-row"><span class="fs-lbl">진행 중</span><span class="v">'+esc(g.live)+'개</span></div>'
+       +     '<div class="fs-row"><span class="fs-lbl">승률</span><span class="v">'+esc(g.wr)+'%</span></div>'
+       +     '<div class="fs-row"><span class="fs-lbl">평균 수익</span><span class="v" style="color:#F06A6A">'+esc(g.avgW)+'만원</span></div>'
+       +     '<div class="fs-row"><span class="fs-lbl">평균 손실</span><span class="v" style="color:#4593FC">'+esc(g.avgL)+'만원</span></div>'
+       +     '<div class="fs-row"><span class="fs-lbl">손익비</span><span class="v">'+esc(g.pf)+'배</span></div>'
+       +     (g.money ? '<div class="fs-row"><span class="fs-lbl">누적 순수익</span><span class="v" style="color:'+pnlCol(g.money)+'">'+esc(g.money)+'</span></div>' : '')
+       +   '</div>'
+       + '</div>';
+
+    var old  = pg.querySelector('.fs-wrap');
+    var wrap = document.createElement('div');
+    wrap.className = 'fs-wrap';
+    wrap.innerHTML = h;
+    pg.appendChild(wrap);
+    if(old) old.parentNode.removeChild(old);
+
+    var hd = wrap.querySelector('.fs-more-hd');
+    if(hd) hd.addEventListener('click', function(){
+      var c = hd.closest('.fs-more');
+      var on = c.classList.toggle('fs-open');
+      var ch2 = c.querySelector('.fs-chev');
+      if(ch2) ch2.innerHTML = on ? '&#9652;' : '&#9662;';
+    });
+  }
+
+  function boot(){
+    build();
+    setInterval(build, 700);
+    try{
+      var t=null;
+      new MutationObserver(function(){ clearTimeout(t); t=setTimeout(build,150); })
+        .observe(document.body, {childList:true, subtree:true});
+    }catch(e){}
+    document.addEventListener('click', function(){ [0,200,600].forEach(function(ms){ setTimeout(build,ms); }); }, true);
+    window.addEventListener('resize', build);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
 </html>
