@@ -3247,6 +3247,8 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   .gm-chartbox canvas{ max-width:100% !important; }
   /* 캔버스 전용 상자 — 높이가 고정돼 있어야 Chart.js가 그림을 그린다 */
   .gm-cvhost{ position:relative !important; width:100% !important; height:200px !important; }
+  .gm-cvhost.gm-cvauto{ height:auto !important; }
+  .gm-cvhost.gm-cvauto canvas{ width:100% !important; height:auto !important; display:block !important; }
   .gm-chartbox *{ font-size:14px !important; line-height:1.5 !important;
     max-width:100% !important; white-space:normal !important; }
   .gm-chartbox .chart-title{ font-weight:800 !important; color:#F5F6F8 !important; }
@@ -3510,6 +3512,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
                 /* Chart.js 가 아닌 그림(직접 그린 캔버스) — 복사하면 그림이 안 따라오므로 옮긴다.
                    화면이 다시 그려질 때 지워지지 않도록 집주소를 기억시킨다. */
                 if(!cv.__gmHome) cv.__gmHome = cv.parentElement;
+                host2.className = 'gm-cvhost gm-cvauto';   /* 높이는 그림 비율대로 */
                 host2.appendChild(cv);
                 chartCvs.push(cv);
               }
