@@ -901,6 +901,13 @@ jiktUpdateViewModeLabel();
     border:0.5px solid rgba(255,255,255,.14) !important; }
   .jcc-cta{ background:#4593FC !important; color:#FFFFFF !important; border:0 !important; }
 
+  /* 팝업 하단 — 12px 이하 금지 · 터치 32px 이상 */
+  .jintro-foot, .jcb-foot{ margin-top:16px !important; }
+  .jintro-hide, .jcb-hide,
+  .jintro-closetxt, .jcb-closetxt{ font-size:14px !important; color:#8B95A1 !important;
+    min-height:32px !important; display:inline-flex !important; align-items:center !important;
+    gap:8px !important; }
+
   /* 누를 수 있는 것 최소 32px */
   .hub-card, .jcb-banner .go, .jintro-coupon, .jcc, .jintro-cta{ min-height:32px !important; }
 }
