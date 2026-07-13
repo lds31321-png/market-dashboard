@@ -1062,7 +1062,8 @@ function ohLegsEntryPt(legs,u){
   var L=ohLegsSorted(legs);
   if(!L.length) return '-';
   var m=ohMult(u);
-  return L.map(function(l){ return hEsc(ohFmtPt((l.premium||0)/(l.contracts||1)/m)); }).join('<br>');
+  /* [2026-07-13] 매수 다리는 프리미엄이 음수(지불)로 저장돼 있음 → 옵션가는 절댓값으로 표기 (매수/매도 구분은 '구분' 컬럼이 담당) */
+  return L.map(function(l){ return hEsc(ohFmtPt(Math.abs((l.premium||0)/(l.contracts||1)/m))); }).join('<br>');
 }
 /* 다리별 청산 옵션가(pt) — 만기소멸이면 다리마다 0, 그 외는 '-' */
 function ohLegsExitPt(legs,status){
