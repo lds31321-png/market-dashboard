@@ -3261,6 +3261,16 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   .gm-acc-bd strong{ color:#F5F6F8 !important; }
   .gm-acc-bd a{ color:#8B95A1 !important; text-decoration:none !important; }
 
+  /* 해설 항목 — 번호가 따로 칸을 차지해 제목이 좁아지고 어색하게 잘린다.
+     번호를 제목과 같은 줄에 붙이고, 본문 들여쓰기를 없애 폭을 넓힌다. */
+  .gm-acc-bd .cm-item{ padding-left:0 !important; margin-left:0 !important; }
+  .gm-acc-bd .cm-title{ display:block !important; text-align:left !important;
+    line-height:1.5 !important; word-break:keep-all !important; }
+  .gm-acc-bd .cm-title > *{ display:inline !important; margin:0 4px 0 0 !important;
+    width:auto !important; min-width:0 !important; flex:none !important; }
+  .gm-acc-bd .cm-text{ padding-left:0 !important; margin-left:0 !important;
+    line-height:1.6 !important; }
+
   .gm-chartbox{ background:#23262E !important; border-radius:8px !important;
     padding:8px !important; margin:0 0 16px 0 !important; }
   /* ⚠ 캔버스 크기를 CSS로 강제하면 Chart.js가 제 크기를 못 재고 0×0 으로 굳어 빈 그림이 된다.

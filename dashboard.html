@@ -3994,9 +3994,15 @@ loadPositions();
   #overlay .modal canvas{ max-width:100% !important; height:auto !important;
     border-radius:8px !important; display:block !important; }
 
-  /* 12px 이하 금지 */
+  /* 12px 이하 금지 — 남아 있던 작은 글씨(공유일·안내문·괄호값)까지 전부 14px 이상 */
   #overlay .modal, #overlay .modal p, #overlay .modal span,
   #overlay .modal div, #overlay .modal td{ font-size:14px; }
+  #overlay .modal [class*="date"], #overlay .modal [class*="share"],
+  #overlay .modal [class*="sub"], #overlay .modal [class*="note"],
+  #overlay .modal [class*="desc"], #overlay .modal [class*="disc"],
+  #overlay .modal small, #overlay .modal em{
+    font-size:14px !important; line-height:1.5 !important; }
+  #overlay .modal .pnl-usd, #overlay .modal [class*="usd"]{ font-size:14px !important; }
 }
 </style>
 </html>
