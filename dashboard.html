@@ -2704,4 +2704,347 @@ loadPositions();
   requestAnimationFrame(draw);
 })();
 </script>
+
+<style id="fm-css-2026-07-13">
+/* ============================================================
+   무료 포지션 공유 — 포지션 현황 탭 모바일 재설계 (2026-07-13)
+   ⚠ 전부 @media(max-width:640px) 안. PC 는 절대 건드리지 않는다.
+   ⚠ 문서 맨 끝이므로 앞선 모바일 규칙을 이긴다(일부러).
+
+   ★★ 색 절제 원칙 ★★
+     색은 손익 숫자에만.  수익 = #F06A6A(빨강) / 손실 = #4593FC(파랑)
+     그 외 전부 무채색.  파란 버튼은 화면당 딱 하나(거래 시작하기)
+     경고색(주황·노랑)은 무료 대시보드에서 쓰지 않는다
+   ============================================================ */
+@media (max-width:640px){
+
+  body{ background:#14161A !important; }
+
+  /* ── 원본 요소는 숨기고, 아래 스크립트가 다시 그린 것만 보인다 ── */
+  #t1 > .action-row,
+  #t1 > .pos-hero,
+  #t1 > div:not(.fm-wrap):not(.pos-grid){ display:none !important; }
+  #t1 > .pos-grid{ display:none !important; }
+
+  .fm-wrap{ display:block !important; padding:0 !important; margin:0 !important; }
+
+  /* ── 카드 공통 ── */
+  .fm-card{ background:#1E2027 !important; border:0.5px solid rgba(255,255,255,.08) !important;
+    border-radius:12px !important; padding:12px !important; margin:0 0 8px 0 !important; }
+  .fm-lbl{ font-size:11px !important; color:#8B95A1 !important; margin:0 !important; }
+  .fm-dim{ font-size:10px !important; color:#868F9C !important; margin:0 !important; line-height:1.6 !important; }
+  .fm-t{ font-size:14px !important; font-weight:800 !important; color:#F5F6F8 !important; margin:0 !important; }
+
+  /* ── 1) 평가수익 (주인공) ── */
+  .fm-hero .fm-v{ font-size:30px !important; font-weight:800 !important; margin:5px 0 0 0 !important;
+    line-height:1.15 !important; word-break:keep-all !important; }
+  .fm-hero .fm-dim{ margin-top:8px !important; }
+
+  /* ── 2) 신규 추천 + 주 버튼 ── */
+  .fm-cta{ display:block !important; background:#2A4A7A !important; color:#8FC0FF !important;
+    text-align:center !important; border-radius:8px !important; font-size:13px !important;
+    font-weight:800 !important; padding:13px 10px !important; margin:10px 0 0 0 !important;
+    min-height:44px !important; text-decoration:none !important; border:0 !important;
+    white-space:normal !important; word-break:keep-all !important; }
+  .fm-sub-btn{ display:block !important; background:transparent !important; color:#8B95A1 !important;
+    border:0.5px solid rgba(255,255,255,.14) !important; text-align:center !important;
+    border-radius:8px !important; font-size:12px !important; padding:11px 10px !important;
+    margin:7px 0 0 0 !important; min-height:36px !important; text-decoration:none !important; }
+
+  /* 신규 추천 목록 (접었다 펴기) */
+  .fm-newhd{ display:flex !important; align-items:center !important; justify-content:space-between !important;
+    cursor:pointer !important; min-height:32px !important; }
+  .fm-newbd{ display:none !important; margin-top:9px !important; }
+  .fm-card.fm-open .fm-newbd{ display:block !important; }
+  .fm-item{ background:#23262E !important; border-radius:9px !important; padding:9px 10px !important;
+    margin:0 0 6px 0 !important; }
+  .fm-item-hd{ display:flex !important; align-items:baseline !important;
+    justify-content:space-between !important; gap:8px !important; }
+  .fm-item-nm{ font-size:12px !important; font-weight:800 !important; color:#F5F6F8 !important;
+    min-width:0 !important; word-break:keep-all !important; }
+  .fm-item-nm i{ font-style:normal !important; font-size:10px !important; font-weight:400 !important;
+    color:#8B95A1 !important; }   /* ⚠ 구분(양매도)은 회색 — 파랑 금지 */
+  .fm-item-mg{ font-size:12px !important; color:#F5F6F8 !important; flex:0 0 auto !important; }
+  .fm-item-sub{ font-size:9px !important; color:#868F9C !important; margin-top:5px !important;
+    line-height:1.6 !important; word-break:keep-all !important; }
+
+  /* ── 3) 보유 포지션 카드 ── */
+  .fm-sec{ font-size:11px !important; color:#8B95A1 !important; margin:14px 0 8px 0 !important; }
+  .fm-sec b{ color:#F5F6F8 !important; font-weight:800 !important; }
+
+  .fm-pos{ background:#1E2027 !important; border:0.5px solid rgba(255,255,255,.08) !important;
+    border-radius:12px !important; padding:11px !important; margin:0 0 7px 0 !important; }
+  .fm-pos-hd{ display:flex !important; align-items:flex-start !important;
+    justify-content:space-between !important; gap:10px !important; cursor:pointer !important;
+    min-height:32px !important; }
+  .fm-pos-nm{ font-size:14px !important; font-weight:800 !important; color:#F5F6F8 !important;
+    margin:0 !important; min-width:0 !important; word-break:keep-all !important; }
+  .fm-pos-nm i{ font-style:normal !important; font-size:10px !important; font-weight:400 !important;
+    color:#8B95A1 !important; }   /* ⚠ 회색 */
+  .fm-pos-meta{ font-size:10px !important; color:#868F9C !important; margin:3px 0 0 0 !important;
+    line-height:1.6 !important; word-break:keep-all !important; }
+  .fm-pos-r{ text-align:right !important; flex:0 0 auto !important; }
+  .fm-pnl{ font-size:15px !important; font-weight:800 !important; margin:0 !important;
+    white-space:normal !important; word-break:keep-all !important; }
+  .fm-pnl-s{ font-size:9px !important; color:#868F9C !important; margin:2px 0 0 0 !important; }
+
+  /* 진행 막대 — 회색 (색 절제) */
+  .fm-bar{ margin-top:8px !important; height:3px !important; background:#23262E !important;
+    border-radius:20px !important; overflow:hidden !important; }
+  .fm-bar > span{ display:block !important; height:100% !important; background:#5F6672 !important;
+    border-radius:20px !important; }
+
+  /* 펼친 내용 */
+  .fm-pos-bd{ display:none !important; border-top:0.5px solid rgba(255,255,255,.08) !important;
+    margin-top:10px !important; padding-top:10px !important; }
+  .fm-pos.fm-open .fm-pos-bd{ display:block !important; }
+  .fm-grid2{ display:grid !important; grid-template-columns:1fr 1fr !important; gap:7px !important; }
+  .fm-tile{ background:#23262E !important; border-radius:8px !important; padding:8px !important; }
+  .fm-tile .fm-dim{ font-size:9px !important; }
+  .fm-tile .v{ font-size:13px !important; font-weight:800 !important; color:#F5F6F8 !important;
+    margin:3px 0 0 0 !important; word-break:keep-all !important; }
+
+  /* ── 4) 청산 내역 (접힘) ── */
+  .fm-cls-hd{ display:flex !important; align-items:center !important;
+    justify-content:space-between !important; cursor:pointer !important; min-height:32px !important; gap:10px !important; }
+  .fm-cls-bd{ display:none !important; margin-top:9px !important; }
+  .fm-card.fm-open .fm-cls-bd{ display:block !important; }
+
+  /* ── 5) 예탁금·증거금 (맨 아래, 조용하게) ── */
+  .fm-row{ display:flex !important; align-items:baseline !important;
+    justify-content:space-between !important; padding:5px 0 !important; gap:10px !important; }
+  .fm-row .v{ font-size:13px !important; color:#F5F6F8 !important; font-weight:700 !important;
+    word-break:keep-all !important; }
+}
+</style>
+
+<script id="fm-js-2026-07-13">
+/* 무료 포지션 공유 — 포지션 현황 탭 모바일 엔진 (2026-07-13)
+   ⚠ 모바일에서만 동작(matchMedia). PC 는 아무것도 바뀌지 않는다.
+   ⚠ 원본을 **꺼내오지 않고 읽기만** 한다. 원본이 다시 그려져도 안전하다.
+      (버튼·링크는 주소만 읽어 새로 만든다 — onclick 이 아니라 href 라서 가능)   */
+(function(){
+  function isMob(){ try{ return window.matchMedia('(max-width:640px)').matches; }catch(e){ return false; } }
+  function T(e){ return e ? String(e.textContent||'').replace(/\s+/g,' ').trim() : ''; }
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  /* 수익 = 빨강, 손실 = 파랑. 이것 말고는 색을 쓰지 않는다. */
+  function pnlCol(t){
+    var s=String(t||'').trim();
+    return /^-/.test(s) ? '#4593FC' : (/^\+/.test(s) ? '#F06A6A' : '#F5F6F8');
+  }
+
+  var sig='';
+
+  function build(){
+    if(!isMob()) return;
+    var pg = document.getElementById('t1');
+    if(!pg || pg.getBoundingClientRect().height <= 0) return;   /* 안 보이는 탭이면 나중에 */
+
+    var hero = pg.querySelector('.pos-hero');
+    var grid = pg.querySelector('.pos-grid');
+    if(!hero || !grid) return;
+
+    var cards = Array.prototype.slice.call(grid.children);
+    if(!cards.length) return;
+
+    /* 내용이 안 바뀌었으면 다시 안 그린다 (지문) */
+    var s2 = T(hero).length + '|' + cards.length + '|' + T(cards[0]).slice(0,60);
+    if(s2 === sig && pg.querySelector('.fm-wrap')) return;
+    sig = s2;
+
+    /* ── 원본에서 값 읽기 ── */
+    var mets = hero.querySelectorAll('.metric');
+    function met(i){ var m=mets[i]; if(!m) return {l:'',v:'',s:''};
+      return { l:T(m.querySelector('.metric-label')), v:T(m.querySelector('.metric-val')), s:T(m.querySelector('.metric-sub')) }; }
+    var mDep = met(0), mMar = met(1), mPnl = met(2);
+
+    /* 카드 한 장 읽기 */
+    function readCard(c){
+      var t = T(c);
+      var o = {};
+      o.nm   = T(c.children[0] && c.children[0].children[0]);          /* 종목 */
+      o.kind = T(c.children[0] && c.children[0].children[1]);          /* 양매도 (콜+풋) */
+      o.no   = T(c.children[1]);                                        /* #176번 · 07/07 공유 */
+      var m;
+      m = t.match(/투자금\(증거금\)\s*([^\s]+)/);        o.margin = m ? m[1] : '';
+      m = t.match(/최대 가능 수익\s*([+\-][^\s]+)/);      o.maxp   = m ? m[1] : '';
+      m = t.match(/현재 평가손익\s*([+\-][\d,\.]+만원)/); o.pnl    = m ? m[1] : '';
+      m = t.match(/\(([+\-]\$[\d,]+)\)/);                 o.pnlUsd = m ? m[1] : '';
+      m = t.match(/(\d+월물)/);                            o.mon    = m ? m[1] : '';
+      m = t.match(/만기\s*([\d\/]+)/);                     o.exp    = m ? m[1] : '';
+      m = t.match(/D-(\d+)/);                              o.dday   = m ? ('D-'+m[1]) : '';
+      m = t.match(/(\d+)%\s*경과/);                        o.prog   = m ? parseInt(m[1],10) : 0;
+      var a = c.querySelector('a[href]');
+      o.href = a ? a.getAttribute('href') : '';
+      o.closed = c.classList.contains('expired');
+      m = t.match(/(만기청산|손절|청산)/);                 o.why    = m ? m[1] : '';
+      return o;
+    }
+
+    var held=[], closed=[];
+    cards.forEach(function(c){ var o=readCard(c); (o.closed?closed:held).push(o); });
+
+    /* 신규 추천 표(위쪽 tbl-rec) 읽기 */
+    var recs=[], recDate='';
+    var tb = pg.querySelector('table.tbl-rec');
+    if(tb){
+      var box = tb.closest('div') && tb.closest('div').previousElementSibling;
+      var head = T(tb.parentElement) ;
+      var dm = T(pg).match(/(\d{4}년\s*\d+월\s*\d+일)\s*공유/);
+      recDate = dm ? dm[1] : '';
+      Array.prototype.forEach.call(tb.querySelectorAll('tbody tr'), function(tr){
+        var td = tr.querySelectorAll('td');
+        if(td.length < 8) return;
+        recs.push({ nm:T(td[1]), mon:T(td[2]), strike:T(td[3]), gu:T(td[4]),
+                    price:T(td[5]), qty:T(td[6]), margin:T(td[7]), exp:T(td[8]) });
+      });
+    }
+
+    /* 액션 링크 */
+    var arow = pg.querySelector('.action-row');
+    var links = arow ? arow.querySelectorAll('a,button') : [];
+    var mainHref='', mainTxt='거래 시작하기', subTxt='', subEl=null;
+    if(links[0]){ mainHref = links[0].getAttribute('href')||''; mainTxt = T(links[0])||mainTxt; }
+    if(links[1]){ subTxt = T(links[1]); subEl = links[1]; }
+
+    /* ── 새로 그리기 ── */
+    var h = '';
+
+    /* 1) 평가수익 — 화면의 주인공 */
+    h += '<div class="fm-card fm-hero">'
+       +   '<p class="fm-lbl">'+esc(mPnl.l||'평가수익')+'</p>'
+       +   '<p class="fm-v" style="color:'+pnlCol(mPnl.v)+'">'+esc(mPnl.v)+'</p>'
+       +   '<p class="fm-dim">'+esc(mPnl.s)+'</p>'
+       + '</div>';
+
+    /* 2) 신규 추천 — 접었다 펴기 + 주 버튼(화면당 하나뿐인 파랑) */
+    h += '<div class="fm-card fm-new">'
+       +   '<div class="fm-newhd">'
+       +     '<div style="min-width:0">'
+       +       '<p class="fm-t">이번 주 신규 추천 '+recs.length+'건</p>'
+       +       '<p class="fm-dim" style="margin-top:3px">'+esc(recDate)+' 공유</p>'
+       +     '</div>'
+       +     '<span class="fm-chev" style="color:#8B95A1;font-size:13px">&#9662;</span>'
+       +   '</div>'
+       +   '<div class="fm-newbd">';
+    recs.forEach(function(r){
+      h +=   '<div class="fm-item">'
+         +     '<div class="fm-item-hd">'
+         +       '<span class="fm-item-nm">'+esc(r.nm)+' <i>'+esc(r.gu)+'</i></span>'
+         +       '<span class="fm-item-mg">'+esc(r.margin)+'</span>'
+         +     '</div>'
+         +     '<p class="fm-item-sub">'+esc([r.mon, r.strike?('행사가 '+r.strike):'', r.price, r.qty, r.exp?('만기 '+r.exp):''].filter(Boolean).join(' · '))+'</p>'
+         +   '</div>';
+    });
+    h +=   '</div>'
+       +   (mainHref ? '<a class="fm-cta" href="'+esc(mainHref)+'" target="_blank" rel="noopener">'+esc(mainTxt)+'</a>'
+                     : '<span class="fm-cta">'+esc(mainTxt)+'</span>')
+       +   (subTxt ? '<span class="fm-sub-btn" data-fm-sub>'+esc(subTxt)+'</span>' : '')
+       + '</div>';
+
+    /* 3) 보유 포지션 */
+    h += '<p class="fm-sec">보유 중 <b>'+held.length+'</b></p>';
+    held.forEach(function(o, i){
+      h += '<div class="fm-pos" data-i="'+i+'">'
+         +   '<div class="fm-pos-hd">'
+         +     '<div style="min-width:0">'
+         +       '<p class="fm-pos-nm">'+esc(o.nm)+' <i>'+esc(o.kind)+'</i></p>'
+         +       '<p class="fm-pos-meta">'+esc([o.mon, o.dday, o.prog?(o.prog+'% 경과'):''].filter(Boolean).join(' · '))+'</p>'
+         +     '</div>'
+         +     '<div class="fm-pos-r">'
+         +       '<p class="fm-pnl" style="color:'+pnlCol(o.pnl)+'">'+esc(o.pnl)+'</p>'
+         +       '<p class="fm-pnl-s">증거금 '+esc(o.margin)+'</p>'
+         +     '</div>'
+         +   '</div>'
+         +   (o.prog ? '<div class="fm-bar"><span style="width:'+Math.min(100,o.prog)+'%"></span></div>' : '')
+         +   '<div class="fm-pos-bd">'
+         +     '<div class="fm-grid2">'
+         +       '<div class="fm-tile"><p class="fm-dim">투자금(증거금)</p><p class="v">'+esc(o.margin)+'</p></div>'
+         +       '<div class="fm-tile"><p class="fm-dim">최대 가능 수익</p><p class="v" style="color:'+pnlCol(o.maxp)+'">'+esc(o.maxp)+'</p></div>'
+         +     '</div>'
+         +     '<p class="fm-dim" style="margin-top:8px">'+esc([o.no, o.exp?('만기 '+o.exp):'', o.pnlUsd].filter(Boolean).join(' · '))+'</p>'
+         +     (o.href ? '<a class="fm-cta" href="'+esc(o.href)+'" style="background:#23262E;color:#8B95A1">자세히 보기 &rarr;</a>' : '')
+         +   '</div>'
+         + '</div>';
+    });
+
+    /* 4) 청산 내역 — 접힘 */
+    var sumClosed = '';
+    var dm2 = T(hero).match(/\+누적\s*([+\-][\d,\.]+만)/);
+    if(dm2) sumClosed = dm2[1] + '원';
+    h += '<div class="fm-card fm-cls" style="margin-top:12px">'
+       +   '<div class="fm-cls-hd">'
+       +     '<div style="min-width:0">'
+       +       '<p class="fm-t">청산 내역 '+closed.length+'건</p>'
+       +       '<p class="fm-dim" style="margin-top:3px">끝난 포지션</p>'
+       +     '</div>'
+       +     '<div style="text-align:right;flex:0 0 auto">'
+       +       (sumClosed ? '<p class="fm-pnl" style="color:'+pnlCol(sumClosed)+'">'+esc(sumClosed)+'</p>' : '')
+       +       '<span class="fm-chev" style="color:#8B95A1;font-size:13px">&#9662;</span>'
+       +     '</div>'
+       +   '</div>'
+       +   '<div class="fm-cls-bd">';
+    closed.forEach(function(o){
+      h +=   '<div class="fm-item">'
+         +     '<div class="fm-item-hd">'
+         +       '<span class="fm-item-nm">'+esc(o.nm)+' <i>'+esc(o.kind.replace(/만기청산|손절|청산/g,'').trim())+'</i></span>'
+         +       '<span class="fm-item-mg" style="color:'+pnlCol(o.pnl)+';font-weight:800">'+esc(o.pnl)+'</span>'
+         +     '</div>'
+         +     '<p class="fm-item-sub">'+esc([o.mon, o.no, o.why].filter(Boolean).join(' · '))+'</p>'
+         +   '</div>';
+    });
+    h +=   '</div>'
+       + '</div>';
+
+    /* 5) 예탁금·증거금 — 맨 아래, 조용하게 */
+    h += '<div class="fm-card" style="margin-top:8px">'
+       +   '<div class="fm-row"><span class="fm-lbl">'+esc(mDep.l)+'</span><span class="v">'+esc(mDep.v)+'</span></div>'
+       +   '<div class="fm-row"><span class="fm-lbl">'+esc(mMar.l)+'</span><span class="v">'+esc(mMar.v)+'</span></div>'
+       +   '<p class="fm-dim" style="margin-top:6px">'+esc(mMar.s)+'</p>'
+       + '</div>';
+
+    var old = pg.querySelector('.fm-wrap');
+    var wrap = document.createElement('div');
+    wrap.className = 'fm-wrap';
+    wrap.innerHTML = h;
+    pg.appendChild(wrap);                 /* 먼저 붙이고 */
+    if(old) old.parentNode.removeChild(old);   /* 옛것은 마지막에 지운다 */
+
+    /* 접었다 펴기 */
+    wrap.querySelectorAll('.fm-pos-hd').forEach(function(hd){
+      hd.addEventListener('click', function(){
+        var c = hd.parentElement;
+        c.classList.toggle('fm-open');
+      });
+    });
+    [['.fm-newhd','.fm-new'], ['.fm-cls-hd','.fm-cls']].forEach(function(p){
+      var hd = wrap.querySelector(p[0]);
+      if(!hd) return;
+      hd.addEventListener('click', function(){
+        var c = hd.closest(p[1]);
+        var on = c.classList.toggle('fm-open');
+        var ch = c.querySelector('.fm-chev');
+        if(ch) ch.innerHTML = on ? '&#9652;' : '&#9662;';
+      });
+    });
+    /* 보조 버튼(전략 브리핑)은 원본 버튼을 대신 눌러준다 */
+    var sb = wrap.querySelector('[data-fm-sub]');
+    if(sb && subEl){ sb.addEventListener('click', function(){ subEl.click(); }); }
+  }
+
+  function boot(){
+    build();
+    setInterval(build, 600);
+    try{
+      var t=null;
+      new MutationObserver(function(){ clearTimeout(t); t=setTimeout(build,150); })
+        .observe(document.body, {childList:true, subtree:true});
+    }catch(e){}
+    document.addEventListener('click', function(){ [0,200,600].forEach(function(ms){ setTimeout(build,ms); }); }, true);
+    window.addEventListener('resize', build);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
 </html>
