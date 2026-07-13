@@ -2804,6 +2804,31 @@ loadPositions();
   .fm-tile .v{ font-size:13px !important; font-weight:800 !important; color:#F5F6F8 !important;
     margin:3px 0 0 0 !important; word-break:keep-all !important; }
 
+  /* ── 카드 안 상세 (팝업에서 가져온 내용) ── */
+  .fm-detail{ font-size:11px !important; color:#F5F6F8 !important; }
+  .fm-detail *{ max-width:100% !important; white-space:normal !important;
+    word-break:keep-all !important; overflow-wrap:anywhere !important;
+    font-size:11px !important; line-height:1.6 !important; }
+  .fm-chart{ display:block !important; width:100% !important; height:auto !important;
+    border-radius:9px !important; background:#23262E !important; margin:0 0 10px 0 !important; }
+  /* 값 4칸(투자금·최대수익·잠재수익률·만기까지) → 2×2 타일 */
+  .fm-detail > div{ margin:0 0 8px 0 !important; }
+  .fm-detail > div > div{ background:#23262E !important; border-radius:8px !important;
+    padding:8px 9px !important; margin:0 0 6px 0 !important; }
+  .fm-detail > div > div > div:first-child{ font-size:9px !important; color:#8B95A1 !important; }
+  /* 포지션 정보 표 → 가로 스크롤 없이 */
+  .fm-detail table{ width:100% !important; border-collapse:collapse !important;
+    table-layout:fixed !important; background:transparent !important; }
+  .fm-detail table th{ font-size:9px !important; color:#8B95A1 !important; font-weight:500 !important;
+    padding:5px 3px !important; text-align:left !important; border:0 !important;
+    border-bottom:0.5px solid rgba(255,255,255,.08) !important; background:transparent !important; }
+  .fm-detail table td{ font-size:10px !important; color:#F5F6F8 !important; padding:6px 3px !important;
+    border:0 !important; border-bottom:0.5px solid rgba(255,255,255,.06) !important;
+    background:transparent !important; }
+  /* 팝업 안 색은 전부 무채색으로 (색 절제) — 손익 숫자만 아래에서 되살린다 */
+  .fm-detail div, .fm-detail span, .fm-detail p, .fm-detail td, .fm-detail th{ color:#F5F6F8 !important; }
+  .fm-detail .fm-dim, .fm-detail small{ color:#868F9C !important; }
+
   /* ── 4) 청산 내역 (접힘) ── */
   .fm-cls-hd{ display:flex !important; align-items:center !important;
     justify-content:space-between !important; cursor:pointer !important; min-height:32px !important; gap:10px !important; }
@@ -2883,8 +2908,12 @@ loadPositions();
       m = t.match(/만기\s*([\d\/]+)/);                     o.exp    = m ? m[1] : '';
       m = t.match(/D-(\d+)/);                              o.dday   = m ? ('D-'+m[1]) : '';
       m = t.match(/(\d+)%\s*경과/);                        o.prog   = m ? parseInt(m[1],10) : 0;
-      var a = c.querySelector('a[href]');
-      o.href = a ? a.getAttribute('href') : '';
+      /* '자세히 보기'는 링크가 아니라 팝업을 여는 버튼이다 → 그 안의 id(p176) 를 꺼낸다 */
+      var a = c.querySelector('a');
+      var oc = a ? (a.getAttribute('onclick')||'') : '';
+      var mm = oc.match(/openModal\(\s*['"]([^'"]+)['"]\s*\)/);
+      o.pid = mm ? mm[1] : '';
+      o.href = '';
       o.closed = c.classList.contains('expired');
       m = t.match(/(만기청산|손절|청산)/);                 o.why    = m ? m[1] : '';
       return o;
@@ -3008,13 +3037,10 @@ loadPositions();
          +     '</div>'
          +   '</div>'
          +   (o.prog ? '<div class="fm-bar"><span style="width:'+Math.min(100,o.prog)+'%"></span></div>' : '')
-         +   '<div class="fm-pos-bd">'
-         +     '<div class="fm-grid2">'
-         +       '<div class="fm-tile"><p class="fm-dim">투자금(증거금)</p><p class="v">'+esc(o.margin)+'</p></div>'
-         +       '<div class="fm-tile"><p class="fm-dim">최대 가능 수익</p><p class="v" style="color:'+pnlCol(o.maxp)+'">'+esc(o.maxp)+'</p></div>'
-         +     '</div>'
-         +     '<p class="fm-dim fm-note" style="margin-top:8px">'+esc([o.no, o.exp?('만기 '+o.exp):'', o.pnlUsd].filter(Boolean).join(' · '))+'</p>'
-         +     (o.href ? '<a class="fm-cta" href="'+esc(o.href)+'" style="background:#23262E;color:#8B95A1">자세히 보기 &rarr;</a>' : '')
+         /* ⚠ 상세 내용(차트·잠재수익률·다리별 표)은 원래 **팝업 안**에만 있었다.
+               카드를 누르면 그 자리에서 다 보이도록, 펼칠 때 팝업 내용을 여기로 옮겨 담는다. */
+         +   '<div class="fm-pos-bd" data-pid="'+esc(o.pid)+'">'
+         +     '<div class="fm-detail"><p class="fm-dim">여는 중…</p></div>'
          +   '</div>'
          + '</div>';
     });
@@ -3063,13 +3089,60 @@ loadPositions();
     pg.appendChild(wrap);                 /* 먼저 붙이고 */
     if(old) old.parentNode.removeChild(old);   /* 옛것은 마지막에 지운다 */
 
-    /* 접었다 펴기 */
+    /* 접었다 펴기 — 펼칠 때 팝업 내용을 그대로 가져온다 */
     wrap.querySelectorAll('.fm-pos-hd').forEach(function(hd){
       hd.addEventListener('click', function(){
-        var c = hd.parentElement;
-        c.classList.toggle('fm-open');
+        var c  = hd.parentElement;
+        var on = c.classList.toggle('fm-open');
+        if(!on) return;
+        var bd  = c.querySelector('.fm-pos-bd');
+        var pid = bd ? bd.getAttribute('data-pid') : '';
+        if(!pid || bd.getAttribute('data-done')) return;
+        loadDetail(bd, pid);
       });
     });
+
+    /* 팝업을 열어 내용만 복사해 오고, 팝업은 바로 닫는다.
+       ⚠ 원본을 **꺼내오지 않고 복사**한다 → 팝업이 다시 열려도 멀쩡하다.
+       ⚠ 차트(canvas)는 복사가 안 되므로 **그림으로 떠서** 넣는다. */
+    function loadDetail(bd, pid){
+      try{
+        var ov = document.getElementById('overlay');
+        if(!ov || typeof window.openModal !== 'function'){ bd.innerHTML=''; return; }
+        var wasOpen = window.getComputedStyle(ov).display !== 'none';
+        window.openModal(pid);
+        setTimeout(function(){
+          try{
+            var body = ov.querySelector('.modal-body');
+            if(!body){ bd.innerHTML=''; return; }
+
+            /* 1) 차트 → 그림으로 */
+            var img = '';
+            var cv = body.querySelector('canvas');
+            if(cv && cv.width > 10){
+              try{ img = '<img class="fm-chart" src="'+cv.toDataURL('image/png')+'" alt="선물 가격 차트">'; }catch(e){}
+            }
+
+            /* 2) 나머지 내용 복사 (차트 캔버스는 뺀다) */
+            var clone = body.cloneNode(true);
+            clone.querySelectorAll('canvas').forEach(function(x){
+              var holder = x.closest('div');
+              if(holder && holder.parentElement) holder.parentElement.removeChild(holder);
+              else if(x.parentElement) x.parentElement.removeChild(x);
+            });
+            /* 팝업에만 필요한 것들 제거 */
+            clone.querySelectorAll('a').forEach(function(x){
+              if(/포지션 목록으로/.test(x.textContent||'')) x.parentElement && x.parentElement.removeChild(x);
+            });
+
+            bd.innerHTML = '<div class="fm-detail">' + img + clone.innerHTML + '</div>';
+            bd.setAttribute('data-done','1');
+          }catch(e){ bd.innerHTML=''; }
+          /* 팝업은 원래 닫혀 있었으면 닫아 준다 */
+          try{ if(!wasOpen){ var cb = ov.querySelector('.modal-close'); if(cb) cb.click(); else ov.style.display='none'; } }catch(e){}
+        }, 450);   /* 차트가 그려질 시간을 준다 */
+      }catch(e){ bd.innerHTML=''; }
+    }
     [['.fm-newhd','.fm-new'], ['.fm-cls-hd','.fm-cls']].forEach(function(p){
       var hd = wrap.querySelector(p[0]);
       if(!hd) return;
