@@ -3487,14 +3487,32 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
             box.innerHTML = head.innerHTML;           /* 차트 제목·설명은 복사 */
             var cv = wr.querySelector('canvas');
             if(cv){
-              if(!cv.__gmHome) cv.__gmHome = cv.parentElement;
-              /* ⚠ 캔버스를 맨몸으로 두면 Chart.js가 부모 높이를 0으로 재서 그림이 안 나온다.
-                    → 높이가 고정된 전용 상자에 넣는다. */
               var host2 = document.createElement('div');
               host2.className = 'gm-cvhost';
-              host2.appendChild(cv);                  /* 캔버스는 이동 */
               box.appendChild(host2);
-              chartCvs.push(cv);
+
+              var srcChart = (window.Chart && window.Chart.getChart) ? window.Chart.getChart(cv) : null;
+              if(srcChart){
+                /* Chart.js 차트 — 원본 캔버스를 옮기면 Chart.js가 관리를 놓쳐 빈 그림이 된다.
+                   → 원본은 그대로 두고, **똑같은 설정으로 새로 그린다**. 원본 손상 위험도 없다. */
+                var nc = document.createElement('canvas');
+                host2.appendChild(nc);
+                try{
+                  var cfg = srcChart.config;
+                  new window.Chart(nc, {
+                    type:    cfg.type,
+                    data:    cfg.data,
+                    options: cfg.options,
+                    plugins: cfg.plugins
+                  });
+                }catch(e){}
+              }else{
+                /* Chart.js 가 아닌 그림(직접 그린 캔버스) — 복사하면 그림이 안 따라오므로 옮긴다.
+                   화면이 다시 그려질 때 지워지지 않도록 집주소를 기억시킨다. */
+                if(!cv.__gmHome) cv.__gmHome = cv.parentElement;
+                host2.appendChild(cv);
+                chartCvs.push(cv);
+              }
             }
             host.appendChild(box);
           });
