@@ -2868,12 +2868,16 @@ loadPositions();
       o.kind = T(c.children[0] && c.children[0].children[1])
                  .replace(/\s*\(.*?\)\s*/g, '')
                  .replace(/만기청산|손절|청산/g, '')
+                 .replace(/\s*D-\d+\s*/g, '')   /* ⚠ 아래 정보 줄에 이미 D-day 가 있다 → 중복 제거 */
                  .trim();
       o.no   = T(c.children[1]);                                        /* #176번 · 07/07 공유 */
       var m;
       m = t.match(/투자금\(증거금\)\s*([^\s]+)/);        o.margin = m ? m[1] : '';
       m = t.match(/최대 가능 수익\s*([+\-][^\s]+)/);      o.maxp   = m ? m[1] : '';
       m = t.match(/현재 평가손익\s*([+\-][\d,\.]+만원)/); o.pnl    = m ? m[1] : '';
+      /* ⚠ 아직 값이 안 붙은 포지션은 원본이 '업데이트 예정' 이라고 적어 둔다.
+            빈칸으로 두면 고장난 것처럼 보인다 → 그대로 알려준다 */
+      if(!o.pnl && /현재 평가손익\s*업데이트 예정/.test(t)) o.pending = true;
       m = t.match(/\(([+\-]\$[\d,]+)\)/);                 o.pnlUsd = m ? m[1] : '';
       m = t.match(/(\d+월물)/);                            o.mon    = m ? m[1] : '';
       m = t.match(/만기\s*([\d\/]+)/);                     o.exp    = m ? m[1] : '';
@@ -2997,7 +3001,9 @@ loadPositions();
          +       '<p class="fm-pos-meta">'+esc([o.mon, o.dday, o.prog?(o.prog+'% 경과'):''].filter(Boolean).join(' · '))+'</p>'
          +     '</div>'
          +     '<div class="fm-pos-r">'
-         +       '<p class="fm-pnl" style="color:'+pnlCol(o.pnl)+'">'+esc(o.pnl)+'</p>'
+         +       (o.pending
+                   ? '<p class="fm-pnl-s" style="font-size:11px">업데이트 예정</p>'
+                   : '<p class="fm-pnl" style="color:'+pnlCol(o.pnl)+'">'+esc(o.pnl)+'</p>')
          +       '<p class="fm-pnl-s">증거금 '+esc(o.margin)+'</p>'
          +     '</div>'
          +   '</div>'
