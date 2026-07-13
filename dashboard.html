@@ -3518,12 +3518,17 @@ loadPositions();
       var c0 = T(td[0]);                                  /* 176번 (진행 중) */
       var no = (c0.match(/(\d+)번/) || [])[1] || '';
       var live = /진행/.test(c0);
+      /* ⚠ 손익 값이 항상 첫 자식에 있는 게 아니다.
+            진행 중: 자식[0]="+6만원", 자식[1]="골드 · 잔존 15일"
+            종료:    자식[0]="",       자식[1]="크루드 오일 · 청산"  ← 값은 **칸 자체 텍스트**에만 있다
+            → 칸 전체 글에서 **금액 패턴**을 직접 뽑는다. */
+      var whole = T(td[1]);                                 /* '-216,423원크루드 오일 · 청산' */
       var kids = td[1].children;
-      var pnl  = kids[0] ? T(kids[0]) : T(td[1]);          /* +6만원 */
-      var sub  = kids[1] ? T(kids[1]) : '';                /* 골드 · 잔존 15일 */
+      var sub  = kids[1] ? T(kids[1]) : (kids[0] ? T(kids[0]) : '');
+      var pnl  = (whole.match(/^[+\-][\d,\.]+(?:만원|원)/) || [])[0] || '';
+      if(!pnl) pnl = (whole.match(/업데이트 예정/) || [])[0] || '';
       var nm   = (sub.split('·')[0] || '').trim();
       var days = (sub.match(/잔존\s*(\d+)일/) || [])[1] || '';
-      if(/청산|만기/.test(pnl)){ pnl = pnl.replace(/청산|만기\s*소멸/g,'').trim(); }
       rows.push({ no:no, live:live, nm:nm, days:days,
                   pnl:pnl, cum:T(td[2]), rate:T(td[3]), res:T(td[4]),
                   hidden: tr.getBoundingClientRect().height <= 0 });
