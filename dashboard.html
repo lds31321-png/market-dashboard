@@ -3403,4 +3403,256 @@ loadPositions();
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
 </script>
+
+<style id="fh-css-2026-07-13">
+/* ============================================================
+   무료 포지션 공유 — 매매 내역 탭(t2) 모바일 재설계 (2026-07-13)
+   ⚠ 전부 @media(max-width:640px). PC 는 건드리지 않는다.
+
+   ★ 레퍼런스 적용
+     #18 카카오페이   → 맨 위 **누적 수익 곡선** (꾸준히 우상향한다는 증거)
+     #38 내 포인트    → **승률 막대** (수익 112 / 손실 37)
+     #6  신한카드     → 필터 칩 + 한 행에 4정보 압축
+     C그룹           → 숫자에 **자연어 결론 한 줄**
+     긴 목록          → 처음 20건만, 나머지는 '더 보기'
+
+   ★ 수치 기준 (유튜브 원칙)
+     본문 14~16px · 여백 8배수 · 위계 3단 · 터치 32px 이상
+   ★ 색 절제 — 수익 #F06A6A / 손실 #4593FC. 그 외 무채색
+   ============================================================ */
+@media (max-width:640px){
+
+  /* 원본은 숨기고, 아래 스크립트가 다시 그린 것만 보인다 */
+  #t2 > .filter-bar,
+  #t2 > .tbl-wrap,
+  #t2 > .tbl-scroll,
+  #t2 > div:not(.fh-wrap){ display:none !important; }
+
+  .fh-wrap{ display:block !important; }
+
+  .fh-card{ background:#1E2027 !important; border:0.5px solid rgba(255,255,255,.08) !important;
+    border-radius:12px !important; padding:16px !important; margin:0 0 16px 0 !important; }
+  .fh-lbl{ font-size:14px !important; color:#8B95A1 !important; margin:0 !important; line-height:1.5 !important; }
+  .fh-v{ font-size:32px !important; font-weight:800 !important; margin:8px 0 0 0 !important;
+    line-height:1.2 !important; word-break:keep-all !important; }
+  .fh-said{ margin:8px 0 0 0 !important; font-size:14px !important; color:#F5F6F8 !important;
+    line-height:1.5 !important; word-break:keep-all !important; }
+  .fh-said b{ font-weight:800 !important; }
+
+  /* 누적 곡선 (레퍼런스 #18) */
+  .fh-chart{ margin-top:16px !important; background:#23262E !important;
+    border-radius:8px !important; height:96px !important; overflow:hidden !important; }
+  .fh-chart svg{ display:block !important; width:100% !important; height:100% !important; }
+
+  /* 승률 막대 (레퍼런스 #38) */
+  .fh-bar{ margin-top:16px !important; height:6px !important; background:#23262E !important;
+    border-radius:20px !important; display:flex !important; overflow:hidden !important; }
+  .fh-bar > i{ display:block !important; height:100% !important; }
+  .fh-bar-w{ background:#F06A6A !important; }
+  .fh-bar-l{ background:#4593FC !important; }
+
+  /* 필터 칩 (레퍼런스 #6) */
+  .fh-chips{ display:flex !important; gap:8px !important; margin:0 0 16px 0 !important; }
+  .fh-chips > button{ flex:1 1 0 !important; min-width:0 !important; min-height:40px !important;
+    background:transparent !important; color:#8B95A1 !important; border:0 !important;
+    border-radius:20px !important; font-size:14px !important; font-weight:700 !important;
+    padding:10px 4px !important; cursor:pointer !important;
+    white-space:nowrap !important; }
+  .fh-chips > button.on{ background:#23262E !important; color:#F5F6F8 !important; }
+
+  /* 내역 카드 */
+  .fh-row{ background:#1E2027 !important; border:0.5px solid rgba(255,255,255,.08) !important;
+    border-radius:12px !important; padding:16px !important; margin:0 0 8px 0 !important;
+    display:flex !important; align-items:flex-start !important;
+    justify-content:space-between !important; gap:16px !important; }
+  .fh-nm{ font-size:16px !important; font-weight:800 !important; color:#F5F6F8 !important;
+    margin:0 !important; line-height:1.4 !important; word-break:keep-all !important; }
+  .fh-nm i{ font-style:normal !important; font-size:14px !important; font-weight:400 !important;
+    color:#8B95A1 !important; }
+  .fh-meta{ font-size:14px !important; color:#8B95A1 !important; margin:6px 0 0 0 !important;
+    line-height:1.5 !important; word-break:keep-all !important; }
+  .fh-r{ text-align:right !important; flex:0 0 auto !important; }
+  .fh-pnl{ font-size:18px !important; font-weight:800 !important; margin:0 !important;
+    line-height:1.3 !important; word-break:keep-all !important; }
+  .fh-cum{ font-size:14px !important; color:#8B95A1 !important; margin:6px 0 0 0 !important; }
+
+  .fh-more{ display:block !important; width:100% !important; min-height:48px !important;
+    background:transparent !important; color:#8B95A1 !important;
+    border:0.5px solid rgba(255,255,255,.14) !important; border-radius:8px !important;
+    font-size:14px !important; padding:14px !important; margin-top:8px !important;
+    cursor:pointer !important; }
+}
+</style>
+
+<script id="fh-js-2026-07-13">
+/* 매매 내역 탭(t2) 모바일 엔진
+   ⚠ 원본을 **읽기만** 한다(꺼내오지 않는다) → 원본이 다시 그려져도 안전.
+   ⚠ 필터는 원본 함수(filterHistory)를 대신 눌러 준다. */
+(function(){
+  function isMob(){ try{ return window.matchMedia('(max-width:640px)').matches; }catch(e){ return false; } }
+  function T(e){ return e ? String(e.textContent||'').replace(/\s+/g,' ').trim() : ''; }
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function pnlCol(t){ var s=String(t||'').trim();
+    return /^-/.test(s) ? '#4593FC' : (/^\+/.test(s) ? '#F06A6A' : '#F5F6F8'); }
+
+  var sig='', shown=20, filt='all';
+
+  function build(){
+    if(!isMob()) return;
+    var pg = document.getElementById('t2');
+    if(!pg || pg.getBoundingClientRect().height <= 0) return;
+    var tb = pg.querySelector('table');
+    if(!tb) return;
+    var trs = Array.prototype.slice.call(tb.querySelectorAll('tbody tr'));
+    if(!trs.length) return;
+
+    var s2 = trs.length + '|' + T(trs[0]).slice(0,40) + '|' + filt + '|' + shown;
+    if(s2 === sig && pg.querySelector('.fh-wrap')) return;
+    sig = s2;
+
+    /* ── 원본 읽기 ── */
+    var rows = [];
+    trs.forEach(function(tr){
+      var td = tr.children;
+      if(td.length < 5) return;
+      var c0 = T(td[0]);                                  /* 176번 (진행 중) */
+      var no = (c0.match(/(\d+)번/) || [])[1] || '';
+      var live = /진행/.test(c0);
+      var kids = td[1].children;
+      var pnl  = kids[0] ? T(kids[0]) : T(td[1]);          /* +6만원 */
+      var sub  = kids[1] ? T(kids[1]) : '';                /* 골드 · 잔존 15일 */
+      var nm   = (sub.split('·')[0] || '').trim();
+      var days = (sub.match(/잔존\s*(\d+)일/) || [])[1] || '';
+      if(/청산|만기/.test(pnl)){ pnl = pnl.replace(/청산|만기\s*소멸/g,'').trim(); }
+      rows.push({ no:no, live:live, nm:nm, days:days,
+                  pnl:pnl, cum:T(td[2]), rate:T(td[3]), res:T(td[4]),
+                  hidden: tr.getBoundingClientRect().height <= 0 });
+    });
+
+    var vis = rows.filter(function(r){ return !r.hidden; });
+    if(!vis.length) vis = rows;
+
+    /* 승률 (레퍼런스 #38) */
+    var win = vis.filter(function(r){ return r.res === '수익'; }).length;
+    var los = vis.filter(function(r){ return r.res === '손실'; }).length;
+    var tot = win + los;
+    var wr  = tot ? Math.round(win / tot * 100) : 0;
+
+    /* 누적 수익률 곡선 (레퍼런스 #18) — 오래된 것 → 최신 순으로 뒤집는다 */
+    var pts = [];
+    for(var i = vis.length - 1; i >= 0; i--){
+      var v = parseFloat(String(vis[i].rate).replace(/[^\d.\-]/g,''));
+      if(!isNaN(v)) pts.push(v);
+    }
+    var svg = '';
+    if(pts.length > 2){
+      var mn = Math.min.apply(null, pts), mx = Math.max.apply(null, pts);
+      var rng = (mx - mn) || 1;
+      var W = 300, H = 96, P = 10;
+      var pl = pts.map(function(v, i){
+        var x = P + (i / (pts.length - 1)) * (W - P * 2);
+        var y = (H - P) - ((v - mn) / rng) * (H - P * 2);
+        return x.toFixed(1) + ',' + y.toFixed(1);
+      }).join(' ');
+      svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none">'
+          +   '<polyline points="' + pl + '" fill="none" stroke="'
+          +   (pts[pts.length-1] >= pts[0] ? '#F06A6A' : '#4593FC')
+          +   '" stroke-width="2" vector-effect="non-scaling-stroke"/>'
+          + '</svg>';
+    }
+
+    var last = vis[0] || {};
+    var cumRate = last.rate || '';
+    var cumMoney = last.cum || '';
+
+    /* ── 그리기 ── */
+    var h = '';
+
+    /* 1) 누적 성과 (합계값 크게 → 곡선 → 결론 한 줄) */
+    h += '<div class="fh-card">'
+       +   '<p class="fh-lbl">누적 수익률</p>'
+       +   '<p class="fh-v" style="color:' + pnlCol(cumRate) + '">' + esc(cumRate) + '</p>'
+       +   (svg ? '<div class="fh-chart">' + svg + '</div>' : '')
+       +   '<div class="fh-bar">'
+       +     '<i class="fh-bar-w" style="width:' + wr + '%"></i>'
+       +     '<i class="fh-bar-l" style="width:' + (100 - wr) + '%"></i>'
+       +   '</div>'
+       +   '<p class="fh-said">' + vis.length + '건 중 <b>' + win + '건이 수익</b>이었습니다 · 승률 <b>' + wr + '%</b></p>'
+       +   (cumMoney ? '<p class="fh-lbl" style="margin-top:8px">누적 ' + esc(cumMoney) + '</p>' : '')
+       + '</div>';
+
+    /* 2) 필터 칩 */
+    h += '<div class="fh-chips">'
+       +   '<button data-f="all"'  + (filt==='all' ?' class="on"':'') + '>전체 ' + vis.length + '</button>'
+       +   '<button data-f="win"'  + (filt==='win' ?' class="on"':'') + '>수익 ' + win + '</button>'
+       +   '<button data-f="loss"' + (filt==='loss'?' class="on"':'') + '>손실 ' + los + '</button>'
+       + '</div>';
+
+    /* 3) 내역 카드 (처음 20건만) */
+    var list = vis.slice(0, shown);
+    list.forEach(function(r){
+      var money = r.pnl;
+      var meta  = [];
+      if(r.no)   meta.push('#' + r.no);
+      if(r.live) meta.push(r.days ? (r.days + '일 남았습니다') : '진행 중');
+      else       meta.push('종료 · ' + (r.res || ''));
+      h += '<div class="fh-row">'
+         +   '<div style="min-width:0">'
+         +     '<p class="fh-nm">' + esc(r.nm || '—') + '</p>'
+         +     '<p class="fh-meta">' + esc(meta.join(' · ')) + '</p>'
+         +   '</div>'
+         +   '<div class="fh-r">'
+         +     '<p class="fh-pnl" style="color:' + pnlCol(money) + '">' + esc(money) + '</p>'
+         +     (r.rate ? '<p class="fh-cum">누적 ' + esc(r.rate) + '</p>' : '')
+         +   '</div>'
+         + '</div>';
+    });
+
+    if(vis.length > shown){
+      h += '<button class="fh-more">더 보기 (' + (vis.length - shown) + '건)</button>';
+    }
+
+    var old  = pg.querySelector('.fh-wrap');
+    var wrap = document.createElement('div');
+    wrap.className = 'fh-wrap';
+    wrap.innerHTML = h;
+    pg.appendChild(wrap);
+    if(old) old.parentNode.removeChild(old);
+
+    /* 필터 — 원본 함수를 대신 눌러 준다 */
+    wrap.querySelectorAll('.fh-chips button').forEach(function(b){
+      b.addEventListener('click', function(){
+        var fv = b.getAttribute('data-f');
+        filt = fv; shown = 20;
+        try{
+          var org = pg.querySelector('.filter-bar');
+          var btns = org ? org.querySelectorAll('button,[onclick]') : [];
+          for(var i=0;i<btns.length;i++){
+            var oc = btns[i].getAttribute('onclick') || '';
+            if(oc.indexOf("'" + fv + "'") >= 0){ btns[i].click(); break; }
+          }
+        }catch(e){}
+        sig = '';
+        setTimeout(build, 120);
+      });
+    });
+
+    var more = wrap.querySelector('.fh-more');
+    if(more) more.addEventListener('click', function(){ shown += 20; sig=''; build(); });
+  }
+
+  function boot(){
+    build();
+    setInterval(build, 700);
+    try{
+      var t=null;
+      new MutationObserver(function(){ clearTimeout(t); t=setTimeout(build,150); })
+        .observe(document.body, {childList:true, subtree:true});
+    }catch(e){}
+    document.addEventListener('click', function(){ [0,200,600].forEach(function(ms){ setTimeout(build,ms); }); }, true);
+    window.addEventListener('resize', build);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
 </html>
