@@ -3834,22 +3834,28 @@ loadPositions();
                 : (g.money ? '<p class="fs-said">누적 순수익 <b>'+esc(g.money)+'</b></p>' : ''))
        + '</div>';
 
-    /* 2) 손익비 — 2계열 비교 바 + 결론 (레퍼런스 #2 의 정석) */
-    if(g.pf && g.avgW && g.avgL){
+    /* 2) 손익비 — 2계열 비교 바 + 결론 (레퍼런스 #2 의 정석)
+       ⚠ 평균끼리(+33만 vs -34만) 비교하면 거의 1:1 로 보여서 "4.88배"와 그림이 어긋난다.
+          손익비는 **수익 총합 ÷ 손실 총합** 이다 → 총합을 비교해야 4.88배가 눈에 보인다. */
+    var nW = num(g.win), nL = num(g.los);
+    var sumW = aw * nW, sumL = al * nL;
+    var mxSum = Math.max(sumW, sumL) || 1;
+    if(g.pf && sumW && sumL){
       h += '<div class="fs-card">'
          +   '<p class="fs-lbl">손익비</p>'
          +   '<p class="fs-v" style="color:#F5F6F8">'+esc(g.pf)+'배</p>'
          +   '<div class="fs-cmp">'
-         +     '<span class="fs-cmp-l">벌 때</span>'
-         +     '<span class="fs-cmp-t"><i style="width:'+Math.round(aw/mxAvg*100)+'%;background:rgba(240,106,106,.35)"></i></span>'
-         +     '<span class="fs-cmp-v" style="color:#F06A6A">'+esc(g.avgW)+'만</span>'
+         +     '<span class="fs-cmp-l">번 돈</span>'
+         +     '<span class="fs-cmp-t"><i style="width:'+Math.round(sumW/mxSum*100)+'%;background:rgba(240,106,106,.35)"></i></span>'
+         +     '<span class="fs-cmp-v" style="color:#F06A6A">+'+Math.round(sumW).toLocaleString()+'만</span>'
          +   '</div>'
          +   '<div class="fs-cmp">'
-         +     '<span class="fs-cmp-l">잃을 때</span>'
-         +     '<span class="fs-cmp-t"><i style="width:'+Math.round(al/mxAvg*100)+'%;background:rgba(69,147,252,.35)"></i></span>'
-         +     '<span class="fs-cmp-v" style="color:#4593FC">'+esc(g.avgL)+'만</span>'
+         +     '<span class="fs-cmp-l">잃은 돈</span>'
+         +     '<span class="fs-cmp-t"><i style="width:'+Math.round(sumL/mxSum*100)+'%;background:rgba(69,147,252,.35)"></i></span>'
+         +     '<span class="fs-cmp-v" style="color:#4593FC">-'+Math.round(sumL).toLocaleString()+'만</span>'
          +   '</div>'
-         +   (pfNum ? '<p class="fs-said">한 번 잃어도 <b>거의 '+Math.round(pfNum)+'번</b> 벌어 메웁니다</p>' : '')
+         +   (pfNum ? '<p class="fs-said">잃은 돈보다 <b>'+pfNum.toFixed(1)+'배</b> 더 벌었습니다'
+                    + '<br><span style="color:#8B95A1">한 번 크게 벌 때 '+esc(g.avgW)+'만원, 잃을 때 '+esc(g.avgL)+'만원</span></p>' : '')
          + '</div>';
     }
 
