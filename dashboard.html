@@ -2917,12 +2917,19 @@ loadPositions();
       });
     }
 
-    /* 액션 링크 */
+    /* 액션 링크 — 버튼이 3개다 (노션 · 거래 시작하기 · 전략 브리핑)
+       ⚠ 순서대로 집으면 '노션'이 주 버튼이 되어 버린다.
+          **파란 주 버튼은 화면당 하나뿐이고, 그건 '거래 시작하기'여야 한다** → 글자로 찾는다. */
     var arow = pg.querySelector('.action-row');
-    var links = arow ? arow.querySelectorAll('a,button') : [];
-    var mainHref='', mainTxt='거래 시작하기', subTxt='', subEl=null;
-    if(links[0]){ mainHref = links[0].getAttribute('href')||''; mainTxt = T(links[0])||mainTxt; }
-    if(links[1]){ subTxt = T(links[1]); subEl = links[1]; }
+    var links = arow ? Array.prototype.slice.call(arow.querySelectorAll('a,button')) : [];
+    var mainEl = null, subs = [];
+    links.forEach(function(el){
+      if(!mainEl && /거래\s*시작/.test(T(el))) mainEl = el;
+      else subs.push(el);
+    });
+    if(!mainEl && links.length){ mainEl = links[0]; subs = links.slice(1); }
+    var mainHref = mainEl ? (mainEl.getAttribute('href')||'') : '';
+    var mainTxt  = mainEl ? (T(mainEl)||'거래 시작하기') : '거래 시작하기';
 
     /* ── 새로 그리기 ── */
     var h = '';
@@ -2955,8 +2962,10 @@ loadPositions();
     });
     h +=   '</div>'
        +   (mainHref ? '<a class="fm-cta" href="'+esc(mainHref)+'" target="_blank" rel="noopener">'+esc(mainTxt)+'</a>'
-                     : '<span class="fm-cta">'+esc(mainTxt)+'</span>')
-       +   (subTxt ? '<span class="fm-sub-btn" data-fm-sub>'+esc(subTxt)+'</span>' : '')
+                     : '<span class="fm-cta" data-fm-main>'+esc(mainTxt)+'</span>')
+       +   subs.map(function(el, si){
+             return '<span class="fm-sub-btn" data-fm-sub="'+si+'">'+esc(T(el))+'</span>';
+           }).join('')
        + '</div>';
 
     /* 3) 보유 포지션 */
@@ -3044,9 +3053,15 @@ loadPositions();
         if(ch) ch.innerHTML = on ? '&#9652;' : '&#9662;';
       });
     });
-    /* 보조 버튼(전략 브리핑)은 원본 버튼을 대신 눌러준다 */
-    var sb = wrap.querySelector('[data-fm-sub]');
-    if(sb && subEl){ sb.addEventListener('click', function(){ subEl.click(); }); }
+    /* 보조 버튼(노션 · 전략 브리핑)은 원본 버튼을 대신 눌러준다
+       ⚠ 원본을 옮겨오지 않고 **대신 눌러주기만** 한다 → 원본이 다시 그려져도 안전 */
+    wrap.querySelectorAll('[data-fm-sub]').forEach(function(sb){
+      var si = parseInt(sb.getAttribute('data-fm-sub'), 10);
+      var el = subs[si];
+      if(el) sb.addEventListener('click', function(){ el.click(); });
+    });
+    var mb = wrap.querySelector('[data-fm-main]');
+    if(mb && mainEl) mb.addEventListener('click', function(){ mainEl.click(); });
   }
 
   function boot(){
