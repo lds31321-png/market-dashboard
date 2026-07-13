@@ -3242,7 +3242,9 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 
   .gm-chartbox{ background:#23262E !important; border-radius:8px !important;
     padding:8px !important; margin:0 0 16px 0 !important; }
-  .gm-chartbox canvas{ max-width:100% !important; width:100% !important; height:200px !important; }
+  /* ⚠ 캔버스 크기를 CSS로 강제하면 Chart.js가 제 크기를 못 재고 0×0 으로 굳어 빈 그림이 된다.
+        크기는 아래 자바스크립트가 직접 지정한다. 여기서는 넘치지만 않게 막는다. */
+  .gm-chartbox canvas{ max-width:100% !important; }
   .gm-chartbox *{ font-size:14px !important; line-height:1.5 !important;
     max-width:100% !important; white-space:normal !important; }
   .gm-chartbox .chart-title{ font-weight:800 !important; color:#F5F6F8 !important; }
@@ -3524,7 +3526,14 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
         chartCvs.forEach(function(cv){
           try{
             var ch = (window.Chart && window.Chart.getChart) ? window.Chart.getChart(cv) : null;
-            if(ch){ ch.resize(); ch.update(); }
+            if(!ch) return;
+            var box = cv.parentElement;
+            var bw  = box ? (box.clientWidth - 16) : 300;
+            if(bw < 60) return;
+            /* Chart.js가 박아 넣은 0px 인라인 크기를 지우고, 크기를 직접 알려준다 */
+            cv.style.width = ''; cv.style.height = '';
+            ch.resize(bw, 200);
+            ch.update();
           }catch(e){}
         });
       };
@@ -3552,15 +3561,17 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
       try{
         if(!isMob()) return;
         document.querySelectorAll('.gm-chartbox canvas').forEach(function(cv){
-          var r = cv.getBoundingClientRect();
-          if(r.width < 20 || r.height < 20) return;
           var ch = (window.Chart && window.Chart.getChart) ? window.Chart.getChart(cv) : null;
           if(!ch) return;
+          var box = cv.parentElement;
+          var bw  = box ? (box.clientWidth - 16) : 0;
+          if(bw < 60) return;                      /* 아직 화면에 자리가 없다 */
           var ca = ch.chartArea;
           var drawn = ca && (ca.right - ca.left) > 40;
-          /* 칸 폭과 차트가 그린 폭이 크게 어긋나면 좌표가 굳은 것 */
-          if(!drawn || Math.abs((ca.right - ca.left) - (r.width - 45)) > 60){
-            ch.resize(); ch.update();
+          if(!drawn || Math.abs((ca.right - ca.left) - (bw - 45)) > 70){
+            cv.style.width = ''; cv.style.height = '';
+            ch.resize(bw, 200);
+            ch.update();
           }
         });
       }catch(e){}
