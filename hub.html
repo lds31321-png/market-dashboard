@@ -763,9 +763,12 @@ jiktUpdateViewModeLabel();
      ⚠ 글자를 키운 곳은 칸의 폭·높이를 함께 손봤다 (Part 3-3).
      ============================================================ */
 
-  /* --- 헤더: 제목 1줄 + 부제 1줄, 버튼은 제목 위 한 줄 --- */
-  .hub-header{ position:relative !important; padding-top:0 !important; margin-bottom:16px !important;
-    text-align:left !important; display:block !important; }
+  /* --- 헤더 ---
+     ★ body 가 flex + align-items:center 라 헤더가 **내용 폭(281px)만** 차지하고
+       가운데로 밀려 있었다. 카드(347px)와 좌측이 어긋났다 → 전체 폭을 강제한다. */
+  .hub-header{ position:relative !important; padding-top:0 !important; margin-bottom:12px !important;
+    text-align:left !important; display:block !important;
+    width:100% !important; align-self:stretch !important; }
   /* [직트 지시 2026-07-14] 모바일에서 삭제 — PC 는 그대로 둔다 (절대규칙 1) */
   .hub-logo{ display:none !important; }   /* JIKT · OPTION SELLING */
   .hub-sub{ display:none !important; }    /* 수익은 시장이 주고, 손실은 우리가 통제합니다 */
