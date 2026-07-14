@@ -3350,6 +3350,10 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
      ⚠ 날짜 칸(cal-cell)이 7칸 격자로 짜여 있어 그대로 두면 글자가 뭉개진다. */
   .gm-big-bd .cal-grid{ display:block !important; }
   .gm-big-bd .cal-dow{ display:none !important; }         /* 일·월·화… 요일 머리줄 */
+  /* ⚠ '이달의 핵심 이벤트' 요약은 아래 날짜 목록과 **같은 내용**이라 두 번 읽게 된다.
+        게다가 요약에는 지표를 눌러도 설명 팝업이 안 뜬다(그 기능은 날짜 칸에만 있다).
+        → 요약을 빼고 날짜 목록만 남긴다. 화면도 짧아지고 기능도 살아 있다. */
+  .gm-big-bd .cal-summary{ display:none !important; }
   .gm-big-bd .cal-cell{ display:block !important; width:auto !important; min-height:0 !important;
     background:#23262E !important; border-radius:8px !important;
     padding:12px !important; margin:0 0 6px 0 !important;
@@ -3438,9 +3442,9 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
           bd.querySelectorAll('.cal-dow').forEach(function(e){ e.remove(); });
           bd.querySelectorAll('.cal-cell').forEach(function(c){
             var isOther = (' ' + c.className + ' ').indexOf(' other-month ') >= 0;
-            /* 날짜 숫자 말고 '내용'이 있는지 — 자식 요소가 2개 미만이면 일정 없는 날 */
-            var hasEvent = c.children.length > 1 || c.querySelectorAll('[onclick]').length > 0;
-            if(isOther || !hasEvent) c.remove();
+            /* 날짜 숫자를 떼고 남는 글자가 없으면 = 일정이 없는 날 → 뺀다 */
+            var rest = String(c.textContent || '').replace(/\s+/g, '').replace(/^\d+/, '');
+            if(isOther || !rest) c.remove();
           });
         }catch(e){}
       }
