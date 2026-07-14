@@ -3341,6 +3341,24 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     border-collapse:collapse !important; }
   .gm-big-bd th, .gm-big-bd td{ padding:8px !important; text-align:left !important;
     vertical-align:top !important; border-bottom:0.5px solid rgba(255,255,255,.07) !important; }
+
+  /* ⚠⚠ 변동성 표는 **5칸짜리 가로 표**라 폰 화면(412px)을 훌쩍 넘어간다(실측 633px).
+        표를 그대로 두고 폭만 줄이면 글자가 뭉개진다.
+        → 한 줄(종목 하나)을 **카드 하나**로 바꿔서 위에서 아래로 읽게 한다. */
+  .gm-big-bd .vol-table-wrap{ overflow:visible !important; }
+  .gm-big-bd .vol-table,
+  .gm-big-bd .vol-table tbody,
+  .gm-big-bd .vol-table tr,
+  .gm-big-bd .vol-table td{ display:block !important; width:auto !important;
+    max-width:100% !important; }
+  .gm-big-bd .vol-table thead{ display:none !important; }   /* 머리줄(종목명·등급…)은 뺀다 */
+  .gm-big-bd .vol-table tr{ background:#23262E !important; border-radius:8px !important;
+    padding:12px !important; margin:0 0 6px 0 !important; border:0 !important; }
+  .gm-big-bd .vol-table td{ border:0 !important; padding:3px 0 !important;
+    white-space:normal !important; word-break:keep-all !important; }
+  /* 첫 칸(종목명)은 제목처럼 */
+  .gm-big-bd .vol-table td:first-child{ font-size:16px !important; font-weight:800 !important;
+    color:#F5F6F8 !important; margin:0 0 6px 0 !important; }
   .gm-big-bd canvas{ display:none !important; }
   /* 원본 카드 배경은 벗긴다 (카드 안에 카드가 겹쳐 보이면 정신없다) */
   .gm-big-bd > *{ background:transparent !important; border:0 !important;
