@@ -1453,13 +1453,29 @@ function buildPositionChart(p, canvasId){
       // ⚠ 모바일에서 가격선·행사가 라벨과 겹쳐 글자가 안 읽혔다 → 왼쪽 끝에 붙이고 살짝 작게
       const _mbZ=window.matchMedia('(max-width:640px)').matches;
       if(_mbZ){ c.font='bold 12px IBM Plex Sans KR,Noto Sans KR,sans-serif'; c.textAlign='left'; }
+
+      /* ★ [직트 지시 2026-07-14] 구간 글자가 **가격선에 가려져 안 읽혔다.**
+           → 글자 뒤에 흰 배경 박스를 깔아 선 위로 띄운다 (모바일에서만). */
+      function zoneText(txt, color, tx, ty){
+        if(_mbZ){
+          const w=c.measureText(txt).width;
+          c.save();
+          c.fillStyle='rgba(255,255,255,0.88)';
+          const bx = tx-4, by = ty-9, bw = w+8, bh = 18;
+          if(c.roundRect){ c.beginPath(); c.roundRect(bx,by,bw,bh,4); c.fill(); }
+          else c.fillRect(bx,by,bw,bh);
+          c.restore();
+        }
+        c.fillStyle=color;
+        c.fillText(txt, tx, ty);
+      }
+
       {
         const y1=clamp(yPx(pMax),top,bottom);
         const y2=clamp(yPx(Math.max(pMin,yMin)),top,bottom);
         const midY=(y1+y2)/2;
         if(midY>top&&midY<bottom&&y2-y1>30){
-          c.fillStyle='rgba(200,30,30,0.6)';
-          c.fillText('수익구간', _mbZ ? (left+8) : (left+right)*0.38, midY);
+          zoneText('수익구간','rgba(200,30,30,0.85)', _mbZ ? (left+8) : (left+right)*0.38, midY);
         }
       }
       // 손실구간 위 텍스트
@@ -1467,8 +1483,7 @@ function buildPositionChart(p, canvasId){
         const y1=clamp(yPx(pMax),top,bottom);
         const midY=(top+y1)/2;
         if(midY>top&&midY<bottom&&y1-top>20){
-          c.fillStyle='rgba(40,80,200,0.55)';
-          c.fillText('손실구간', _mbZ ? (left+8) : (left+right)*0.5, midY);
+          zoneText('손실구간','rgba(40,80,200,0.85)', _mbZ ? (left+8) : (left+right)*0.5, midY);
         }
       }
       // 손실구간 아래 텍스트
@@ -1476,11 +1491,29 @@ function buildPositionChart(p, canvasId){
         const y1=clamp(yPx(pMin),top,bottom);
         const midY=(y1+bottom)/2;
         if(midY>top&&midY<bottom&&bottom-y1>20){
-          c.fillStyle='rgba(40,80,200,0.55)';
-          c.fillText('손실구간', _mbZ ? (left+8) : (left+right)*0.5, midY);
+          zoneText('손실구간','rgba(40,80,200,0.85)', _mbZ ? (left+8) : (left+right)*0.5, midY);
         }
       }
       c.restore();
+
+      /* ★ [직트 지시 2026-07-14] 만기 화살표가 **중간에 뚝 잘려** 있었다.
+           원인: 화살표를 `마지막 데이터(오늘) → 만기` 로만 그렸다.
+           → **진입선부터 만기선까지** 쭉 잇는다. 그러려면 진입 위치를 먼저 구해야 한다. */
+      let _entryXp = null;
+      {
+        const enStr0=cd.entry_date.replace(/-/g,'/').replace(/\d{4}\//,'');
+        let enIdx0=histLabels.indexOf(enStr0);
+        if(enIdx0<0){
+          const enD0=new Date(cd.entry_date); let minDiff0=Infinity;
+          histLabels.forEach((lb,i)=>{
+            const pts=lb.split('/');
+            const d2=new Date(enD0.getFullYear(), parseInt(pts[0])-1, parseInt(pts[1]));
+            const diff=Math.abs(d2-enD0);
+            if(diff<minDiff0){ minDiff0=diff; enIdx0=i; }
+          });
+        }
+        if(enIdx0>=0) _entryXp = x.getPixelForValue(enIdx0);
+      }
 
       // ── 만기일 수직선 ──
       if(expiryIdx>=0&&expiryIdx<labels.length){
@@ -1515,28 +1548,38 @@ function buildPositionChart(p, canvasId){
         c.fillStyle='#fff';
         c.fillText(lbl,_mbTxtX,_mbTxtY);
 
-        // 잔존일 화살표 (→ N일) — 중간 하단
+        // 잔존일 화살표 (→ N일)
         // ⚠ 모바일에서 아래쪽 행사가 점선·라벨과 겹쳤다 → 위쪽(만기일 배지 아래)으로 올린다
+        // ★ [직트 지시] 시작점을 **진입선**으로 바꾼다 (예전엔 '오늘'부터라 중간이 비어 보였다)
         const lastXp=x.getPixelForValue(histLabels.length-1);
-        const midX=(lastXp+xp)/2;
+        const startXp = (_mbE && _entryXp!=null) ? (_entryXp+4) : (lastXp+6);
+        const midX=(startXp+xp)/2;
         const arrowY=_mbE ? (top+(bottom-top)*0.30+34) : (bottom-14);
 
-        // 화살표 선
-        c.strokeStyle='rgba(10,10,10,0.4)';
+        // 화살표 선 — 진입 → 만기 전 구간
+        c.strokeStyle='rgba(10,10,10,0.45)';
         c.lineWidth=1.2;
         c.setLineDash([4,3]);
-        c.beginPath();c.moveTo(lastXp+6,arrowY);c.lineTo(xp-4,arrowY);c.stroke();
+        c.beginPath();c.moveTo(startXp,arrowY);c.lineTo(xp-4,arrowY);c.stroke();
         c.setLineDash([]);
 
         // 화살표 머리
-        c.fillStyle='rgba(10,10,10,0.45)';
+        c.fillStyle='rgba(10,10,10,0.5)';
         c.beginPath();c.moveTo(xp-4,arrowY);c.lineTo(xp-10,arrowY-4);c.lineTo(xp-10,arrowY+4);c.closePath();c.fill();
 
-        // 잔존일 텍스트
-        c.fillStyle='rgba(10,10,10,0.7)';
+        // 잔존일 텍스트 — 글자 뒤에 흰 배경을 깔아 선에 안 가리게
         c.font='bold 12px IBM Plex Sans KR,Noto Sans KR,sans-serif';
         c.textAlign='center';c.textBaseline='bottom';
-        c.fillText('→ '+daysLeft+'일',midX,arrowY-3);
+        const _dtxt='→ '+daysLeft+'일';
+        if(_mbE){
+          const _dw=c.measureText(_dtxt).width;
+          c.fillStyle='rgba(255,255,255,0.9)';
+          const _bx=midX-_dw/2-5, _by=arrowY-19, _bw=_dw+10, _bh=17;
+          if(c.roundRect){ c.beginPath(); c.roundRect(_bx,_by,_bw,_bh,4); c.fill(); }
+          else c.fillRect(_bx,_by,_bw,_bh);
+        }
+        c.fillStyle='rgba(10,10,10,0.78)';
+        c.fillText(_dtxt,midX,arrowY-3);
         c.restore();
       }
 
@@ -1586,13 +1629,22 @@ function buildPositionChart(p, canvasId){
         c.beginPath();c.arc(xp,yp,5,0,Math.PI*2);
         c.fillStyle='#0088cc';c.fill();
         c.strokeStyle='#fff';c.lineWidth=1.5;c.stroke();
-        c.fillStyle='#0088cc';
         c.font='bold 10px IBM Plex Mono,monospace';
+        /* ★ [직트 지시 2026-07-14] 현재가 글자가 **가격선에 가려져 안 보였다.**
+             → 글자 뒤에 흰 배경 박스를 깔고, 점 아래로 살짝 내려 선을 피한다. */
         if(window.matchMedia('(max-width:640px)').matches){
-          // 모바일: 점 왼쪽에 표시 → 만기선·화살표와 겹침 방지
+          const _ctxt='현재 $'+_lastC.toLocaleString();
+          const _cw=c.measureText(_ctxt).width;
           c.textAlign='right';c.textBaseline='middle';
-          c.fillText('현재 $'+_lastC.toLocaleString(),xp-9,yp);
+          const _ty = yp + 15;                 // 점 아래로 내려 선을 피한다
+          c.fillStyle='rgba(255,255,255,0.92)';
+          const _bx=xp-9-_cw-5, _by=_ty-8, _bw=_cw+10, _bh=16;
+          if(c.roundRect){ c.beginPath(); c.roundRect(_bx,_by,_bw,_bh,4); c.fill(); }
+          else c.fillRect(_bx,_by,_bw,_bh);
+          c.fillStyle='#0077b5';
+          c.fillText(_ctxt, xp-9, _ty);
         }else{
+          c.fillStyle='#0088cc';
           c.textAlign='left';c.textBaseline='bottom';
           c.fillText('현재 $'+_lastC.toLocaleString(),xp+8,yp+2);
         }
@@ -2841,6 +2893,11 @@ loadPositions();
     color:#8B95A1 !important; line-height:1.55 !important; word-break:keep-all !important; }
   .fm-said b{ color:#F5F6F8 !important; font-weight:800 !important; }
 
+  /* ★ [직트 지시] 카드를 클릭해 펼쳤을 때 **어디까지가 내가 누른 카드인지** 구분이 안 됐다
+       → 펼친 카드만 테두리를 진하게 한다 (색은 그대로, 밝기만 올림) */
+  .fm-pos.fm-open{ border-color:rgba(255,255,255,.34) !important;
+    background:#20232A !important; }
+
   /* 펼친 내용 */
   .fm-pos-bd{ display:none !important; border-top:0.5px solid rgba(255,255,255,.08) !important;
     margin-top:12px !important; padding-top:12px !important; }
@@ -2890,23 +2947,41 @@ loadPositions();
         flex·margin·float 은 큰글씨에서 전부 깨진다.
         **라벨 한 줄 / 값 그 아래 줄 우측정렬** (블록 2개) 이 유일하게 안 깨진다.
         ⚠ 글자는 12px 이상 (유튜브 원칙: 12px 이하 금지) */
+  /* ★ [직트 지시 2026-07-14] 포지션 정보가 라벨/값이 위아래로 벌어져 보기 불편했다.
+       → 위쪽 「투자금 · 최대 가능 수익」 타일과 **똑같은 박스 격자**로 바꾼다.
+         각 항목이 하나의 타일이 되고, 라벨(위·작게·회색) + 값(아래·크게·흰색) 구조.
+     ⚠ 원본 `.tbl-rec` 규칙이 더 강해서 `#overlay table td` 로는 안 이긴다
+        → `#overlay table.tbl-rec tbody td` 로 특이도를 올린다. */
   #overlay table{ width:100% !important; table-layout:fixed !important; border-collapse:collapse !important;
     display:block !important; }
   #overlay table thead{ display:none !important; }   /* 헤더 줄은 라벨로 대체 */
   #overlay table tbody{ display:block !important; }
-  #overlay table tr{ display:block !important; background:#23262E !important;
-    border-radius:9px !important; padding:10px 11px !important; margin:0 0 8px 0 !important;
+  /* 한 포지션(행) = 타일 격자 하나 */
+  #overlay table.tbl-rec tbody tr{ display:grid !important;
+    grid-template-columns:1fr 1fr !important; gap:6px !important;
+    background:transparent !important; padding:0 !important; margin:0 0 10px 0 !important;
     border:0 !important; }
-  #overlay table td{ display:block !important; padding:5px 0 !important; border:0 !important;
-    border-bottom:0.5px solid rgba(255,255,255,.06) !important;
-    text-align:right !important;                      /* 값은 오른쪽 */
-    font-size:13px !important; color:#F5F6F8 !important;
-    white-space:normal !important; word-break:keep-all !important; }
-  #overlay table td:last-child{ border-bottom:0 !important; }
-  #overlay table td::before{ content:attr(data-label);
-    display:block !important; text-align:left !important;   /* 라벨은 왼쪽 윗줄 */
+  /* 각 항목 = 박스 타일. 값이 길면(업데이트 예정) 칸 밖으로 나가지 않게 줄바꿈 허용 */
+  #overlay table.tbl-rec tbody td{ display:block !important;
+    background:#23262E !important; border:0 !important; border-radius:8px !important;
+    padding:10px 11px !important; margin:0 !important;
+    grid-column:auto !important; min-width:0 !important;
+    text-align:left !important;
+    font-size:15px !important; font-weight:800 !important; color:#FFFFFF !important;
+    line-height:1.3 !important;
+    white-space:normal !important; word-break:keep-all !important;
+    overflow-wrap:anywhere !important; }
+  #overlay table.tbl-rec tbody td::before{ content:attr(data-label);
+    display:block !important; text-align:left !important;
     font-size:12px !important; font-weight:400 !important;
-    color:#8B95A1 !important; margin-bottom:2px !important; }
+    color:#8B95A1 !important; margin-bottom:4px !important;
+    white-space:nowrap !important; }
+  /* 종목명 줄(첫 칸)은 전체 폭 한 줄 — 배경 없이 제목처럼 */
+  #overlay table.tbl-rec tbody td:first-child{ grid-column:1 / -1 !important;
+    background:transparent !important; padding:2px 0 6px 0 !important;
+    font-size:15px !important; }
+  #overlay table.tbl-rec tbody td:first-child::before{ display:none !important; }
+  #overlay table.tbl-rec tbody td[data-hide]{ display:none !important; }
   /* '← 포지션 목록으로' 는 시트를 닫으면 되니 숨긴다 */
   #overlay .modal-body > a{ display:none !important; }
   /* ★ 레퍼런스 C그룹: "차트만 두지 말고 해석을 한 줄 붙여라"
@@ -3067,8 +3142,11 @@ loadPositions();
     var links = arow ? Array.prototype.slice.call(arow.querySelectorAll('a,button')) : [];
     var mainEl = null, subs = [];
     links.forEach(function(el){
-      if(!mainEl && /거래\s*시작/.test(T(el))) mainEl = el;
-      else subs.push(el);
+      if(!mainEl && /거래\s*시작/.test(T(el))) { mainEl = el; return; }
+      /* [직트 지시 2026-07-14] '노션 (전략 자세히 보기)' 버튼은 모바일에서 빼라.
+         ⚠ PC 는 그대로 둔다 — 여기서 목록에만 안 담으면 된다 (원본 요소는 손대지 않음) */
+      if(/노션/.test(T(el))) return;
+      subs.push(el);
     });
     if(!mainEl && links.length){ mainEl = links[0]; subs = links.slice(1); }
     var mainHref = mainEl ? (mainEl.getAttribute('href')||'') : '';
