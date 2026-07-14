@@ -774,17 +774,23 @@ jiktUpdateViewModeLabel();
         (자리 이동은 아래 스크립트가 .hm-btnrow 를 만들어서 처리)
      ★ 큰글씨 2배에서 이 두 버튼이 nowrap 이라 가로 517px 로 화면을 터뜨렸다.
         → nowrap 을 풀고 줄바꿈을 허용한다. 칸도 함께 늘어나게 높이를 자동으로 둔다. */
+  /* ★ [2차 검수] 버튼 2개 합계 364px 인데 가용 폭이 347px 이라 17px 모자라
+       계단식 2줄로 내려앉았다 (밸런스 깨짐). 문구는 원본이라 줄일 수 없다.
+       → 두 버튼을 한 줄에 반반씩(각 169px) 나눠 좌우 대칭을 맞춘다.
+         큰글씨 2배에서도 한 줄을 유지하고 화면을 벗어나지 않는다. */
   .hm-btnrow{ display:flex !important; flex-wrap:wrap !important;
     justify-content:flex-end !important; gap:8px !important; margin:0 0 16px 0 !important; }
   .jikt-refresh-btn, .jikt-viewmode-btn{
     position:static !important; transform:none !important; margin:0 !important;
+    flex:1 1 0 !important;
     min-height:32px !important; height:auto !important; padding:8px 12px !important;
     font-size:14px !important; line-height:1.4 !important;
     border-radius:8px !important; background:#1E2027 !important; color:#8B95A1 !important;
     border:0.5px solid rgba(255,255,255,.14) !important;
     white-space:normal !important; word-break:keep-all !important;
-    width:auto !important; max-width:100% !important; min-width:0 !important;
-    display:inline-flex !important; align-items:center !important; gap:6px !important; }
+    width:auto !important; max-width:none !important; min-width:0 !important;
+    display:inline-flex !important; align-items:center !important;
+    justify-content:center !important; text-align:center !important; gap:6px !important; }
   .jikt-theme-btn{ display:none !important; }
 
   /* --- 단계 표시 2벌은 모두 숨긴다 (카드에 이미 1·2·3 이 있다) --- */
@@ -850,7 +856,11 @@ jiktUpdateViewModeLabel();
     justify-content:space-between !important; gap:10px !important;
     background:#16233A !important; border:0 !important; border-radius:12px !important;
     padding:12px !important; margin:16px 0 0 0 !important; animation:none !important; }
-  .jcb-banner .tx{ display:block !important; min-width:0 !important; flex:1 1 180px !important;
+  /* ★ [2차 검수] 버튼을 옆에 붙였더니 글 영역이 182px 로 좁아져
+       부제가 `정가 200,000원 → 최저 / 70,000원 · 쿠폰 합산` 으로 어색하게 끊겼다.
+       → 버튼을 아래 줄 전체 폭으로 내린다 (원본 모바일 CSS 도 원래 그렇게 설계돼 있었다).
+         글 영역이 323px 이 되어 부제가 한 줄에 들어간다. */
+  .jcb-banner .tx{ display:block !important; min-width:0 !important; flex:1 1 100% !important;
     gap:0 !important; }
   /* 배너 제목 = 본문(15px). 흰색 — 파랑은 이 화면에서 '쿠폰 안내 보기' 버튼 하나만 쓴다 */
   .jcb-banner .t{ font-size:15px !important; color:#F5F6F8 !important; font-weight:700 !important;
@@ -867,10 +877,10 @@ jiktUpdateViewModeLabel();
   .jcb-old{ text-decoration:line-through !important; color:#868F9C !important; }
   .jcb-new{ color:#F5F6F8 !important; font-weight:800 !important; }
   /* 이 화면의 유일한 파란 주 버튼 = 라벨(14px). 흰 글씨 대비 4.5 확보를 위해 #1A5FBF */
-  .jcb-banner .go{ margin:0 !important; width:auto !important; flex:0 1 auto !important;
+  .jcb-banner .go{ margin:4px 0 0 0 !important; width:100% !important; flex:1 1 100% !important;
     background:#1A5FBF !important; color:#FFFFFF !important;
     border:0 !important; border-radius:8px !important;
-    padding:9px 14px !important; min-height:32px !important; height:auto !important;
+    padding:11px 14px !important; min-height:32px !important; height:auto !important;
     display:inline-flex !important; align-items:center !important; justify-content:center !important;
     font-size:14px !important; font-weight:700 !important; line-height:1.4 !important;
     white-space:normal !important; word-break:keep-all !important; min-width:0 !important; }
