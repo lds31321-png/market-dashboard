@@ -3345,12 +3345,15 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   /* ⚠⚠ 변동성 표는 **5칸짜리 가로 표**라 폰 화면(412px)을 훌쩍 넘어간다(실측 633px).
         표를 그대로 두고 폭만 줄이면 글자가 뭉개진다.
         → 한 줄(종목 하나)을 **카드 하나**로 바꿔서 위에서 아래로 읽게 한다. */
-  .gm-big-bd .vol-table-wrap{ overflow:visible !important; }
+  /* ⚠⚠ 원본 표에 `min-width:600px` 이 박혀 있다.
+        이걸 안 풀면 폭을 아무리 줄이라고 해도 **600px 아래로는 절대 안 줄어든다.**
+        (실제로 카드 안에서 633px 로 튀어나와 있었다) → 최소폭을 먼저 풀어 준다. */
+  .gm-big-bd .vol-table-wrap{ overflow:visible !important; min-width:0 !important; }
   .gm-big-bd .vol-table,
   .gm-big-bd .vol-table tbody,
   .gm-big-bd .vol-table tr,
   .gm-big-bd .vol-table td{ display:block !important; width:auto !important;
-    max-width:100% !important; }
+    min-width:0 !important; max-width:100% !important; }
   .gm-big-bd .vol-table thead{ display:none !important; }   /* 머리줄(종목명·등급…)은 뺀다 */
   .gm-big-bd .vol-table tr{ background:#23262E !important; border-radius:8px !important;
     padding:12px !important; margin:0 0 6px 0 !important; border:0 !important; }
