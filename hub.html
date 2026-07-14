@@ -789,9 +789,13 @@ jiktUpdateViewModeLabel();
          큰글씨 2배에서도 한 줄을 유지하고 화면을 벗어나지 않는다. */
   .hm-btnrow{ display:flex !important; flex-wrap:wrap !important;
     justify-content:flex-end !important; gap:8px !important; margin:0 0 16px 0 !important; }
+  /* ★ 폭을 픽셀이 아니라 **글자 크기 배수(em)** 로 준다.
+       기본 글씨(13px) → 11em = 143px → 두 개가 나란히 (2×143+8 = 294 < 347)
+       큰글씨 2배(26px) → 11em = 286px → 한 줄에 못 들어가 자동으로 세로로 쌓임
+       → 큰글씨에서 버튼 글자가 3줄로 쪼개지던 문제가 사라진다. */
   .jikt-refresh-btn, .jikt-viewmode-btn{
     position:static !important; transform:none !important; margin:0 !important;
-    flex:1 1 0 !important;
+    flex:1 1 11em !important;
     min-height:32px !important; height:auto !important; padding:8px 12px !important;
     font-size:13px !important; line-height:1.4 !important;
     border-radius:8px !important; background:#1E2027 !important; color:#8B95A1 !important;
@@ -873,9 +877,13 @@ jiktUpdateViewModeLabel();
   .jcb-banner .tx{ display:block !important; min-width:0 !important; flex:1 1 100% !important;
     gap:0 !important; }
   /* 배너 제목 = 본문(15px). 흰색 — 파랑은 이 화면에서 '쿠폰 안내 보기' 버튼 하나만 쓴다 */
-  .jcb-banner .t{ font-size:16px !important; color:#F5F6F8 !important; font-weight:800 !important;
+  /* ★ 원본 `.t` 가 inline-flex 이고 그 안의 <b> 가 block 이라, 큰글씨에서
+       "트레이딩 룸" 과 "최대 65% 할인" 이 **좌우 2칸으로 갈라졌다.**
+       기본 글씨에선 폭이 넉넉해 안 보였다 → 일반 텍스트 흐름으로 되돌린다. */
+  .jcb-banner .t{ display:block !important;
+    font-size:16px !important; color:#F5F6F8 !important; font-weight:800 !important;
     line-height:1.35 !important; word-break:keep-all !important; }
-  .jcb-banner .t b{ color:#F5F6F8 !important; }
+  .jcb-banner .t b{ display:inline !important; color:#F5F6F8 !important; }
   .jcb-banner .ic{ display:none !important; }
   /* 배너 부제 = 메타(13px) — 제목보다 한 단계 아래여야 위계가 산다 */
   .jcb-banner .s{ display:block !important; font-size:13px !important; color:#8B95A1 !important;
