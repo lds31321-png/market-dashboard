@@ -832,11 +832,15 @@ jiktUpdateViewModeLabel();
     stroke:#5F6672 !important; }
   .hub-card .card-step{ padding-right:26px !important; }
 
-  /* 1번 카드만 강조 — 파란 테두리 + 1번 숫자 강조 (원본에 없는 배지·버튼은 만들지 않는다)
+  /* 1번 카드만 강조 — 파란 테두리 + 1번 숫자 + 화살표 (원본에 없는 배지·버튼은 만들지 않는다)
      ★ [2026-07-14] 예전엔 1번 카드의 화살표를 숨겼는데, 3장 중 1장만 화살표가 없어
-        "눌러서 들어가는 카드"라는 표시가 어긋났다 → 3장 모두 화살표를 보인다. */
-  .card-grid > .hub-card:first-child{ border:1px solid #4593FC !important; }
+        "눌러서 들어가는 카드"라는 표시가 어긋났다 → 3장 모두 화살표를 보인다.
+     ★ 근거: 레퍼런스 A-08(선택 카드 = 파란 테두리로 표시) + 유튜브 원칙 8(한 번에 하나).
+        단, 2·3번 카드를 흐리게 낮추지는 않는다 — 기존 회원이 매일 2단계로 들어가기 때문. */
+  .card-grid > .hub-card:first-child{ border:2px solid #4593FC !important; }
   .card-grid > .hub-card:first-child .card-step .n{ background:#2A4A7A !important; color:#8FC0FF !important; }
+  .card-grid > .hub-card:first-child .card-chev{ stroke:#4593FC !important; }
+  .card-grid > .hub-card:first-child .card-items{ border-top-color:rgba(69,147,252,.25) !important; }
 
   /* --- 쿠폰 배너: 카드 아래로 (자리 이동은 아래 스크립트가 한다) ---
      ★ 큰글씨 2배에서 버튼이 nowrap + flex:0 0 auto 라 배너 밖으로 나갔다
@@ -881,77 +885,188 @@ jiktUpdateViewModeLabel();
   /* 시트 손잡이 */
   .jintro-box::before, .jcb-box::before{ content:''; display:block; width:34px; height:4px;
     background:#3A3E48; border-radius:20px; margin:0 auto 12px; }
+  /* ★ 닫기 × — 32×32 원 안에 19px 글자. 큰글씨 2배면 38px 이 되어 원 밖으로 넘친다.
+       칸을 원형으로 유지하려면 글자를 못 키운다 → 글자 크기를 고정하고 줄간격을 1로 못 박는다.
+       (누르는 대상은 원 전체 32px 이라 터치 규칙은 지켜진다) */
   .jintro-x, .jcb-x{ top:12px !important; right:12px !important; color:#8B95A1 !important;
-    min-width:32px !important; min-height:32px !important; }
+    width:32px !important; height:32px !important;
+    min-width:32px !important; min-height:32px !important;
+    font-size:19px !important; line-height:1 !important; padding:0 !important;
+    display:inline-flex !important; align-items:center !important; justify-content:center !important;
+    flex-shrink:0 !important; }
 
+  /* ============================================================
+     [2026-07-14 영역② 자가진단 팝업] 위계표 — 시안 1안(아코디언 정석) 채택
+       근거: A-02 NAVER(긴 목록은 아코디언) · A-05 모니모(세부는 접었다 펼침) · 원칙 3(위계 3단)
+       값(대) 22 / 제목 17 / 본문 15 / 라벨 14 / 메타 13
+     ⚠ 6단계는 "이어지는 절차"라 세로선을 유지한다. 대신 번호 칸의 고정 크기만 푼다.
+     ============================================================ */
   .jintro-tag, .jcb-tag{ font-size:14px !important; color:#8B95A1 !important; text-align:left !important; }
-  .jintro-h, .jcb-h{ font-size:20px !important; font-weight:800 !important; color:#F5F6F8 !important;
-    line-height:1.35 !important; text-align:left !important; margin-top:8px !important; }
+  .jintro-h, .jcb-h{ font-size:22px !important; font-weight:800 !important; color:#F5F6F8 !important;
+    line-height:1.35 !important; text-align:left !important; margin-top:8px !important;
+    word-break:keep-all !important; }
   .jcb-h b{ color:#F5F6F8 !important; }
-  .jintro-sub{ font-size:14px !important; color:#8B95A1 !important; line-height:1.6 !important;
-    text-align:left !important; margin-top:8px !important; }
+  .jintro-sub{ font-size:15px !important; color:#8B95A1 !important; line-height:1.6 !important;
+    text-align:left !important; margin-top:8px !important; word-break:keep-all !important; }
 
-  .jintro-coupon{ font-size:15px !important; padding:14px !important; min-height:40px !important;
+  /* 쿠폰 절차 토글 = 제목(17px). 파랑은 아래 '체크리스트 작성하기' 하나에만 쓴다 */
+  .jintro-coupon{ font-size:17px !important; padding:14px !important;
+    min-height:32px !important; height:auto !important;
     background:#23262E !important; color:#F5F6F8 !important; border:0 !important;
-    border-radius:8px !important; margin-top:16px !important; font-weight:700 !important; }
+    border-radius:8px !important; margin-top:16px !important; font-weight:700 !important;
+    line-height:1.4 !important; animation:none !important;
+    white-space:normal !important; word-break:keep-all !important; }
+  .jintro-coupon .chev{ color:#8B95A1 !important; animation:none !important; flex-shrink:0 !important; }
+  .jintro-coupon .chev svg{ width:18px !important; height:18px !important; }
+
   .jintro-detail{ background:#23262E !important; border-radius:10px !important;
     padding:16px !important; margin-top:8px !important; }
-  .jintro-dlead{ font-size:14px !important; color:#8B95A1 !important; line-height:1.6 !important; }
-  .jintro-flow .ft{ font-size:14px !important; color:#F5F6F8 !important; line-height:1.5 !important; }
-  .jintro-flow .fc{ background:#2E323C !important; color:#C4CBD6 !important; }
-  /* 이 화면의 유일한 파란 주 버튼 */
+  .jintro-dlead{ font-size:15px !important; color:#8B95A1 !important; line-height:1.6 !important;
+    margin-bottom:16px !important; }
+  .jintro-fstep{ gap:12px !important; }
+  .jintro-flow .ft{ font-size:15px !important; color:#F5F6F8 !important; line-height:1.5 !important;
+    padding-bottom:16px !important; min-width:0 !important; }
+  .jintro-flow .ft b{ color:#F5F6F8 !important; }
+  .jintro-flow .ft .cp{ color:#F5F6F8 !important; }
+  /* ★ 번호 원이 25×25 고정 + 글자 12.5px 이었다 (12px 이하 금지 위반은 아니나 바닥 미달).
+       큰글씨 2배에서 글자 28px 이 되어 칸이 터진다 → 칸을 글자에 맞춰 늘어나게 둔다 (Part 3-3). */
+  .jintro-flow .fc{ width:auto !important; height:auto !important;
+    min-width:26px !important; min-height:26px !important; padding:2px !important;
+    box-sizing:border-box !important;
+    background:#2E323C !important; color:#C4CBD6 !important;
+    border:0 !important; font-size:14px !important; line-height:1.4 !important; }
+
+  /* 이 팝업의 유일한 파란 주 버튼 */
   .jintro-cta{ height:auto !important; min-height:48px !important; background:#1A5FBF !important;
     color:#FFFFFF !important; border-radius:8px !important; font-size:16px !important;
-    font-weight:700 !important; }
+    font-weight:700 !important; line-height:1.4 !important; padding:12px 14px !important;
+    white-space:normal !important; word-break:keep-all !important; text-align:center !important; }
+  /* ★ 카카오 버튼은 height:50px 고정이었다 → 큰글씨에서 글자가 칸 밖으로 나간다 */
+  .jintro-kakao{ height:auto !important; min-height:44px !important; border-radius:8px !important;
+    font-size:14px !important; line-height:1.4 !important; padding:12px 14px !important;
+    background:rgba(255,255,255,.05) !important; color:#C4CBD6 !important;
+    white-space:normal !important; word-break:keep-all !important; text-align:center !important; }
+  .jintro-btns{ gap:8px !important; margin-top:16px !important; }
 
-  /* --- 쿠폰 팝업 --- */
-  .jcb-calc{ background:#23262E !important; border-radius:10px !important; padding:16px !important;
-    margin-top:16px !important; }
-  .jcb-calc-top{ font-size:14px !important; color:#8B95A1 !important; }
-  .jcb-calc-formula{ font-size:14px !important; color:#8B95A1 !important; margin-top:8px !important;
-    line-height:1.6 !important; word-break:keep-all !important; }
+  /* ============================================================
+     [2026-07-14 영역③ 쿠폰 팝업] 위계표 — 시안 1안 + 3안 조합 채택
+       근거: B-01(핵심 숫자 1개를 가장 크게) · C-03(강조 바는 1개만 색)
+             A-08(카드 그리드) · 원칙 7(근접성 — 관련끼리 묶고 그룹 사이만 벌림)
+       값(대) 26 = 결제 70,000원 / 제목 22·17 / 본문 15 / 라벨 14 / 메타 13
+     ============================================================ */
+  .jcb-calc{ background:#23262E !important; border:0 !important;
+    border-radius:10px !important; padding:16px !important;
+    margin:16px 0 0 0 !important; }
+  /* ★ 결제액을 막대 밖 대표값으로 끌어올린다 (자리 이동은 아래 스크립트가 한다).
+       문구는 원본 그대로 `결제 70,000원`. 막대 안에 겹쳐 있어 묻혀 있었다. */
+  .jcb-bar-pay{ position:static !important; display:block !important;
+    font-size:26px !important; font-weight:800 !important; color:#F5F6F8 !important;
+    line-height:1.25 !important; margin:0 0 12px 0 !important;
+    white-space:normal !important; word-break:keep-all !important; }
+  .jcb-calc-top{ font-size:14px !important; color:#8B95A1 !important;
+    display:flex !important; justify-content:space-between !important;
+    align-items:baseline !important; gap:8px !important; flex-wrap:wrap !important;
+    margin-bottom:8px !important; }
+  .jcb-calc-top .dc{ color:#F5F6F8 !important; font-weight:800 !important; }
+  /* 막대는 '65% 할인' 하나만 담는다. 높이를 자동으로 둬 큰글씨에서 안 터지게 한다 */
+  .jcb-bar{ height:auto !important; min-height:24px !important; border-radius:6px !important;
+    background:#2E323C !important; }
+  .jcb-bar-fill{ position:relative !important; width:65% !important;
+    background:#4593FC !important; border-radius:6px !important;
+    min-height:24px !important; padding:2px 4px !important; box-sizing:border-box !important;
+    font-size:14px !important; font-weight:700 !important; color:#FFFFFF !important;
+    line-height:1.4 !important; white-space:nowrap !important; }
+  .jcb-calc-formula{ font-size:13px !important; color:#8B95A1 !important; margin-top:12px !important;
+    line-height:1.6 !important; word-break:keep-all !important; text-align:left !important; }
   .jcb-calc-formula b{ color:#F5F6F8 !important; }
-  .jcb-groups{ grid-template-columns:1fr !important; gap:0 !important; margin-top:16px !important; }
-  .jcb-group-h{ font-size:14px !important; color:#8B95A1 !important; margin:0 0 8px 0 !important;
-    font-weight:700 !important; }
+
+  /* --- 쿠폰 6장: 신규 / 기존 그룹을 확실히 가른다 (근접성 그루핑) --- */
+  .jcb-groups{ grid-template-columns:1fr !important; gap:24px !important; margin-top:24px !important; }
+  .jcb-group-h{ font-size:15px !important; color:#F5F6F8 !important;
+    margin:0 0 8px 0 !important; font-weight:800 !important;
+    border-left:2px solid #5F6672 !important; padding-left:10px !important;
+    border-radius:0 !important; }
+  /* 신규 가입자 그룹만 파란 세로선 (첫 그룹 = 처음 온 사람이 볼 곳) */
+  .jcb-groups > div:first-child > .jcb-group-h{ border-left-color:#4593FC !important; }
+  /* 그룹 안 카드들을 한 덩어리로 묶는 배경 */
+  .jcb-groups > div{ background:#20232A !important; border-radius:12px !important;
+    padding:12px !important; }
+  .jcb-groups > div > .jcb-group-h{ margin-bottom:12px !important; }
+
   .jcc{ background:#23262E !important; border:0 !important; border-radius:10px !important;
-    padding:16px !important; margin-bottom:8px !important; min-height:36px !important; }
+    padding:14px !important; margin-bottom:6px !important; min-height:32px !important;
+    align-items:center !important; }
   .jcc[aria-expanded="true"]{ border:1px solid #4593FC !important; margin-bottom:0 !important; }
-  .jcc .amt .a{ font-size:18px !important; color:#F5F6F8 !important; font-weight:800 !important; }
-  .jcc .amt .p{ font-size:14px !important; color:#8B95A1 !important; }
-  .jcc .meta .nm{ font-size:15px !important; color:#F5F6F8 !important; font-weight:700 !important; }
-  .jcc .meta .dur{ font-size:14px !important; color:#8B95A1 !important; }
-  .jcc .chev{ color:#8B95A1 !important; }
+  /* ★ 금액 칸이 52px 고정이었다 → 큰글씨 2배에서 `5만 / 원` 3줄로 쪼개졌다 (실제 사고).
+       글자를 키울 땐 칸을 함께 늘린다 (Part 3-3). 칸은 자동, 글자는 줄바꿈 금지. */
+  .jcc .amt{ width:auto !important; min-width:56px !important; flex-shrink:0 !important; }
+  .jcc .amt .a{ font-size:17px !important; color:#F5F6F8 !important; font-weight:800 !important;
+    white-space:nowrap !important; line-height:1.25 !important; }
+  .jcc .amt .p{ font-size:13px !important; color:#8B95A1 !important; font-weight:700 !important;
+    white-space:nowrap !important; }
+  .jcc .meta{ min-width:0 !important; }
+  .jcc .meta .nm{ font-size:15px !important; color:#F5F6F8 !important; font-weight:700 !important;
+    word-break:keep-all !important; }
+  .jcc .meta .dur{ font-size:13px !important; color:#8B95A1 !important; margin-top:2px !important; }
+  .jcc .chev{ color:#8B95A1 !important; animation:none !important; flex-shrink:0 !important; }
+  .jcc .chev svg{ width:18px !important; height:18px !important; }
+
   .jcc-body{ background:#23262E !important; border-radius:0 0 10px 10px !important;
-    padding:16px !important; margin-bottom:8px !important; }
-  .jcc-body .d{ font-size:14px !important; color:#8B95A1 !important; line-height:1.6 !important; }
-  .jcc-body .stp{ font-size:14px !important; color:#F5F6F8 !important; line-height:1.7 !important;
+    padding:16px !important; margin-bottom:6px !important; }
+  .jcc-body .d{ font-size:15px !important; color:#8B95A1 !important; line-height:1.6 !important; }
+  .jcc-body .d b{ color:#F5F6F8 !important; }
+  .jcc-body .stp{ font-size:15px !important; color:#F5F6F8 !important; line-height:1.7 !important;
     margin-top:16px !important; padding-top:16px !important;
     border-top:0.5px solid rgba(255,255,255,.07) !important; }
   .jcc-body .stp b{ color:#F5F6F8 !important; }
-  .jcc-btns{ display:flex !important; gap:8px !important; margin-top:16px !important; }
-  .jcc-kakao, .jcc-cta{ flex:1 1 0 !important; min-width:0 !important; text-align:center !important;
+  .jcc-btns{ display:flex !important; gap:8px !important; margin-top:16px !important;
+    flex-wrap:wrap !important; }
+  /* ★ 카드마다 파란 버튼이 있으면 펼칠 때마다 파랑이 6개가 된다.
+       이 팝업의 파란 주 버튼은 맨 아래 '라이브 클래스에서 쿠폰 사용하기' 하나뿐이다.
+       (같은 링크가 아래에 이미 있으므로 정보 누락이 아니다) */
+  .jcc-kakao, .jcc-cta{ flex:1 1 140px !important; min-width:0 !important;
+    text-align:center !important;
     border-radius:8px !important; font-size:14px !important; min-height:44px !important;
+    height:auto !important; padding:10px 12px !important; line-height:1.4 !important;
     font-weight:700 !important;
     display:inline-flex !important; align-items:center !important; justify-content:center !important;
     white-space:normal !important; word-break:keep-all !important; }
   .jcc-kakao{ background:transparent !important; color:#8B95A1 !important;
     border:0.5px solid rgba(255,255,255,.14) !important; }
-  .jcc-cta{ background:#1A5FBF !important; color:#FFFFFF !important; border:0 !important; }
+  .jcc-cta{ background:#2E323C !important; color:#F5F6F8 !important;
+    border:0.5px solid rgba(255,255,255,.14) !important; }
 
-  /* 쿠폰 팝업 잔여 작은 글씨 — 12px 이하 금지 */
-  .jcb-bar-fill, .jcb-bar-pay{ font-size:14px !important; font-weight:700 !important; }
-  .jcb-box .evt{ font-size:14px !important; padding:2px 8px !important;
-    background:#3A2A2E !important; color:#F0A0A0 !important; border-radius:6px !important; }
-  .jcb-box .l{ font-size:14px !important; line-height:1.5 !important; }
-  .jcb-note{ font-size:14px !important; line-height:1.6 !important; color:#8B95A1 !important; }
+  /* 그룹별 소계 */
+  .jcg-sum{ margin-top:12px !important; padding:0 4px !important;
+    background:transparent !important; border:0 !important; }
+  .jcg-sum .l{ font-size:13px !important; color:#8B95A1 !important; line-height:1.5 !important; }
+  .jcg-sum .v{ font-size:13px !important; color:#8B95A1 !important; line-height:1.6 !important;
+    margin-top:2px !important; word-break:keep-all !important; }
+  .jcg-sum .v b{ font-size:15px !important; color:#F5F6F8 !important; }
+  .jcg-sum .pct{ color:#8B95A1 !important; }
 
-  /* 팝업 하단 — 12px 이하 금지 · 터치 32px 이상 */
+  /* ★ '오픈이벤트' 배지가 붉은 계열이었다 → 손익 색(빨강=수익)과 의미가 충돌한다.
+       할인·이벤트는 손익이 아니므로 무채색으로 내린다. (Part 10-4 미해결 ④) */
+  .jcb-box .evt{ font-size:13px !important; padding:2px 8px !important;
+    background:#2E323C !important; color:#C4CBD6 !important; border-radius:6px !important;
+    white-space:nowrap !important; font-weight:700 !important; margin-left:4px !important; }
+  .jcb-note{ font-size:13px !important; line-height:1.6 !important; color:#8B95A1 !important;
+    word-break:keep-all !important; }
+  /* 이 팝업의 유일한 파란 주 버튼 */
+  .jcb-foot-cta{ height:auto !important; min-height:48px !important; border-radius:8px !important;
+    background:#1A5FBF !important; color:#FFFFFF !important;
+    font-size:16px !important; font-weight:700 !important; line-height:1.4 !important;
+    padding:12px 14px !important; margin-top:24px !important;
+    white-space:normal !important; word-break:keep-all !important; text-align:center !important; }
+
+  /* 팝업 하단 = 메타(13px). 바닥이자 최소값 — 12px 이하 금지 · 터치는 32px 이상 확보 */
   .jintro-foot, .jcb-foot{ margin-top:16px !important; }
   .jintro-hide, .jcb-hide,
-  .jintro-closetxt, .jcb-closetxt{ font-size:14px !important; color:#8B95A1 !important;
+  .jintro-closetxt, .jcb-closetxt{ font-size:13px !important; color:#8B95A1 !important;
     min-height:32px !important; display:inline-flex !important; align-items:center !important;
-    gap:8px !important; }
+    gap:8px !important; line-height:1.4 !important; }
+  /* 체크박스 자체는 17px 이지만, 실제 누르는 대상은 라벨 전체(32px 이상)라 터치 규칙 통과 */
+  .jintro-hide input{ flex-shrink:0 !important; }
 
   /* 누를 수 있는 것 최소 32px */
   .hub-card, .jcb-banner .go, .jintro-coupon, .jcc, .jintro-cta{ min-height:32px !important; }
@@ -999,7 +1114,20 @@ jiktUpdateViewModeLabel();
       document.querySelectorAll('.hm-badge, .hm-cta').forEach(function(el){ el.remove(); });
     }catch(e){}
 
-    /* 3) [2026-07-14 제거] 일괄 최소폰트 보정(14px 미만 → 14px)은 정보 위계를 파괴한다.
+    /* 3) [2026-07-14 영역③] 쿠폰 팝업 — `결제 70,000원` 을 막대 밖 맨 위로 옮긴다.
+          원본에선 할인 막대(.jcb-bar) 안에 겹쳐 있어 묻혀 있었다.
+          이 팝업이 말하려는 핵심 숫자는 "결국 얼마 내는가" 다 (레퍼런스 B-01).
+          ⚠ 문구는 손대지 않는다. 자리만 옮긴다.
+          ⚠ 이 팝업은 정적 HTML 이라 다시 그려지지 않으므로 옮겨도 사라지지 않는다. */
+    try{
+      var calc = document.querySelector('.jcb-calc');
+      var pay  = document.querySelector('.jcb-bar-pay');
+      if(calc && pay && pay.parentNode !== calc){
+        calc.insertBefore(pay, calc.firstChild);
+      }
+    }catch(e){}
+
+    /* 4) [2026-07-14 제거] 일괄 최소폰트 보정(14px 미만 → 14px)은 정보 위계를 파괴한다.
           원본이 의도적으로 작게 둔 라벨·캡션까지 전부 14px로 밀어올려
           "제목 18 / 나머지 전부 14" 로 평평해졌고, 폰 큰글씨 배율이 곱해져 화면이 터졌다.
           → 일괄 보정 금지. 글자 크기는 영역마다 위계표(마스터 통합본 Part 3-2)에 맞춰
