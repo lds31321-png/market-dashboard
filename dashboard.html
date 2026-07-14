@@ -2731,6 +2731,16 @@ loadPositions();
 
   .fm-wrap{ display:block !important; padding:0 !important; margin:0 !important; }
 
+  /* ★ [2026-07-14] 탭 3개(포지션 현황 · 매매 내역 · 수익 통계)가 큰글씨에서 화면 밖으로 넘쳤다.
+       원본 `.nav-inner` 가 flex 인데 가로 스크롤이 없어서 그냥 잘렸다.
+       → 종합 옵션의 칩바처럼 **가로 스크롤 허용** + 글자 12px 로 낮춘다. */
+  .nav-inner{ overflow-x:auto !important; overflow-y:hidden !important;
+    -webkit-overflow-scrolling:touch !important; scrollbar-width:none !important;
+    gap:4px !important; }
+  .nav-inner::-webkit-scrollbar{ display:none !important; }
+  .nav-tab{ flex:0 0 auto !important; font-size:12px !important; font-weight:800 !important;
+    white-space:nowrap !important; padding:8px 12px !important; min-height:34px !important; }
+
   /* ══════════════════════════════════════════════════════════
      [2026-07-14 위계 재매핑] ★ 기준 = 종합 옵션 대시보드 (통합본 Part 3-2)
        대표값 26px / 800 · 섹션제목 15px / 800 / 흰 · 카드제목 14px / 800 / 흰
