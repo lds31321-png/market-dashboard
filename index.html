@@ -3399,6 +3399,117 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 }
 </style>
 
+<style id="gm2-css-2026-07-15">
+/* ============================================================
+   글로벌 대시보드 모바일 — 시안 B (요약 우선형)  2026-07-15
+   ⚠ 전부 @media(max-width:640px). PC 는 절대 건드리지 않는다.
+
+   ★ 인베스팅닷컴 실측 기준 (D:\종합 대시보드\인베스팅닷컴_레퍼런스_실측.md)
+     · 좌우 여백 16px 고정
+     · 글자 6단계만 — 24 / 20 / 16 / 13 / 12 / 11
+     · 행 높이 — 표 40 · 메뉴 48 · 리스트 56 (40 미만 터치 요소 금지)
+     · 카드 안에 카드 금지. 테두리 대신 배경 한 단계 차이로만 구분
+     · 색 4개 — 흰 / 회색 #8B95A1 / 수익 빨강 #F06A6A / 손실 파랑 #4593FC
+   ============================================================ */
+@media (max-width:640px){
+
+  .gm-wrap{ padding:0 0 32px 0 !important; }
+
+  /* ── 맨 위 제목 ── */
+  .gm2-hd{ padding:16px 16px 8px 16px !important; }
+  .gm2-h1{ font-size:20px !important; font-weight:800 !important; color:#F5F6F8 !important;
+    margin:0 !important; line-height:1.4 !important; }
+  .gm2-cap{ font-size:12px !important; color:#8B95A1 !important; margin:4px 0 0 0 !important;
+    line-height:1.5 !important; }
+
+  /* ── ① 오늘의 시장 한 줄 ── */
+  .gm2-box{ background:#1E2027 !important; border:0 !important; border-radius:12px !important;
+    padding:16px !important; margin:0 16px 8px 16px !important; }
+  .gm2-lbl{ font-size:12px !important; color:#8B95A1 !important; margin:0 !important;
+    line-height:1.5 !important; }
+  .gm2-said{ font-size:16px !important; color:#F5F6F8 !important; margin:8px 0 0 0 !important;
+    line-height:1.6 !important; word-break:keep-all !important; }
+
+  /* ── ② 변동성 1순위 2종목 ── */
+  .gm2-heros{ display:flex !important; gap:8px !important; margin:0 16px 8px 16px !important; }
+  .gm2-hero{ flex:1 !important; min-width:0 !important; background:#1E2027 !important;
+    border-radius:12px !important; padding:16px !important;
+    cursor:pointer !important; min-height:56px !important; }
+  .gm2-hero-nm{ font-size:12px !important; color:#8B95A1 !important; margin:0 !important;
+    white-space:nowrap !important; overflow:hidden !important; text-overflow:ellipsis !important; }
+  .gm2-hero-px{ font-size:24px !important; font-weight:800 !important; color:#F5F6F8 !important;
+    margin:6px 0 0 0 !important; line-height:1.25 !important; word-break:break-all !important; }
+  .gm2-hero-cg{ font-size:13px !important; font-weight:800 !important; margin:4px 0 0 0 !important; }
+
+  /* ── ③ 메뉴 3줄 (행 높이 48) ── */
+  .gm2-menu{ background:#1E2027 !important; border-radius:12px !important;
+    margin:0 16px 8px 16px !important; padding:0 16px !important; overflow:hidden !important; }
+  .gm2-menu .gm-big{ background:transparent !important; border:0 !important;
+    border-radius:0 !important; margin:0 !important; }
+  .gm2-menu .gm-big + .gm-big > .gm-big-hd{ border-top:0.5px solid rgba(255,255,255,.07) !important; }
+  .gm2-menu .gm-big-hd{ padding:14px 0 !important; min-height:48px !important;
+    box-sizing:border-box !important; align-items:center !important; }
+  .gm2-menu .gm-big-t{ font-size:16px !important; font-weight:400 !important; }
+  .gm2-menu .gm-big-s{ display:none !important; }
+  .gm2-menu .gm-big-bd{ padding:0 0 12px 0 !important; }
+  .gm2-menu .gm-big-rt{ display:flex !important; align-items:center !important; gap:8px !important;
+    flex-shrink:0 !important; }
+  .gm2-menu .gm-big-hint{ font-size:12px !important; color:#8B95A1 !important; margin:0 !important;
+    white-space:nowrap !important; }
+  .gm2-menu .gm-big.gm-open{ border:0 !important; }
+
+  /* 종목 목록 — 행 높이 56, 카드 없음 */
+  .gm2-menu .gm-a{ background:transparent !important; border:0 !important; border-radius:0 !important;
+    padding:0 !important; margin:0 !important; }
+  .gm2-menu .gm-a + .gm-a > .gm-a-hd{ border-top:0.5px solid rgba(255,255,255,.07) !important; }
+  .gm2-menu .gm-a-hd{ padding:10px 0 !important; min-height:56px !important;
+    box-sizing:border-box !important; align-items:center !important; }
+  .gm2-menu .gm-a-nm{ font-size:16px !important; font-weight:400 !important; }
+  .gm2-menu .gm-a-meta{ font-size:12px !important; margin:2px 0 0 0 !important; }
+  /* 오른쪽은 가격(위) · 등락(아래) 두 줄 */
+  .gm2-menu .gm-a-px{ font-size:16px !important; color:#F5F6F8 !important; margin:0 !important;
+    line-height:1.4 !important; white-space:nowrap !important; }
+  .gm2-menu .gm-a-chg{ font-size:12px !important; font-weight:800 !important;
+    margin:2px 0 0 0 !important; line-height:1.4 !important; }
+  .gm2-menu .gm-risk{ display:none !important; }
+  .gm2-menu .gm-a.gm-open{ border:0 !important; }
+  .gm2-menu .gm-a-bd{ margin-top:12px !important; padding-top:12px !important; }
+
+  /* ── ④ 헤드라인 ── */
+  .gm2-sec{ font-size:12px !important; color:#8B95A1 !important;
+    margin:24px 16px 8px 16px !important; }
+  .gm2-hl-t{ font-size:16px !important; font-weight:800 !important; color:#F5F6F8 !important;
+    margin:0 !important; line-height:1.5 !important; word-break:keep-all !important; }
+  .gm2-hl-d{ font-size:13px !important; color:#C4CBD6 !important; margin:8px 0 0 0 !important;
+    line-height:1.7 !important; word-break:keep-all !important; }
+
+  /* 뉴스 한 건 = 한 행 */
+  .gm2-news{ background:#1E2027 !important; border-radius:12px !important;
+    margin:0 16px 8px 16px !important; padding:0 16px !important; }
+  .gm2-ni{ padding:14px 0 !important; }
+  .gm2-ni + .gm2-ni{ border-top:0.5px solid rgba(255,255,255,.07) !important; }
+  .gm2-ni-t{ font-size:13px !important; color:#F5F6F8 !important; margin:0 !important;
+    line-height:1.6 !important; word-break:keep-all !important; }
+  .gm2-ni-t em{ font-style:normal !important; font-weight:800 !important; color:#F06A6A !important;
+    margin-right:6px !important; }
+  .gm2-ni-s{ font-size:12px !important; color:#8B95A1 !important; margin:6px 0 0 0 !important;
+    text-decoration:none !important; display:inline-block !important; min-height:24px !important; }
+
+  /* 더보기 줄 (행 높이 48) */
+  .gm2-more{ display:flex !important; align-items:center !important;
+    justify-content:space-between !important;
+    background:#1E2027 !important; border-radius:12px !important;
+    margin:0 16px 8px 16px !important; padding:0 16px !important;
+    min-height:48px !important; cursor:pointer !important; }
+  .gm2-more p{ font-size:13px !important; color:#8B95A1 !important; margin:0 !important; }
+  .gm2-more span{ font-size:13px !important; color:#8B95A1 !important; }
+
+  /* ── ⑤ 아래 더보기 구역 ── */
+  .gm2-tail{ margin:0 16px !important; }
+  .gm2-tail .gm-big{ border:0 !important; }
+}
+</style>
+
 <script id="gm-js-2026-07-14">
 /* 글로벌 대시보드 모바일 엔진
    ⚠ 원본을 **꺼내오지 않고 복사**한다 → 원본이 다시 그려져도 안전.
@@ -3415,14 +3526,17 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   /* ★ 2026-07-15 — 큰 구역 아코디언 (헤드라인·변동성표·캘린더·거시지표·출처)
      껍데기만 먼저 만들고, 안쪽 내용은 **누를 때** 원본에서 복사해 온다.
      (처음부터 다 복사하면 화면이 무거워지고, 원본이 아직 안 그려졌을 수도 있다) */
-  function bigAcc(id, title, sub){
+  function bigAcc(id, title, sub, hint){
     return '<div class="gm-big" id="' + id + '">'
          +   '<div class="gm-big-hd">'
          +     '<div style="min-width:0">'
          +       '<p class="gm-big-t">' + esc(title) + '</p>'
          +       (sub ? '<p class="gm-big-s">' + esc(sub) + '</p>' : '')
          +     '</div>'
-         +     '<span class="gm-big-chev">&#9662;</span>'
+         +     '<div class="gm-big-rt">'
+         +       (hint ? '<p class="gm-big-hint">' + esc(hint) + '</p>' : '')
+         +       '<span class="gm-big-chev">&#9662;</span>'
+         +     '</div>'
          +   '</div>'
          +   '<div class="gm-big-bd"></div>'
          + '</div>';
@@ -3542,78 +3656,146 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     assets.forEach(function(a, i){ a.ord = i; });
     assets.sort(function(a,b){ return (b.star - a.star) || (a.ord - b.ord); });
 
-    /* ⚠ 여기에 openKey 를 넣으면 카드를 열 때마다 화면을 통째로 다시 그려 번쩍인다.
-          펼침 표시는 클릭이 직접 바꾸므로, 지문에는 **목록 내용만** 넣는다. */
-    var s2 = assets.map(function(a){ return a.nm + a.px + a.cg + a.star; }).join('|');
+    /* ⚠⚠ 화면 전체를 다시 그리면 **펼쳐 놓은 게 접히고 화면이 번쩍인다.**
+          (종목을 누르면 원본이 다시 그려지고 → 시세 글자가 바뀌고 → 여기가 또 다시 그린다)
+          → 종목 **개수**가 바뀔 때만 새로 그린다. 시세 숫자는 tick() 이 글자만 갈아 끼운다. */
+    var s2 = assets.map(function(a){ return a.key; }).join('|');
     if(s2 === sig && document.querySelector('.gm-wrap')) return;
     sig = s2;
 
-    /* ── 오늘의 시장 한 문장 (레퍼런스 C) ── */
-    var head = '';
+    /* ── 헤드라인 읽어오기 ── */
+    var hlT = '', hlD = '', news = [];
     try{
       var hn = document.querySelector('.headline-news');
-      head = T(hn).replace(/^핵심 헤드라인\s*—\s*/, '');
-      head = head.split('·').slice(0, 3).join(' · ');
-      if(head.length > 120) head = head.slice(0, 120) + '…';
+      if(hn){
+        hlT = T(hn.querySelector('.hn-title'));
+        hlD = T(hn.querySelector('.hn-desc'));
+        /* ①~⑦ 출처 목록 — 번호 / 본문 / 출처 링크 */
+        hn.querySelectorAll('a[href^="http"]').forEach(function(a){
+          var row = a.parentElement;
+          if(!row) return;
+          var sp = row.querySelectorAll('span');
+          if(sp.length < 2) return;
+          news.push({
+            no:   T(sp[0]),
+            txt:  T(sp[1]).replace(/\s*—\s*$/, ''),
+            src:  T(a),
+            href: a.getAttribute('href') || ''
+          });
+        });
+      }
     }catch(e){}
+
     var when = '';
     try{
       var ht = T(document.querySelector('.headline-top'));
       when = (ht.match(/기준일:\s*([\d.]+\s*[\d:]*\s*\w*)/) || [])[1] || '';
     }catch(e){}
 
-    /* ── 그리기 ── */
+    /* ── 그리기 (시안 B — 요약 우선형) ── */
     var h = '';
 
-    h += '<div class="gm-card">'
-       +   '<p class="gm-lbl">오늘의 시장</p>'
-       +   (head ? '<p class="gm-said">' + esc(head) + '</p>' : '')
-       +   (when ? '<p class="gm-lbl" style="margin-top:16px">' + esc(when) + ' · EIA · FRED · Reuters</p>' : '')
+    /* 맨 위 제목 */
+    h += '<div class="gm2-hd">'
+       +   '<p class="gm2-h1">글로벌 시장</p>'
+       +   '<p class="gm2-cap">' + esc(when ? ('기준일 ' + when) : '실시간') + ' · EIA · FRED · Reuters</p>'
        + '</div>';
 
-    /* 최고 등급(★ 최다) 종목들 = 1순위 */
-    var maxStar = assets[0] ? assets[0].star : 0;
-    var top2 = assets.filter(function(a){ return a.star === maxStar && maxStar > 0; }).map(function(a){ return a.nm; });
-    if(top2.length){
-      h += '<div class="gm-card">'
-         +   '<p class="gm-lbl">향후 30일 변동성 전망 · 최고 등급</p>'
-         +   '<p class="gm-said"><b style="font-size:22px">' + esc(top2.slice(0,3).join(' · ')) + '</b></p>'
-         +   '<p class="gm-lbl" style="margin-top:16px">변동성 등급 ' + '★'.repeat(maxStar) + '</p>'
+    /* ① 오늘의 시장 — 한 줄 결론 (헤드라인 제목을 그대로 쓴다) */
+    if(hlT){
+      h += '<div class="gm2-box">'
+         +   '<p class="gm2-lbl">오늘의 시장</p>'
+         +   '<p class="gm2-said">' + esc(hlT) + '</p>'
          + '</div>';
     }
 
-    /* ★ 2026-07-15 — 헤드라인 전문 / 변동성 표를 '펼쳐보기'로 붙인다 (PC 에만 있던 내용) */
-    h += bigAcc('gm-hl',  '헤드라인 시장 분석',   '오늘 이슈 전문 보기');
-    h += bigAcc('gm-vol', '종목별 변동성 표',     '등급 · 예상 변동성 · 주요 일정');
+    /* ② 변동성 1순위 2종목 — 큰 숫자로 */
+    var hero = assets.slice(0, 2);
+    if(hero.length === 2){
+      h += '<div class="gm2-heros">';
+      hero.forEach(function(a){
+        h += '<div class="gm2-hero" data-go="' + esc(a.key) + '">'
+           +   '<p class="gm2-hero-nm">' + esc(a.nm) + '</p>'
+           +   '<p class="gm2-hero-px" data-px="' + esc(a.key) + '">' + esc(a.px || '—') + '</p>'
+           +   '<p class="gm2-hero-cg" data-cg="' + esc(a.key) + '" style="color:' + chgCol(a.cg) + '">' + esc(a.cg) + '</p>'
+           + '</div>';
+      });
+      h += '</div>';
+    }
 
-    h += '<p class="gm-sec">종목 ' + assets.length + '개 · 변동성 높은 순</p>';
+    /* ③ 메뉴 3줄 — 종목 목록 / 변동성 전망 / 경제 캘린더 */
+    var maxStar = assets[0] ? assets[0].star : 0;
+    var top1 = assets.filter(function(a){ return a.star === maxStar && maxStar > 0; })
+                     .slice(0, 2).map(function(a){ return a.nm; }).join(' · ');
 
+    h += '<div class="gm2-menu">';
+
+    /* 종목 목록 — 접이식. 안에는 카드 없이 행만 늘어놓는다 (행 높이 56) */
+    h += '<div class="gm-big" id="gm-assets">'
+       +   '<div class="gm-big-hd">'
+       +     '<div style="min-width:0"><p class="gm-big-t">종목 ' + assets.length + '개 보기</p></div>'
+       +     '<div class="gm-big-rt">'
+       +       '<p class="gm-big-hint">변동성 높은 순</p>'
+       +       '<span class="gm-big-chev">&#9662;</span>'
+       +     '</div>'
+       +   '</div>'
+       +   '<div class="gm-big-bd">';
     assets.forEach(function(a){
-      var risk = a.star ? Math.round(a.star / 5 * 100) : 0;
-      var open = (openKey === a.key);
-      h += '<div class="gm-a' + (open ? ' gm-open' : '') + '" data-k="' + esc(a.key) + '">'
+      h += '<div class="gm-a" data-k="' + esc(a.key) + '">'
          +   '<div class="gm-a-hd">'
          +     '<div style="min-width:0">'
          +       '<p class="gm-a-nm">' + esc(a.nm) + '</p>'
-         +       '<p class="gm-a-meta">' + esc([a.px, a.note].filter(Boolean).join(' · ')) + '</p>'
+         +       '<p class="gm-a-meta">' + (a.star ? ('변동성 ' + '★'.repeat(a.star)) : '—') + '</p>'
          +     '</div>'
          +     '<div class="gm-a-rt">'
-         +       '<p class="gm-a-chg" style="color:' + chgCol(a.cg) + '">' + esc(a.cg) + '</p>'
-         +       '<span class="gm-a-chev">' + (open ? '&#9652;' : '&#9662;') + '</span>'
+         +       '<div style="text-align:right">'
+         +         '<p class="gm-a-px" data-px="' + esc(a.key) + '">' + esc(a.px || '—') + '</p>'
+         +         '<p class="gm-a-chg" data-cg="' + esc(a.key) + '" style="color:' + chgCol(a.cg) + '">' + esc(a.cg) + '</p>'
+         +       '</div>'
+         +       '<span class="gm-a-chev">&#9662;</span>'
          +     '</div>'
          +   '</div>'
-         +   (risk ? '<div class="gm-risk"><i style="width:' + risk + '%"></i></div>' : '')
-         +   '<div class="gm-a-bd" data-bd="' + esc(a.key) + '">'
-         +     (open ? '<p class="gm-lbl">불러오는 중</p>' : '')
-         +   '</div>'
+         +   '<div class="gm-a-bd" data-bd="' + esc(a.key) + '"></div>'
          + '</div>';
     });
+    h += '</div></div>';
 
-    /* ★ 2026-07-15 — 종목 카드 아래: 경제 캘린더 · 글로벌 거시 지표 · 데이터 출처 */
-    h += '<p class="gm-sec">더 보기</p>';
-    h += bigAcc('gm-cal',   '경제 캘린더',        '미국·중국·한국·일본 ★★★ 지표');
-    h += bigAcc('gm-macro', '글로벌 거시 지표',   'World Bank · IMF · USDA');
-    h += bigAcc('gm-foot',  '데이터 출처',        'EIA · FRED · Reuters 외');
+    h += bigAcc('gm-vol', '변동성 전망', '', top1 ? (top1 + ' 1순위') : '');
+    h += bigAcc('gm-cal', '경제 캘린더', '', '');
+    h += '</div>';   /* .gm2-menu 끝 */
+
+    /* ④ 헤드라인 — 본문 + ①②③ + 더보기 */
+    if(hlD || news.length){
+      h += '<p class="gm2-sec">헤드라인</p>';
+      if(hlD){
+        h += '<div class="gm2-box">'
+           +   (hlT ? '<p class="gm2-hl-t">' + esc(hlT) + '</p>' : '')
+           +   '<p class="gm2-hl-d">' + esc(hlD) + '</p>'
+           + '</div>';
+      }
+      if(news.length){
+        h += '<div class="gm2-news" id="gm2-news">';
+        news.forEach(function(n, i){
+          h += '<div class="gm2-ni"' + (i >= 3 ? ' data-hid="1" style="display:none"' : '') + '>'
+             +   '<p class="gm2-ni-t"><em>' + esc(n.no) + '</em>' + esc(n.txt) + '</p>'
+             +   (n.href ? '<a class="gm2-ni-s" href="' + esc(n.href) + '" target="_blank" rel="noopener">' + esc(n.src) + '</a>' : '')
+             + '</div>';
+        });
+        h += '</div>';
+        if(news.length > 3){
+          h += '<div class="gm2-more" id="gm2-more">'
+             +   '<p>뉴스 ' + (news.length - 3) + '건 더보기</p><span>&#8250;</span>'
+             + '</div>';
+        }
+      }
+    }
+
+    /* ⑤ 아래 더보기 */
+    h += '<p class="gm2-sec">더 보기</p>';
+    h += '<div class="gm2-tail">';
+    h += bigAcc('gm-macro', '글로벌 거시 지표', 'World Bank · IMF · USDA');
+    h += bigAcc('gm-foot',  '데이터 출처',      'EIA · FRED · Reuters 외');
+    h += '</div>';
 
     var old  = document.querySelector('.gm-wrap');
     var wrap = document.createElement('div');
@@ -3691,7 +3873,58 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
       });
     });
 
+    /* ★ 위쪽 큰 숫자 카드 2개 — 누르면 종목 목록을 펴고 그 종목을 연다 */
+    wrap.querySelectorAll('.gm2-hero').forEach(function(el){
+      el.addEventListener('click', function(){
+        var k = el.getAttribute('data-go');
+        var box = document.getElementById('gm-assets');
+        if(box && !box.classList.contains('gm-open')){
+          var hd = box.querySelector('.gm-big-hd');
+          if(hd) hd.click();
+        }
+        var row = wrap.querySelector('.gm-a[data-k="' + k + '"] .gm-a-hd');
+        if(row && openKey !== k) row.click();
+        if(row) setTimeout(function(){ row.scrollIntoView({block:'center'}); }, 80);
+      });
+    });
+
+    /* ★ 뉴스 더보기 — ④부터 마저 편다 */
+    var more = wrap.querySelector('#gm2-more');
+    if(more){
+      more.addEventListener('click', function(){
+        wrap.querySelectorAll('.gm2-ni[data-hid]').forEach(function(n){
+          n.style.display = '';
+          n.removeAttribute('data-hid');
+        });
+        if(more.parentNode) more.parentNode.removeChild(more);
+      });
+    }
+
     if(openKey) setTimeout(fillDetail, 300);
+  }
+
+  /* ★ 시세 숫자만 갈아 끼운다 — 화면을 다시 그리지 않으므로 번쩍이지 않는다 */
+  function tick(){
+    try{
+      if(!isMob()) return;
+      var nav = document.querySelector('.asset-nav-inner');
+      var wrap = document.querySelector('.gm-wrap');
+      if(!nav || !wrap) return;
+      Array.prototype.forEach.call(nav.children, function(t){
+        var oc  = t.getAttribute('onclick') || '';
+        var key = (oc.match(/switchAsset\(\s*'([^']+)'/) || [])[1];
+        if(!key || key === 'calendar') return;
+        var px = T(t.querySelector('.at-price'));
+        var cg = T(t.querySelector('.at-chg'));
+        wrap.querySelectorAll('[data-px="' + key + '"]').forEach(function(e){
+          if(px && e.textContent !== px) e.textContent = px;
+        });
+        wrap.querySelectorAll('[data-cg="' + key + '"]').forEach(function(e){
+          if(cg && e.textContent !== cg) e.textContent = cg;
+          e.style.setProperty('color', chgCol(cg), 'important');
+        });
+      });
+    }catch(e){}
   }
 
   /* 열린 종목의 상세를 채운다 — 원본을 **복사**해 온다 */
@@ -3843,7 +4076,13 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 
   function boot(){
     build();
-    setInterval(build, 800);
+    /* ⚠⚠ 카드가 '떴다가 사라지는' 현상의 진짜 원인이 여기였다.
+          0.8초마다 화면을 통째로 다시 그렸다 → 종목을 누르면 원본이 다시 그려지고,
+          시세 글자가 바뀌면 지문이 달라져서 화면을 갈아엎었다 → 펼친 게 도로 접혔다.
+          → 다시 그리지 않는다. 종목 개수가 바뀔 때만 build() 가 실제로 동작하고,
+            시세 숫자는 tick() 이 **글자만** 갈아 끼운다. */
+    setInterval(tick,  1000);
+    setInterval(build, 3000);   /* 종목이 늦게 생기는 경우만 대비 (개수 같으면 즉시 빠져나온다) */
     setInterval(fillDetail, 900);
     /* ★ 펼쳐 놓은 큰 구역이 아직 안 채워졌으면 계속 시도한다.
          (경제 캘린더처럼 원본이 늦게 그려지는 경우가 있다) */
@@ -3875,10 +4114,12 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
         });
       }catch(e){}
     }, 2000);
+    /* ⚠ 원본이 조금이라도 바뀔 때마다 다시 그리면 화면이 번쩍인다.
+         → 감시는 하되, build() 는 종목 개수가 달라졌을 때만 실제로 다시 그린다. */
     try{
       var t=null;
-      new MutationObserver(function(){ clearTimeout(t); t=setTimeout(build,200); })
-        .observe(document.body, {childList:true, subtree:true});
+      new MutationObserver(function(){ clearTimeout(t); t=setTimeout(build,300); })
+        .observe(document.body, {childList:true});
     }catch(e){}
     window.addEventListener('resize', function(){ sig=''; build(); });
   }
