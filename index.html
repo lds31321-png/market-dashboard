@@ -3439,6 +3439,15 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
          **일정이 있는 날만** 위에서 아래로 늘어놓는다. (요일 머리줄·빈 날·지난달 날짜는 뺀다) */
       if(box.id === 'gm-cal'){
         try{
+          /* ⚠⚠ 지표를 눌러도 설명 팝업이 **안 보였다.**
+                팝업이 '숨겨 놓은 원본 페이지' 안에 들어 있어서, 내용은 채워지는데
+                부모가 숨겨져 있으니 화면에 뜰 수가 없었다.
+                → 팝업을 화면 맨 바깥(body)으로 옮긴다. 한 번만 옮기면 계속 쓸 수 있다. */
+          ['.cal-popup-overlay', '.cal-popup'].forEach(function(sel){
+            var p = document.querySelector(sel);
+            if(p && p.parentElement !== document.body) document.body.appendChild(p);
+          });
+
           bd.querySelectorAll('.cal-dow').forEach(function(e){ e.remove(); });
           bd.querySelectorAll('.cal-cell').forEach(function(c){
             var isOther = (' ' + c.className + ' ').indexOf(' other-month ') >= 0;
