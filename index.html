@@ -3182,9 +3182,11 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 
   body{ background:#14161A !important; }
 
-  /* 원본은 숨기고 다시 그린 것만 */
+  /* 원본은 숨기고 다시 그린 것만.
+     ⚠ body 바로 밑에 떠 있는 캔버스(#vol-fx)가 1919px 짜리라 화면 밖으로 튀어나갔다 → 같이 숨긴다. */
   .headline-section,
   .asset-nav,
+  body > canvas,
   body > .page{ display:none !important; }
   .gm-wrap{ display:block !important; padding:16px !important; }
 
@@ -3302,6 +3304,61 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   .gm-raw .ph-price, .gm-raw .price-val, .gm-raw [class*="price"] b{ font-size:26px !important; }
   .gm-raw table{ width:100% !important; table-layout:fixed !important; }
   .gm-raw canvas, .gm-acc-bd canvas{ display:none !important; }  /* 빈 캔버스 복제본 숨김 */
+
+  /* ============================================================
+     2026-07-15 추가 — PC 에는 있는데 모바일에서 통째로 빠져 있던 구역들
+       ① 헤드라인 전문  ② 종목별 변동성 표
+       ③ 경제 캘린더    ④ 글로벌 거시 지표   ⑤ 데이터 출처(푸터)
+     전부 '접어두고 눌러서 펴는' 방식이다. 화면을 길게 만들지 않으면서 내용은 다 살린다.
+     ============================================================ */
+
+  /* 큰 구역 아코디언 (카드 바깥 단계) */
+  .gm-big{ background:#1E2027 !important; border:0.5px solid rgba(255,255,255,.08) !important;
+    border-radius:12px !important; margin:0 0 8px 0 !important; overflow:hidden !important; }
+  .gm-big.gm-open{ border-color:rgba(69,147,252,.45) !important; }
+  .gm-big-hd{ display:flex !important; align-items:center !important;
+    justify-content:space-between !important; gap:16px !important;
+    padding:16px !important; cursor:pointer !important; min-height:32px !important; }
+  .gm-big-t{ font-size:16px !important; font-weight:800 !important; color:#F5F6F8 !important;
+    margin:0 !important; line-height:1.4 !important; word-break:keep-all !important; }
+  .gm-big-s{ font-size:14px !important; color:#8B95A1 !important; margin:4px 0 0 0 !important;
+    line-height:1.5 !important; word-break:keep-all !important; }
+  .gm-big-chev{ color:#8B95A1 !important; font-size:14px !important; line-height:1 !important; flex-shrink:0 !important; }
+  .gm-big-bd{ display:none !important; padding:0 16px 16px !important; }
+  .gm-big.gm-open .gm-big-bd{ display:block !important; }
+
+  /* 안에 들어오는 원본 내용 — 폭·글자만 맞추고 내용은 손대지 않는다 */
+  .gm-big-bd *{ max-width:100% !important; white-space:normal !important;
+    word-break:keep-all !important; overflow-wrap:anywhere !important;
+    font-size:14px !important; line-height:1.6 !important; }
+  .gm-big-bd h1, .gm-big-bd h2, .gm-big-bd h3, .gm-big-bd h4,
+  .gm-big-bd strong, .gm-big-bd b{ color:#F5F6F8 !important; }
+  .gm-big-bd a{ color:#8B95A1 !important; text-decoration:none !important; }
+  /* PC용 가로 격자·표는 모바일에서 한 줄씩 */
+  .gm-big-bd [class*="grid"], .gm-big-bd [style*="grid-template"]{ display:block !important; }
+  .gm-big-bd [style*="display:flex"]{ flex-wrap:wrap !important; }
+  .gm-big-bd table{ width:100% !important; table-layout:fixed !important;
+    border-collapse:collapse !important; }
+  .gm-big-bd th, .gm-big-bd td{ padding:8px !important; text-align:left !important;
+    vertical-align:top !important; border-bottom:0.5px solid rgba(255,255,255,.07) !important; }
+  .gm-big-bd canvas{ display:none !important; }
+  /* 원본 카드 배경은 벗긴다 (카드 안에 카드가 겹쳐 보이면 정신없다) */
+  .gm-big-bd > *{ background:transparent !important; border:0 !important;
+    padding:0 !important; margin:0 !important; box-shadow:none !important; }
+
+  /* 경제 캘린더 — 달력 격자는 폰에서 못 쓴다. 목록으로 편다.
+     ⚠ 날짜 칸(cal-cell)이 7칸 격자로 짜여 있어 그대로 두면 글자가 뭉개진다. */
+  .gm-big-bd .cal-grid{ display:block !important; }
+  .gm-big-bd .cal-head{ display:none !important; }        /* 월~일 요일 머리줄 */
+  .gm-big-bd .cal-cell{ display:block !important; width:auto !important; min-height:0 !important;
+    background:#23262E !important; border-radius:8px !important;
+    padding:12px !important; margin:0 0 6px 0 !important; }
+  .gm-big-bd .cal-cell:empty,
+  .gm-big-bd .cal-cell.cal-empty{ display:none !important; }
+  /* 팝업은 모바일에서도 그대로 쓴다 (지표 누르면 뜨는 설명창) */
+  .cal-popup-overlay, .cal-popup{ z-index:9999 !important; }
+  .cal-popup{ width:92vw !important; max-width:92vw !important; left:4vw !important;
+    right:auto !important; max-height:80vh !important; overflow-y:auto !important; }
 }
 </style>
 
@@ -3317,6 +3374,47 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     return /^-/.test(s) ? '#4593FC' : (/^\+/.test(s) ? '#F06A6A' : '#8B95A1'); }
 
   var sig='', openKey='';
+
+  /* ★ 2026-07-15 — 큰 구역 아코디언 (헤드라인·변동성표·캘린더·거시지표·출처)
+     껍데기만 먼저 만들고, 안쪽 내용은 **누를 때** 원본에서 복사해 온다.
+     (처음부터 다 복사하면 화면이 무거워지고, 원본이 아직 안 그려졌을 수도 있다) */
+  function bigAcc(id, title, sub){
+    return '<div class="gm-big" id="' + id + '">'
+         +   '<div class="gm-big-hd">'
+         +     '<div style="min-width:0">'
+         +       '<p class="gm-big-t">' + esc(title) + '</p>'
+         +       (sub ? '<p class="gm-big-s">' + esc(sub) + '</p>' : '')
+         +     '</div>'
+         +     '<span class="gm-big-chev">&#9662;</span>'
+         +   '</div>'
+         +   '<div class="gm-big-bd"></div>'
+         + '</div>';
+  }
+
+  /* 어느 원본을 가져올지 — id → 원본을 찾는 방법 */
+  var BIG_SRC = {
+    'gm-hl':    function(){ return document.querySelector('.headline-inner') || document.querySelector('.headline-section'); },
+    'gm-vol':   function(){ return document.querySelector('.vol-table-wrap'); },
+    'gm-cal':   function(){ var p=document.getElementById('page-calendar'); return p ? p.querySelector('.cal-wrap') : null; },
+    'gm-macro': function(){ return document.getElementById('macro-strip'); },
+    'gm-foot':  function(){ return document.querySelector('.footer'); }
+  };
+
+  /* 큰 구역 하나를 채운다 — 원본은 **복사**한다 (원본이 다시 그려져도 안전) */
+  function fillBig(box){
+    try{
+      if(!box || box.getAttribute('data-done')) return;
+      var get = BIG_SRC[box.id];
+      if(!get) return;
+      var src = get();
+      if(!src) return;                       /* 원본이 아직 없다 — 다음에 다시 */
+      var bd = box.querySelector('.gm-big-bd');
+      if(!bd) return;
+      bd.innerHTML = '';
+      bd.appendChild(src.cloneNode(true));
+      box.setAttribute('data-done','1');
+    }catch(e){}
+  }
 
   /* 변동성 등급(★ 개수) → 0~100 */
   function riskOf(name, volMap){
@@ -3411,6 +3509,10 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
          + '</div>';
     }
 
+    /* ★ 2026-07-15 — 헤드라인 전문 / 변동성 표를 '펼쳐보기'로 붙인다 (PC 에만 있던 내용) */
+    h += bigAcc('gm-hl',  '헤드라인 시장 분석',   '오늘 이슈 전문 보기');
+    h += bigAcc('gm-vol', '종목별 변동성 표',     '등급 · 예상 변동성 · 주요 일정');
+
     h += '<p class="gm-sec">종목 ' + assets.length + '개 · 변동성 높은 순</p>';
 
     assets.forEach(function(a){
@@ -3433,6 +3535,12 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
          +   '</div>'
          + '</div>';
     });
+
+    /* ★ 2026-07-15 — 종목 카드 아래: 경제 캘린더 · 글로벌 거시 지표 · 데이터 출처 */
+    h += '<p class="gm-sec">더 보기</p>';
+    h += bigAcc('gm-cal',   '경제 캘린더',        '미국·중국·한국·일본 ★★★ 지표');
+    h += bigAcc('gm-macro', '글로벌 거시 지표',   'World Bank · IMF · USDA');
+    h += bigAcc('gm-foot',  '데이터 출처',        'EIA · FRED · Reuters 외');
 
     var old  = document.querySelector('.gm-wrap');
     var wrap = document.createElement('div');
@@ -3492,6 +3600,21 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
         fillDetail();
         setTimeout(fillDetail, 400);
         setTimeout(fillDetail, 1200);
+      });
+    });
+
+    /* ★ 큰 구역 아코디언 — 누르면 그때 원본을 복사해 온다 */
+    wrap.querySelectorAll('.gm-big-hd').forEach(function(hd){
+      hd.addEventListener('click', function(){
+        var box = hd.parentElement;
+        var on  = box.classList.toggle('gm-open');
+        var ch3 = box.querySelector('.gm-big-chev');
+        if(ch3) ch3.innerHTML = on ? '&#9652;' : '&#9662;';
+        if(on){
+          fillBig(box);
+          setTimeout(function(){ fillBig(box); }, 400);   /* 원본이 늦게 그려지는 경우 대비 */
+          setTimeout(function(){ fillBig(box); }, 1200);
+        }
       });
     });
 
