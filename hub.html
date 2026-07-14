@@ -888,7 +888,10 @@ jiktUpdateViewModeLabel();
   /* ★ 닫기 × — 32×32 원 안에 19px 글자. 큰글씨 2배면 38px 이 되어 원 밖으로 넘친다.
        칸을 원형으로 유지하려면 글자를 못 키운다 → 글자 크기를 고정하고 줄간격을 1로 못 박는다.
        (누르는 대상은 원 전체 32px 이라 터치 규칙은 지켜진다) */
-  .jintro-x, .jcb-x{ top:12px !important; right:12px !important; color:#8B95A1 !important;
+  /* [1차 검수] 색이 #8B95A1 이라 대비 3.04 (4.5 미달) → 글자만 밝게. 대비 5.65
+     ⚠ 배경을 .05 → .08 로 밝히면 대비가 오히려 4.48 로 떨어진다 (배경이 밝아지므로).
+        보정 방향은 배경 밝기로 정한다 — 배경은 건드리지 않는다. (함정 31) */
+  .jintro-x, .jcb-x{ top:12px !important; right:12px !important; color:#C4CBD6 !important;
     width:32px !important; height:32px !important;
     min-width:32px !important; min-height:32px !important;
     font-size:19px !important; line-height:1 !important; padding:0 !important;
@@ -971,8 +974,10 @@ jiktUpdateViewModeLabel();
   /* 막대는 '65% 할인' 하나만 담는다. 높이를 자동으로 둬 큰글씨에서 안 터지게 한다 */
   .jcb-bar{ height:auto !important; min-height:24px !important; border-radius:6px !important;
     background:#2E323C !important; }
+  /* [1차 검수] 밝은 파랑(#4593FC) 위 흰 글씨 = 대비 3.07 (4.5 미달). 함정 29와 같은 사고.
+     → 막대 파랑을 진한 파랑(#1A5FBF)으로 낮춘다. 흰 글씨 대비 4.5 확보용 검증된 값. */
   .jcb-bar-fill{ position:relative !important; width:65% !important;
-    background:#4593FC !important; border-radius:6px !important;
+    background:#1A5FBF !important; border-radius:6px !important;
     min-height:24px !important; padding:2px 4px !important; box-sizing:border-box !important;
     font-size:14px !important; font-weight:700 !important; color:#FFFFFF !important;
     line-height:1.4 !important; white-space:nowrap !important; }
@@ -1065,6 +1070,9 @@ jiktUpdateViewModeLabel();
   .jintro-closetxt, .jcb-closetxt{ font-size:13px !important; color:#8B95A1 !important;
     min-height:32px !important; display:inline-flex !important; align-items:center !important;
     gap:8px !important; line-height:1.4 !important; }
+  /* [1차 검수] '닫기' 글자 폭이 24px 라 터치 32px 미달 → 좌우 여백으로 칸을 넓힌다 */
+  .jintro-closetxt, .jcb-closetxt{ min-width:32px !important; padding:0 8px !important;
+    justify-content:center !important; }
   /* 체크박스 자체는 17px 이지만, 실제 누르는 대상은 라벨 전체(32px 이상)라 터치 규칙 통과 */
   .jintro-hide input{ flex-shrink:0 !important; }
 
