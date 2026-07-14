@@ -2976,11 +2976,15 @@ loadPositions();
     font-size:12px !important; font-weight:400 !important;
     color:#8B95A1 !important; margin-bottom:4px !important;
     white-space:nowrap !important; }
-  /* 종목명 줄(첫 칸)은 전체 폭 한 줄 — 배경 없이 제목처럼 */
+  /* 종목명 줄(첫 칸)은 전체 폭 한 줄 — 배경 없이 제목처럼
+     ★ [직트 지시] 종목명이 카드 테두리에 딱 붙어 있었다 → 좌우 여백을 준다 */
   #overlay table.tbl-rec tbody td:first-child{ grid-column:1 / -1 !important;
-    background:transparent !important; padding:2px 0 6px 0 !important;
+    background:transparent !important; padding:4px 2px 8px 2px !important;
     font-size:15px !important; }
   #overlay table.tbl-rec tbody td:first-child::before{ display:none !important; }
+  /* ★ 구분 배지(콜 매도 / 풋 매도)도 오른쪽 끝에 붙어 있었다 → 여백 확보 */
+  #overlay table.tbl-rec tbody td[data-label="구분"]{
+    margin:2px 2px 0 0 !important; }
   #overlay table.tbl-rec tbody td[data-hide]{ display:none !important; }
   /* '← 포지션 목록으로' 는 시트를 닫으면 되니 숨긴다 */
   #overlay .modal-body > a{ display:none !important; }
@@ -4118,6 +4122,70 @@ loadPositions();
   #overlay .modal .pnl-usd, #overlay .modal [class*="usd"]{ font-size:14px !important; }
 }
 </style>
+
+<script id="fd-js-2026-07-14-values">
+/* [직트 지시 2026-07-14] 상세 시트 「포지션 정보」의 값 표기를 바꾼다.
+     ① 행사가  : `$5690`      → `5690`      (달러 기호 제거, 숫자만)
+     ② 진입가  : `1.900`      → `1.900 pt`  (포인트 단위 표시)
+     ③ 평가손익: `+30,000원`  → `+3만원`    (만원 단위)
+   ⚠ 모바일에서만 바꾼다. PC 는 원본 그대로 둔다 (절대규칙 1).
+   ⚠ 원본 값은 `data-fdv0` 에 보관해 두고 항상 그 값에서 다시 계산한다
+      (몇 번 돌려도 결과가 같아지게 — 함정 51의 멱등화와 같은 방식) */
+(function(){
+  function isMob(){ try{ return window.matchMedia('(max-width:640px)').matches; }catch(e){ return false; } }
+
+  function toManwon(s){
+    var m = String(s).replace(/\s/g,'').match(/^([+\-]?)([\d,]+)\s*원$/);
+    if(!m) return null;                       // '업데이트 예정' 같은 건 그대로 둔다
+    var sign = m[1] === '-' ? '-' : (m[1] === '+' ? '+' : '');
+    var won  = parseInt(m[2].replace(/,/g,''), 10);
+    if(!isFinite(won)) return null;
+    var man = won / 10000;
+    var txt = (man >= 10 || man === Math.round(man)) ? String(Math.round(man))
+                                                     : (Math.round(man*10)/10).toFixed(1);
+    return sign + txt + '만원';
+  }
+
+  function fix(){
+    if(!isMob()) return;
+    try{
+      var tds = document.querySelectorAll('#overlay table.tbl-rec tbody td');
+      for(var i=0;i<tds.length;i++){
+        var td  = tds[i];
+        var lab = td.getAttribute('data-label');
+        if(!lab) continue;
+        if(td.getAttribute('data-fdv0') === null) td.setAttribute('data-fdv0', td.textContent);
+        var raw = td.getAttribute('data-fdv0');
+        var out = null;
+
+        if(lab === '행사가')      out = String(raw).replace(/\$/g, '').trim();
+        else if(lab === '진입가'){
+          var v = String(raw).trim();
+          out = /^[\d.,]+$/.test(v) ? (v + ' pt') : v;
+        }
+        else if(lab === '평가손익') out = toManwon(raw);
+
+        if(out !== null && td.textContent !== out) td.textContent = out;
+      }
+    }catch(e){}
+  }
+
+  function boot(){
+    fix();
+    /* 상세 시트는 눌러야 열리고, 열릴 때 표가 새로 그려진다 → 클릭 뒤 몇 번 더 훑는다 */
+    document.addEventListener('click', function(){
+      [100, 400, 900, 1800].forEach(function(ms){ setTimeout(fix, ms); });
+    }, true);
+    try{
+      var ov = document.getElementById('overlay');
+      if(ov) new MutationObserver(function(){ setTimeout(fix, 60); })
+               .observe(ov, {childList:true, subtree:true});
+    }catch(e){}
+    window.addEventListener('resize', fix);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
 
 <!-- [2026-07-14 제거] fd-js-2026-07-14 (fdMinFont) — 일괄 최소폰트 보정
      0.7초마다 14px 미만 글자를 전부 14px 로 밀어올리던 코드였다.
