@@ -3349,12 +3349,18 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   /* 경제 캘린더 — 달력 격자는 폰에서 못 쓴다. 목록으로 편다.
      ⚠ 날짜 칸(cal-cell)이 7칸 격자로 짜여 있어 그대로 두면 글자가 뭉개진다. */
   .gm-big-bd .cal-grid{ display:block !important; }
-  .gm-big-bd .cal-head{ display:none !important; }        /* 월~일 요일 머리줄 */
+  .gm-big-bd .cal-dow{ display:none !important; }         /* 일·월·화… 요일 머리줄 */
   .gm-big-bd .cal-cell{ display:block !important; width:auto !important; min-height:0 !important;
     background:#23262E !important; border-radius:8px !important;
-    padding:12px !important; margin:0 0 6px 0 !important; }
-  .gm-big-bd .cal-cell:empty,
-  .gm-big-bd .cal-cell.cal-empty{ display:none !important; }
+    padding:12px !important; margin:0 0 6px 0 !important;
+    border:0 !important; box-shadow:none !important; }
+  .gm-big-bd .cal-cell.other-month{ display:none !important; }
+  /* 날짜 숫자를 제목처럼 */
+  .gm-big-bd .cal-cell > :first-child{ font-weight:800 !important; color:#F5F6F8 !important;
+    display:block !important; margin:0 0 6px 0 !important; }
+  /* 일정 한 줄 한 줄 — 누르면 설명 팝업이 뜬다 (터치 32px) */
+  .gm-big-bd .cal-cell [onclick]{ display:block !important; padding:8px 0 !important;
+    min-height:32px !important; cursor:pointer !important; }
   /* 팝업은 모바일에서도 그대로 쓴다 (지표 누르면 뜨는 설명창) */
   .cal-popup-overlay, .cal-popup{ z-index:9999 !important; }
   .cal-popup{ width:92vw !important; max-width:92vw !important; left:4vw !important;
@@ -3395,19 +3401,13 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   var BIG_SRC = {
     'gm-hl':    function(){ return document.querySelector('.headline-inner') || document.querySelector('.headline-section'); },
     'gm-vol':   function(){ return document.querySelector('.vol-table-wrap'); },
-    /* ⚠ 경제 캘린더는 **탭을 눌러야 비로소 그려진다.** 그냥 복사하면 껍데기(빈 달력)만 온다.
-          → 우리가 대신 눌러 준다. 스크롤이 튀지 않게 위치는 되돌려 놓는다. */
+    /* ⚠⚠ 경제 캘린더는 **달력을 그리는 함수를 부르기 전까지 텅 비어 있다.**
+          (탭을 대신 눌러도 안 그려졌다 — 실제로 날짜 칸이 0개였다)
+          → 달력을 그리는 함수(renderCalendar)를 직접 부른다. */
     'gm-cal':   function(){
       var p = document.getElementById('page-calendar');
       if(p && !p.querySelector('.cal-cell')){
-        try{
-          if(typeof window.switchAsset === 'function'){
-            var keep = window.scrollY || 0;
-            window.switchAsset('calendar', null);
-            window.scrollTo(0, keep);
-            setTimeout(function(){ window.scrollTo(0, keep); }, 60);
-          }
-        }catch(e){}
+        try{ if(typeof window.renderCalendar === 'function') window.renderCalendar(); }catch(e){}
       }
       return p ? p.querySelector('.cal-wrap') : null;
     },
@@ -3430,6 +3430,21 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
       if(!bd) return;
       bd.innerHTML = '';
       bd.appendChild(src.cloneNode(true));
+
+      /* 경제 캘린더 — 폰에서는 달력 격자를 쓸 수 없다.
+         **일정이 있는 날만** 위에서 아래로 늘어놓는다. (요일 머리줄·빈 날·지난달 날짜는 뺀다) */
+      if(box.id === 'gm-cal'){
+        try{
+          bd.querySelectorAll('.cal-dow').forEach(function(e){ e.remove(); });
+          bd.querySelectorAll('.cal-cell').forEach(function(c){
+            var isOther = (' ' + c.className + ' ').indexOf(' other-month ') >= 0;
+            /* 날짜 숫자 말고 '내용'이 있는지 — 자식 요소가 2개 미만이면 일정 없는 날 */
+            var hasEvent = c.children.length > 1 || c.querySelectorAll('[onclick]').length > 0;
+            if(isOther || !hasEvent) c.remove();
+          });
+        }catch(e){}
+      }
+
       box.setAttribute('data-done','1');
     }catch(e){}
   }
