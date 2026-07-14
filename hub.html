@@ -743,30 +743,47 @@ jiktUpdateViewModeLabel();
 
   body{ background:#14161A !important; padding:16px 14px 34px !important; }
 
-  /* --- 헤더: 제목 1줄 + 부제 1줄, 버튼은 우측 위 작은 칩 --- */
-  .hub-header{ position:relative !important; padding-top:0 !important; margin-bottom:12px !important;
+  /* ============================================================
+     [2026-07-14 본화면 재작업] 위계표 (마스터 통합본 Part 3-2)
+       값(대)   26px  — 페이지 제목
+       제목     18px  — 카드 제목
+       본문     15px  — 부제 · 카드 설명 · 배너 제목
+       라벨     14px  — 헤더 버튼 · 단계 · 카드 요약줄 · 배너 버튼
+       메타     13px  — 로고 · 배너 부제   ← 바닥. 12px 이하 금지
+     ⚠ 일괄 최소폰트 보정은 제거했다. 개별로 지정한다.
+     ⚠ 글자를 키운 곳은 칸의 폭·높이를 함께 손봤다 (Part 3-3).
+     ============================================================ */
+
+  /* --- 헤더: 제목 1줄 + 부제 1줄, 버튼은 제목 위 한 줄 --- */
+  .hub-header{ position:relative !important; padding-top:0 !important; margin-bottom:16px !important;
     text-align:left !important; display:block !important; }
-  /* 로고 라벨 — 파란색을 여기저기 쓰면 정신없다. 회색으로 낮추고 파랑은 버튼 하나에만 남긴다 */
-  .hub-logo{ display:block !important; font-size:12px !important; letter-spacing:.08em !important;
-    color:#8B95A1 !important; margin:0 0 8px 0 !important; }
-  .hub-title{ font-size:24px !important; line-height:1.3 !important; text-align:left !important;
-    color:#F5F6F8 !important; margin:0 !important; font-weight:800 !important; }
-  /* ⚠ 부제는 기존 모바일 규칙이 숨기고 있었다 → 다시 살린다 */
-  .hub-sub{ display:block !important; font-size:14px !important; font-weight:500 !important;
+  /* 로고 라벨 = 메타(13px). 파란색을 여기저기 쓰면 정신없다 → 회색. 파랑은 주 버튼 하나에만 */
+  .hub-logo{ display:block !important; font-size:13px !important; letter-spacing:.08em !important;
+    color:#8B95A1 !important; margin:0 0 8px 0 !important; font-weight:700 !important; }
+  /* 페이지 제목 = 값(대) */
+  .hub-title{ font-size:26px !important; line-height:1.3 !important; text-align:left !important;
+    color:#F5F6F8 !important; margin:0 !important; font-weight:800 !important;
+    word-break:keep-all !important; }
+  /* 부제 = 본문. ⚠ 기존 모바일 규칙이 숨기고 있었다 → 살린다 (정보 누락 금지) */
+  .hub-sub{ display:block !important; font-size:15px !important; font-weight:500 !important;
     color:#8B95A1 !important; margin:8px 0 0 0 !important; text-align:left !important;
     line-height:1.5 !important; word-break:keep-all !important; }
 
   /* 버튼 2개(업데이트·PC버전)를 제목 위 한 줄로.
      ⚠ 처음엔 제목 오른쪽에 겹쳐 놓았더니 제목을 가렸다 → 제목 위 별도 줄로 뺀다.
-        (자리 이동은 아래 스크립트가 .hm-btnrow 를 만들어서 처리) */
-  .hm-btnrow{ display:flex !important; justify-content:flex-end !important; gap:6px !important;
-    margin:0 0 10px 0 !important; }
+        (자리 이동은 아래 스크립트가 .hm-btnrow 를 만들어서 처리)
+     ★ 큰글씨 2배에서 이 두 버튼이 nowrap 이라 가로 517px 로 화면을 터뜨렸다.
+        → nowrap 을 풀고 줄바꿈을 허용한다. 칸도 함께 늘어나게 높이를 자동으로 둔다. */
+  .hm-btnrow{ display:flex !important; flex-wrap:wrap !important;
+    justify-content:flex-end !important; gap:8px !important; margin:0 0 16px 0 !important; }
   .jikt-refresh-btn, .jikt-viewmode-btn{
     position:static !important; transform:none !important; margin:0 !important;
-    min-height:36px !important; padding:0 12px !important; font-size:14px !important;
+    min-height:32px !important; height:auto !important; padding:8px 12px !important;
+    font-size:14px !important; line-height:1.4 !important;
     border-radius:8px !important; background:#1E2027 !important; color:#8B95A1 !important;
-    border:0.5px solid rgba(255,255,255,.14) !important; white-space:nowrap !important;
-    width:auto !important; max-width:none !important;
+    border:0.5px solid rgba(255,255,255,.14) !important;
+    white-space:normal !important; word-break:keep-all !important;
+    width:auto !important; max-width:100% !important; min-width:0 !important;
     display:inline-flex !important; align-items:center !important; gap:6px !important; }
   .jikt-theme-btn{ display:none !important; }
 
@@ -782,56 +799,77 @@ jiktUpdateViewModeLabel();
     padding:16px !important; gap:0 !important; box-shadow:none !important; }
   .hub-card:hover{ transform:none !important; box-shadow:none !important; }
 
-  .card-step{ display:flex !important; align-items:center !important; gap:8px !important; }
-  .card-step .n{ display:flex !important; width:24px !important; height:24px !important;
+  .card-step{ display:flex !important; align-items:center !important; gap:8px !important;
+    flex-wrap:wrap !important; }
+  /* 단계 배지 = 라벨(14px).
+     ★ 24×24 고정 칸이었다 → 큰글씨 2배에서 글자 28px 이 되어 칸이 터진다.
+        칸을 고정하지 않고 글자를 따라 늘어나게 둔다 (Part 3-3). */
+  .card-step .n{ display:inline-flex !important; width:auto !important; height:auto !important;
+    min-width:26px !important; min-height:26px !important; padding:2px 6px !important;
+    box-sizing:border-box !important;
     border-radius:8px !important; background:#23262E !important; color:#8B95A1 !important;
-    font-size:14px !important; font-weight:700 !important;
+    font-size:14px !important; font-weight:700 !important; line-height:1.4 !important;
     align-items:center !important; justify-content:center !important; flex-shrink:0 !important; }
-  .card-step .t{ font-size:14px !important; color:#8B95A1 !important; font-weight:500 !important; }
+  .card-step .t{ font-size:14px !important; color:#8B95A1 !important; font-weight:500 !important;
+    word-break:keep-all !important; min-width:0 !important; }
   .card-ic{ display:none !important; }
 
+  /* 카드 제목 = 제목(18px) */
   .card-title{ font-size:18px !important; font-weight:800 !important; color:#F5F6F8 !important;
-    margin:8px 0 0 0 !important; line-height:1.3 !important; }
+    margin:8px 0 0 0 !important; line-height:1.3 !important; word-break:keep-all !important; }
   .card-desc{ display:none !important; }
-  .card-desc-m{ display:block !important; font-size:14px !important; color:#8B95A1 !important;
+  /* 카드 설명 = 본문(15px) — 요약줄(14px)보다 한 단계 위여야 위계가 산다 */
+  .card-desc-m{ display:block !important; font-size:15px !important; color:#8B95A1 !important;
     line-height:1.5 !important; margin:8px 0 0 0 !important; word-break:keep-all !important; }
-  /* ⚠ 요약줄은 기존 모바일 규칙이 숨기고 있었다 → 되살린다 (정보 누락 금지) */
+  /* 카드 요약줄 = 라벨(14px). ⚠ 기존 모바일 규칙이 숨기고 있었다 → 살린다 (정보 누락 금지) */
   .card-items{ display:block !important; font-size:14px !important; color:#8B95A1 !important;
     line-height:1.5 !important; margin:16px 0 0 0 !important; padding-top:16px !important;
     border-top:0.5px solid rgba(255,255,255,.07) !important; word-break:keep-all !important; }
   .card-arrow{ display:none !important; }
+  /* 화살표는 카드 오른쪽 위 고정. 제목과 겹치지 않게 카드 오른쪽 여백을 확보한다 */
   .card-chev{ display:block !important; position:absolute !important; right:16px !important;
     top:16px !important; transform:none !important; width:18px !important; height:18px !important;
     stroke:#5F6672 !important; }
+  .hub-card .card-step{ padding-right:26px !important; }
 
-  /* 1번 카드만 강조 — 파란 테두리 + 1번 숫자 강조 (원본에 없는 문구는 넣지 않는다) */
+  /* 1번 카드만 강조 — 파란 테두리 + 1번 숫자 강조 (원본에 없는 배지·버튼은 만들지 않는다)
+     ★ [2026-07-14] 예전엔 1번 카드의 화살표를 숨겼는데, 3장 중 1장만 화살표가 없어
+        "눌러서 들어가는 카드"라는 표시가 어긋났다 → 3장 모두 화살표를 보인다. */
   .card-grid > .hub-card:first-child{ border:1px solid #4593FC !important; }
   .card-grid > .hub-card:first-child .card-step .n{ background:#2A4A7A !important; color:#8FC0FF !important; }
-  .card-grid > .hub-card:first-child .card-chev{ display:none !important; }
 
-  /* --- 쿠폰 배너: 카드 아래로 (자리 이동은 아래 스크립트가 한다) --- */
-  .jcb-banner{ flex-direction:row !important; align-items:center !important;
+  /* --- 쿠폰 배너: 카드 아래로 (자리 이동은 아래 스크립트가 한다) ---
+     ★ 큰글씨 2배에서 버튼이 nowrap + flex:0 0 auto 라 배너 밖으로 나갔다
+        → 배너에 줄바꿈을 허용하고, 좁아지면 버튼이 다음 줄 전체 폭으로 내려가게 둔다 */
+  .jcb-banner{ flex-direction:row !important; flex-wrap:wrap !important;
+    align-items:center !important;
     justify-content:space-between !important; gap:10px !important;
     background:#16233A !important; border:0 !important; border-radius:12px !important;
-    padding:11px !important; margin:9px 0 0 0 !important; animation:none !important; }
-  .jcb-banner .tx{ display:block !important; min-width:0 !important; gap:0 !important; }
-  /* 배너 제목은 흰색 — 파랑은 이 화면에서 '쿠폰 안내 보기' 버튼 하나만 쓴다 */
+    padding:12px !important; margin:16px 0 0 0 !important; animation:none !important; }
+  .jcb-banner .tx{ display:block !important; min-width:0 !important; flex:1 1 180px !important;
+    gap:0 !important; }
+  /* 배너 제목 = 본문(15px). 흰색 — 파랑은 이 화면에서 '쿠폰 안내 보기' 버튼 하나만 쓴다 */
   .jcb-banner .t{ font-size:15px !important; color:#F5F6F8 !important; font-weight:700 !important;
-    line-height:1.4 !important; }
+    line-height:1.4 !important; word-break:keep-all !important; }
   .jcb-banner .t b{ color:#F5F6F8 !important; }
   .jcb-banner .ic{ display:none !important; }
-  .jcb-banner .s{ display:block !important; font-size:14px !important; color:#8B95A1 !important;
-    margin-top:4px !important; line-height:1.5 !important; }
+  /* 배너 부제 = 메타(13px) — 제목보다 한 단계 아래여야 위계가 산다 */
+  .jcb-banner .s{ display:block !important; font-size:13px !important; color:#8B95A1 !important;
+    margin-top:4px !important; line-height:1.5 !important;
+    white-space:normal !important; word-break:keep-all !important;
+    overflow-wrap:anywhere !important; }
   .jcb-banner .s br{ display:none !important; }
   .jcb-banner .s .sep-dot{ display:inline !important; }
   .jcb-old{ text-decoration:line-through !important; color:#868F9C !important; }
   .jcb-new{ color:#F5F6F8 !important; font-weight:800 !important; }
-  .jcb-banner .go{ margin:0 !important; width:auto !important; flex:0 0 auto !important;
+  /* 이 화면의 유일한 파란 주 버튼 = 라벨(14px). 흰 글씨 대비 4.5 확보를 위해 #1A5FBF */
+  .jcb-banner .go{ margin:0 !important; width:auto !important; flex:0 1 auto !important;
     background:#1A5FBF !important; color:#FFFFFF !important;
     border:0 !important; border-radius:8px !important;
-    padding:0 14px !important; min-height:40px !important; display:inline-flex !important;
-    align-items:center !important; font-size:14px !important; font-weight:700 !important;
-    white-space:nowrap !important; }
+    padding:9px 14px !important; min-height:32px !important; height:auto !important;
+    display:inline-flex !important; align-items:center !important; justify-content:center !important;
+    font-size:14px !important; font-weight:700 !important; line-height:1.4 !important;
+    white-space:normal !important; word-break:keep-all !important; min-width:0 !important; }
 
   /* ============ 팝업 2개: 가운데 카드 → 아래에서 올라오는 시트 ============ */
   .jintro-wrap, .jcb-wrap{ align-items:flex-end !important; padding:0 !important; }
@@ -961,25 +999,11 @@ jiktUpdateViewModeLabel();
       document.querySelectorAll('.hm-badge, .hm-cta').forEach(function(el){ el.remove(); });
     }catch(e){}
 
-    /* 3) 글자 최소 크기 — 본문 14px 이상. 팝업 안 클래스 없는 글자까지 잡는다. (PC 무영향) */
-    try{
-      var list = document.body.querySelectorAll('*');
-      for(var i=0;i<list.length;i++){
-        var e = list[i], tg = e.tagName;
-        if(tg==='CANVAS'||tg==='SVG'||tg==='PATH'||tg==='SCRIPT'||tg==='STYLE') continue;
-        var ch = e.childNodes, has = false;
-        for(var j=0;j<ch.length;j++){
-          if(ch[j].nodeType===3 && ch[j].textContent.trim()){ has = true; break; }
-        }
-        if(!has) continue;
-        var cs = window.getComputedStyle(e);
-        var fs = parseFloat(cs.fontSize);
-        if(!fs || fs >= 14) continue;
-        e.style.setProperty('font-size','14px','important');
-        var lh = parseFloat(cs.lineHeight);
-        if(!lh || lh < 19) e.style.setProperty('line-height','1.5','important');
-      }
-    }catch(e){}
+    /* 3) [2026-07-14 제거] 일괄 최소폰트 보정(14px 미만 → 14px)은 정보 위계를 파괴한다.
+          원본이 의도적으로 작게 둔 라벨·캡션까지 전부 14px로 밀어올려
+          "제목 18 / 나머지 전부 14" 로 평평해졌고, 폰 큰글씨 배율이 곱해져 화면이 터졌다.
+          → 일괄 보정 금지. 글자 크기는 영역마다 위계표(마스터 통합본 Part 3-2)에 맞춰
+            개별로 지정한다. (값 26 / 제목 18 / 본문 15 / 라벨 14 / 메타 13, 12px 이하 금지) */
   }
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', build);
