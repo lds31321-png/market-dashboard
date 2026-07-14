@@ -3415,6 +3415,19 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 
   .gm-wrap{ padding:0 0 32px 0 !important; }
 
+  /* ── 원본 맨 윗줄 — 제목이 '메인으로' 버튼과 겹쳐 있었다.
+        제목은 아래 gm2-hd 가 다시 쓰므로, 여기서는 '메인으로' 버튼만 남긴다. ── */
+  .topbar{ display:flex !important; align-items:center !important;
+    justify-content:flex-start !important;
+    background:transparent !important; border:0 !important; box-shadow:none !important;
+    padding:12px 16px 0 16px !important; min-height:0 !important; }
+  .topbar > :first-child{ display:none !important; }
+  .topbar-right{ margin:0 !important; }
+  .topbar-right a, .topbar-right button{ font-size:13px !important; color:#8B95A1 !important;
+    background:transparent !important; border:0 !important; padding:0 !important;
+    text-decoration:none !important; white-space:nowrap !important;
+    min-height:40px !important; display:inline-flex !important; align-items:center !important; }
+
   /* ── 맨 위 제목 ── */
   .gm2-hd{ padding:16px 16px 8px 16px !important; }
   .gm2-h1{ font-size:20px !important; font-weight:800 !important; color:#F5F6F8 !important;
@@ -3507,6 +3520,15 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   /* ── ⑤ 아래 더보기 구역 ── */
   .gm2-tail{ margin:0 16px !important; }
   .gm2-tail .gm-big{ border:0 !important; }
+
+  /* ⚠ 종목 상세 안의 지표 3개(기준금리·달러인덱스·WTI)가 **가로로 나란히** 놓여
+       화면 밖(509px)까지 밀려나 있었다. 클래스에 'grid' 라는 글자가 없어서
+       기존 규칙에 안 걸렸다 → 이름을 콕 집어서 세로로 편다. */
+  .gm-raw .ph-metrics, .gm-acc-bd .ph-metrics{ display:block !important; width:auto !important; }
+  .gm-raw .ph-metrics .hm, .gm-acc-bd .ph-metrics .hm{
+    display:block !important; width:auto !important; min-width:0 !important; max-width:100% !important;
+    margin:0 0 6px 0 !important; padding:12px !important;
+    background:#23262E !important; border-radius:8px !important; border:0 !important; }
 }
 </style>
 
@@ -3767,9 +3789,10 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     /* ④ 헤드라인 — 본문 + ①②③ + 더보기 */
     if(hlD || news.length){
       h += '<p class="gm2-sec">헤드라인</p>';
+      /* ⚠ 제목을 여기서 또 쓰면 맨 위 '오늘의 시장'과 **똑같은 문장이 두 번** 나온다.
+           → 헤드라인 칸에는 본문만 넣는다. */
       if(hlD){
         h += '<div class="gm2-box">'
-           +   (hlT ? '<p class="gm2-hl-t">' + esc(hlT) + '</p>' : '')
            +   '<p class="gm2-hl-d">' + esc(hlD) + '</p>'
            + '</div>';
       }
