@@ -3395,7 +3395,22 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   var BIG_SRC = {
     'gm-hl':    function(){ return document.querySelector('.headline-inner') || document.querySelector('.headline-section'); },
     'gm-vol':   function(){ return document.querySelector('.vol-table-wrap'); },
-    'gm-cal':   function(){ var p=document.getElementById('page-calendar'); return p ? p.querySelector('.cal-wrap') : null; },
+    /* ⚠ 경제 캘린더는 **탭을 눌러야 비로소 그려진다.** 그냥 복사하면 껍데기(빈 달력)만 온다.
+          → 우리가 대신 눌러 준다. 스크롤이 튀지 않게 위치는 되돌려 놓는다. */
+    'gm-cal':   function(){
+      var p = document.getElementById('page-calendar');
+      if(p && !p.querySelector('.cal-cell')){
+        try{
+          if(typeof window.switchAsset === 'function'){
+            var keep = window.scrollY || 0;
+            window.switchAsset('calendar', null);
+            window.scrollTo(0, keep);
+            setTimeout(function(){ window.scrollTo(0, keep); }, 60);
+          }
+        }catch(e){}
+      }
+      return p ? p.querySelector('.cal-wrap') : null;
+    },
     'gm-macro': function(){ return document.getElementById('macro-strip'); },
     'gm-foot':  function(){ return document.querySelector('.footer'); }
   };
@@ -3408,6 +3423,9 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
       if(!get) return;
       var src = get();
       if(!src) return;                       /* 원본이 아직 없다 — 다음에 다시 */
+      /* ⚠ 캘린더는 '탭을 누른 직후'엔 아직 비어 있다. 빈 껍데기를 복사해 굳혀버리면
+            영영 빈 달력이 남는다 → 날짜 칸이 실제로 생겼을 때만 복사한다. */
+      if(box.id === 'gm-cal' && !src.querySelector('.cal-cell')) return;
       var bd = box.querySelector('.gm-big-bd');
       if(!bd) return;
       bd.innerHTML = '';
@@ -3772,6 +3790,16 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     build();
     setInterval(build, 800);
     setInterval(fillDetail, 900);
+    /* ★ 펼쳐 놓은 큰 구역이 아직 안 채워졌으면 계속 시도한다.
+         (경제 캘린더처럼 원본이 늦게 그려지는 경우가 있다) */
+    setInterval(function(){
+      try{
+        if(!isMob()) return;
+        document.querySelectorAll('.gm-big.gm-open').forEach(function(b){
+          if(!b.getAttribute('data-done')) fillBig(b);
+        });
+      }catch(e){}
+    }, 700);
     /* 차트 지킴이 — 옮겨온 차트가 빈 채로 굳으면 다시 그린다 (2초마다 확인) */
     setInterval(function(){
       try{
