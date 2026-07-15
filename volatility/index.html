@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260716-012420">
+<meta name="jikt-build" content="20260716-021408">
 <script>
 // [라이트 테마] 화면 요소(DOM)의 인라인 파랑 → 살몬. 캔버스/차트는 style속성에 색이 없어 안전.
 var _jiktMO=null;
@@ -44,7 +44,7 @@ window.addEventListener('storage',function(e){if(e.key==='jikt_theme'){var wl=(e
 
 /* [자동 최신화 v2] 배포 빌드버전 vs 서버 ver.txt 비교 → 다르면 캐시우회 1회 새로고침(무한루프 방지) */
 (function(){try{
-  var BUILD='20260716-012420';
+  var BUILD='20260716-021408';
   if(BUILD.charAt(0)==='_')return;
   fetch('../ver.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null;}).then(function(v){
     if(!v)return; v=v.trim(); if(!v||v===BUILD)return;
@@ -8181,7 +8181,7 @@ body{padding-bottom:0}
   @keyframes jmShake{ 0%,100%{ transform:translateX(0); } 15%{ transform:translateX(-4px); }
     30%{ transform:translateX(4px); } 45%{ transform:translateX(-3px); } 60%{ transform:translateX(3px); }
     75%{ transform:translateX(-2px); } 88%{ transform:translateX(2px); } }
-  .jm-simform{ border:1.5px solid rgba(143,192,255,.5) !important; animation:jmShake 0.6s ease-in-out 2; }
+  .jm-simform{ border:1.5px solid rgba(143,192,255,.5) !important; }
   .jm-simform:focus-within{ animation:none !important; }   /* 입력 중엔 안 흔들린다 */
   /* ⚠ 원본에 `[style*="font-size:15px"]{font-size:15px !important}` 같은 규칙이 있다.
         내 `.jm-unit` 과 **우선순위가 같아서**, 뒤에 선언된 원본이 이겨 '원'만 15px 로 나왔다.
@@ -11420,6 +11420,37 @@ body{padding-bottom:0}
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', wire); else wire();
   setInterval(wire, 3000);
+})();
+</script>
+<script id="jm-yaxis-2026-07-16">
+/* [#38 재수정] 누적 손익 곡선 Y축 오버레이 — 차트가 준비될 때까지 폴링해서 %기준선을 얹는다.
+   (trade2 가 한 번만 돌고 끝나, 차트가 늦게 그려지면 안 뜨던 문제 해결) */
+(function(){
+  function isMob(){ try{ return matchMedia('(max-width:640px)').matches; }catch(e){ return false; } }
+  function findInst(){
+    if(typeof Chart==='undefined' || !Chart.instances) return null;
+    var arr=Object.values(Chart.instances);
+    for(var i=0;i<arr.length;i++){ if(arr[i].canvas && arr[i].canvas.id==='tr-cum-chart') return arr[i]; }
+    return null;
+  }
+  function build(){
+    if(!isMob()) return;
+    var box=document.getElementById('tr-cum-box'); if(!box) return;
+    var inst=findInst(); if(!inst || !inst.scales || !inst.scales.y) return;
+    var ys=inst.scales.y;
+    if(!isFinite(ys.max) || !isFinite(ys.min) || ys.max<=ys.min) return;
+    var mx=ys.max, mn=ys.min;
+    var fy=function(v){ return (v>0?'+':'')+Math.round(v)+'%'; };
+    var sig=Math.round(mx)+'|'+Math.round(mn);
+    var ov=box.querySelector('.jm-yax');
+    if(ov && ov.getAttribute('data-sig')===sig) return;
+    if(!ov){ ov=document.createElement('div'); ov.className='jm-yax'; box.appendChild(ov); }
+    var lv=[mx,(mx+mn)/2,mn], hh='';
+    lv.forEach(function(v){ var pp=(mx-v)/(mx-mn)*100; hh+='<b style="top:'+pp+'%"></b><i style="top:'+pp+'%">'+fy(v)+'</i>'; });
+    ov.innerHTML=hh; ov.setAttribute('data-sig',sig);
+  }
+  setInterval(build, 1200);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', function(){ setTimeout(build,1500); }); else setTimeout(build,1500);
 })();
 </script>
 </body>
