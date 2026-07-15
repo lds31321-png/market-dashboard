@@ -3020,10 +3020,12 @@ loadPositions();
     border-radius:8px !important; padding:5px 10px !important; white-space:nowrap !important;
     opacity:0 !important; pointer-events:none !important; transition:opacity .2s !important; z-index:5 !important; }
   .hdr.fm-docked .fm-dock{ opacity:1 !important; pointer-events:auto !important; }
-  /* 테두리(border-color)를 직접 깜빡인다 — box-shadow 링은 카드 overflow 에 잘려서 안 보임 */
-  @keyframes fmPulse{ 0%,100%{ border-color:rgba(69,147,252,.35) !important; } 50%{ border-color:rgba(69,147,252,1) !important; } }
-  .fm-cta, .hdr-home, .fm-dock{ border:1.5px solid rgba(69,147,252,.35) !important;
-    animation:fmPulse 2.6s ease-in-out infinite !important; }
+  /* 테두리(border-color)를 직접 깜빡인다 — box-shadow 링은 카드 overflow 에 잘려서 안 보임.
+     ⚠ 파란 버튼(거래 시작하기·차트 상세 보기) 위에 파란 테두리는 안 보인다 → 밝은 하늘색→흰빛으로 대비.
+     ⚠ 선택자를 겹쳐(.fm-cta.fm-cta) base border 규칙보다 우선순위를 확실히 올린다. */
+  @keyframes fmPulse{ 0%,100%{ border-color:rgba(143,192,255,.55) !important; } 50%{ border-color:rgba(214,236,255,1) !important; } }
+  .fm-cta.fm-cta, .hdr-home.hdr-home, .fm-dock.fm-dock{ border:2px solid rgba(143,192,255,.55) !important;
+    animation:fmPulse 2s ease-in-out infinite !important; }
   .hdr-home{ color:#8FC0FF !important; }
 }
 </style>
