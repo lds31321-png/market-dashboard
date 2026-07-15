@@ -4275,5 +4275,303 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
 </script>
+
+<style id="gm5-css-2026-07-15">
+/* ============================================================
+   글로벌 대시보드 모바일 — 초안 1 (탭형) 정식 구현  2026-07-15
+   ⚠ 전부 @media(max-width:640px). PC 는 절대 건드리지 않는다.
+   ⚠ 옛 엔진(.gm-wrap)은 숨기고, 이 엔진(.gmx)만 화면에 남긴다.
+   ★ 인베스팅 실측: 여백16 / 글자 24·20·16·13·12·11 / 행 56·48·40 / 카드중첩 금지
+   ============================================================ */
+@media (max-width:640px){
+  .gm-wrap{ display:none !important; }              /* 옛 엔진 화면 숨김 */
+  .topbar{ display:none !important; }               /* 원본 상단바 숨김 (메인으로 중복 방지) */
+  body{ background:#0C1115 !important; }
+
+  .gmx{ display:block !important; }
+  .gmx *{ box-sizing:border-box; }
+  .gmx-cap{ font-size:12px; color:#787F85; line-height:1.5; }
+
+  /* 상단 바 */
+  .gmx-top{ display:flex; align-items:center; justify-content:space-between; padding:12px 16px; }
+  .gmx-back{ font-size:13px; color:#4593FC; font-weight:700; display:inline-flex; align-items:center; min-height:40px; }
+  .gmx-pad{ padding:0 16px; }
+  .gmx-h1{ font-size:20px; font-weight:800; color:#F5F6F8; line-height:1.35; }
+
+  /* 카드 / 섹션 */
+  .gmx-box{ background:#1F262C; border-radius:12px; margin:12px 16px 8px; padding:16px; }
+  .gmx-lbl{ font-size:12px; color:#787F85; }
+  .gmx-said{ font-size:16px; color:#F5F6F8; line-height:1.6; margin-top:8px; word-break:keep-all; }
+  .gmx-sec{ font-size:12px; color:#787F85; margin:22px 16px 8px; }
+
+  /* 종목 리스트 행 (56) */
+  .gmx-row{ display:flex; align-items:center; justify-content:space-between; padding:9px 16px; min-height:56px; cursor:pointer; }
+  .gmx-row + .gmx-row{ border-top:.5px solid rgba(255,255,255,.07); }
+  .gmx-row:active{ background:#161B20; }
+  .gmx-nm{ font-size:16px; color:#F5F6F8; }
+  .gmx-st{ font-size:12px; color:#F0A24A; letter-spacing:1px; margin-top:3px; }
+  .gmx-val{ font-size:16px; color:#F5F6F8; text-align:right; }
+  .gmx-chg{ font-size:12px; font-weight:800; text-align:right; margin-top:3px; }
+
+  /* 더보기 / 헤드라인 */
+  .gmx-more{ display:flex; align-items:center; justify-content:space-between; background:#1F262C; border-radius:12px; margin:0 16px 8px; padding:0 16px; min-height:48px; cursor:pointer; font-size:13px; color:#9AA3AD; }
+  .gmx-news{ padding:13px 16px; } .gmx-news + .gmx-news{ border-top:.5px solid rgba(255,255,255,.07); }
+  .gmx-nt{ font-size:13px; color:#F5F6F8; line-height:1.6; word-break:keep-all; }
+  .gmx-ns{ font-size:12px; color:#787F85; margin-top:5px; }
+
+  /* ── 상세 화면 ── */
+  .gmx-detail{ display:none; }
+  .gmx.gmx-on-detail .gmx-main{ display:none; }
+  .gmx.gmx-on-detail .gmx-detail{ display:block; }
+
+  .gmx-shead{ padding:6px 16px 10px; border-bottom:.5px solid rgba(255,255,255,.07); }
+  .gmx-sname{ font-size:20px; font-weight:800; color:#F5F6F8; }
+  .gmx-ssub{ font-size:12px; color:#787F85; margin-top:2px; }
+  .gmx-spx{ display:flex; align-items:baseline; gap:10px; margin-top:8px; }
+  .gmx-spx .p{ font-size:24px; font-weight:800; color:#F5F6F8; line-height:1.2; }
+  .gmx-spx .c{ font-size:20px; font-weight:800; }
+
+  .gmx-tabs{ display:flex; gap:18px; padding:0 16px; border-bottom:.5px solid rgba(255,255,255,.07); overflow-x:auto; position:sticky; top:0; background:#0C1115; z-index:5; }
+  .gmx-tabs::-webkit-scrollbar{ height:0; }
+  .gmx-tab{ font-size:13px; color:#787F85; padding:12px 0; white-space:nowrap; cursor:pointer; }
+  .gmx-tab.on{ color:#F5F6F8; font-weight:800; border-bottom:2px solid #F5F6F8; }
+  .gmx-panel{ display:none; padding-bottom:28px; }
+  .gmx-panel.on{ display:block; }
+
+  /* 개요: 3칸 지표 + 요약 + kv */
+  .gmx-three{ display:flex; gap:8px; margin:14px 16px 8px; }
+  .gmx-three .c{ flex:1; background:#1F262C; border-radius:12px; padding:12px; min-width:0; }
+  .gmx-three .c .k{ font-size:12px; color:#787F85; }
+  .gmx-three .c .v{ font-size:16px; font-weight:800; color:#F5F6F8; margin-top:4px; word-break:break-all; }
+  .gmx-kv{ display:flex; justify-content:space-between; align-items:baseline; padding:11px 16px; gap:12px; }
+  .gmx-kv + .gmx-kv{ border-top:.5px solid rgba(255,255,255,.07); }
+  .gmx-kv .k{ font-size:13px; color:#787F85; flex-shrink:0; }
+  .gmx-kv .v{ font-size:14px; color:#F5F6F8; text-align:right; word-break:keep-all; }
+
+  /* 클론된 원본 요소 정리 (분석·시나리오·일정 탭) */
+  .gmx-clone{ padding:14px 16px 0; }
+  .gmx-clone *{ max-width:100% !important; white-space:normal !important; word-break:keep-all !important; overflow-wrap:break-word !important; border-left:0 !important; }
+  .gmx-clone .sec-lbl{ display:none !important; }         /* 탭 제목이 대신함 */
+  .gmx-clone .sec-lbl::before, .gmx-clone .sec-lbl::after{ display:none !important; }
+  .gmx-clone .alert-dot, .gmx-clone canvas, .gmx-clone .chart-row, .gmx-clone [class*="chart"]{ display:none !important; }
+  .gmx-clone .factors-grid, .gmx-clone .scenario-grid, .gmx-clone .calendar-grid, .gmx-clone .season-grid, .gmx-clone [class*="grid"]{ display:block !important; }
+  /* 요인 카드 */
+  .gmx-clone .factor-card, .gmx-clone .scenario-card{ background:#1F262C !important; border:0 !important; border-radius:12px !important; padding:14px !important; margin:0 0 8px 0 !important; }
+  .gmx-clone .factor-hd, .gmx-clone .factor-left{ display:block !important; }
+  .gmx-clone .factor-num{ font-size:11px !important; color:#787F85 !important; white-space:nowrap !important; margin:0 0 2px 0 !important; }
+  .gmx-clone .factor-title{ font-size:15px !important; font-weight:800 !important; line-height:1.4 !important; display:block !important; margin:0 0 8px 0 !important; }
+  .gmx-clone .factor-badge{ display:inline-block !important; font-size:12px !important; padding:4px 10px !important; border-radius:6px !important; white-space:nowrap !important; margin:0 0 10px 0 !important; }
+  .gmx-clone .factor-bar-hd{ display:flex !important; justify-content:space-between !important; font-size:12px !important; color:#787F85 !important; margin:0 0 6px 0 !important; }
+  .gmx-clone .factor-bar-bg{ height:6px !important; background:#2E323C !important; border-radius:20px !important; overflow:hidden !important; margin:0 0 12px 0 !important; }
+  .gmx-clone .fp{ display:flex !important; gap:8px !important; margin:0 0 10px 0 !important; }
+  .gmx-clone .fp-dot{ flex:0 0 8px !important; width:8px !important; height:8px !important; border-radius:50% !important; margin-top:6px !important; }
+  .gmx-clone .fp > div:last-child{ font-size:13px !important; line-height:1.6 !important; color:#C4CBD6 !important; }
+  .gmx-clone .factor-impact{ font-size:13px !important; padding:10px !important; border-radius:8px !important; margin-top:6px !important; }
+  /* 시나리오 */
+  .gmx-clone .sc-tag{ display:inline-block !important; font-size:11px !important; padding:3px 8px !important; border-radius:6px !important; margin:0 0 8px 0 !important; }
+  .gmx-clone .sc-title{ font-size:15px !important; font-weight:800 !important; margin:0 0 6px 0 !important; }
+  .gmx-clone .sc-price{ font-size:17px !important; font-weight:800 !important; margin:8px 0 2px 0 !important; }
+  .gmx-clone .sc-trigger, .gmx-clone .sc-timing, .gmx-clone .sc-item{ font-size:13px !important; color:#C4CBD6 !important; line-height:1.6 !important; }
+  /* 일정/이벤트 카드 */
+  .gmx-clone [class*="cal-"], .gmx-clone [class*="event"], .gmx-clone [class*="ev-"]{ background:#1F262C !important; border:0 !important; border-radius:10px !important; }
+  .gmx-clone table{ width:100% !important; table-layout:fixed !important; border-collapse:collapse !important; }
+  .gmx-clone th, .gmx-clone td{ padding:8px !important; text-align:left !important; vertical-align:top !important; border-bottom:.5px solid rgba(255,255,255,.07) !important; font-size:13px !important; }
+  .gmx-clone h1, .gmx-clone h2, .gmx-clone h3, .gmx-clone h4, .gmx-clone strong, .gmx-clone b{ color:#F5F6F8 !important; }
+  .gmx-clone a{ color:#787F85 !important; text-decoration:none !important; }
+  .gmx-empty{ font-size:13px; color:#787F85; padding:24px 16px; text-align:center; }
+}
+</style>
+
+<script id="gm5-js-2026-07-15">
+/* 글로벌 대시보드 모바일 — 초안 1(탭형) 엔진.
+   원본 데이터를 읽어 새 UI를 만든다. 옛 .gm-wrap 은 CSS로 숨겨 둔다. */
+(function(){
+  function isMob(){ try{ return matchMedia('(max-width:640px)').matches; }catch(e){ return false; } }
+  function T(e){ return e?String(e.textContent||'').replace(/\s+/g,' ').trim():''; }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function col(t){ var s=String(t||'').trim(); return /^-/.test(s)?'#4593FC':(/^\+/.test(s)?'#F06A6A':'#787F85'); }
+
+  var built=false, curKey='';
+
+  function readStocks(){
+    var nav=document.querySelector('.asset-nav-inner'); if(!nav||!nav.children.length) return [];
+    var vol={};
+    var tb=document.querySelector('.vol-table-wrap table');
+    if(tb){ var trs=tb.querySelectorAll('tbody tr');
+      [].forEach.call(trs,function(tr,idx){
+        var td=tr.children; if(td.length<3) return;
+        var nm=T(td[0]).replace(/(WTI|FRED.*|EIA.*|Henry Hub|CME.*|ICE.*|LME.*|COMEX.*|NYMEX.*)$/,'').replace(/\s*100$/,'').trim();
+        var st=(T(td[1]).match(/★/g)||[]).length;
+        /* 30일 예상 범위는 다음 행(상세 설명 행)에 '범위: $X~$Y' 형태로 있다 */
+        var rng=''; var nx=trs[idx+1];
+        if(nx){ var rm=T(nx).match(/범위[:\s]*(\$?[\d,]+\s*~\s*\$?[\d,.]+[^\s,]*)/); if(rm) rng=rm[1]; }
+        if(nm&&st) vol[nm]={st:st,rng:rng};
+      });
+    }
+    var out=[];
+    [].forEach.call(nav.children,function(t){
+      var oc=t.getAttribute('onclick')||''; var key=(oc.match(/switchAsset\(\s*'([^']+)'/)||[])[1];
+      if(!key||key==='calendar') return;
+      var nm=T(t.querySelector('.at-name')); var v=null;
+      for(var k in vol){ if(k&&nm&&(k.indexOf(nm)>=0||nm.indexOf(k)>=0)){ v=vol[k]; break; } }
+      out.push({key:key,nm:nm,px:T(t.querySelector('.at-price')),cg:T(t.querySelector('.at-chg')),star:v?v.st:0,rng:v?v.rng:''});
+    });
+    out.forEach(function(a,i){a.ord=i;});
+    out.sort(function(a,b){return (b.star-a.star)||(a.ord-b.ord);});
+    return out;
+  }
+
+  function readHeadline(){
+    var hn=document.querySelector('.headline-news'); if(!hn) return {t:'',news:[]};
+    var news=[]; hn.querySelectorAll('a[href^="http"]').forEach(function(a){
+      var sp=a.parentElement.querySelectorAll('span'); if(sp.length<2) return;
+      news.push({tx:T(sp[1]).replace(/\s*—\s*$/,''),src:T(a)});
+    });
+    return {t:T(hn.querySelector('.hn-title')),news:news};
+  }
+  function whenStr(){
+    try{ var ht=T(document.querySelector('.headline-top')); var m=ht.match(/기준일:\s*([\d.]+\s*[\d:]*\s*\w*)/); if(m&&m[1].trim()!=='') return '기준일 '+m[1]; }catch(e){}
+    return '실시간';
+  }
+
+  /* ── 상세: 원본 page-{key} 를 탭별로 분류 ── */
+  function detailHTML(a){
+    var pg=document.getElementById('page-'+a.key);
+    if(!pg){ try{ if(typeof window.switchAsset==='function') window.switchAsset(a.key,null); }catch(e){} pg=document.getElementById('page-'+a.key); }
+    var over='', anal='', scen='', sched='';
+    // 개요: 요약(alert) + 지표(hm)
+    var oneLine=''; try{ oneLine=T((pg||document).querySelector('.alert-banner .alert-banner-inner, .alert-banner')); }catch(e){}
+    if(oneLine.length>200) oneLine=oneLine.slice(0,200)+'…';
+    var kv='';
+    if(pg) pg.querySelectorAll('.ph-metrics .hm').forEach(function(hm){
+      /* hm-lbl = 지표 이름(WTI·DXY 등), hm-src = 출처코드. 이름을 앞세운다 */
+      var name=T(hm.querySelector('.hm-lbl'))||T(hm.querySelector('.hm-src'));
+      var val=T(hm.querySelector('.hm-val')); var sub=T(hm.querySelector('.hm-sub'));
+      if(name&&val) kv+='<div class="gmx-kv"><span class="k">'+esc(name)+'</span><span class="v">'+esc(val)+(sub?' · '+esc(sub):'')+'</span></div>';
+    });
+    over+='<div class="gmx-three">'
+        + '<div class="c"><div class="k">변동성</div><div class="v" style="color:#F06A6A">'+(a.star?'★'.repeat(a.star):'—')+'</div></div>'
+        + (a.rng?'<div class="c"><div class="k">예상 범위</div><div class="v">'+esc(a.rng)+'</div></div>':'')
+        + '</div>';
+    if(oneLine) over+='<div class="gmx-box"><div class="gmx-lbl">한 줄 요약</div><div class="gmx-said">'+esc(oneLine)+'</div></div>';
+    if(kv) over+='<div class="gmx-sec">핵심 지표</div>'+kv;
+
+    // 분석/시나리오/일정: 원본 블록 클론
+    if(pg){
+      var cur='';
+      [].slice.call(pg.children).forEach(function(el){
+        var cls=' '+(el.className||'')+' '; var has=function(c){return cls.indexOf(' '+c+' ')>=0;};
+        if(has('sec-lbl')){ cur=T(el); return; }
+        if(has('factors-grid')){ anal+=el.outerHTML; return; }
+        if(has('season-grid')){ anal+='<div class="gmx-sec" style="margin-left:0">계절성</div>'+el.outerHTML; return; }
+        if(has('commentary-section')){ anal+=el.outerHTML; return; }
+        if(has('scenario-grid')){ scen+=el.outerHTML; return; }
+        if(has('calendar-grid')||/일정|캘린더|이벤트/.test(cur)){ sched+=el.outerHTML; return; }
+      });
+    }
+    function panel(id,inner,on){ return '<div class="gmx-panel'+(on?' on':'')+'" data-panel="'+id+'">'+(inner||'<div class="gmx-empty">내용이 없습니다.</div>')+'</div>'; }
+    var h='';
+    h+='<div class="gmx-shead"><div class="gmx-sname">'+esc(a.nm)+'</div><div class="gmx-ssub">실시간 CFD · USD</div>'
+      +'<div class="gmx-spx"><span class="p" data-px="'+esc(a.key)+'">'+esc(a.px||'—')+'</span><span class="c" data-cg="'+esc(a.key)+'" style="color:'+col(a.cg)+'">'+esc(a.cg)+'</span></div></div>';
+    h+='<div class="gmx-tabs">'
+      +'<span class="gmx-tab on" data-t="over">개요</span>'
+      +'<span class="gmx-tab" data-t="anal">분석</span>'
+      +'<span class="gmx-tab" data-t="scen">시나리오</span>'
+      +'<span class="gmx-tab" data-t="sched">일정</span></div>';
+    h+=panel('over', over, true);
+    h+=panel('anal', anal?'<div class="gmx-clone">'+anal+'</div>':'');
+    h+=panel('scen', scen?'<div class="gmx-clone">'+scen+'</div>':'');
+    h+=panel('sched', sched?'<div class="gmx-clone">'+sched+'</div>':'');
+    return h;
+  }
+
+  function openDetail(a){
+    var app=document.querySelector('.gmx'); if(!app) return;
+    var d=app.querySelector('.gmx-detail');
+    d.innerHTML='<div class="gmx-top"><span class="gmx-back" data-act="back">← 목록</span></div>'+detailHTML(a);
+    curKey=a.key;
+    app.classList.add('gmx-on-detail');
+    window.scrollTo(0,0);
+    // 탭 전환
+    d.querySelectorAll('.gmx-tab').forEach(function(tb){
+      tb.addEventListener('click',function(){
+        d.querySelectorAll('.gmx-tab').forEach(function(x){x.classList.remove('on');});
+        tb.classList.add('on');
+        var t=tb.getAttribute('data-t');
+        d.querySelectorAll('.gmx-panel').forEach(function(p){ p.classList.toggle('on', p.getAttribute('data-panel')===t); });
+        window.scrollTo(0,0);
+      });
+    });
+    d.querySelector('[data-act="back"]').addEventListener('click',function(){ app.classList.remove('gmx-on-detail'); curKey=''; window.scrollTo(0,0); });
+    // 원본 상세가 늦게 채워지면 한 번 더
+    setTimeout(function(){ if(curKey===a.key){ var np=document.getElementById('page-'+a.key); if(np){ /* 이미 채워졌으면 재구성 */ } } },500);
+  }
+
+  function build(){
+    if(!isMob()) return;
+    if(built && document.querySelector('.gmx')) return;
+    var S=readStocks(); if(!S.length) return;
+    var H=readHeadline();
+    var backA=document.querySelector('.topbar-right a, .topbar-right button');
+    var backHref=backA?(backA.getAttribute('href')||'hub.html'):'hub.html';
+
+    var m='';
+    m+='<div class="gmx-top"><a class="gmx-back" href="'+esc(backHref)+'">← 메인으로</a></div>';
+    m+='<div class="gmx-pad"><div class="gmx-h1">글로벌 시장</div><div class="gmx-cap" style="margin-top:4px">'+esc(whenStr())+' · EIA · FRED · Reuters</div></div>';
+    if(H.t) m+='<div class="gmx-box"><div class="gmx-lbl">오늘의 시장 요약</div><div class="gmx-said">'+esc(H.t)+'</div></div>';
+    m+='<div class="gmx-sec">변동성 순위 · '+S.length+'개 종목</div><div id="gmx-list">';
+    S.forEach(function(a,i){
+      m+='<div class="gmx-row" data-k="'+esc(a.key)+'"'+(i>=6?' data-hid="1" style="display:none"':'')+'>'
+        +'<div style="min-width:0"><div class="gmx-nm">'+esc(a.nm)+'</div><div class="gmx-st">'+(a.star?'★'.repeat(a.star):'—')+'</div></div>'
+        +'<div style="text-align:right"><div class="gmx-val" data-px="'+esc(a.key)+'">'+esc(a.px||'—')+'</div><div class="gmx-chg" data-cg="'+esc(a.key)+'" style="color:'+col(a.cg)+'">'+esc(a.cg)+'</div></div>'
+        +'</div>';
+    });
+    m+='</div>';
+    if(S.length>6) m+='<div class="gmx-more" id="gmx-morelist"><span>종목 '+(S.length-6)+'개 더보기</span><span>›</span></div>';
+    if(H.news.length){
+      m+='<div class="gmx-sec">헤드라인</div>';
+      H.news.slice(0,3).forEach(function(n){ m+='<div class="gmx-news"><div class="gmx-nt">'+esc(n.tx)+'</div><div class="gmx-ns">'+esc(n.src)+'</div></div>'; });
+      if(H.news.length>3) m+='<div class="gmx-more" id="gmx-morenews"><span>뉴스 '+(H.news.length-3)+'건 더보기</span><span>›</span></div>';
+    }
+    m+='<div style="height:24px"></div>';
+
+    var app=document.querySelector('.gmx');
+    if(!app){ app=document.createElement('div'); app.className='gmx'; document.body.appendChild(app); }
+    app.innerHTML='<div class="gmx-main">'+m+'</div><div class="gmx-detail"></div>';
+
+    var SByKey={}; S.forEach(function(a){SByKey[a.key]=a;});
+    app.querySelectorAll('.gmx-row').forEach(function(r){
+      r.addEventListener('click',function(){ var a=SByKey[r.getAttribute('data-k')]; if(a) openDetail(a); });
+    });
+    var ml=app.querySelector('#gmx-morelist');
+    if(ml) ml.addEventListener('click',function(){ app.querySelectorAll('.gmx-row[data-hid]').forEach(function(x){x.style.display='';x.removeAttribute('data-hid');}); ml.remove(); });
+    var mn=app.querySelector('#gmx-morenews');
+    if(mn) mn.addEventListener('click',function(){ if(typeof window.switchAsset==='function'){} location.hash='headline'; mn.remove(); });
+
+    if(S.length>=10) built=true;
+  }
+
+  function tick(){
+    try{
+      if(!isMob()) return; var app=document.querySelector('.gmx'); if(!app) return;
+      var nav=document.querySelector('.asset-nav-inner'); if(!nav) return;
+      [].forEach.call(nav.children,function(t){
+        var oc=t.getAttribute('onclick')||''; var key=(oc.match(/switchAsset\(\s*'([^']+)'/)||[])[1]; if(!key||key==='calendar') return;
+        var px=T(t.querySelector('.at-price')), cg=T(t.querySelector('.at-chg'));
+        app.querySelectorAll('[data-px="'+key+'"]').forEach(function(e){ if(px&&e.textContent!==px) e.textContent=px; });
+        app.querySelectorAll('[data-cg="'+key+'"]').forEach(function(e){ if(cg&&e.textContent!==cg) e.textContent=cg; e.style.setProperty('color',col(cg),'important'); });
+      });
+    }catch(e){}
+  }
+
+  function boot(){
+    build();
+    setInterval(build, 1500);   /* 종목 늦게 로드될 때만 실제 동작, 완성되면 no-op */
+    setInterval(tick, 1200);
+    window.addEventListener('resize', function(){ built=false; build(); });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
 </body>
 </html>
