@@ -4289,11 +4289,15 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 @media (max-width:640px){
   /* 원본·옛 엔진 전부 숨김 */
   .headline-section, .asset-nav, body > canvas, body > .page, .topbar, .gm-wrap{ display:none !important; }
-  html, body{ background:#0C1115 !important; overflow-x:hidden !important; }
+  /* ⚠ overflow-x:hidden 은 position:sticky 를 깨뜨린다 → overflow-x:clip 으로.
+     clip 은 가로 넘침은 막으면서 sticky(상단 고정)는 정상 작동한다. */
+  html, body{ background:#0C1115 !important; overflow-x:clip !important; }
   .gmx{ display:block !important; }
   .gmx *{ box-sizing:border-box; max-width:100%; }
 
-  .gmx-top{ padding:12px 16px 0; }
+  /* ← 메인으로 / ← 목록 화살표를 상단 고정 (스크롤해도 따라옴).
+     배경을 페이지색과 같게 둬서 아래 내용이 뒤로 자연스럽게 사라진다. */
+  .gmx-top{ position:sticky; top:0; z-index:100; background:#0C1115; padding:12px 16px 8px; }
   .gmx-back{ font-size:13px; color:#4593FC; font-weight:700; display:inline-flex; align-items:center; min-height:40px; text-decoration:none; }
   .gmx-pad{ padding:0 16px; }
   .gmx-h1{ font-size:20px; font-weight:800; color:#F5F6F8; line-height:1.35; }
@@ -4367,6 +4371,18 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   .gmx-ev .et{ font-size:13px; font-weight:800; color:#F5F6F8; }
   .gmx-ev .ed{ font-size:13px; color:#C4CBD6; line-height:1.6; margin-top:4px; }
   .gmx-ev .ei{ font-size:12px; color:#8FB0E0; margin-top:6px; }
+  /* 계절성 */
+  .gmx-seas{ background:#23262E; border-radius:10px; padding:12px; margin:0 0 8px; }
+  .gmx-seast{ font-size:14px; font-weight:800; color:#F5F6F8; }
+  .gmx-seassub{ font-size:12px; color:#787F85; margin-top:2px; }
+  .gmx-sbwrap{ display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:10px; }
+  .gmx-sb{ background:#1B1E24; border-radius:8px; padding:8px; text-align:center; }
+  .gmx-sb .m{ display:block; font-size:13px; font-weight:800; color:#F5F6F8; }
+  .gmx-sb .s{ display:block; font-size:11px; color:#9AA3AD; margin-top:2px; }
+  /* 상세 해설 */
+  .gmx-cm{ margin:0 0 12px; }
+  .gmx-cmt{ font-size:14px; font-weight:800; color:#F5F6F8; line-height:1.5; word-break:keep-all; }
+  .gmx-cmx{ font-size:13px; color:#C4CBD6; line-height:1.7; margin-top:6px; word-break:keep-all; }
   .gmx-empty{ font-size:13px; color:#787F85; padding:16px; text-align:center; }
 }
 </style>
@@ -4485,6 +4501,28 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     });
     return h;
   }
+  function extractSeason(pg){
+    var h=''; if(!pg) return h;
+    pg.querySelectorAll('.season-grid .season-card').forEach(function(card){
+      var title=T(card.querySelector('.season-title')), sub=T(card.querySelector('.season-sub'));
+      var rows='';
+      card.querySelectorAll('.sb-row').forEach(function(r){
+        var full=T(r); var m=full.match(/^(\d+월)\s*(.*)$/); var mon=m?m[1]:full; var st=m?m[2]:'';
+        rows+='<div class="gmx-sb"><span class="m">'+esc(mon)+'</span><span class="s">'+esc(st)+'</span></div>';
+      });
+      h+='<div class="gmx-seas"><div class="gmx-seast">'+esc(title)+'</div>'+(sub?'<div class="gmx-seassub">'+esc(sub)+'</div>':'')+(rows?'<div class="gmx-sbwrap">'+rows+'</div>':'')+'</div>';
+    });
+    return h;
+  }
+  function extractCommentary(pg){
+    var h=''; if(!pg) return h;
+    pg.querySelectorAll('.commentary-section .cm-item').forEach(function(it){
+      var title=T(it.querySelector('.cm-title')), text=T(it.querySelector('.cm-text'));
+      if(!title&&!text){ text=T(it); }
+      h+='<div class="gmx-cm">'+(title?'<div class="gmx-cmt">'+esc(title)+'</div>':'')+(text?'<div class="gmx-cmx">'+esc(text)+'</div>':'')+'</div>';
+    });
+    return h;
+  }
   function acc(title, body){
     if(!body) return '';
     return '<div class="gmx-acc"><div class="gmx-acch"><span class="t">'+esc(title)+'</span><span class="cv">▸</span></div><div class="gmx-accb" style="display:none">'+body+'</div></div>';
@@ -4494,7 +4532,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     var pg=document.getElementById('page-'+a.key);
     var oneLine=''; try{ oneLine=Tno((pg||document).querySelector('.alert-banner')); }catch(e){}
     if(oneLine.length>220) oneLine=oneLine.slice(0,220)+'…';
-    var kv=extractKV(pg), fac=extractFactors(pg), scn=extractScenarios(pg), evt=extractEvents(pg);
+    var kv=extractKV(pg), fac=extractFactors(pg), scn=extractScenarios(pg), evt=extractEvents(pg), sea=extractSeason(pg), com=extractCommentary(pg);
     var h='<div class="gmx-top"><span class="gmx-back" data-act="back">← 목록</span></div>';
     h+='<div class="gmx-shead"><div class="gmx-sname">'+esc(a.nm)+'</div><div class="gmx-ssub">실시간 CFD · USD</div>'
       +'<div class="gmx-spx"><span class="p">'+esc(a.px||'—')+'</span><span class="c" style="color:'+col(a.cg)+'">'+esc(a.cg)+'</span></div></div>';
@@ -4502,9 +4540,9 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
       +(a.rng?'<div class="c"><div class="k">예상 범위</div><div class="v">'+esc(a.rng)+'</div></div>':'')+'</div>';
     if(oneLine) h+='<div class="gmx-box"><div class="gmx-lbl">한 줄 요약</div><div class="gmx-said">'+esc(oneLine)+'</div></div>';
     if(kv) h+='<div class="gmx-sec">핵심 지표</div>'+kv;
-    if(fac||scn||evt){
+    if(fac||scn||sea||evt||com){
       h+='<div class="gmx-sec">자세히 보기</div>';
-      h+=acc('요인별 분석', fac)+acc('시나리오', scn)+acc('주요 일정', evt);
+      h+=acc('요인별 분석', fac)+acc('시나리오', scn)+acc('계절성 패턴', sea)+acc('주요 일정', evt)+acc('상세 해설', com);
     }
     h+='<div style="height:24px"></div>';
     return h;
@@ -4584,7 +4622,12 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     build();
     setInterval(build, 1500);
     setInterval(tick, 1500);
-    window.addEventListener('resize', function(){ if(mode==='main'){ ready=false; build(); } });
+    /* ⚠ 폰에서 스크롤하면 주소창이 나타났다 사라지며 resize(높이 변화)가 뜬다.
+       그때 다시 그리면 '더보기'로 펼친 게 도로 접힌다 → 폭이 실제로 바뀔 때(회전)만 다시 그린다. */
+    var lastW=window.innerWidth;
+    window.addEventListener('resize', function(){
+      if(Math.abs(window.innerWidth-lastW)>60){ lastW=window.innerWidth; if(mode==='main'){ ready=false; build(); } }
+    });
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
