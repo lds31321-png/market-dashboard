@@ -3640,10 +3640,10 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 </style>
 
 <script id="gm-js-2026-07-14">
-/* 글로벌 대시보드 모바일 엔진
-   ⚠ 원본을 **꺼내오지 않고 복사**한다 → 원본이 다시 그려져도 안전.
-   ⚠ 종목 전환은 원본 함수(switchAsset)를 대신 눌러 준다. */
-(function(){
+/* ⚠⚠ 이 옛 엔진(시안 B·아코디언 방식)은 gm5(초안1 탭형)로 완전히 대체되어 비활성화됨.
+   두 엔진이 동시에 돌면서 화면을 건드리는(까매짐) 것을 막기 위해 즉시 return 한다.
+   아래 원래 코드는 참고용으로만 남겨 둔다 — 실행되지 않는다. */
+(function(){ return;
   function isMob(){ try{ return window.matchMedia('(max-width:640px)').matches; }catch(e){ return false; } }
   function T(e){ return e ? String(e.textContent||'').replace(/\s+/g,' ').trim() : ''; }
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -4286,7 +4286,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 @media (max-width:640px){
   .gm-wrap{ display:none !important; }              /* 옛 엔진 화면 숨김 */
   .topbar{ display:none !important; }               /* 원본 상단바 숨김 (메인으로 중복 방지) */
-  body{ background:#0C1115 !important; }
+  html, body{ background:#0C1115 !important; }       /* 오버스크롤 시 흰/검 깜빡임 방지 */
 
   .gmx{ display:block !important; }
   .gmx *{ box-sizing:border-box; }
@@ -4322,7 +4322,8 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   /* ── 상세 화면 ── */
   .gmx-detail{ display:none; }
   .gmx.gmx-on-detail .gmx-main{ display:none; }
-  .gmx.gmx-on-detail .gmx-detail{ display:block; }
+  /* ⚠ 상세가 짧아도 화면을 꽉 채운다 → 아래쪽에 까만 빈 공간이 생기지 않게 */
+  .gmx.gmx-on-detail .gmx-detail{ display:block; min-height:100vh; }
 
   .gmx-shead{ padding:6px 16px 10px; border-bottom:.5px solid rgba(255,255,255,.07); }
   .gmx-sname{ font-size:20px; font-weight:800; color:#F5F6F8; }
@@ -4331,7 +4332,8 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   .gmx-spx .p{ font-size:24px; font-weight:800; color:#F5F6F8; line-height:1.2; }
   .gmx-spx .c{ font-size:20px; font-weight:800; }
 
-  .gmx-tabs{ display:flex; gap:18px; padding:0 16px; border-bottom:.5px solid rgba(255,255,255,.07); overflow-x:auto; position:sticky; top:0; background:#0C1115; z-index:5; }
+  /* ⚠ position:sticky 는 삼성 브라우저에서 스크롤 중 화면이 까맣게 깜빡이는 원인이 된다 → 일반 흐름으로 */
+  .gmx-tabs{ display:flex; gap:18px; padding:0 16px; border-bottom:.5px solid rgba(255,255,255,.07); overflow-x:auto; background:#0C1115; }
   .gmx-tabs::-webkit-scrollbar{ height:0; }
   .gmx-tab{ font-size:13px; color:#787F85; padding:12px 0; white-space:nowrap; cursor:pointer; }
   .gmx-tab.on{ color:#F5F6F8; font-weight:800; border-bottom:2px solid #F5F6F8; }
@@ -4444,8 +4446,11 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     if(oneLine.length>200) oneLine=oneLine.slice(0,200)+'…';
     var kv='';
     if(pg) pg.querySelectorAll('.ph-metrics .hm').forEach(function(hm){
-      /* hm-lbl = 지표 이름(WTI·DXY 등), hm-src = 출처코드. 이름을 앞세운다 */
-      var name=T(hm.querySelector('.hm-lbl'))||T(hm.querySelector('.hm-src'));
+      /* ⚠ 종목마다 hm-lbl/hm-src 순서가 뒤바뀌어 있다(원유는 lbl=이름, S&P는 src=이름).
+         → '출처코드처럼 생긴 쪽'을 버리고 사람이 읽는 이름을 고른다. */
+      var a1=T(hm.querySelector('.hm-lbl')), a2=T(hm.querySelector('.hm-src'));
+      var isSrc=function(s){ return /^(FRED|EIA|CME|ICE|LME|NYMEX|COMEX|NASDAQ|London|World|IMF|USDA|BOJ|RBA|ECB)\b/.test(s) || /·\s*[A-Z0-9][A-Z0-9._]*$/.test(s); };
+      var name = isSrc(a1) ? (a2||a1) : (a1||a2);
       var val=T(hm.querySelector('.hm-val')); var sub=T(hm.querySelector('.hm-sub'));
       if(name&&val) kv+='<div class="gmx-kv"><span class="k">'+esc(name)+'</span><span class="v">'+esc(val)+(sub?' · '+esc(sub):'')+'</span></div>';
     });
