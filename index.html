@@ -4334,7 +4334,6 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     display:block !important;
     position:fixed !important; top:0; left:0; right:0; bottom:0; width:100%;
     overflow-y:auto !important; overflow-x:hidden !important;
-    -webkit-overflow-scrolling:touch;
     background:#0C1115 !important; z-index:1000; }
 
   .gmx-shead{ padding:6px 16px 10px; border-bottom:.5px solid rgba(255,255,255,.07); }
@@ -4344,8 +4343,10 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   .gmx-spx .p{ font-size:24px; font-weight:800; color:#F5F6F8; line-height:1.2; }
   .gmx-spx .c{ font-size:20px; font-weight:800; }
 
-  /* ⚠ position:sticky 는 삼성 브라우저에서 스크롤 중 화면이 까맣게 깜빡이는 원인이 된다 → 일반 흐름으로 */
-  .gmx-tabs{ display:flex; gap:18px; padding:0 16px; border-bottom:.5px solid rgba(255,255,255,.07); overflow-x:auto; background:#0C1115; }
+  /* ⚠⚠ 까매짐의 진짜 원인 = 여기 있던 overflow-x:auto (가로 스크롤).
+        세로 스크롤 화면 안의 가로 스크롤 요소는 모바일에서 화면을 통째로 까맣게 만든다.
+        탭 4개는 화면에 다 들어가므로 가로 스크롤 자체를 없앤다. */
+  .gmx-tabs{ display:flex; gap:16px; padding:0 16px; border-bottom:.5px solid rgba(255,255,255,.07); background:#0C1115; flex-wrap:nowrap; overflow:hidden; }
   .gmx-tabs::-webkit-scrollbar{ height:0; }
   .gmx-tab{ font-size:13px; color:#787F85; padding:12px 0; white-space:nowrap; cursor:pointer; }
   .gmx-tab.on{ color:#F5F6F8; font-weight:800; border-bottom:2px solid #F5F6F8; }
