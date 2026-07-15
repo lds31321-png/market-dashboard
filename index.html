@@ -4286,7 +4286,11 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 @media (max-width:640px){
   .gm-wrap{ display:none !important; }              /* 옛 엔진 화면 숨김 */
   .topbar{ display:none !important; }               /* 원본 상단바 숨김 (메인으로 중복 방지) */
-  html, body{ background:#0C1115 !important; }       /* 오버스크롤 시 흰/검 깜빡임 방지 */
+  /* ⚠⚠ 폰에서 상세 스크롤 시 화면 전체가 새까매지던 진짜 원인 = 가로 넘침.
+        화면보다 넓은 요소가 하나라도 있으면 삼성/모바일 브라우저가 그리기를 포기해 검게 된다.
+        (옆으로 스크롤하면 잠깐 다시 보이는 게 그 증거) → 가로 넘침을 원천 차단한다. */
+  html, body{ background:#0C1115 !important; overflow-x:hidden !important; max-width:100% !important; }
+  .gmx, .gmx-main, .gmx-detail, .gmx-panel{ overflow-x:hidden !important; max-width:100% !important; }
 
   .gmx{ display:block !important; }
   .gmx *{ box-sizing:border-box; }
@@ -4322,8 +4326,8 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   /* ── 상세 화면 ── */
   .gmx-detail{ display:none; }
   .gmx.gmx-on-detail .gmx-main{ display:none; }
-  /* ⚠ 상세가 짧아도 화면을 꽉 채운다 → 아래쪽에 까만 빈 공간이 생기지 않게 */
-  .gmx.gmx-on-detail .gmx-detail{ display:block; min-height:100vh; }
+  /* ⚠ 100vh 는 모바일에서 주소창 때문에 오히려 문제를 일으켜 뺀다. 내용 높이만큼만 */
+  .gmx.gmx-on-detail .gmx-detail{ display:block; }
 
   .gmx-shead{ padding:6px 16px 10px; border-bottom:.5px solid rgba(255,255,255,.07); }
   .gmx-sname{ font-size:20px; font-weight:800; color:#F5F6F8; }
@@ -4352,7 +4356,8 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 
   /* 클론된 원본 요소 정리 (분석·시나리오·일정 탭) */
   .gmx-clone{ padding:14px 16px 0; }
-  .gmx-clone *{ max-width:100% !important; white-space:normal !important; word-break:keep-all !important; overflow-wrap:break-word !important; border-left:0 !important; }
+  /* ⚠ 복제된 원본 요소의 애니메이션·그림자·transition 은 모바일에서 렌더링 부담·깜빡임 원인 → 전부 끈다 */
+  .gmx-clone *{ max-width:100% !important; white-space:normal !important; word-break:keep-all !important; overflow-wrap:break-word !important; border-left:0 !important; animation:none !important; transition:none !important; box-shadow:none !important; }
   .gmx-clone .sec-lbl{ display:none !important; }         /* 탭 제목이 대신함 */
   .gmx-clone .sec-lbl::before, .gmx-clone .sec-lbl::after{ display:none !important; }
   .gmx-clone .alert-dot, .gmx-clone canvas, .gmx-clone .chart-row, .gmx-clone [class*="chart"]{ display:none !important; }
