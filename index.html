@@ -4383,6 +4383,14 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   .gmx-cm{ margin:0 0 12px; }
   .gmx-cmt{ font-size:14px; font-weight:800; color:#F5F6F8; line-height:1.5; word-break:keep-all; }
   .gmx-cmx{ font-size:13px; color:#C4CBD6; line-height:1.7; margin-top:6px; word-break:keep-all; }
+  /* 경제 캘린더 카드 */
+  .gmx-cal{ background:#1F262C; border-radius:12px; margin:0 16px 8px; padding:14px; }
+  .gmx-calhd{ display:flex; justify-content:space-between; align-items:center; }
+  .gmx-calhd .cn{ font-size:12px; font-weight:800; color:#8FB0E0; }
+  .gmx-calhd .tm{ font-size:12px; color:#787F85; }
+  .gmx-calt{ font-size:15px; font-weight:800; color:#F5F6F8; margin:6px 0 4px; word-break:keep-all; }
+  .gmx-calv{ font-size:13px; color:#C4CBD6; line-height:1.6; }
+  .gmx-cali{ font-size:12px; color:#F0A24A; margin-top:6px; }
   .gmx-empty{ font-size:13px; color:#787F85; padding:16px; text-align:center; }
 }
 </style>
@@ -4563,6 +4571,8 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
         +'<div style="text-align:right"><div class="gmx-val" data-px="'+esc(a.key)+'">'+esc(a.px||'—')+'</div><div class="gmx-chg" data-cg="'+esc(a.key)+'" style="color:'+col(a.cg)+'">'+esc(a.cg)+'</div></div></div>';
     });
     if(S.length>6) m+='<div class="gmx-more" id="gmx-morelist"><span>종목 '+(S.length-6)+'개 더보기</span><span>›</span></div>';
+    m+='<div class="gmx-sec">경제 캘린더</div>';
+    m+='<div class="gmx-more" id="gmx-cal"><span>미·중·한·일 ★★★ 주요 지표</span><span>›</span></div>';
     if(H.news.length){
       m+='<div class="gmx-sec">헤드라인</div>';
       H.news.slice(0,3).forEach(function(n){ m+='<div class="gmx-news"><div class="gmx-nt">'+esc(n.tx)+'</div><div class="gmx-ns">'+esc(n.src)+'</div></div>'; });
@@ -4580,7 +4590,38 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     });
     var ml=app.querySelector('#gmx-morelist');
     if(ml) ml.addEventListener('click',function(){ app.querySelectorAll('.gmx-row[data-hid]').forEach(function(x){x.style.display='';x.removeAttribute('data-hid');}); ml.remove(); });
+    var mc=app.querySelector('#gmx-cal');
+    if(mc) mc.addEventListener('click',openCalendar);
     return true;
+  }
+
+  /* ── 경제 캘린더 (미·중·한·일 ★★★ 지표) — window.CAL_EVENTS 에서 읽는다 ── */
+  function calendarHTML(){
+    var evs=(window.CAL_EVENTS||[]).slice();
+    evs.sort(function(a,b){ return String(a.date+(a.time||'')).localeCompare(String(b.date+(b.time||''))); });
+    var CN={us:'미국',kr:'한국',cn:'중국',jp:'일본'};
+    var h='<div class="gmx-top"><span class="gmx-back" data-act="back">← 목록</span></div>';
+    h+='<div class="gmx-pad"><div class="gmx-h1">경제 캘린더</div><div class="gmx-cap" style="margin-top:4px">미·중·한·일 ★★★ 주요 지표</div></div>';
+    if(!evs.length){ h+='<div class="gmx-empty">지표 데이터가 없습니다.</div>'; return h; }
+    var lastDate='';
+    evs.forEach(function(e){
+      if(e.date!==lastDate){ lastDate=e.date; h+='<div class="gmx-sec">'+esc(e.date)+'</div>'; }
+      var actual=(e.actual&&e.actual!=='')?e.actual:'';
+      var vals=actual ? ('실제 '+esc(actual)+' · 예측 '+esc(e.forecast||'—')+' · 이전 '+esc(e.prev||'—'))
+                      : ('예측 '+esc(e.forecast||'—')+' · 이전 '+esc(e.prev||'—')+' · <span style="color:#8FB0E0">발표 예정</span>');
+      h+='<div class="gmx-cal"><div class="gmx-calhd"><span class="cn">'+esc(CN[e.country]||e.country||'')+'</span><span class="tm">'+esc(e.time||'')+' KST</span></div>'
+        +'<div class="gmx-calt">'+esc(e.title||'')+'</div>'
+        +'<div class="gmx-calv">'+vals+'</div>'
+        +(e.impact?'<div class="gmx-cali">'+esc(e.impact)+'</div>':'')+'</div>';
+    });
+    h+='<div style="height:24px"></div>';
+    return h;
+  }
+  function openCalendar(){
+    mode='detail';
+    var app=appEl(); app.innerHTML=calendarHTML(); window.scrollTo(0,0);
+    var back=app.querySelector('[data-act="back"]');
+    if(back) back.addEventListener('click',function(){ renderMain(); window.scrollTo(0,0); });
   }
 
   function openDetail(a){
