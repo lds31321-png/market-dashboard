@@ -3532,6 +3532,95 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 }
 </style>
 
+<style id="gm3-css-2026-07-15">
+/* ============================================================
+   글로벌 대시보드 모바일 — 2차 피드백 반영 (2026-07-15)
+   ① 헤더 = 왼쪽 파란 세로 막대로 통일   ② 펼친 영역 = 파란 테두리로 표시
+   ③ 상세 본문(요인·시나리오·해설·지표) 가독성 재정리
+   ============================================================ */
+@media (max-width:640px){
+
+  /* ── ① 헤더 규칙 (일괄) — 왼쪽 파란 막대 = 헤더 ── */
+  .gm2-sec, .gm2-hdr{
+    border-left:3px solid #4593FC !important; padding-left:10px !important;
+    color:#F5F6F8 !important; font-weight:800 !important; }
+
+  /* 상세 안 원본 섹션 제목(.sec-lbl)도 같은 헤더로 — 원본은 모바일에서 파란 막대를 지워놨었다 */
+  .gm-a-bd .sec-lbl, .gm-big-bd .sec-lbl{
+    display:block !important; font-size:15px !important; font-weight:800 !important;
+    color:#F5F6F8 !important; border-left:3px solid #4593FC !important;
+    padding-left:10px !important; margin:20px 0 10px 0 !important; letter-spacing:0 !important; }
+  .gm-a-bd .sec-lbl::before, .gm-a-bd .sec-lbl::after,
+  .gm-big-bd .sec-lbl::before, .gm-big-bd .sec-lbl::after{ display:none !important; }
+
+  /* ── ② 클릭 피드백 — 펼친 영역은 파란 왼쪽 막대 + 살짝 밝은 배경 ── */
+  .gm2-menu .gm-big.gm-open, .gm2-tail .gm-big.gm-open{
+    border-left:3px solid #4593FC !important; background:#23262E !important;
+    border-radius:8px !important; }
+  .gm2-menu .gm-a.gm-open{
+    border-left:3px solid #4593FC !important; background:#23262E !important;
+    border-radius:8px !important; padding-left:10px !important; }
+  .gm-acc.gm-open{ border:1px solid rgba(69,147,252,.5) !important; }
+
+  /* ── ③ 상세 본문 가독성 ── */
+  /* ⚠ 영어 단어(FACTOR·BULL 등)가 글자 단위로 쪼개지던 문제 → 단어는 통째로 유지 */
+  .gm-a-bd *, .gm-acc-bd *, .gm-raw *{
+    word-break:keep-all !important; overflow-wrap:break-word !important; }
+
+  /* 요인별 영향도 — 번호·제목·배지를 세로로 쌓는다 (가로로 붙어 깨졌었다) */
+  .gm-a-bd .factor-card, .gm-acc-bd .factor-card{
+    background:#23262E !important; border:0 !important; border-radius:10px !important;
+    padding:14px !important; margin:0 0 8px 0 !important; }
+  .gm-a-bd .factor-hd, .gm-acc-bd .factor-hd,
+  .gm-a-bd .factor-left, .gm-acc-bd .factor-left{ display:block !important; }
+  .gm-a-bd .factor-num, .gm-acc-bd .factor-num{
+    font-size:11px !important; color:#8B95A1 !important; letter-spacing:.04em !important;
+    white-space:nowrap !important; margin:0 0 2px 0 !important; }
+  .gm-a-bd .factor-title, .gm-acc-bd .factor-title{
+    font-size:15px !important; font-weight:800 !important; line-height:1.4 !important;
+    display:block !important; margin:0 0 8px 0 !important; }
+  .gm-a-bd .factor-badge, .gm-acc-bd .factor-badge{
+    display:inline-block !important; font-size:12px !important; padding:4px 10px !important;
+    border-radius:6px !important; white-space:nowrap !important; margin:0 0 10px 0 !important; }
+  .gm-a-bd .factor-bar-hd, .gm-acc-bd .factor-bar-hd{
+    display:flex !important; justify-content:space-between !important; font-size:12px !important;
+    color:#8B95A1 !important; margin:0 0 6px 0 !important; }
+  .gm-a-bd .factor-bar-bg, .gm-acc-bd .factor-bar-bg{
+    height:6px !important; background:#2E323C !important; border-radius:20px !important;
+    overflow:hidden !important; margin:0 0 12px 0 !important; }
+  .gm-a-bd .fp, .gm-acc-bd .fp{ display:flex !important; gap:8px !important; margin:0 0 10px 0 !important; }
+  .gm-a-bd .fp-dot, .gm-acc-bd .fp-dot{ flex:0 0 8px !important; width:8px !important; height:8px !important;
+    border-radius:50% !important; margin-top:6px !important; }
+  .gm-a-bd .fp > div:last-child, .gm-acc-bd .fp > div:last-child{
+    font-size:13px !important; line-height:1.6 !important; }
+  .gm-a-bd .factor-impact, .gm-acc-bd .factor-impact{
+    font-size:13px !important; padding:10px !important; border-radius:8px !important; margin-top:6px !important; }
+
+  /* 시나리오 카드 — 한 장씩 세로 */
+  .gm-a-bd .scenario-card, .gm-acc-bd .scenario-card{
+    background:#23262E !important; border:0 !important; border-left:3px solid #4593FC !important;
+    border-radius:8px !important; padding:14px !important; margin:0 0 8px 0 !important; }
+  .gm-a-bd .sc-tag, .gm-acc-bd .sc-tag{ display:inline-block !important; font-size:11px !important;
+    padding:3px 8px !important; border-radius:6px !important; margin:0 0 8px 0 !important; }
+  .gm-a-bd .sc-title, .gm-acc-bd .sc-title{ font-size:15px !important; font-weight:800 !important; margin:0 0 6px 0 !important; }
+  .gm-a-bd .sc-price, .gm-acc-bd .sc-price{ font-size:17px !important; font-weight:800 !important; margin:8px 0 2px 0 !important; }
+  .gm-a-bd .sc-trigger, .gm-a-bd .sc-timing,
+  .gm-acc-bd .sc-trigger, .gm-acc-bd .sc-timing{ font-size:13px !important; color:#C4CBD6 !important; line-height:1.6 !important; }
+  .gm-a-bd .sc-item, .gm-acc-bd .sc-item{ font-size:13px !important; margin-top:4px !important; }
+
+  /* 해설(cm) */
+  .gm-a-bd .cm-title, .gm-acc-bd .cm-title{ display:block !important; font-size:14px !important;
+    font-weight:800 !important; color:#F5F6F8 !important; margin:0 0 6px 0 !important; }
+  .gm-a-bd .cm-text, .gm-acc-bd .cm-text{ font-size:13px !important; line-height:1.7 !important; color:#C4CBD6 !important; }
+
+  /* 지표 카드(hm) */
+  .gm-a-bd .hm-lbl, .gm-raw .hm-lbl, .gm-acc-bd .hm-lbl{ font-size:12px !important; color:#8B95A1 !important; }
+  .gm-a-bd .hm-src, .gm-raw .hm-src, .gm-acc-bd .hm-src{ font-size:11px !important; color:#68707C !important; }
+  .gm-a-bd .hm-val, .gm-raw .hm-val, .gm-acc-bd .hm-val{ font-size:18px !important; font-weight:800 !important; margin:4px 0 2px 0 !important; }
+  .gm-a-bd .hm-sub, .gm-raw .hm-sub, .gm-acc-bd .hm-sub{ font-size:12px !important; }
+}
+</style>
+
 <script id="gm-js-2026-07-14">
 /* 글로벌 대시보드 모바일 엔진
    ⚠ 원본을 **꺼내오지 않고 복사**한다 → 원본이 다시 그려져도 안전.
@@ -3621,6 +3710,15 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
         }catch(e){}
       }
 
+      /* ⚠ 개발용 메모가 화면 제목에 새어 나온 것 정리 (예: "(키 불필요 · 자동 로드)") */
+      try{
+        bd.querySelectorAll('.sec-lbl, .macro-title, [class*="title"]').forEach(function(t){
+          if(!t.children.length){
+            t.textContent = t.textContent.replace(/\s*[\(（][^)）]*(불필요|자동\s*로드|API\s*키)[^)）]*[\)）]/g, '');
+          }
+        });
+      }catch(e){}
+
       box.setAttribute('data-done','1');
     }catch(e){}
   }
@@ -3678,10 +3776,13 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     assets.forEach(function(a, i){ a.ord = i; });
     assets.sort(function(a,b){ return (b.star - a.star) || (a.ord - b.ord); });
 
-    /* ⚠⚠ 화면 전체를 다시 그리면 **펼쳐 놓은 게 접히고 화면이 번쩍인다.**
-          (종목을 누르면 원본이 다시 그려지고 → 시세 글자가 바뀌고 → 여기가 또 다시 그린다)
-          → 종목 **개수**가 바뀔 때만 새로 그린다. 시세 숫자는 tick() 이 글자만 갈아 끼운다. */
-    var s2 = assets.map(function(a){ return a.key; }).join('|');
+    /* ⚠⚠ 카드가 저절로 접히던 진짜 원인이 여기였다.
+          종목을 '변동성 높은 순'으로 정렬하는데, 실시간 시세가 바뀌면 별점(★)이 바뀌고
+          → 정렬 순서가 뒤바뀌고 → 지문(순서를 이어붙인 글자)이 달라지고
+          → "목록이 바뀌었다"고 오해해 화면을 통째로 다시 그렸다 → 펼친 게 접혔다.
+          → 지문을 만들 때 **순서를 무시**한다(정렬해서 이어붙임). 종목 구성이 실제로
+            바뀌지 않는 한 다시 그리지 않는다. 시세 숫자는 tick() 이 글자만 갈아 끼운다. */
+    var s2 = assets.map(function(a){ return a.key; }).sort().join('|');
     if(s2 === sig && document.querySelector('.gm-wrap')) return;
     sig = s2;
 
@@ -3723,17 +3824,18 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
        +   '<p class="gm2-cap">' + esc(when ? ('기준일 ' + when) : '실시간') + ' · EIA · FRED · Reuters</p>'
        + '</div>';
 
-    /* ① 오늘의 시장 — 한 줄 결론 (헤드라인 제목을 그대로 쓴다) */
+    /* ① 오늘의 시장 요약 — 한 줄 결론 (헤드라인 제목을 그대로 쓴다) */
     if(hlT){
       h += '<div class="gm2-box">'
-         +   '<p class="gm2-lbl">오늘의 시장</p>'
+         +   '<p class="gm2-lbl gm2-hdr">오늘의 시장 요약</p>'
          +   '<p class="gm2-said">' + esc(hlT) + '</p>'
          + '</div>';
     }
 
-    /* ② 변동성 1순위 2종목 — 큰 숫자로 */
+    /* ② 변동성 1순위 2종목 — 큰 숫자로 (왜 이 둘을 위에 올렸는지 라벨로 밝힌다) */
     var hero = assets.slice(0, 2);
     if(hero.length === 2){
+      h += '<p class="gm2-sec">변동성 1순위 · 오늘 가장 크게 움직일 종목</p>';
       h += '<div class="gm2-heros">';
       hero.forEach(function(a){
         h += '<div class="gm2-hero" data-go="' + esc(a.key) + '">'
@@ -3752,18 +3854,21 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 
     h += '<div class="gm2-menu">';
 
-    /* 종목 목록 — 접이식. 안에는 카드 없이 행만 늘어놓는다 (행 높이 56) */
-    h += '<div class="gm-big" id="gm-assets">'
+    /* 종목 목록 — 접이식. 안에는 카드 없이 행만 늘어놓는다 (행 높이 56)
+       ⚠ 열려 있던 종목이 있으면 목록 자체도 펼친 채로 그린다(다시 그려도 유지). */
+    var assetsOpen = !!openKey;
+    h += '<div class="gm-big' + (assetsOpen ? ' gm-open' : '') + '" id="gm-assets">'
        +   '<div class="gm-big-hd">'
        +     '<div style="min-width:0"><p class="gm-big-t">종목 ' + assets.length + '개 보기</p></div>'
        +     '<div class="gm-big-rt">'
        +       '<p class="gm-big-hint">변동성 높은 순</p>'
-       +       '<span class="gm-big-chev">&#9662;</span>'
+       +       '<span class="gm-big-chev">' + (assetsOpen ? '&#9652;' : '&#9662;') + '</span>'
        +     '</div>'
        +   '</div>'
        +   '<div class="gm-big-bd">';
     assets.forEach(function(a){
-      h += '<div class="gm-a" data-k="' + esc(a.key) + '">'
+      var aopen = (openKey === a.key);
+      h += '<div class="gm-a' + (aopen ? ' gm-open' : '') + '" data-k="' + esc(a.key) + '">'
          +   '<div class="gm-a-hd">'
          +     '<div style="min-width:0">'
          +       '<p class="gm-a-nm">' + esc(a.nm) + '</p>'
@@ -3774,10 +3879,10 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
          +         '<p class="gm-a-px" data-px="' + esc(a.key) + '">' + esc(a.px || '—') + '</p>'
          +         '<p class="gm-a-chg" data-cg="' + esc(a.key) + '" style="color:' + chgCol(a.cg) + '">' + esc(a.cg) + '</p>'
          +       '</div>'
-         +       '<span class="gm-a-chev">&#9662;</span>'
+         +       '<span class="gm-a-chev">' + (aopen ? '&#9652;' : '&#9662;') + '</span>'
          +     '</div>'
          +   '</div>'
-         +   '<div class="gm-a-bd" data-bd="' + esc(a.key) + '"></div>'
+         +   '<div class="gm-a-bd" data-bd="' + esc(a.key) + '">' + (aopen ? '<p class="gm2-lbl">불러오는 중…</p>' : '') + '</div>'
          + '</div>';
     });
     h += '</div></div>';
