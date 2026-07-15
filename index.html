@@ -3553,13 +3553,13 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   .gm-a-bd .sec-lbl::before, .gm-a-bd .sec-lbl::after,
   .gm-big-bd .sec-lbl::before, .gm-big-bd .sec-lbl::after{ display:none !important; }
 
-  /* ── ② 클릭 피드백 — 펼친 영역은 파란 왼쪽 막대 + 살짝 밝은 배경 ── */
+  /* ── ② 클릭 피드백 — '테두리'로만 표시한다. 본문에 세로 막대는 절대 붙이지 않는다.
+        (막대는 오직 헤더 표시용) ── */
   .gm2-menu .gm-big.gm-open, .gm2-tail .gm-big.gm-open{
-    border-left:3px solid #4593FC !important; background:#23262E !important;
-    border-radius:8px !important; }
+    background:#23262E !important; border-radius:8px !important; }
   .gm2-menu .gm-a.gm-open{
-    border-left:3px solid #4593FC !important; background:#23262E !important;
-    border-radius:8px !important; padding-left:10px !important; }
+    background:#23262E !important; border-radius:8px !important;
+    border:1px solid rgba(69,147,252,.4) !important; padding:10px !important; }
   .gm-acc.gm-open{ border:1px solid rgba(69,147,252,.5) !important; }
 
   /* ── ③ 상세 본문 가독성 ── */
@@ -3598,7 +3598,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 
   /* 시나리오 카드 — 한 장씩 세로 */
   .gm-a-bd .scenario-card, .gm-acc-bd .scenario-card{
-    background:#23262E !important; border:0 !important; border-left:3px solid #4593FC !important;
+    background:#23262E !important; border:0 !important;
     border-radius:8px !important; padding:14px !important; margin:0 0 8px 0 !important; }
   .gm-a-bd .sc-tag, .gm-acc-bd .sc-tag{ display:inline-block !important; font-size:11px !important;
     padding:3px 8px !important; border-radius:6px !important; margin:0 0 8px 0 !important; }
@@ -3632,7 +3632,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   function chgCol(t){ var s=String(t||'').trim();
     return /^-/.test(s) ? '#4593FC' : (/^\+/.test(s) ? '#F06A6A' : '#8B95A1'); }
 
-  var sig='', openKey='';
+  var sig='', openKey='', built=false;
 
   /* ★ 2026-07-15 — 큰 구역 아코디언 (헤드라인·변동성표·캘린더·거시지표·출처)
      껍데기만 먼저 만들고, 안쪽 내용은 **누를 때** 원본에서 복사해 온다.
@@ -3730,8 +3730,11 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     return Math.round(v / 5 * 100);
   }
 
-  function build(){
+  function build(force){
     if(!isMob()) return;
+    /* ⚠ 한 번 완성하면 다시 그리지 않는다. 재렌더가 스크롤 중 깜빡임·접힘의 원인이었다.
+         화면 폭이 바뀔 때만 force=true 로 다시 그린다. */
+    if(built && !force && document.querySelector('.gm-wrap')) return;
     var nav = document.querySelector('.asset-nav-inner');
     if(!nav || !nav.children.length) return;
 
@@ -4028,6 +4031,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
       });
     }
 
+    if(assets.length >= 10) built = true;   /* 12종목 다 실리면 잠근다 → 이후 재렌더 없음 */
     if(openKey) setTimeout(fillDetail, 300);
   }
 
@@ -4227,6 +4231,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
       try{
         if(!isMob()) return;
         document.querySelectorAll('.gm-chartbox canvas').forEach(function(cv){
+          if(cv.__ok) return;                      /* 한 번 제대로 그려진 차트는 더 안 건드린다 */
           var ch = (window.Chart && window.Chart.getChart) ? window.Chart.getChart(cv) : null;
           if(!ch) return;
           var box = cv.closest('.gm-chartbox');
@@ -4238,18 +4243,16 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
             cv.style.width = ''; cv.style.height = '';
             ch.resize(bw, 200);
             ch.update();
+          } else {
+            cv.__ok = true;                        /* 정상 → 잠근다 (깜빡임 방지) */
           }
         });
       }catch(e){}
     }, 2000);
-    /* ⚠ 원본이 조금이라도 바뀔 때마다 다시 그리면 화면이 번쩍인다.
-         → 감시는 하되, build() 는 종목 개수가 달라졌을 때만 실제로 다시 그린다. */
-    try{
-      var t=null;
-      new MutationObserver(function(){ clearTimeout(t); t=setTimeout(build,300); })
-        .observe(document.body, {childList:true});
-    }catch(e){}
-    window.addEventListener('resize', function(){ sig=''; build(); });
+    /* ⚠⚠ 예전엔 원본 DOM이 바뀔 때마다(감시) 다시 그렸는데, 그게 스크롤 중
+          '깜빡→접힘→다른 화면' 현상의 진짜 원인이었다. 감시를 완전히 없앤다.
+          한 번 완성되면 다시 그리지 않고, 화면 폭이 바뀔 때만 새로 그린다. */
+    window.addEventListener('resize', function(){ sig=''; built=false; build(true); });
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
