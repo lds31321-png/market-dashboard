@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260715-212754">
-<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260715-212754";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
+<meta name="jikt-build" content="20260715-221732">
+<script>var _jiktRT,_jiktMO=null;function jiktRecolorDOM(){if(document.documentElement.classList.contains("theme-light"))try{_jiktMO&&_jiktMO.disconnect();for(var t=document.querySelectorAll("[style]"),e=0;e<t.length;e++){var n=t[e],i=n.getAttribute("style");if(i&&!(i.indexOf("#")<0&&i.indexOf("rgb")<0)){var o=i.match(/width:\s*(\d+)px;\s*height:\s*(\d+)px/);if(!(o&&+o[1]<=14&&+o[2]<=14)){var c=(n.textContent||"").trim(),r=/^[\-\u2212]/.test(c)||/^\(\-/.test(c)||c.indexOf("▼")>=0,a=!1,s=i.replace(/rgba?\((\d+),\s*(\d+),\s*(\d+)([^)]*)\)/g,function(t,e,n,i,o){return l(+e,+n,+i)?(a=!0,"rgba("+(r?"42,95,168":"217,102,74")+o+")"):t}).replace(/#([0-9a-fA-F]{6})\b/g,function(t,e){return l(parseInt(e.slice(0,2),16),parseInt(e.slice(2,4),16),parseInt(e.slice(4,6),16))?(a=!0,r?"#2a5fa8":"#d9664a"):t});a&&n.setAttribute("style",s)}}}}catch(n){}finally{if(_jiktMO)try{_jiktMO.observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(n){}}function l(t,e,n){return n>=210&&n>t+60&&n>e+55&&t<130&&e<200}}function jiktRecolorSoon(){clearTimeout(_jiktRT),_jiktRT=setTimeout(jiktRecolorDOM,80)}function TC(t,e){return document.documentElement.classList.contains("theme-light")?t:e}document.addEventListener("DOMContentLoaded",function(){jiktRecolorDOM();try{(_jiktMO=new MutationObserver(jiktRecolorSoon)).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["style"]})}catch(t){}setTimeout(jiktRecolorDOM,600),setTimeout(jiktRecolorDOM,1600)}),function(){try{"light"===(localStorage.getItem("jikt_theme")||"dark")&&document.documentElement.classList.add("theme-light")}catch(t){}}(),window.addEventListener("storage",function(t){"jikt_theme"===t.key&&("light"===t.newValue!==document.documentElement.classList.contains("theme-light")&&location.reload())}),function(){try{var t="20260715-221732";if("_"===t.charAt(0))return;fetch("../ver.txt?t="+Date.now(),{cache:"no-store"}).then(function(t){return t.ok?t.text():null}).then(function(e){if(e&&(e=e.trim())&&e!==t){try{if(sessionStorage.getItem("jr_"+e))return;sessionStorage.setItem("jr_"+e,"1")}catch(t){}location.replace(location.pathname+"?v="+encodeURIComponent(e))}}).catch(function(){})}catch(t){}}();</script>
 <script>!function(){try{var t=location.hash||"";if(t.indexOf("token=")>=0){var e=new URLSearchParams(t.replace(/^#/,"")),a=e.get("token"),o=e.get("uid");if(a&&(localStorage.setItem("jikt_token",a),o&&localStorage.setItem("jikt_uid",o),location.hostname.indexOf("github.io")>=0))return void location.replace("../hub.html");try{var i=new URL(location.href);i.hash="",i.searchParams.delete("login"),history.replaceState(null,"",i.pathname+i.search)}catch(t){try{location.hash=""}catch(t){}}}var n=location.hostname.indexOf("github.io")>=0,c=localStorage.getItem("jikt_token");n&&!c&&location.replace("login.html")}catch(t){}}();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -7559,11 +7559,18 @@ body{padding-bottom:0}
   .jm-wrap{ display:block !important; font-family:inherit; }
 
   /* 탭 헤더 */
-  /* ── [← 메인으로][탭명] 바를 헤더·탭 바로 아래(top:105px = hdr54+nav51)에 상단 고정 ──
-     스크롤해도 백버튼이 따라온다. 백버튼은 위 jmPulse 로 천천히 깜빡여 시인성 ↑ */
   .jm-hdr{ display:flex !important; align-items:center !important; gap:9px !important;
-    position:sticky !important; top:105px !important; z-index:150 !important;
-    margin:0 0 12px 0 !important; padding:8px 0 8px 0 !important; background:#17171C !important; border:0 !important; }
+    margin:14px 0 12px 0 !important; padding:0 !important; background:transparent !important; border:0 !important; }
+  /* ── 스크롤 내리면 "종합 옵션 대시보드" 헤더 우측에 도킹되는 백버튼 (jm-js 가 토글) ──
+       .hdr 는 원래 sticky(top:0) 상단 고정. sticky 도 절대배치 자식의 기준이 되므로
+       relative 로 바꾸지 말 것! (바꾸면 헤더 고정이 풀려 도크가 같이 스크롤돼 사라진다) */
+  .hdr{ position:sticky !important; top:0 !important; z-index:200 !important; }
+  .jm-dock{ position:absolute !important; right:12px !important; top:50% !important; transform:translateY(-50%) !important;
+    display:inline-flex !important; align-items:center !important; min-height:30px !important;
+    font-size:12px !important; font-weight:700 !important; color:#8FC0FF !important; background:#1E2027 !important;
+    border-radius:8px !important; padding:5px 10px !important; white-space:nowrap !important;
+    opacity:0 !important; pointer-events:none !important; transition:opacity .2s !important; z-index:5 !important; }
+  .hdr.jm-docked .jm-dock{ opacity:1 !important; pointer-events:auto !important; }
   /* ⚠ 터치 최소 32px 확보 (기존 31px) */
   /* ⚠ 회색 테두리 + 회색 글자라 '눌러야 하는 것'으로 안 보였다 → 얇은 파란 테두리 + 파란 글자 */
   .jm-hdr-back{ display:inline-flex !important; align-items:center !important; min-height:32px !important;
@@ -7573,9 +7580,11 @@ body{padding-bottom:0}
   .jm-hdr-ttl{ font-size:17px !important; font-weight:800 !important; color:#F5F6F8 !important;
     word-break:keep-all !important; line-height:1.3 !important; }
 
-  /* ── 버튼 펄스 (버튼색과 같은 파란색, 연하게·천천히) — "여기 누르면 돌아간다" 시인성 ↑ ── */
-  @keyframes jmPulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(69,147,252,0); } 50%{ box-shadow:0 0 0 4px rgba(69,147,252,.22); } }
-  .jm-hdr-back, .jm-more, .ov-back-btn{ animation:jmPulse 2.6s ease-in-out infinite !important; }
+  /* ── 버튼 테두리 펄스 (버튼색 파란, 연하게·천천히).
+     box-shadow 링은 카드 overflow:hidden 에 잘려서 '상세 분석 보기'에서 안 보였다
+     → 테두리(border-color)를 직접 깜빡인다. 카드 안 버튼에서도 보인다. ── */
+  @keyframes jmPulse{ 0%,100%{ border-color:rgba(69,147,252,.35) !important; } 50%{ border-color:rgba(69,147,252,1) !important; } }
+  .jm-hdr-back, .jm-more, .ov-back-btn, .jm-dock{ border:1.5px solid rgba(69,147,252,.35) !important; animation:jmPulse 2.6s ease-in-out infinite !important; }
 
   /* 운용 원금 (자동 계산 결과) */
   .jm-cap{ display:block !important; background:#1E2027 !important; border:0.5px solid rgba(69,147,252,.42) !important;
@@ -8000,6 +8009,13 @@ body{padding-bottom:0}
     margin:0 0 5px 0 !important; height:auto !important; }
   .jm-pos-bd{ display:none; margin:10px 0 0 0 !important; }
   .jm-pos.jm-open .jm-pos-bd{ display:block !important; }
+
+  /* ★ [직트 지시 #32] 펼친 카드만 강조 — "어디까지가 내가 누른 카드인지" 구분.
+       ⚠ 카드 테두리는 JS 가 위험도별로 색을 칠한다(인라인 !important). 그 위험색을 덮으면 안 된다.
+       → border 대신 outline 으로 위에 겹쳐 그린다. 위험색 테두리는 그대로 살아있다.
+       클릭 강조색은 주황이 아니라 흰색으로 통일. */
+  .jm-ov.jm-open, .jm-st.jm-open, .jm-rk-card.jm-open, .jm-note.jm-open, .jm-pos.jm-open{
+    outline:1.5px solid rgba(255,255,255,.45) !important; outline-offset:-1px !important; }
   .jm-side2{ font-size:10px !important; font-weight:800 !important; border-radius:5px !important;
     padding:3px 6px !important; white-space:nowrap !important; flex-shrink:0 !important; height:auto !important; }
   .jm-pnl{ font-size:14px !important; font-weight:800 !important; white-space:nowrap !important; }
@@ -8248,5 +8264,7 @@ body{padding-bottom:0}
      - 90일 안에 자료가 없으면(짧은 종목) 아무 것도 자르지 않고 원래대로 둔다.
      ================================================================ -->
 <script id="jm-chart90-2026-07-15">!function(){"use strict";function t(){try{var t=window.buildPositionChart;if("function"!=typeof t)return;if(t.__jm90)return;var e=t,n=function(t,n){return"uvp-chart1-canvas"===n&&function(t){try{var e=t&&t.chart_data;if(!e||!e.dates||!e.closes)return;var n=e.dates,r=e.closes;if(!n.length||n.length!==r.length)return;for(var a=Date.now()-7776e6,i=-1,c=0;c<n.length;c++){var s=new Date(String(n[c]).replace(/\./g,"-")).getTime();if(!isNaN(s)&&s>=a){i=c;break}}if(i<=0)return;n.length-i<20&&(i=Math.max(0,n.length-20)),e.dates=n.slice(i),e.closes=r.slice(i)}catch(t){}}(t),e.apply(this,arguments)};n.__jm90=!0,window.buildPositionChart=n}catch(t){}}t(),setInterval(t,300)}();</script>
+
+<script id="jm-dock-2026-07-15">!function(){function e(){var e=[].filter.call(document.querySelectorAll(".ov-back-btn"),function(e){return e.offsetParent})[0];if(e)return{el:e,label:"← 돌아가기"};var t=[].filter.call(document.querySelectorAll(".jm-hdr-back"),function(e){return e.offsetParent})[0];return t?{el:t,label:"← 메인으로"}:null}function t(){if(function(){try{return matchMedia("(max-width:640px)").matches}catch(e){return!1}}()){var t=document.querySelector(".hdr");if(t){var n=t.querySelector(".jm-dock");if(n||((n=document.createElement("button")).className="jm-dock",n.type="button",n.textContent="← 메인으로",t.appendChild(n),n.addEventListener("click",function(){var t=e();t&&t.el?"A"===t.el.tagName&&t.el.getAttribute("href")?location.href=t.el.getAttribute("href"):t.el.click():location.href="hub.html"})),!t.__jmDockScroll){t.__jmDockScroll=!0;var r=function(){var r=e();r&&(n.textContent=r.label),t.classList.toggle("jm-docked",window.scrollY>130&&!!r)};window.addEventListener("scroll",r,{passive:!0}),r()}}}}"loading"===document.readyState?document.addEventListener("DOMContentLoaded",function(){setTimeout(t,900)}):setTimeout(t,900),setInterval(t,2e3)}();</script>
 </body>
 </html>
