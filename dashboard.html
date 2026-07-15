@@ -326,6 +326,7 @@ html.theme-light .new-pos{border-color:var(--accent)!important;}
 .modal-head{padding:20px 22px 14px;border-bottom:1px solid var(--b1);position:sticky;top:0;background:var(--card);z-index:2;}
 .modal-close{position:absolute;top:14px;right:14px;background:none;border:none;font-size:16px;cursor:pointer;color:var(--t3);padding:4px 8px;border-radius:6px;line-height:1;transition:color .15s;}
 .modal-close:hover{color:var(--t1);}
+.modal-back{display:none;}  /* PC 는 기존 X 유지. 아래 모바일에서만 '← 뒤로 가기' 버튼을 보여준다 */
 .modal-body{padding:20px 22px 28px;}
 .modal-badges{display:flex;gap:5px;margin-bottom:10px;flex-wrap:wrap;}
 .modal-title{font-size:18px;font-weight:600;color:var(--t1);margin-bottom:4px;letter-spacing:-.02em;}
@@ -725,6 +726,7 @@ window.addEventListener('storage',function(e){if(e.key==='jikt_theme'){var want=
   <div class="modal">
     <div class="modal-head">
       <button class="modal-close" onclick="closeModal()">✕</button>
+      <button class="modal-back" type="button" onclick="closeModal()">← 뒤로 가기</button>
       <div class="modal-badges" id="mBadges"></div>
       <div class="modal-title" id="mTitle"></div>
       <div class="modal-date" id="mDate"></div>
@@ -3025,11 +3027,20 @@ loadPositions();
      ⚠ 선택자를 겹쳐(.fm-cta.fm-cta) base border 규칙보다 우선순위를 확실히 올린다. */
   /* ⚠ @keyframes 안에서는 !important 금지(규격상 무시 → 색이 안 움직임). outline 으로 깜빡인다. */
   @keyframes fmPulse{ 0%,100%{ outline-color:rgba(143,192,255,.45); } 50%{ outline-color:rgba(230,244,255,1); } }
-  .fm-cta.fm-cta, .hdr-home.hdr-home, .fm-dock.fm-dock{
+  .fm-cta.fm-cta, .hdr-home.hdr-home, .fm-dock.fm-dock, .modal-back.modal-back{
     outline-width:2px !important; outline-style:solid !important; outline-offset:-2px !important;
     outline-color:rgba(143,192,255,.45);   /* ← 색엔 !important 금지 */
     animation:fmPulse 1.8s ease-in-out infinite; }
   .hdr-home{ color:#8FC0FF !important; }
+
+  /* ── [직트 지시] 상세 보기(모달)에서 X 는 눈에 안 띈다 → 종목명 우측 상단에 '← 뒤로 가기' 버튼 ── */
+  #overlay .modal-close{ display:none !important; }          /* 모바일에선 X 숨김 */
+  #overlay .modal-head{ padding-right:120px !important; }    /* 버튼 자리 확보 (제목이 밑으로 안 겹치게) */
+  #overlay .modal-back{ display:inline-flex !important; align-items:center !important;
+    position:absolute !important; top:12px !important; right:14px !important; z-index:5 !important;
+    min-height:34px !important; padding:6px 12px !important; border-radius:9px !important;
+    font-size:13px !important; font-weight:700 !important; white-space:nowrap !important;
+    color:#8FC0FF !important; background:#232830 !important; cursor:pointer !important; }
 }
 </style>
 
