@@ -3023,9 +3023,12 @@ loadPositions();
   /* 테두리(border-color)를 직접 깜빡인다 — box-shadow 링은 카드 overflow 에 잘려서 안 보임.
      ⚠ 파란 버튼(거래 시작하기·차트 상세 보기) 위에 파란 테두리는 안 보인다 → 밝은 하늘색→흰빛으로 대비.
      ⚠ 선택자를 겹쳐(.fm-cta.fm-cta) base border 규칙보다 우선순위를 확실히 올린다. */
-  @keyframes fmPulse{ 0%,100%{ border-color:rgba(143,192,255,.55) !important; } 50%{ border-color:rgba(214,236,255,1) !important; } }
-  .fm-cta.fm-cta, .hdr-home.hdr-home, .fm-dock.fm-dock{ border:2px solid rgba(143,192,255,.55) !important;
-    animation:fmPulse 2s ease-in-out infinite !important; }
+  /* ⚠ @keyframes 안에서는 !important 금지(규격상 무시 → 색이 안 움직임). outline 으로 깜빡인다. */
+  @keyframes fmPulse{ 0%,100%{ outline-color:rgba(143,192,255,.45); } 50%{ outline-color:rgba(230,244,255,1); } }
+  .fm-cta.fm-cta, .hdr-home.hdr-home, .fm-dock.fm-dock{
+    outline-width:2px !important; outline-style:solid !important; outline-offset:-2px !important;
+    outline-color:rgba(143,192,255,.45);   /* ← 색엔 !important 금지 */
+    animation:fmPulse 1.8s ease-in-out infinite; }
   .hdr-home{ color:#8FC0FF !important; }
 }
 </style>
