@@ -4326,8 +4326,16 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   /* ── 상세 화면 ── */
   .gmx-detail{ display:none; }
   .gmx.gmx-on-detail .gmx-main{ display:none; }
-  /* ⚠ 100vh 는 모바일에서 주소창 때문에 오히려 문제를 일으켜 뺀다. 내용 높이만큼만 */
-  .gmx.gmx-on-detail .gmx-detail{ display:block; }
+  /* ⚠⚠ 상세는 '전체화면 고정 오버레이 + 자체 스크롤'로 만든다.
+        메인(긴 목록)을 감추면서 상세로 바꿀 때, 스크롤이 남아 있으면 폰 브라우저가
+        화면을 다시 못 그려 새까매졌다. 상세를 viewport 에 고정하고 자체적으로 스크롤하면
+        메인 스크롤과 완전히 분리돼 그 문제가 사라진다. */
+  .gmx.gmx-on-detail .gmx-detail{
+    display:block !important;
+    position:fixed !important; top:0; left:0; right:0; bottom:0; width:100%;
+    overflow-y:auto !important; overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch;
+    background:#0C1115 !important; z-index:1000; }
 
   .gmx-shead{ padding:6px 16px 10px; border-bottom:.5px solid rgba(255,255,255,.07); }
   .gmx-sname{ font-size:20px; font-weight:800; color:#F5F6F8; }
@@ -4502,6 +4510,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     curKey=a.key;
     app.classList.add('gmx-on-detail');
     window.scrollTo(0,0);
+    d.scrollTop=0;                 /* 고정 오버레이의 자체 스크롤도 맨 위로 */
     // 탭 전환
     d.querySelectorAll('.gmx-tab').forEach(function(tb){
       tb.addEventListener('click',function(){
@@ -4509,7 +4518,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
         tb.classList.add('on');
         var t=tb.getAttribute('data-t');
         d.querySelectorAll('.gmx-panel').forEach(function(p){ p.classList.toggle('on', p.getAttribute('data-panel')===t); });
-        window.scrollTo(0,0);
+        d.scrollTop=0;             /* 탭 바꾸면 상세 스크롤 맨 위로 */
       });
     });
     d.querySelector('[data-act="back"]').addEventListener('click',function(){ app.classList.remove('gmx-on-detail'); curKey=''; window.scrollTo(0,0); });
