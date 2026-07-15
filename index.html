@@ -4278,37 +4278,31 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 
 <style id="gm5-css-2026-07-15">
 /* ============================================================
-   글로벌 대시보드 모바일 — 초안 1 (탭형) 정식 구현  2026-07-15
-   ⚠ 전부 @media(max-width:640px). PC 는 절대 건드리지 않는다.
-   ⚠ 옛 엔진(.gm-wrap)은 숨기고, 이 엔진(.gmx)만 화면에 남긴다.
-   ★ 인베스팅 실측: 여백16 / 글자 24·20·16·13·12·11 / 행 56·48·40 / 카드중첩 금지
+   글로벌 대시보드 모바일 — 초안2+3 조합 (세로 스크롤 + 접이식)  2026-07-15 전면 재작성
+   ⚠ 까매짐 방지 원칙:
+      · 가로 스크롤 요소 없음 (overflow-x:auto/scroll 일절 사용 안 함)
+      · 화면 오버레이(position:fixed) 없음
+      · 화면 전환은 내용 전체 교체(innerHTML) — 긴 화면을 감췄다 보였다 안 함
+      · 원본 DOM 복제 없음 — 필요한 값만 추출해 새로 만든다
+   ★ 인베스팅 실측: 여백16 / 글자 24·20·16·13·12·11 / 행 56·48·40
    ============================================================ */
 @media (max-width:640px){
-  .gm-wrap{ display:none !important; }              /* 옛 엔진 화면 숨김 */
-  .topbar{ display:none !important; }               /* 원본 상단바 숨김 (메인으로 중복 방지) */
-  /* ⚠⚠ 폰에서 상세 스크롤 시 화면 전체가 새까매지던 진짜 원인 = 가로 넘침.
-        화면보다 넓은 요소가 하나라도 있으면 삼성/모바일 브라우저가 그리기를 포기해 검게 된다.
-        (옆으로 스크롤하면 잠깐 다시 보이는 게 그 증거) → 가로 넘침을 원천 차단한다. */
-  html, body{ background:#0C1115 !important; overflow-x:hidden !important; max-width:100% !important; }
-  .gmx, .gmx-main, .gmx-detail, .gmx-panel{ overflow-x:hidden !important; max-width:100% !important; }
-
+  /* 원본·옛 엔진 전부 숨김 */
+  .headline-section, .asset-nav, body > canvas, body > .page, .topbar, .gm-wrap{ display:none !important; }
+  html, body{ background:#0C1115 !important; overflow-x:hidden !important; }
   .gmx{ display:block !important; }
-  .gmx *{ box-sizing:border-box; }
-  .gmx-cap{ font-size:12px; color:#787F85; line-height:1.5; }
+  .gmx *{ box-sizing:border-box; max-width:100%; }
 
-  /* 상단 바 */
-  .gmx-top{ display:flex; align-items:center; justify-content:space-between; padding:12px 16px; }
-  .gmx-back{ font-size:13px; color:#4593FC; font-weight:700; display:inline-flex; align-items:center; min-height:40px; }
+  .gmx-top{ padding:12px 16px 0; }
+  .gmx-back{ font-size:13px; color:#4593FC; font-weight:700; display:inline-flex; align-items:center; min-height:40px; text-decoration:none; }
   .gmx-pad{ padding:0 16px; }
   .gmx-h1{ font-size:20px; font-weight:800; color:#F5F6F8; line-height:1.35; }
-
-  /* 카드 / 섹션 */
+  .gmx-cap{ font-size:12px; color:#787F85; line-height:1.5; }
   .gmx-box{ background:#1F262C; border-radius:12px; margin:12px 16px 8px; padding:16px; }
   .gmx-lbl{ font-size:12px; color:#787F85; }
   .gmx-said{ font-size:16px; color:#F5F6F8; line-height:1.6; margin-top:8px; word-break:keep-all; }
   .gmx-sec{ font-size:12px; color:#787F85; margin:22px 16px 8px; }
 
-  /* 종목 리스트 행 (56) */
   .gmx-row{ display:flex; align-items:center; justify-content:space-between; padding:9px 16px; min-height:56px; cursor:pointer; }
   .gmx-row + .gmx-row{ border-top:.5px solid rgba(255,255,255,.07); }
   .gmx-row:active{ background:#161B20; }
@@ -4316,44 +4310,18 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   .gmx-st{ font-size:12px; color:#F0A24A; letter-spacing:1px; margin-top:3px; }
   .gmx-val{ font-size:16px; color:#F5F6F8; text-align:right; }
   .gmx-chg{ font-size:12px; font-weight:800; text-align:right; margin-top:3px; }
-
-  /* 더보기 / 헤드라인 */
   .gmx-more{ display:flex; align-items:center; justify-content:space-between; background:#1F262C; border-radius:12px; margin:0 16px 8px; padding:0 16px; min-height:48px; cursor:pointer; font-size:13px; color:#9AA3AD; }
   .gmx-news{ padding:13px 16px; } .gmx-news + .gmx-news{ border-top:.5px solid rgba(255,255,255,.07); }
   .gmx-nt{ font-size:13px; color:#F5F6F8; line-height:1.6; word-break:keep-all; }
   .gmx-ns{ font-size:12px; color:#787F85; margin-top:5px; }
 
-  /* ── 상세 화면 ── */
-  .gmx-detail{ display:none; }
-  .gmx.gmx-on-detail .gmx-main{ display:none; }
-  /* ⚠⚠ 상세는 '전체화면 고정 오버레이 + 자체 스크롤'로 만든다.
-        메인(긴 목록)을 감추면서 상세로 바꿀 때, 스크롤이 남아 있으면 폰 브라우저가
-        화면을 다시 못 그려 새까매졌다. 상세를 viewport 에 고정하고 자체적으로 스크롤하면
-        메인 스크롤과 완전히 분리돼 그 문제가 사라진다. */
-  .gmx.gmx-on-detail .gmx-detail{
-    display:block !important;
-    position:fixed !important; top:0; left:0; right:0; bottom:0; width:100%;
-    overflow-y:auto !important; overflow-x:hidden !important;
-    background:#0C1115 !important; z-index:1000; }
-
+  /* 상세 헤더 (항상 보이는 상단) */
   .gmx-shead{ padding:6px 16px 10px; border-bottom:.5px solid rgba(255,255,255,.07); }
   .gmx-sname{ font-size:20px; font-weight:800; color:#F5F6F8; }
   .gmx-ssub{ font-size:12px; color:#787F85; margin-top:2px; }
   .gmx-spx{ display:flex; align-items:baseline; gap:10px; margin-top:8px; }
   .gmx-spx .p{ font-size:24px; font-weight:800; color:#F5F6F8; line-height:1.2; }
   .gmx-spx .c{ font-size:20px; font-weight:800; }
-
-  /* ⚠⚠ 까매짐의 진짜 원인 = 여기 있던 overflow-x:auto (가로 스크롤).
-        세로 스크롤 화면 안의 가로 스크롤 요소는 모바일에서 화면을 통째로 까맣게 만든다.
-        탭 4개는 화면에 다 들어가므로 가로 스크롤 자체를 없앤다. */
-  .gmx-tabs{ display:flex; gap:16px; padding:0 16px; border-bottom:.5px solid rgba(255,255,255,.07); background:#0C1115; flex-wrap:nowrap; overflow:hidden; }
-  .gmx-tabs::-webkit-scrollbar{ height:0; }
-  .gmx-tab{ font-size:13px; color:#787F85; padding:12px 0; white-space:nowrap; cursor:pointer; }
-  .gmx-tab.on{ color:#F5F6F8; font-weight:800; border-bottom:2px solid #F5F6F8; }
-  .gmx-panel{ display:none; padding-bottom:28px; }
-  .gmx-panel.on{ display:block; }
-
-  /* 개요: 3칸 지표 + 요약 + kv */
   .gmx-three{ display:flex; gap:8px; margin:14px 16px 8px; }
   .gmx-three .c{ flex:1; background:#1F262C; border-radius:12px; padding:12px; min-width:0; }
   .gmx-three .c .k{ font-size:12px; color:#787F85; }
@@ -4363,38 +4331,43 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   .gmx-kv .k{ font-size:13px; color:#787F85; flex-shrink:0; }
   .gmx-kv .v{ font-size:14px; color:#F5F6F8; text-align:right; word-break:keep-all; }
 
-  /* 클론된 원본 요소 정리 (분석·시나리오·일정 탭) */
-  .gmx-clone{ padding:14px 16px 0; }
-  /* ⚠ 복제된 원본 요소의 애니메이션·그림자·transition 은 모바일에서 렌더링 부담·깜빡임 원인 → 전부 끈다 */
-  .gmx-clone *{ max-width:100% !important; white-space:normal !important; word-break:keep-all !important; overflow-wrap:break-word !important; border-left:0 !important; animation:none !important; transition:none !important; box-shadow:none !important; }
-  .gmx-clone .sec-lbl{ display:none !important; }         /* 탭 제목이 대신함 */
-  .gmx-clone .sec-lbl::before, .gmx-clone .sec-lbl::after{ display:none !important; }
-  .gmx-clone .alert-dot, .gmx-clone canvas, .gmx-clone .chart-row, .gmx-clone [class*="chart"]{ display:none !important; }
-  .gmx-clone .factors-grid, .gmx-clone .scenario-grid, .gmx-clone .calendar-grid, .gmx-clone .season-grid, .gmx-clone [class*="grid"]{ display:block !important; }
+  /* 접이식 섹션 (요인/시나리오/일정) */
+  .gmx-acc{ margin:0 16px 8px; background:#1F262C; border-radius:12px; overflow:hidden; }
+  .gmx-acch{ display:flex; align-items:center; justify-content:space-between; padding:14px 16px; min-height:48px; cursor:pointer; }
+  .gmx-acch .t{ font-size:15px; font-weight:800; color:#F5F6F8; }
+  .gmx-acch .cv{ color:#787F85; font-size:12px; }
+  .gmx-accb{ padding:0 14px 12px; }
+
   /* 요인 카드 */
-  .gmx-clone .factor-card, .gmx-clone .scenario-card{ background:#1F262C !important; border:0 !important; border-radius:12px !important; padding:14px !important; margin:0 0 8px 0 !important; }
-  .gmx-clone .factor-hd, .gmx-clone .factor-left{ display:block !important; }
-  .gmx-clone .factor-num{ font-size:11px !important; color:#787F85 !important; white-space:nowrap !important; margin:0 0 2px 0 !important; }
-  .gmx-clone .factor-title{ font-size:15px !important; font-weight:800 !important; line-height:1.4 !important; display:block !important; margin:0 0 8px 0 !important; }
-  .gmx-clone .factor-badge{ display:inline-block !important; font-size:12px !important; padding:4px 10px !important; border-radius:6px !important; white-space:nowrap !important; margin:0 0 10px 0 !important; }
-  .gmx-clone .factor-bar-hd{ display:flex !important; justify-content:space-between !important; font-size:12px !important; color:#787F85 !important; margin:0 0 6px 0 !important; }
-  .gmx-clone .factor-bar-bg{ height:6px !important; background:#2E323C !important; border-radius:20px !important; overflow:hidden !important; margin:0 0 12px 0 !important; }
-  .gmx-clone .fp{ display:flex !important; gap:8px !important; margin:0 0 10px 0 !important; }
-  .gmx-clone .fp-dot{ flex:0 0 8px !important; width:8px !important; height:8px !important; border-radius:50% !important; margin-top:6px !important; }
-  .gmx-clone .fp > div:last-child{ font-size:13px !important; line-height:1.6 !important; color:#C4CBD6 !important; }
-  .gmx-clone .factor-impact{ font-size:13px !important; padding:10px !important; border-radius:8px !important; margin-top:6px !important; }
+  .gmx-fac{ background:#23262E; border-radius:10px; padding:14px; margin:0 0 8px; }
+  .gmx-fac:last-child{ margin-bottom:0; }
+  .gmx-fn{ font-size:11px; color:#787F85; }
+  .gmx-ft{ font-size:15px; font-weight:800; color:#F5F6F8; margin:2px 0 8px; word-break:keep-all; }
+  .gmx-badge{ display:inline-block; font-size:12px; color:#C4CBD6; background:#2E323C; border-radius:6px; padding:3px 10px; margin:0 0 10px; }
+  .gmx-bar{ height:6px; background:#2E323C; border-radius:20px; overflow:hidden; margin:0 0 12px; }
+  .gmx-bar > i{ display:block; height:100%; background:#C4CBD6; }
+  .gmx-fp{ display:flex; gap:8px; margin:0 0 10px; }
+  .gmx-fp .dot{ flex:0 0 8px; width:8px; height:8px; border-radius:50%; margin-top:6px; }
+  .gmx-fp .tx{ font-size:13px; color:#C4CBD6; line-height:1.6; }
+  .gmx-fp .tx b{ color:#F5F6F8; }
+  .gmx-impact{ font-size:13px; color:#F5F6F8; background:#2E323C; border-radius:8px; padding:10px; margin-top:6px; }
   /* 시나리오 */
-  .gmx-clone .sc-tag{ display:inline-block !important; font-size:11px !important; padding:3px 8px !important; border-radius:6px !important; margin:0 0 8px 0 !important; }
-  .gmx-clone .sc-title{ font-size:15px !important; font-weight:800 !important; margin:0 0 6px 0 !important; }
-  .gmx-clone .sc-price{ font-size:17px !important; font-weight:800 !important; margin:8px 0 2px 0 !important; }
-  .gmx-clone .sc-trigger, .gmx-clone .sc-timing, .gmx-clone .sc-item{ font-size:13px !important; color:#C4CBD6 !important; line-height:1.6 !important; }
-  /* 일정/이벤트 카드 */
-  .gmx-clone [class*="cal-"], .gmx-clone [class*="event"], .gmx-clone [class*="ev-"]{ background:#1F262C !important; border:0 !important; border-radius:10px !important; }
-  .gmx-clone table{ width:100% !important; table-layout:fixed !important; border-collapse:collapse !important; }
-  .gmx-clone th, .gmx-clone td{ padding:8px !important; text-align:left !important; vertical-align:top !important; border-bottom:.5px solid rgba(255,255,255,.07) !important; font-size:13px !important; }
-  .gmx-clone h1, .gmx-clone h2, .gmx-clone h3, .gmx-clone h4, .gmx-clone strong, .gmx-clone b{ color:#F5F6F8 !important; }
-  .gmx-clone a{ color:#787F85 !important; text-decoration:none !important; }
-  .gmx-empty{ font-size:13px; color:#787F85; padding:24px 16px; text-align:center; }
+  .gmx-scn{ background:#23262E; border-radius:10px; padding:14px; margin:0 0 8px; }
+  .gmx-scn:last-child{ margin-bottom:0; }
+  .gmx-tag{ display:inline-block; font-size:11px; font-weight:700; background:#2E323C; border-radius:6px; padding:3px 8px; }
+  .gmx-sct{ font-size:15px; font-weight:800; color:#F5F6F8; margin:8px 0 4px; }
+  .gmx-str{ font-size:13px; color:#C4CBD6; line-height:1.6; }
+  .gmx-scp{ font-size:17px; font-weight:800; margin:8px 0 2px; }
+  .gmx-sctm{ font-size:12px; color:#787F85; }
+  .gmx-sci{ font-size:13px; color:#C4CBD6; margin-top:4px; }
+  /* 일정 */
+  .gmx-evgrp{ margin:0 0 12px; }
+  .gmx-evh{ font-size:13px; font-weight:800; color:#F5F6F8; margin:0 0 8px; }
+  .gmx-ev{ background:#23262E; border-radius:10px; padding:12px; margin:0 0 6px; }
+  .gmx-ev .et{ font-size:13px; font-weight:800; color:#F5F6F8; }
+  .gmx-ev .ed{ font-size:13px; color:#C4CBD6; line-height:1.6; margin-top:4px; }
+  .gmx-ev .ei{ font-size:12px; color:#8FB0E0; margin-top:6px; }
+  .gmx-empty{ font-size:13px; color:#787F85; padding:16px; text-align:center; }
 }
 </style>
 
@@ -4404,10 +4377,14 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 (function(){
   function isMob(){ try{ return matchMedia('(max-width:640px)').matches; }catch(e){ return false; } }
   function T(e){ return e?String(e.textContent||'').replace(/\s+/g,' ').trim():''; }
+  function Tno(e){ if(!e) return ''; var c=e.cloneNode(true); c.querySelectorAll('a').forEach(function(x){x.remove();}); return T(c); }
   function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
   function col(t){ var s=String(t||'').trim(); return /^-/.test(s)?'#4593FC':(/^\+/.test(s)?'#F06A6A':'#787F85'); }
+  function bgc(el){ try{ return getComputedStyle(el).backgroundColor||'#787F85'; }catch(e){ return '#787F85'; } }
+  function fgc(el){ try{ return getComputedStyle(el).color||'#C4CBD6'; }catch(e){ return '#C4CBD6'; } }
 
-  var built=false, curKey='';
+  var mode='main', ready=false;
+  function appEl(){ var e=document.querySelector('.gmx'); if(!e){ e=document.createElement('div'); e.className='gmx'; document.body.appendChild(e);} return e; }
 
   function readStocks(){
     var nav=document.querySelector('.asset-nav-inner'); if(!nav||!nav.children.length) return [];
@@ -4450,130 +4427,149 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     return '실시간';
   }
 
-  /* ── 상세: 원본 page-{key} 를 탭별로 분류 ── */
-  function detailHTML(a){
-    var pg=document.getElementById('page-'+a.key);
-    if(!pg){ try{ if(typeof window.switchAsset==='function') window.switchAsset(a.key,null); }catch(e){} pg=document.getElementById('page-'+a.key); }
-    var over='', anal='', scen='', sched='';
-    // 개요: 요약(alert) + 지표(hm)
-    var oneLine=''; try{ oneLine=T((pg||document).querySelector('.alert-banner .alert-banner-inner, .alert-banner')); }catch(e){}
-    if(oneLine.length>200) oneLine=oneLine.slice(0,200)+'…';
-    var kv='';
-    if(pg) pg.querySelectorAll('.ph-metrics .hm').forEach(function(hm){
-      /* ⚠ 종목마다 hm-lbl/hm-src 순서가 뒤바뀌어 있다(원유는 lbl=이름, S&P는 src=이름).
-         → '출처코드처럼 생긴 쪽'을 버리고 사람이 읽는 이름을 고른다. */
+  /* ── 상세: 원본에서 값만 추출 (DOM 복제 안 함) ── */
+  function extractKV(pg){
+    var kv=''; if(!pg) return kv;
+    pg.querySelectorAll('.ph-metrics .hm').forEach(function(hm){
       var a1=T(hm.querySelector('.hm-lbl')), a2=T(hm.querySelector('.hm-src'));
       var isSrc=function(s){ return /^(FRED|EIA|CME|ICE|LME|NYMEX|COMEX|NASDAQ|London|World|IMF|USDA|BOJ|RBA|ECB)\b/.test(s) || /·\s*[A-Z0-9][A-Z0-9._]*$/.test(s); };
-      var name = isSrc(a1) ? (a2||a1) : (a1||a2);
-      var val=T(hm.querySelector('.hm-val')); var sub=T(hm.querySelector('.hm-sub'));
+      var name=isSrc(a1)?(a2||a1):(a1||a2);
+      var val=T(hm.querySelector('.hm-val')), sub=T(hm.querySelector('.hm-sub'));
       if(name&&val) kv+='<div class="gmx-kv"><span class="k">'+esc(name)+'</span><span class="v">'+esc(val)+(sub?' · '+esc(sub):'')+'</span></div>';
     });
-    over+='<div class="gmx-three">'
-        + '<div class="c"><div class="k">변동성</div><div class="v" style="color:#F06A6A">'+(a.star?'★'.repeat(a.star):'—')+'</div></div>'
-        + (a.rng?'<div class="c"><div class="k">예상 범위</div><div class="v">'+esc(a.rng)+'</div></div>':'')
-        + '</div>';
-    if(oneLine) over+='<div class="gmx-box"><div class="gmx-lbl">한 줄 요약</div><div class="gmx-said">'+esc(oneLine)+'</div></div>';
-    if(kv) over+='<div class="gmx-sec">핵심 지표</div>'+kv;
-
-    // 분석/시나리오/일정: 원본 블록 클론
-    if(pg){
-      var cur='';
-      [].slice.call(pg.children).forEach(function(el){
-        var cls=' '+(el.className||'')+' '; var has=function(c){return cls.indexOf(' '+c+' ')>=0;};
-        if(has('sec-lbl')){ cur=T(el); return; }
-        if(has('factors-grid')){ anal+=el.outerHTML; return; }
-        if(has('season-grid')){ anal+='<div class="gmx-sec" style="margin-left:0">계절성</div>'+el.outerHTML; return; }
-        if(has('commentary-section')){ anal+=el.outerHTML; return; }
-        if(has('scenario-grid')){ scen+=el.outerHTML; return; }
-        if(has('calendar-grid')||/일정|캘린더|이벤트/.test(cur)){ sched+=el.outerHTML; return; }
+    return kv;
+  }
+  function extractFactors(pg){
+    var h=''; if(!pg) return h;
+    pg.querySelectorAll('.factor-card').forEach(function(fc){
+      var num=T(fc.querySelector('.factor-num')), title=T(fc.querySelector('.factor-title')), badge=T(fc.querySelector('.factor-badge'));
+      var bar=fc.querySelector('.factor-bar'); var pct=bar?(bar.style.width||''):'';
+      var pts='';
+      fc.querySelectorAll('.fp').forEach(function(fp){
+        var dot=fp.querySelector('.fp-dot'); var c=dot?bgc(dot):'#787F85';
+        var body=fp.querySelector('div:last-child'); var strong=T(body&&body.querySelector('strong'));
+        var full=body?T(body):''; var text=(strong&&full.indexOf(strong)===0)?full.slice(strong.length).trim():full;
+        pts+='<div class="gmx-fp"><span class="dot" style="background:'+c+'"></span><span class="tx">'+(strong?'<b>'+esc(strong)+'</b> ':'')+esc(text)+'</span></div>';
       });
-    }
-    function panel(id,inner,on){ return '<div class="gmx-panel'+(on?' on':'')+'" data-panel="'+id+'">'+(inner||'<div class="gmx-empty">내용이 없습니다.</div>')+'</div>'; }
-    var h='';
+      var imp=Tno(fc.querySelector('.factor-impact'));
+      h+='<div class="gmx-fac"><div class="gmx-fn">'+esc(num)+'</div><div class="gmx-ft">'+esc(title)+'</div>'
+        +(badge?'<div class="gmx-badge">'+esc(badge)+'</div>':'')
+        +(pct?'<div class="gmx-bar"><i style="width:'+esc(pct)+'"></i></div>':'')
+        +pts+(imp?'<div class="gmx-impact">'+esc(imp)+'</div>':'')+'</div>';
+    });
+    return h;
+  }
+  function extractScenarios(pg){
+    var h=''; if(!pg) return h;
+    pg.querySelectorAll('.scenario-card').forEach(function(sc){
+      var tagEl=sc.querySelector('.sc-tag'), prEl=sc.querySelector('.sc-price');
+      var tag=T(tagEl), title=T(sc.querySelector('.sc-title')), trig=T(sc.querySelector('.sc-trigger')), pr=T(prEl), tm=T(sc.querySelector('.sc-timing'));
+      var items=''; sc.querySelectorAll('.sc-item').forEach(function(it){ items+='<div class="gmx-sci">'+esc(T(it))+'</div>'; });
+      h+='<div class="gmx-scn">'+(tag?'<span class="gmx-tag" style="color:'+(tagEl?fgc(tagEl):'#C4CBD6')+'">'+esc(tag)+'</span>':'')
+        +'<div class="gmx-sct">'+esc(title)+'</div>'
+        +(trig?'<div class="gmx-str">'+esc(trig)+'</div>':'')
+        +(pr?'<div class="gmx-scp" style="color:'+(prEl?fgc(prEl):'#F5F6F8')+'">'+esc(pr)+'</div>':'')
+        +(tm?'<div class="gmx-sctm">'+esc(tm)+'</div>':'')+items+'</div>';
+    });
+    return h;
+  }
+  function extractEvents(pg){
+    var h=''; if(!pg) return h;
+    pg.querySelectorAll('.calendar-grid .cal-card').forEach(function(card){
+      var group=Tno(card.querySelector('.cal-hd')); var items='';
+      card.querySelectorAll('.cal-item').forEach(function(it){
+        var date=T(it.querySelector('.cal-date')), tx=T(it.querySelector('.cal-tx')), imp=Tno(it.querySelector('.cal-impact'));
+        items+='<div class="gmx-ev"><div class="et">'+esc(date)+'</div>'+(tx?'<div class="ed">'+esc(tx)+'</div>':'')+(imp?'<div class="ei">'+esc(imp)+'</div>':'')+'</div>';
+      });
+      if(group||items) h+='<div class="gmx-evgrp"><div class="gmx-evh">'+esc(group)+'</div>'+items+'</div>';
+    });
+    return h;
+  }
+  function acc(title, body){
+    if(!body) return '';
+    return '<div class="gmx-acc"><div class="gmx-acch"><span class="t">'+esc(title)+'</span><span class="cv">▸</span></div><div class="gmx-accb" style="display:none">'+body+'</div></div>';
+  }
+
+  function detailHTML(a){
+    var pg=document.getElementById('page-'+a.key);
+    var oneLine=''; try{ oneLine=Tno((pg||document).querySelector('.alert-banner')); }catch(e){}
+    if(oneLine.length>220) oneLine=oneLine.slice(0,220)+'…';
+    var kv=extractKV(pg), fac=extractFactors(pg), scn=extractScenarios(pg), evt=extractEvents(pg);
+    var h='<div class="gmx-top"><span class="gmx-back" data-act="back">← 목록</span></div>';
     h+='<div class="gmx-shead"><div class="gmx-sname">'+esc(a.nm)+'</div><div class="gmx-ssub">실시간 CFD · USD</div>'
-      +'<div class="gmx-spx"><span class="p" data-px="'+esc(a.key)+'">'+esc(a.px||'—')+'</span><span class="c" data-cg="'+esc(a.key)+'" style="color:'+col(a.cg)+'">'+esc(a.cg)+'</span></div></div>';
-    h+='<div class="gmx-tabs">'
-      +'<span class="gmx-tab on" data-t="over">개요</span>'
-      +'<span class="gmx-tab" data-t="anal">분석</span>'
-      +'<span class="gmx-tab" data-t="scen">시나리오</span>'
-      +'<span class="gmx-tab" data-t="sched">일정</span></div>';
-    h+=panel('over', over, true);
-    h+=panel('anal', anal?'<div class="gmx-clone">'+anal+'</div>':'');
-    h+=panel('scen', scen?'<div class="gmx-clone">'+scen+'</div>':'');
-    h+=panel('sched', sched?'<div class="gmx-clone">'+sched+'</div>':'');
+      +'<div class="gmx-spx"><span class="p">'+esc(a.px||'—')+'</span><span class="c" style="color:'+col(a.cg)+'">'+esc(a.cg)+'</span></div></div>';
+    h+='<div class="gmx-three"><div class="c"><div class="k">변동성</div><div class="v" style="color:#F06A6A">'+(a.star?'★'.repeat(a.star):'—')+'</div></div>'
+      +(a.rng?'<div class="c"><div class="k">예상 범위</div><div class="v">'+esc(a.rng)+'</div></div>':'')+'</div>';
+    if(oneLine) h+='<div class="gmx-box"><div class="gmx-lbl">한 줄 요약</div><div class="gmx-said">'+esc(oneLine)+'</div></div>';
+    if(kv) h+='<div class="gmx-sec">핵심 지표</div>'+kv;
+    if(fac||scn||evt){
+      h+='<div class="gmx-sec">자세히 보기</div>';
+      h+=acc('요인별 분석', fac)+acc('시나리오', scn)+acc('주요 일정', evt);
+    }
+    h+='<div style="height:24px"></div>';
     return h;
   }
 
-  function openDetail(a){
-    var app=document.querySelector('.gmx'); if(!app) return;
-    var d=app.querySelector('.gmx-detail');
-    d.innerHTML='<div class="gmx-top"><span class="gmx-back" data-act="back">← 목록</span></div>'+detailHTML(a);
-    curKey=a.key;
-    app.classList.add('gmx-on-detail');
-    window.scrollTo(0,0);
-    d.scrollTop=0;                 /* 고정 오버레이의 자체 스크롤도 맨 위로 */
-    // 탭 전환
-    d.querySelectorAll('.gmx-tab').forEach(function(tb){
-      tb.addEventListener('click',function(){
-        d.querySelectorAll('.gmx-tab').forEach(function(x){x.classList.remove('on');});
-        tb.classList.add('on');
-        var t=tb.getAttribute('data-t');
-        d.querySelectorAll('.gmx-panel').forEach(function(p){ p.classList.toggle('on', p.getAttribute('data-panel')===t); });
-        d.scrollTop=0;             /* 탭 바꾸면 상세 스크롤 맨 위로 */
-      });
-    });
-    d.querySelector('[data-act="back"]').addEventListener('click',function(){ app.classList.remove('gmx-on-detail'); curKey=''; window.scrollTo(0,0); });
-    // 원본 상세가 늦게 채워지면 한 번 더
-    setTimeout(function(){ if(curKey===a.key){ var np=document.getElementById('page-'+a.key); if(np){ /* 이미 채워졌으면 재구성 */ } } },500);
-  }
-
-  function build(){
-    if(!isMob()) return;
-    if(built && document.querySelector('.gmx')) return;
-    var S=readStocks(); if(!S.length) return;
+  function mainHTML(){
+    var S=readStocks(); if(!S.length) return null;
     var H=readHeadline();
     var backA=document.querySelector('.topbar-right a, .topbar-right button');
     var backHref=backA?(backA.getAttribute('href')||'hub.html'):'hub.html';
-
-    var m='';
-    m+='<div class="gmx-top"><a class="gmx-back" href="'+esc(backHref)+'">← 메인으로</a></div>';
+    var m='<div class="gmx-top"><a class="gmx-back" href="'+esc(backHref)+'">← 메인으로</a></div>';
     m+='<div class="gmx-pad"><div class="gmx-h1">글로벌 시장</div><div class="gmx-cap" style="margin-top:4px">'+esc(whenStr())+' · EIA · FRED · Reuters</div></div>';
     if(H.t) m+='<div class="gmx-box"><div class="gmx-lbl">오늘의 시장 요약</div><div class="gmx-said">'+esc(H.t)+'</div></div>';
-    m+='<div class="gmx-sec">변동성 순위 · '+S.length+'개 종목</div><div id="gmx-list">';
+    m+='<div class="gmx-sec">변동성 순위 · '+S.length+'개 종목</div>';
     S.forEach(function(a,i){
       m+='<div class="gmx-row" data-k="'+esc(a.key)+'"'+(i>=6?' data-hid="1" style="display:none"':'')+'>'
         +'<div style="min-width:0"><div class="gmx-nm">'+esc(a.nm)+'</div><div class="gmx-st">'+(a.star?'★'.repeat(a.star):'—')+'</div></div>'
-        +'<div style="text-align:right"><div class="gmx-val" data-px="'+esc(a.key)+'">'+esc(a.px||'—')+'</div><div class="gmx-chg" data-cg="'+esc(a.key)+'" style="color:'+col(a.cg)+'">'+esc(a.cg)+'</div></div>'
-        +'</div>';
+        +'<div style="text-align:right"><div class="gmx-val" data-px="'+esc(a.key)+'">'+esc(a.px||'—')+'</div><div class="gmx-chg" data-cg="'+esc(a.key)+'" style="color:'+col(a.cg)+'">'+esc(a.cg)+'</div></div></div>';
     });
-    m+='</div>';
     if(S.length>6) m+='<div class="gmx-more" id="gmx-morelist"><span>종목 '+(S.length-6)+'개 더보기</span><span>›</span></div>';
     if(H.news.length){
       m+='<div class="gmx-sec">헤드라인</div>';
       H.news.slice(0,3).forEach(function(n){ m+='<div class="gmx-news"><div class="gmx-nt">'+esc(n.tx)+'</div><div class="gmx-ns">'+esc(n.src)+'</div></div>'; });
-      if(H.news.length>3) m+='<div class="gmx-more" id="gmx-morenews"><span>뉴스 '+(H.news.length-3)+'건 더보기</span><span>›</span></div>';
     }
     m+='<div style="height:24px"></div>';
+    window.__gmxS={}; S.forEach(function(a){ window.__gmxS[a.key]=a; });
+    return m;
+  }
 
-    var app=document.querySelector('.gmx');
-    if(!app){ app=document.createElement('div'); app.className='gmx'; document.body.appendChild(app); }
-    app.innerHTML='<div class="gmx-main">'+m+'</div><div class="gmx-detail"></div>';
-
-    var SByKey={}; S.forEach(function(a){SByKey[a.key]=a;});
+  function renderMain(){
+    var m=mainHTML(); if(m==null) return false;
+    mode='main'; var app=appEl(); app.innerHTML=m;
     app.querySelectorAll('.gmx-row').forEach(function(r){
-      r.addEventListener('click',function(){ var a=SByKey[r.getAttribute('data-k')]; if(a) openDetail(a); });
+      r.addEventListener('click',function(){ var a=window.__gmxS[r.getAttribute('data-k')]; if(a) openDetail(a); });
     });
     var ml=app.querySelector('#gmx-morelist');
     if(ml) ml.addEventListener('click',function(){ app.querySelectorAll('.gmx-row[data-hid]').forEach(function(x){x.style.display='';x.removeAttribute('data-hid');}); ml.remove(); });
-    var mn=app.querySelector('#gmx-morenews');
-    if(mn) mn.addEventListener('click',function(){ if(typeof window.switchAsset==='function'){} location.hash='headline'; mn.remove(); });
+    return true;
+  }
 
-    if(S.length>=10) built=true;
+  function openDetail(a){
+    mode='detail';
+    var app=appEl(); app.innerHTML=detailHTML(a); window.scrollTo(0,0);
+    var back=app.querySelector('[data-act="back"]');
+    if(back) back.addEventListener('click',function(){ renderMain(); window.scrollTo(0,0); });
+    app.querySelectorAll('.gmx-acch').forEach(function(hd){
+      hd.addEventListener('click',function(){
+        var b=hd.nextElementSibling; if(!b) return;
+        var open=(b.style.display==='none');
+        b.style.display=open?'block':'none';
+        var cv=hd.querySelector('.cv'); if(cv) cv.textContent=open?'▾':'▸';
+      });
+    });
+  }
+
+  function build(){
+    if(!isMob()) return;
+    if(mode==='detail') return;                       /* 상세 보는 중엔 건드리지 않음 */
+    if(ready && document.querySelector('.gmx-row')) return;
+    if(renderMain()){ if(Object.keys(window.__gmxS||{}).length>=10) ready=true; }
   }
 
   function tick(){
     try{
-      if(!isMob()) return; var app=document.querySelector('.gmx'); if(!app) return;
+      if(!isMob()||mode!=='main') return; var app=document.querySelector('.gmx'); if(!app) return;
       var nav=document.querySelector('.asset-nav-inner'); if(!nav) return;
       [].forEach.call(nav.children,function(t){
         var oc=t.getAttribute('onclick')||''; var key=(oc.match(/switchAsset\(\s*'([^']+)'/)||[])[1]; if(!key||key==='calendar') return;
@@ -4586,9 +4582,9 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 
   function boot(){
     build();
-    setInterval(build, 1500);   /* 종목 늦게 로드될 때만 실제 동작, 완성되면 no-op */
-    setInterval(tick, 1200);
-    window.addEventListener('resize', function(){ built=false; build(); });
+    setInterval(build, 1500);
+    setInterval(tick, 1500);
+    window.addEventListener('resize', function(){ if(mode==='main'){ ready=false; build(); } });
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
