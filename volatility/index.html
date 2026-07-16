@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260716-093856">
+<meta name="jikt-build" content="20260716-095230">
 <script>
 // [라이트 테마] 화면 요소(DOM)의 인라인 파랑 → 살몬. 캔버스/차트는 style속성에 색이 없어 안전.
 var _jiktMO=null;
@@ -44,7 +44,7 @@ window.addEventListener('storage',function(e){if(e.key==='jikt_theme'){var wl=(e
 
 /* [자동 최신화 v2] 배포 빌드버전 vs 서버 ver.txt 비교 → 다르면 캐시우회 1회 새로고침(무한루프 방지) */
 (function(){try{
-  var BUILD='20260716-093856';
+  var BUILD='20260716-095230';
   if(BUILD.charAt(0)==='_')return;
   fetch('../ver.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null;}).then(function(v){
     if(!v)return; v=v.trim(); if(!v||v===BUILD)return;
@@ -8627,10 +8627,13 @@ body{padding-bottom:0}
   /* [직트 지시 2026-07-16] 각 영역 헤더 좌측에 파란 세로 바 (헤더 구분 시인성) */
   .jm-st-t, .jm-card-ttl, .jm-mg-l, .jm-nonehd-t{
     border-left:3px solid #4593FC !important; padding-left:8px !important; line-height:1.15 !important; }
-  /* [직트 지시] 위험 포지션 카드 필터(종목·월물·구분)도 진입예정처럼 파란 테두리 + 주황 포커스 제거 */
-  .jm-flt-c{ border:1.5px solid rgba(69,147,252,.55) !important; }
-  .jm-flt-c select:focus{ outline:none !important; }
-  .jm-flt-c:focus-within{ border-color:rgba(143,192,255,1) !important; }
+  /* [직트 재지시] 위험 포지션 카드 필터 — 진입예정과 동일하게: 라벨(종목)은 위, 값(전체)에만 파란 테두리.
+     (박스 전체가 아니라 '선택하는 값' 부분에만 테두리) */
+  .jm-flt-c{ background:transparent !important; border:0 !important; padding:0 !important; }
+  .jm-flt-c .jm-lbl{ margin:0 0 3px 0 !important; }
+  .jm-flt-c select{ border:1.5px solid rgba(69,147,252,.55) !important; background:#1E2027 !important;
+    border-radius:8px !important; padding:5px 8px !important; min-height:34px !important; }
+  .jm-flt-c select:focus{ outline:none !important; border-color:rgba(143,192,255,1) !important; }
 
   /* ===== 매매 현황 탭 ===== */
   #page-trade{ padding:0 12px 24px 12px !important; max-width:none !important; gap:0 !important; }
