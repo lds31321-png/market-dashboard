@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260716-122810">
+<meta name="jikt-build" content="20260716-140227">
 <script>
 // [라이트 테마] 화면 요소(DOM)의 인라인 파랑 → 살몬. 캔버스/차트는 style속성에 색이 없어 안전.
 var _jiktMO=null;
@@ -44,7 +44,7 @@ window.addEventListener('storage',function(e){if(e.key==='jikt_theme'){var wl=(e
 
 /* [자동 최신화 v2] 배포 빌드버전 vs 서버 ver.txt 비교 → 다르면 캐시우회 1회 새로고침(무한루프 방지) */
 (function(){try{
-  var BUILD='20260716-122810';
+  var BUILD='20260716-140227';
   if(BUILD.charAt(0)==='_')return;
   fetch('../ver.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null;}).then(function(v){
     if(!v)return; v=v.trim(); if(!v||v===BUILD)return;
@@ -7965,35 +7965,25 @@ body{padding-bottom:0}
         }
       }catch(e){}
 
-      /* [trade2 #4] 누적 손익 곡선(#tr-cum-chart) 우측 % 축 눈금 라벨('+35.0% … -5.0%') 숨김 — 모바일만.
-         조사결과: HTML 오버레이 아님, Chart.js 캔버스 y축(position:right) 눈금(ticks.display:true, callback로 % 포맷).
-         → 런타임에 options.scales.y.ticks.display=false + update('none') 로 축 라벨만 미표시(축/데이터 유지).
-         PC는 이 코드가 mq.matches 가드로 실행 안 되므로 축 유지. 멱등(canvas.dataset.trd2tick).
-         라이브 검증: y축 폭 28→8px(라벨 미렌더), 차트 정상. update 1회만(가드) → 업데이트 루프 없음. */
+      /* [2026-07-16 수정] 매매현황 누적 손익 곡선(#tr-cum-chart) 우측 % 축을 매매복기(rv-cum-chart)처럼
+         그대로 보이게 한다. 기존 [trade2 #4]는 축 라벨을 끄고 3개짜리 오버레이(최대/중간/최소)로 대체했는데,
+         '축이 오른쪽으로 삐져나가던' 문제는 이미 캔버스 CSS(.jm-chartbox canvas: inset:0/width:100%, 상자 overflow:hidden)로
+         해결돼 있어 네이티브 우측 % 눈금이 정상 표시된다(Chart.js 하네스로 검증). 옛 오버레이가 남아 있으면 제거. */
       try{
         if(typeof Chart!=='undefined'){
           var cv=document.getElementById('tr-cum-chart');
-          if(cv && !(cv.dataset && cv.dataset.trd2tick==='1')){
+          if(cv){
             var inst=null;
             var insts=Chart.instances? Object.values(Chart.instances):[];
             for(var ci=0; ci<insts.length; ci++){ if(insts[ci].canvas && insts[ci].canvas.id==='tr-cum-chart'){ inst=insts[ci]; break; } }
-            if(inst && inst.scales && inst.scales.y){
-              /* [#38] Y축이 없어 세로 기준(%)을 못 읽었다. 네이티브 우측 축은 모바일에서 폭0으로 눌림.
-                 → 축 라벨은 끄고, 차트 위에 HTML 로 기준값 3개(최대/중간/최소 %)를 점선과 함께 얹는다. */
-              try{ if(inst.options.scales.y.ticks) inst.options.scales.y.ticks.display=false; inst.update('none'); }catch(e){}
-              var box=document.getElementById('tr-cum-box');
-              var ys=inst.scales.y;
-              if(box && ys && isFinite(ys.max) && isFinite(ys.min) && ys.max>ys.min){
-                var mx=ys.max, mn=ys.min;
-                var fy=function(v){ return (v>0?'+':'')+Math.round(v)+'%'; };
-                var ov=box.querySelector('.jm-yax');
-                if(!ov){ ov=document.createElement('div'); ov.className='jm-yax'; box.appendChild(ov); }
-                var lv=[mx,(mx+mn)/2,mn], hh='';
-                lv.forEach(function(v){ var pp=(mx-v)/(mx-mn)*100; hh+='<b style="top:'+pp+'%"></b><i style="top:'+pp+'%">'+fy(v)+'</i>'; });
-                ov.innerHTML=hh;
+            if(inst && inst.options && inst.options.scales && inst.options.scales.y){
+              if(inst.options.scales.y.ticks && inst.options.scales.y.ticks.display===false){
+                inst.options.scales.y.ticks.display=true; try{ inst.update('none'); }catch(e){}
               }
-              if(cv.dataset) cv.dataset.trd2tick='1';
             }
+            var box2=document.getElementById('tr-cum-box');
+            var oldOv=box2 && box2.querySelector('.jm-yax'); if(oldOv && oldOv.parentNode) oldOv.parentNode.removeChild(oldOv);
+            if(cv.dataset) cv.dataset.trd2tick='1';
           }
         }
       }catch(e){}
@@ -9026,7 +9016,11 @@ body{padding-bottom:0}
       var alertTxt = after('생존 경보');                      /* "2단계 위험방어" */
       var alertStep = parseInt((alertTxt.match(/(\d)단계/)||[])[1], 10);
       var price = lv[5] && /달러|원/.test(lv[5]) ? lv[5] : (lv.filter(function(x){return /^[\d,.]+달러$/.test(x);})[0]||'');
-      var tail = lv.filter(function(x){ return /꼬리위험/.test(x); })[0] || '';
+      /* ⚠ 꼬리위험은 텍스트만 보고 넣으면 안 된다. PC는 종목별 실제값(i.tail)이 참일 때만
+            #ovv2-tail-* 를 display:inline-block 로 켠다(꺼짐=none). 숨은 텍스트까지 긁으면
+            전 종목에 '꼬리위험 활성'이 잘못 떠버린다 → PC와 동일하게 display 상태로 판단. */
+      var tailEl = c.querySelector('[id^="ovv2-tail-"]');
+      var tail = (tailEl && tailEl.style.display!=='none' && /꼬리위험/.test(tailEl.textContent)) ? T2(tailEl) : '';
       var vol  = lv.filter(function(x){ return /^변동성\s*\d+점/.test(x); })[0] || '';
       var act  = lv[lv.length-1] || '';
       var ci=lv.indexOf('콜 매도'), pi=lv.indexOf('풋 매도');
@@ -11453,18 +11447,14 @@ body{padding-bottom:0}
   function build(){
     if(!isMob()) return;
     var box=document.getElementById('tr-cum-box'); if(!box) return;
-    var inst=findInst(); if(!inst || !inst.scales || !inst.scales.y) return;
-    var ys=inst.scales.y;
-    if(!isFinite(ys.max) || !isFinite(ys.min) || ys.max<=ys.min) return;
-    var mx=ys.max, mn=ys.min;
-    var fy=function(v){ return (v>0?'+':'')+Math.round(v)+'%'; };
-    var sig=Math.round(mx)+'|'+Math.round(mn);
-    var ov=box.querySelector('.jm-yax');
-    if(ov && ov.getAttribute('data-sig')===sig) return;
-    if(!ov){ ov=document.createElement('div'); ov.className='jm-yax'; box.appendChild(ov); }
-    var lv=[mx,(mx+mn)/2,mn], hh='';
-    lv.forEach(function(v){ var pp=(mx-v)/(mx-mn)*100; hh+='<b style="top:'+pp+'%"></b><i style="top:'+pp+'%">'+fy(v)+'</i>'; });
-    ov.innerHTML=hh; ov.setAttribute('data-sig',sig);
+    /* [2026-07-16 수정] 매매복기처럼 네이티브 우측 % 축을 쓴다. 옛 3개짜리 오버레이(.jm-yax)가
+       남아 있으면 제거하고, 혹시 축 라벨이 꺼져 있으면 다시 켠다. */
+    var ov=box.querySelector('.jm-yax'); if(ov && ov.parentNode) ov.parentNode.removeChild(ov);
+    var inst=findInst();
+    if(inst && inst.options && inst.options.scales && inst.options.scales.y &&
+       inst.options.scales.y.ticks && inst.options.scales.y.ticks.display===false){
+      inst.options.scales.y.ticks.display=true; try{ inst.update('none'); }catch(e){}
+    }
   }
   setInterval(build, 1200);
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', function(){ setTimeout(build,1500); }); else setTimeout(build,1500);
@@ -11576,6 +11566,50 @@ body{padding-bottom:0}
   }
   function boot(){ Array.prototype.forEach.call(document.querySelectorAll('.csel-ui'), init); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
+<script id="jm-swipe-2026-07-16">
+/* [직트 지시] 모바일 좌우 스와이프로 상단 탭 전환.
+   오른쪽으로 밀면 오른쪽(다음) 탭, 왼쪽으로 밀면 왼쪽(이전) 탭.
+   표·차트·탭바·드롭다운 등 가로로 움직여야 하는 곳에서는 스와이프를 가로채지 않는다. */
+(function(){
+  function isMob(){ try{ return matchMedia('(max-width:640px)').matches; }catch(e){ return false; } }
+  var sx=0, sy=0, tracking=false, ignore=false;
+  function tabList(){ return Array.prototype.slice.call(document.querySelectorAll('.nav-tab')); }
+  document.addEventListener('touchstart', function(e){
+    if(!isMob() || !e.touches || e.touches.length!==1){ tracking=false; return; }
+    var t=e.touches[0]; sx=t.clientX; sy=t.clientY; tracking=true; ignore=false;
+    var el=e.target;
+    /* 가로 제스처가 이미 의미 있는 영역이면 탭 스와이프를 끈다 */
+    if(el && el.closest && (el.closest('.nav')||el.closest('table')||el.closest('canvas')||
+        el.closest('.jm-chartbox')||el.closest('.csel-list')||el.closest('.csel-ui')||
+        el.closest('input')||el.closest('select')||el.closest('textarea'))){ ignore=true; return; }
+    /* 가로 스크롤이 실제로 걸린 조상이 있으면(표 래퍼 등) 끈다 */
+    var n=el;
+    while(n && n!==document.body){
+      try{ var cs=getComputedStyle(n);
+        if((cs.overflowX==='auto'||cs.overflowX==='scroll') && n.scrollWidth>n.clientWidth+4){ ignore=true; break; }
+      }catch(_){}
+      n=n.parentElement;
+    }
+  }, {passive:true});
+  document.addEventListener('touchend', function(e){
+    if(!isMob() || !tracking || ignore){ tracking=false; return; }
+    tracking=false;
+    var t=(e.changedTouches && e.changedTouches[0]); if(!t) return;
+    var dx=t.clientX-sx, dy=t.clientY-sy;
+    /* 충분히 수평인 스와이프만 (세로 스크롤과 구분) */
+    if(Math.abs(dx)<60 || Math.abs(dx)<Math.abs(dy)*1.6) return;
+    var list=tabList(); if(!list.length) return;
+    var cur=-1;
+    for(var i=0;i<list.length;i++){ if(list[i].classList.contains('active')){ cur=i; break; } }
+    if(cur<0) return;
+    var next = dx>0 ? cur+1 : cur-1;   /* 오른쪽으로 밀면 오른쪽(다음) 탭 */
+    if(next<0 || next>=list.length) return;
+    try{ list[next].click(); }catch(_){}
+    try{ list[next].scrollIntoView({inline:'center', block:'nearest'}); }catch(_){}
+    try{ window.scrollTo({top:0, behavior:'smooth'}); }catch(_){ try{ window.scrollTo(0,0); }catch(__){} }
+  }, {passive:true});
 })();
 </script>
 </body>
