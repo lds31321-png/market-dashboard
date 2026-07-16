@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260716-095230">
+<meta name="jikt-build" content="20260716-114741">
 <script>
 // [라이트 테마] 화면 요소(DOM)의 인라인 파랑 → 살몬. 캔버스/차트는 style속성에 색이 없어 안전.
 var _jiktMO=null;
@@ -44,7 +44,7 @@ window.addEventListener('storage',function(e){if(e.key==='jikt_theme'){var wl=(e
 
 /* [자동 최신화 v2] 배포 빌드버전 vs 서버 ver.txt 비교 → 다르면 캐시우회 1회 새로고침(무한루프 방지) */
 (function(){try{
-  var BUILD='20260716-095230';
+  var BUILD='20260716-114741';
   if(BUILD.charAt(0)==='_')return;
   fetch('../ver.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null;}).then(function(v){
     if(!v)return; v=v.trim(); if(!v||v===BUILD)return;
@@ -3893,7 +3893,7 @@ input[type=range] { background: transparent !important; border: none !important;
       <div id="desc-pt-c1" style="display:none;position:relative;margin:0 0 14px;padding:56px 28px 24px;background:var(--card);border-top:1px solid rgba(var(--cyan-rgb),.25);border-bottom:1px solid rgba(var(--cyan-rgb),.25);border-left:0px solid var(--cyan);font-size:15px;color:var(--t1);line-height:1.7"><button onclick="document.getElementById('desc-pt-c1').style.display='none'" title="페이지 닫기" class="hint-glow-salmon" style="position:absolute;top:14px;right:16px;display:inline-flex;align-items:center;justify-content:center;height:36px;padding:0 16px;border-radius:8px;border:1.5px solid rgba(var(--cyan-rgb),.45);background:rgba(var(--cyan-rgb),.10);color:var(--cyan);font-size:15px;font-weight:800;cursor:pointer;transition:all .15s" onmouseover="this.style.background='rgba(var(--cyan-rgb),.20)'" onmouseout="this.style.background='rgba(var(--cyan-rgb),.10)'">페이지 닫기</button><div style="font-weight:900;color:var(--cyan);margin-bottom:20px;font-size:24px;letter-spacing:-.02em;line-height:1.2">3단계 — 진입 시뮬레이션 (진입 전 노출 사전 검토)</div><div style="margin-bottom:14px;padding:12px 16px;background:rgba(var(--cyan-rgb),.06);border:1px solid rgba(var(--cyan-rgb),.30);border-radius:8px;font-size:15px;color:var(--t1);line-height:1.7"><span style="font-weight:800;color:var(--cyan)">[한 줄 요약]</span> <b style="color:var(--cyan)">진입 예정 포지션</b>을 가상으로 추가하여 → <b style="color:var(--cyan)">진입 후 종목별 노출%</b>를 미리 확인하고 <b style="color:var(--cyan)">무리한 진입을 사전에 방지</b>할 수 있습니다.</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">이 영역에서 얻는 것</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:15px;line-height:1.85">· <b style="color:var(--cyan)">진입 예정 포지션</b>의 가상 노출% 계산<br>· <b style="color:var(--cyan)">진입전 → 진입예정 → 진입후</b> 3단계 노출 비교<br>· <b style="color:var(--cyan)">종목 제한 비중(자본 1.5%)</b> 초과 여부 경고<br>· <b style="color:var(--cyan)">B-1 종목별 노출 통합 표 "진입후" 열 자동 갱신</b></div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">교육생 판단·실행 흐름</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:15px;line-height:1.85"><b style="color:var(--cyan)">1.</b> 진입 예정 포지션 추가 — 종목·구분(콜/풋)·계약수·진입가 입력<br><b style="color:var(--cyan)">2.</b> <b style="color:var(--cyan)">[+ 추가]</b> 클릭 → 시뮬 행 생성 + B-1 "진입후" 열 자동 갱신<br><b style="color:var(--cyan)">3.</b> 진입후 노출% 확인 — 종목 제한 비중의 <b style="color:var(--cyan)">1/3 이내</b>인지 검토<br><b style="color:var(--cyan)">4.</b> 초과 시 → 더 <b style="color:var(--cyan)">외가격(OTM)</b>으로 행사가 조정해 프리미엄 축소 검토<br><b style="color:var(--cyan)">5.</b> <b style="color:var(--warn2)">0.5% 초과 시 경고 표시</b> → 신중 검토</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">3가지 노출 지표</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:15px;line-height:1.85">· <b style="color:var(--cyan)">진입전 노출%</b> — 현재 보유 포지션의 노출 합산 (B-1 테이블 기준)<br>· <b style="color:var(--cyan)">진입예정 노출%</b> — 이 시뮬 행에서 추가하는 가상 포지션의 노출<br>· <b style="color:var(--cyan)">진입후 노출%</b> — 이 수치로 진입 여부 판단 (<b style="color:var(--cyan)">핵심 결정 지표</b>)</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">자동 연동 관계</div><div style="margin-bottom:18px;padding-left:14px;color:var(--t2);font-size:15px;line-height:1.85">· <b style="color:var(--cyan)">자금 설정(Tab1 A-1)</b> 원금 → 노출% 계산 기준<br>· <b style="color:var(--cyan)">시뮬 행 추가/삭제</b> → B-1 "진입후" 열 즉시 자동 갱신<br>· <b style="color:var(--cyan)">매매 전략 탭 추천 종목</b> → 본 시뮬에서 진입 전 사전 검토 가능</div><div style="margin-bottom:8px;font-weight:800;color:var(--t1);font-size:15px">활용 이점</div><div style="margin-bottom:0;padding-left:14px;color:var(--t2);font-size:15px;line-height:1.85">· 실제 매매 전 <b style="color:var(--cyan)">가상 시나리오</b>로 무리한 진입 사전 방지<br>· <b style="color:var(--cyan)">종목별 비중 한도(자본 1.5%)</b> 초과 여부 즉시 확인<br>· <b style="color:var(--cyan)">추천 행사가·계약수</b>를 그대로 시뮬에 넣어 진입 후 영향 예측 가능</div></div>
       <div id="pt-sim-body"><div style="text-align:center;padding:20px;color:var(--t3);font-size:15px">아래 폼에서 진입 예정 포지션을 추가하세요.</div></div>
       <div style="display:grid;grid-template-columns:2fr 1fr 0.7fr 2fr auto;gap:8px;align-items:end;margin-top:14px;padding-top:14px;border-top:1px solid var(--b1)">
-        <div class="pos-field">
+        <div class="pos-field csel-field">
           <div class="pos-lbl" style="font-weight:600">종목</div>
           <select id="sim-inst" class="pos-inp" style="border-color:rgba(var(--warn1-rgb),.3);cursor:pointer">
             <option value="OCL">원유 (OCL · ×1,000)</option>
@@ -3909,6 +3909,10 @@ input[type=range] { background: transparent !important; border: none !important;
             <option value="OZW">밀 (OZW · ×50)</option>
             <option value="OZC">옥수수 (OZC · ×50)</option>
           </select>
+          <div class="csel-ui" data-for="sim-inst">
+            <button type="button" class="csel-btn"><span class="csel-txt"></span><span class="csel-arw" aria-hidden="true">▾</span></button>
+            <div class="csel-list" role="listbox"></div>
+          </div>
         </div>
         <div class="pos-field">
           <div class="pos-lbl" style="font-weight:600">구분</div>
@@ -11479,6 +11483,99 @@ body{padding-bottom:0}
       });
     }, 60);
   }, true);
+})();
+</script>
+<style id="csel-css-2026-07-16">
+/* 진입 예정 '종목' 커스텀 드롭다운 — PC(>640px)에서 네이티브 select 잔상(위아래 흔들림) 제거.
+   모바일(≤640px)에서는 커스텀 UI를 숨기고 원본 select(OS 피커)를 그대로 사용한다. */
+.csel-ui{ display:none; }
+@media(min-width:641px){
+  .csel-field{ position:relative; }
+  /* 데스크톱: 원본 select 는 값 저장용으로만 남기고 화면에서 숨긴다(로직 불변) */
+  .csel-field > select#sim-inst{
+    position:absolute !important; width:1px !important; height:1px !important;
+    padding:0 !important; margin:-1px !important; border:0 !important;
+    clip:rect(0 0 0 0) !important; overflow:hidden !important; opacity:0 !important;
+    pointer-events:none !important; }
+  .csel-ui{ display:block; position:relative; }
+  .csel-btn{ width:100%; height:40px; display:flex; align-items:center; justify-content:space-between;
+    gap:8px; background:var(--bg); border:1px solid rgba(var(--warn1-rgb),.3); border-radius:6px;
+    color:var(--t1); font-family:var(--mono); font-size:15px; font-weight:600; padding:0 12px;
+    cursor:pointer; text-align:left; line-height:1.2; }
+  .csel-btn:hover{ border-color:rgba(var(--warn1-rgb),.55); }
+  .csel-txt{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .csel-arw{ color:var(--t3); font-size:11px; flex:0 0 auto; transition:transform .15s ease; }
+  .csel-ui.open .csel-arw{ transform:rotate(180deg); }
+  /* position:fixed → .card 의 overflow-x:hidden(=overflow-y auto) 클리핑을 원천 회피. 좌표는 JS로. */
+  .csel-list{ display:none; position:fixed; z-index:4000;
+    background:var(--card); border:1px solid rgba(var(--warn1-rgb),.4); border-radius:8px;
+    box-shadow:0 10px 28px rgba(0,0,0,.38); max-height:288px; overflow-y:auto; padding:4px; }
+  .csel-ui.open .csel-list{ display:block; }
+  .csel-opt{ padding:9px 12px; border-radius:6px; font-size:15px; font-weight:600; color:var(--t1);
+    cursor:pointer; white-space:nowrap; }
+  .csel-opt:hover{ background:rgba(var(--warn1-rgb),.12); }
+  .csel-opt.sel{ background:rgba(var(--warn1-rgb),.20); font-weight:800; }
+}
+</style>
+<script id="csel-js-2026-07-16">
+/* 커스텀 드롭다운 엔진 — 원본 <select> 를 그대로 두고 UI만 대체. 값·change 이벤트 동일 유지. */
+(function(){
+  function init(ui){
+    var id=ui.getAttribute('data-for');
+    var sel=document.getElementById(id); if(!sel) return;
+    if(ui.__cselInit) return; ui.__cselInit=true;
+    var btn=ui.querySelector('.csel-btn'),
+        txt=ui.querySelector('.csel-txt'),
+        list=ui.querySelector('.csel-list');
+    function label(){
+      var o=sel.options[sel.selectedIndex];
+      txt.textContent = o ? o.textContent : '';
+    }
+    function render(){
+      list.innerHTML='';
+      Array.prototype.forEach.call(sel.options, function(o){
+        var d=document.createElement('div');
+        d.className='csel-opt'+(o.selected?' sel':'');
+        d.setAttribute('role','option');
+        d.textContent=o.textContent;
+        d.addEventListener('click', function(ev){ ev.stopPropagation(); pick(o.value); });
+        list.appendChild(d);
+      });
+    }
+    function pick(v){
+      sel.value=v;
+      try{ sel.dispatchEvent(new Event('change',{bubbles:true})); }catch(e){}
+      label(); close();
+    }
+    function place(){
+      var r=btn.getBoundingClientRect();
+      var vh=window.innerHeight||document.documentElement.clientHeight;
+      list.style.left=r.left+'px';
+      list.style.width=r.width+'px';
+      /* 아래 공간이 부족하면 위로 펼친다 */
+      var spaceBelow=vh-r.bottom;
+      if(spaceBelow<200 && r.top>spaceBelow){
+        list.style.top='auto';
+        list.style.bottom=(vh-r.top+4)+'px';
+      }else{
+        list.style.bottom='auto';
+        list.style.top=(r.bottom+4)+'px';
+      }
+    }
+    function open(){ if(sel.disabled) return; render(); label(); ui.classList.add('open'); place(); }
+    function close(){ ui.classList.remove('open'); }
+    btn.addEventListener('click', function(e){ e.stopPropagation(); ui.classList.contains('open')?close():open(); });
+    document.addEventListener('click', function(e){ if(!ui.contains(e.target) && !list.contains(e.target)) close(); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') close(); });
+    /* fixed 목록은 스크롤을 따라가지 않으므로 스크롤/리사이즈 시 닫는다 */
+    window.addEventListener('scroll', function(){ if(ui.classList.contains('open')) close(); }, true);
+    window.addEventListener('resize', function(){ if(ui.classList.contains('open')) close(); });
+    /* 다른 코드가 select 값을 바꿔도 라벨 동기화 */
+    sel.addEventListener('change', label);
+    label();
+  }
+  function boot(){ Array.prototype.forEach.call(document.querySelectorAll('.csel-ui'), init); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
 </script>
 </body>
