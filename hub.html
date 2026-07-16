@@ -1159,11 +1159,11 @@ jiktUpdateViewModeLabel();
       }
     }catch(e){}
 
-    /* 0-B) [직트 지시 2026-07-14] 모바일에서만 제목을 `트레이딩 룸` 으로.
-            ⚠ HTML 을 고치면 PC 도 바뀐다 (절대규칙 1) → 모바일에서만 글자를 바꾼다. */
+    /* 0-B) [직트 재지시 2026-07-16] 모바일 제목을 전체 문구 `직트&레이 트레이딩 룸` 으로.
+            (예전엔 '트레이딩 룸'으로 줄였는데, 전체 문구로 표시해달라는 요청) */
     try{
       var ttl=document.querySelector('.hub-title');
-      if(ttl && ttl.textContent.trim()!=='트레이딩 룸') ttl.textContent='트레이딩 룸';
+      if(ttl && ttl.textContent.trim()!=='직트&레이 트레이딩 룸') ttl.textContent='직트&레이 트레이딩 룸';
     }catch(e){}
 
     /* 1) 쿠폰 배너를 카드 3장 아래로 옮긴다 */
