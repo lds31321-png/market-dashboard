@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260716-021408">
+<meta name="jikt-build" content="20260716-093207">
 <script>
 // [라이트 테마] 화면 요소(DOM)의 인라인 파랑 → 살몬. 캔버스/차트는 style속성에 색이 없어 안전.
 var _jiktMO=null;
@@ -44,7 +44,7 @@ window.addEventListener('storage',function(e){if(e.key==='jikt_theme'){var wl=(e
 
 /* [자동 최신화 v2] 배포 빌드버전 vs 서버 ver.txt 비교 → 다르면 캐시우회 1회 새로고침(무한루프 방지) */
 (function(){try{
-  var BUILD='20260716-021408';
+  var BUILD='20260716-093207';
   if(BUILD.charAt(0)==='_')return;
   fetch('../ver.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null;}).then(function(v){
     if(!v)return; v=v.trim(); if(!v||v===BUILD)return;
@@ -8622,6 +8622,14 @@ body{padding-bottom:0}
     font-size:12px !important; font-weight:800 !important; padding:10px 0 !important; margin:0 !important;
     height:auto !important; box-shadow:none !important; }
 
+  /* [직트 지시 2026-07-16] 각 영역 헤더 좌측에 파란 세로 바 (헤더 구분 시인성) */
+  .jm-st-t, .jm-card-ttl, .jm-mg-l, .jm-nonehd-t{
+    border-left:3px solid #4593FC !important; padding-left:8px !important; line-height:1.15 !important; }
+  /* [직트 지시] 위험 포지션 카드 필터(종목·월물·구분)도 진입예정처럼 파란 테두리 + 주황 포커스 제거 */
+  .jm-flt-c{ border:1.5px solid rgba(69,147,252,.55) !important; }
+  .jm-flt-c select:focus{ outline:none !important; }
+  .jm-flt-c:focus-within{ border-color:rgba(143,192,255,1) !important; }
+
   /* ===== 매매 현황 탭 ===== */
   #page-trade{ padding:0 12px 24px 12px !important; max-width:none !important; gap:0 !important; }
   #tr-sticky-nav{ display:none !important; }
@@ -11451,6 +11459,21 @@ body{padding-bottom:0}
   }
   setInterval(build, 1200);
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', function(){ setTimeout(build,1500); }); else setTimeout(build,1500);
+})();
+</script>
+<script id="jm-collapse-2026-07-16">
+/* [직트 지시] 다른 탭 갔다 오면 펼쳐둔 카드는 모두 접힌 상태로 리셋 */
+(function(){
+  function isMob(){ try{return matchMedia('(max-width:640px)').matches;}catch(e){return false;} }
+  document.addEventListener('click', function(e){
+    var t=e.target.closest('.nav-tab'); if(!t || !isMob()) return;
+    setTimeout(function(){
+      document.querySelectorAll('.jm-open').forEach(function(c){
+        c.classList.remove('jm-open');
+        var ar=c.querySelector('.jm-ar'); if(ar) ar.textContent='\u2304';
+      });
+    }, 60);
+  }, true);
 })();
 </script>
 </body>
