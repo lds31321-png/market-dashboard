@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260717-201824">
+<meta name="jikt-build" content="20260718-001829">
 <script>
 // [라이트 테마] 화면 요소(DOM)의 인라인 파랑 → 살몬. 캔버스/차트는 style속성에 색이 없어 안전.
 var _jiktMO=null;
@@ -44,7 +44,7 @@ window.addEventListener('storage',function(e){if(e.key==='jikt_theme'){var wl=(e
 
 /* [자동 최신화 v2] 배포 빌드버전 vs 서버 ver.txt 비교 → 다르면 캐시우회 1회 새로고침(무한루프 방지) */
 (function(){try{
-  var BUILD='20260717-201824';
+  var BUILD='20260718-001829';
   if(BUILD.charAt(0)==='_')return;
   fetch('../ver.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null;}).then(function(v){
     if(!v)return; v=v.trim(); if(!v||v===BUILD)return;
@@ -1802,6 +1802,37 @@ input[type=range] { background: transparent !important; border: none !important;
   [style*="font-size:18px"] { font-size: 15px !important; }
 }
 /* ===== 모바일 강화 패치 v2 끝 ===== */
+</style>
+<style id="jikt-refine-v1-2026-07-17">
+/* === 직트 대시보드 리파인 v1 — 노션 '색 절제 원칙' + 3레이어 그림자 + 은은한 효과 + Pretendard === */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+/* 1) 폰트 → Pretendard (세련된 한글) */
+html:not(.theme-light) body, html:not(.theme-light) .page, html:not(.theme-light) .page *{
+  font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif;
+}
+html:not(.theme-light){ --font-n:'Pretendard','Noto Sans KR',sans-serif !important;
+  --sans:'Pretendard','Noto Sans KR',sans-serif !important; }
+/* 2) 장식 파랑(--cyan)만 무채색으로 — 손익(--red)·경고(--warn)는 그대로 유지 */
+html:not(.theme-light){
+  --cyan:#b4bcc8 !important; --cyan-rgb:180,188,200 !important; --cyan-a:rgba(180,188,200,.10) !important;
+  --t1:#F5F6F8 !important;            /* 순백 → 노션 오프화이트 */
+  --bg:#14161A !important;            /* 페이지 배경(노션 값) */
+  --b1:rgba(255,255,255,.07) !important;
+}
+/* 3) 헤더·섹션 뒤 점무늬/글로우 텍스처 제거 */
+[style*="radial-gradient"]{ background-image:none !important; }
+/* 4) 카드 3레이어 검정 그림자(입체감) + 호버 리프트 — 색 그림자 금지(노션) */
+html:not(.theme-light) .card{
+  box-shadow:0 1px 3px rgba(0,0,0,.26), 0 8px 20px rgba(0,0,0,.20), 0 24px 48px rgba(0,0,0,.26) !important;
+  transition:transform .22s cubic-bezier(.2,.7,.3,1), box-shadow .22s ease !important;
+}
+html:not(.theme-light) .card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 2px 5px rgba(0,0,0,.30), 0 14px 34px rgba(0,0,0,.26), 0 40px 74px rgba(0,0,0,.34) !important;
+}
+/* 5) 표 행 호버 하이라이트(무채색) */
+html:not(.theme-light) table tbody tr{ transition:background .16s ease; }
+html:not(.theme-light) table tbody tr:hover{ background:rgba(255,255,255,.035) !important; }
 </style>
 </head><body>
 <canvas id="vol-fx" style="position:fixed;inset:0;z-index:-1;pointer-events:none"></canvas>
