@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260717-170646">
+<meta name="jikt-build" content="20260717-173100">
 <script>
 // [라이트 테마] 화면 요소(DOM)의 인라인 파랑 → 살몬. 캔버스/차트는 style속성에 색이 없어 안전.
 var _jiktMO=null;
@@ -44,7 +44,7 @@ window.addEventListener('storage',function(e){if(e.key==='jikt_theme'){var wl=(e
 
 /* [자동 최신화 v2] 배포 빌드버전 vs 서버 ver.txt 비교 → 다르면 캐시우회 1회 새로고침(무한루프 방지) */
 (function(){try{
-  var BUILD='20260717-170646';
+  var BUILD='20260717-173100';
   if(BUILD.charAt(0)==='_')return;
   fetch('../ver.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null;}).then(function(v){
     if(!v)return; v=v.trim(); if(!v||v===BUILD)return;
@@ -10078,7 +10078,10 @@ body{padding-bottom:0}
         if(o.getAttribute('data-jm0')===null) o.setAttribute('data-jm0', o.textContent);
         var t=String(o.getAttribute('data-jm0')||'');
         var clean=t.replace(/\s*\([^)]*\)\s*$/,'').trim();
-        if(clean) o.textContent=clean;
+        /* [2026-07-17] 흔들림 원인 수정: 값이 이미 같으면 다시 쓰지 않는다.
+           예전엔 매 tick(0.4초)마다 12개 옵션 글자를 다시 써서, 그 변경이 감시기를 또 깨워
+           끝없이 다시 그리며 기본 목록이 계속 흔들리고 선택이 안 됐다. */
+        if(clean && o.textContent!==clean) o.textContent=clean;
       });
     }catch(e){}
   }
@@ -10123,13 +10126,10 @@ body{padding-bottom:0}
     var grid=mk('div','jm-grid');
     [['sim-inst','종목'],['sim-opt','구분'],['sim-qty','계약수'],['sim-price','진입가']].forEach(function(t){
       var inp=document.getElementById(t[0]); if(!inp) return;
-      /* [2026-07-17] 종목(sim-inst)은 커스텀 드롭다운 래퍼(.csel-field)를 통째로 옮긴다.
-         select 만 옮기면 흔들림 없는 커스텀 목록(.csel-ui)이 안 따라와 기본 목록이 다시 떠 흔들렸다. */
-      var moveEl=inp; if(t[0]==='sim-inst'){ var cf=inp.closest('.csel-field'); if(cf) moveEl=cf; }
       var cell=mk('div','jm-cell');
       var l=mk('div','jm-lbl'); l.textContent=t[1];
       var fl=mk('div','jm-fld');
-      cell.appendChild(l); cell.appendChild(fl); fl.appendChild(moveEl);
+      cell.appendChild(l); cell.appendChild(fl); fl.appendChild(inp);
       grid.appendChild(cell);
     });
     fc.appendChild(grid);
@@ -11496,35 +11496,34 @@ body{padding-bottom:0}
 })();
 </script>
 <style id="csel-css-2026-07-16">
-/* 진입 예정 '종목' 커스텀 드롭다운 — PC·모바일 공통.
-   네이티브 select 흔들림(잔상)을 없애기 위해, 원본 select 는 값 저장용으로만 숨겨두고
-   커스텀 UI(csel)가 화면 표시와 선택을 담당한다. (모바일에서도 동일 동작) */
-.csel-field{ position:relative; }
-/* 원본 select 는 값 저장용으로만 남기고 화면에서 숨긴다(로직 불변) */
-.csel-field > select#sim-inst{
-  position:absolute !important; width:1px !important; height:1px !important;
-  padding:0 !important; margin:-1px !important; border:0 !important;
-  clip:rect(0 0 0 0) !important; overflow:hidden !important; opacity:0 !important;
-  pointer-events:none !important; }
-.csel-ui{ display:block; position:relative; }
-.csel-btn{ width:100%; height:40px; display:flex; align-items:center; justify-content:space-between;
-  gap:8px; background:var(--bg); border:1px solid rgba(var(--warn1-rgb),.3); border-radius:6px;
-  color:var(--t1); font-family:var(--mono); font-size:15px; font-weight:600; padding:0 12px;
-  cursor:pointer; text-align:left; line-height:1.2; -webkit-tap-highlight-color:transparent; }
-.csel-btn:hover{ border-color:rgba(var(--warn1-rgb),.55); }
-.csel-txt{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.csel-arw{ color:var(--t3); font-size:11px; flex:0 0 auto; transition:transform .15s ease; }
-.csel-ui.open .csel-arw{ transform:rotate(180deg); }
-/* position:fixed → .card 의 overflow-x:hidden(=overflow-y auto) 클리핑을 원천 회피. 좌표는 JS로. */
-.csel-list{ display:none; position:fixed; z-index:4000;
-  background:var(--card); border:1px solid rgba(var(--warn1-rgb),.4); border-radius:8px;
-  box-shadow:0 10px 28px rgba(0,0,0,.38); max-height:288px; overflow-y:auto; padding:4px;
-  -webkit-overflow-scrolling:touch; }
-.csel-ui.open .csel-list{ display:block; }
-.csel-opt{ padding:11px 12px; border-radius:6px; font-size:15px; font-weight:600; color:var(--t1);
-  cursor:pointer; white-space:nowrap; -webkit-tap-highlight-color:transparent; }
-.csel-opt:hover{ background:rgba(var(--warn1-rgb),.12); }
-.csel-opt.sel{ background:rgba(var(--warn1-rgb),.20); font-weight:800; }
+/* 진입 예정 '종목' 커스텀 드롭다운 — PC(>640px)에서만 사용.
+   모바일(≤640px)에서는 커스텀 UI를 숨기고 기본 목록(OS 피커)을 그대로 쓴다. (직트 요청 2026-07-17) */
+.csel-ui{ display:none; }
+@media(min-width:641px){
+  .csel-field{ position:relative; }
+  .csel-field > select#sim-inst{
+    position:absolute !important; width:1px !important; height:1px !important;
+    padding:0 !important; margin:-1px !important; border:0 !important;
+    clip:rect(0 0 0 0) !important; overflow:hidden !important; opacity:0 !important;
+    pointer-events:none !important; }
+  .csel-ui{ display:block; position:relative; }
+  .csel-btn{ width:100%; height:40px; display:flex; align-items:center; justify-content:space-between;
+    gap:8px; background:var(--bg); border:1px solid rgba(var(--warn1-rgb),.3); border-radius:6px;
+    color:var(--t1); font-family:var(--mono); font-size:15px; font-weight:600; padding:0 12px;
+    cursor:pointer; text-align:left; line-height:1.2; }
+  .csel-btn:hover{ border-color:rgba(var(--warn1-rgb),.55); }
+  .csel-txt{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .csel-arw{ color:var(--t3); font-size:11px; flex:0 0 auto; transition:transform .15s ease; }
+  .csel-ui.open .csel-arw{ transform:rotate(180deg); }
+  .csel-list{ display:none; position:fixed; z-index:4000;
+    background:var(--card); border:1px solid rgba(var(--warn1-rgb),.4); border-radius:8px;
+    box-shadow:0 10px 28px rgba(0,0,0,.38); max-height:288px; overflow-y:auto; padding:4px; }
+  .csel-ui.open .csel-list{ display:block; }
+  .csel-opt{ padding:9px 12px; border-radius:6px; font-size:15px; font-weight:600; color:var(--t1);
+    cursor:pointer; white-space:nowrap; }
+  .csel-opt:hover{ background:rgba(var(--warn1-rgb),.12); }
+  .csel-opt.sel{ background:rgba(var(--warn1-rgb),.20); font-weight:800; }
+}
 </style>
 <script id="csel-js-2026-07-16">
 /* 커스텀 드롭다운 엔진 — 원본 <select> 를 그대로 두고 UI만 대체. 값·change 이벤트 동일 유지. */
@@ -11591,9 +11590,16 @@ body{padding-bottom:0}
 /* [2026-07-17] 모바일 탭 전환을 부드럽게 — 새 탭 내용이 살짝 페이드로 나타난다.
    (탭이 다시 그려질 때의 '뚝뚝 끊김'을 부드러운 등장으로 덮는다. PC엔 영향 없음.) */
 @media(max-width:640px){
-  .page.active{ animation: jmPageFade .18s ease-out; }
-  @keyframes jmPageFade{ from{ opacity:.2; } to{ opacity:1; } }
+  .page.active{ animation: jmPageFade .2s ease-out; }
+  @keyframes jmPageFade{ from{ opacity:.25; } to{ opacity:1; } }
+  /* 스와이프 방향에 따라 슥 들어오는 슬라이드(가로) — 탭 클릭 땐 위 페이드만 */
+  .page.active.jm-slide-r{ animation: jmSlideR .27s cubic-bezier(.22,.61,.36,1); }
+  .page.active.jm-slide-l{ animation: jmSlideL .27s cubic-bezier(.22,.61,.36,1); }
+  @keyframes jmSlideR{ from{ opacity:.25; transform:translateX(20px); } to{ opacity:1; transform:translateX(0); } }
+  @keyframes jmSlideL{ from{ opacity:.25; transform:translateX(-20px); } to{ opacity:1; transform:translateX(0); } }
 }
+/* 슬라이드 중 가로 스크롤바가 잠깐 뜨는 것 방지 */
+@media(max-width:640px){ body{ overflow-x:hidden; } }
 </style>
 <script id="jm-swipe-2026-07-16">
 /* [직트 지시] 모바일 좌우 스와이프로 상단 탭 전환.
@@ -11635,8 +11641,14 @@ body{padding-bottom:0}
     if(next<0 || next>=list.length) return;
     try{ list[next].click(); }catch(_){}
     try{ list[next].scrollIntoView({inline:'center', block:'nearest'}); }catch(_){}
-    /* 부드러운 느낌: 겹치는 스크롤 애니메이션 없이 즉시 상단으로(페이드는 .page.active 로 처리) */
+    /* 부드러운 느낌: 겹치는 스크롤 애니메이션 없이 즉시 상단으로(페이드/슬라이드는 .page.active 로 처리) */
     try{ window.scrollTo(0,0); }catch(_){}
+    /* 방향성 슬라이드 — 넘긴 방향에서 새 탭이 슥 들어온다 (왼쪽으로 밀면 오른쪽에서 등장) */
+    try{
+      var ap=document.querySelector('.page.active');
+      if(ap){ ap.classList.remove('jm-slide-l','jm-slide-r'); void ap.offsetWidth;
+        ap.classList.add(dx<0?'jm-slide-r':'jm-slide-l'); }
+    }catch(_){}
   }, {passive:true});
 })();
 </script>
