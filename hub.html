@@ -488,6 +488,20 @@ document.addEventListener('DOMContentLoaded',jiktSyncThemeLabel);
   }
 }
 </style>
+<style id="jikt-refine-uni-2026-07-18">
+/* === 공통 리파인 — 폰트 통일(Pretendard) + 점무늬 제거 (테마 색은 불변, 라이트/다크 공통 안전) === */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+:root, .theme-light, .theme-blue{
+  --mono:'Pretendard','Noto Sans KR',sans-serif !important;
+  --font-n:'Pretendard','Noto Sans KR',sans-serif !important;
+  --font-m:'Pretendard','Noto Sans KR',sans-serif !important;
+  --sans:'Pretendard','Noto Sans KR',sans-serif !important;
+  --uxc-font:'Pretendard','Noto Sans KR',sans-serif !important;
+  --font:'Pretendard','Noto Sans KR',sans-serif !important;
+}
+body{ font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif; font-variant-numeric:tabular-nums; }
+[style*="radial-gradient"]{ background-image:none !important; }
+</style>
 </head>
 <body>
 <div id="hub-ambient"></div>
@@ -737,7 +751,7 @@ jiktUpdateViewModeLabel();
    색은 종합 옵션 대시보드 모바일과 완전히 같은 값을 쓴다.
      배경 #14161A / 카드 #1E2027 / 타일 #23262E / 예시박스 #16233A
      글 #F5F6F8 / 라벨 #8B95A1 / 흐린글 #868F9C
-     파랑 #4593FC · 밝은파랑 #8FC0FF · 버튼 #2A4A7A
+     파랑 #5F8AD4 · 밝은파랑 #8FC0FF · 버튼 #2A4A7A
    ============================================================ */
 @media (max-width:640px){
 
@@ -859,9 +873,9 @@ jiktUpdateViewModeLabel();
         "눌러서 들어가는 카드"라는 표시가 어긋났다 → 3장 모두 화살표를 보인다.
      ★ 근거: 레퍼런스 A-08(선택 카드 = 파란 테두리로 표시) + 유튜브 원칙 8(한 번에 하나).
         단, 2·3번 카드를 흐리게 낮추지는 않는다 — 기존 회원이 매일 2단계로 들어가기 때문. */
-  .card-grid > .hub-card:first-child{ border:2px solid #4593FC !important; }
+  .card-grid > .hub-card:first-child{ border:2px solid #5F8AD4 !important; }
   .card-grid > .hub-card:first-child .card-step .n{ background:#2A4A7A !important; color:#8FC0FF !important; }
-  .card-grid > .hub-card:first-child .card-chev{ stroke:#4593FC !important; }
+  .card-grid > .hub-card:first-child .card-chev{ stroke:#5F8AD4 !important; }
   .card-grid > .hub-card:first-child .card-items{ border-top-color:rgba(69,147,252,.25) !important; }
 
   /* --- 쿠폰 배너: 카드 아래로 (자리 이동은 아래 스크립트가 한다) ---
@@ -1014,7 +1028,7 @@ jiktUpdateViewModeLabel();
   /* 막대는 '65% 할인' 하나만 담는다. 높이를 자동으로 둬 큰글씨에서 안 터지게 한다 */
   .jcb-bar{ height:auto !important; min-height:24px !important; border-radius:6px !important;
     background:#2E323C !important; }
-  /* [1차 검수] 밝은 파랑(#4593FC) 위 흰 글씨 = 대비 3.07 (4.5 미달). 함정 29와 같은 사고.
+  /* [1차 검수] 밝은 파랑(#5F8AD4) 위 흰 글씨 = 대비 3.07 (4.5 미달). 함정 29와 같은 사고.
      → 막대 파랑을 진한 파랑(#1A5FBF)으로 낮춘다. 흰 글씨 대비 4.5 확보용 검증된 값. */
   .jcb-bar-fill{ position:relative !important; width:65% !important;
     background:#1A5FBF !important; border-radius:6px !important;
@@ -1033,7 +1047,7 @@ jiktUpdateViewModeLabel();
     border-left:2px solid #5F6672 !important; padding-left:10px !important;
     border-radius:0 !important; }
   /* 신규 가입자 그룹만 파란 세로선 (첫 그룹 = 처음 온 사람이 볼 곳) */
-  .jcb-groups > div:first-child > .jcb-group-h{ border-left-color:#4593FC !important; }
+  .jcb-groups > div:first-child > .jcb-group-h{ border-left-color:#5F8AD4 !important; }
   /* 그룹 안 카드들을 한 덩어리로 묶는 배경 */
   .jcb-groups > div{ background:#20232A !important; border-radius:12px !important;
     padding:12px !important; }
@@ -1042,7 +1056,7 @@ jiktUpdateViewModeLabel();
   .jcc{ background:#23262E !important; border:0 !important; border-radius:10px !important;
     padding:14px !important; margin-bottom:6px !important; min-height:32px !important;
     align-items:center !important; }
-  .jcc[aria-expanded="true"]{ border:1px solid #4593FC !important; margin-bottom:0 !important; }
+  .jcc[aria-expanded="true"]{ border:1px solid #5F8AD4 !important; margin-bottom:0 !important; }
   /* ★ 금액 칸이 52px 고정이었다 → 큰글씨 2배에서 `5만 / 원` 3줄로 쪼개졌다 (실제 사고).
        글자를 키울 땐 칸을 함께 늘린다 (Part 3-3). 칸은 자동, 글자는 줄바꿈 금지. */
   /* [종합 옵션 기준] 쿠폰 금액 16px/800 · 이름 14px/800/흰 · % 와 사용기간 12px/400/회색 */

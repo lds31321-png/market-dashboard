@@ -34,22 +34,22 @@
   --t1:#FFFFFF;          /* 주 텍스트 (웜 블랙) */
   --t2:#B0B8C1;          /* 보조 텍스트 */
   --t3:#8B95A1;          /* 흐린 텍스트 */
-  --accent:#4593FC;      /* 살몬/테라코타 — Claude 액센트 */
+  --accent:#5F8AD4;      /* 살몬/테라코타 — Claude 액센트 */
   --accent-a:rgba(69,147,252,.10);
   --accent-b:rgba(69,147,252,.06);
   --profit:#FF8080;      /* 수익 — 다크 그린 */
   --profit-bg:rgba(255,128,128,.07);
   --profit-border:rgba(255,128,128,.2);
-  --loss:#4593FC;        /* 손실 — 다크 블루 */
+  --loss:#5F8AD4;        /* 손실 — 다크 블루 */
   --loss-bg:rgba(69,147,252,.07);
   --loss-border:rgba(69,147,252,.2);
   /* 레거시 변수 (차트/바 내부 참조) */
-  --cyan:#4593FC;--green:#FF8080;--yellow:#FFB020;--orange:#4593FC;--red:#FF8080;--purple:#A78BFA;
+  --cyan:#5F8AD4;--green:#FF8080;--yellow:#E3A845;--orange:#5F8AD4;--red:#FF8080;--purple:#A78BFA;
   --cyan-a:rgba(69,147,252,.08);--green-a:rgba(255,128,128,.08);
   --yellow-a:rgba(255,176,32,.08);--orange-a:rgba(69,147,252,.08);
   --red-a:rgba(255,128,128,.08);--purple-a:rgba(167,139,250,.08);
   --grad-title:linear-gradient(135deg,#FFFFFF 0%,#8B95A1 100%);
-  --grad-green:linear-gradient(135deg,#FF8080 0%,#4593FC 100%);
+  --grad-green:linear-gradient(135deg,#FF8080 0%,#5F8AD4 100%);
   --mono:'IBM Plex Mono',monospace;
   --sans:'IBM Plex Sans KR','Noto Sans KR',sans-serif;
   --font-h:'IBM Plex Sans KR','Noto Sans KR',sans-serif;
@@ -234,7 +234,7 @@ body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:13px
 @keyframes pulse-title{0%,100%{opacity:1;}50%{opacity:.45;}}
 .rec-row{cursor:pointer;transition:background .15s;}
 .rec-row:hover td{background:rgba(var(--accent-rgb),.06);}
-.new-pos{border:2px solid #4593FC!important;animation:pulse-new 2s ease-in-out infinite;}
+.new-pos{border:2px solid #5F8AD4!important;animation:pulse-new 2s ease-in-out infinite;}
 html.theme-light .new-pos{border-color:var(--accent)!important;}
 
 /* ── 브리핑 모달 ── */
@@ -520,6 +520,20 @@ html.theme-light .new-pos{border-color:var(--accent)!important;}
 // 메인(hub) 버튼에서 테마 변경 시 실시간 동기화: 다른 탭에서 jikt_theme 바뀌면 새로고침해 안전 반영
 window.addEventListener('storage',function(e){if(e.key==='jikt_theme'){var want=(e.newValue==='light');var cur=document.documentElement.classList.contains('theme-light');if(want!==cur){location.reload();}}});
 </script>
+<style id="jikt-refine-uni-2026-07-18">
+/* === 공통 리파인 — 폰트 통일(Pretendard) + 점무늬 제거 (테마 색은 불변, 라이트/다크 공통 안전) === */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+:root, .theme-light, .theme-blue{
+  --mono:'Pretendard','Noto Sans KR',sans-serif !important;
+  --font-n:'Pretendard','Noto Sans KR',sans-serif !important;
+  --font-m:'Pretendard','Noto Sans KR',sans-serif !important;
+  --sans:'Pretendard','Noto Sans KR',sans-serif !important;
+  --uxc-font:'Pretendard','Noto Sans KR',sans-serif !important;
+  --font:'Pretendard','Noto Sans KR',sans-serif !important;
+}
+body{ font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif; font-variant-numeric:tabular-nums; }
+[style*="radial-gradient"]{ background-image:none !important; }
+</style>
 </head>
 <body>
 <style>
@@ -975,14 +989,14 @@ window.ohToggle=function(id,btn){ var el=document.getElementById(id); if(!el)ret
 /* 추천표(이번 주 신규 추천 종목)와 동일한 표 스타일 */
 function ohTh(t,al){ return '<th style="text-align:'+(al||'left')+';font-size:13px;font-weight:600;color:var(--t2);padding:8px 13px;border-bottom:1.5px solid var(--b1);white-space:nowrap;letter-spacing:.02em;">'+t+'</th>'; }
 function ohCell(v,al,bold){ return '<td style="text-align:'+(al||'left')+';padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:14px;color:var(--t1);white-space:nowrap;'+(bold?'font-weight:700;':'')+'">'+hEsc(v)+'</td>'; }
-/* 수익=빨강(#4593FC), 손실=파랑(#4593FC) */
+/* 수익=빨강(#5F8AD4), 손실=파랑(#5F8AD4) */
 /* [2026-07-13] HTML 그대로 넣는 셀 (줄바꿈·색상 표기용) — 값은 넣는 쪽에서 이스케이프 처리함 */
 function ohCellRaw(v,al,bold){ return '<td style="text-align:'+(al||'left')+';padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:14px;color:var(--t1);white-space:nowrap;vertical-align:top;line-height:1.7;'+(bold?'font-weight:700;':'')+'">'+(v==null?'-':v)+'</td>'; }
-function ohPnlInner(usd,rate){ var man=Math.round((usd||0)*rate/10000); var sgn=usd>0?'+':usd<0?'-':''; var col=usd>0?'#FF8080':usd<0?'#4593FC':'var(--t3)'; return '<span style="color:'+col+';font-weight:700;">'+sgn+Math.abs(man).toLocaleString('ko-KR')+'만원 <span style="font-size:11px;color:var(--t3);font-weight:600;">('+sgn+'$'+Math.abs(usd||0).toLocaleString()+')</span></span>'; }
+function ohPnlInner(usd,rate){ var man=Math.round((usd||0)*rate/10000); var sgn=usd>0?'+':usd<0?'-':''; var col=usd>0?'#FF8080':usd<0?'#5F8AD4':'var(--t3)'; return '<span style="color:'+col+';font-weight:700;">'+sgn+Math.abs(man).toLocaleString('ko-KR')+'만원 <span style="font-size:11px;color:var(--t3);font-weight:600;">('+sgn+'$'+Math.abs(usd||0).toLocaleString()+')</span></span>'; }
 function ohPnlTd(usd,rate){ return '<td style="text-align:right;padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:14px;white-space:nowrap;">'+ohPnlInner(usd,rate)+'</td>'; }
 
 /* === 1-3 종목별 평가손익 요약 (유료 대시보드와 동일 디자인) === */
-function ohPc(v){ return v>0?'#FF8080':v<0?'#4593FC':'var(--t2)'; }
+function ohPc(v){ return v>0?'#FF8080':v<0?'#5F8AD4':'var(--t2)'; }
 function ohUF(usd,rate){ var man=Math.round((usd||0)*rate/10000); return (man>=0?'+':'-')+Math.abs(man).toLocaleString('ko-KR')+'만원'; }
 function ohSumTh(arr){ return '<tr>'+arr.map(function(t,i){return '<th style="padding:10px 12px;text-align:'+(i?'right':'left')+';font-weight:700;color:var(--accent);border-bottom:2px solid rgba(var(--accent-rgb),.25);white-space:nowrap;">'+t+'</th>';}).join('')+'</tr>'; }
 function ohSumTd(t,a,c,b){ return '<td style="padding:9px 12px;text-align:'+(a||'left')+';font-weight:'+(b||400)+';color:'+(c||'var(--t1)')+';border-bottom:1px solid rgba(0,0,0,.05);white-space:nowrap;">'+t+'</td>'; }
@@ -1244,7 +1258,7 @@ function renderCards(pos){
       const pnlKrw=Math.round(Math.abs(p.current_pnl)*rate/10000);
       const cls=p.current_pnl>0?'profit':p.current_pnl<0?'loss':'neutral';
       const sign=p.current_pnl>0?'+':p.current_pnl<0?'-':'';
-      const pnlColor=p.current_pnl>0?'var(--profit)':p.current_pnl<0?'#4593FC':'var(--t3)';
+      const pnlColor=p.current_pnl>0?'var(--profit)':p.current_pnl<0?'#5F8AD4':'var(--t3)';
       pnlHtml=`<div class="pnl-row ${cls}"><span class="pnl-label">현재 평가손익</span><span class="pnl-val ${cls}" style="color:${pnlColor};">${sign}${pnlKrw}만원 <span style="font-size:12px;opacity:.8;">(${sign}$${Math.abs(p.current_pnl).toLocaleString()})</span></span></div>`;
     } else {
       const pnlMsg=isExpired?'만기청산':'업데이트 예정';
@@ -2031,8 +2045,8 @@ function renderPosKpi(){
   const lossCount   = a.filter(p => (p.current_pnl||0) < 0).length;
   const neutralCount = a.length - profitCount - lossCount;
 
-  // 색상 (수익=연빨강 #FF8080, 손실=연파랑 #4593FC)
-  const pnlColor = activePnlKrw > 0 ? '#FF8080' : activePnlKrw < 0 ? '#4593FC' : 'var(--t3)';
+  // 색상 (수익=연빨강 #FF8080, 손실=연파랑 #5F8AD4)
+  const pnlColor = activePnlKrw > 0 ? '#FF8080' : activePnlKrw < 0 ? '#5F8AD4' : 'var(--t3)';
   const pnlSign  = activePnlKrw > 0 ? '+' : activePnlKrw < 0 ? '-' : '';
 
   // 증거금 비율 (총 예탁금 대비) — 관리자 입력 pct 우선
@@ -2103,7 +2117,7 @@ function renderTimeline(){
 function showDotTip(n,pnl){
   const el=document.getElementById('dotTooltip');
   const sign=pnl>0?'+':'';
-  const color=pnl>0?'#FF8080':pnl<0?'#4593FC':'var(--t3)';
+  const color=pnl>0?'#FF8080':pnl<0?'#5F8AD4':'var(--t3)';
   el.innerHTML=`<span style="color:var(--t2)">${n}번 전략:</span> <strong style="color:${color}">${sign}${comma(pnl)}원</strong>`;
 }
 function hideDotTip(){document.getElementById('dotTooltip').innerHTML='';}
@@ -2112,9 +2126,9 @@ function getStory(s){
   const strikes=s.legs.filter(l=>l.type&&l.type.includes('매도')).map(l=>l.strike).join(', ');
   if(n===0) return {text:'상세 데이터를 준비 중이에요.',color:'var(--t3)'};
   if(r==='loss'){
-    if(n>=7) return {text:`<span class="hl">${n}번의 계약 조정</span>으로 방어했으나 결국 손절 마감. 가격이 예상 범위를 크게 벗어난 전략.`,color:'#4593FC'};
-    if(n>=4) return {text:`진입 후 <span class="hl">${n}번의 추가 주문</span>으로 방어했으나 결국 손절 마감.`,color:'#4593FC'};
-    return {text:`진입 후 가격이 예상 범위를 벗어나 손절 마감.`,color:'#4593FC'};
+    if(n>=7) return {text:`<span class="hl">${n}번의 계약 조정</span>으로 방어했으나 결국 손절 마감. 가격이 예상 범위를 크게 벗어난 전략.`,color:'#5F8AD4'};
+    if(n>=4) return {text:`진입 후 <span class="hl">${n}번의 추가 주문</span>으로 방어했으나 결국 손절 마감.`,color:'#5F8AD4'};
+    return {text:`진입 후 가격이 예상 범위를 벗어나 손절 마감.`,color:'#5F8AD4'};
   }
   if(n===1) return {text:`단 <span class="hl">1번의 주문</span>만으로 만기까지 수익 구간 유지. 가장 깔끔한 패턴.`,color:'#FF8080'};
   if(n===2) return {text:`<span class="hl">2개 주문</span>으로 양방향 커버하며 만기 수익 확정.`,color:'#FF8080'};
@@ -2322,7 +2336,7 @@ function renderHistory(filter){
           <td class="mono" style="color:${numColor};font-weight:700;font-size:14px;">${x.n}번 <span style="font-size:12px;color:var(--t3);font-weight:400;">(${statusLabel})</span></td>
           <td class="mono">${pnlText}<div style="font-size:13px;color:var(--t2);font-family:var(--mono);margin-top:4px;">${pos.underlying} · ${dLabel}</div></td>
           <td class="mono">${x.cumKrw!==undefined?comma(x.cumKrw)+'원':'—'}</td>
-          <td class="mono" style="color:${(x.cumPct||0)>=0?'#FF8080':'#4593FC'}">${x.cumPct!==undefined?(x.cumPct>=0?'+':'')+x.cumPct.toFixed(2)+'%':'—'}</td>
+          <td class="mono" style="color:${(x.cumPct||0)>=0?'#FF8080':'#5F8AD4'}">${x.cumPct!==undefined?(x.cumPct>=0?'+':'')+x.cumPct.toFixed(2)+'%':'—'}</td>
           <td>${x.pnlKrw!==undefined?(x.pnlKrw>0?'<span class="badge b-green">수익</span>':x.pnlKrw<0?'<span class="badge b-red">손실</span>':'<span class="badge b-gray">대기</span>'):'—'}</td>
         </tr>`;
       }).join('')
@@ -2343,7 +2357,7 @@ function renderHistory(filter){
       <td class="mono" style="color:${isExpiredHist?'var(--t3)':'var(--t1)'}">${x.n}번${isExpiredHist?` <span style="font-size:12px;color:var(--t3);font-family:var(--mono);font-weight:400;">(만기청산)</span>`:''}</td>
       <td class="mono ${cls}">${sign}${comma(x.pnl)}원<div class="inline-bar" style="width:${bw}%;background:${bc};height:3px;border-radius:2px;margin-top:4px;"></div><div class="h-clo-sub" style="display:none;font-family:var(--mono);">${commodity?commodity+' · ':''}청산</div></td>
       <td class="mono">${comma(x.cum)}원</td>
-      <td class="mono" style="color:${x.pct>=0?'#FF8080':'#4593FC'}">${(x.pct*100).toFixed(2)}%</td>
+      <td class="mono" style="color:${x.pct>=0?'#FF8080':'#5F8AD4'}">${(x.pct*100).toFixed(2)}%</td>
       <td style="display:flex;align-items:center;gap:8px;">${pill}</td>
     </tr>`;
     return mainRow + buildDetailRow(x, x.pnl, x.pct);
@@ -2429,7 +2443,7 @@ function buildStatCharts(){
   const _finalCumPct = _ac/_dp*100;
   const _finalCumAmt = Math.round(_ac/10000);
   const _cumSign = _finalCumPct >= 0 ? '+' : '';
-  const _cumColor = _finalCumPct >= 0 ? '#FF8080' : '#4593FC';
+  const _cumColor = _finalCumPct >= 0 ? '#FF8080' : '#5F8AD4';
   const _cumEl = document.getElementById('heroCumPct');
   if(_cumEl){ _cumEl.textContent=_cumSign+_finalCumPct.toFixed(2); _cumEl.style.color=_cumColor; }
   const _amtEl = document.getElementById('heroCumAmt');
@@ -2623,7 +2637,7 @@ function buildStatCharts(){
           ctx.save();
           ctx.textAlign='center';ctx.textBaseline='bottom';
           ctx.font='bold '+(_mbS?9:12)+'px IBM Plex Mono,monospace';
-          ctx.fillStyle=isWin?'#FF8080':'#4593FC';
+          ctx.fillStyle=isWin?'#FF8080':'#5F8AD4';
           ctx.fillText(v+'번',x,barTop-4);
           ctx.restore();
         });
@@ -2654,7 +2668,7 @@ function buildStatCharts(){
           color:tc,font:{size:_mbS?10:12,family:'IBM Plex Mono'},padding:_mbS?10:14,
           generateLabels:()=>[
             {text:'수익',fillStyle:'#FF8080',strokeStyle:'transparent',lineWidth:0,fontColor:'#B0B8C1',datasetIndex:0},
-            {text:'손실',fillStyle:'#4593FC',strokeStyle:'transparent',lineWidth:0,fontColor:'#B0B8C1',datasetIndex:1}
+            {text:'손실',fillStyle:'#5F8AD4',strokeStyle:'transparent',lineWidth:0,fontColor:'#B0B8C1',datasetIndex:1}
           ]
         }},
         tooltip:{enabled:false}
@@ -2769,7 +2783,7 @@ loadPositions();
    ⚠ 문서 맨 끝이므로 앞선 모바일 규칙을 이긴다(일부러).
 
    ★★ 색 절제 원칙 ★★
-     색은 손익 숫자에만.  수익 = #F06A6A(빨강) / 손실 = #4593FC(파랑)
+     색은 손익 숫자에만.  수익 = #EA6A60(빨강) / 손실 = #5F8AD4(파랑)
      그 외 전부 무채색.  파란 버튼은 화면당 딱 하나(거래 시작하기)
      경고색(주황·노랑)은 무료 대시보드에서 쓰지 않는다
    ============================================================ */
@@ -3057,7 +3071,7 @@ loadPositions();
   /* 수익 = 빨강, 손실 = 파랑. 이것 말고는 색을 쓰지 않는다. */
   function pnlCol(t){
     var s=String(t||'').trim();
-    return /^-/.test(s) ? '#4593FC' : (/^\+/.test(s) ? '#F06A6A' : '#F5F6F8');
+    return /^-/.test(s) ? '#5F8AD4' : (/^\+/.test(s) ? '#EA6A60' : '#F5F6F8');
   }
 
   var sig='';
@@ -3557,7 +3571,7 @@ loadPositions();
 
    ★ 수치 기준 (유튜브 원칙)
      본문 14~16px · 여백 8배수 · 위계 3단 · 터치 32px 이상
-   ★ 색 절제 — 수익 #F06A6A / 손실 #4593FC. 그 외 무채색
+   ★ 색 절제 — 수익 #EA6A60 / 손실 #5F8AD4. 그 외 무채색
    ============================================================ */
 @media (max-width:640px){
 
@@ -3590,8 +3604,8 @@ loadPositions();
   .fh-bar{ margin-top:12px !important; height:6px !important; background:#23262E !important;
     border-radius:20px !important; display:flex !important; overflow:hidden !important; }
   .fh-bar > i{ display:block !important; height:100% !important; }
-  .fh-bar-w{ background:#F06A6A !important; }
-  .fh-bar-l{ background:#4593FC !important; }
+  .fh-bar-w{ background:#EA6A60 !important; }
+  .fh-bar-l{ background:#5F8AD4 !important; }
 
   /* 필터 칩 (레퍼런스 #6) = 메타 12px. 종합 옵션 칩바는 11px */
   .fh-chips{ display:flex !important; gap:6px !important; margin:0 0 10px 0 !important; }
@@ -3637,7 +3651,7 @@ loadPositions();
   function T(e){ return e ? String(e.textContent||'').replace(/\s+/g,' ').trim() : ''; }
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function pnlCol(t){ var s=String(t||'').trim();
-    return /^-/.test(s) ? '#4593FC' : (/^\+/.test(s) ? '#F06A6A' : '#F5F6F8'); }
+    return /^-/.test(s) ? '#5F8AD4' : (/^\+/.test(s) ? '#EA6A60' : '#F5F6F8'); }
 
   var sig='', shown=20, filt='all';
 
@@ -3709,7 +3723,7 @@ loadPositions();
       }).join(' ');
       svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none">'
           +   '<polyline points="' + pl + '" fill="none" stroke="'
-          +   (pts[pts.length-1] >= pts[0] ? '#F06A6A' : '#4593FC')
+          +   (pts[pts.length-1] >= pts[0] ? '#EA6A60' : '#5F8AD4')
           +   '" stroke-width="2" vector-effect="non-scaling-stroke"/>'
           + '</svg>';
     }
@@ -3814,7 +3828,7 @@ loadPositions();
      B그룹          → 대표값 크게 → 아래로 분해
      #38            → 승률 막대
    ★ 수치 기준 — 본문 14~16px · 여백 8배수 · 위계 3단 · 터치 32px
-   ★ 색 절제 — 수익 #F06A6A / 손실 #4593FC. 그 외 무채색
+   ★ 색 절제 — 수익 #EA6A60 / 손실 #5F8AD4. 그 외 무채색
    ============================================================ */
 @media (max-width:640px){
 
@@ -3883,7 +3897,7 @@ loadPositions();
   function T(e){ return e ? String(e.textContent||'').replace(/\s+/g,' ').trim() : ''; }
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function pnlCol(t){ var s=String(t||'').trim();
-    return /^-/.test(s) ? '#4593FC' : (/^\+/.test(s) ? '#F06A6A' : '#F5F6F8'); }
+    return /^-/.test(s) ? '#5F8AD4' : (/^\+/.test(s) ? '#EA6A60' : '#F5F6F8'); }
   function num(s){ var v=parseFloat(String(s||'').replace(/[^\d.\-]/g,'')); return isNaN(v)?0:v; }
 
   var sig='';
@@ -3937,7 +3951,7 @@ loadPositions();
         }).join(' ');
         svg = '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">'
             +   '<polyline points="'+pl+'" fill="none" stroke="'
-            +   (pts[pts.length-1] >= pts[0] ? '#F06A6A' : '#4593FC')
+            +   (pts[pts.length-1] >= pts[0] ? '#EA6A60' : '#5F8AD4')
             +   '" stroke-width="2" vector-effect="non-scaling-stroke"/>'
             + '</svg>';
         break;
@@ -3962,11 +3976,11 @@ loadPositions();
          +   '<p class="fs-top">'
          +     (g.dep ? esc(g.dep) + '으로 시작해<br>' : '')
          +     '<b>' + esc(g.total) + '번 거래</b>했고<br>'
-         +     '<b style="color:#F06A6A">' + esc(g.win) + '번 이겼습니다</b>'
+         +     '<b style="color:#EA6A60">' + esc(g.win) + '번 이겼습니다</b>'
          +   '</p>'
          +   '<div class="fs-bar">'
-         +     '<i style="width:'+wrPct+'%;background:#F06A6A"></i>'
-         +     '<i style="width:'+(100-wrPct)+'%;background:#4593FC"></i>'
+         +     '<i style="width:'+wrPct+'%;background:#EA6A60"></i>'
+         +     '<i style="width:'+(100-wrPct)+'%;background:#5F8AD4"></i>'
          +   '</div>'
          +   '<p class="fs-lbl" style="margin-top:8px">승률 ' + esc(g.wr) + '% · '
          +     esc(g.win) + '승 ' + esc(g.los) + '패' + (g.live ? ' · ' + esc(g.live) + '개 진행중' : '') + '</p>'
@@ -3995,12 +4009,12 @@ loadPositions();
          +   '<div class="fs-cmp">'
          +     '<span class="fs-cmp-l">총 수익</span>'
          +     '<span class="fs-cmp-t"><i style="width:'+Math.round(sumW/mxSum*100)+'%;background:rgba(240,106,106,.35)"></i></span>'
-         +     '<span class="fs-cmp-v" style="color:#F06A6A">+'+Math.round(sumW).toLocaleString()+'만</span>'
+         +     '<span class="fs-cmp-v" style="color:#EA6A60">+'+Math.round(sumW).toLocaleString()+'만</span>'
          +   '</div>'
          +   '<div class="fs-cmp">'
          +     '<span class="fs-cmp-l">총 손실</span>'
          +     '<span class="fs-cmp-t"><i style="width:'+Math.round(sumL/mxSum*100)+'%;background:rgba(69,147,252,.35)"></i></span>'
-         +     '<span class="fs-cmp-v" style="color:#4593FC">-'+Math.round(sumL).toLocaleString()+'만</span>'
+         +     '<span class="fs-cmp-v" style="color:#5F8AD4">-'+Math.round(sumL).toLocaleString()+'만</span>'
          +   '</div>'
          +   (pfNum ? '<p class="fs-said">총 수익 ÷ 총 손실 = <b>'+pfNum.toFixed(1)+'배</b>'
                     + '<br><span style="color:#8B95A1">평균 수익 '+esc(g.avgW)+'만원 · 평균 손실 '+esc(g.avgL)+'만원</span></p>' : '')
@@ -4017,8 +4031,8 @@ loadPositions();
        +     '<div class="fs-row"><span class="fs-lbl">총 전략 수</span><span class="v">'+esc(g.total)+'번</span></div>'
        +     '<div class="fs-row"><span class="fs-lbl">진행 중</span><span class="v">'+esc(g.live)+'개</span></div>'
        +     '<div class="fs-row"><span class="fs-lbl">승률</span><span class="v">'+esc(g.wr)+'%</span></div>'
-       +     '<div class="fs-row"><span class="fs-lbl">평균 수익</span><span class="v" style="color:#F06A6A">'+esc(g.avgW)+'만원</span></div>'
-       +     '<div class="fs-row"><span class="fs-lbl">평균 손실</span><span class="v" style="color:#4593FC">'+esc(g.avgL)+'만원</span></div>'
+       +     '<div class="fs-row"><span class="fs-lbl">평균 수익</span><span class="v" style="color:#EA6A60">'+esc(g.avgW)+'만원</span></div>'
+       +     '<div class="fs-row"><span class="fs-lbl">평균 손실</span><span class="v" style="color:#5F8AD4">'+esc(g.avgL)+'만원</span></div>'
        +     '<div class="fs-row"><span class="fs-lbl">손익비</span><span class="v">'+esc(g.pf)+'배</span></div>'
        +     (g.money ? '<div class="fs-row"><span class="fs-lbl">누적 순수익</span><span class="v" style="color:'+pnlCol(g.money)+'">'+esc(g.money)+'</span></div>' : '')
        +   '</div>'
