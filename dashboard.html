@@ -520,19 +520,25 @@ html.theme-light .new-pos{border-color:var(--accent)!important;}
 // 메인(hub) 버튼에서 테마 변경 시 실시간 동기화: 다른 탭에서 jikt_theme 바뀌면 새로고침해 안전 반영
 window.addEventListener('storage',function(e){if(e.key==='jikt_theme'){var want=(e.newValue==='light');var cur=document.documentElement.classList.contains('theme-light');if(want!==cur){location.reload();}}});
 </script>
-<style id="jikt-refine-uni-2026-07-18">
-/* === 공통 리파인 — 폰트 통일(Pretendard) + 점무늬 제거 (테마 색은 불변, 라이트/다크 공통 안전) === */
+<style id="jikt-refine-full-2026-07-18">
+/* === 풀 리파인 — 폰트 통일 + 색 절제(장식 무채색) + 3레이어 그림자 입체감 + 호버 (양 테마 안전) === */
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
 :root, .theme-light, .theme-blue{
-  --mono:'Pretendard','Noto Sans KR',sans-serif !important;
-  --font-n:'Pretendard','Noto Sans KR',sans-serif !important;
-  --font-m:'Pretendard','Noto Sans KR',sans-serif !important;
-  --sans:'Pretendard','Noto Sans KR',sans-serif !important;
-  --uxc-font:'Pretendard','Noto Sans KR',sans-serif !important;
-  --font:'Pretendard','Noto Sans KR',sans-serif !important;
+  --mono:'Pretendard','Noto Sans KR',sans-serif !important; --font-n:'Pretendard','Noto Sans KR',sans-serif !important;
+  --font-m:'Pretendard','Noto Sans KR',sans-serif !important; --sans:'Pretendard','Noto Sans KR',sans-serif !important;
+  --uxc-font:'Pretendard','Noto Sans KR',sans-serif !important; --font:'Pretendard','Noto Sans KR',sans-serif !important;
 }
 body{ font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif; font-variant-numeric:tabular-nums; }
 [style*="radial-gradient"]{ background-image:none !important; }
+/* 색 절제: 장식 강조색(--cyan) → 무채색. 손익·경고색은 그대로 */
+:root, .theme-blue, html, body{ --cyan:#9aa3b0 !important; --cyan-a:rgba(154,163,176,.10) !important; }
+.theme-light{ --cyan:#8a8480 !important; --cyan-a:rgba(138,132,128,.10) !important; }
+/* 카드 입체감(3레이어 그림자) + 호버 리프트 — 라이트/다크 공통 은은하게 */
+.card, .jcc, .dg-box, .metric, .metric-card{
+  box-shadow:0 1px 3px rgba(0,0,0,.12), 0 8px 20px rgba(0,0,0,.09), 0 22px 44px rgba(0,0,0,.10) !important;
+  transition:transform .2s cubic-bezier(.2,.7,.3,1), box-shadow .2s ease !important;
+}
+.card:hover, .jcc:hover, .dg-box:hover, .metric:hover, .metric-card:hover{ transform:translateY(-2px); }
 </style>
 </head>
 <body>
