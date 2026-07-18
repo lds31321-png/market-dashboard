@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260718-105324">
+<meta name="jikt-build" content="20260718-110827">
 <script>
 // [라이트 테마] 화면 요소(DOM)의 인라인 파랑 → 살몬. 캔버스/차트는 style속성에 색이 없어 안전.
 var _jiktMO=null;
@@ -44,7 +44,7 @@ window.addEventListener('storage',function(e){if(e.key==='jikt_theme'){var wl=(e
 
 /* [자동 최신화 v2] 배포 빌드버전 vs 서버 ver.txt 비교 → 다르면 캐시우회 1회 새로고침(무한루프 방지) */
 (function(){try{
-  var BUILD='20260718-105324';
+  var BUILD='20260718-110827';
   if(BUILD.charAt(0)==='_')return;
   fetch('../ver.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null;}).then(function(v){
     if(!v)return; v=v.trim(); if(!v||v===BUILD)return;
@@ -1852,6 +1852,11 @@ html:not(.theme-light) .csel-list{
 html:not(.theme-light) button, html:not(.theme-light) .nav-tab, html:not(.theme-light) [class*="btn"]{ transition:all .18s ease; }
 </style>
 <style id="jikt-btn-fix-2026-07-18">a[download]{color:#14161A!important}</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style id="jikt-font-force-2026-07-18">
+:root,html,body,.theme-blue,.theme-light{--mono:'Pretendard','Noto Sans KR',sans-serif!important;--font-n:'Pretendard','Noto Sans KR',sans-serif!important;--font-m:'Pretendard','Noto Sans KR',sans-serif!important;--sans:'Pretendard','Noto Sans KR',sans-serif!important;--uxc-font:'Pretendard','Noto Sans KR',sans-serif!important;--font:'Pretendard','Noto Sans KR',sans-serif!important;}
+body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font-variant-numeric:tabular-nums;}
+</style>
 </head><body>
 <canvas id="vol-fx" style="position:fixed;inset:0;z-index:-1;pointer-events:none"></canvas>
 <script>
@@ -6431,8 +6436,8 @@ body{padding-bottom:0}
 .jikt-lock-h{font-size:18px;font-weight:800;color:var(--t1,#fff);}
 .jikt-lock-d{font-size:14px;line-height:1.8;color:var(--t2,var(--t2));max-width:470px;word-break:keep-all;text-wrap:balance;}
 .jikt-lock-d br{display:block;content:"";margin-top:4px;}
-.jikt-lock-cta{display:inline-flex;align-items:center;gap:6px;height:48px;padding:0 26px;border-radius:11px;background:var(--cyan);color:#fff;font-size:15px;font-weight:800;text-decoration:none;box-shadow:0 6px 18px rgba(var(--cyan-rgb),.28);transition:all .15s;}
-.jikt-lock-cta:hover{background:#3182F6;transform:translateY(-1px);}
+.jikt-lock-cta{display:inline-flex;align-items:center;gap:6px;height:48px;padding:0 26px;border-radius:11px;background:var(--cyan);color:#14161A;font-size:15px;font-weight:800;text-decoration:none;box-shadow:0 6px 18px rgba(var(--cyan-rgb),.28);transition:all .15s;}
+.jikt-lock-cta:hover{background:#14161A;color:var(--cyan);transform:translateY(-1px);}
 .jikt-lock-note{font-size:12.5px;color:var(--t3,var(--t3));}
 .jikt-lock-help{margin-top:9px;padding-top:14px;border-top:1px solid rgba(255,255,255,.10);font-size:13.5px;color:var(--t3,var(--t3));line-height:1.9;max-width:460px;word-break:keep-all;}
 .jikt-lock-help a{display:inline-block;margin-top:5px;padding:6px 16px;border:1px solid rgba(var(--cyan-rgb),.45);border-radius:8px;background:rgba(var(--cyan-rgb),.10);color:var(--cyan);font-weight:800;font-size:15px;text-decoration:none;}
