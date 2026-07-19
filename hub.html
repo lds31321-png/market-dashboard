@@ -513,6 +513,56 @@ body{ font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif; font-variant
 :root,html,body,.theme-blue,.theme-light{--mono:'Pretendard','Noto Sans KR',sans-serif!important;--font-n:'Pretendard','Noto Sans KR',sans-serif!important;--font-m:'Pretendard','Noto Sans KR',sans-serif!important;--sans:'Pretendard','Noto Sans KR',sans-serif!important;--uxc-font:'Pretendard','Noto Sans KR',sans-serif!important;--font:'Pretendard','Noto Sans KR',sans-serif!important;}
 body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font-variant-numeric:tabular-nums;}
 </style>
+
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style id="jikt-refine-v3">
+/* ===== 세련화 v3 — 눈에 띄는 프리미엄, 색 없이 (구조·문구 불변) ===== */
+html body,.hub-logo,.hub-title,.hub-sub,.hub-flow,.card-title,.card-desc,.card-items,.card-step .t,.jcb-banner,.jikt-theme-btn,.jt-label{
+  font-family:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif !important;}
+html:not(.theme-light) body{background:#0A0B0F !important;}
+html:not(.theme-light) #hub-ambient{background:
+  radial-gradient(1100px 560px at 50% -12%, rgba(255,255,255,.035), transparent 62%),
+  radial-gradient(900px 500px at 100% 110%, rgba(120,130,150,.05), transparent 60%) !important;}
+.hub-header{margin-bottom:24px !important;}
+.hub-logo{letter-spacing:.3em !important;font-size:12px !important;color:#6E7681 !important;font-weight:700 !important;}
+.hub-title{font-size:46px !important;letter-spacing:-.035em !important;font-weight:800 !important;margin-bottom:14px !important;line-height:1.08 !important;}
+.hub-sub{font-size:16px !important;color:#9AA3AE !important;letter-spacing:-.01em !important;}
+.hub-flow{margin-top:24px !important;gap:9px !important;}
+.hub-flow .f{border:1px solid rgba(255,255,255,.1) !important;border-radius:999px !important;padding:8px 16px !important;font-size:13px !important;color:#AEB6C1 !important;background:rgba(255,255,255,.02) !important;}
+.hub-flow .a{color:#565E69 !important;}
+.jcb-banner{border-radius:16px !important;padding:18px 24px !important;margin-bottom:28px !important;
+  border:1px solid rgba(255,255,255,.09) !important;background:rgba(255,255,255,.022) !important;
+  transition:border-color .25s,background .25s,transform .25s,box-shadow .25s !important;}
+.jcb-banner:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.16) !important;box-shadow:0 12px 34px rgba(0,0,0,.5);}
+.card-grid{gap:22px !important;}
+.hub-card{border-radius:20px !important;
+  background:#15161B !important;border:1px solid rgba(255,255,255,.08) !important;
+  padding:38px 32px !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045), 0 10px 34px rgba(0,0,0,.55) !important;
+  transition:transform .32s cubic-bezier(.2,.7,.3,1),border-color .32s,box-shadow .32s,background .32s !important;}
+.hub-card:hover{transform:translateY(-7px) !important;background:#191A20 !important;
+  border-color:rgba(255,255,255,.22) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07), 0 32px 64px rgba(0,0,0,.7) !important;}
+.card-step{gap:12px !important;margin-bottom:24px !important;}
+.card-step .n{width:34px !important;height:34px !important;background:rgba(255,255,255,.06) !important;color:#E4E9F0 !important;
+  border:1px solid rgba(255,255,255,.13) !important;font-weight:600 !important;border-radius:10px !important;transition:all .3s;}
+.hub-card:hover .card-step .n{color:#FFFFFF !important;border-color:rgba(255,255,255,.32) !important;background:rgba(255,255,255,.1) !important;}
+.card-step .t{color:#8B95A1 !important;font-weight:700 !important;letter-spacing:.03em !important;}
+.card-title{font-size:23px !important;letter-spacing:-.02em !important;margin-bottom:12px !important;}
+.card-desc{font-size:14px !important;color:#AEB6C1 !important;line-height:1.75 !important;}
+.card-items{color:#6E7681 !important;font-size:12.5px !important;margin-top:18px !important;padding-top:16px !important;}
+.card-arrow{align-self:flex-end;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:20px !important;
+  border:1px solid rgba(255,255,255,.13);color:#8B95A1 !important;font-size:16px !important;padding-top:0 !important;transition:all .3s;line-height:1;}
+.hub-card:hover .card-arrow{transform:translateX(3px);border-color:rgba(255,255,255,.34);color:#FFFFFF !important;background:rgba(255,255,255,.08);}
+.jikt-theme-btn{border-radius:999px !important;transition:all .22s !important;}
+@keyframes jiktUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hub-header{animation:jiktUp .6s .05s both;}
+.hub-flow{animation:jiktUp .6s .16s both;}
+.jcb-banner{animation:jiktUp .6s .24s both;}
+.card-grid > .hub-card:nth-child(1){animation:jiktUp .6s .34s both;}
+.card-grid > .hub-card:nth-child(2){animation:jiktUp .6s .42s both;}
+.card-grid > .hub-card:nth-child(3){animation:jiktUp .6s .5s both;}
+</style>
 </head>
 <body>
 <div id="hub-ambient"></div>
