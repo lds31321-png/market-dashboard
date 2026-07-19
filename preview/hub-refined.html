@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<script>/*[JIKT 로그인 게이트]*/(function(){try{var h=location.hash||"";if(h.indexOf("token=")>=0){var p=new URLSearchParams(h.replace(/^#/,""));var tk=p.get("token"),uid=p.get("uid");if(tk){localStorage.setItem("jikt_token",tk);if(uid)localStorage.setItem("jikt_uid",uid);}try{var u=new URL(location.href);u.hash="";u.searchParams.delete("login");history.replaceState(null,"",u.pathname+u.search);}catch(e){try{location.hash="";}catch(_){}}}var live=location.hostname.indexOf("github.io")>=0;var token=localStorage.getItem("jikt_token");if(live&&!token){location.replace("volatility/login.html");}}catch(e){}})();</script>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* [2026-06-11] 로컬(localhost) 검수 시 대시보드 링크를 루트 작업본으로 전환 (라이브는 volatility/ 하위폴더 유지) */
+!function(){var h=location.hostname;if(h!=='localhost'&&h!=='127.0.0.1')return;function fx(){var as=document.querySelectorAll('a[href]');for(var i=0;i<as.length;i++){var a=as[i],u=a.getAttribute('href')||'';if(u.indexOf('volatility/volatility_dashboard_v3.html')>=0)a.setAttribute('href','volatility_dashboard_v3.html');}}document.readyState==='loading'?document.addEventListener('DOMContentLoaded',fx):fx();}();
+</script>
+<title>직트&레이 트레이딩 룸</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:#17171C;
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    font-family:'Noto Sans KR',sans-serif;
+    padding:40px 20px;
+  }
+  .hub-header{
+    text-align:center;
+    margin-bottom:14px;
+    position:relative;
+  }
+  .hub-logo{
+    font-size:15px;
+    font-weight:800;
+    letter-spacing:0.12em;
+    color:#667085;
+    margin-bottom:12px;
+  }
+  .hub-title{
+    font-size:32px;
+    font-weight:800;
+    color:#FFFFFF;
+    line-height:1.2;
+    margin-bottom:10px;
+  }
+  .hub-sub{
+    font-size:15px;
+    color:#8B95A1;
+    font-weight:500;
+  }
+  .hub-flow{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin:18px 0 34px;
+    flex-wrap:wrap;
+  }
+  .hub-flow .f{
+    font-size:15px;
+    font-weight:700;
+    color:#667085;
+    background:rgba(102,112,133,.12);
+    border:1px solid rgba(102,112,133,.35);
+    padding:6px 16px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .hub-flow .a{
+    font-size:17px;
+    font-weight:800;
+    color:#667085;
+  }
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(310px,1fr));
+    gap:24px;
+    width:100%;
+    max-width:1180px;
+  }
+  .hub-card{
+    background:#1E2027;
+    border-radius:16px;
+    border:1.5px solid rgba(255,255,255,.08);
+    padding:30px 28px;
+    text-decoration:none;
+    display:flex;
+    flex-direction:column;
+    gap:11px;
+    transition:transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+    cursor:pointer;
+  }
+  .hub-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 32px rgba(102,112,133,0.20);
+    border-color:#667085;
+  }
+  .card-step{
+    display:flex;
+    align-items:center;
+    gap:9px;
+  }
+  .card-step .n{
+    width:28px;height:28px;
+    display:flex;align-items:center;justify-content:center;
+    background:#667085;color:#fff;
+    font-size:15px;font-weight:900;
+    border-radius:8px;
+    font-family:'IBM Plex Mono',monospace;
+    flex-shrink:0;
+  }
+  .card-step .t{
+    font-size:15px;
+    font-weight:800;
+    color:#667085;
+    letter-spacing:0.02em;
+  }
+  .card-title{
+    font-size:21px;
+    font-weight:800;
+    color:#FFFFFF;
+    line-height:1.25;
+  }
+  .card-desc{
+    font-size:15px;
+    color:#B0B8C1;
+    line-height:1.7;
+  }
+  .card-items{
+    margin-top:2px;
+    padding-top:12px;
+    border-top:1px solid rgba(255,255,255,.08);
+    font-size:15px;
+    color:#8B95A1;
+    line-height:1.7;
+  }
+  .card-arrow{
+    margin-top:auto;
+    padding-top:10px;
+    font-size:20px;
+    color:#667085;
+    font-weight:700;
+  }
+  /* [2026-06-29] 모바일 전용 요소 — PC에서는 숨김 */
+  .card-ic,.card-chev,.card-desc-m,.refresh-ic,.hub-stepper{display:none}
+  /* [2026-06-12] 최신 데이터로 업데이트 버튼 — 좌측 상단, 흰 배경+살몬, 펄스 */
+  .jikt-refresh-btn{
+    position:absolute; left:calc(100% + 28px); top:50%; transform:translateY(-50%); z-index:9999;
+    white-space:nowrap;
+    display:inline-flex; align-items:center; gap:8px;
+    background:#1E2027; color:#667085;
+    border:1.6px solid #667085; border-radius:999px;
+    padding:11px 18px; font-size:14px; font-weight:800;
+    font-family:'Noto Sans KR',sans-serif; cursor:pointer;
+    box-shadow:0 0 0 0 rgba(102,112,133,.5);
+    animation:jiktPulse 1.8s infinite;
+    transition:background .15s, color .15s;
+  }
+  .jikt-refresh-btn:hover{ background:#667085; color:#ffffff; animation:none; }
+  @keyframes jiktPulse{
+    0%{ box-shadow:0 0 0 0 rgba(102,112,133,.5); }
+    70%{ box-shadow:0 0 0 16px rgba(102,112,133,0); }
+    100%{ box-shadow:0 0 0 0 rgba(102,112,133,0); }
+  }
+  /* ===== [2026-06-26] 모바일 최적화 — 폰 전용 레이아웃 ===== */
+  @media (max-width:640px){
+    body{ padding:26px 16px 44px; justify-content:flex-start; }
+    .hub-header{ margin-bottom:4px; }
+    .hub-logo{ font-size:13px; letter-spacing:.1em; margin-bottom:8px; }
+    .hub-title{ font-size:25px; line-height:1.25; }
+    .hub-sub{ font-size:13.5px; word-break:keep-all; }
+    /* 새로고침 버튼: 헤더 옆(화면 밖) → 헤더 아래 가운데로 이동 */
+    .jikt-refresh-btn{
+      position:static; left:auto; top:auto; transform:none;
+      margin:14px auto 0; padding:10px 16px; font-size:13px;
+    }
+    .hub-flow{ gap:7px; margin:16px 0 24px; }
+    .hub-flow .f{ font-size:13px; padding:5px 13px; }
+    .hub-flow .a{ font-size:15px; }
+    .card-grid{ grid-template-columns:1fr; gap:15px; max-width:460px; }
+    .hub-card{ padding:22px 20px; gap:9px; border-radius:14px; }
+    .hub-card:hover{ transform:none; box-shadow:none; border-color:rgba(255,255,255,.08); }
+    .card-step .n{ width:26px; height:26px; font-size:14px; }
+    .card-step .t{ font-size:14px; }
+    .card-title{ font-size:19px; }
+    .card-arrow{ display:none; }
+    .hub-logo{ display:none; }
+    .hub-flow{ display:none; }
+    .hub-stepper{ display:flex; align-items:flex-start; margin:22px 4px 22px; }
+    .hub-stepper .st{ display:flex; flex-direction:column; align-items:center; flex-shrink:0; }
+    .hub-stepper .c{ width:28px; height:28px; border-radius:50%; background:#667085; color:#fff; font-size:14px; font-weight:900; display:flex; align-items:center; justify-content:center; }
+    .hub-stepper .l{ font-size:12px; font-weight:700; color:#cfd6de; margin-top:7px; white-space:nowrap; }
+    .hub-stepper .ln{ flex:1; height:2px; background:rgba(102,112,133,.4); margin-top:13px; min-width:12px; }
+    .jikt-refresh-btn{ display:inline-flex; align-items:center; gap:6px; }
+    .refresh-ic{ display:inline-flex; }
+    .hub-card{ position:relative; padding:19px 40px 19px 18px; gap:0; }
+    .card-step{ gap:8px; }
+    .card-step .n{ display:none; }
+    .card-ic{ display:inline-flex; }
+    .card-title{ margin-top:10px; }
+    .card-desc{ display:none; }
+    .card-desc-m{ display:block; font-size:13px; color:#B0B8C1; line-height:1.7; margin-top:8px; word-break:keep-all; }
+    .card-items{ display:none; }
+    .card-chev{ display:block; position:absolute; right:14px; top:50%; transform:translateY(-50%); }
+  }
+  @media (max-width:380px){
+    .hub-title{ font-size:22px; }
+    .hub-flow .f{ font-size:12px; padding:4px 10px; }
+    .hub-card{ padding:18px 38px 18px 16px; }
+  }
+  /* [2026-06-27] 토스풍 은은한 배경 그라데이션 + 마우스 따라오는 물결 글로우 */
+  #hub-ambient{position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background:radial-gradient(1200px 600px at 18% -8%,rgba(102,112,133,.10),transparent 60%),
+               radial-gradient(1000px 560px at 100% 108%,rgba(102,112,133,.07),transparent 60%);}
+  #hub-glow{position:fixed;left:0;top:0;width:560px;height:560px;margin:-280px 0 0 -280px;
+    border-radius:50%;z-index:-1;pointer-events:none;opacity:0;transition:opacity .45s;
+    will-change:transform;filter:blur(10px);
+    background:radial-gradient(circle,rgba(102,112,133,.18),rgba(102,112,133,.06) 35%,transparent 65%);}
+  @media (max-width:640px){ #hub-glow{display:none;} }
+  /* [2026-06-30] 옵션투자준비 체크리스트 안내 팝업 (토스풍) */
+  .jintro-wrap{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(8,9,12,.64);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+  .jintro-wrap.on{display:flex;}
+  .jintro-box{position:relative;width:100%;max-width:420px;max-height:90vh;overflow-y:auto;background:#1E2027;border:1px solid rgba(255,255,255,.06);border-radius:22px;padding:40px 30px 22px;box-shadow:0 30px 80px rgba(0,0,0,.55);}
+  .jintro-x{position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:rgba(255,255,255,.05);color:#8B95A1;font-size:19px;line-height:1;border-radius:50%;cursor:pointer;transition:all .15s;}
+  .jintro-x:hover{background:rgba(255,255,255,.12);color:#fff;}
+  .jintro-tag{font-size:13px;font-weight:700;color:#667085;margin-bottom:12px;}
+  .jintro-h{font-size:27px;font-weight:800;color:#fff;line-height:1.32;letter-spacing:-.02em;margin-bottom:14px;}
+  .jintro-sub{font-size:15px;line-height:1.65;color:#9aa3ad;word-break:keep-all;margin-bottom:14px;}
+  .jintro-coupon{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;text-align:center;font-size:24px;font-weight:800;color:#fff;letter-spacing:-.02em;background:rgba(102,112,133,.08);border:1.5px solid #667085;border-radius:14px;padding:18px 16px;margin-bottom:14px;word-break:keep-all;line-height:1.3;cursor:pointer;font-family:inherit;animation:jintroPulse 1.8s infinite;}
+  .jintro-coupon .chev{display:inline-flex;align-items:center;color:#667085;flex-shrink:0;animation:jbob 1.3s ease-in-out infinite;}
+  .jintro-coupon .chev svg{width:24px;height:24px;}
+  .jintro-coupon.open .chev{animation:none;transform:rotate(180deg);}
+  @keyframes jbob{0%,100%{transform:translateY(-2px);}50%{transform:translateY(4px);}}
+  @keyframes jintroPulse{0%{box-shadow:0 0 0 0 rgba(102,112,133,.45);}70%{box-shadow:0 0 0 13px rgba(102,112,133,0);}100%{box-shadow:0 0 0 0 rgba(102,112,133,0);}}
+  .jintro-more{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 2px;background:none;border:none;border-top:1px solid rgba(255,255,255,.07);color:#cfd6de;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
+  .jintro-more .chev{font-size:11px;color:#8B95A1;transition:transform .2s;}
+  .jintro-more.open .chev{transform:rotate(180deg);}
+  .jintro-detail{padding:2px 0 16px;}
+  .jintro-dlead{font-size:14px;line-height:1.7;color:#9aa3ad;word-break:keep-all;margin-bottom:16px;}
+  .jintro-flow{display:flex;flex-direction:column;}
+  .jintro-fstep{display:flex;gap:13px;}
+  .jintro-fstep .fn{flex-shrink:0;display:flex;flex-direction:column;align-items:center;}
+  .jintro-fstep .fc{width:25px;height:25px;border-radius:50%;background:rgba(102,112,133,.15);border:1px solid rgba(102,112,133,.45);color:#667085;font-size:12.5px;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;}
+  .jintro-fstep .fl{flex:1;width:2px;background:rgba(255,255,255,.08);margin:2px 0;}
+  .jintro-fstep:last-child .fl{display:none;}
+  .jintro-fstep .ft{padding-bottom:16px;font-size:13.5px;line-height:1.62;color:#B0B8C1;word-break:keep-all;}
+  .jintro-fstep .ft b{color:#fff;font-weight:700;}
+  .jintro-fstep .ft .cp{color:#fff;font-weight:800;}
+  .jintro-btns{display:flex;flex-direction:column;gap:9px;margin-top:4px;}
+  .jintro-cta{display:flex;align-items:center;justify-content:center;height:54px;border-radius:14px;background:#667085;color:#fff;font-size:16px;font-weight:700;text-decoration:none;transition:background .15s;}
+  .jintro-cta:hover{background:#556070;}
+  .jintro-kakao{display:flex;align-items:center;justify-content:center;height:50px;border-radius:14px;background:rgba(255,255,255,.05);color:#cfd6de;font-size:14.5px;font-weight:700;text-decoration:none;transition:all .15s;}
+  .jintro-kakao:hover{background:rgba(255,255,255,.09);color:#fff;}
+  .jintro-foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px;}
+  .jintro-hide{display:flex;align-items:center;gap:7px;font-size:13px;color:#8B95A1;cursor:pointer;user-select:none;}
+  .jintro-hide input{appearance:none;-webkit-appearance:none;width:17px;height:17px;border:1.5px solid rgba(255,255,255,.25);border-radius:5px;cursor:pointer;position:relative;flex-shrink:0;transition:all .15s;margin:0;}
+  .jintro-hide input:checked{background:#667085;border-color:#667085;}
+  .jintro-hide input:checked::after{content:"";position:absolute;left:5px;top:2px;width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg);}
+  .jintro-closetxt{background:none;border:none;color:#8B95A1;font-size:13px;cursor:pointer;font-family:inherit;}
+  .jintro-closetxt:hover{color:#cfd6de;}
+  @media(max-width:640px){.jintro-box{padding:34px 22px 20px;border-radius:20px;}.jintro-h{font-size:23px;}.jintro-sub{font-size:14px;}.jintro-coupon{font-size:20px;padding:16px 14px;}.jintro-cta{height:52px;}}
+  /* [2026-06-30] 트레이딩 룸 할인 쿠폰 배너 + 모달 */
+  .jcb-banner{display:flex;align-items:center;gap:13px;width:100%;max-width:1180px;margin:0 auto 22px;padding:15px 22px;background:linear-gradient(90deg,rgba(102,112,133,.14),rgba(102,112,133,.04));border:1px solid rgba(102,112,133,.35);border-radius:14px;cursor:pointer;transition:all .15s;animation:jcbPulse 2.2s infinite;}
+  .jcb-banner:hover{border-color:#667085;}
+  .jcb-banner .ic{flex-shrink:0;color:#667085;display:inline-flex;}
+  .jcb-banner .ic svg{width:26px;height:26px;}
+  .jcb-banner .tx{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .jcb-banner .tx .t{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.01em;}
+  .jcb-banner .tx .t b{color:#5aa0ff;}
+  .jcb-banner .tx .s{font-size:13px;color:#9aa3ad;}
+  .jcb-banner .go{margin-left:auto;flex-shrink:0;color:#667085;font-weight:800;font-size:16px;white-space:nowrap;}
+  .jcb-banner .s br{display:none;}
+  .jcb-banner .s .sep-dot{color:#8B95A1;}
+  @keyframes jcbPulse{0%{box-shadow:0 0 0 0 rgba(102,112,133,.30);}70%{box-shadow:0 0 0 12px rgba(102,112,133,0);}100%{box-shadow:0 0 0 0 rgba(102,112,133,0);}}
+  .jcb-wrap{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(8,9,12,.64);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+  .jcb-wrap.on{display:flex;}
+  .jcb-box{position:relative;width:100%;max-width:720px;max-height:90vh;overflow-y:auto;background:#1E2027;border:1px solid rgba(255,255,255,.06);border-radius:22px;padding:36px 32px 24px;box-shadow:0 30px 80px rgba(0,0,0,.55);}
+  .jcb-x{position:absolute;top:16px;right:16px;width:32px;height:32px;border:none;background:rgba(255,255,255,.05);color:#8B95A1;font-size:19px;border-radius:50%;cursor:pointer;}
+  .jcb-x:hover{background:rgba(255,255,255,.12);color:#fff;}
+  .jcb-tag{font-size:13px;font-weight:700;color:#667085;margin-bottom:8px;}
+  .jcb-h{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:14px;}
+  .jcb-h b{color:#5aa0ff;}
+  .jcb-calc{margin-bottom:8px;padding:15px 18px;background:rgba(102,112,133,.06);border:1px solid rgba(102,112,133,.20);border-radius:14px;}
+  .jcb-calc-top{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px;color:#9aa3ad;margin-bottom:9px;}
+  .jcb-calc-top .dc{color:#5aa0ff;font-weight:800;}
+  .jcb-bar{position:relative;height:30px;border-radius:8px;background:rgba(255,255,255,.07);overflow:hidden;}
+  .jcb-bar-fill{position:absolute;left:0;top:0;bottom:0;width:65%;background:linear-gradient(90deg,#667085,#5aa0ff);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:800;}
+  .jcb-bar-pay{position:absolute;right:10px;top:0;bottom:0;display:flex;align-items:center;color:#cfd6de;font-size:12.5px;font-weight:700;}
+  .jcb-calc-formula{margin-top:9px;font-size:12.5px;color:#8B95A1;text-align:center;word-break:keep-all;}
+  .jcb-calc-formula b{color:#cfd6de;font-weight:700;}
+  .jcb-groups{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;margin-top:8px;}
+  .jcb-group-h{font-size:13px;font-weight:800;color:#667085;margin:8px 0 2px;}
+  .jcc{display:flex;align-items:center;gap:11px;width:100%;text-align:left;padding:13px 2px;background:none;border:none;border-top:1px solid rgba(255,255,255,.07);cursor:pointer;font-family:inherit;}
+  .jcc .amt{flex-shrink:0;width:52px;text-align:center;}
+  .jcc .amt .a{font-size:15px;font-weight:800;color:#fff;line-height:1.15;}
+  .jcc .amt .p{font-size:11px;font-weight:700;color:#667085;}
+  .jcc .meta{flex:1;min-width:0;}
+  .jcc .nm{font-size:14px;font-weight:700;color:#fff;word-break:keep-all;}
+  .jcc .nm .evt{font-size:10.5px;font-weight:700;color:#FF8080;background:rgba(255,128,128,.12);border-radius:5px;padding:2px 5px;margin-left:4px;white-space:nowrap;}
+  .jcc .dur{font-size:12px;color:#8B95A1;margin-top:2px;}
+  .jcc .chev{flex-shrink:0;color:#667085;display:inline-flex;animation:jbob 1.3s ease-in-out infinite;}
+  .jcc .chev svg{width:18px;height:18px;}
+  .jcc.open .chev{animation:none;transform:rotate(180deg);}
+  .jcc-body{padding:0 2px 14px 65px;}
+  .jcc-body .d{font-size:13px;line-height:1.7;color:#9aa3ad;word-break:keep-all;margin-bottom:9px;}
+  .jcc-body .d b{color:#cfd6de;font-weight:700;}
+  .jcc-body .stp{font-size:12.5px;line-height:1.85;color:#B0B8C1;word-break:keep-all;margin-bottom:12px;}
+  .jcc-body .stp b{color:#667085;font-weight:800;}
+  .jcc-cta{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 16px;border-radius:10px;background:rgba(102,112,133,.12);border:1px solid rgba(102,112,133,.40);color:#667085;font-size:13px;font-weight:800;text-decoration:none;}
+  .jcc-cta:hover{background:rgba(102,112,133,.20);}
+  .jcc-btns{display:flex;flex-wrap:wrap;gap:8px;}
+  .jcc-kakao{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 16px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);color:#cfd6de;font-size:13px;font-weight:800;text-decoration:none;}
+  .jcc-kakao:hover{background:rgba(255,255,255,.10);color:#fff;}
+  .jcg-sum{margin-top:14px;padding:13px 14px;background:rgba(102,112,133,.09);border:1px solid rgba(102,112,133,.30);border-radius:12px;text-align:center;}
+  .jcg-sum .l{font-size:11.5px;color:#9aa3ad;margin-bottom:4px;}
+  .jcg-sum .v{font-size:14.5px;font-weight:800;color:#fff;word-break:keep-all;line-height:1.4;}
+  .jcg-sum .v b{color:#5aa0ff;}
+  .jcg-sum .v .pct{color:#5aa0ff;}
+  .jcb-foot-cta{display:flex;align-items:center;justify-content:center;height:52px;border-radius:14px;background:#667085;color:#fff;font-size:15.5px;font-weight:800;text-decoration:none;margin-top:24px;}
+  .jcb-foot-cta:hover{background:#1f6fe5;}
+  .jcb-note{margin-top:16px;font-size:12.5px;line-height:1.75;color:#8B95A1;word-break:keep-all;}
+  .jcb-closetxt{display:block;margin:14px auto 0;background:none;border:none;color:#8B95A1;font-size:13px;cursor:pointer;}
+  .jcb-closetxt:hover{color:#cfd6de;}
+  @media(max-width:640px){.jcb-banner{flex-wrap:wrap;gap:8px;padding:14px 16px;}.jcb-banner .go{margin-left:0;width:100%;}.jcb-banner .s br{display:inline;}.jcb-banner .s .sep-dot{display:none;}.jcb-box{padding:30px 18px 20px;max-width:460px;}.jcb-h{font-size:22px;}.jcb-groups{grid-template-columns:1fr;gap:8px;}.jcc-body{padding-left:60px;}}
+  /* [2026-07-03] 다크/라이트 토글 버튼 — 최신데이터 버튼과 좌우 대칭(메인텍스트 왼쪽) */
+  .jikt-theme-btn{
+    position:absolute; right:calc(100% + 63px); top:50%; transform:translateY(-50%); z-index:9999;
+    white-space:nowrap; display:inline-flex; align-items:center; gap:8px;
+    background:#1E2027; color:#667085; border:1.6px solid #667085; border-radius:999px;
+    padding:11px 18px; font-size:14px; font-weight:800;
+    font-family:'Noto Sans KR',sans-serif; cursor:pointer;
+    box-shadow:0 0 0 0 rgba(102,112,133,.5); animation:jiktPulse 1.8s infinite;
+    transition:background .15s, color .15s;
+  }
+  .jikt-theme-btn:hover{ background:#667085; color:#ffffff; animation:none; }
+  @media (max-width:640px){
+    .jikt-theme-btn{ position:static; right:auto; top:auto; transform:none; margin:10px auto 0; padding:10px 16px; font-size:13px; }
+  }
+  /* ===== [2026-07-03] 라이트(클로드 웜) 테마 — CSS 전용, JS/차트 미변경 ===== */
+  html.theme-light body{ background:#f0e9e1; }
+  html.theme-light #hub-ambient{ background:
+    radial-gradient(1200px 600px at 18% -8%,rgba(217,102,74,.10),transparent 60%),
+    radial-gradient(1000px 560px at 100% 108%,rgba(200,128,58,.08),transparent 60%); }
+  html.theme-light #hub-glow{ background:radial-gradient(circle,rgba(217,102,74,.16),rgba(217,102,74,.05) 35%,transparent 65%); }
+  html.theme-light .hub-logo{ color:#d9664a; }
+  html.theme-light .hub-title{ color:#1a1816; }
+  html.theme-light .hub-header .hub-sub{ color:#6b625a !important; }
+  html.theme-light .hub-flow .f{ color:#c25a3f; background:rgba(217,102,74,.10); border-color:rgba(217,102,74,.32); }
+  html.theme-light .hub-flow .a{ color:#d9664a; }
+  html.theme-light .hub-card{ background:#ffffff; border-color:rgba(0,0,0,.09); }
+  html.theme-light .hub-card:hover{ box-shadow:0 8px 32px rgba(217,102,74,.18); border-color:#d9664a; }
+  html.theme-light .card-step .n{ background:#d9664a; color:#fff; }
+  html.theme-light .card-step .t{ color:#c25a3f; }
+  html.theme-light .card-title{ color:#1a1816; }
+  html.theme-light .card-desc{ color:#5f574f; }
+  html.theme-light .card-items{ color:#8a8178; border-top-color:rgba(0,0,0,.08); }
+  html.theme-light .card-arrow{ color:#d9664a; }
+  html.theme-light .jikt-refresh-btn{ background:#ffffff; color:#d9664a; border-color:#d9664a; animation:jiktPulseWarm 1.8s infinite; }
+  html.theme-light .jikt-refresh-btn:hover{ background:#d9664a; color:#fff; }
+  html.theme-light .jikt-theme-btn{ background:#ffffff; color:#d9664a; border-color:#d9664a; animation:jiktPulseWarm 1.8s infinite; }
+  html.theme-light .jikt-theme-btn:hover{ background:#d9664a; color:#fff; }
+  @keyframes jiktPulseWarm{ 0%{box-shadow:0 0 0 0 rgba(217,102,74,.5);} 70%{box-shadow:0 0 0 16px rgba(217,102,74,0);} 100%{box-shadow:0 0 0 0 rgba(217,102,74,0);} }
+  html.theme-light .jcb-banner{ background:linear-gradient(90deg,rgba(217,102,74,.13),rgba(217,102,74,.04)); border-color:rgba(217,102,74,.32); }
+  html.theme-light .jcb-banner:hover{ border-color:#d9664a; }
+  html.theme-light .jcb-banner .ic{ color:#d9664a; }
+  html.theme-light .jcb-banner .tx .t{ color:#1a1816; }
+  html.theme-light .jcb-banner .tx .t b{ color:#d9664a; }
+  html.theme-light .jcb-banner .tx .s{ color:#8a8178; }
+  html.theme-light .jcb-banner .go{ color:#d9664a; }
+  html.theme-light .jcb-banner .s .sep-dot{ color:#b3a99f; }
+
+  /* ===== [2026-07-03] 라이트 테마 — 팝업(자가진단·할인쿠폰) + 세부 텍스트 시안성 (CSS 전용) ===== */
+  /* 공통 펄스(웜) */
+  html.theme-light .jintro-coupon{ animation:jiktPulseWarm 1.8s infinite; }
+  html.theme-light .jcb-banner{ animation:jiktPulseWarm 2.2s infinite; }
+  /* --- 자가진단 팝업 --- */
+  html.theme-light .jintro-box{ background:#ffffff; border-color:rgba(0,0,0,.08); box-shadow:0 30px 80px rgba(120,90,70,.28); }
+  html.theme-light .jintro-x{ background:rgba(0,0,0,.05); color:#8a8178; }
+  html.theme-light .jintro-x:hover{ background:rgba(0,0,0,.10); color:#1a1816; }
+  html.theme-light .jintro-tag{ color:#d9664a; }
+  html.theme-light .jintro-h{ color:#1a1816; }
+  html.theme-light .jintro-sub{ color:#6b625a; }
+  html.theme-light .jintro-coupon{ background:rgba(217,102,74,.08); border-color:#d9664a; color:#d9664a; }
+  html.theme-light .jintro-coupon .chev{ color:#d9664a; }
+  html.theme-light .jintro-more{ color:#5f574f; border-top-color:rgba(0,0,0,.08); }
+  html.theme-light .jintro-more .chev{ color:#8a8178; }
+  html.theme-light .jintro-dlead{ color:#6b625a; }
+  html.theme-light .jintro-fstep .fc{ background:rgba(217,102,74,.14); border-color:rgba(217,102,74,.4); color:#d9664a; }
+  html.theme-light .jintro-fstep .fl{ background:rgba(0,0,0,.10); }
+  html.theme-light .jintro-fstep .ft{ color:#5f574f; }
+  html.theme-light .jintro-fstep .ft b{ color:#1a1816; }
+  html.theme-light .jintro-fstep .ft .cp{ color:#d9664a; }
+  html.theme-light .jintro-cta{ background:#d9664a; color:#fff; }
+  html.theme-light .jintro-cta:hover{ background:#c25a3f; }
+  html.theme-light .jintro-kakao{ background:rgba(0,0,0,.04); color:#5f574f; }
+  html.theme-light .jintro-kakao:hover{ background:rgba(0,0,0,.07); color:#1a1816; }
+  html.theme-light .jintro-hide{ color:#8a8178; }
+  html.theme-light .jintro-hide input{ border-color:rgba(0,0,0,.25); }
+  html.theme-light .jintro-hide input:checked{ background:#d9664a; border-color:#d9664a; }
+  html.theme-light .jintro-closetxt{ color:#8a8178; }
+  html.theme-light .jintro-closetxt:hover{ color:#5f574f; }
+  /* --- 할인쿠폰 팝업 --- */
+  html.theme-light .jcb-box{ background:#ffffff; border-color:rgba(0,0,0,.08); box-shadow:0 30px 80px rgba(120,90,70,.28); }
+  html.theme-light .jcb-x{ background:rgba(0,0,0,.05); color:#8a8178; }
+  html.theme-light .jcb-x:hover{ background:rgba(0,0,0,.10); color:#1a1816; }
+  html.theme-light .jcb-tag{ color:#d9664a; }
+  html.theme-light .jcb-h{ color:#1a1816; }
+  html.theme-light .jcb-h b{ color:#d9664a; }
+  html.theme-light .jcb-calc{ background:rgba(217,102,74,.06); border-color:rgba(217,102,74,.20); }
+  html.theme-light .jcb-calc-top{ color:#6b625a; }
+  html.theme-light .jcb-calc-top .dc{ color:#d9664a; }
+  html.theme-light .jcb-bar{ background:rgba(0,0,0,.07); }
+  html.theme-light .jcb-bar-fill{ background:linear-gradient(90deg,#d9664a,#e08a6e); }
+  html.theme-light .jcb-bar-pay{ color:#5f574f; }
+  html.theme-light .jcb-calc-formula{ color:#8a8178; }
+  html.theme-light .jcb-calc-formula b{ color:#5f574f; }
+  html.theme-light .jcb-group-h{ color:#d9664a; }
+  html.theme-light .jcc{ border-top-color:rgba(0,0,0,.08); }
+  html.theme-light .jcc .amt .a{ color:#1a1816; }
+  html.theme-light .jcc .amt .p{ color:#d9664a; }
+  html.theme-light .jcc .nm{ color:#1a1816; }
+  html.theme-light .jcc .dur{ color:#8a8178; }
+  html.theme-light .jcc .chev{ color:#d9664a; }
+  html.theme-light .jcc-body .d{ color:#6b625a; }
+  html.theme-light .jcc-body .d b{ color:#5f574f; }
+  html.theme-light .jcc-body .stp{ color:#5f574f; }
+  html.theme-light .jcc-body .stp b{ color:#d9664a; }
+  html.theme-light .jcc-cta{ background:rgba(217,102,74,.12); border-color:rgba(217,102,74,.40); color:#d9664a; }
+  html.theme-light .jcc-cta:hover{ background:rgba(217,102,74,.20); }
+  html.theme-light .jcc-kakao{ background:rgba(0,0,0,.05); border-color:rgba(0,0,0,.12); color:#5f574f; }
+  html.theme-light .jcc-kakao:hover{ background:rgba(0,0,0,.08); color:#1a1816; }
+  html.theme-light .jcg-sum{ background:rgba(217,102,74,.09); border-color:rgba(217,102,74,.30); }
+  html.theme-light .jcg-sum .l{ color:#6b625a; }
+  html.theme-light .jcg-sum .v{ color:#1a1816; }
+  html.theme-light .jcg-sum .v b{ color:#d9664a; }
+  html.theme-light .jcg-sum .v .pct{ color:#d9664a; }
+  html.theme-light .jcb-foot-cta{ background:#d9664a; color:#fff; }
+  html.theme-light .jcb-foot-cta:hover{ background:#c25a3f; }
+  html.theme-light .jcb-note{ color:#8a8178; }
+  html.theme-light .jcb-closetxt{ color:#8a8178; }
+  html.theme-light .jcb-closetxt:hover{ color:#5f574f; }
+
+  /* [2026-07-05 토스 메인 재설계] 쿠폰 아이콘 제목 옆 정렬 (양 테마 공통) */
+  .jcb-banner .t{display:inline-flex;align-items:center;gap:8px;}
+  .jcb-banner .t .ic{color:#667085;flex-shrink:0;line-height:0;}
+  .jcb-banner .t .ic svg{width:20px;height:20px;}
+  @media (max-width:640px){
+    /* 부제 삭제 */
+    .hub-sub{display:none !important;}
+    /* 영어 로고 삭제 */
+    .hub-logo{display:none !important;}
+    /* 최신 데이터 버튼 중앙 유지 */
+    .jikt-refresh-btn{margin:0 auto !important;}
+    /* 모바일은 다크 전용 → 라이트/다크 토글 숨김 + 그 자리 상단 여백 제거(밸런스) */
+    .hub-header{padding-top:0 !important;}
+    .jikt-theme-btn{display:none !important;}
+    /* 쿠폰 카드: 세로 스택 + 가격 위계 + CTA 버튼 */
+    .jcb-banner{flex-direction:column !important;align-items:stretch !important;gap:9px !important;animation:none !important;padding:14px 15px !important;}
+    .jcb-banner .tx{gap:8px !important;}
+    .jcb-banner .t{font-size:15px !important;}
+    .jcb-banner .s br{display:none !important;}
+    .jcb-banner .s .sep-dot{display:inline !important;}
+    .jcb-old{text-decoration:line-through;color:#9aa3ad;}
+    .jcb-new{font-weight:800;color:#fff;}
+    html.theme-light .jcb-new{color:#1a1816;}
+    .jcb-banner .go{margin:0 !important;width:100% !important;background:#667085 !important;color:#fff !important;border-radius:10px !important;padding:11px !important;text-align:center !important;font-size:14px !important;}
+  }
+
+</style>
+<script>
+(function(){try{var t=localStorage.getItem('jikt_theme')||'dark';if(t==='light')document.documentElement.classList.add('theme-light');}catch(e){}})();
+function jiktSyncThemeLabel(){var b=document.getElementById('jiktThemeBtn');if(!b)return;var light=document.documentElement.classList.contains('theme-light');var l=b.querySelector('.jt-label');if(l)l.textContent=light?'다크 모드':'라이트 모드';}
+function jiktToggleTheme(){var h=document.documentElement;var light=h.classList.toggle('theme-light');try{localStorage.setItem('jikt_theme',light?'light':'dark');}catch(e){}jiktSyncThemeLabel();}
+document.addEventListener('DOMContentLoaded',jiktSyncThemeLabel);
+</script>
+<style id="viewmode-css">
+.jikt-viewmode-btn{display:none;}
+@media(max-width:640px){
+  .jikt-viewmode-btn{
+    display:flex;width:fit-content;max-width:fit-content;
+    align-items:center;justify-content:center;gap:6px;
+    position:static;margin:10px auto 0;padding:10px 16px;font-size:13px;font-weight:700;
+    white-space:nowrap;cursor:pointer;border-radius:999px;
+    background:#1E2027;color:#667085;border:1.6px solid #667085;
+  }
+}
+</style>
+<style id="jikt-refine-full-2026-07-18">
+/* === 풀 리파인 — 폰트 통일 + 색 절제(장식 무채색) + 3레이어 그림자 입체감 + 호버 (양 테마 안전) === */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+:root, .theme-light, .theme-blue{
+  --mono:'Pretendard','Noto Sans KR',sans-serif !important; --font-n:'Pretendard','Noto Sans KR',sans-serif !important;
+  --font-m:'Pretendard','Noto Sans KR',sans-serif !important; --sans:'Pretendard','Noto Sans KR',sans-serif !important;
+  --uxc-font:'Pretendard','Noto Sans KR',sans-serif !important; --font:'Pretendard','Noto Sans KR',sans-serif !important;
+}
+body{ font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif; font-variant-numeric:tabular-nums; }
+[style*="radial-gradient"]{ background-image:none !important; }
+/* 색 절제: 장식 강조색(--cyan) → 무채색. 손익·경고색은 그대로 */
+:root, .theme-blue, html, body{ --cyan:#9aa3b0 !important; --cyan-a:rgba(154,163,176,.10) !important; }
+.theme-light{ --cyan:#8a8480 !important; --cyan-a:rgba(138,132,128,.10) !important; }
+/* 카드 입체감(3레이어 그림자) + 호버 리프트 — 라이트/다크 공통 은은하게 */
+.card, .jcc, .dg-box, .metric, .metric-card{
+  box-shadow:0 1px 3px rgba(0,0,0,.12), 0 8px 20px rgba(0,0,0,.09), 0 22px 44px rgba(0,0,0,.10) !important;
+  transition:transform .2s cubic-bezier(.2,.7,.3,1), box-shadow .2s ease !important;
+}
+.card:hover, .jcc:hover, .dg-box:hover, .metric:hover, .metric-card:hover{ transform:translateY(-2px); }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style id="jikt-font-force-2026-07-18">
+:root,html,body,.theme-blue,.theme-light{--mono:'Pretendard','Noto Sans KR',sans-serif!important;--font-n:'Pretendard','Noto Sans KR',sans-serif!important;--font-m:'Pretendard','Noto Sans KR',sans-serif!important;--sans:'Pretendard','Noto Sans KR',sans-serif!important;--uxc-font:'Pretendard','Noto Sans KR',sans-serif!important;--font:'Pretendard','Noto Sans KR',sans-serif!important;}
+body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font-variant-numeric:tabular-nums;}
+</style>
+
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style id="jikt-refine-2026-07-19">
+/* ===== 세련화 다듬기 레이어 — 구조·문구 불변, 마감만 ===== */
+html body, .hub-logo, .hub-title, .hub-sub, .hub-flow, .card-title, .card-desc, .card-items,
+.card-step .t, .jcb-banner, .jikt-theme-btn, .jt-label{
+  font-family:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif !important;
+}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(120% 100% at 50% -6%,transparent 50%,rgba(0,0,0,.45) 100%);}
+.hub-logo{letter-spacing:.24em !important;font-size:12.5px !important;color:#7E8794 !important;font-weight:700 !important;}
+.hub-title{letter-spacing:-.025em !important;}
+.hub-sub{letter-spacing:-.01em !important;color:#9AA3AE !important;}
+.hub-flow{gap:8px !important;}
+.hub-flow .f{border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:7px 14px;font-size:13px;
+  color:#AEB6C1 !important;background:rgba(255,255,255,.02);transition:all .2s;}
+.hub-flow .a{color:#5B636E !important;}
+.jcb-banner{border-radius:14px !important;transition:border-color .25s,background .25s,transform .25s,box-shadow .25s !important;}
+.jcb-banner:hover{transform:translateY(-1px);}
+.hub-card{border-radius:18px !important;position:relative;overflow:hidden;
+  box-shadow:0 2px 10px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.045) !important;
+  transition:transform .28s cubic-bezier(.2,.7,.3,1),border-color .28s,box-shadow .28s,background .28s !important;}
+.hub-card::before{content:"";position:absolute;top:0;left:24px;right:24px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(var(--cyan-rgb),.5),transparent);opacity:0;transition:opacity .3s;}
+.hub-card:hover{transform:translateY(-6px) !important;
+  border-color:rgba(var(--cyan-rgb),.34) !important;
+  box-shadow:0 18px 46px rgba(0,0,0,.5), 0 8px 40px rgba(var(--cyan-rgb),.12), inset 0 1px 0 rgba(255,255,255,.06) !important;}
+.hub-card:hover::before{opacity:1;}
+.card-step .n{background:rgba(255,255,255,.05) !important;color:#C9D2DE !important;
+  border:1px solid rgba(255,255,255,.12) !important;font-weight:600 !important;transition:all .28s;}
+.hub-card:hover .card-step .n{color:var(--cyan) !important;border-color:rgba(var(--cyan-rgb),.5) !important;background:rgba(var(--cyan-rgb),.1) !important;}
+.card-step .t{color:#7E8794 !important;font-weight:700 !important;letter-spacing:.04em !important;}
+.card-title{letter-spacing:-.02em !important;}
+.card-items{color:#6E7681 !important;font-size:13px !important;}
+.card-arrow{align-self:flex-end;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,.13);color:#7E8794 !important;font-size:16px !important;padding-top:0 !important;transition:all .28s;line-height:1;}
+.hub-card:hover .card-arrow{transform:translateX(4px);border-color:rgba(var(--cyan-rgb),.6);color:var(--cyan) !important;background:rgba(var(--cyan-rgb),.1);}
+.jikt-theme-btn{transition:all .22s !important;}
+@keyframes jiktRefineUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.hub-header{animation:jiktRefineUp .7s .05s both;}
+.hub-flow{animation:jiktRefineUp .7s .18s both;}
+.jcb-banner{animation:jiktRefineUp .7s .26s both, jiktPulseWarm 2.2s infinite;}
+.card-grid > .hub-card:nth-child(1){animation:jiktRefineUp .7s .36s both;}
+.card-grid > .hub-card:nth-child(2){animation:jiktRefineUp .7s .44s both;}
+.card-grid > .hub-card:nth-child(3){animation:jiktRefineUp .7s .52s both;}
+@media(max-width:640px){ body::after{display:none;} }
+/* 미리보기 전용: 인트로/쿠폰 팝업 감춤(실제 적용 시 제외) */
+#jikt-intro-modal,#jcoupon-modal{display:none !important;}
+</style>
+</head>
+<body>
+<div id="hub-ambient"></div>
+<div id="hub-glow"></div>
+
+<div class="hub-header">
+  <div class="hub-logo">JIKT · OPTION SELLING</div>
+  <div class="hub-title">직트&레이 트레이딩 룸</div>
+  <div class="hub-sub" style="font-size:16px;font-weight:700;color:#B0B8C1">수익은 시장이 주고, 손실은 우리가 통제합니다</div>
+  <button class="jikt-refresh-btn" onclick="jiktRefresh()"><svg class="refresh-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v6h-6"/></svg>최신 데이터로 업데이트</button>
+  <button class="jikt-viewmode-btn" id="jiktViewModeBtn" onclick="jiktToggleViewMode()"><span id="jiktViewModeLabel">PC 버전</span></button>
+  <button class="jikt-theme-btn" id="jiktThemeBtn" onclick="jiktToggleTheme()"><span class="jt-label">라이트 모드</span></button>
+</div>
+
+<div class="hub-flow">
+  <span class="f">1 체험 · 연습</span><span class="a">→</span><span class="f">2 실전 운용</span><span class="a">→</span><span class="f">3 거시 대비</span>
+</div>
+
+<div class="hub-stepper">
+  <div class="st"><div class="c">1</div><div class="l">체험·연습</div></div>
+  <div class="ln"></div>
+  <div class="st"><div class="c">2</div><div class="l">실전 운용</div></div>
+  <div class="ln"></div>
+  <div class="st"><div class="c">3</div><div class="l">거시 대비</div></div>
+</div>
+
+<div class="jcb-banner" id="jcb-banner" role="button" tabindex="0">
+  <span class="tx"><span class="t"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8z"/><path d="M14 6v12"/></svg></span>트레이딩 룸 <b>최대 65% 할인</b></span><span class="s">정가 <span class="jcb-old">200,000원</span> → 최저 <span class="jcb-new">70,000원</span><span class="sep-dot"> · </span>쿠폰 합산</span></span>
+  <span class="go">쿠폰 안내 보기 →</span>
+</div>
+
+<div class="card-grid">
+
+  <a class="hub-card" href="dashboard.html">
+    <div class="card-step"><span class="n">1</span><svg class="card-ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v6l-4.6 8.6A2 2 0 0 0 7.2 20.5h9.6a2 2 0 0 0 1.8-2.9L14 9V3"/></svg><span class="t">체험 · 연습 단계</span></div>
+    <div class="card-title">무료 포지션 공유</div>
+    <div class="card-desc">공유되는 실제 포지션을 따라 진입하며 옵션 매도를 직접 경험하는 연습 공간입니다.</div>
+    <div class="card-desc-m">공유되는 실제 포지션을 따라<br>옵션 매도를 직접 체험하는 공간</div>
+    <div class="card-items">진행 포지션 · 추천 종목 · 수익률 · 전략 히스토리</div>
+    <div class="card-arrow">→</div>
+    <svg class="card-chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+  </a>
+
+  <a class="hub-card" href="volatility/volatility_dashboard_v3.html">
+    <div class="card-step"><span class="n">2</span><svg class="card-ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/></svg><span class="t">실전 운용 단계</span></div>
+    <div class="card-title">종합 옵션 대시보드</div>
+    <div class="card-desc">위험·자금·전략 — 내 자금에 맞는 최적의 진입·관리 정보를 제공하는 실전 운용 영역입니다.</div>
+    <div class="card-desc-m">내 자금에 맞는 최적의 진입·관리를<br>제공하는 실전 운용 영역</div>
+    <div class="card-items">종목 4단계 분석 · 최종 진입 정보 · 종합 순위표 · 생존경보 · 매매 현황·복기</div>
+    <div class="card-arrow">→</div>
+    <svg class="card-chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+  </a>
+
+  <a class="hub-card" href="https://lds31321-png.github.io/market-dashboard/" target="_blank" rel="noopener">
+    <div class="card-step"><span class="n">3</span><svg class="card-ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 3.8 5.6 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.6-3.8-9s1.3-6.5 3.8-9z"/></svg><span class="t">거시 대비 단계</span></div>
+    <div class="card-title">글로벌 대시보드</div>
+    <div class="card-desc">거시경제를 점검해 큰 변동성을 미리 파악하고 대비하는 영역입니다.</div>
+    <div class="card-desc-m">거시경제를 점검해 큰 변동성을<br>미리 파악하고 대비하는 영역</div>
+    <div class="card-items">변동성 예측 헤드라인 · 7종목 시나리오 분석 · EIA·FRED 공식 데이터</div>
+    <div class="card-arrow">→</div>
+    <svg class="card-chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#667085" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+  </a>
+
+</div>
+
+<script>
+/* [2026-06-12] 최신 데이터로 업데이트 — 클릭 시 캐시 우회 강제 새로고침. 그 경유로 들어가는 대시보드 링크도 캐시버스트 */
+function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.now()); }catch(e){ location.reload(); } }
+(function(){ try{ var m=location.search.match(/[?&]v=([^&]+)/); if(m){ var ts=m[1]; document.querySelectorAll('a.hub-card').forEach(function(a){ var h=a.getAttribute('href'); if(!h) return; a.setAttribute('href', h+(h.indexOf('?')>=0?'&':'?')+'v='+ts); }); } }catch(e){} })();
+</script>
+
+<script>
+/* [2026-06-27] 마우스 따라 물결처럼 번지는 블루 글로우 */
+(function(){
+  var g=document.getElementById('hub-glow'); if(!g) return;
+  var tx=0,ty=0,cx=0,cy=0,on=false;
+  window.addEventListener('mousemove',function(e){ tx=e.clientX; ty=e.clientY; if(!on){on=true; g.style.opacity='1';} });
+  window.addEventListener('mouseout',function(e){ if(!e.relatedTarget){ on=false; g.style.opacity='0'; } });
+  (function loop(){ cx+=(tx-cx)*0.12; cy+=(ty-cy)*0.12; g.style.transform='translate('+cx+'px,'+cy+'px)'; requestAnimationFrame(loop); })();
+})();
+</script>
+
+<canvas id="vol-fx" style="position:fixed;inset:0;z-index:-1;pointer-events:none"></canvas>
+<script>
+/* [토스풍 배경 효과] 콘텐츠 뒤(z-index:-1) 메인 배경 레이어 — 마우스 추적 글로우 + 픽셀 물방울 파동 */
+(function(){
+  if(window.matchMedia&&window.matchMedia('(max-width:640px)').matches) return;
+  var cv=document.getElementById('vol-fx'); if(!cv) return;
+  var ctx=cv.getContext('2d'),dpr=Math.min(window.devicePixelRatio||1,2);
+  function rs(){cv.width=window.innerWidth*dpr;cv.height=window.innerHeight*dpr;cv.style.width=window.innerWidth+'px';cv.style.height=window.innerHeight+'px';ctx.setTransform(dpr,0,0,dpr,0,0);}
+  rs();window.addEventListener('resize',rs);
+  var mx=window.innerWidth/2,my=window.innerHeight/2,gx=mx,gy=my,on=false,ripples=[],trail=[],lastSample=0,lastSpawn=0,lastMove=0;
+  window.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;on=true;var n=performance.now();lastMove=n;if(n-lastSample>60){lastSample=n;trail.push({x:mx,y:my,t:n});if(trail.length>60)trail.shift();}},{passive:true});
+  window.addEventListener('mouseout',function(e){if(!e.relatedTarget)on=false;});
+  var GRID=10,DUR=2400,MAXR=300,BAND=34,W=function(){return window.innerWidth;},H=function(){return window.innerHeight;};
+  function draw(now){
+    ctx.clearRect(0,0,W(),H());var _L=document.documentElement.classList.contains('theme-light'),C1=_L?'224,138,106':'83,160,255',C2=_L?'217,102,74':'69,147,252';
+    gx+=(mx-gx)*0.12;gy+=(my-gy)*0.12;
+    if(on){var g=ctx.createRadialGradient(gx,gy,0,gx,gy,240);g.addColorStop(0,'rgba('+C1+',0.18)');g.addColorStop(0.4,'rgba('+C2+',0.07)');g.addColorStop(1,'rgba('+C2+',0)');ctx.fillStyle=g;ctx.fillRect(gx-240,gy-240,480,480);}
+    if(on&&now-lastMove<1800&&now-lastSpawn>2000&&trail.length){var tp=trail[0];for(var k=0;k<trail.length;k++){if(now-trail[k].t<=400)break;tp=trail[k];}ripples.push({x:tp.x,y:tp.y,t:now});lastSpawn=now;}
+    for(var i=ripples.length-1;i>=0;i--){
+      var rp=ripples[i],p=(now-rp.t)/DUR;
+      if(p>=1){ripples.splice(i,1);continue;}
+      var R=p*MAXR,al=(1-p);
+      for(var yy=Math.floor((rp.y-R-BAND)/GRID)*GRID;yy<rp.y+R+BAND;yy+=GRID){
+        if(yy<0||yy>H())continue;
+        for(var xx=Math.floor((rp.x-R-BAND)/GRID)*GRID;xx<rp.x+R+BAND;xx+=GRID){
+          if(xx<0||xx>W())continue;
+          var dx=xx-rp.x,dy=yy-rp.y,d=Math.sqrt(dx*dx+dy*dy),off=Math.abs(d-R);
+          if(off<BAND){var a=al*(1-off/BAND)*0.30;if(a>0.015){ctx.fillStyle='rgba('+C1+','+a.toFixed(3)+')';ctx.fillRect(xx,yy,GRID-2,GRID-2);}}
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+</script>
+
+<!-- [2026-06-30] 옵션투자준비 체크리스트 안내 팝업 -->
+<div id="jikt-intro-modal" class="jintro-wrap">
+  <div class="jintro-box">
+    <button class="jintro-x" data-jclose aria-label="닫기">×</button>
+    <div class="jintro-tag">옵션 투자 자가진단</div>
+    <div class="jintro-h">나는 투자를 시작하기에<br>적합한 사람일까?</div>
+    <div class="jintro-sub">단 3분이면 자가진단이 끝납니다.<br>자기객관화를 통해 나의 투자 준비 수준을 점검해 보세요.</div>
+    <button class="jintro-coupon" data-jmore aria-expanded="false">5만원 할인쿠폰 받기 <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+    <div class="jintro-detail" data-jdetail hidden>
+      <div class="jintro-dlead">옵션투자준비 체크리스트는 옵션 매도에 대한 이해와 실전 운용 준비 정도를 스스로 점검하는 3분 자가진단입니다. 아래 순서대로 진행하시면 됩니다.</div>
+      <div class="jintro-flow">
+        <div class="jintro-fstep"><div class="fn"><div class="fc">1</div><div class="fl"></div></div><div class="ft"><b>작성·제출</b> — 아래 '체크리스트 작성하기'를 눌러 구글폼에 응답하고 제출합니다. (약 3분)</div></div>
+        <div class="jintro-fstep"><div class="fn"><div class="fc">2</div><div class="fl"></div></div><div class="ft"><b>결과 받기</b> — 입력하신 이메일로 진단 결과가 회신됩니다. 결과에는 나에게 맞는 교육 단계가 안내됩니다.</div></div>
+        <div class="jintro-fstep"><div class="fn"><div class="fc">3</div><div class="fl"></div></div><div class="ft"><b>'2단계 추천' 확인</b> — 결과가 <span class="cp">2단계(트레이딩키) 추천</span>으로 나오면 할인쿠폰 대상입니다. <span style="color:#8B95A1">2단계는 실전 투자 정보를 제공하는 트레이딩키 서비스입니다.</span></div></div>
+        <div class="jintro-fstep"><div class="fn"><div class="fc">4</div><div class="fl"></div></div><div class="ft"><b>인증</b> — 이메일로 받은 진단 결과를 <b>캡처하거나 복사</b>해서 카카오톡 1:1 채팅으로 보냅니다.</div></div>
+        <div class="jintro-fstep"><div class="fn"><div class="fc">5</div><div class="fl"></div></div><div class="ft"><b>쿠폰 지급</b> — 인증이 확인되면 1:1 카카오톡으로 <span class="cp">5만원 할인쿠폰 코드</span>를 전달해 드립니다. 첫 1회에 한해 1개월 내 사용 가능합니다.</div></div>
+        <div class="jintro-fstep"><div class="fn"><div class="fc">6</div><div class="fl"></div></div><div class="ft"><b>사용</b> — 받은 쿠폰코드를 라이브 클래스 결제 화면의 <b>쿠폰 입력란</b>에 입력하면 할인이 적용됩니다.</div></div>
+      </div>
+    </div>
+
+    <div class="jintro-btns">
+      <a class="jintro-cta" href="https://forms.gle/uFwfnCBEis8ThqGV6" target="_blank" rel="noopener noreferrer">체크리스트 작성하기 →</a>
+      <a class="jintro-kakao" href="https://open.kakao.com/o/sQK7Yx1g" target="_blank" rel="noopener noreferrer">카카오톡 1:1 문의</a>
+    </div>
+
+    <div class="jintro-foot">
+      <label class="jintro-hide"><input type="checkbox" data-jhide12>하루 동안 보지 않기</label>
+      <button class="jintro-closetxt" data-jclose>닫기</button>
+    </div>
+  </div>
+</div>
+<script>
+/* [2026-06-30] 안내 팝업 — 진입 시 항상 표시 */
+(function(){
+  var w=document.getElementById('jikt-intro-modal'); if(!w) return;
+  var KEY='jikt_intro_hide_until';
+  try{ var until=parseInt(localStorage.getItem(KEY)||'0',10); if(until && Date.now()<until) return; }catch(e){}
+  function close(){ w.classList.remove('on'); document.body.style.overflow=''; try{ localStorage.setItem(KEY, String(Date.now()+24*3600*1000)); }catch(e){} }
+  w.addEventListener('click',function(e){ if(e.target===w) close(); });
+  w.querySelectorAll('[data-jclose]').forEach(function(b){ b.addEventListener('click',close); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+  var cb=w.querySelector('[data-jhide12]');
+  if(cb){ cb.addEventListener('change',function(){ try{ if(cb.checked){ localStorage.setItem(KEY, String(Date.now()+24*3600*1000)); } else { localStorage.removeItem(KEY); } }catch(e){} }); }
+  var mb=w.querySelector('[data-jmore]'), dt=w.querySelector('[data-jdetail]');
+  if(mb&&dt){ mb.addEventListener('click',function(){
+    var hidden=dt.hasAttribute('hidden');
+    if(hidden){ dt.removeAttribute('hidden'); mb.classList.add('open'); mb.setAttribute('aria-expanded','true'); }
+    else{ dt.setAttribute('hidden',''); mb.classList.remove('open'); mb.setAttribute('aria-expanded','false'); }
+  }); }
+  w.classList.add('on'); document.body.style.overflow='hidden';
+})();
+</script>
+
+<!-- [2026-06-30] 트레이딩 룸 할인 쿠폰 안내 모달 -->
+<div id="jcoupon-modal" class="jcb-wrap">
+  <div class="jcb-box">
+    <button class="jcb-x" data-jcclose aria-label="닫기">×</button>
+    <div class="jcb-tag">트레이딩 룸 할인 쿠폰</div>
+    <div class="jcb-h">최대 <b>65% 할인</b>받기</div>
+
+    <div class="jcb-calc">
+      <div class="jcb-calc-top"><span>정가 200,000원</span><span class="dc">− 130,000원</span></div>
+      <div class="jcb-bar"><div class="jcb-bar-fill">65% 할인</div><div class="jcb-bar-pay">결제 70,000원</div></div>
+      <div class="jcb-calc-formula">환영 <b>3만</b> + 체크리스트 <b>5만</b> + 대시보드 피드백 <b>5만</b> = <b>13만원</b> 할인</div>
+    </div>
+
+    <div class="jcb-groups">
+      <div>
+        <div class="jcb-group-h">신규 가입자</div>
+        <button type="button" class="jcc" data-acc aria-expanded="false"><div class="amt"><div class="a">3만원</div><div class="p">15%</div></div><div class="meta"><div class="nm">신규가입 환영</div><div class="dur">사용기간 12개월</div></div><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="jcc-body" hidden><div class="d">가입과 동시에 자동으로 지급되는 환영 쿠폰입니다. 별도 조건이 없습니다.</div><div class="stp"><b>1</b> 회원가입 — 카카오·구글 계정으로 1회 로그인합니다<br><b>2</b> 자동 발급 — 가입 즉시 환영 쿠폰이 지급됩니다<br><b>3</b> 사용 — 라이브 클래스 결제 화면의 쿠폰 입력란에 코드를 입력하면 할인이 적용됩니다</div><div class="jcc-btns"><a class="jcc-kakao" href="https://open.kakao.com/o/sQK7Yx1g" target="_blank" rel="noopener noreferrer">카카오톡 1:1 →</a><a class="jcc-cta" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener noreferrer">라이브 클래스에서 사용하기 →</a></div></div>
+        <button type="button" class="jcc" data-acc aria-expanded="false"><div class="amt"><div class="a">5만원</div><div class="p">25%</div></div><div class="meta"><div class="nm">옵션투자준비 체크리스트</div><div class="dur">사용기간 3개월</div></div><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="jcc-body" hidden><div class="d">트레이딩키 실전투자 전, 옵션 이론·운용 이해가 충분한지 자가진단합니다. 결과에 따라 온라인 강의(이론)·모의투자(운용)·실투자 중 맞는 단계를 추천받습니다. 결과가 <b>[2단계: 추천]</b>이면 발급되는 쿠폰입니다.</div><div class="stp"><b>1</b> 작성·제출 — '체크리스트 작성하기'를 눌러 구글폼에 응답·제출합니다 (약 3분)<br><b>2</b> 결과 받기 — 입력한 이메일로 진단 결과가 회신됩니다<br><b>3</b> '2단계 추천' 확인 — 결과가 [2단계: 추천]이면 쿠폰 대상입니다<br><b>4</b> 인증 — 결과 이메일을 캡처·복사해 카카오톡 1:1 채팅으로 보냅니다<br><b>5</b> 쿠폰 지급 — 1:1 카톡으로 5만원 쿠폰코드를 받습니다<br><b>6</b> 사용 — 라이브 클래스 결제 화면 쿠폰 입력란에 코드를 입력합니다</div><div class="jcc-btns"><a class="jcc-kakao" href="https://open.kakao.com/o/sQK7Yx1g" target="_blank" rel="noopener noreferrer">카카오톡 1:1 →</a><a class="jcc-cta" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener noreferrer">라이브 클래스에서 사용하기 →</a></div></div>
+        <button type="button" class="jcc" data-acc aria-expanded="false"><div class="amt"><div class="a">5만원</div><div class="p">25%</div></div><div class="meta"><div class="nm">대시보드 피드백 <span class="evt">오픈이벤트</span></div><div class="dur">사용기간 1개월</div></div><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="jcc-body" hidden><div class="d">무료 오픈 기간에 <b>피드백 5건 이상</b>(불편 사항·질문 포함)을 남기시면 발급됩니다. 7월 등록(결제) 시 사용할 수 있습니다.</div><div class="stp"><b>1</b> 사용 — 무료 기간(6/5~6/30) 대시보드를 직접 사용합니다<br><b>2</b> 피드백 — 불편 사항·질문 등 피드백을 5건 이상 채팅방에 남깁니다<br><b>3</b> 쿠폰 지급 — 1:1 카톡으로 5만원 쿠폰코드를 받습니다<br><b>4</b> 사용 — 7월 등록(결제) 시 라이브 클래스 쿠폰 입력란에 입력합니다</div><div class="jcc-btns"><a class="jcc-kakao" href="https://open.kakao.com/o/sQK7Yx1g" target="_blank" rel="noopener noreferrer">카카오톡 1:1 →</a><a class="jcc-cta" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener noreferrer">라이브 클래스에서 사용하기 →</a></div></div>
+        <div class="jcg-sum"><div class="l">신규 가입자 — 3가지 모두 적용 시</div><div class="v"><b>13만원 할인</b> · 결제 70,000원 <span class="pct">(65%)</span></div></div>
+      </div>
+      <div>
+        <div class="jcb-group-h">기존 가입자</div>
+        <button type="button" class="jcc" data-acc aria-expanded="false"><div class="amt"><div class="a">3만원</div><div class="p">15%</div></div><div class="meta"><div class="nm">투자토론</div><div class="dur">사용기간 3개월</div></div><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="jcc-body" hidden><div class="d">다양한 시장 상황에서의 고민을 토론으로 미리 경험·숙고해, 향후 손실을 줄이고 지속 가능한 성장을 돕는 과정입니다. 주기적으로 진행되며, 한 번만 참여해도 발급 대상입니다.</div><div class="stp"><b>1</b> 주제 확인 — 주초에 공지되는 토론 주제를 확인합니다<br><b>2</b> 참여 — 토론 기간(주중) 동안 채팅방에 본인 의견을 남깁니다<br><b>3</b> 쿠폰 지급 — 참여 확인 후 1:1 카톡으로 3만원 쿠폰코드를 받습니다<br><b>4</b> 사용 — 라이브 클래스 결제 화면 쿠폰 입력란에 코드를 입력합니다</div><div class="jcc-btns"><a class="jcc-kakao" href="https://open.kakao.com/o/sQK7Yx1g" target="_blank" rel="noopener noreferrer">카카오톡 1:1 →</a><a class="jcc-cta" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener noreferrer">라이브 클래스에서 사용하기 →</a></div></div>
+        <button type="button" class="jcc" data-acc aria-expanded="false"><div class="amt"><div class="a">5만원</div><div class="p">25%</div></div><div class="meta"><div class="nm">매매복기</div><div class="dur">사용기간 3개월</div></div><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="jcc-body" hidden><div class="d">한 달의 매매를 돌아보며 반복되는 실수를 줄이고 원칙을 보완하는 과정입니다. 투자의 시간이 쌓일수록 실력과 멘탈을 키우는 바탕이 됩니다. 매매복기를 작성하시면 발급되는 쿠폰입니다.</div><div class="stp"><b>1</b> 작성 — 종합 옵션 대시보드 '매매 복기' 탭에서 거래 복기를 작성합니다<br><b>2</b> 확인 — 운영진이 정해진 일자에 작성 여부를 확인합니다<br><b>3</b> 쿠폰 지급 — 1:1 카톡으로 트레이딩키 5만원 쿠폰코드를 받습니다<br><b>4</b> 사용 — 라이브 클래스 결제 화면 쿠폰 입력란에 코드를 입력합니다</div><div class="jcc-btns"><a class="jcc-kakao" href="https://open.kakao.com/o/sQK7Yx1g" target="_blank" rel="noopener noreferrer">카카오톡 1:1 →</a><a class="jcc-cta" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener noreferrer">라이브 클래스에서 사용하기 →</a></div></div>
+        <button type="button" class="jcc" data-acc aria-expanded="false"><div class="amt"><div class="a">5만원</div><div class="p">25%</div></div><div class="meta"><div class="nm">대시보드 피드백 <span class="evt">오픈이벤트</span></div><div class="dur">사용기간 1개월</div></div><span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
+        <div class="jcc-body" hidden><div class="d">무료 오픈 기간에 <b>피드백 5건 이상</b>(불편 사항·질문 포함)을 남기시면 발급됩니다. 7월 등록(결제) 시 사용할 수 있습니다.</div><div class="stp"><b>1</b> 사용 — 무료 기간(6/5~6/30) 대시보드를 직접 사용합니다<br><b>2</b> 피드백 — 불편 사항·질문 등 피드백을 5건 이상 채팅방에 남깁니다<br><b>3</b> 쿠폰 지급 — 1:1 카톡으로 5만원 쿠폰코드를 받습니다<br><b>4</b> 사용 — 7월 등록(결제) 시 라이브 클래스 쿠폰 입력란에 입력합니다</div><div class="jcc-btns"><a class="jcc-kakao" href="https://open.kakao.com/o/sQK7Yx1g" target="_blank" rel="noopener noreferrer">카카오톡 1:1 →</a><a class="jcc-cta" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener noreferrer">라이브 클래스에서 사용하기 →</a></div></div>
+        <div class="jcg-sum"><div class="l">기존 가입자 — 3가지 모두 적용 시</div><div class="v"><b>13만원 할인</b> · 결제 70,000원 <span class="pct">(65%)</span></div></div>
+      </div>
+    </div>
+
+    <a class="jcb-foot-cta" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener noreferrer">라이브 클래스에서 쿠폰 사용하기 →</a>
+    <div class="jcb-note">· 모든 쿠폰은 라이브 클래스 결제 시 쿠폰 입력란에 등록합니다.<br>· 환영 쿠폰은 자동, 나머지는 조건 충족 시 발급됩니다.<br>· 사용기간은 발급일 기준입니다.</div>
+    <button class="jcb-closetxt" data-jcclose>닫기</button>
+  </div>
+</div>
+<script>
+/* [2026-06-30] 쿠폰 안내 배너→모달 */
+(function(){
+  var w=document.getElementById('jcoupon-modal'); if(!w) return;
+  var b=document.getElementById('jcb-banner');
+  function open(){ w.classList.add('on'); document.body.style.overflow='hidden'; }
+  function close(){ w.classList.remove('on'); document.body.style.overflow=''; }
+  if(b){ b.addEventListener('click',open); b.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } }); }
+  w.addEventListener('click',function(e){ if(e.target===w) close(); });
+  w.querySelectorAll('[data-jcclose]').forEach(function(x){ x.addEventListener('click',close); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+  var _accT=0;
+  w.addEventListener('click',function(e){
+    var btn=e.target.closest('[data-acc]'); if(!btn||!w.contains(btn)) return;
+    var now=Date.now(); if(now-_accT<350) return; _accT=now;
+    var body=btn.nextElementSibling; if(!body) return;
+    if(body.hasAttribute('hidden')){ body.removeAttribute('hidden'); btn.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+    else{ body.setAttribute('hidden',''); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+  });
+})();
+</script>
+<script>/*[JIKT 방문기록 — 메인(트레이딩 룸) 접속도 카운트]*/(function(){try{var t=localStorage.getItem("jikt_token");if(!t)return;fetch("https://jikt-dashboard-api.eotjd3133.workers.dev/auth/me",{headers:{Authorization:"Bearer "+t}}).catch(function(){});}catch(e){}})();</script>
+<script>
+function jiktToggleViewMode(){try{var m=(localStorage.getItem('jikt_view_mode')||'pc');m=(m==='pc')?'mobile':'pc';localStorage.setItem('jikt_view_mode',m);jiktUpdateViewModeLabel();}catch(e){}}
+function jiktUpdateViewModeLabel(){try{var m=(localStorage.getItem('jikt_view_mode')||'pc');var el=document.getElementById('jiktViewModeLabel');if(el)el.textContent=(m==='pc')?'PC 버전 · 탭하면 큰 글씨':'큰 글씨 · 탭하면 PC 버전';}catch(e){}}
+jiktUpdateViewModeLabel();
+</script>
+
+<style id="hm-css-2026-07-13">
+/* ============================================================
+   메인(hub) 모바일 재설계 — 2026-07-13
+   ⚠ 전부 @media(max-width:640px) 안에만 둔다. PC는 절대 건드리지 않는다.
+   ⚠ 이 블록은 문서 맨 끝에 있으므로 앞선 모바일 규칙을 이긴다(일부러 그렇게 둔 것).
+   색은 종합 옵션 대시보드 모바일과 완전히 같은 값을 쓴다.
+     배경 #14161A / 카드 #1E2027 / 타일 #23262E / 예시박스 #16233A
+     글 #F5F6F8 / 라벨 #8B95A1 / 흐린글 #868F9C
+     파랑 #5F8AD4 · 밝은파랑 #8FC0FF · 버튼 #2A4A7A
+   ============================================================ */
+@media (max-width:640px){
+
+  body{ background:#14161A !important; padding:16px 14px 34px !important; }
+
+  /* ============================================================
+     [2026-07-14 2차 — 위계 재설계] ★ 14px 단계를 삭제했다
+       ※ 왜 다시 하나: 13/14/15 는 1px 간격이라 사람 눈에 위계로 보이지 않았다.
+         "5단"이라고 적어놓고 실제로는 "큰 것 / 중간 / 나머지 다 똑같은 것" 3덩어리였다.
+         게다가 라벨·요약줄까지 14px 로 올린 탓에 폰 큰글씨(2배)에서 28px 이 되어
+         줄바꿈이 폭증했다. 작아야 할 것까지 키운 것이 촌스러움의 원인이었다.
+
+       대표값   28px / 800 / #F5F6F8   — 결제 70,000원 (화면당 1개)
+       페이지제목 26px / 800 / #F5F6F8 — 직트&레이 트레이딩 룸 · 팝업 제목
+       제목     20px / 800 / #F5F6F8   — 카드 제목 · 쿠폰 토글
+       본문     15px / 500 / #B0B8C1   — 부제 · 설명 · 절차 · 쿠폰 이름
+       메타     13px / 500 / #8B95A1   — 로고 · 단계라벨 · 요약줄 · 사용기간 · % · 버튼 · 캡션
+                                          ← 바닥. 12px 이하 금지
+
+       ★ 본문과 메타는 크기 차가 1.15배뿐이므로 **색으로 가른다** (#B0B8C1 vs #8B95A1).
+         유튜브 원칙 3 "크기·굵기·색·여백을 복합으로" 가 이 뜻이다.
+     ⚠ 일괄 최소폰트 보정은 제거했다. 개별로 지정한다.
+     ⚠ 글자를 키운 곳은 칸의 폭·높이를 함께 손봤다 (Part 3-3).
+     ============================================================ */
+
+  /* --- 헤더 ---
+     ★ body 가 flex + align-items:center 라 헤더가 **내용 폭(281px)만** 차지하고
+       가운데로 밀려 있었다. 카드(347px)와 좌측이 어긋났다 → 전체 폭을 강제한다. */
+  .hub-header{ position:relative !important; padding-top:0 !important; margin-bottom:12px !important;
+    text-align:left !important; display:block !important;
+    width:100% !important; align-self:stretch !important; }
+  /* [직트 지시 2026-07-14] 모바일에서 삭제 — PC 는 그대로 둔다 (절대규칙 1) */
+  .hub-logo{ display:none !important; }   /* JIKT · OPTION SELLING */
+  .hub-sub{ display:none !important; }    /* 수익은 시장이 주고, 손실은 우리가 통제합니다 */
+  /* 페이지 제목 = 17px (종합 옵션 탭 제목과 같은 값). 글자는 아래 스크립트가 '트레이딩 룸' 으로 바꾼다 */
+  .hub-title{ font-size:17px !important; line-height:1.3 !important; text-align:left !important;
+    color:#F5F6F8 !important; margin:0 0 4px 0 !important; font-weight:800 !important;
+    word-break:keep-all !important; }
+
+  /* 버튼 2개(업데이트·PC버전)를 제목 위 한 줄로.
+     ⚠ 처음엔 제목 오른쪽에 겹쳐 놓았더니 제목을 가렸다 → 제목 위 별도 줄로 뺀다.
+        (자리 이동은 아래 스크립트가 .hm-btnrow 를 만들어서 처리)
+     ★ 큰글씨 2배에서 이 두 버튼이 nowrap 이라 가로 517px 로 화면을 터뜨렸다.
+        → nowrap 을 풀고 줄바꿈을 허용한다. 칸도 함께 늘어나게 높이를 자동으로 둔다. */
+  /* ★ [2차 검수] 버튼 2개 합계 364px 인데 가용 폭이 347px 이라 17px 모자라
+       계단식 2줄로 내려앉았다 (밸런스 깨짐). 문구는 원본이라 줄일 수 없다.
+       → 두 버튼을 한 줄에 반반씩(각 169px) 나눠 좌우 대칭을 맞춘다.
+         큰글씨 2배에서도 한 줄을 유지하고 화면을 벗어나지 않는다. */
+  /* ★ [직트 지적] 버튼 글자가 계속 줄바꿈됐다. em 방식도 안 먹었다.
+       → 나란히 두는 걸 포기하고 **세로로 완전히 쌓는다.** 각 버튼이 전체 폭(347px)을
+         쓰므로 어떤 글씨 크기에서도 한 줄로 끝난다. 줄바꿈이 구조적으로 불가능해진다. */
+  .hm-btnrow{ display:flex !important; flex-direction:column !important;
+    align-items:stretch !important; gap:6px !important; margin:0 0 12px 0 !important; }
+  .jikt-refresh-btn, .jikt-viewmode-btn{
+    position:static !important; transform:none !important; margin:0 !important;
+    flex:0 0 auto !important; width:100% !important; max-width:none !important; min-width:0 !important;
+    min-height:32px !important; height:auto !important; padding:7px 12px !important;
+    font-size:12px !important; line-height:1.4 !important;
+    border-radius:8px !important; background:#1E2027 !important; color:#8B95A1 !important;
+    border:0.5px solid rgba(255,255,255,.14) !important;
+    white-space:nowrap !important; overflow:hidden !important; text-overflow:ellipsis !important;
+    display:inline-flex !important; align-items:center !important;
+    justify-content:center !important; text-align:center !important; gap:6px !important; }
+  .jikt-theme-btn{ display:none !important; }
+
+  /* --- 단계 표시 2벌은 모두 숨긴다 (카드에 이미 1·2·3 이 있다) --- */
+  .hub-flow, .hub-stepper{ display:none !important; }
+
+  /* --- 카드 3장 ---
+     글자 기준(레퍼런스): 본문 14~16px, 12px 이하 금지 · 줄간격 1.4~1.6 · 여백 8배수 */
+  .card-grid{ grid-template-columns:1fr !important; gap:6px !important; max-width:none !important;
+    margin:0 !important; }
+  /* [종합 옵션 기준] 카드 여백 12px (종합 옵션은 11px) */
+  .hub-card{ position:relative !important; background:#1E2027 !important;
+    border:0.5px solid rgba(255,255,255,.07) !important; border-radius:12px !important;
+    padding:12px !important; gap:0 !important; box-shadow:none !important; }
+  .hub-card:hover{ transform:none !important; box-shadow:none !important; }
+
+  .card-step{ display:flex !important; align-items:center !important; gap:8px !important;
+    flex-wrap:wrap !important; }
+  /* 단계 배지 = 라벨(14px).
+     ★ 24×24 고정 칸이었다 → 큰글씨 2배에서 글자 28px 이 되어 칸이 터진다.
+        칸을 고정하지 않고 글자를 따라 늘어나게 둔다 (Part 3-3). */
+  /* [종합 옵션 기준] 단계 배지·라벨 = 12px / 400 / 회색 */
+  .card-step .n{ display:inline-flex !important; width:auto !important; height:auto !important;
+    min-width:22px !important; min-height:22px !important; padding:2px 6px !important;
+    box-sizing:border-box !important;
+    border-radius:6px !important; background:#23262E !important; color:#8B95A1 !important;
+    font-size:12px !important; font-weight:800 !important; line-height:1.3 !important;
+    align-items:center !important; justify-content:center !important; flex-shrink:0 !important; }
+  .card-step .t{ font-size:12px !important; color:#8B95A1 !important; font-weight:400 !important;
+    word-break:keep-all !important; min-width:0 !important; }
+  .card-ic{ display:none !important; }
+
+  /* [종합 옵션 기준] 카드 제목 = 15px / 800 / 흰
+     ⚠ 위계는 크기가 아니라 **굵기(800 vs 400)와 색(흰 vs 회색)** 으로 만든다.
+       종합 옵션 대시보드는 종목명이 14px 인데도 위계가 또렷하다. */
+  .card-title{ font-size:15px !important; font-weight:800 !important; color:#FFFFFF !important;
+    margin:6px 0 0 0 !important; line-height:1.3 !important; word-break:keep-all !important; }
+  .card-desc{ display:none !important; }
+  /* 카드 설명 = 13px / 400 / 회색 */
+  .card-desc-m{ display:block !important; font-size:13px !important; color:#8B95A1 !important;
+    font-weight:400 !important;
+    line-height:1.55 !important; margin:6px 0 0 0 !important; word-break:keep-all !important; }
+  /* 카드 요약줄 = 12px / 400 / 흐린 회색 */
+  .card-items{ display:block !important; font-size:12px !important; color:#868F9C !important;
+    font-weight:400 !important;
+    line-height:1.55 !important; margin:12px 0 0 0 !important; padding-top:12px !important;
+    border-top:0.5px solid rgba(255,255,255,.07) !important; word-break:keep-all !important; }
+  .card-arrow{ display:none !important; }
+  /* 화살표는 카드 오른쪽 위 고정. 제목과 겹치지 않게 카드 오른쪽 여백을 확보한다 */
+  .card-chev{ display:block !important; position:absolute !important; right:16px !important;
+    top:16px !important; transform:none !important; width:18px !important; height:18px !important;
+    stroke:#5F6672 !important; }
+  .hub-card .card-step{ padding-right:26px !important; }
+
+  /* 1번 카드만 강조 — 파란 테두리 + 1번 숫자 + 화살표 (원본에 없는 배지·버튼은 만들지 않는다)
+     ★ [2026-07-14] 예전엔 1번 카드의 화살표를 숨겼는데, 3장 중 1장만 화살표가 없어
+        "눌러서 들어가는 카드"라는 표시가 어긋났다 → 3장 모두 화살표를 보인다.
+     ★ 근거: 레퍼런스 A-08(선택 카드 = 파란 테두리로 표시) + 유튜브 원칙 8(한 번에 하나).
+        단, 2·3번 카드를 흐리게 낮추지는 않는다 — 기존 회원이 매일 2단계로 들어가기 때문. */
+  .card-grid > .hub-card:first-child{ border:2px solid #5F8AD4 !important; }
+  .card-grid > .hub-card:first-child .card-step .n{ background:#2A4A7A !important; color:#8FC0FF !important; }
+  .card-grid > .hub-card:first-child .card-chev{ stroke:#5F8AD4 !important; }
+  .card-grid > .hub-card:first-child .card-items{ border-top-color:rgba(69,147,252,.25) !important; }
+
+  /* --- 쿠폰 배너: 카드 아래로 (자리 이동은 아래 스크립트가 한다) ---
+     ★ 큰글씨 2배에서 버튼이 nowrap + flex:0 0 auto 라 배너 밖으로 나갔다
+        → 배너에 줄바꿈을 허용하고, 좁아지면 버튼이 다음 줄 전체 폭으로 내려가게 둔다 */
+  .jcb-banner{ flex-direction:row !important; flex-wrap:wrap !important;
+    align-items:center !important;
+    justify-content:space-between !important; gap:10px !important;
+    background:#16233A !important; border:0 !important; border-radius:12px !important;
+    padding:12px !important; margin:16px 0 0 0 !important; animation:none !important; }
+  /* ★ [2차 검수] 버튼을 옆에 붙였더니 글 영역이 182px 로 좁아져
+       부제가 `정가 200,000원 → 최저 / 70,000원 · 쿠폰 합산` 으로 어색하게 끊겼다.
+       → 버튼을 아래 줄 전체 폭으로 내린다 (원본 모바일 CSS 도 원래 그렇게 설계돼 있었다).
+         글 영역이 323px 이 되어 부제가 한 줄에 들어간다. */
+  .jcb-banner .tx{ display:block !important; min-width:0 !important; flex:1 1 100% !important;
+    gap:0 !important; }
+  /* 배너 제목 = 본문(15px). 흰색 — 파랑은 이 화면에서 '쿠폰 안내 보기' 버튼 하나만 쓴다 */
+  /* ★ 원본 `.t` 가 inline-flex 이고 그 안의 <b> 가 block 이라, 큰글씨에서
+       "트레이딩 룸" 과 "최대 65% 할인" 이 **좌우 2칸으로 갈라졌다.**
+       기본 글씨에선 폭이 넉넉해 안 보였다 → 일반 텍스트 흐름으로 되돌린다. */
+  .jcb-banner .t{ display:block !important;
+    font-size:14px !important; color:#FFFFFF !important; font-weight:800 !important;
+    line-height:1.35 !important; word-break:keep-all !important; }
+  .jcb-banner .t b{ display:inline !important; color:#FFFFFF !important; }
+  .jcb-banner .ic{ display:none !important; }
+  /* 배너 부제 = 12px / 400 */
+  .jcb-banner .s{ display:block !important; font-size:12px !important; color:#8B95A1 !important;
+    font-weight:400 !important;
+    margin-top:4px !important; line-height:1.5 !important;
+    white-space:normal !important; word-break:keep-all !important;
+    overflow-wrap:anywhere !important; }
+  .jcb-banner .s br{ display:none !important; }
+  .jcb-banner .s .sep-dot{ display:inline !important; }
+  .jcb-old{ text-decoration:line-through !important; color:#868F9C !important; }
+  .jcb-new{ color:#F5F6F8 !important; font-weight:800 !important; }
+  /* 이 화면의 유일한 파란 주 버튼 = 라벨(14px). 흰 글씨 대비 4.5 확보를 위해 #1A5FBF */
+  .jcb-banner .go{ margin:4px 0 0 0 !important; width:100% !important; flex:1 1 100% !important;
+    background:#1A5FBF !important; color:#FFFFFF !important;
+    border:0 !important; border-radius:8px !important;
+    padding:11px 14px !important; min-height:32px !important; height:auto !important;
+    display:inline-flex !important; align-items:center !important; justify-content:center !important;
+    font-size:13px !important; font-weight:800 !important; line-height:1.4 !important;
+    white-space:nowrap !important; min-width:0 !important; }
+
+  /* ============ 팝업 2개: 가운데 카드 → 아래에서 올라오는 시트 ============ */
+  .jintro-wrap, .jcb-wrap{ align-items:flex-end !important; padding:0 !important; }
+  .jintro-box, .jcb-box{
+    width:100% !important; max-width:none !important; max-height:92vh !important;
+    overflow-y:auto !important; -webkit-overflow-scrolling:touch !important;
+    background:#1E2027 !important; border:0 !important;
+    border-radius:16px 16px 0 0 !important; padding:12px 13px 18px !important; }
+  /* 시트 손잡이 */
+  .jintro-box::before, .jcb-box::before{ content:''; display:block; width:34px; height:4px;
+    background:#3A3E48; border-radius:20px; margin:0 auto 12px; }
+  /* ★ 닫기 × — 32×32 원 안에 19px 글자. 큰글씨 2배면 38px 이 되어 원 밖으로 넘친다.
+       칸을 원형으로 유지하려면 글자를 못 키운다 → 글자 크기를 고정하고 줄간격을 1로 못 박는다.
+       (누르는 대상은 원 전체 32px 이라 터치 규칙은 지켜진다) */
+  /* [1차 검수] 색이 #8B95A1 이라 대비 3.04 (4.5 미달) → 글자만 밝게. 대비 5.65
+     ⚠ 배경을 .05 → .08 로 밝히면 대비가 오히려 4.48 로 떨어진다 (배경이 밝아지므로).
+        보정 방향은 배경 밝기로 정한다 — 배경은 건드리지 않는다. (함정 31) */
+  .jintro-x, .jcb-x{ top:12px !important; right:12px !important; color:#C4CBD6 !important;
+    width:32px !important; height:32px !important;
+    min-width:32px !important; min-height:32px !important;
+    font-size:19px !important; line-height:1 !important; padding:0 !important;
+    display:inline-flex !important; align-items:center !important; justify-content:center !important;
+    flex-shrink:0 !important; }
+
+  /* ============================================================
+     [2026-07-14 영역② 자가진단 팝업] 위계표 — 시안 1안(아코디언 정석) 채택
+       근거: A-02 NAVER(긴 목록은 아코디언) · A-05 모니모(세부는 접었다 펼침) · 원칙 3(위계 3단)
+       값(대) 22 / 제목 17 / 본문 15 / 라벨 14 / 메타 13
+     ⚠ 6단계는 "이어지는 절차"라 세로선을 유지한다. 대신 번호 칸의 고정 크기만 푼다.
+     ============================================================ */
+  /* [종합 옵션 기준] 태그 = 12px / 400 */
+  .jintro-tag, .jcb-tag{ font-size:12px !important; font-weight:400 !important;
+    color:#8B95A1 !important; text-align:left !important; }
+  /* 팝업 제목 = 18px / 800 / 흰 */
+  .jintro-h, .jcb-h{ font-size:18px !important; font-weight:800 !important; color:#FFFFFF !important;
+    line-height:1.35 !important; text-align:left !important; margin-top:6px !important;
+    word-break:keep-all !important; }
+  .jcb-h b{ color:#FFFFFF !important; }
+  /* 부제 = 13px / 400 / 회색 */
+  .jintro-sub{ font-size:13px !important; font-weight:400 !important;
+    color:#8B95A1 !important; line-height:1.6 !important;
+    text-align:left !important; margin-top:8px !important; word-break:keep-all !important; }
+
+  /* 쿠폰 절차 토글 = 15px / 800 (카드 제목급) */
+  .jintro-coupon{ font-size:15px !important; padding:12px !important;
+    min-height:32px !important; height:auto !important;
+    background:#23262E !important; color:#F5F6F8 !important; border:0 !important;
+    border-radius:8px !important; margin-top:16px !important; font-weight:700 !important;
+    line-height:1.4 !important; animation:none !important;
+    white-space:normal !important; word-break:keep-all !important; }
+  .jintro-coupon .chev{ color:#8B95A1 !important; animation:none !important; flex-shrink:0 !important; }
+  .jintro-coupon .chev svg{ width:18px !important; height:18px !important; }
+
+  .jintro-detail{ background:#23262E !important; border-radius:10px !important;
+    padding:16px !important; margin-top:8px !important; }
+  /* [종합 옵션 기준] 안내문·절차 본문 = 13px / 400 / 회색. 강조어(b)만 흰색·800 */
+  .jintro-dlead{ font-size:13px !important; font-weight:400 !important;
+    color:#8B95A1 !important; line-height:1.6 !important; margin-bottom:12px !important; }
+  .jintro-fstep{ gap:10px !important; }
+  .jintro-flow .ft{ font-size:13px !important; font-weight:400 !important;
+    color:#8B95A1 !important; line-height:1.6 !important;
+    padding-bottom:12px !important; min-width:0 !important; }
+  .jintro-flow .ft b{ color:#F5F6F8 !important; }
+  .jintro-flow .ft .cp{ color:#F5F6F8 !important; }
+  /* ★ 번호 원이 25×25 고정 + 글자 12.5px 이었다 (12px 이하 금지 위반은 아니나 바닥 미달).
+       큰글씨 2배에서 글자 28px 이 되어 칸이 터진다 → 칸을 글자에 맞춰 늘어나게 둔다 (Part 3-3). */
+  .jintro-flow .fc{ width:auto !important; height:auto !important;
+    min-width:22px !important; min-height:22px !important; padding:2px !important;
+    box-sizing:border-box !important;
+    background:#2E323C !important; color:#C4CBD6 !important;
+    border:0 !important; font-size:12px !important; font-weight:800 !important;
+    line-height:1.3 !important; }
+
+  /* 이 팝업의 유일한 파란 주 버튼 = 14px / 800 */
+  .jintro-cta{ height:auto !important; min-height:44px !important; background:#667085 !important;
+    color:#FFFFFF !important; border-radius:8px !important; font-size:14px !important;
+    font-weight:800 !important; line-height:1.4 !important; padding:11px 14px !important;
+    white-space:nowrap !important; text-align:center !important; }
+  /* ★ 카카오 버튼은 height:50px 고정이었다 → 큰글씨에서 글자가 칸 밖으로 나간다. 13px */
+  .jintro-kakao{ height:auto !important; min-height:40px !important; border-radius:8px !important;
+    font-size:13px !important; line-height:1.4 !important; padding:10px 14px !important;
+    background:rgba(255,255,255,.05) !important; color:#C4CBD6 !important;
+    white-space:normal !important; word-break:keep-all !important; text-align:center !important; }
+  .jintro-btns{ gap:8px !important; margin-top:16px !important; }
+
+  /* ============================================================
+     [2026-07-14 영역③ 쿠폰 팝업] 위계표 — 시안 1안 + 3안 조합 채택
+       근거: B-01(핵심 숫자 1개를 가장 크게) · C-03(강조 바는 1개만 색)
+             A-08(카드 그리드) · 원칙 7(근접성 — 관련끼리 묶고 그룹 사이만 벌림)
+       값(대) 26 = 결제 70,000원 / 제목 22·17 / 본문 15 / 라벨 14 / 메타 13
+     ============================================================ */
+  .jcb-calc{ background:#23262E !important; border:0 !important;
+    border-radius:10px !important; padding:16px !important;
+    margin:16px 0 0 0 !important; }
+  /* ★ 결제액을 막대 밖 대표값으로 끌어올린다 (자리 이동은 아래 스크립트가 한다).
+       문구는 원본 그대로 `결제 70,000원`. 막대 안에 겹쳐 있어 묻혀 있었다. */
+  /* 결제액 = 이 팝업의 대표값. 22px / 800 / 흰 (줄바꿈 금지 — '결제 70,000원' 한 줄) */
+  .jcb-bar-pay{ position:static !important; display:block !important;
+    font-size:22px !important; font-weight:800 !important; color:#FFFFFF !important;
+    line-height:1.25 !important; margin:0 0 10px 0 !important;
+    white-space:nowrap !important; }
+  .jcb-calc-top{ font-size:12px !important; font-weight:400 !important; color:#8B95A1 !important;
+    display:flex !important; justify-content:space-between !important;
+    align-items:baseline !important; gap:8px !important; flex-wrap:wrap !important;
+    margin-bottom:8px !important; }
+  .jcb-calc-top .dc{ color:#F5F6F8 !important; font-weight:800 !important; }
+  /* 막대는 '65% 할인' 하나만 담는다. 높이를 자동으로 둬 큰글씨에서 안 터지게 한다 */
+  .jcb-bar{ height:auto !important; min-height:24px !important; border-radius:6px !important;
+    background:#2E323C !important; }
+  /* [1차 검수] 밝은 파랑(#5F8AD4) 위 흰 글씨 = 대비 3.07 (4.5 미달). 함정 29와 같은 사고.
+     → 막대 파랑을 진한 파랑(#1A5FBF)으로 낮춘다. 흰 글씨 대비 4.5 확보용 검증된 값. */
+  .jcb-bar-fill{ position:relative !important; width:65% !important;
+    background:#1A5FBF !important; border-radius:6px !important;
+    min-height:22px !important; padding:2px 4px !important; box-sizing:border-box !important;
+    font-size:12px !important; font-weight:800 !important; color:#FFFFFF !important;
+    line-height:1.4 !important; white-space:nowrap !important; }
+  .jcb-calc-formula{ font-size:12px !important; font-weight:400 !important;
+    color:#8B95A1 !important; margin-top:10px !important;
+    line-height:1.6 !important; word-break:keep-all !important; text-align:left !important; }
+  .jcb-calc-formula b{ color:#F5F6F8 !important; font-weight:800 !important; }
+
+  /* --- 쿠폰 6장: 신규 / 기존 그룹을 확실히 가른다 (근접성 그루핑) --- */
+  .jcb-groups{ grid-template-columns:1fr !important; gap:24px !important; margin-top:24px !important; }
+  .jcb-group-h{ font-size:14px !important; color:#FFFFFF !important;
+    margin:0 0 8px 0 !important; font-weight:800 !important;
+    border-left:2px solid #5F6672 !important; padding-left:10px !important;
+    border-radius:0 !important; }
+  /* 신규 가입자 그룹만 파란 세로선 (첫 그룹 = 처음 온 사람이 볼 곳) */
+  .jcb-groups > div:first-child > .jcb-group-h{ border-left-color:#5F8AD4 !important; }
+  /* 그룹 안 카드들을 한 덩어리로 묶는 배경 */
+  .jcb-groups > div{ background:#20232A !important; border-radius:12px !important;
+    padding:12px !important; }
+  .jcb-groups > div > .jcb-group-h{ margin-bottom:12px !important; }
+
+  .jcc{ background:#23262E !important; border:0 !important; border-radius:10px !important;
+    padding:14px !important; margin-bottom:6px !important; min-height:32px !important;
+    align-items:center !important; }
+  .jcc[aria-expanded="true"]{ border:1px solid #5F8AD4 !important; margin-bottom:0 !important; }
+  /* ★ 금액 칸이 52px 고정이었다 → 큰글씨 2배에서 `5만 / 원` 3줄로 쪼개졌다 (실제 사고).
+       글자를 키울 땐 칸을 함께 늘린다 (Part 3-3). 칸은 자동, 글자는 줄바꿈 금지. */
+  /* [종합 옵션 기준] 쿠폰 금액 16px/800 · 이름 14px/800/흰 · % 와 사용기간 12px/400/회색 */
+  .jcc .amt{ width:auto !important; min-width:50px !important; flex-shrink:0 !important; }
+  .jcc .amt .a{ font-size:16px !important; color:#FFFFFF !important; font-weight:800 !important;
+    white-space:nowrap !important; line-height:1.2 !important; }
+  .jcc .amt .p{ font-size:12px !important; color:#8B95A1 !important; font-weight:400 !important;
+    white-space:nowrap !important; }
+  .jcc .meta{ min-width:0 !important; }
+  .jcc .meta .nm{ font-size:14px !important; color:#FFFFFF !important; font-weight:800 !important;
+    word-break:keep-all !important; line-height:1.35 !important; }
+  .jcc .meta .dur{ font-size:12px !important; font-weight:400 !important;
+    color:#8B95A1 !important; margin-top:2px !important; }
+  .jcc .chev{ color:#8B95A1 !important; animation:none !important; flex-shrink:0 !important; }
+  .jcc .chev svg{ width:18px !important; height:18px !important; }
+
+  .jcc-body{ background:#23262E !important; border-radius:0 0 10px 10px !important;
+    padding:16px !important; margin-bottom:6px !important; }
+  .jcc-body .d{ font-size:13px !important; font-weight:400 !important;
+    color:#8B95A1 !important; line-height:1.6 !important; }
+  .jcc-body .d b{ color:#F5F6F8 !important; font-weight:800 !important; }
+  .jcc-body .stp{ font-size:13px !important; font-weight:400 !important;
+    color:#8B95A1 !important; line-height:1.65 !important;
+    margin-top:12px !important; padding-top:12px !important;
+    border-top:0.5px solid rgba(255,255,255,.07) !important; }
+  .jcc-body .stp b{ color:#F5F6F8 !important; font-weight:800 !important; }
+  /* ★ 카드마다 파란 버튼이 있으면 펼칠 때마다 파랑이 6개가 된다.
+       이 팝업의 파란 주 버튼은 맨 아래 '라이브 클래스에서 쿠폰 사용하기' 하나뿐이다.
+       (같은 링크가 아래에 이미 있으므로 정보 누락이 아니다)
+     ★ [위계 재설계] 좌우 반반으로 두면 큰글씨에서 한쪽만 3줄이 되어 높이가 안 맞는다
+       → 위아래로 쌓는다. 각 버튼이 전체 폭을 쓰므로 1줄로 끝난다. */
+  .jcc-btns{ display:flex !important; flex-direction:column !important;
+    gap:8px !important; margin-top:16px !important; }
+  .jcc-kakao, .jcc-cta{ width:100% !important; min-width:0 !important;
+    text-align:center !important;
+    border-radius:8px !important; font-size:12px !important; min-height:38px !important;
+    height:auto !important; padding:9px 12px !important; line-height:1.4 !important;
+    font-weight:800 !important;
+    display:inline-flex !important; align-items:center !important; justify-content:center !important;
+    white-space:nowrap !important; }
+  .jcc-kakao{ background:transparent !important; color:#8B95A1 !important;
+    border:0.5px solid rgba(255,255,255,.14) !important; }
+  .jcc-cta{ background:#2E323C !important; color:#F5F6F8 !important;
+    border:0.5px solid rgba(255,255,255,.14) !important; }
+
+  /* 그룹별 소계 */
+  .jcg-sum{ margin-top:12px !important; padding:0 4px !important;
+    background:transparent !important; border:0 !important; }
+  .jcg-sum .l{ font-size:12px !important; font-weight:400 !important;
+    color:#8B95A1 !important; line-height:1.5 !important; }
+  .jcg-sum .v{ font-size:12px !important; font-weight:400 !important;
+    color:#8B95A1 !important; line-height:1.6 !important;
+    margin-top:2px !important; word-break:keep-all !important; }
+  .jcg-sum .v b{ font-size:14px !important; color:#FFFFFF !important; font-weight:800 !important; }
+  .jcg-sum .pct{ color:#8B95A1 !important; }
+
+  /* ★ '오픈이벤트' 배지가 붉은 계열이었다 → 손익 색(빨강=수익)과 의미가 충돌한다.
+       할인·이벤트는 손익이 아니므로 무채색으로 내린다. (Part 10-4 미해결 ④) */
+  /* [직트 지적] 무채색으로 내렸더니 강조가 죽었다 → **테두리로 강조**한다.
+     빨강 계열은 손익 색(빨강=수익)과 의미가 충돌하므로 쓰지 않는다. */
+  .jcb-box .evt{ font-size:11px !important; padding:2px 7px !important;
+    background:transparent !important; color:#F5F6F8 !important;
+    border:1px solid #8B95A1 !important; border-radius:5px !important;
+    white-space:nowrap !important; font-weight:800 !important; margin-left:5px !important;
+    display:inline-block !important; vertical-align:middle !important; }
+  .jcb-note{ font-size:12px !important; font-weight:400 !important;
+    line-height:1.6 !important; color:#868F9C !important; word-break:keep-all !important; }
+  /* 이 팝업의 유일한 파란 주 버튼 */
+  .jcb-foot-cta{ height:auto !important; min-height:44px !important; border-radius:8px !important;
+    background:#1A5FBF !important; color:#FFFFFF !important;
+    font-size:14px !important; font-weight:800 !important; line-height:1.4 !important;
+    padding:11px 14px !important; margin-top:20px !important;
+    white-space:nowrap !important; text-align:center !important; }
+
+  /* 팝업 하단 = 메타(13px). 바닥이자 최소값 — 12px 이하 금지 · 터치는 32px 이상 확보 */
+  .jintro-foot, .jcb-foot{ margin-top:16px !important; }
+  .jintro-hide, .jcb-hide,
+  .jintro-closetxt, .jcb-closetxt{ font-size:13px !important; color:#8B95A1 !important;
+    min-height:32px !important; display:inline-flex !important; align-items:center !important;
+    gap:8px !important; line-height:1.4 !important; }
+  /* [1차 검수] '닫기' 글자 폭이 24px 라 터치 32px 미달 → 좌우 여백으로 칸을 넓힌다 */
+  .jintro-closetxt, .jcb-closetxt{ min-width:32px !important; padding:0 8px !important;
+    justify-content:center !important; }
+  /* 체크박스 자체는 17px 이지만, 실제 누르는 대상은 라벨 전체(32px 이상)라 터치 규칙 통과 */
+  .jintro-hide input{ flex-shrink:0 !important; }
+
+  /* 누를 수 있는 것 최소 32px */
+  .hub-card, .jcb-banner .go, .jintro-coupon, .jcc, .jintro-cta{ min-height:32px !important; }
+}
+</style>
+
+<script id="hm-js-2026-07-13">
+/* 메인(hub) 모바일 — 자리 옮기기 · 강조 넣기.
+   ⚠ 모바일에서만 동작한다(matchMedia). PC 는 아무것도 바뀌지 않는다.
+   ⚠ 이 화면은 정적 HTML 이라 다시 그려지지 않으므로, 원본을 옮겨도 사라지지 않는다.
+      (대시보드처럼 표를 다시 그리는 구조가 아니다) */
+(function(){
+  function isMob(){ try{ return window.matchMedia('(max-width:640px)').matches; }catch(e){ return false; } }
+
+  function build(){
+    if(!isMob()) return;
+
+    /* 0) 헤더 버튼 2개를 제목 위 한 줄로 모은다 (제목을 가리지 않게) */
+    try{
+      var hd=document.querySelector('.hub-header');
+      var rf=document.querySelector('.jikt-refresh-btn');
+      var vm=document.querySelector('.jikt-viewmode-btn');
+      if(hd && !hd.querySelector('.hm-btnrow')){
+        var row=document.createElement('div');
+        row.className='hm-btnrow';
+        hd.insertBefore(row, hd.firstChild);
+        if(rf) row.appendChild(rf);
+        if(vm) row.appendChild(vm);
+      }
+    }catch(e){}
+
+    /* 0-B) [직트 재지시 2026-07-16] 모바일 제목을 전체 문구 `직트&레이 트레이딩 룸` 으로.
+            (예전엔 '트레이딩 룸'으로 줄였는데, 전체 문구로 표시해달라는 요청) */
+    try{
+      var ttl=document.querySelector('.hub-title');
+      if(ttl && ttl.textContent.trim()!=='직트&레이 트레이딩 룸') ttl.textContent='직트&레이 트레이딩 룸';
+    }catch(e){}
+
+    /* 1) 쿠폰 배너를 카드 3장 아래로 옮긴다 */
+    try{
+      var banner=document.getElementById('jcb-banner');
+      var grid=document.querySelector('.card-grid');
+      if(banner && grid && banner.previousElementSibling!==grid){
+        grid.parentNode.insertBefore(banner, grid.nextSibling);
+      }
+    }catch(e){}
+
+    /* 2) [2026-07-14] 원본에 없는 문구는 신설하지 않는다.
+          1번 카드 강조는 원본 요소(파란 테두리 + 1번 숫자)만으로 표현한다.
+          이전 빌드에서 붙었던 덧붙임 요소가 남아 있으면 지운다. */
+    try{
+      document.querySelectorAll('.hm-badge, .hm-cta').forEach(function(el){ el.remove(); });
+    }catch(e){}
+
+    /* 3) [2026-07-14 영역③] 쿠폰 팝업 — `결제 70,000원` 을 막대 밖 맨 위로 옮긴다.
+          원본에선 할인 막대(.jcb-bar) 안에 겹쳐 있어 묻혀 있었다.
+          이 팝업이 말하려는 핵심 숫자는 "결국 얼마 내는가" 다 (레퍼런스 B-01).
+          ⚠ 문구는 손대지 않는다. 자리만 옮긴다.
+          ⚠ 이 팝업은 정적 HTML 이라 다시 그려지지 않으므로 옮겨도 사라지지 않는다. */
+    try{
+      var calc = document.querySelector('.jcb-calc');
+      var pay  = document.querySelector('.jcb-bar-pay');
+      if(calc && pay && pay.parentNode !== calc){
+        calc.insertBefore(pay, calc.firstChild);
+      }
+    }catch(e){}
+
+    /* 4) [2026-07-14 제거] 일괄 최소폰트 보정(14px 미만 → 14px)은 정보 위계를 파괴한다.
+          원본이 의도적으로 작게 둔 라벨·캡션까지 전부 14px로 밀어올려
+          "제목 18 / 나머지 전부 14" 로 평평해졌고, 폰 큰글씨 배율이 곱해져 화면이 터졌다.
+          → 일괄 보정 금지. 글자 크기는 영역마다 위계표(마스터 통합본 Part 3-2)에 맞춰
+            개별로 지정한다. (값 26 / 제목 18 / 본문 15 / 라벨 14 / 메타 13, 12px 이하 금지) */
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', build);
+  else build();
+  /* 팝업은 나중에 열리므로 클릭 뒤에도 다시 훑는다 */
+  document.addEventListener('click', function(){ [150, 600].forEach(function(ms){ setTimeout(build, ms); }); }, true);
+  window.addEventListener('resize', build);
+})();
+</script>
+</body>
+</html>
