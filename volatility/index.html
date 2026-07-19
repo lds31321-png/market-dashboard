@@ -9486,8 +9486,8 @@ body{padding-bottom:0}
     /* 등급 안내 */
     var g=mk('div','jm-st'); g.style.setProperty('margin','0 0 8px 0','important');
     mark(g, '순위표');
-    var gh='<div class="jm-st-hd" style="cursor:default"><span class="jm-st-t">종합 순위표 <span style="font-size:11px;color:#8B95A1;font-weight:600">· 평균 잠재수익률(월간)</span></span>'+
-           '<span class="jm-sum-d">'+esc2(T2(card.querySelector('.st-cardhd')||{}).match(/\d{4}\.\d{2}\.\d{2}/) ? T2(card).match(/\d{4}\.\d{2}\.\d{2}/)[0]+' 기준' : '')+'</span></div>'+
+    var gh='<div class="jm-st-hd" style="cursor:default;flex-wrap:wrap"><span class="jm-st-t">종합 순위표</span>'+
+           '<span class="jm-sum-d">'+esc2(T2(card.querySelector('.st-cardhd')||{}).match(/\d{4}\.\d{2}\.\d{2}/) ? T2(card).match(/\d{4}\.\d{2}\.\d{2}/)[0]+' 기준' : '')+'</span><span style="flex-basis:100%;display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#8B95A1;font-weight:600;margin-top:4px;white-space:nowrap"><span style="display:inline-block;width:3px;height:11px;background:#EA6A60;border-radius:2px"></span>평균 잠재수익률(월간)</span></div>'+
            /* ⚠ 세 칸의 줄 수가 제각각이라(‘비권장 9~11위’만 두 줄) 높이가 안 맞고 어색했다.
                  → 등급과 순위를 **항상 두 줄**로 나누고, 세로 가운데 정렬로 통일한다. */
            '<div class="jm-st-bd" style="display:block"><div class="jm-grade">'+
@@ -9560,8 +9560,8 @@ body{padding-bottom:0}
     var hd=mk('div','jm-st'); hd.style.setProperty('margin','0 0 8px 0','important');
     mark(hd, '현황판');
     var dm=(T2(card).match(/\d{4}\.\d{2}\.\d{2}/)||[''])[0];
-    hd.innerHTML='<div class="jm-st-hd" style="cursor:default"><span class="jm-st-t">종목별 상세 현황 <span style="font-size:11px;color:#8B95A1;font-weight:600">· 평균 잠재수익률(월간)</span></span>'+
-                 '<span class="jm-sum-d">'+esc2(dm?dm+' 기준':'')+'</span></div>';
+    hd.innerHTML='<div class="jm-st-hd" style="cursor:default;flex-wrap:wrap"><span class="jm-st-t">종목별 상세 현황</span>'+
+                 '<span class="jm-sum-d">'+esc2(dm?dm+' 기준':'')+'</span><span style="flex-basis:100%;display:inline-flex;align-items:center;gap:5px;font-size:11px;color:#8B95A1;font-weight:600;margin-top:4px;white-space:nowrap"><span style="display:inline-block;width:3px;height:11px;background:#EA6A60;border-radius:2px"></span>평균 잠재수익률(월간)</span></div>';
     wrap.appendChild(hd);
 
     var tot=rows.length;
