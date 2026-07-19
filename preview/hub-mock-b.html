@@ -61,7 +61,7 @@
   .coupon .go{font-size:13px;font-weight:600;color:var(--t2);white-space:nowrap;}.coupon:hover .go{color:var(--acc);}
 
   .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
-  .card{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px 24px 22px;text-decoration:none;cursor:pointer;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.045);transition:transform .28s cubic-bezier(.2,.7,.3,1),border-color .28s,box-shadow .28s,background .28s;}
+  .card{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px 24px 22px;text-decoration:none;color:var(--t2);cursor:pointer;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.045);transition:transform .28s cubic-bezier(.2,.7,.3,1),border-color .28s,box-shadow .28s,background .28s;}
   .card::before{content:"";position:absolute;top:0;left:24px;right:24px;height:1px;background:linear-gradient(90deg,transparent,rgba(var(--acc-rgb),.55),transparent);opacity:0;transition:opacity .3s;}
   .card:hover{transform:translateY(-6px);background:var(--card-h);border-color:rgba(var(--acc-rgb),.34);box-shadow:0 18px 46px rgba(0,0,0,.55),0 8px 40px rgba(var(--acc-rgb),.12),inset 0 1px 0 rgba(255,255,255,.06);}
   .card:hover::before{opacity:1;}
@@ -70,7 +70,7 @@
   .card .num{width:32px;height:32px;flex-shrink:0;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:15px;font-weight:600;color:var(--t2);background:var(--bg2);border:1px solid var(--line2);transition:all .28s;}
   .card:hover .num{color:var(--acc);border-color:rgba(var(--acc-rgb),.5);background:rgba(var(--acc-rgb),.1);}
   .card .steptxt{font-size:11.5px;letter-spacing:.05em;color:var(--t3);}
-  .card .ttl{font-size:21px;font-weight:800;letter-spacing:-.02em;line-height:1.25;margin-bottom:10px;}
+  .card .ttl{font-size:21px;font-weight:800;letter-spacing:-.02em;line-height:1.25;margin-bottom:10px;color:var(--t1);}
   .card .desc{font-size:13.5px;color:var(--t3);line-height:1.7;}
   .card .items{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--t4);line-height:1.75;flex:1;}
   .card .go{display:flex;align-items:center;justify-content:space-between;margin-top:18px;}
