@@ -669,7 +669,7 @@ function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.n
   var w=document.getElementById('jikt-intro-modal'); if(!w) return;
   var KEY='jikt_intro_hide_until';
   try{ var until=parseInt(localStorage.getItem(KEY)||'0',10); if(until && Date.now()<until) return; }catch(e){}
-  function close(){ w.classList.remove('on'); document.body.style.overflow=''; }
+  function close(){ w.classList.remove('on'); document.body.style.overflow=''; try{ localStorage.setItem(KEY, String(Date.now()+24*3600*1000)); }catch(e){} }
   w.addEventListener('click',function(e){ if(e.target===w) close(); });
   w.querySelectorAll('[data-jclose]').forEach(function(b){ b.addEventListener('click',close); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
