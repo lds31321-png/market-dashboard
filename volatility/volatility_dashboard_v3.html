@@ -1857,6 +1857,43 @@ html:not(.theme-light) button, html:not(.theme-light) .nav-tab, html:not(.theme-
 :root,html,body,.theme-blue,.theme-light{--mono:'Pretendard','Noto Sans KR',sans-serif!important;--font-n:'Pretendard','Noto Sans KR',sans-serif!important;--font-m:'Pretendard','Noto Sans KR',sans-serif!important;--sans:'Pretendard','Noto Sans KR',sans-serif!important;--uxc-font:'Pretendard','Noto Sans KR',sans-serif!important;--font:'Pretendard','Noto Sans KR',sans-serif!important;}
 body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font-variant-numeric:tabular-nums;}
 </style>
+<style id="jikt-mkt-declutter-2026-07-19">
+/* [시장 현황 색 절제 2026-07-19] 위험 단계 규칙(빨강=비상 / 주황=주의 / 무채색=안전)은 유지. 겹친 색·점멸·파란 순위배지만 정리. 텍스트·수치·구조 불변. */
+.ov-inst-card-v2{animation:none !important;}
+.ov-inst-card-v2[data-jrisk="safe"]{border:0.9px solid rgba(255,255,255,.08) !important;box-shadow:none !important;}
+.ov-inst-card-v2[data-jrisk="red"]{border:0.9px solid rgba(255,92,104,.20) !important;border-left:3px solid rgba(255,92,104,.9) !important;box-shadow:none !important;}
+.ov-inst-card-v2[data-jrisk="amber"]{border:0.9px solid rgba(255,138,61,.20) !important;border-left:3px solid rgba(255,138,61,.9) !important;box-shadow:none !important;}
+.ov-inst-card-v2 [data-jk="rank"]{background:transparent !important;color:#8B95A1 !important;border:none !important;}
+.ov-inst-card-v2 [data-jk="rank"] *{color:#8B95A1 !important;}
+.ov-inst-card-v2 [data-jk="chip"]{background:transparent !important;border-color:transparent !important;padding-left:0 !important;padding-right:0 !important;}
+html.theme-light .ov-inst-card-v2 [data-jk="rank"],html.theme-light .ov-inst-card-v2 [data-jk="rank"] *{color:#8a8178 !important;}
+</style>
+<script>
+/* [시장 현황 색 절제 2026-07-19] 카드 위험단계(인라인 pulse-card-*)를 읽어 data속성 부여 → 정적 좌측 색띠 + 파란배지 무채색 + 색블록 제거. 재렌더 대응 MutationObserver. */
+(function(){
+  function apply(){
+    var cards=document.querySelectorAll('.ov-inst-card-v2');
+    for(var i=0;i<cards.length;i++){
+      var c=cards[i];
+      var st=c.getAttribute('style')||'';
+      var risk=/pulse-card-red/.test(st)?'red':(/pulse-card-orange/.test(st)?'amber':'safe');
+      if(c.getAttribute('data-jrisk')!==risk){c.setAttribute('data-jrisk',risk);}
+      var els=c.querySelectorAll('*');
+      for(var j=0;j<els.length;j++){
+        var el=els[j]; if(el.getAttribute('data-jk')) continue;
+        var s=el.getAttribute('style')||'';
+        if(/71,\s*152,\s*250/.test(s)||/57,\s*139,\s*239/.test(s)){el.setAttribute('data-jk','rank');continue;}
+        var cs=getComputedStyle(el),bg=cs.backgroundColor,m=bg.match(/[\d.]+/g);
+        if(!m) continue; var r=+m[0],g=+m[1],b=+m[2],a=(m[3]!==undefined?+m[3]:1);
+        if(a>0 && (Math.max(r,g,b)-Math.min(r,g,b))>28 && (el.textContent||'').trim().length>0){el.setAttribute('data-jk','chip');}
+      }
+    }
+  }
+  function boot(){ apply(); try{var t;var mo=new MutationObserver(function(){clearTimeout(t);t=setTimeout(apply,140);});mo.observe(document.body,{childList:true,subtree:true});}catch(e){} }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot);}else{boot();}
+})();
+</script>
+
 </head><body>
 <canvas id="vol-fx" style="position:fixed;inset:0;z-index:-1;pointer-events:none"></canvas>
 <script>
