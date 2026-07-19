@@ -515,51 +515,69 @@ body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font
 </style>
 
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<style id="jikt-refine-2026-07-19">
-/* ===== 세련화 다듬기 레이어 — 구조·문구 불변, 마감만 ===== */
-html body, .hub-logo, .hub-title, .hub-sub, .hub-flow, .card-title, .card-desc, .card-items,
-.card-step .t, .jcb-banner, .jikt-theme-btn, .jt-label{
-  font-family:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif !important;
-}
-body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:radial-gradient(120% 100% at 50% -6%,transparent 50%,rgba(0,0,0,.45) 100%);}
-.hub-logo{letter-spacing:.24em !important;font-size:12.5px !important;color:#7E8794 !important;font-weight:700 !important;}
-.hub-title{letter-spacing:-.025em !important;}
-.hub-sub{letter-spacing:-.01em !important;color:#9AA3AE !important;}
-.hub-flow{gap:8px !important;}
-.hub-flow .f{border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:7px 14px;font-size:13px;
-  color:#AEB6C1 !important;background:rgba(255,255,255,.02);transition:all .2s;}
-.hub-flow .a{color:#5B636E !important;}
-.jcb-banner{border-radius:14px !important;transition:border-color .25s,background .25s,transform .25s,box-shadow .25s !important;}
-.jcb-banner:hover{transform:translateY(-1px);}
-.hub-card{border-radius:18px !important;position:relative;overflow:hidden;
-  box-shadow:0 2px 10px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.045) !important;
-  transition:transform .28s cubic-bezier(.2,.7,.3,1),border-color .28s,box-shadow .28s,background .28s !important;}
-.hub-card::before{content:"";position:absolute;top:0;left:24px;right:24px;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(var(--cyan-rgb),.5),transparent);opacity:0;transition:opacity .3s;}
-.hub-card:hover{transform:translateY(-6px) !important;
-  border-color:rgba(var(--cyan-rgb),.34) !important;
-  box-shadow:0 18px 46px rgba(0,0,0,.5), 0 8px 40px rgba(var(--cyan-rgb),.12), inset 0 1px 0 rgba(255,255,255,.06) !important;}
-.hub-card:hover::before{opacity:1;}
-.card-step .n{background:rgba(255,255,255,.05) !important;color:#C9D2DE !important;
-  border:1px solid rgba(255,255,255,.12) !important;font-weight:600 !important;transition:all .28s;}
-.hub-card:hover .card-step .n{color:var(--cyan) !important;border-color:rgba(var(--cyan-rgb),.5) !important;background:rgba(var(--cyan-rgb),.1) !important;}
-.card-step .t{color:#7E8794 !important;font-weight:700 !important;letter-spacing:.04em !important;}
-.card-title{letter-spacing:-.02em !important;}
-.card-items{color:#6E7681 !important;font-size:13px !important;}
-.card-arrow{align-self:flex-end;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  border:1px solid rgba(255,255,255,.13);color:#7E8794 !important;font-size:16px !important;padding-top:0 !important;transition:all .28s;line-height:1;}
-.hub-card:hover .card-arrow{transform:translateX(4px);border-color:rgba(var(--cyan-rgb),.6);color:var(--cyan) !important;background:rgba(var(--cyan-rgb),.1);}
-.jikt-theme-btn{transition:all .22s !important;}
-@keyframes jiktRefineUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-.hub-header{animation:jiktRefineUp .7s .05s both;}
-.hub-flow{animation:jiktRefineUp .7s .18s both;}
-.jcb-banner{animation:jiktRefineUp .7s .26s both;}
-.card-grid > .hub-card:nth-child(1){animation:jiktRefineUp .7s .36s both;}
-.card-grid > .hub-card:nth-child(2){animation:jiktRefineUp .7s .44s both;}
-.card-grid > .hub-card:nth-child(3){animation:jiktRefineUp .7s .52s both;}
-@media(max-width:640px){ body::after{display:none;} }
-/* 미리보기 전용: 인트로/쿠폰 팝업 감춤(실제 적용 시 제외) */
+<style id="jikt-refine-v3">
+/* ===== 세련화 v3 — 눈에 띄는 프리미엄, 색 없이 (구조·문구 불변) ===== */
+html body,.hub-logo,.hub-title,.hub-sub,.hub-flow,.card-title,.card-desc,.card-items,.card-step .t,.jcb-banner,.jikt-theme-btn,.jt-label{
+  font-family:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif !important;}
+
+/* 1) 훨씬 깊은 프리미엄 검정 */
+html:not(.theme-light) body{background:#0A0B0F !important;}
+html:not(.theme-light) #hub-ambient{background:
+  radial-gradient(1100px 560px at 50% -12%, rgba(255,255,255,.035), transparent 62%),
+  radial-gradient(900px 500px at 100% 110%, rgba(120,130,150,.05), transparent 60%) !important;}
+
+/* 2) 헤더 여백 + 큰 제목 */
+.hub-header{margin-bottom:24px !important;}
+.hub-logo{letter-spacing:.3em !important;font-size:12px !important;color:#6E7681 !important;font-weight:700 !important;}
+.hub-title{font-size:46px !important;letter-spacing:-.035em !important;font-weight:800 !important;margin-bottom:14px !important;line-height:1.08 !important;}
+.hub-sub{font-size:16px !important;color:#9AA3AE !important;letter-spacing:-.01em !important;}
+.hub-flow{margin-top:24px !important;gap:9px !important;}
+.hub-flow .f{border:1px solid rgba(255,255,255,.1) !important;border-radius:999px !important;padding:8px 16px !important;font-size:13px !important;color:#AEB6C1 !important;background:rgba(255,255,255,.02) !important;}
+.hub-flow .a{color:#565E69 !important;}
+
+/* 3) 쿠폰: 넓고 깔끔 (색·펄스 없음) */
+.jcb-banner{border-radius:16px !important;padding:18px 24px !important;margin-bottom:28px !important;
+  border:1px solid rgba(255,255,255,.09) !important;background:rgba(255,255,255,.022) !important;
+  transition:border-color .25s,background .25s,transform .25s,box-shadow .25s !important;}
+.jcb-banner:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.16) !important;box-shadow:0 12px 34px rgba(0,0,0,.5);}
+
+/* 4) 카드: 넉넉한 여백 + 떠 보이는 카드 + 무채색 hover */
+.card-grid{gap:22px !important;}
+.hub-card{border-radius:20px !important;
+  background:#15161B !important;border:1px solid rgba(255,255,255,.08) !important;
+  padding:38px 32px !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045), 0 10px 34px rgba(0,0,0,.55) !important;
+  transition:transform .32s cubic-bezier(.2,.7,.3,1),border-color .32s,box-shadow .32s,background .32s !important;}
+.hub-card:hover{transform:translateY(-7px) !important;background:#191A20 !important;
+  border-color:rgba(255,255,255,.22) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07), 0 32px 64px rgba(0,0,0,.7) !important;}
+
+/* 5) 번호 배지·라벨·제목·목록 (무채색, hover 무채색) */
+.card-step{gap:12px !important;margin-bottom:24px !important;}
+.card-step .n{width:34px !important;height:34px !important;background:rgba(255,255,255,.06) !important;color:#E4E9F0 !important;
+  border:1px solid rgba(255,255,255,.13) !important;font-weight:600 !important;border-radius:10px !important;transition:all .3s;}
+.hub-card:hover .card-step .n{color:#FFFFFF !important;border-color:rgba(255,255,255,.32) !important;background:rgba(255,255,255,.1) !important;}
+.card-step .t{color:#8B95A1 !important;font-weight:700 !important;letter-spacing:.03em !important;}
+.card-title{font-size:23px !important;letter-spacing:-.02em !important;margin-bottom:12px !important;}
+.card-desc{font-size:14px !important;color:#AEB6C1 !important;line-height:1.75 !important;}
+.card-items{color:#6E7681 !important;font-size:12.5px !important;margin-top:18px !important;padding-top:16px !important;}
+
+/* 6) 화살표 → 원형 버튼(무채색) */
+.card-arrow{align-self:flex-end;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:20px !important;
+  border:1px solid rgba(255,255,255,.13);color:#8B95A1 !important;font-size:16px !important;padding-top:0 !important;transition:all .3s;line-height:1;}
+.hub-card:hover .card-arrow{transform:translateX(3px);border-color:rgba(255,255,255,.34);color:#FFFFFF !important;background:rgba(255,255,255,.08);}
+
+/* 7) 상단 버튼 정돈 */
+.jikt-theme-btn{border-radius:999px !important;transition:all .22s !important;}
+
+/* 8) 은은한 등장 */
+@keyframes jiktUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hub-header{animation:jiktUp .6s .05s both;}
+.hub-flow{animation:jiktUp .6s .16s both;}
+.jcb-banner{animation:jiktUp .6s .24s both;}
+.card-grid > .hub-card:nth-child(1){animation:jiktUp .6s .34s both;}
+.card-grid > .hub-card:nth-child(2){animation:jiktUp .6s .42s both;}
+.card-grid > .hub-card:nth-child(3){animation:jiktUp .6s .5s both;}
 #jikt-intro-modal,#jcoupon-modal{display:none !important;}
 </style>
 </head>
