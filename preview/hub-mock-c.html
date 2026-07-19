@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>시안 C · 리스트 메뉴형 — 직트 & 레이 트레이딩 룸</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --acc:#AEB8C4; --acc-rgb:174,184,196;
+    --bg:#0C0D10; --bg2:#111217; --card:#15161B;
+    --t1:#FFFFFF; --t2:#AEB6C1; --t3:#7E8794; --t4:#565E69;
+    --line:rgba(255,255,255,.07); --line2:rgba(255,255,255,.13);
+    --mono:'IBM Plex Mono',monospace; --disp:'Clash Display',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:var(--bg);}
+  body{font-family:'Pretendard Variable',Pretendard,sans-serif;color:var(--t1);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  .note{font-size:12px;color:var(--t3);text-align:center;padding:8px 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.015);display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;}
+  .note b{color:var(--t2);}
+  .note .accsel{display:inline-flex;gap:6px;align-items:center;}
+  .note .chip{font-size:11.5px;font-weight:600;color:var(--t3);padding:5px 11px;border-radius:999px;cursor:pointer;border:1px solid var(--line);background:transparent;transition:all .2s;display:inline-flex;align-items:center;gap:6px;}
+  .note .chip .dot{width:8px;height:8px;border-radius:50%;}
+  .note .chip[data-acc="blue"] .dot{background:#4593FC;}.note .chip[data-acc="mint"] .dot{background:#5FE0C4;}.note .chip[data-acc="neutral"] .dot{background:#AEB8C4;}
+  .note .chip.on{color:var(--t1);border-color:rgba(var(--acc-rgb),.55);background:rgba(var(--acc-rgb),.12);}
+  .bg-glow{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(50% 40% at 50% 108%,rgba(var(--acc-rgb),.12),transparent 68%);animation:glowPulse 8s ease-in-out infinite;transition:background .5s;}
+  @keyframes glowPulse{0%,100%{opacity:.5}50%{opacity:.85}}
+  .vig{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(120% 120% at 50% 100%,transparent 55%,rgba(0,0,0,.5) 100%);}
+  .wrap{position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:0 34px 70px;}
+  header.top{display:flex;align-items:center;justify-content:space-between;padding:24px 0 0;gap:16px;flex-wrap:wrap;}
+  .brand .kicker{font-family:var(--disp);font-size:12px;letter-spacing:.26em;color:var(--t3);text-transform:uppercase;}
+  .tbtns{display:flex;gap:10px;}
+  .btn{font-size:12.5px;font-weight:600;color:var(--t3);padding:9px 16px;border-radius:999px;border:1px solid var(--line2);background:rgba(255,255,255,.02);cursor:pointer;transition:all .22s;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;}
+  .btn:hover{color:var(--t1);border-color:var(--t3);}
+
+  .hero{padding:52px 0 34px;position:relative;animation:fadeUp .7s .05s both;}
+  .hero h1{font-size:clamp(34px,5vw,56px);font-weight:800;line-height:1.05;letter-spacing:-.03em;margin-bottom:14px;}
+  .hero h1 .amp{font-family:var(--disp);font-weight:500;color:var(--t4);}
+  .hero .tagline{font-size:clamp(15px,1.7vw,18px);color:var(--t2);font-weight:400;}
+  .hero .tagline .em{color:var(--t1);font-weight:600;}
+
+  .coupon{display:flex;align-items:center;gap:14px;padding:14px 20px;border-radius:14px;border:1px solid var(--line2);background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.008));margin:6px 0 10px;cursor:pointer;transition:all .25s;animation:fadeUp .7s .18s both;}
+  .coupon:hover{border-color:rgba(var(--acc-rgb),.45);background:rgba(var(--acc-rgb),.06);}
+  .coupon .ic{width:32px;height:32px;flex-shrink:0;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;background:rgba(var(--acc-rgb),.14);}
+  .coupon .tx{flex:1;min-width:0;}.coupon .tx .t{font-size:14.5px;font-weight:800;}.coupon .tx .t b{color:var(--t1);}
+  .coupon .tx .s{font-size:12px;color:var(--t3);margin-top:2px;}
+  .coupon .go{font-size:12.5px;font-weight:600;color:var(--t2);white-space:nowrap;}.coupon:hover .go{color:var(--t1);}
+
+  .menu{margin-top:16px;border-top:1px solid var(--line);}
+  .row{position:relative;display:flex;align-items:center;gap:22px;padding:26px 8px;text-decoration:none;border-bottom:1px solid var(--line);cursor:pointer;overflow:hidden;transition:padding .3s cubic-bezier(.2,.7,.3,1),background .3s;}
+  .row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--acc);transform:scaleY(0);transform-origin:center;transition:transform .3s;}
+  .row:hover{background:linear-gradient(90deg,rgba(var(--acc-rgb),.05),transparent 60%);padding-left:22px;}
+  .row:hover::before{transform:scaleY(1);}
+  .row .gh{font-family:var(--disp);font-size:clamp(42px,6vw,72px);font-weight:600;line-height:1;color:var(--t4);width:1.4em;flex-shrink:0;transition:color .3s,transform .3s;opacity:.55;}
+  .row:hover .gh{color:var(--acc);opacity:1;transform:translateY(-2px);}
+  .row .mid{flex:1;min-width:0;}
+  .row .step{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--t3);text-transform:none;margin-bottom:7px;}
+  .row .ttl{font-size:clamp(24px,3.2vw,34px);font-weight:800;letter-spacing:-.025em;line-height:1.1;color:var(--t2);transition:color .3s;}
+  .row:hover .ttl{color:var(--t1);}
+  .row .items{font-size:12.5px;color:var(--t4);margin-top:9px;line-height:1.6;max-width:520px;}
+  .row .arw{width:44px;height:44px;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--line2);color:var(--t3);font-size:17px;transition:all .3s;}
+  .row:hover .arw{transform:translateX(5px);border-color:rgba(var(--acc-rgb),.6);color:var(--t1);background:rgba(var(--acc-rgb),.12);}
+  .menu .row:nth-child(1){animation:fadeUp .6s .26s both;}.menu .row:nth-child(2){animation:fadeUp .6s .34s both;}.menu .row:nth-child(3){animation:fadeUp .6s .42s both;}
+
+  footer.foot{margin-top:34px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--t4);font-family:var(--mono);animation:fadeUp .7s .5s both;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @media(max-width:640px){.wrap{padding:0 18px 56px;}.row{gap:14px;padding:20px 4px;}.row .items{display:none;}.row .arw{width:38px;height:38px;}.coupon{flex-wrap:wrap;}}
+</style>
+</head>
+<body>
+  <div class="note"><span>시안 <b>C · 리스트 메뉴형(대담·에디토리얼)</b></span><span class="accsel"><b>포인트색</b><button class="chip" data-acc="blue"><span class="dot"></span>블루</button><button class="chip" data-acc="mint"><span class="dot"></span>민트</button><button class="chip on" data-acc="neutral"><span class="dot"></span>뉴트럴</button></span></div>
+  <div class="bg-glow"></div><div class="vig"></div>
+  <div class="wrap">
+    <header class="top">
+      <div class="brand"><span class="kicker">JIKT · Option Selling</span></div>
+      <div class="tbtns"><button class="btn">◐ 라이트 모드</button><button class="btn">↻ 최신 데이터로 업데이트</button></div>
+    </header>
+    <section class="hero">
+      <h1>직트 <span class="amp">&amp;</span> 레이 트레이딩 룸</h1>
+      <p class="tagline">수익은 시장이 주고, <span class="em">손실은 우리가 통제</span>합니다.</p>
+    </section>
+    <div class="coupon"><div class="ic">🎟</div><div class="tx"><div class="t">트레이딩 룸 <b>최대 65% 할인</b></div><div class="s">정가 200,000원 → 최저 70,000원 · 쿠폰 합산</div></div><div class="go">쿠폰 안내 보기 →</div></div>
+
+    <nav class="menu">
+      <a class="row" href="#">
+        <div class="gh">01</div>
+        <div class="mid"><div class="step">체험 · 연습 단계</div><div class="ttl">무료 포지션 공유</div><div class="items">진행 포지션 · 추천 종목 · 수익률 · 전략 히스토리</div></div>
+        <div class="arw">→</div>
+      </a>
+      <a class="row" href="#">
+        <div class="gh">02</div>
+        <div class="mid"><div class="step">실전 운용 단계</div><div class="ttl">종합 옵션 대시보드</div><div class="items">종목 4단계 분석 · 최종 진입 정보 · 종합 순위표 · 생존 경보 · 매매 현황·복기</div></div>
+        <div class="arw">→</div>
+      </a>
+      <a class="row" href="#">
+        <div class="gh">03</div>
+        <div class="mid"><div class="step">거시 대비 단계</div><div class="ttl">글로벌 대시보드</div><div class="items">변동성 예측 헤드라인 · 7종목 시나리오 분석 · EIA·FRED 공식 데이터</div></div>
+        <div class="arw">→</div>
+      </a>
+    </nav>
+    <footer class="foot"><span>© 2026 JIKT & RAY</span><span>수익은 시장이 주고, 손실은 우리가 통제합니다.</span></footer>
+  </div>
+<script>
+  var ACC={blue:{c:'#4593FC',rgb:'69,147,252'},mint:{c:'#5FE0C4',rgb:'95,224,196'},neutral:{c:'#AEB8C4',rgb:'174,184,196'}};
+  var root=document.documentElement;
+  document.querySelectorAll('.chip').forEach(function(b){b.addEventListener('click',function(){var a=ACC[b.dataset.acc];root.style.setProperty('--acc',a.c);root.style.setProperty('--acc-rgb',a.rgb);document.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on');});b.classList.add('on');});});
+</script>
+</body>
+</html>
