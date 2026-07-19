@@ -1874,8 +1874,9 @@ html.theme-light .ov-inst-card-v2 [data-jk="btn"]{background:rgba(0,0,0,.05) !im
 .ov-inst-card-v2 .jk-mval::after{content:' (월간)' !important;opacity:.6 !important;font-weight:500 !important;}
 .ov-inst-card-v2 [data-jk="btn"].jk-noarrow::after{content:' \2192' !important;}
 /* 카드 상세 '보유 점검'의 축소 콜/풋 강조 — 축소율>0%면 살몬색+은은한 펄스(축소하라는 신호), 0%면 무채색 유지 */
-.jk-cut-on{color:#E65C66 !important;font-weight:800 !important;animation:jkCutPulse 1.9s ease-in-out infinite !important;}
-@keyframes jkCutPulse{0%,100%{opacity:1}50%{opacity:.5}}
+.jk-cut-on{color:#E65C66 !important;font-weight:800 !important;}
+/* [A] 상세 상태 펄스 동기화용 통일 키프레임 (JS가 한 pass에 일괄 적용 → 위상 동기화) */
+@keyframes jkSyncPulse{0%,100%{opacity:1}50%{opacity:.5}}
 /* [E] 위험 포지션 카드 테두리 톤다운 — 위험도 색은 유지하되 너무 진한 것 완화 */
 .pos-card.danger-1{border-color:rgba(255,176,32,.22) !important;border-width:1px !important;}
 .pos-card.danger-2{border-color:rgba(255,176,32,.30) !important;border-width:1px !important;}
@@ -1943,6 +1944,18 @@ html.theme-light .ov-inst-card-v2 [data-jk="btn"]{background:rgba(0,0,0,.05) !im
     /* 카드 상세 '보유 점검' 축소 콜/풋 강조: 값>0%면 표시, 0%면 해제 */
     try{ var cutBox=document.getElementById('uvp-face-a2');
       if(cutBox){ var cl=cutBox.querySelectorAll('*'); for(var q=0;q<cl.length;q++){ var ce=cl[q]; if(ce.children.length===0){ var ct=(ce.textContent||'').trim(), cm=ct.match(/^(\d+)%$/); if(cm){ if(+cm[1]>0) ce.classList.add('jk-cut-on'); else ce.classList.remove('jk-cut-on'); } } } }
+    }catch(e){}
+    /* [A] 카드 상세 상태 펄스 동기화 — ov-detail-view 안의 상태 펄스(배지·표값·축소)를 jkSyncPulse 2s로 일괄 통일(한 pass=위상 동기화) */
+    try{ var dv=document.getElementById('ov-detail-view');
+      if(dv && dv.offsetParent!==null){ var de=dv.querySelectorAll('*'); var tg=[];
+        for(var d=0;d<de.length;d++){ var ee=de[d];
+          if(ee.classList && ee.classList.contains('jk-cut-on')){ tg.push(ee); continue; }
+          if(ee.children.length>0) continue;
+          var an=getComputedStyle(ee).animationName;
+          if(/uvpBadgePulse|uvpAbnPulse/.test(an)) tg.push(ee);
+        }
+        for(var g=0;g<tg.length;g++){ tg[g].style.setProperty('animation','jkSyncPulse 2s ease-in-out infinite','important'); }
+      }
     }catch(e){}
     /* [C] 위험 포지션 카드 위험도순 정렬 (danger-3>2>1>기타), flex order (DOM 불변) */
     try{ var pl=document.getElementById('pt-pos-list');
