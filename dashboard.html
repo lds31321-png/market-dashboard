@@ -22,6 +22,7 @@
 </script>
 <title>직트 무료 포지션 공유</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 :root{
@@ -557,6 +558,45 @@ body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font
   will-change:transform;filter:blur(12px);
   background:radial-gradient(circle,rgba(var(--accent-rgb),.12),rgba(var(--accent-rgb),.04) 38%,transparent 66%);}
 @media (max-width:640px){#fd-glow{display:none;}}
+</style>
+<style id="jikt-refine-v3">
+/* ===== [jikt-refine-v3 2026-07-19] 대시보드 세련화 · 구조/텍스트/의미색 불변, 마감만 정제 ===== */
+/* 1) 프리미엄 한글 폰트 (원본 폰트 폴백 유지, Pretendard 우선) */
+html{ --sans:'Pretendard Variable',Pretendard,'IBM Plex Sans KR','Noto Sans KR',sans-serif !important; }
+/* 2) 다크모드 표면 심화 — 라이트 모드는 절대 건드리지 않음 */
+html:not(.theme-light){
+  --bg:#0A0B0F !important;
+  --card:#15161B !important;
+  --card2:#1B1D24 !important;
+  --b1:rgba(255,255,255,.06) !important;
+  --b2:rgba(255,255,255,.12) !important;
+  --r:16px !important;
+  --shadow:0 12px 34px rgba(0,0,0,.55),0 2px 8px rgba(0,0,0,.4) !important;
+  --shadow-sm:0 8px 24px rgba(0,0,0,.42) !important;
+}
+html:not(.theme-light) body{ background:#0A0B0F !important; }
+/* 3) 헤더·네비 딥블랙 톤 정렬 (기존 rgba(23,23,28) 밝은 띠 제거) */
+html:not(.theme-light) .hdr{ background:rgba(10,11,15,.82) !important; border-bottom:1px solid rgba(255,255,255,.055) !important; }
+html:not(.theme-light) .nav{ background:rgba(10,11,15,.9) !important; border-bottom:1px solid rgba(255,255,255,.055) !important; }
+/* 4) 클릭 카드(포지션)·지표 카드 — inset 하이라이트 + 떠있는 그림자 */
+html:not(.theme-light) .pos-card,
+html:not(.theme-light) .metric{
+  border:1px solid rgba(255,255,255,.07) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 8px 26px rgba(0,0,0,.45) !important;
+}
+/* 5) 포지션 카드 호버 — 무채색(파랑 테두리 금지), 살짝 떠오름 */
+html:not(.theme-light) .pos-card:hover{
+  transform:translateY(-4px) !important;
+  border-color:rgba(255,255,255,.2) !important;
+  background:#191A20 !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 16px 40px rgba(0,0,0,.6) !important;
+}
+html:not(.theme-light) .pos-card.expired:hover{ transform:translateY(-2px) !important; }
+/* 6) 탭 정제 — 활성 밑줄 무채색 화이트, 자간 미세조정 */
+html:not(.theme-light) .nav-tab{ letter-spacing:-.015em !important; transition:color .2s !important; }
+html:not(.theme-light) .nav-tab.active{ border-bottom-color:rgba(255,255,255,.85) !important; }
+/* 7) 헤더 타이틀 자간·톤 미세 정제 */
+html:not(.theme-light) .hdr-title{ letter-spacing:-.03em !important; }
 </style>
 <div id="fd-ambient"></div>
 <div id="fd-glow"></div>
