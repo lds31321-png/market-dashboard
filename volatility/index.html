@@ -1858,18 +1858,24 @@ html:not(.theme-light) button, html:not(.theme-light) .nav-tab, html:not(.theme-
 body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font-variant-numeric:tabular-nums;}
 </style>
 <style id="jikt-mkt-declutter-2026-07-19">
-/* [시장 현황 색 절제 2026-07-19] 위험 단계 규칙(빨강=비상 / 주황=주의 / 무채색=안전)은 유지. 겹친 색·점멸·파란 순위배지만 정리. 텍스트·수치·구조 불변. */
-.ov-inst-card-v2{animation:none !important;}
-.ov-inst-card-v2[data-jrisk="safe"]{border:0.9px solid rgba(255,255,255,.08) !important;box-shadow:none !important;}
-.ov-inst-card-v2[data-jrisk="red"]{border:0.9px solid rgba(255,92,104,.20) !important;border-left:3px solid rgba(255,92,104,.9) !important;box-shadow:none !important;}
-.ov-inst-card-v2[data-jrisk="amber"]{border:0.9px solid rgba(255,138,61,.20) !important;border-left:3px solid rgba(255,138,61,.9) !important;box-shadow:none !important;}
+/* [시장 현황 색 절제 v2 2026-07-19] 위험 단계 규칙(빨강=비상/주황=주의/무채색=안전)은 유지.
+   색은 글자에만. 테두리·펄스·컬러 게이지바 제거 + 하단 버튼 통일·화살표·(월간) 라벨·적합우선 정렬.
+   (월간)/화살표는 ::after 가상요소로만 표시 → 모바일 스크래핑(buildOverview) 불변. 정렬은 flex order(원본 DOM·텍스트 불변). */
+.ov-inst-card-v2,.ov-inst-card-v2 *{animation:none !important;}
+.ov-inst-card-v2[data-jrisk]{border:0.9px solid rgba(255,255,255,.08) !important;box-shadow:none !important;}
+html.theme-light .ov-inst-card-v2[data-jrisk]{border:0.9px solid rgba(0,0,0,.08) !important;}
 .ov-inst-card-v2 [data-jk="rank"]{background:transparent !important;color:#8B95A1 !important;border:none !important;}
 .ov-inst-card-v2 [data-jk="rank"] *{color:#8B95A1 !important;}
-.ov-inst-card-v2 [data-jk="chip"]{background:transparent !important;border-color:transparent !important;padding-left:0 !important;padding-right:0 !important;}
 html.theme-light .ov-inst-card-v2 [data-jk="rank"],html.theme-light .ov-inst-card-v2 [data-jk="rank"] *{color:#8a8178 !important;}
+.ov-inst-card-v2 [data-jk="chip"]{background:transparent !important;border:none !important;box-shadow:none !important;padding-left:0 !important;padding-right:0 !important;}
+.ov-inst-card-v2 [data-jk="bar"]{background-image:linear-gradient(90deg,rgba(180,188,200,.75),rgb(180,188,200)) !important;background-color:transparent !important;box-shadow:none !important;}
+.ov-inst-card-v2 [data-jk="btn"]{background:rgba(138,134,128,.10) !important;border:1px solid rgba(255,255,255,.09) !important;box-shadow:none !important;border-radius:8px !important;}
+html.theme-light .ov-inst-card-v2 [data-jk="btn"]{background:rgba(0,0,0,.05) !important;border:1px solid rgba(0,0,0,.10) !important;}
+.ov-inst-card-v2 .jk-mval::after{content:' (월간)' !important;opacity:.6 !important;font-weight:500 !important;}
+.ov-inst-card-v2 [data-jk="btn"].jk-noarrow::after{content:' \2192' !important;}
 </style>
 <script>
-/* [시장 현황 색 절제 2026-07-19] 카드 위험단계(인라인 pulse-card-*)를 읽어 data속성 부여 → 정적 좌측 색띠 + 파란배지 무채색 + 색블록 제거. 재렌더 대응 MutationObserver. */
+/* [시장 현황 색 절제 v2 2026-07-19] class/attribute + flex order + ::after 만 사용. appendChild·textContent 변경 없음 → 모바일 스크래핑 안전. */
 (function(){
   function apply(){
     var cards=document.querySelectorAll('.ov-inst-card-v2');
@@ -1877,20 +1883,50 @@ html.theme-light .ov-inst-card-v2 [data-jk="rank"],html.theme-light .ov-inst-car
       var c=cards[i];
       var st=c.getAttribute('style')||'';
       var risk=/pulse-card-red/.test(st)?'red':(/pulse-card-orange/.test(st)?'amber':'safe');
-      if(c.getAttribute('data-jrisk')!==risk){c.setAttribute('data-jrisk',risk);}
+      if(c.getAttribute('data-jrisk')!==risk) c.setAttribute('data-jrisk',risk);
+      var kids=c.children, last=kids.length?kids[kids.length-1]:null;
+      if(last && /신규 진입|신중 검토/.test(last.textContent||'')){
+        if(last.getAttribute('data-jk')!=='btn') last.setAttribute('data-jk','btn');
+        /* 끝 가운뎃점만 제거(구분점은 유지): 마지막 텍스트 노드의 후행 " · " 삭제 */
+        try{ var wlk=document.createTreeWalker(last,NodeFilter.SHOW_TEXT,null),tn=null,nn; while(nn=wlk.nextNode()){ if(nn.textContent.trim()) tn=nn; } if(tn){ var nt=tn.textContent.replace(/\s*·\s*$/,''); if(nt!==tn.textContent) tn.textContent=nt; } }catch(e){}
+        if(!/→/.test(last.textContent||'')) last.classList.add('jk-noarrow'); else last.classList.remove('jk-noarrow');
+      }
       var els=c.querySelectorAll('*');
       for(var j=0;j<els.length;j++){
-        var el=els[j]; if(el.getAttribute('data-jk')) continue;
+        var el=els[j];
+        if(el.getAttribute('data-jk')) continue;
         var s=el.getAttribute('style')||'';
-        if(/71,\s*152,\s*250/.test(s)||/57,\s*139,\s*239/.test(s)){el.setAttribute('data-jk','rank');continue;}
-        var cs=getComputedStyle(el),bg=cs.backgroundColor,m=bg.match(/[\d.]+/g);
-        if(!m) continue; var r=+m[0],g=+m[1],b=+m[2],a=(m[3]!==undefined?+m[3]:1);
-        if(a>0 && (Math.max(r,g,b)-Math.min(r,g,b))>28 && (el.textContent||'').trim().length>0){el.setAttribute('data-jk','chip');}
+        if(/71,\s*152,\s*250/.test(s)||/57,\s*139,\s*239/.test(s)){ el.setAttribute('data-jk','rank'); continue; }
+        var cs=getComputedStyle(el), bi=cs.backgroundImage;
+        if(bi && bi.indexOf('gradient')>=0){
+          var trip=bi.match(/(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/g)||[];
+          var hue=trip.some(function(t){var p=t.split(',').map(Number);return (Math.max(p[0],p[1],p[2])-Math.min(p[0],p[1],p[2]))>40;});
+          if(hue){ el.setAttribute('data-jk','bar'); continue; }
+        }
+        var bg=cs.backgroundColor, m=bg.match(/[\d.]+/g);
+        if(m){ var r=+m[0],g=+m[1],b=+m[2],a=(m[3]!==undefined?+m[3]:1);
+          if(a>0 && (Math.max(r,g,b)-Math.min(r,g,b))>28 && (el.textContent||'').trim().length>0){ el.setAttribute('data-jk','chip'); }
+        }
+      }
+      var rankEl=c.querySelector('[data-jk="rank"]');
+      if(rankEl && !rankEl.querySelector('.jk-mval')){
+        var leaves=rankEl.querySelectorAll('*'), vs=null;
+        for(var k=0;k<leaves.length;k++){ if(leaves[k].children.length===0 && /%/.test(leaves[k].textContent)) vs=leaves[k]; }
+        if(vs) vs.classList.add('jk-mval');
       }
     }
+    var list=[];
+    for(var x=0;x<cards.length;x++){
+      var cc=cards[x]; var rt=(cc.querySelector('[data-jk="rank"]')||{}).textContent||'';
+      var mm=rt.match(/([\d.]+)\s*%/); var pct=mm?parseFloat(mm[1]):-1;
+      var rr=cc.getAttribute('data-jrisk'); var pri=(rr==='safe'?0:(rr==='amber'?1:2));
+      list.push({c:cc,pri:pri,pct:pct});
+    }
+    list.sort(function(a,b){return a.pri-b.pri || b.pct-a.pct;});
+    for(var y=0;y<list.length;y++){ list[y].c.style.setProperty('order',String(y+1),'important'); }
   }
-  function boot(){ apply(); try{var t;var mo=new MutationObserver(function(){clearTimeout(t);t=setTimeout(apply,140);});mo.observe(document.body,{childList:true,subtree:true});}catch(e){} }
-  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot);}else{boot();}
+  function boot(){ apply(); try{var t;var mo=new MutationObserver(function(){clearTimeout(t);t=setTimeout(apply,160);});mo.observe(document.body,{childList:true,subtree:true});}catch(e){} }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
 })();
 </script>
 
@@ -9124,7 +9160,7 @@ body{padding-bottom:0}
         call:callArr, put:putArr, cut:cut, lim:lim, onclick:c.getAttribute('onclick')||'' });
     });
     if(!items.length) return;
-    items.sort(function(a,b){ return a.rk - b.rk; });
+    items.sort(function(a,b){var ap=function(x){x=(x&&x.act)||"";return /적합/.test(x)?0:(/신중|점검/.test(x)?1:(/제한|축소|중단|금지|청산|비상/.test(x)?2:1));};var pn=function(x){var m=((x&&x.pr)||"").match(/([\d.]+)/);return m?parseFloat(m[1]):-1;};return ap(a)-ap(b)||pn(b)-pn(a);});
 
     /* --- 그리기 --- */
     var wrap=mk('div','jm-wrap');
