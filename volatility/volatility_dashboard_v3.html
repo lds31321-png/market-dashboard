@@ -1934,9 +1934,10 @@ html.theme-light .ov-inst-card-v2 [data-jk="btn"]{background:rgba(0,0,0,.05) !im
       wrap.insertBefore(h, wrap.firstChild);
     }
   }
-  /* [G] 종합순위표(table) 가로 게이지 좌측 정렬 — 고정 트랙이 오른쪽으로 밀려(flex-end) 좌측이 들쭉날쭉 → flex-start 로 가지런히 */
+  /* [G] 종합순위표(#st-rank-table) 가로 게이지 좌측 정렬 — 오른쪽으로 밀려(flex-end) 좌측 들쭉날쭉 → flex-start. 순위표에만 적용. */
   function tblGauge(){
-    var wraps=[].slice.call(document.querySelectorAll('table div'));
+    var t=document.getElementById('st-rank-table'); if(!t) return;
+    var wraps=[].slice.call(t.querySelectorAll('div'));
     for(var i=0;i<wraps.length;i++){ var w=wraps[i];
       var st=w.getAttribute('style')||'';
       if(st.indexOf('flex')<0) continue;
@@ -1944,10 +1945,24 @@ html.theme-light .ov-inst-card-v2 [data-jk="btn"]{background:rgba(0,0,0,.05) !im
       w.style.setProperty('justify-content','flex-start','important');
     }
   }
+  /* [H] 월별 상세표 '잠재수익률(월간)' 미니 게이지 제거 — 눈곱만한 막대 빼고 숫자만 선명하게. PC 전용. */
+  function monthGauge(){
+    if(window.matchMedia && window.matchMedia('(max-width:640px)').matches) return;
+    var tbls=[].slice.call(document.querySelectorAll('table'));
+    for(var t=0;t<tbls.length;t++){ var tb=tbls[t];
+      if(tb.id==='st-rank-table') continue;
+      if(!/잠재수익률\(월간\)/.test(tb.innerText||'')) continue;
+      var wraps=[].slice.call(tb.querySelectorAll('div')).filter(function(w){var s=w.getAttribute('style')||'';return s.indexOf('flex')>=0 && w.querySelector && w.querySelector('div[style*="overflow"]');});
+      for(var i=0;i<wraps.length;i++){ var tr=wraps[i].querySelector('div[style*="overflow"]');
+        if(tr) tr.style.setProperty('display','none','important');
+      }
+    }
+  }
   function apply(){
     try{blueClean();}catch(e){}
     try{potTable();}catch(e){}
     try{tblGauge();}catch(e){}
+    try{monthGauge();}catch(e){}
     var cards=document.querySelectorAll('.ov-inst-card-v2');
     for(var i=0;i<cards.length;i++){
       var c=cards[i];
