@@ -1946,10 +1946,28 @@ html.theme-light .ov-inst-card-v2 [data-jk="btn"]{background:rgba(0,0,0,.05) !im
     }
   }
   /* [H] 월별 상세표 미니 게이지 — 원본 유지(건드리지 않음). */
+  /* [I] 종목별 상세 현황(현황판) — 잠재수익률 내림차순 정렬 + 순위 번호 재부여. 표시 정렬만(데이터 원본 불변). */
+  function boardSort(){
+    var list=document.getElementById('st-detail-list'); if(!list) return;
+    var blocks=[].slice.call(list.children).filter(function(c){ return /stToggleInst/.test(c.innerHTML||'') && /\d{1,2}\.\d{2}%/.test(c.textContent||''); });
+    if(blocks.length<2) return;
+    function pctOf(bl){ var m=(bl.textContent||'').match(/(\d{1,2}\.\d{2})%/); return m?parseFloat(m[1]):-1; }
+    var cur=blocks.map(pctOf);
+    var isDesc=true; for(var q=1;q<cur.length;q++){ if(cur[q-1] < cur[q]-0.0001){ isDesc=false; break; } }
+    if(isDesc) return; /* 이미 내림차순이면 아무것도 안 함 → 옵저버 루프 방지 */
+    var arr=blocks.slice().sort(function(a,b){ return pctOf(b)-pctOf(a); });
+    for(var i=0;i<arr.length;i++){ list.appendChild(arr[i]); }
+    for(var k=0;k<arr.length;k++){ var leaves=arr[k].getElementsByTagName('*');
+      for(var j=0;j<leaves.length;j++){ var e=leaves[j];
+        if(e.children.length===0){ var t=(e.textContent||'').trim(); if(/^\d{1,2}$/.test(t)){ if(t!==String(k+1)) e.textContent=String(k+1); break; } }
+      }
+    }
+  }
   function apply(){
     try{blueClean();}catch(e){}
     try{potTable();}catch(e){}
     try{tblGauge();}catch(e){}
+    try{boardSort();}catch(e){}
     var cards=document.querySelectorAll('.ov-inst-card-v2');
     for(var i=0;i<cards.length;i++){
       var c=cards[i];
