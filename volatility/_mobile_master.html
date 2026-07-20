@@ -1945,24 +1945,11 @@ html.theme-light .ov-inst-card-v2 [data-jk="btn"]{background:rgba(0,0,0,.05) !im
       w.style.setProperty('justify-content','flex-start','important');
     }
   }
-  /* [H] 월별 상세표 '잠재수익률(월간)' 미니 게이지 제거 — 눈곱만한 막대 빼고 숫자만 선명하게. PC 전용. */
-  function monthGauge(){
-    if(window.matchMedia && window.matchMedia('(max-width:640px)').matches) return;
-    var tbls=[].slice.call(document.querySelectorAll('table'));
-    for(var t=0;t<tbls.length;t++){ var tb=tbls[t];
-      if(tb.id==='st-rank-table') continue;
-      if(!/잠재수익률\(월간\)/.test(tb.innerText||'')) continue;
-      var wraps=[].slice.call(tb.querySelectorAll('div')).filter(function(w){var s=w.getAttribute('style')||'';return s.indexOf('flex')>=0 && w.querySelector && w.querySelector('div[style*="overflow"]');});
-      for(var i=0;i<wraps.length;i++){ var tr=wraps[i].querySelector('div[style*="overflow"]');
-        if(tr) tr.style.setProperty('display','none','important');
-      }
-    }
-  }
+  /* [H] 월별 상세표 미니 게이지 — 원본 유지(건드리지 않음). */
   function apply(){
     try{blueClean();}catch(e){}
     try{potTable();}catch(e){}
     try{tblGauge();}catch(e){}
-    try{monthGauge();}catch(e){}
     var cards=document.querySelectorAll('.ov-inst-card-v2');
     for(var i=0;i<cards.length;i++){
       var c=cards[i];
