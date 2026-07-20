@@ -1877,10 +1877,10 @@ html.theme-light .ov-inst-card-v2 [data-jk="btn"]{background:rgba(0,0,0,.05) !im
 .jk-cut-on{color:#E65C66 !important;font-weight:800 !important;}
 /* [A] 상세 상태 펄스 동기화용 통일 키프레임 (JS가 한 pass에 일괄 적용 → 위상 동기화) */
 @keyframes jkSyncPulse{0%,100%{opacity:1}50%{opacity:.5}}
-/* [E] 위험 포지션 카드 테두리 톤다운 — 위험도 색은 유지하되 너무 진한 것 완화 */
-.pos-card.danger-1{border-color:rgba(255,176,32,.22) !important;border-width:1px !important;}
-.pos-card.danger-2{border-color:rgba(255,176,32,.30) !important;border-width:1px !important;}
-.pos-card.danger-3{border-color:rgba(255,92,104,.36) !important;border-width:1px !important;}
+/* [E] 위험 포지션 카드 테두리 — 너무 진하지 않게, 단 무채색과 확실히 구분되게. 주황(danger-2)이 흰색과 안 구분돼 강화 */
+.pos-card.danger-1{border-color:rgba(255,176,32,.42) !important;border-width:1.2px !important;}
+.pos-card.danger-2{border-color:rgba(255,176,32,.6) !important;border-width:1.2px !important;}
+.pos-card.danger-3{border-color:rgba(255,92,104,.55) !important;border-width:1.2px !important;}
 </style>
 <script>
 /* [시장 현황 색 절제 v2 2026-07-19] class/attribute + flex order + ::after 만 사용. appendChild·textContent 변경 없음 → 모바일 스크래핑 안전. */
@@ -1963,6 +1963,23 @@ html.theme-light .ov-inst-card-v2 [data-jk="btn"]{background:rgba(0,0,0,.05) !im
         if(pk.length){ pl.style.setProperty('display','flex','important'); pl.style.setProperty('flex-direction','column','important');
           var pr=function(pc){var cl=pc.className;return /danger-3/.test(cl)?0:(/danger-2/.test(cl)?1:(/danger-1/.test(cl)?2:3));};
           pk.map(function(pc,ii){return {c:pc,p:pr(pc),i:ii};}).sort(function(a,b){return a.p-b.p||a.i-b.i;}).forEach(function(o,idx){o.c.style.setProperty('order',String(idx),'important');});
+        }
+      }
+    }catch(e){}
+    /* [F] 매매전략 위험단계 카드: (1) 급등 화살표(↑) 위험신호 값+화살표 → 살몬색(너무 진하지 않은 붉은계열) (2) 국면(위험>주의>안전)순 정렬 */
+    try{ var rg=document.getElementById('rm-cards-grid');
+      if(rg){
+        var ra=rg.querySelectorAll('*');
+        for(var f=0;f<ra.length;f++){ var af=ra[f];
+          if(af.children.length===0 && /^[↑]+$/.test((af.textContent||'').trim())){
+            af.style.setProperty('color','#E65C66','important');
+            var pf=af.parentElement; if(pf) pf.style.setProperty('color','#E65C66','important');
+          }
+        }
+        var rcard=[].slice.call(rg.children).filter(function(c){return c.className&&/(^|\s)card(\s|$)/.test(c.className);});
+        if(rcard.length){
+          var rlvl=function(c){var b=[].slice.call(c.querySelectorAll('*')).find(function(e){return e.children.length===0&&/(위험|비상|주의|안전)\s*국면/.test((e.textContent||'').trim());});var t=b?b.textContent:'';return /비상/.test(t)?0:(/위험/.test(t)?1:(/주의/.test(t)?2:3));};
+          rcard.map(function(c,ii){return {c:c,l:rlvl(c),i:ii};}).sort(function(a,b){return a.l-b.l||a.i-b.i;}).forEach(function(o,idx){o.c.style.setProperty('order',String(idx),'important');});
         }
       }
     }catch(e){}
