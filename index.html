@@ -10,6 +10,7 @@
 <title>글로벌 원자재·금융 종합 대시보드</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js">
 
 </script>
@@ -26,36 +27,36 @@
   --amber:#c8803a;--purple:#a8714e;--teal:#8a8480;
   --accent1:#d9664a;--accent2:#c8803a;--accent3:#b8501e;
   --glow-purple:rgba(217,102,74,0.10);--glow-cyan:rgba(200,128,58,0.08);
-  --font-h:'Noto Sans KR',sans-serif;
-  --font-n:'Noto Sans KR',sans-serif;
-  --font-b:'Noto Sans KR',sans-serif;
+  --font-h:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif;
+  --font-n:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif;
+  --font-b:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif;
   --font-m:'IBM Plex Mono',monospace;
 }
 /* [테마 토글] 파랑(토스) — html.theme-blue 일 때만 색 변수 교체. 기존 코드 불변, 색만. */
 html.theme-blue{
---bg:#17171C;--bg2:#1E2027;--bg3:#23262E;--bg4:#1E2027;
+--bg:#0A0B0F;--bg2:#15161B;--bg3:#1B1D24;--bg4:#191A20;
 --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);
---text:#FFFFFF;--text2:#B0B8C1;--text3:#8B95A1;
---gold:#4593FC;--gold2:#3182F6;--red:#FF8080;--red2:#FF9A9A;
---green:#4593FC;--green2:#3182F6;--blue:#4593FC;--blue2:#3182F6;
---amber:#4593FC;--purple:#A78BFA;--teal:#4593FC;
---accent1:#4593FC;--accent2:#3182F6;--accent3:#FF8080;
---glow-purple:rgba(69,147,252,0.10);--glow-cyan:rgba(69,147,252,0.08);
---card:#1E2027;--accent:#4593FC;
+--text:#F5F6F8;--text2:#C0C6CD;--text3:#8B95A1;
+--gold:#BCC2CA;--gold2:#9AA2AB;--red:#F06A6A;--red2:#F58A8A;
+--green:#9AA2AB;--green2:#C0C6CD;--blue:#9AA2AB;--blue2:#8B95A1;
+--amber:#9AA2AB;--purple:#ADA69E;--teal:#9AA2AB;
+--accent1:#BCC2CA;--accent2:#9AA2AB;--accent3:#F06A6A;
+--glow-purple:rgba(255,255,255,0.05);--glow-cyan:rgba(255,255,255,0.04);
+--card:#15161B;--accent:#BCC2CA;
 }
 /* [테마 토글] 하드코딩 웜 잔재 → 파랑 덮어쓰기 (추가만, 기존 규칙 불변) */
 /* 바: JS 파랑 농담 그라데이션으로 처리 */
-html.theme-blue .sb-val, html.theme-blue .mi-val{border-color:rgba(69,147,252,.28) !important;}
-html.theme-blue .cal-popup-val{color:#4593FC !important;}
-html.theme-blue .tb-btn{color:#4593FC !important;border-color:#4593FC !important;background:transparent !important;}
-html.theme-blue .cal-leg-dot, html.theme-blue .mi-src-dot{background:#4593FC !important;}
-html.theme-blue .scenario-card, html.theme-blue .alert-banner, html.theme-blue .price-hero, html.theme-blue .headline-news, html.theme-blue .headline-top1, html.theme-blue .cal-guide-wrap, html.theme-blue .footer{border-color:rgba(69,147,252,.22) !important;}
-html.theme-blue .sc-tag, html.theme-blue .factor-badge, html.theme-blue .factor-impact, html.theme-blue .api-tag, html.theme-blue .ph-badge, html.theme-blue .dir-badge, html.theme-blue .cal-icon{background:rgba(69,147,252,.10) !important;border-color:rgba(69,147,252,.28) !important;}
-html.theme-blue .notice, html.theme-blue .setup-guide, html.theme-blue .slink, html.theme-blue .cal-summary, html.theme-blue .cal-guide-note{background:rgba(69,147,252,.08) !important;border-color:rgba(69,147,252,.20) !important;}
-html.theme-blue .cal-popup{border-color:rgba(69,147,252,.35) !important;}
+html.theme-blue .sb-val, html.theme-blue .mi-val{border-color:rgba(255,255,255,.28) !important;}
+html.theme-blue .cal-popup-val{color:#C0C6CD !important;}
+html.theme-blue .tb-btn{color:#C0C6CD !important;border-color:#C0C6CD !important;background:transparent !important;}
+html.theme-blue .cal-leg-dot, html.theme-blue .mi-src-dot{background:#C0C6CD !important;}
+html.theme-blue .scenario-card, html.theme-blue .alert-banner, html.theme-blue .price-hero, html.theme-blue .headline-news, html.theme-blue .headline-top1, html.theme-blue .cal-guide-wrap, html.theme-blue .footer{border-color:rgba(255,255,255,.22) !important;}
+html.theme-blue .sc-tag, html.theme-blue .factor-badge, html.theme-blue .factor-impact, html.theme-blue .api-tag, html.theme-blue .ph-badge, html.theme-blue .dir-badge, html.theme-blue .cal-icon{background:rgba(255,255,255,.10) !important;border-color:rgba(255,255,255,.28) !important;}
+html.theme-blue .notice, html.theme-blue .setup-guide, html.theme-blue .slink, html.theme-blue .cal-summary, html.theme-blue .cal-guide-note{background:rgba(255,255,255,.08) !important;border-color:rgba(255,255,255,.20) !important;}
+html.theme-blue .cal-popup{border-color:rgba(255,255,255,.35) !important;}
 html.theme-blue .macro-item, html.theme-blue .headline-news, html.theme-blue .alert-banner, html.theme-blue .price-hero, html.theme-blue .hm, html.theme-blue .chart-wrap, html.theme-blue .factor-card, html.theme-blue .scenario-card, html.theme-blue .cal-card, html.theme-blue .season-card{background:var(--card) !important;border-color:var(--border) !important;}
-html.theme-blue .scenario-card{border-color:rgba(69,147,252,.22) !important;border-left-color:rgba(69,147,252,.5) !important;}
-html.theme-blue a.tb-btn{color:#4593FC !important;border-color:#4593FC !important;}
+html.theme-blue .scenario-card{border-color:rgba(255,255,255,.22) !important;border-left-color:rgba(255,255,255,.5) !important;}
+html.theme-blue a.tb-btn{color:#C0C6CD !important;border-color:#C0C6CD !important;}
 html.theme-blue .macro-item, html.theme-blue .headline-news, html.theme-blue .alert-banner, html.theme-blue .price-hero, html.theme-blue .hm, html.theme-blue .chart-wrap, html.theme-blue .factor-card, html.theme-blue .scenario-card, html.theme-blue .cal-card, html.theme-blue .season-card, html.theme-blue .footer-card, html.theme-blue .macro-card, html.theme-blue .vol-card, html.theme-blue .news-card{background:var(--card) !important;border-color:var(--border) !important;}
 html.theme-blue .topbar, html.theme-blue .asset-nav, html.theme-blue .cal-dow{background:var(--card) !important;border-color:var(--border) !important;}
 html.theme-blue .cal-cell{background:var(--bg2) !important;border-color:var(--border) !important;}
@@ -67,11 +68,11 @@ html.theme-blue .cd-center{border-left-color:var(--border) !important;border-rig
 html.theme-blue .cd-divider{background:var(--border2) !important;}
 html.theme-blue .headline-section{background:transparent !important;}
 html.theme-blue .cal-event.us{background:rgba(255,128,128,.16) !important;color:#FF9A9A !important;border-left-color:#FF8080 !important;}
-html.theme-blue .cal-event.jp{background:rgba(69,147,252,.12) !important;color:var(--text2) !important;}
-html.theme-blue .weekend{background:rgba(69,147,252,.04) !important;}
-html.theme-blue th{background:rgba(69,147,252,.10) !important;}
-html.theme-blue button:not(#themeToggle){background:rgba(69,147,252,.12) !important;border-color:rgba(69,147,252,.30) !important;}
-html.theme-blue .hn-tag{color:#4593FC !important;}
+html.theme-blue .cal-event.jp{background:rgba(255,255,255,.12) !important;color:var(--text2) !important;}
+html.theme-blue .weekend{background:rgba(255,255,255,.04) !important;}
+html.theme-blue th{background:rgba(255,255,255,.10) !important;}
+html.theme-blue button:not(#themeToggle){background:rgba(255,255,255,.12) !important;border-color:rgba(255,255,255,.30) !important;}
+html.theme-blue .hn-tag{color:#C0C6CD !important;}
 
 
 body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6;background-image:radial-gradient(ellipse at 20% 0%,rgba(217,102,74,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 100%,rgba(42,95,168,0.05) 0%,transparent 50%)}
@@ -3058,7 +3059,7 @@ function _jiktBarRecolor(blue){
     var orig=el.dataset.jw; if(!orig) return;
     if(blue){
       var m=orig.match(/[\d.]+/g); if(!m||m.length<3) return;
-      if(isVal){var blv='rgb('+m[2]+','+Math.max(135,m[1])+',255)';el.style.setProperty('color',blv,'important');}else{var bl='rgb('+m[2]+','+m[1]+','+m[0]+')';el.style.setProperty('background',bl,'important');}
+      if(isVal){el.style.setProperty('color','rgb(176,184,193)','important');}else{var gv=Math.round((+m[0]+ +m[1]+ +m[2])/3);el.style.setProperty('background','rgb('+gv+','+gv+','+gv+')','important');}
     }else{
       if(isVal){el.style.removeProperty('color');el.style.color=orig;}else{el.style.removeProperty('background');el.style.backgroundColor=orig;}
     }
@@ -3070,33 +3071,32 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 
 <canvas id="vol-fx" style="position:fixed;inset:0;z-index:-1;pointer-events:none"></canvas>
 <script>
-/* [토스풍 배경 효과] 콘텐츠 뒤(z-index:-1) 메인 배경 레이어 — 마우스 추적 글로우 + 픽셀 물방울 파동 */
+/* [마우스 효과] 커서 추적 소프트 스포트라이트 + 잉크 트레일 (다른 대시보드와 동일). 데스크톱 전용. */
 (function(){
   if(window.matchMedia&&window.matchMedia('(max-width:640px)').matches) return;
   var cv=document.getElementById('vol-fx'); if(!cv) return;
   var ctx=cv.getContext('2d'),dpr=Math.min(window.devicePixelRatio||1,2);
-  function rs(){cv.width=window.innerWidth*dpr;cv.height=window.innerHeight*dpr;cv.style.width=window.innerWidth+'px';cv.style.height=window.innerHeight+'px';ctx.setTransform(dpr,0,0,dpr,0,0);}
+  function W(){return window.innerWidth;} function H(){return window.innerHeight;}
+  function rs(){cv.width=W()*dpr;cv.height=H()*dpr;cv.style.width=W()+'px';cv.style.height=H()+'px';ctx.setTransform(dpr,0,0,dpr,0,0);}
   rs();window.addEventListener('resize',rs);
-  var mx=window.innerWidth/2,my=window.innerHeight/2,gx=mx,gy=my,on=false,ripples=[],trail=[],lastSample=0,lastSpawn=0,lastMove=0;
-  window.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;on=true;var n=performance.now();lastMove=n;if(n-lastSample>60){lastSample=n;trail.push({x:mx,y:my,t:n});if(trail.length>60)trail.shift();}},{passive:true});
+  var mx=W()/2,my=H()/2,gx=mx,gy=my,on=false,pts=[];
+  window.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;on=true;pts.push({x:mx,y:my,t:performance.now()});if(pts.length>28)pts.shift();},{passive:true});
   window.addEventListener('mouseout',function(e){if(!e.relatedTarget)on=false;});
-  var GRID=10,DUR=2400,MAXR=300,BAND=34,W=function(){return window.innerWidth;},H=function(){return window.innerHeight;};
+  function col(a){return 'rgba(255,255,255,'+a+')';}
   function draw(now){
     ctx.clearRect(0,0,W(),H());
-    gx+=(mx-gx)*0.12;gy+=(my-gy)*0.12;
-    if(on){var g=ctx.createRadialGradient(gx,gy,0,gx,gy,240);g.addColorStop(0,'rgba(83,160,255,0.18)');g.addColorStop(0.4,'rgba(69,147,252,0.07)');g.addColorStop(1,'rgba(69,147,252,0)');ctx.fillStyle=g;ctx.fillRect(gx-240,gy-240,480,480);}
-    if(on&&now-lastMove<1800&&now-lastSpawn>2000&&trail.length){var tp=trail[0];for(var k=0;k<trail.length;k++){if(now-trail[k].t<=400)break;tp=trail[k];}ripples.push({x:tp.x,y:tp.y,t:now});lastSpawn=now;}
-    for(var i=ripples.length-1;i>=0;i--){
-      var rp=ripples[i],p=(now-rp.t)/DUR;
-      if(p>=1){ripples.splice(i,1);continue;}
-      var R=p*MAXR,al=(1-p);
-      for(var yy=Math.floor((rp.y-R-BAND)/GRID)*GRID;yy<rp.y+R+BAND;yy+=GRID){
-        if(yy<0||yy>H())continue;
-        for(var xx=Math.floor((rp.x-R-BAND)/GRID)*GRID;xx<rp.x+R+BAND;xx+=GRID){
-          if(xx<0||xx>W())continue;
-          var dx=xx-rp.x,dy=yy-rp.y,d=Math.sqrt(dx*dx+dy*dy),off=Math.abs(d-R);
-          if(off<BAND){var a=al*(1-off/BAND)*0.30;if(a>0.015){ctx.fillStyle='rgba(83,160,255,'+a.toFixed(3)+')';ctx.fillRect(xx,yy,GRID-2,GRID-2);}}
-        }
+    gx+=(mx-gx)*0.085; gy+=(my-gy)*0.085;
+    if(on){
+      var g=ctx.createRadialGradient(gx,gy,0,gx,gy,300);
+      g.addColorStop(0,col('0.08')); g.addColorStop(0.5,col('0.028')); g.addColorStop(1,col('0'));
+      ctx.fillStyle=g; ctx.fillRect(gx-300,gy-300,600,600);
+      ctx.lineCap='round'; ctx.lineJoin='round';
+      for(var i=1;i<pts.length;i++){
+        var age=(now-pts[i].t)/1000; if(age>=1) continue;
+        var f=i/pts.length;
+        ctx.strokeStyle=col((Math.max(0,(1-age))*0.12*f).toFixed(3));
+        ctx.lineWidth=Math.max(0.5, f*3.0*(1-age));
+        ctx.beginPath(); ctx.moveTo(pts[i-1].x,pts[i-1].y); ctx.lineTo(pts[i].x,pts[i].y); ctx.stroke();
       }
     }
     requestAnimationFrame(draw);
@@ -3214,7 +3214,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   /* 종목 카드 */
   .gm-a{ background:#1E2027 !important; border:0.5px solid rgba(255,255,255,.08) !important;
     border-radius:12px !important; padding:16px !important; margin:0 0 8px 0 !important; }
-  .gm-a.gm-open{ border-color:#4593FC !important; }
+  .gm-a.gm-open{ border-color:#C0C6CD !important; }
   .gm-a-hd{ display:flex !important; align-items:flex-start !important;
     justify-content:space-between !important; gap:16px !important;
     cursor:pointer !important; min-height:32px !important; }
@@ -3328,7 +3328,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   /* 큰 구역 아코디언 (카드 바깥 단계) */
   .gm-big{ background:#1E2027 !important; border:0.5px solid rgba(255,255,255,.08) !important;
     border-radius:12px !important; margin:0 0 8px 0 !important; overflow:hidden !important; }
-  .gm-big.gm-open{ border-color:rgba(69,147,252,.45) !important; }
+  .gm-big.gm-open{ border-color:rgba(255,255,255,.45) !important; }
   .gm-big-hd{ display:flex !important; align-items:center !important;
     justify-content:space-between !important; gap:16px !important;
     padding:16px !important; cursor:pointer !important; min-height:32px !important; }
@@ -3422,7 +3422,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
      · 글자 6단계만 — 24 / 20 / 16 / 13 / 12 / 11
      · 행 높이 — 표 40 · 메뉴 48 · 리스트 56 (40 미만 터치 요소 금지)
      · 카드 안에 카드 금지. 테두리 대신 배경 한 단계 차이로만 구분
-     · 색 4개 — 흰 / 회색 #8B95A1 / 수익 빨강 #F06A6A / 손실 파랑 #4593FC
+     · 색 4개 — 흰 / 회색 #8B95A1 / 수익 빨강 #F06A6A / 손실 파랑 #C0C6CD
    ============================================================ */
 @media (max-width:640px){
 
@@ -3555,13 +3555,13 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 
   /* ── ① 헤더 규칙 (일괄) — 왼쪽 파란 막대 = 헤더 ── */
   .gm2-sec, .gm2-hdr{
-    border-left:3px solid #4593FC !important; padding-left:10px !important;
+    border-left:3px solid #C0C6CD !important; padding-left:10px !important;
     color:#F5F6F8 !important; font-weight:800 !important; }
 
   /* 상세 안 원본 섹션 제목(.sec-lbl)도 같은 헤더로 — 원본은 모바일에서 파란 막대를 지워놨었다 */
   .gm-a-bd .sec-lbl, .gm-big-bd .sec-lbl{
     display:block !important; font-size:15px !important; font-weight:800 !important;
-    color:#F5F6F8 !important; border-left:3px solid #4593FC !important;
+    color:#F5F6F8 !important; border-left:3px solid #C0C6CD !important;
     padding-left:10px !important; margin:20px 0 10px 0 !important; letter-spacing:0 !important; }
   .gm-a-bd .sec-lbl::before, .gm-a-bd .sec-lbl::after,
   .gm-big-bd .sec-lbl::before, .gm-big-bd .sec-lbl::after{ display:none !important; }
@@ -3573,10 +3573,10 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     background:#23262E !important; border-radius:8px !important; }
   .gm2-menu .gm-a.gm-open{ background:#23262E !important; border-radius:8px !important; }
   .gm2-menu .gm-a.gm-open > .gm-a-hd{
-    border:1px solid rgba(69,147,252,.5) !important; border-radius:8px !important;
+    border:1px solid rgba(255,255,255,.5) !important; border-radius:8px !important;
     padding:10px !important; }
   /* 안쪽 아코디언(요인별·시나리오 등)도 펼침 표시는 헤더 줄에만 */
-  .gm-acc.gm-open > .gm-acc-hd{ background:rgba(69,147,252,.12) !important; }
+  .gm-acc.gm-open > .gm-acc-hd{ background:rgba(255,255,255,.12) !important; }
 
   /* ── 상세의 차트는 원본에서 살려오지 못해 빈 박스만 남는다 → 감춘다 ── */
   .gm-a-bd .gm-charts, .gm-a-bd .gm-chartbox,
@@ -4311,7 +4311,7 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   /* ← 메인으로 / ← 목록 화살표를 상단 고정 (스크롤해도 따라옴).
      배경을 페이지색과 같게 둬서 아래 내용이 뒤로 자연스럽게 사라진다. */
   .gmx-top{ position:sticky; top:0; z-index:100; background:#0C1115; padding:12px 16px 8px; }
-  .gmx-back{ font-size:13px; color:#4593FC; font-weight:700; display:inline-flex; align-items:center; min-height:40px; text-decoration:none; }
+  .gmx-back{ font-size:13px; color:#C0C6CD; font-weight:700; display:inline-flex; align-items:center; min-height:40px; text-decoration:none; }
   .gmx-pad{ padding:0 16px; }
   .gmx-h1{ font-size:20px; font-weight:800; color:#F5F6F8; line-height:1.35; }
   .gmx-cap{ font-size:12px; color:#787F85; line-height:1.5; }
@@ -4686,5 +4686,40 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
 </script>
+<style id="jk-global-gray-polish-2026-07-20">
+/* [종합옵션 결 마감] 카드 입체감 + 붕뜨는 호버 + 자잘한 정리 (다크 회색톤) */
+html.theme-blue .headline-news,html.theme-blue .price-hero,html.theme-blue .chart-wrap,
+html.theme-blue .factor-card,html.theme-blue .scenario-card,html.theme-blue .cal-card,
+html.theme-blue .season-card,html.theme-blue .footer-card,html.theme-blue .hm,
+html.theme-blue .macro-item,html.theme-blue .alert-banner{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 8px 26px rgba(0,0,0,.45) !important;
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease !important;
+}
+html.theme-blue .headline-news:hover,html.theme-blue .price-hero:hover,html.theme-blue .chart-wrap:hover,
+html.theme-blue .factor-card:hover,html.theme-blue .scenario-card:hover,html.theme-blue .cal-card:hover,
+html.theme-blue .season-card:hover,html.theme-blue .footer-card:hover,html.theme-blue .hm:hover,
+html.theme-blue .macro-item:hover{
+  transform:translateY(-4px) !important;border-color:rgba(255,255,255,.2) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 16px 40px rgba(0,0,0,.6) !important;
+}
+/* 넥스트 이벤트 영역 좌우 세로선 제거 */
+html.theme-blue .cd-center{border-left:none !important;border-right:none !important;}
+html.theme-blue .countdown-banner{border-left:none !important;}
+/* 자산 탭: 호버 시 배경·테두리 없음, 활성 밑줄 무채색 */
+html.theme-blue .asset-tab:hover{background:transparent !important;box-shadow:none !important;}
+html.theme-blue .asset-tab.active{background:transparent !important;box-shadow:none !important;border-bottom-color:rgba(255,255,255,.28) !important;}
+/* 장식용 빨강(제목·태그·별점·위험도·목록번호) → 무채색. 실제 등락/수익 값(.up)만 빨강 유지 */
+html.theme-blue .ht1-tag,html.theme-blue .sc-tag,html.theme-blue .cal-icon{color:#9AA2AB !important;-webkit-text-fill-color:#9AA2AB !important;}
+html.theme-blue .ht1-asset,html.theme-blue .sc-title,html.theme-blue .sc-price,html.theme-blue .factor-title{color:#F5F6F8 !important;-webkit-text-fill-color:#F5F6F8 !important;}
+html.theme-blue .vt-stars,html.theme-blue .vt-stars.s4,html.theme-blue .vt-stars.s3,html.theme-blue .vt-stars.s2{color:#C0C6CD !important;}
+html.theme-blue .dir-badge,html.theme-blue .dir-up,html.theme-blue .dir-down,html.theme-blue .dir-wup,html.theme-blue .dir-wdn{color:#C0C6CD !important;background:rgba(255,255,255,.04) !important;border-color:rgba(255,255,255,.16) !important;}
+/* 인라인 장식용 빨강(목록번호·위험라벨·임팩트 화살표 등)은 전부 무채색. 실제 등락 값은 .up 클래스라 영향 없음 */
+html.theme-blue [style*="color:var(--red2)"]{color:#9AA2AB !important;-webkit-text-fill-color:#9AA2AB !important;}
+html.theme-blue [style*="color:var(--red)"]{color:#C0C6CD !important;-webkit-text-fill-color:#C0C6CD !important;}
+html.theme-blue .cal-src-name{color:#C0C6CD !important;-webkit-text-fill-color:#C0C6CD !important;}
+html.theme-blue .alert-text strong{color:#F5F6F8 !important;-webkit-text-fill-color:#F5F6F8 !important;}
+/* 계절성·위험도 막대: 색이 무엇이든 항상 회색으로(농도 유지). JS 미적용 브라우저 대비 */
+html.theme-blue .sb-bar,html.theme-blue .factor-bar{filter:grayscale(1) contrast(1.3) !important;}
+</style>
 </body>
 </html>
