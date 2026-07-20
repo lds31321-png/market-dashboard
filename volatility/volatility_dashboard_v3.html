@@ -1909,7 +1909,7 @@ html.theme-light .ov-inst-card-v2 [data-jk="btn"]{background:rgba(0,0,0,.05) !im
   /* [B] 투자 정보 종합 현황판 '평균 잠재수익률' 바 목록 → 표 형식(순위|종목|게이지|잠재수익률) + 머리글 + 가로격자, 순위 뒤 세로선. PC 전용(모바일은 자체 레이아웃). 스타일만 + 머리글 1개. */
   function potTable(){
     if(window.matchMedia && window.matchMedia('(max-width:640px)').matches) return;
-    var pcts=[].slice.call(document.querySelectorAll('*')).filter(function(e){return e.children.length===0 && e.offsetParent!==null && !e.closest('table') && /^\d{1,2}\.\d{2}%$/.test((e.textContent||'').trim()) && e.parentElement && e.parentElement.parentElement && /[가-힣A-Z]/.test(e.parentElement.parentElement.innerText||'');});
+    var pcts=[].slice.call(document.querySelectorAll('*')).filter(function(e){return e.children.length===0 && e.offsetParent!==null && !e.closest('table') && /^\d{1,2}\.\d{2}%$/.test((e.textContent||'').trim()) && e.parentElement && e.parentElement.parentElement && /[가-힣A-Z]/.test(e.parentElement.parentElement.innerText||'') && e.parentElement.querySelector && e.parentElement.querySelector('div[style*="overflow"]');});
     if(!pcts.length) return;
     var rows=[]; for(var q=0;q<pcts.length;q++){var r=pcts[q].parentElement.parentElement; if(rows.indexOf(r)<0) rows.push(r);}
     var COLS='40px 96px 1fr';
@@ -1923,7 +1923,7 @@ html.theme-light .ov-inst-card-v2 [data-jk="btn"]{background:rgba(0,0,0,.05) !im
       if(k[0]) k[0].style.setProperty('justify-self','center','important');
       if(k[1]){ k[1].style.setProperty('padding-left','12px','important'); k[1].style.setProperty('justify-self','start','important'); k[1].style.setProperty('white-space','nowrap','important'); k[1].style.setProperty('border-left','1px solid rgba(255,255,255,.08)','important'); k[1].style.setProperty('align-self','stretch','important'); k[1].style.setProperty('display','flex','important'); k[1].style.setProperty('align-items','center','important'); }
       if(k[2]){ k[2].style.setProperty('display','grid','important'); k[2].style.setProperty('grid-template-columns','170px 1fr','important'); k[2].style.setProperty('gap','10px','important'); k[2].style.setProperty('align-items','center','important'); k[2].style.setProperty('width','auto','important');
-        var pc=k[2].children; if(pc.length){ pc[0].style.setProperty('justify-self','start','important'); pc[0].style.setProperty('width','100%','important'); if(pc[pc.length-1]){ pc[pc.length-1].style.setProperty('justify-self','start','important'); pc[pc.length-1].style.setProperty('text-align','left','important'); } }
+        var pc=k[2].children; if(pc.length){ pc[0].style.setProperty('justify-self','start','important'); /* 트랙 폭(px)이 곧 차등 → 건드리지 않음 */ if(pc[pc.length-1]){ pc[pc.length-1].style.setProperty('justify-self','start','important'); pc[pc.length-1].style.setProperty('text-align','left','important'); } }
       }
     }
     var wrap=rows[0].parentElement.parentElement;
@@ -1934,9 +1934,20 @@ html.theme-light .ov-inst-card-v2 [data-jk="btn"]{background:rgba(0,0,0,.05) !im
       wrap.insertBefore(h, wrap.firstChild);
     }
   }
+  /* [G] 종합순위표(table) 가로 게이지 좌측 정렬 — 고정 트랙이 오른쪽으로 밀려(flex-end) 좌측이 들쭉날쭉 → flex-start 로 가지런히 */
+  function tblGauge(){
+    var wraps=[].slice.call(document.querySelectorAll('table div'));
+    for(var i=0;i<wraps.length;i++){ var w=wraps[i];
+      var st=w.getAttribute('style')||'';
+      if(st.indexOf('flex')<0) continue;
+      if(!w.querySelector || !w.querySelector('div[style*="overflow"]')) continue;
+      w.style.setProperty('justify-content','flex-start','important');
+    }
+  }
   function apply(){
     try{blueClean();}catch(e){}
     try{potTable();}catch(e){}
+    try{tblGauge();}catch(e){}
     var cards=document.querySelectorAll('.ov-inst-card-v2');
     for(var i=0;i<cards.length;i++){
       var c=cards[i];
