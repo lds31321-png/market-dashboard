@@ -1981,7 +1981,18 @@ html.theme-light .ov-inst-card-v2 [data-jk="btn"]{background:rgba(0,0,0,.05) !im
     /* 머리글(순위|종목|게이지|잠재수익률)이 특정 블록 안에 갇히면 첫 블록 앞으로 이동 — 정렬로 밀리는 것 방지 */
     var hdr=list.querySelector('.jk-pot-hdr');
     var fb=[].slice.call(list.children).filter(function(c){ return /stToggleInst/.test(c.innerHTML||'') && /\d{1,2}\.\d{2}%/.test(c.textContent||''); })[0];
-    if(hdr && fb && fb.previousElementSibling!==hdr){ list.insertBefore(hdr, fb); }
+    if(hdr && fb){
+      if(fb.previousElementSibling!==hdr){ list.insertBefore(hdr, fb); }
+      /* 머리글 좌측 여백을 데이터 행 시작점에 맞춤 — 데이터 행이 카드 안쪽으로 들여써져 생기는 어긋남 보정 */
+      try{ var pl=[].slice.call(fb.querySelectorAll('*')).filter(function(e){ return e.children.length===0 && /^\d{1,2}\.\d{2}%$/.test((e.textContent||'').trim()); })[0];
+        var dr=pl?pl.parentElement.parentElement:null;
+        if(dr && hdr.getBoundingClientRect().width>0 && dr.getBoundingClientRect().width>0){
+          var dpl=parseFloat(getComputedStyle(dr).paddingLeft)||16;
+          var tgt=Math.round(dr.getBoundingClientRect().left + dpl - hdr.getBoundingClientRect().left);
+          if(tgt>0 && tgt<80 && Math.abs((parseFloat(hdr.style.paddingLeft)||0)-tgt)>0.5){ hdr.style.setProperty('padding-left', tgt+'px','important'); }
+        }
+      }catch(e){}
+    }
   }
   function apply(){
     try{blueClean();}catch(e){}
