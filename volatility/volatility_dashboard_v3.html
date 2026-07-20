@@ -1906,8 +1906,37 @@ html.theme-light .ov-inst-card-v2 [data-jk="btn"]{background:rgba(0,0,0,.05) !im
       }
     }
   }
+  /* [B] 투자 정보 종합 현황판 '평균 잠재수익률' 바 목록 → 표 형식(순위|종목|게이지|잠재수익률) + 머리글 + 가로격자, 순위 뒤 세로선. PC 전용(모바일은 자체 레이아웃). 스타일만 + 머리글 1개. */
+  function potTable(){
+    if(window.matchMedia && window.matchMedia('(max-width:640px)').matches) return;
+    var pcts=[].slice.call(document.querySelectorAll('*')).filter(function(e){return e.children.length===0 && e.offsetParent!==null && !e.closest('table') && /^\d{1,2}\.\d{2}%$/.test((e.textContent||'').trim()) && e.parentElement && e.parentElement.parentElement && /[가-힣A-Z]/.test(e.parentElement.parentElement.innerText||'');});
+    if(!pcts.length) return;
+    var rows=[]; for(var q=0;q<pcts.length;q++){var r=pcts[q].parentElement.parentElement; if(rows.indexOf(r)<0) rows.push(r);}
+    var COLS='40px 96px 1fr';
+    for(var i=0;i<rows.length;i++){ var r=rows[i];
+      r.style.setProperty('display','grid','important'); r.style.setProperty('grid-template-columns',COLS,'important');
+      r.style.setProperty('gap','0','important'); r.style.setProperty('align-items','center','important');
+      r.style.setProperty('padding','7px 16px','important'); r.style.setProperty('border-bottom','1px solid rgba(255,255,255,.07)','important');
+      r.style.setProperty('border-radius','0','important'); r.style.setProperty('background','transparent','important'); r.style.setProperty('margin','0','important');
+      var stp=r.parentElement; if(stp){ stp.style.setProperty('background','transparent','important'); stp.style.setProperty('border-radius','0','important'); stp.style.setProperty('margin','0','important'); stp.style.setProperty('border','none','important'); }
+      var k=r.children;
+      if(k[0]) k[0].style.setProperty('justify-self','center','important');
+      if(k[1]){ k[1].style.setProperty('padding-left','12px','important'); k[1].style.setProperty('justify-self','start','important'); k[1].style.setProperty('white-space','nowrap','important'); k[1].style.setProperty('border-left','1px solid rgba(255,255,255,.08)','important'); k[1].style.setProperty('align-self','stretch','important'); k[1].style.setProperty('display','flex','important'); k[1].style.setProperty('align-items','center','important'); }
+      if(k[2]){ k[2].style.setProperty('display','grid','important'); k[2].style.setProperty('grid-template-columns','170px 1fr','important'); k[2].style.setProperty('gap','10px','important'); k[2].style.setProperty('align-items','center','important'); k[2].style.setProperty('width','auto','important');
+        var pc=k[2].children; if(pc.length){ pc[0].style.setProperty('justify-self','start','important'); pc[0].style.setProperty('width','100%','important'); if(pc[pc.length-1]){ pc[pc.length-1].style.setProperty('justify-self','start','important'); pc[pc.length-1].style.setProperty('text-align','left','important'); } }
+      }
+    }
+    var wrap=rows[0].parentElement.parentElement;
+    if(wrap && !document.querySelector('.jk-pot-hdr')){
+      var h=document.createElement('div'); h.className='jk-pot-hdr';
+      h.style.cssText='display:grid;grid-template-columns:'+COLS+';gap:0;align-items:center;padding:8px 16px;border-bottom:1.5px solid rgba(255,255,255,.18);font-size:12px;color:#8B95A1;font-weight:700';
+      h.innerHTML='<div style="text-align:center">순위</div><div style="padding-left:12px;border-left:1px solid rgba(255,255,255,.08)">종목</div><div style="display:grid;grid-template-columns:170px 1fr;gap:10px"><div>게이지</div><div style="text-align:left;white-space:nowrap">잠재수익률</div></div>';
+      wrap.insertBefore(h, wrap.firstChild);
+    }
+  }
   function apply(){
     try{blueClean();}catch(e){}
+    try{potTable();}catch(e){}
     var cards=document.querySelectorAll('.ov-inst-card-v2');
     for(var i=0;i<cards.length;i++){
       var c=cards[i];
