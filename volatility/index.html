@@ -1887,13 +1887,17 @@ html.theme-light .ov-inst-card-v2 [data-jk="btn"]{background:rgba(0,0,0,.05) !im
 (function(){
   /* [D 토스 파란색 정리 2026-07-19] #5F8AD4(토스 잔재)만 대상: +수익→빨강 / -손실→파랑유지 / 부호없는 지표→무채색 / 파란 테두리→무채색. 상속색까지 처리(요소+하위 leaf). */
   function isToss(c){var m=c&&c.match(/\d+/g);if(!m)return false;var r=+m[0],g=+m[1],b=+m[2],a=(m[3]!==undefined?+m[3]:1);return a>0.4 && Math.abs(r-95)<16 && Math.abs(g-138)<18 && Math.abs(b-212)<18;}
+  function blueTint(v){var m=v&&v.match(/[\d.]+/g);if(!m)return false;var r=+m[0],g=+m[1],b=+m[2],a=(m[3]!==undefined?+m[3]:1);return a>0 && b>200 && b-r>80;}
   var _bts=0;
   function blueClean(){
-    var now=Date.now(); if(now-_bts<300) return; _bts=now;   /* 스로틀: 렌더 버스트당 1회 */
+    var now=Date.now(); if(now-_bts<40) return; _bts=now;   /* 번쩍 줄이려 짧은 스로틀 */
     var all=document.getElementsByTagName('*');
     for(var i=0;i<all.length;i++){ var e=all[i];
       var cs=getComputedStyle(e);
-      if(parseFloat(cs.borderTopWidth)>0 && isToss(cs.borderTopColor)) e.style.setProperty('border-color','rgba(255,255,255,.13)','important');
+      var bd=parseFloat(cs.borderTopWidth)>0 && (isToss(cs.borderTopColor)||blueTint(cs.borderTopColor));
+      var bg=blueTint(cs.backgroundColor);
+      if(bg && bd){ e.style.setProperty('background','rgba(255,255,255,.04)','important'); e.style.setProperty('border-color','rgba(255,255,255,.14)','important'); } /* 파란 액센트 박스(배경+테두리) → 무채색. 손실 배경(테두리 없음)은 보존 */
+      else if(bd){ e.style.setProperty('border-color','rgba(255,255,255,.14)','important'); }
       if(e.children.length===0){ var t=(e.textContent||'').trim();
         if(t && isToss(cs.color)){
           if(/^\+/.test(t)) e.style.setProperty('color','#F06A6A','important');
@@ -1996,8 +2000,8 @@ html.theme-light .ov-inst-card-v2 [data-jk="btn"]{background:rgba(0,0,0,.05) !im
   function boot(){
     apply();
     try{var t;var mo=new MutationObserver(function(){clearTimeout(t);t=setTimeout(apply,30);});mo.observe(document.body,{childList:true,subtree:true});}catch(e){}
-    /* 시장 현황 탭 재진입 시 즉시 여러 번 재정렬 → 옛 배열 깜빡임 제거 */
-    try{ Array.prototype.forEach.call(document.querySelectorAll('.nav-tab'),function(tb){ if(/시장 현황/.test(tb.textContent||'')){ tb.addEventListener('click',function(){ [0,16,50,150,320].forEach(function(ms){ setTimeout(apply,ms); }); }); } }); }catch(e){}
+    /* 어느 탭이든 전환 시 즉시 여러 번 정리 → 옛 배열/파란색 번쩍 제거 */
+    try{ document.addEventListener('click',function(){ [0,16,40,90,180,320].forEach(function(ms){ setTimeout(apply,ms); }); },true); }catch(e){}
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
 })();
