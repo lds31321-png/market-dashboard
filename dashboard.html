@@ -56,7 +56,7 @@
   --r:12px;
   --shadow:0 1px 4px rgba(0,0,0,.07),0 4px 16px rgba(0,0,0,.05);
   --shadow-sm:0 1px 3px rgba(0,0,0,.07);
-  --accent-rgb:69,147,252;--loss-rgb:69,147,252;
+  --accent-rgb:139,149,161;--loss-rgb:139,149,161;
 }
 
 /* [2026-07-03] 다크/라이트 토글 버튼 (헤더) */
@@ -67,7 +67,7 @@ html.theme-light{
   --bg:#f0e9e1; --card:#ffffff; --card2:#faf4ee;
   --b1:rgba(0,0,0,.07); --b2:rgba(0,0,0,.12);
   --t1:#1a1816; --t2:#5f574f; --t3:#8a8178;
-  --accent:#d9664a; --accent-a:rgba(217,102,74,.10); --accent-b:rgba(217,102,74,.06); --accent-rgb:217,102,74; --loss-rgb:42,95,168;
+  --accent:#d9664a; --accent-a:rgba(217,102,74,.10); --accent-b:rgba(217,102,74,.06); --accent-rgb:217,102,74; --loss-rgb:139,149,161;
   --profit:#d9664a; --profit-bg:rgba(217,102,74,.08); --profit-border:rgba(217,102,74,.22);
   --loss:#575757; --loss-bg:rgba(139,149,161,.07); --loss-border:rgba(139,149,161,.22);
   --cyan:#d9664a; --green:#d9664a; --yellow:#c8803a; --orange:#d9664a; --red:#d9664a; --purple:#8b6fc9;
@@ -2767,7 +2767,7 @@ loadPositions();
   function draw(now){
     ctx.clearRect(0,0,W(),H());
     gx+=(mx-gx)*0.12;gy+=(my-gy)*0.12;
-    if(on){var _gl=document.documentElement.classList.contains('theme-light');var _c0=_gl?'224,138,106':'83,160,255',_c1=_gl?'217,102,74':'69,147,252';var g=ctx.createRadialGradient(gx,gy,0,gx,gy,240);g.addColorStop(0,'rgba('+_c0+',0.18)');g.addColorStop(0.4,'rgba('+_c1+',0.07)');g.addColorStop(1,'rgba('+_c1+',0)');ctx.fillStyle=g;ctx.fillRect(gx-240,gy-240,480,480);}
+    if(on){var _gl=document.documentElement.classList.contains('theme-light');var _c0=_gl?'224,138,106':'83,160,255',_c1=_gl?'217,102,74':'139,149,161';var g=ctx.createRadialGradient(gx,gy,0,gx,gy,240);g.addColorStop(0,'rgba('+_c0+',0.18)');g.addColorStop(0.4,'rgba('+_c1+',0.07)');g.addColorStop(1,'rgba('+_c1+',0)');ctx.fillStyle=g;ctx.fillRect(gx-240,gy-240,480,480);}
     if(on&&now-lastMove<1800&&now-lastSpawn>2000&&trail.length){var tp=trail[0];for(var k=0;k<trail.length;k++){if(now-trail[k].t<=400)break;tp=trail[k];}ripples.push({x:tp.x,y:tp.y,t:now});lastSpawn=now;}
     for(var i=ripples.length-1;i>=0;i--){
       var rp=ripples[i],p=(now-rp.t)/DUR;
