@@ -12205,14 +12205,13 @@ body{padding-bottom:0}
 })();
 </script>
 
-<script id="jk-detail-cover-v9">
+<script id="jk-detail-cover-v10">
 (function(){"use strict";
-  function bgColor(){
-    var el=document.getElementById('page-overview')||document.getElementById('ov-detail-view')||document.body;
-    for(var n=0;n<7&&el;n++){ var cc=getComputedStyle(el).backgroundColor; if(cc&&cc!=='rgba(0, 0, 0, 0)'&&cc!=='transparent') return cc; el=el.parentElement; }
-    return '#0e1117';
+  function pageBg(){
+    try{ var v=getComputedStyle(document.body).getPropertyValue('--bg'); if(v&&v.trim()) return v.trim(); }catch(e){}
+    try{ var b=getComputedStyle(document.body).backgroundColor; if(b&&b!=='rgba(0, 0, 0, 0)'&&b!=='transparent') return b; }catch(e){}
+    return '#14161A';
   }
-  /* 스피너 keyframes 1회 주입 */
   try{ if(!document.getElementById('jk-cover-kf')){ var st=document.createElement('style'); st.id='jk-cover-kf';
     st.textContent='@keyframes jkspin{to{transform:rotate(360deg)}}@keyframes jkdots{0%,20%{opacity:.2}50%{opacity:1}100%{opacity:.2}}';
     document.head.appendChild(st); } }catch(e){}
@@ -12224,16 +12223,15 @@ body{padding-bottom:0}
     var po=document.getElementById('page-overview');
     var top=110,left=0,width=window.innerWidth;
     if(po){ var r=po.getBoundingClientRect(); if(r.height>2){ top=Math.max(0,r.top); left=Math.max(0,r.left); width=r.width||window.innerWidth; } }
-    var bg=bgColor();
     var cov=document.createElement('div'); cov.id='jk-detail-cover';
-    cov.style.cssText='position:fixed;left:'+left+'px;top:'+top+'px;width:'+width+'px;height:'+(window.innerHeight-top+40)+'px;z-index:99990;background:'+bg+';pointer-events:none;opacity:1;transition:opacity .2s ease;will-change:opacity;';
+    cov.style.cssText='position:fixed;left:'+left+'px;top:'+top+'px;width:'+width+'px;height:'+(window.innerHeight-top+40)+'px;z-index:2147483647;background:'+pageBg()+';pointer-events:none;opacity:1;transition:opacity .2s ease;will-change:opacity;';
     if(loader){
       var box=document.createElement('div');
-      box.style.cssText='position:absolute;left:0;right:0;top:120px;display:flex;flex-direction:column;align-items:center;gap:16px;';
+      box.style.cssText='position:absolute;left:0;right:0;top:140px;display:flex;flex-direction:column;align-items:center;gap:16px;';
       var sp=document.createElement('div');
-      sp.style.cssText='width:38px;height:38px;border-radius:50%;border:3px solid rgba(255,255,255,.15);border-top-color:rgba(120,170,255,.9);animation:jkspin .8s linear infinite;';
+      sp.style.cssText='width:40px;height:40px;border-radius:50%;border:3px solid rgba(255,255,255,.15);border-top-color:rgba(120,170,255,.95);animation:jkspin .8s linear infinite;';
       var tx=document.createElement('div');
-      tx.style.cssText='font-size:15px;color:rgba(200,210,225,.85);font-weight:600;letter-spacing:.02em;';
+      tx.style.cssText='font-size:15px;color:rgba(200,210,225,.9);font-weight:600;letter-spacing:.02em;';
       tx.innerHTML='종목 분석 중<span style="animation:jkdots 1.2s infinite">·</span><span style="animation:jkdots 1.2s .2s infinite">·</span><span style="animation:jkdots 1.2s .4s infinite">·</span>';
       box.appendChild(sp); box.appendChild(tx); cov.appendChild(box);
     }
@@ -12244,10 +12242,9 @@ body{padding-bottom:0}
     if(window.__jkCoverOn) return true;
     var orig=window.ovShowDetail; if(typeof orig!=='function') return false;
     window.__jkCoverOn=true;
-    window.ovShowDetail=function(){ try{coverFor(1900,true);}catch(e){} return orig.apply(this,arguments); };  /* 카드 상세: 분석 중 로딩화면 1.9초 */
+    window.ovShowDetail=function(){ try{coverFor(1900,true);}catch(e){} return orig.apply(this,arguments); };
     return true;
   }
-  /* 시장현황 탭 진입: 짧은 무지 커버 750ms (로딩문구 없이) */
   document.addEventListener('click', function(ev){
     try{ var t=ev.target && ev.target.closest ? ev.target.closest('.nav-tab-market') : null;
       if(t){ requestAnimationFrame(function(){ try{coverFor(750,false);}catch(e){} }); } }catch(e){}
