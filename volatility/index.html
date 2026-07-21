@@ -12205,7 +12205,7 @@ body{padding-bottom:0}
 })();
 </script>
 
-<script id="jk-detail-cover-v5">
+<script id="jk-detail-cover-v6">
 (function(){"use strict";
   function bgColor(){
     var el=document.getElementById('page-overview')||document.getElementById('ov-detail-view')||document.body;
@@ -12229,7 +12229,7 @@ body{padding-bottom:0}
     if(window.__jkCoverOn) return true;
     var orig=window.ovShowDetail; if(typeof orig!=='function') return false;
     window.__jkCoverOn=true;
-    window.ovShowDetail=function(){ try{coverFor(1200);}catch(e){} return orig.apply(this,arguments); };  /* 카드 클릭: 검증된 520ms */
+    window.ovShowDetail=function(){ try{coverFor(1800);}catch(e){} return orig.apply(this,arguments); };  /* 카드 클릭: 검증된 520ms */
     return true;
   }
   /* 시장현황 탭 진입: 큰 재구성 burst를 고정 750ms 동안 가림 */
