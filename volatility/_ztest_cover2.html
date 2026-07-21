@@ -12205,9 +12205,8 @@ body{padding-bottom:0}
 })();
 </script>
 
-<script id="jk-detail-cover-v2">
+<script id="jk-detail-cover-v4">
 (function(){"use strict";
-  var COVER_MS=520;
   function bgColor(){
     var el=document.getElementById('page-overview')||document.getElementById('ov-detail-view')||document.body;
     for(var n=0;n<7&&el;n++){ var cc=getComputedStyle(el).backgroundColor; if(cc&&cc!=='rgba(0, 0, 0, 0)'&&cc!=='transparent') return cc; el=el.parentElement; }
@@ -12215,50 +12214,34 @@ body{padding-bottom:0}
   }
   function removeCover(){ var c=document.getElementById('jk-detail-cover'); if(c&&c.parentNode) c.parentNode.removeChild(c); }
   var hideT=null, remT=null;
-  function makeCover(){
+  function coverFor(ms){
+    try{clearTimeout(hideT);}catch(e){} try{clearTimeout(remT);}catch(e){}
     removeCover();
     var po=document.getElementById('page-overview');
     var top=110,left=0,width=window.innerWidth;
     if(po){ var r=po.getBoundingClientRect(); if(r.height>2){ top=Math.max(0,r.top); left=Math.max(0,r.left); width=r.width||window.innerWidth; } }
     var cov=document.createElement('div'); cov.id='jk-detail-cover';
-    cov.style.cssText='position:fixed;left:'+left+'px;top:'+top+'px;width:'+width+'px;height:'+(window.innerHeight-top+40)+'px;z-index:99990;background:'+bgColor()+';pointer-events:none;opacity:1;transition:opacity .18s ease;will-change:opacity;';
+    cov.style.cssText='position:fixed;left:'+left+'px;top:'+top+'px;width:'+width+'px;height:'+(window.innerHeight-top+40)+'px;z-index:99990;background:'+bgColor()+';pointer-events:none;opacity:1;transition:opacity .2s ease;will-change:opacity;';
     document.body.appendChild(cov);
-    return cov;
-  }
-  function fade(){ var c=document.getElementById('jk-detail-cover'); if(c){ c.style.opacity='0'; remT=setTimeout(removeCover,220);} }
-  function clearAll(){ try{clearTimeout(hideT);}catch(e){} try{clearTimeout(remT);}catch(e){} }
-  /* 카드 클릭(상세) — 검증된 고정시간 커버 */
-  function cover(){ clearAll(); makeCover(); hideT=setTimeout(fade, COVER_MS); }
-  /* 탭 진입·첫 로딩 — 구조 재구성이 멈추면 자동으로 걷힘(최대 maxMs 안전상한) */
-  function coverAdaptive(maxMs, quietMs){
-    clearAll(); makeCover();
-    var po=document.getElementById('page-overview'); if(!po){ hideT=setTimeout(fade,600); return; }
-    var mo=null, quiet=null, cap=null, finished=false;
-    function done(){ if(finished)return; finished=true; try{mo&&mo.disconnect();}catch(e){} try{clearTimeout(quiet);}catch(e){} try{clearTimeout(cap);}catch(e){} fade(); }
-    try{
-      mo=new MutationObserver(function(){ clearTimeout(quiet); quiet=setTimeout(done, quietMs); });
-      mo.observe(po,{childList:true,subtree:true});
-    }catch(e){ hideT=setTimeout(fade,600); return; }
-    quiet=setTimeout(done, quietMs);
-    cap=setTimeout(done, maxMs);
+    hideT=setTimeout(function(){ var c=document.getElementById('jk-detail-cover'); if(c){ c.style.opacity='0'; remT=setTimeout(removeCover,240);} }, ms);
   }
   function wrap(){
     if(window.__jkCoverOn) return true;
     var orig=window.ovShowDetail; if(typeof orig!=='function') return false;
     window.__jkCoverOn=true;
-    window.ovShowDetail=function(){ try{cover();}catch(e){} return orig.apply(this,arguments); };
+    window.ovShowDetail=function(){ try{coverFor(520);}catch(e){} return orig.apply(this,arguments); };  /* 카드 클릭: 검증된 520ms */
     return true;
   }
-  /* 시장현황 탭 진입 클릭 감지 */
+  /* 시장현황 탭 진입: 큰 재구성 burst를 고정 750ms 동안 가림 */
   document.addEventListener('click', function(ev){
     try{
       var t=ev.target && ev.target.closest ? ev.target.closest('.nav-tab-market') : null;
-      if(t){ requestAnimationFrame(function(){ coverAdaptive(1600,150); }); }
+      if(t){ requestAnimationFrame(function(){ try{coverFor(750);}catch(e){} }); }
     }catch(e){}
   }, true);
-  /* 첫 로딩 시 시장현황이 이미 보이면 첫 재구성을 덮음 */
+  /* 첫 로딩 시 시장현황이 이미 보이면 첫 재구성을 가림 */
   function initialCover(){
-    try{ var po=document.getElementById('page-overview'); if(po){ var cs=getComputedStyle(po); if(cs.display!=='none'){ coverAdaptive(1800,170); } } }catch(e){}
+    try{ var po=document.getElementById('page-overview'); if(po&&getComputedStyle(po).display!=='none'){ coverFor(900); } }catch(e){}
   }
   var n=0,iv=setInterval(function(){ if(wrap()||++n>60) clearInterval(iv); },150);
   if(document.readyState!=='loading'){ wrap(); initialCover(); }
