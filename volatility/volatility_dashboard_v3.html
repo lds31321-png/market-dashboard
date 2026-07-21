@@ -12205,38 +12205,5 @@ body{padding-bottom:0}
 })();
 </script>
 
-<script id="jk-detail-mask-v1">
-(function(){"use strict";
-  function css(){ if(document.getElementById('jk-mask-css'))return; var s=document.createElement('style'); s.id='jk-mask-css';
-    s.textContent='#ov-detail-view.jk-masking{opacity:0 !important;pointer-events:none !important;}#ov-detail-view.jk-reveal{transition:opacity .16s ease !important;opacity:1 !important;}';
-    (document.head||document.documentElement).appendChild(s); }
-  var revealT=null, settleObs=null;
-  function reveal(dv){ if(!dv)return; try{clearTimeout(revealT);}catch(e){} if(settleObs){try{settleObs.disconnect();}catch(e){}settleObs=null;} dv.classList.remove('jk-masking'); dv.classList.add('jk-reveal'); }
-  function wrap(){
-    if(window.__jkMaskOn) return true;
-    var orig=window.ovShowDetail;
-    if(typeof orig!=='function') return false;
-    window.__jkMaskOn=true; css();
-    window.ovShowDetail=function(){
-      var dv=document.getElementById('ov-detail-view');
-      if(dv){ dv.classList.remove('jk-reveal'); dv.classList.add('jk-masking'); }
-      var r;
-      try{ r=orig.apply(this,arguments); }catch(e){ reveal(dv); throw e; }
-      if(dv){
-        try{clearTimeout(revealT);}catch(e){}
-        if(settleObs){try{settleObs.disconnect();}catch(e){}}
-        var settle=function(){ try{clearTimeout(revealT);}catch(e){} revealT=setTimeout(function(){ reveal(dv); }, 180); };
-        try{ settleObs=new MutationObserver(settle); settleObs.observe(dv,{childList:true,subtree:true,attributes:true,characterData:true}); }catch(e){}
-        settle();
-        setTimeout(function(){ reveal(dv); }, 1100); /* 최대 1.1초 후 무조건 표시(안전장치) */
-      }
-      return r;
-    };
-    return true;
-  }
-  var n=0, iv=setInterval(function(){ if(wrap()||++n>60) clearInterval(iv); }, 150);
-  if(document.readyState!=='loading') wrap();
-})();
-</script>
 </body>
 </html>
