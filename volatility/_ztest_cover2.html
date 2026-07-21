@@ -11562,19 +11562,28 @@ body{padding-bottom:0}
       }catch(e){}
     }
 
+    var _tickMO=null, _tickBusy=false;
     function tick(){
-      forceDark();
-      jmWatchTab();
-      jmFixCharts();
-      jmFoldGuide();
-      jmFixGuideFont();
-      for(var i=0;i<FNS.length;i++){
-        try{ FNS[i](); }
-        catch(e){ try{ window.__jmErr=(window.__jmErr||'')+'['+i+'] '+String(e)+' | '; }catch(e2){} }
+      if(_tickBusy) return;
+      _tickBusy=true;
+      try{ if(_tickMO) _tickMO.disconnect(); }catch(e){}
+      try{
+        forceDark();
+        jmWatchTab();
+        jmFixCharts();
+        jmFoldGuide();
+        jmFixGuideFont();
+        for(var i=0;i<FNS.length;i++){
+          try{ FNS[i](); }
+          catch(e){ try{ window.__jmErr=(window.__jmErr||'')+'['+i+'] '+String(e)+' | '; }catch(e2){} }
+        }
+        jmRestoreOpen();
+        jmMinFont();
+        jmContrast();
+      } finally {
+        try{ if(_tickMO) _tickMO.observe(document.body,{childList:true,subtree:true}); }catch(e){}
+        _tickBusy=false;
       }
-      jmRestoreOpen();
-      jmMinFont();          /* 마지막에 — 새로 그려진 글자까지 잡는다 */
-      jmContrast();
     }
     forceDark();
     tick();
@@ -11589,10 +11598,11 @@ body{padding-bottom:0}
     /* 2) 화면이 바뀌면 즉시 — 앱이 무엇을 다시 그리든 바로 따라간다 */
     try{
       var mt=null;
-      new MutationObserver(function(){
+      _tickMO=new MutationObserver(function(){
         clearTimeout(mt);
         mt=setTimeout(tick, 120);
-      }).observe(document.body, {childList:true, subtree:true});
+      });
+      _tickMO.observe(document.body, {childList:true, subtree:true});
     }catch(e){}
 
     /* 3) 누르면 즉시 — 탭 전환·조회·버튼 클릭 직후엔 내용이 늦게 채워지므로 여러 번 확인 */
@@ -12205,7 +12215,7 @@ body{padding-bottom:0}
 })();
 </script>
 
-<script id="jk-detail-cover-v4">
+<script id="jk-detail-cover-v8">
 (function(){"use strict";
   function bgColor(){
     var el=document.getElementById('page-overview')||document.getElementById('ov-detail-view')||document.body;
@@ -12229,7 +12239,7 @@ body{padding-bottom:0}
     if(window.__jkCoverOn) return true;
     var orig=window.ovShowDetail; if(typeof orig!=='function') return false;
     window.__jkCoverOn=true;
-    window.ovShowDetail=function(){ try{coverFor(520);}catch(e){} return orig.apply(this,arguments); };  /* 카드 클릭: 검증된 520ms */
+    window.ovShowDetail=function(){ try{coverFor(1400);}catch(e){} return orig.apply(this,arguments); };  /* 카드 클릭: 검증된 520ms */
     return true;
   }
   /* 시장현황 탭 진입: 큰 재구성 burst를 고정 750ms 동안 가림 */
