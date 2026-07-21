@@ -2100,7 +2100,7 @@ input,select,textarea,progress{accent-color:#8B95A1 !important;}
   }
   function boot(){
     apply();
-    try{var t;var mo=new MutationObserver(function(){clearTimeout(t);t=setTimeout(apply,30);});mo.observe(document.body,{childList:true,subtree:true});}catch(e){}
+    try{var t,mo;var _run=function(){if(mo)mo.disconnect();try{apply();}catch(_e){}if(mo){try{mo.observe(document.body,{childList:true,subtree:true});}catch(_e){}}};mo=new MutationObserver(function(){clearTimeout(t);t=setTimeout(_run,200);});mo.observe(document.body,{childList:true,subtree:true});}catch(e){}
     /* 어느 탭이든 전환 시 즉시 여러 번 정리 → 옛 배열/파란색 번쩍 제거 */
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
