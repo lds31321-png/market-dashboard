@@ -11976,10 +11976,12 @@ body{padding-bottom:0}
 #jk-eb-wrap th{font-size:11px;color:var(--t3,#8B95A1);font-weight:600;text-align:center;padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.10)}
 #jk-eb-wrap td{text-align:center;padding:9px 8px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--t2,#C7CDD4);vertical-align:middle}
 #jk-eb-wrap td.pl,#jk-eb-wrap th.pl{text-align:left}
-/* 조정 근거: 평범한 글자, 테두리·배경 없음, 여러 줄 나열 */
-#jk-eb-wrap .jkeb-rsn{display:flex;flex-direction:column;gap:2px;align-items:center;font-size:11.5px;color:#9AA2AB;line-height:1.45}
-#jk-eb-wrap .jkeb-rsn .r-adj{color:#C7CDD4}
-#jk-eb-wrap .jkeb-rsn .r-tail{color:#E88}
+/* 조정 근거: 평범한 글자, 테두리·배경 없음, 가로로 · 이어서 나열 */
+#jk-eb-wrap .jkeb-rsn{font-size:11px;color:#9AA2AB;line-height:1.5;word-break:keep-all}
+#jk-eb-wrap .jkeb-rsn .r-adj{color:#B8BDC4}
+#jk-eb-wrap .jkeb-rsn .r-tail{color:#E65C66;font-weight:600}
+#jk-eb-wrap .jkeb-rsn .r-warn{color:#E3A845}
+#jk-eb-wrap .jkeb-rsn .r-dot{color:#565C64;padding:0 3px}
 #jk-eb-wrap .jkeb-collap .jkeb-hd{cursor:pointer;user-select:none}
 #jk-eb-wrap .jkeb-collap.jkeb-collapsed .jkeb-body{display:none}
 #jk-eb-wrap .jkeb-chev{display:inline-block;font-size:12px;color:var(--t3,#8B95A1);margin-right:6px;transition:transform .15s}
@@ -12024,14 +12026,14 @@ body{padding-bottom:0}
     if(cf && cf.extraSteps>0){
       r.push({t:'외가조정',c:'r-adj'});
       if(mac.phase==='CRISIS') r.push({t:'위기국면',c:'r-tail'});
-      else if(mac.phase==='WARNING') r.push({t:'주의국면',c:''});
+      else if(mac.phase==='WARNING') r.push({t:'주의국면',c:'r-warn'});
       if(mac.tail) r.push({t:'꼬리위험',c:'r-tail'});
     }
     return r;
   }
   function reasonsHtml(reasons){
     if(!reasons||!reasons.length) return '<span style="color:#5A6068">—</span>';
-    return '<div class="jkeb-rsn">'+reasons.map(function(x){return '<span class="'+(x.c||'')+'">'+esc(x.t)+'</span>';}).join('')+'</div>';
+    return '<span class="jkeb-rsn">'+reasons.map(function(x){return '<span class="'+(x.c||'')+'">'+esc(x.t)+'</span>';}).join('<span class="r-dot">·</span>')+'</span>';
   }
 
   var PHASE={NORMAL:{t:'안전',c:'#8B95A1'},WARNING:{t:'주의',c:'#E3A845'},CRISIS:{t:'위기',c:'#E65C66'}};
