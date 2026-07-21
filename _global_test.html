@@ -4722,10 +4722,12 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
 <script id="jk-reskin-bluesweep-2026-07-22">
 (function(){var SALMON='#d9664a';
  function isAB(s){return /(?:^|[^0-9])(69,\s*147,\s*252|49,\s*130,\s*246|66,\s*133,\s*244|24,\s*144,\s*255)/.test(s||'');}
+ function isNum(t){t=(t||'').trim();return /^[+\-\u2212]?[\d,]+(\.\d+)?\s*%?$/.test(t);}
  function sweep(){try{var els=document.querySelectorAll('body *,body');for(var i=0;i<els.length;i++){var e=els[i],cs;try{cs=getComputedStyle(e);}catch(x){continue;}
-   if(isAB(cs.color))e.style.setProperty('color',SALMON,'important');
+   var num=(e.children.length===0)&&isNum(e.textContent);
+   if(isAB(cs.color)&&!num)e.style.setProperty('color',SALMON,'important');   /* 숫자(등락) 값은 색 보존 → 하락=파랑 유지 */
    if(isAB(cs.borderTopColor)||isAB(cs.borderRightColor)||isAB(cs.borderBottomColor)||isAB(cs.borderLeftColor))e.style.setProperty('border-color',SALMON,'important');
-   if(isAB(cs.backgroundColor))e.style.setProperty('background-color',SALMON,'important');
+   if(isAB(cs.backgroundColor)&&!num)e.style.setProperty('background-color',SALMON,'important');
    if(isAB(cs.outlineColor))e.style.setProperty('outline-color',SALMON,'important');
  }}catch(x){}}
  function run(){sweep();}
