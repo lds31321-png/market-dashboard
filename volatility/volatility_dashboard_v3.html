@@ -12128,8 +12128,7 @@ body{padding-bottom:0}
     var vbg=/E65/.test(m.verdict.c)?'rgba(230,92,102,.12)':/E3A/.test(m.verdict.c)?'rgba(227,168,69,.12)':'rgba(255,255,255,.06)';
     var brd=m.sev>=300?'border-color:rgba(230,92,102,.35)':'';
     return '<div class="jkeb-box jkeb-click" data-code="'+m.code+'" onclick="event.stopPropagation();window.__jkOpen&&window.__jkOpen(\''+m.code+'\')" style="'+brd+'">'
-      +'<div class="jkeb-hd"><span class="jkeb-namewrap"><span class="jkeb-nm">'+esc(m.name)+'</span><span class="jkeb-more">자세히 보기 →</span></span>'
-      +'<span class="jkeb-verdict" style="color:'+m.verdict.c+';background:'+vbg+'">'+esc(m.verdict.t)+'</span></div>'
+      +'<div class="jkeb-hd"><span class="jkeb-namewrap"><span class="jkeb-nm">'+esc(m.name)+'</span><span class="jkeb-more">자세히 보기 →</span></span></div>'
       +'<div class="jkeb-risk">'
       +'<div class="jkeb-rc"><div class="jkeb-rl">시장 국면</div><div class="jkeb-rv" style="color:'+m.phase.c+'">'+esc(m.phase.t)+'</div></div>'
       +'<div class="jkeb-rc"><div class="jkeb-rl">생존 경보</div><div class="jkeb-rv" style="color:'+m.alert.c+'">'+esc(m.alert.t)+'</div></div>'
@@ -12140,10 +12139,22 @@ body{padding-bottom:0}
       +'<table>'+BOX_CG+'<thead><tr><th>구분</th><th>월물</th><th>기대수익률</th><th>프리미엄</th><th>원화 환산</th><th>계약수</th><th>조정 근거</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
 
-  /* 접이식 섹션 (제목 클릭으로 접기/펼치기 — 스크롤 접기 버튼 없음) */
+  /* 접이식 섹션 (제목 클릭으로 접기/펼치기).
+     펼침/접힘 상태를 제목별로 기억(window.__jkExp)해서, 데이터 로딩 중 다시 그려져도
+     사용자가 펼친 섹션이 저절로 접히지 않도록 한다. */
+  window.__jkExp = window.__jkExp || {};
+  window.__jkToggle = function(hd){
+    try{
+      var box=hd.parentNode;
+      var nowCollapsed=box.classList.toggle('jkeb-collapsed'); /* 추가되면 true=접힘 */
+      var key=box.getAttribute('data-jk');
+      if(key) window.__jkExp[key] = !nowCollapsed;            /* 펼침 = 접힘 아님 */
+    }catch(e){}
+  };
   function collapSection(title, sub, badge, badgeColor, bodyHtml){
-    return '<div class="jkeb-box jkeb-collap jkeb-collapsed">'
-      +'<div class="jkeb-hd" onclick="event.stopPropagation();this.parentNode.classList.toggle(\'jkeb-collapsed\')">'
+    var open = !!(window.__jkExp && window.__jkExp[title]);   /* 기억된 상태 복원 */
+    return '<div class="jkeb-box jkeb-collap'+(open?'':' jkeb-collapsed')+'" data-jk="'+esc(title)+'">'
+      +'<div class="jkeb-hd" onclick="event.stopPropagation();window.__jkToggle&&window.__jkToggle(this)">'
       +'<span class="jkeb-nm"><span class="jkeb-chev">▾</span>'+esc(title)+(sub?' <span class="jkeb-secsub">'+esc(sub)+'</span>':'')+'</span>'
       +'<span class="jkeb-verdict" style="color:'+badgeColor+';background:rgba(255,255,255,.06)">'+esc(badge)+'</span></div>'
       +'<div class="jkeb-body">'+bodyHtml+'</div></div>';
