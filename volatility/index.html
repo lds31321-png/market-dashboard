@@ -12205,23 +12205,36 @@ body{padding-bottom:0}
 })();
 </script>
 
-<script id="jk-detail-cover-v7">
+<script id="jk-detail-cover-v10">
 (function(){"use strict";
-  function bgColor(){
-    var el=document.getElementById('page-overview')||document.getElementById('ov-detail-view')||document.body;
-    for(var n=0;n<7&&el;n++){ var cc=getComputedStyle(el).backgroundColor; if(cc&&cc!=='rgba(0, 0, 0, 0)'&&cc!=='transparent') return cc; el=el.parentElement; }
-    return '#0e1117';
+  function pageBg(){
+    try{ var v=getComputedStyle(document.body).getPropertyValue('--bg'); if(v&&v.trim()) return v.trim(); }catch(e){}
+    try{ var b=getComputedStyle(document.body).backgroundColor; if(b&&b!=='rgba(0, 0, 0, 0)'&&b!=='transparent') return b; }catch(e){}
+    return '#14161A';
   }
+  try{ if(!document.getElementById('jk-cover-kf')){ var st=document.createElement('style'); st.id='jk-cover-kf';
+    st.textContent='@keyframes jkspin{to{transform:rotate(360deg)}}@keyframes jkdots{0%,20%{opacity:.2}50%{opacity:1}100%{opacity:.2}}';
+    document.head.appendChild(st); } }catch(e){}
   function removeCover(){ var c=document.getElementById('jk-detail-cover'); if(c&&c.parentNode) c.parentNode.removeChild(c); }
   var hideT=null, remT=null;
-  function coverFor(ms){
+  function coverFor(ms, loader){
     try{clearTimeout(hideT);}catch(e){} try{clearTimeout(remT);}catch(e){}
     removeCover();
     var po=document.getElementById('page-overview');
     var top=110,left=0,width=window.innerWidth;
     if(po){ var r=po.getBoundingClientRect(); if(r.height>2){ top=Math.max(0,r.top); left=Math.max(0,r.left); width=r.width||window.innerWidth; } }
     var cov=document.createElement('div'); cov.id='jk-detail-cover';
-    cov.style.cssText='position:fixed;left:'+left+'px;top:'+top+'px;width:'+width+'px;height:'+(window.innerHeight-top+40)+'px;z-index:99990;background:'+bgColor()+';pointer-events:none;opacity:1;transition:opacity .2s ease;will-change:opacity;';
+    cov.style.cssText='position:fixed;left:'+left+'px;top:'+top+'px;width:'+width+'px;height:'+(window.innerHeight-top+40)+'px;z-index:2147483647;background:'+pageBg()+';pointer-events:none;opacity:1;transition:opacity .2s ease;will-change:opacity;';
+    if(loader){
+      var box=document.createElement('div');
+      box.style.cssText='position:absolute;left:0;right:0;top:140px;display:flex;flex-direction:column;align-items:center;gap:16px;';
+      var sp=document.createElement('div');
+      sp.style.cssText='width:40px;height:40px;border-radius:50%;border:3px solid rgba(255,255,255,.15);border-top-color:rgba(120,170,255,.95);animation:jkspin .8s linear infinite;';
+      var tx=document.createElement('div');
+      tx.style.cssText='font-size:15px;color:rgba(200,210,225,.9);font-weight:600;letter-spacing:.02em;';
+      tx.innerHTML='종목 분석 중<span style="animation:jkdots 1.2s infinite">·</span><span style="animation:jkdots 1.2s .2s infinite">·</span><span style="animation:jkdots 1.2s .4s infinite">·</span>';
+      box.appendChild(sp); box.appendChild(tx); cov.appendChild(box);
+    }
     document.body.appendChild(cov);
     hideT=setTimeout(function(){ var c=document.getElementById('jk-detail-cover'); if(c){ c.style.opacity='0'; remT=setTimeout(removeCover,240);} }, ms);
   }
@@ -12229,20 +12242,14 @@ body{padding-bottom:0}
     if(window.__jkCoverOn) return true;
     var orig=window.ovShowDetail; if(typeof orig!=='function') return false;
     window.__jkCoverOn=true;
-    window.ovShowDetail=function(){ try{coverFor(2200);}catch(e){} return orig.apply(this,arguments); };  /* 카드 클릭: 검증된 520ms */
+    window.ovShowDetail=function(){ try{coverFor(1900,true);}catch(e){} return orig.apply(this,arguments); };
     return true;
   }
-  /* 시장현황 탭 진입: 큰 재구성 burst를 고정 750ms 동안 가림 */
   document.addEventListener('click', function(ev){
-    try{
-      var t=ev.target && ev.target.closest ? ev.target.closest('.nav-tab-market') : null;
-      if(t){ requestAnimationFrame(function(){ try{coverFor(750);}catch(e){} }); }
-    }catch(e){}
+    try{ var t=ev.target && ev.target.closest ? ev.target.closest('.nav-tab-market') : null;
+      if(t){ requestAnimationFrame(function(){ try{coverFor(750,false);}catch(e){} }); } }catch(e){}
   }, true);
-  /* 첫 로딩 시 시장현황이 이미 보이면 첫 재구성을 가림 */
-  function initialCover(){
-    try{ var po=document.getElementById('page-overview'); if(po&&getComputedStyle(po).display!=='none'){ coverFor(900); } }catch(e){}
-  }
+  function initialCover(){ try{ var po=document.getElementById('page-overview'); if(po&&getComputedStyle(po).display!=='none'){ coverFor(900,false); } }catch(e){} }
   var n=0,iv=setInterval(function(){ if(wrap()||++n>60) clearInterval(iv); },150);
   if(document.readyState!=='loading'){ wrap(); initialCover(); }
   else document.addEventListener('DOMContentLoaded', function(){ wrap(); initialCover(); });
