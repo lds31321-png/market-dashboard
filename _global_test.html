@@ -712,13 +712,6 @@ html, html.theme-blue, html.theme-light{ --font-h:'Pretendard Variable',Pretenda
 .api-tag{ color:#9AA2AB !important; border-color:rgba(255,255,255,.16) !important; background:rgba(255,255,255,.03) !important; }html.theme-blue /* 5) 푸터 상단 주황선·구분선 → 무채색 */
 .footer{ border-top-color:rgba(255,255,255,.08) !important; }html.theme-blue .footer-hd::after{ background:linear-gradient(90deg,rgba(255,255,255,.14),transparent) !important; }html.theme-blue .cm-title{ border-left-color:rgba(255,255,255,.18) !important; }
 </style>
-<style id="jk-reskin-complete-2026-07-22">
-html.theme-blue .setup-logo, html.theme-blue .setup-guide-title, html.theme-blue .slink, html.theme-blue .tb-btn, html.theme-blue .vt-stars, html.theme-blue .dir-badge, html.theme-blue .at-chg, html.theme-blue .hm-val, html.theme-blue .hm-sub, html.theme-blue .fi-link, html.theme-blue .factor-title, html.theme-blue .factor-badge, html.theme-blue .factor-impact, html.theme-blue .sc-tag, html.theme-blue .sc-title, html.theme-blue .sc-price, html.theme-blue .cal-impact, html.theme-blue .cal-icon, html.theme-blue .cal-src-name, html.theme-blue .cm-num, html.theme-blue .api-tag, html.theme-blue .ph-badge, html.theme-blue .cal-popup-val, html.theme-blue a, html.theme-blue .hn-tag{ color:#d9664a !important; }
-html.theme-blue .setup-logo, html.theme-blue .setup-guide, html.theme-blue .setup-guide-title, html.theme-blue .slink, html.theme-blue .setup-btn, html.theme-blue .tb-btn, html.theme-blue .headline-top1, html.theme-blue .dir-badge, html.theme-blue .vt-stars, html.theme-blue .at-chg, html.theme-blue .notice, html.theme-blue .ph-badge, html.theme-blue .hm-val, html.theme-blue .hm-sub, html.theme-blue .api-tag, html.theme-blue .factor-badge, html.theme-blue .factor-impact, html.theme-blue .fi-link, html.theme-blue .factor-title, html.theme-blue .sc-tag, html.theme-blue .sc-title, html.theme-blue .sc-price, html.theme-blue .cal-icon, html.theme-blue .cal-impact, html.theme-blue .cal-src-name, html.theme-blue .sb-val, html.theme-blue .cm-num, html.theme-blue .cal-popup, html.theme-blue .cal-popup-close, html.theme-blue .cal-popup-val, html.theme-blue .cal-guide-wrap, html.theme-blue .cal-guide-note, html.theme-blue .cal-summary, html.theme-blue .mi-val, html.theme-blue a{ border-color:#d9664a !important; }
-html.theme-blue .setup-guide, html.theme-blue .snum, html.theme-blue .slink, html.theme-blue .setup-btn, html.theme-blue .th, html.theme-blue .dir-badge, html.theme-blue .notice, html.theme-blue .ph-badge, html.theme-blue .api-tag, html.theme-blue .factor-badge, html.theme-blue .fp-dot, html.theme-blue .factor-impact, html.theme-blue .factor-bar, html.theme-blue .sc-tag, html.theme-blue .cal-icon, html.theme-blue .cal-urgency, html.theme-blue .cal-popup-close, html.theme-blue .cal-guide-note{ background:#d9664a !important; }
-/* 링크 밑줄/hover도 살몬 */
-html.theme-blue a:hover{ color:#c8803a !important; }
-</style>
 </head>
 <body>
 
@@ -4724,6 +4717,20 @@ function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggl
     });
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
+<script id="jk-reskin-bluesweep-2026-07-22">
+(function(){var SALMON='#d9664a';
+ function isAB(s){return /(?:^|[^0-9])(69,\s*147,\s*252|49,\s*130,\s*246|66,\s*133,\s*244|24,\s*144,\s*255)/.test(s||'');}
+ function sweep(){try{var els=document.querySelectorAll('body *,body');for(var i=0;i<els.length;i++){var e=els[i],cs;try{cs=getComputedStyle(e);}catch(x){continue;}
+   if(isAB(cs.color))e.style.setProperty('color',SALMON,'important');
+   if(isAB(cs.borderTopColor)||isAB(cs.borderRightColor)||isAB(cs.borderBottomColor)||isAB(cs.borderLeftColor))e.style.setProperty('border-color',SALMON,'important');
+   if(isAB(cs.backgroundColor))e.style.setProperty('background-color',SALMON,'important');
+   if(isAB(cs.outlineColor))e.style.setProperty('outline-color',SALMON,'important');
+ }}catch(x){}}
+ function run(){sweep();}
+ if(document.readyState!=='loading')run();else document.addEventListener('DOMContentLoaded',run);
+ [300,900,1800,3000].forEach(function(ms){setTimeout(run,ms);});
 })();
 </script>
 </body>
