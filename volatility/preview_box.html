@@ -11960,7 +11960,6 @@ body{padding-bottom:0}
   }, {passive:true});
 })();
 </script>
-
 <style id="jk-eb-style-v9">
 #jk-eb-wrap{margin-bottom:16px}
 #jk-eb-wrap .jkeb-box{background:var(--card,#15161B);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px 18px;margin-bottom:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 8px 26px rgba(0,0,0,.4)}
@@ -12020,6 +12019,37 @@ body{padding-bottom:0}
   }
   function krwFmt(profit){ if(profit==null||profit==='') return '—'; var n=Number(profit); if(!isFinite(n)) return '—'; if(n<10000) return '1만원 미만'; return Math.round(n/10000).toLocaleString()+'만원'; }
 
+  /* 원화 환산 — 카드 상세('총 약 N만원')와 동일한 계산식을 그대로 복제 */
+  function _lsGet(k){ try{ var e=localStorage.getItem(k); return e?JSON.parse(e):null; }catch(t){ return null; } }
+  function detailKRW(code, side, lg){
+    try{
+      var l=String(lg.price||'');
+      var i=parseFloat((l.match(/^([0-9.]+)/)||[])[1])||0;
+      var p=l.match(/\(([0-9.]+)\)/);
+      var s=p?parseFloat(p[1]):i;
+      var v=parseFloat((String(lg.qty||'').match(/^([0-9.]+)/)||[])[1])||0;
+      var f=parseFloat(String(_lsGet('uvp-info-step2-single-amount')||'').replace(/[^0-9.]/g,''))||25;
+      var d=f/25, h=1;
+      var c=null; try{ c=window.calcFinalEntry(code, lg.month||'', side); }catch(e){}
+      var w=c&&c.macros;
+      if(w){ h = side==='call' ? (w.sizingCall!=null?w.sizingCall:(w.sizing!=null?w.sizing:1)) : (w.sizingPut!=null?w.sizingPut:(w.sizing!=null?w.sizing:1)); }
+      var m=1e4*f, g=false, F=1, x=v*d*h;
+      if(v>0 && i>0){
+        g=x<1; F=g?1:Math.floor(x);
+        var O=g?s:i;
+        if(!g && typeof window._optKRW==='function'){
+          var S=window._optKRW(code,O);
+          if(S!=null&&isFinite(S)&&S>0){ var C=Math.floor(m/S); if(C<1){g=true;F=1;O=s;} else if(C<F){F=C;} }
+        }
+        if(typeof window._optKRW==='function'){
+          var kr=window._optKRW(code,O);
+          if(kr!=null&&isFinite(kr)){ var R=Math.round(kr*F/1e4); return R<=0?'1만원 미만':R.toLocaleString()+'만원'; }
+        }
+      }
+    }catch(e){}
+    return '—';
+  }
+
   /* 조정 근거 목록 (여러 개 복합 가능) — 프리미엄에 반영된 요인들 */
   function legReasons(cf, mac){
     var r=[];
@@ -12069,7 +12099,7 @@ body{padding-bottom:0}
         var cf=null; try{ cf=window.calcFinalEntry(code, lg.month||'', side)||{}; }catch(e){ cf={}; }
         var adjusted=(cf.extraSteps>0)||false;
         legs.push({side: side==='call'?'콜 매도':'풋 매도', month:lg.month, pct:(lg.pct!=null?lg.pct.toFixed(2)+'%':'—'),
-          prem:pickPrem(lg.price, adjusted), reasons:legReasons(cf,mac), qty:pickQty(lg.qty), krw:krwFmt(lg.profit),
+          prem:pickPrem(lg.price, adjusted), reasons:legReasons(cf,mac), qty:pickQty(lg.qty), krw:detailKRW(code, side, lg),
           blocked:!!cf.blocked, avg:lg.pct||0});
       });
       metas.push({code:code, name:r.name, avg:r.avgPct||0, phase:PHASE[phase]||PHASE.NORMAL, alert:{t:ALERT[alv]||'정상',c:alv>=3?'#E65C66':alv>=2?'#E3A845':'#8B95A1'}, tail:tail, verdict:verdict, sev:sev, legs:legs});
