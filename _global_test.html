@@ -652,49 +652,41 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
   .hn-title{word-break:keep-all}
 }
 </style>
-<script id="jikt-theme-init">/*[다크모드 조기적용 — 로드 시 라이트 깜빡임(FOUC) 방지. body 중간 초기화보다 먼저 html에 theme-blue 부여]*/(function(){try{var t=localStorage.getItem('jikt_theme')||'dark';if(t!=='light'){document.documentElement.classList.add('theme-blue');}}catch(e){}})();</script>
-<style id="jk-global-dark-2026-07-20">html.theme-blue /* ===== [종합옵션 결 통일: Pretendard + 회색톤 절제] ===== */
-:root, html.theme-light /* ===== [종합옵션 결 통일: Pretendard + 회색톤 절제] ===== */
-:root, html /* ===== [종합옵션 결 통일: Pretendard + 회색톤 절제] ===== */
-:root{ --font-h:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif !important; --font-n:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif !important; --font-b:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif !important; --font-m:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif !important; }body{ font-family:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif !important; letter-spacing:-.01em; }html.theme-blue /* 골드 그라데이션 제목 → 밝은 무채색 */
-.topbar-logo, html.theme-light /* 골드 그라데이션 제목 → 밝은 무채색 */
-.topbar-logo, html /* 골드 그라데이션 제목 → 밝은 무채색 */
-.topbar-logo, html.theme-blue .headline-label, html.theme-light .headline-label, html .headline-label, html.theme-blue .footer-hd, html.theme-light .footer-hd, html .footer-hd, html.theme-blue .cal-title, html.theme-light .cal-title, html .cal-title{ background:none !important; -webkit-text-fill-color:#F5F6F8 !important; color:#F5F6F8 !important; }html.theme-blue /* 큰 가격 숫자 → 절제된 살몬(핵심 값만 색) */
-.ph-price, html.theme-light /* 큰 가격 숫자 → 절제된 살몬(핵심 값만 색) */
-.ph-price, html /* 큰 가격 숫자 → 절제된 살몬(핵심 값만 색) */
-.ph-price{ background:none !important; -webkit-text-fill-color:#E8956A !important; color:#E8956A !important; }html.theme-blue /* 골드 텍스트 라벨/보조 → 차분한 회색 */
-.setup-guide-title, html.theme-light /* 골드 텍스트 라벨/보조 → 차분한 회색 */
-.setup-guide-title, html /* 골드 텍스트 라벨/보조 → 차분한 회색 */
-.setup-guide-title, html.theme-blue .slink, html.theme-light .slink, html .slink, html.theme-blue .cm-num, html.theme-light .cm-num, html .cm-num, html.theme-blue .footer-card-src, html.theme-light .footer-card-src, html .footer-card-src, html.theme-blue .cal-date, html.theme-light .cal-date, html .cal-date, html.theme-blue .forecast, html.theme-light .forecast, html .forecast, html.theme-blue .cal-summary-day, html.theme-light .cal-summary-day, html .cal-summary-day, html.theme-blue .cal-tab-sub2, html.theme-light .cal-tab-sub2, html .cal-tab-sub2, html.theme-blue .cal-popup-date, html.theme-light .cal-popup-date, html .cal-popup-date, html.theme-blue .cal-summary-title, html.theme-light .cal-summary-title, html .cal-summary-title, html.theme-blue .at-name, html.theme-light .at-name, html .at-name{ color:#9AA2AB !important; -webkit-text-fill-color:#9AA2AB !important; }html.theme-blue .at-name, html.theme-light .at-name, html .at-name{ color:#C0C6CD !important; }html.theme-blue .asset-tab.active .at-name, html.theme-light .asset-tab.active .at-name, html .asset-tab.active .at-name{ color:#E8956A !important; }html.theme-blue /* 팩터/섹션 제목 인라인 골드 → 밝은 무채색 (제목은 색 안 씀) */
-.factor-title, html.theme-light /* 팩터/섹션 제목 인라인 골드 → 밝은 무채색 (제목은 색 안 씀) */
-.factor-title, html /* 팩터/섹션 제목 인라인 골드 → 밝은 무채색 (제목은 색 안 씀) */
-.factor-title, html.theme-blue .scenario-title, html.theme-light .scenario-title, html .scenario-title, html.theme-blue .cal-src-name, html.theme-light .cal-src-name, html .cal-src-name, html.theme-blue .season-title, html.theme-light .season-title, html .season-title, html.theme-blue .chart-title, html.theme-light .chart-title, html .chart-title, html.theme-blue .sec-lbl, html.theme-light .sec-lbl, html .sec-lbl, html.theme-blue .ph-name, html.theme-light .ph-name, html .ph-name, html.theme-blue .footer-card-name, html.theme-light .footer-card-name, html .footer-card-name{ color:#F5F6F8 !important; -webkit-text-fill-color:#F5F6F8 !important; }html.theme-blue /* ===== 색 절제 최종(회색톤) — 종합옵션 결 ===== */
+<script id="jikt-theme-init">/*[다크모드 조기적용 — 로드 시 라이트 깜빡임(FOUC) 방지. body 중간 초기화보다 먼저 html에 theme-blue 부여]*/(function(){try{var t=localStorage.getItem('jikt_theme')||'dark';if(t!=='light'){document.documentElement.classList.remove('theme-blue');}}catch(e){}})();</script>
+<style id="jk-global-dark-2026-07-20">
+/* ===== [종합옵션 결 통일: Pretendard + 회색톤 절제] ===== */
+:root{ --font-h:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif !important; --font-n:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif !important; --font-b:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif !important; --font-m:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif !important; }
+body{ font-family:'Pretendard Variable',Pretendard,'Noto Sans KR',sans-serif !important; letter-spacing:-.01em; }
+/* 골드 그라데이션 제목 → 밝은 무채색 */
+.topbar-logo,.headline-label,.footer-hd,.cal-title{ background:none !important; -webkit-text-fill-color:#F5F6F8 !important; color:#F5F6F8 !important; }
+/* 큰 가격 숫자 → 절제된 살몬(핵심 값만 색) */
+.ph-price{ background:none !important; -webkit-text-fill-color:#E8956A !important; color:#E8956A !important; }
+/* 골드 텍스트 라벨/보조 → 차분한 회색 */
+.setup-guide-title,.slink,.cm-num,.footer-card-src,.cal-date,.forecast,.cal-summary-day,.cal-tab-sub2,.cal-popup-date,.cal-summary-title,.at-name{ color:#9AA2AB !important; -webkit-text-fill-color:#9AA2AB !important; }
+.at-name{ color:#C0C6CD !important; }
+.asset-tab.active .at-name{ color:#E8956A !important; }
+/* 팩터/섹션 제목 인라인 골드 → 밝은 무채색 (제목은 색 안 씀) */
+.factor-title,.scenario-title,.cal-src-name,.season-title,.chart-title,.sec-lbl,.ph-name,.footer-card-name{ color:#F5F6F8 !important; -webkit-text-fill-color:#F5F6F8 !important; }
+/* ===== 색 절제 최종(회색톤) — 종합옵션 결 ===== */
 /* 가로 바(충격 강도 등) → 회색 그라데이션(증거금 사용률 스타일) */
-.factor-bar, html.theme-light /* ===== 색 절제 최종(회색톤) — 종합옵션 결 ===== */
-/* 가로 바(충격 강도 등) → 회색 그라데이션(증거금 사용률 스타일) */
-.factor-bar, html /* ===== 색 절제 최종(회색톤) — 종합옵션 결 ===== */
-/* 가로 바(충격 강도 등) → 회색 그라데이션(증거금 사용률 스타일) */
-.factor-bar{ background:linear-gradient(90deg,#5B6069 0%,#A0A8B0 100%) !important; }html.theme-blue .factor-bar-bg, html.theme-light .factor-bar-bg, html .factor-bar-bg{ background:rgba(255,255,255,.06) !important; }html.theme-blue /* 위험 배지(아주높음/높음/낮음) — 색 구분 제거, html.theme-light /* 위험 배지(아주높음/높음/낮음) — 색 구분 제거, html /* 위험 배지(아주높음/높음/낮음) — 색 구분 제거, html.theme-blue 무채색 통일 */
-.dir-badge, html.theme-light 무채색 통일 */
-.dir-badge, html 무채색 통일 */
-.dir-badge, html.theme-blue .dir-up, html.theme-light .dir-up, html .dir-up, html.theme-blue .dir-wup, html.theme-light .dir-wup, html .dir-wup, html.theme-blue .dir-wdn, html.theme-light .dir-wdn, html .dir-wdn{ background:rgba(255,255,255,.04) !important; border-color:rgba(255,255,255,.16) !important; color:#C0C6CD !important; }html.theme-blue /* 신호 배지 / 유가 기여 → 무채색 */
-.factor-badge, html.theme-light /* 신호 배지 / 유가 기여 → 무채색 */
-.factor-badge, html /* 신호 배지 / 유가 기여 → 무채색 */
-.factor-badge{ font-weight:600 !important; color:#C0C6CD !important; border-color:rgba(255,255,255,.18) !important; background:transparent !important; }html.theme-blue .factor-impact, html.theme-light .factor-impact, html .factor-impact{ color:#C0C6CD !important; border-color:rgba(255,255,255,.14) !important; background:rgba(255,255,255,.03) !important; }html.theme-blue /* 경제일정/뉴스 ▶ 임팩트 줄 — 옆으로 쭉 그어진 바 느낌 제거(배경·테두리 없이 평범한 글자) */
-.cal-impact, html.theme-light /* 경제일정/뉴스 ▶ 임팩트 줄 — 옆으로 쭉 그어진 바 느낌 제거(배경·테두리 없이 평범한 글자) */
-.cal-impact, html /* 경제일정/뉴스 ▶ 임팩트 줄 — 옆으로 쭉 그어진 바 느낌 제거(배경·테두리 없이 평범한 글자) */
-.cal-impact{ color:#C0C6CD !important; background:transparent !important; border:none !important; }html.theme-blue /* 시나리오 태그/제목/가격 → 무채색 */
-.sc-tag, html.theme-light /* 시나리오 태그/제목/가격 → 무채색 */
-.sc-tag, html /* 시나리오 태그/제목/가격 → 무채색 */
-.sc-tag{ color:#9AA2AB !important; border-color:rgba(255,255,255,.16) !important; background:rgba(255,255,255,.03) !important; }html.theme-blue .sc-title, html.theme-light .sc-title, html .sc-title, html.theme-blue .sc-price, html.theme-light .sc-price, html .sc-price{ color:#F5F6F8 !important; -webkit-text-fill-color:#F5F6F8 !important; }html.theme-blue /* 소스 라벨 → 본문 회색과 동일 */
-.vt-src, html.theme-light /* 소스 라벨 → 본문 회색과 동일 */
-.vt-src, html /* 소스 라벨 → 본문 회색과 동일 */
-.vt-src, html.theme-blue .cal-src-name, html.theme-light .cal-src-name, html .cal-src-name, html.theme-blue .footer-card-src, html.theme-light .footer-card-src, html .footer-card-src, html.theme-blue .season-src, html.theme-light .season-src, html .season-src{ color:#8B95A1 !important; -webkit-text-fill-color:#8B95A1 !important; }html.theme-blue /* 불릿 점 등 골드 → 차분한 회색 */
-.factor-li::before, html.theme-light /* 불릿 점 등 골드 → 차분한 회색 */
-.factor-li::before, html /* 불릿 점 등 골드 → 차분한 회색 */
-.factor-li::before, html.theme-blue .sc-item::before, html.theme-light .sc-item::before, html .sc-item::before{ background:#6B7079 !important; color:#6B7079 !important; }html.theme-blue /* [글로벌 대시보드 다크 리스킨 2026-07-20] 종합옵션·메인 대시보드와 동일한 세련된 다크 톤. 변수 뒤집기 + 하드코딩 색 보정. */
-:root, html.theme-light /* [글로벌 대시보드 다크 리스킨 2026-07-20] 종합옵션·메인 대시보드와 동일한 세련된 다크 톤. 변수 뒤집기 + 하드코딩 색 보정. */
-:root, html /* [글로벌 대시보드 다크 리스킨 2026-07-20] 종합옵션·메인 대시보드와 동일한 세련된 다크 톤. 변수 뒤집기 + 하드코딩 색 보정. */
+.factor-bar{ background:linear-gradient(90deg,#5B6069 0%,#A0A8B0 100%) !important; }
+.factor-bar-bg{ background:rgba(255,255,255,.06) !important; }
+/* 위험 배지(아주높음/높음/낮음) — 색 구분 제거, 무채색 통일 */
+.dir-badge,.dir-up,.dir-wup,.dir-wdn{ background:rgba(255,255,255,.04) !important; border-color:rgba(255,255,255,.16) !important; color:#C0C6CD !important; }
+/* 신호 배지 / 유가 기여 → 무채색 */
+.factor-badge{ font-weight:600 !important; color:#C0C6CD !important; border-color:rgba(255,255,255,.18) !important; background:transparent !important; }
+.factor-impact{ color:#C0C6CD !important; border-color:rgba(255,255,255,.14) !important; background:rgba(255,255,255,.03) !important; }
+/* 경제일정/뉴스 ▶ 임팩트 줄 — 옆으로 쭉 그어진 바 느낌 제거(배경·테두리 없이 평범한 글자) */
+.cal-impact{ color:#C0C6CD !important; background:transparent !important; border:none !important; }
+/* 시나리오 태그/제목/가격 → 무채색 */
+.sc-tag{ color:#9AA2AB !important; border-color:rgba(255,255,255,.16) !important; background:rgba(255,255,255,.03) !important; }
+.sc-title,.sc-price{ color:#F5F6F8 !important; -webkit-text-fill-color:#F5F6F8 !important; }
+/* 소스 라벨 → 본문 회색과 동일 */
+.vt-src,.cal-src-name,.footer-card-src,.season-src{ color:#8B95A1 !important; -webkit-text-fill-color:#8B95A1 !important; }
+/* 불릿 점 등 골드 → 차분한 회색 */
+.factor-li::before,.sc-item::before{ background:#6B7079 !important; color:#6B7079 !important; }
+
+/* [글로벌 대시보드 다크 리스킨 2026-07-20] 종합옵션·메인 대시보드와 동일한 세련된 다크 톤. 변수 뒤집기 + 하드코딩 색 보정. */
 :root{
   --bg:#0A0B0F; --bg2:#15161B; --bg3:#1B1D24; --bg4:#191A20;
   --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.13);
@@ -706,74 +698,93 @@ body{font-family:var(--font-b);background:var(--bg);color:var(--text);min-height
   --amber:#9AA2AB; --purple:#ADA69E; --teal:#8B95A1;
   --accent1:#BCC2CA; --accent2:#9AA2AB; --accent3:#EA6A60;
   --glow-purple:rgba(255,255,255,.05); --glow-cyan:rgba(255,255,255,.04);
-}html{ color-scheme:dark; }html, body{ background:#0A0B0F !important; color:#F5F6F8; }html.theme-blue /* 하드코딩 텍스트색 → 밝게 */
-[style*="#1a1816"], html.theme-light /* 하드코딩 텍스트색 → 밝게 */
-[style*="#1a1816"], html /* 하드코딩 텍스트색 → 밝게 */
-[style*="#1a1816"]{ color:#F5F6F8 !important; }html.theme-blue [style*="#4a4440"], html.theme-light [style*="#4a4440"], html [style*="#4a4440"]{ color:#C7CDD4 !important; }html.theme-blue [style*="#55504c"], html.theme-light [style*="#55504c"], html [style*="#55504c"]{ color:#B0B8C1 !important; }html.theme-blue [style*="#7a736e"], html.theme-light [style*="#7a736e"], html [style*="#7a736e"]{ color:#9AA2AB !important; }html.theme-blue [style*="#8d5e42"], html.theme-light [style*="#8d5e42"], html [style*="#8d5e42"]{ color:#C89A7E !important; }html.theme-blue [style*="color:#8a8480"], html.theme-light [style*="color:#8a8480"], html [style*="color:#8a8480"]{ color:#8B95A1 !important; }html.theme-blue /* 흰/베이지 하드코딩 배경 → 다크 카드 */
-[style*="background:#fff"], html.theme-light /* 흰/베이지 하드코딩 배경 → 다크 카드 */
-[style*="background:#fff"], html /* 흰/베이지 하드코딩 배경 → 다크 카드 */
-[style*="background:#fff"], html.theme-blue [style*="background: #fff"], html.theme-light [style*="background: #fff"], html [style*="background: #fff"], html.theme-blue [style*="background:#ffffff"], html.theme-light [style*="background:#ffffff"], html [style*="background:#ffffff"], html.theme-blue [style*="background-color:#fff"], html.theme-light [style*="background-color:#fff"], html [style*="background-color:#fff"]{ background:#15161B !important; }html.theme-blue [style*="rgba(250, html.theme-light [style*="rgba(250, html [style*="rgba(250, 247, 244"]{ background:#1B1D24 !important; }html.theme-blue [style*="rgba(243, html.theme-light [style*="rgba(243, html [style*="rgba(243, 237, 230"]{ background:#191A20 !important; }html.theme-blue [style*="#faf7f4"], html.theme-light [style*="#faf7f4"], html [style*="#faf7f4"]{ background:#1B1D24 !important; }html.theme-blue [style*="#f3ede6"], html.theme-light [style*="#f3ede6"], html [style*="#f3ede6"]{ background:#191A20 !important; }html.theme-blue [style*="#ece4da"], html.theme-light [style*="#ece4da"], html [style*="#ece4da"]{ background:#1B1D24 !important; }html.theme-blue [style*="#e8e4dc"], html.theme-light [style*="#e8e4dc"], html [style*="#e8e4dc"]{ background:#1B1D24 !important; }html.theme-blue /* 카드류 → 단색 다크(그라데이션 X) + 종합옵션 카드와 동일한 미세 하이라이트·그림자 */
-.headline-news, html.theme-light /* 카드류 → 단색 다크(그라데이션 X) + 종합옵션 카드와 동일한 미세 하이라이트·그림자 */
-.headline-news, html /* 카드류 → 단색 다크(그라데이션 X) + 종합옵션 카드와 동일한 미세 하이라이트·그림자 */
-.headline-news, html.theme-blue .price-hero, html.theme-light .price-hero, html .price-hero, html.theme-blue .chart-wrap, html.theme-light .chart-wrap, html .chart-wrap, html.theme-blue .factor-card, html.theme-light .factor-card, html .factor-card, html.theme-blue .scenario-card, html.theme-light .scenario-card, html .scenario-card, html.theme-blue .cal-card, html.theme-light .cal-card, html .cal-card, html.theme-blue .season-card, html.theme-light .season-card, html .season-card, html.theme-blue .footer-card, html.theme-light .footer-card, html .footer-card, html.theme-blue .hm, html.theme-light .hm, html .hm, html.theme-blue .setup-box, html.theme-light .setup-box, html .setup-box, html.theme-blue .cal-popup, html.theme-light .cal-popup, html .cal-popup, html.theme-blue .macro-item, html.theme-light .macro-item, html .macro-item{
+}
+html{ color-scheme:dark; }
+html, body{ background:#0A0B0F !important; color:#F5F6F8; }
+/* 하드코딩 텍스트색 → 밝게 */
+[style*="#1a1816"]{ color:#F5F6F8 !important; }
+[style*="#4a4440"]{ color:#C7CDD4 !important; }
+[style*="#55504c"]{ color:#B0B8C1 !important; }
+[style*="#7a736e"]{ color:#9AA2AB !important; }
+[style*="#8d5e42"]{ color:#C89A7E !important; }
+[style*="color:#8a8480"]{ color:#8B95A1 !important; }
+/* 흰/베이지 하드코딩 배경 → 다크 카드 */
+[style*="background:#fff"], [style*="background: #fff"], [style*="background:#ffffff"], [style*="background-color:#fff"]{ background:#15161B !important; }
+[style*="rgba(250,247,244"]{ background:#1B1D24 !important; }
+[style*="rgba(243,237,230"]{ background:#191A20 !important; }
+[style*="#faf7f4"]{ background:#1B1D24 !important; }
+[style*="#f3ede6"]{ background:#191A20 !important; }
+[style*="#ece4da"]{ background:#1B1D24 !important; }
+[style*="#e8e4dc"]{ background:#1B1D24 !important; }
+/* 카드류 → 단색 다크(그라데이션 X) + 종합옵션 카드와 동일한 미세 하이라이트·그림자 */
+.headline-news,.price-hero,.chart-wrap,.factor-card,.scenario-card,.cal-card,.season-card,.footer-card,.hm,.setup-box,.cal-popup,.macro-item{
   background:#15161B !important;
   border-color:rgba(255,255,255,.07) !important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.045), 0 8px 26px rgba(0,0,0,.45) !important;
-}html.theme-blue .alert-banner, html.theme-light .alert-banner, html .alert-banner{ background:linear-gradient(135deg,rgba(234,154,106,.10) 0%,#16171C 100%) !important; border-color:rgba(234,154,106,.22) !important; }html.theme-blue .topbar, html.theme-light .topbar, html .topbar{ background:rgba(10,11,15,.92) !important; border-bottom-color:rgba(255,255,255,.07) !important; box-shadow:0 1px 0 rgba(255,255,255,.04) !important; }html.theme-blue .cal-dow, html.theme-light .cal-dow, html .cal-dow{ background:rgba(255,255,255,.06) !important; }html.theme-blue .cal-cell, html.theme-light .cal-cell, html .cal-cell{ background:rgba(255,255,255,.035) !important; border-color:rgba(255,255,255,.06) !important; }html.theme-blue .other-month, html.theme-light .other-month, html .other-month{ background:rgba(255,255,255,.015) !important; }html.theme-blue /* 자산 네비 그리드 */
-.asset-nav, html.theme-light /* 자산 네비 그리드 */
-.asset-nav, html /* 자산 네비 그리드 */
-.asset-nav{ background:rgba(10,11,15,.92) !important; border-bottom-color:rgba(255,255,255,.07) !important; }html.theme-blue .asset-tab, html.theme-light .asset-tab, html .asset-tab{ border-right-color:rgba(255,255,255,.06) !important; }html.theme-blue /* 활성 탭 노란 밑줄 → 무채색 얇은 밑줄, html.theme-light /* 활성 탭 노란 밑줄 → 무채색 얇은 밑줄, html /* 활성 탭 노란 밑줄 → 무채색 얇은 밑줄, html.theme-blue 배경/글로우 없음 */
-.asset-tab.active, html.theme-light 배경/글로우 없음 */
-.asset-tab.active, html 배경/글로우 없음 */
-.asset-tab.active{ background:transparent !important; border-bottom:2px solid rgba(255,255,255,.28) !important; box-shadow:none !important; }html.theme-blue .asset-tab.active .at-name, html.theme-light .asset-tab.active .at-name, html .asset-tab.active .at-name{ color:#F5F6F8 !important; }html.theme-blue .cal-summary, html.theme-light .cal-summary, html .cal-summary, html.theme-blue .cal-guide-note, html.theme-light .cal-guide-note, html .cal-guide-note{ background:rgba(234,154,106,.06) !important; }html.theme-blue /* 남은 베이지 배경 일괄 보정 */
-[style*="240, html.theme-light /* 남은 베이지 배경 일괄 보정 */
-[style*="240, html /* 남은 베이지 배경 일괄 보정 */
-[style*="240, 233, 225"], html.theme-blue [style*="rgba(240, html.theme-light [style*="rgba(240, html [style*="rgba(240, 233, 225"]{ background:#15161B !important; }html.theme-blue /* 어두운 하드코딩 테두리 → 밝게 (다크에서 안 보이던 것) */
-[style*="rgba(0, html.theme-light /* 어두운 하드코딩 테두리 → 밝게 (다크에서 안 보이던 것) */
-[style*="rgba(0, html /* 어두운 하드코딩 테두리 → 밝게 (다크에서 안 보이던 것) */
-[style*="rgba(0, 0, 0, 0.08"], html.theme-blue [style*="rgba(0, html.theme-light [style*="rgba(0, html [style*="rgba(0, 0, 0, 0.16"], html.theme-blue [style*="rgba(0, html.theme-light [style*="rgba(0, html [style*="rgba(0, 0, 0, html.theme-blue .08"], html.theme-light .08"], html .08"]{ border-color:rgba(255,255,255,.10) !important; }html.theme-blue /* 메인으로 버튼 — 빨강 → 차분한 무채색(다른 대시보드와 통일) */
-.tb-btn, html.theme-light /* 메인으로 버튼 — 빨강 → 차분한 무채색(다른 대시보드와 통일) */
-.tb-btn, html /* 메인으로 버튼 — 빨강 → 차분한 무채색(다른 대시보드와 통일) */
-.tb-btn{ background:rgba(255,255,255,.04) !important; border-color:rgba(255,255,255,.16) !important; color:#C0C6CD !important; }html.theme-blue .tb-btn:hover, html.theme-light .tb-btn:hover, html .tb-btn:hover{ background:rgba(255,255,255,.09) !important; border-color:rgba(255,255,255,.3) !important; color:#F5F6F8 !important; }html.theme-blue /* [입체 호버] 모든 카드 영역 — 마우스 올리면 붕 떠오르기(종합옵션·메인 대시보드와 동일) */
-.headline-news, html.theme-light /* [입체 호버] 모든 카드 영역 — 마우스 올리면 붕 떠오르기(종합옵션·메인 대시보드와 동일) */
-.headline-news, html /* [입체 호버] 모든 카드 영역 — 마우스 올리면 붕 떠오르기(종합옵션·메인 대시보드와 동일) */
-.headline-news, html.theme-blue .price-hero, html.theme-light .price-hero, html .price-hero, html.theme-blue .chart-wrap, html.theme-light .chart-wrap, html .chart-wrap, html.theme-blue .factor-card, html.theme-light .factor-card, html .factor-card, html.theme-blue .scenario-card, html.theme-light .scenario-card, html .scenario-card, html.theme-blue .cal-card, html.theme-light .cal-card, html .cal-card, html.theme-blue .season-card, html.theme-light .season-card, html .season-card, html.theme-blue .footer-card, html.theme-light .footer-card, html .footer-card, html.theme-blue .macro-item, html.theme-light .macro-item, html .macro-item, html.theme-blue .hm, html.theme-light .hm, html .hm{ transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease; }html.theme-blue .headline-news:hover, html.theme-light .headline-news:hover, html .headline-news:hover, html.theme-blue .price-hero:hover, html.theme-light .price-hero:hover, html .price-hero:hover, html.theme-blue .chart-wrap:hover, html.theme-light .chart-wrap:hover, html .chart-wrap:hover, html.theme-blue .factor-card:hover, html.theme-light .factor-card:hover, html .factor-card:hover, html.theme-blue .scenario-card:hover, html.theme-light .scenario-card:hover, html .scenario-card:hover, html.theme-blue .cal-card:hover, html.theme-light .cal-card:hover, html .cal-card:hover, html.theme-blue .season-card:hover, html.theme-light .season-card:hover, html .season-card:hover, html.theme-blue .footer-card:hover, html.theme-light .footer-card:hover, html .footer-card:hover, html.theme-blue .macro-item:hover, html.theme-light .macro-item:hover, html .macro-item:hover, html.theme-blue .hm:hover, html.theme-light .hm:hover, html .hm:hover{
+}
+.alert-banner{ background:linear-gradient(135deg,rgba(234,154,106,.10) 0%,#16171C 100%) !important; border-color:rgba(234,154,106,.22) !important; }
+.topbar{ background:rgba(10,11,15,.92) !important; border-bottom-color:rgba(255,255,255,.07) !important; box-shadow:0 1px 0 rgba(255,255,255,.04) !important; }
+.cal-dow{ background:rgba(255,255,255,.06) !important; }
+.cal-cell{ background:rgba(255,255,255,.035) !important; border-color:rgba(255,255,255,.06) !important; }
+.other-month{ background:rgba(255,255,255,.015) !important; }
+/* 자산 네비 그리드 */
+.asset-nav{ background:rgba(10,11,15,.92) !important; border-bottom-color:rgba(255,255,255,.07) !important; }
+.asset-tab{ border-right-color:rgba(255,255,255,.06) !important; }
+/* 활성 탭 노란 밑줄 → 무채색 얇은 밑줄, 배경/글로우 없음 */
+.asset-tab.active{ background:transparent !important; border-bottom:2px solid rgba(255,255,255,.28) !important; box-shadow:none !important; }
+.asset-tab.active .at-name{ color:#F5F6F8 !important; }
+.cal-summary,.cal-guide-note{ background:rgba(234,154,106,.06) !important; }
+/* 남은 베이지 배경 일괄 보정 */
+[style*="240,233,225"],[style*="rgba(240, 233, 225"]{ background:#15161B !important; }
+/* 어두운 하드코딩 테두리 → 밝게 (다크에서 안 보이던 것) */
+[style*="rgba(0,0,0,0.08"],[style*="rgba(0,0,0,0.16"],[style*="rgba(0,0,0,.08"]{ border-color:rgba(255,255,255,.10) !important; }
+/* 메인으로 버튼 — 빨강 → 차분한 무채색(다른 대시보드와 통일) */
+.tb-btn{ background:rgba(255,255,255,.04) !important; border-color:rgba(255,255,255,.16) !important; color:#C0C6CD !important; }
+.tb-btn:hover{ background:rgba(255,255,255,.09) !important; border-color:rgba(255,255,255,.3) !important; color:#F5F6F8 !important; }
+/* [입체 호버] 모든 카드 영역 — 마우스 올리면 붕 떠오르기(종합옵션·메인 대시보드와 동일) */
+.headline-news,.price-hero,.chart-wrap,.factor-card,.scenario-card,.cal-card,.season-card,.footer-card,.macro-item,.hm{ transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.headline-news:hover,.price-hero:hover,.chart-wrap:hover,.factor-card:hover,.scenario-card:hover,.cal-card:hover,.season-card:hover,.footer-card:hover,.macro-item:hover,.hm:hover{
   transform:translateY(-4px) !important; border-color:rgba(255,255,255,.2) !important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.055), 0 16px 40px rgba(0,0,0,.6) !important;
-}html.theme-blue /* 자산 탭 — 호버 시 테두리·배경 안 생김. 글자만 살짝 밝게 */
-.asset-tab, html.theme-light /* 자산 탭 — 호버 시 테두리·배경 안 생김. 글자만 살짝 밝게 */
-.asset-tab, html /* 자산 탭 — 호버 시 테두리·배경 안 생김. 글자만 살짝 밝게 */
-.asset-tab{ transition:color .15s ease !important; }html.theme-blue .asset-tab:hover, html.theme-light .asset-tab:hover, html .asset-tab:hover{ background:transparent !important; box-shadow:none !important; }html.theme-blue .asset-tab:hover .at-name, html.theme-light .asset-tab:hover .at-name, html .asset-tab:hover .at-name{ color:#F5F6F8 !important; }html.theme-blue /* ════════ [보완 2026-07-20] 남은 색·선 정리 (종합옵션 결로 통일) ════════ */
+}
+/* 자산 탭 — 호버 시 테두리·배경 안 생김. 글자만 살짝 밝게 */
+.asset-tab{ transition:color .15s ease !important; }
+.asset-tab:hover{ background:transparent !important; box-shadow:none !important; }
+.asset-tab:hover .at-name{ color:#F5F6F8 !important; }
+
+/* ════════ [보완 2026-07-20] 남은 색·선 정리 (종합옵션 결로 통일) ════════ */
 /* 1) 자산 네비 — 좌우 양옆 박스선 + 탭 사이 세로선 전부 제거(심플) */
-.asset-nav-inner, html.theme-light /* ════════ [보완 2026-07-20] 남은 색·선 정리 (종합옵션 결로 통일) ════════ */
-/* 1) 자산 네비 — 좌우 양옆 박스선 + 탭 사이 세로선 전부 제거(심플) */
-.asset-nav-inner, html /* ════════ [보완 2026-07-20] 남은 색·선 정리 (종합옵션 결로 통일) ════════ */
-/* 1) 자산 네비 — 좌우 양옆 박스선 + 탭 사이 세로선 전부 제거(심플) */
-.asset-nav-inner{ border:none !important; border-radius:0 !important; }html.theme-blue .asset-tab, html.theme-light .asset-tab, html .asset-tab, html.theme-blue .asset-tab:nth-child(4n), html.theme-light .asset-tab:nth-child(4n), html .asset-tab:nth-child(4n), html.theme-blue .asset-tab:last-child, html.theme-light .asset-tab:last-child, html .asset-tab:last-child, html.theme-blue .asset-tab:nth-child(2n), html.theme-light .asset-tab:nth-child(2n), html .asset-tab:nth-child(2n){ border-right:none !important; border-left:none !important; }html.theme-blue .asset-tab:nth-child(n+5), html.theme-light .asset-tab:nth-child(n+5), html .asset-tab:nth-child(n+5), html.theme-blue .asset-tab:nth-child(n+3), html.theme-light .asset-tab:nth-child(n+3), html .asset-tab:nth-child(n+3){ border-top-color:rgba(255,255,255,.06) !important; }html.theme-blue /* 2) 경제일정 요약 셀 — 붉은 그라데이션·좌측 바 제거 → 평범한 회색 선 */
-.cal-summary, html.theme-light /* 2) 경제일정 요약 셀 — 붉은 그라데이션·좌측 바 제거 → 평범한 회색 선 */
-.cal-summary, html /* 2) 경제일정 요약 셀 — 붉은 그라데이션·좌측 바 제거 → 평범한 회색 선 */
-.cal-summary, html.theme-blue .cal-guide-note, html.theme-light .cal-guide-note, html .cal-guide-note{ background:transparent !important; border:1px solid rgba(255,255,255,.08) !important; }html.theme-blue .cal-summary-title, html.theme-light .cal-summary-title, html .cal-summary-title{ color:#9AA2AB !important; -webkit-text-fill-color:#9AA2AB !important; }html.theme-blue .cal-summary-day, html.theme-light .cal-summary-day, html .cal-summary-day{ color:#C0C6CD !important; -webkit-text-fill-color:#C0C6CD !important; }html.theme-blue /* 3) 카운트다운(일·시간·분·초) — 주황 배경·구분선·숫자 → 회색 */
-.countdown-banner, html.theme-light /* 3) 카운트다운(일·시간·분·초) — 주황 배경·구분선·숫자 → 회색 */
-.countdown-banner, html /* 3) 카운트다운(일·시간·분·초) — 주황 배경·구분선·숫자 → 회색 */
-.countdown-banner{ background:rgba(255,255,255,.02) !important; border-left-color:rgba(255,255,255,.10) !important; }html.theme-blue .cd-center, html.theme-light .cd-center, html .cd-center{ border-left-color:rgba(255,255,255,.10) !important; border-right-color:rgba(255,255,255,.10) !important; }html.theme-blue .cd-divider, html.theme-light .cd-divider, html .cd-divider{ background:rgba(255,255,255,.12) !important; }html.theme-blue .cd-num, html.theme-light .cd-num, html .cd-num{ background:none !important; -webkit-text-fill-color:#F5F6F8 !important; color:#F5F6F8 !important; }html.theme-blue .cd-sep, html.theme-light .cd-sep, html .cd-sep{ color:#8B95A1 !important; }html.theme-blue .cd-badge, html.theme-light .cd-badge, html .cd-badge, html.theme-blue .cd-lbl, html.theme-light .cd-lbl, html .cd-lbl{ color:#9AA2AB !important; }html.theme-blue /* 4) 계절성 수급 바 — 붉은 그라데이션 → 회색(농도=진하기 유지: 넓을수록 진한 회색, html.theme-light /* 4) 계절성 수급 바 — 붉은 그라데이션 → 회색(농도=진하기 유지: 넓을수록 진한 회색, html /* 4) 계절성 수급 바 — 붉은 그라데이션 → 회색(농도=진하기 유지: 넓을수록 진한 회색, html.theme-blue 좁을수록 밝은 회색) */
-.sb-bar, html.theme-light 좁을수록 밝은 회색) */
-.sb-bar, html 좁을수록 밝은 회색) */
-.sb-bar{ filter:grayscale(1) contrast(1.3) !important; }html.theme-blue .sb-label, html.theme-light .sb-label, html .sb-label{ color:#C0C6CD !important; }html.theme-blue /* 4-2) 계절성 우측 라벨(비수기/전환기/드라이빙/성수기) — 인라인 주황 → 회색 */
-.sb-val, html.theme-light /* 4-2) 계절성 우측 라벨(비수기/전환기/드라이빙/성수기) — 인라인 주황 → 회색 */
-.sb-val, html /* 4-2) 계절성 우측 라벨(비수기/전환기/드라이빙/성수기) — 인라인 주황 → 회색 */
-.sb-val{ color:#B0B8C1 !important; -webkit-text-fill-color:#B0B8C1 !important; filter:none !important; }html.theme-blue /* 4-3) 경제일정 탭 자체 배경 붉은 그라데이션 제거(무채색 통일) */
-.cal-tab, html.theme-light /* 4-3) 경제일정 탭 자체 배경 붉은 그라데이션 제거(무채색 통일) */
-.cal-tab, html /* 4-3) 경제일정 탭 자체 배경 붉은 그라데이션 제거(무채색 통일) */
-.cal-tab, html.theme-blue .asset-tab.cal-tab, html.theme-light .asset-tab.cal-tab, html .asset-tab.cal-tab{ background:none !important; background-image:none !important; }html.theme-blue .cal-tab.active, html.theme-light .cal-tab.active, html .cal-tab.active, html.theme-blue .asset-tab.cal-tab.active, html.theme-light .asset-tab.cal-tab.active, html .asset-tab.cal-tab.active{ background:transparent !important; }html.theme-blue /* 4-4) 넥스트 이벤트 영역 좌우로 삐져나온 세로선 제거 */
-.countdown-banner, html.theme-light /* 4-4) 넥스트 이벤트 영역 좌우로 삐져나온 세로선 제거 */
-.countdown-banner, html /* 4-4) 넥스트 이벤트 영역 좌우로 삐져나온 세로선 제거 */
-.countdown-banner{ border-left:none !important; }html.theme-blue .cd-center, html.theme-light .cd-center, html .cd-center{ border-left:none !important; border-right:none !important; }html.theme-blue /* 4-1) 차트 출처 배지(EIA API/STEO 등) 주황 → 무채색 */
-.api-tag, html.theme-light /* 4-1) 차트 출처 배지(EIA API/STEO 등) 주황 → 무채색 */
-.api-tag, html /* 4-1) 차트 출처 배지(EIA API/STEO 등) 주황 → 무채색 */
-.api-tag{ color:#9AA2AB !important; border-color:rgba(255,255,255,.16) !important; background:rgba(255,255,255,.03) !important; }html.theme-blue /* 5) 푸터 상단 주황선·구분선 → 무채색 */
-.footer, html.theme-light /* 5) 푸터 상단 주황선·구분선 → 무채색 */
-.footer, html /* 5) 푸터 상단 주황선·구분선 → 무채색 */
-.footer{ border-top-color:rgba(255,255,255,.08) !important; }html.theme-blue .footer-hd::after, html.theme-light .footer-hd::after, html .footer-hd::after{ background:linear-gradient(90deg,rgba(255,255,255,.14),transparent) !important; }html.theme-blue .cm-title, html.theme-light .cm-title, html .cm-title{ border-left-color:rgba(255,255,255,.18) !important; }
+.asset-nav-inner{ border:none !important; border-radius:0 !important; }
+.asset-tab,.asset-tab:nth-child(4n),.asset-tab:last-child,.asset-tab:nth-child(2n){ border-right:none !important; border-left:none !important; }
+.asset-tab:nth-child(n+5),.asset-tab:nth-child(n+3){ border-top-color:rgba(255,255,255,.06) !important; }
+/* 2) 경제일정 요약 셀 — 붉은 그라데이션·좌측 바 제거 → 평범한 회색 선 */
+.cal-summary,.cal-guide-note{ background:transparent !important; border:1px solid rgba(255,255,255,.08) !important; }
+.cal-summary-title{ color:#9AA2AB !important; -webkit-text-fill-color:#9AA2AB !important; }
+.cal-summary-day{ color:#C0C6CD !important; -webkit-text-fill-color:#C0C6CD !important; }
+/* 3) 카운트다운(일·시간·분·초) — 주황 배경·구분선·숫자 → 회색 */
+.countdown-banner{ background:rgba(255,255,255,.02) !important; border-left-color:rgba(255,255,255,.10) !important; }
+.cd-center{ border-left-color:rgba(255,255,255,.10) !important; border-right-color:rgba(255,255,255,.10) !important; }
+.cd-divider{ background:rgba(255,255,255,.12) !important; }
+.cd-num{ background:none !important; -webkit-text-fill-color:#F5F6F8 !important; color:#F5F6F8 !important; }
+.cd-sep{ color:#8B95A1 !important; }
+.cd-badge,.cd-lbl{ color:#9AA2AB !important; }
+/* 4) 계절성 수급 바 — 붉은 그라데이션 → 회색(농도=진하기 유지: 넓을수록 진한 회색, 좁을수록 밝은 회색) */
+.sb-bar{ filter:grayscale(1) contrast(1.3) !important; }
+.sb-label{ color:#C0C6CD !important; }
+/* 4-2) 계절성 우측 라벨(비수기/전환기/드라이빙/성수기) — 인라인 주황 → 회색 */
+.sb-val{ color:#B0B8C1 !important; -webkit-text-fill-color:#B0B8C1 !important; filter:none !important; }
+/* 4-3) 경제일정 탭 자체 배경 붉은 그라데이션 제거(무채색 통일) */
+.cal-tab,.asset-tab.cal-tab{ background:none !important; background-image:none !important; }
+.cal-tab.active,.asset-tab.cal-tab.active{ background:transparent !important; }
+/* 4-4) 넥스트 이벤트 영역 좌우로 삐져나온 세로선 제거 */
+.countdown-banner{ border-left:none !important; }
+.cd-center{ border-left:none !important; border-right:none !important; }
+/* 4-1) 차트 출처 배지(EIA API/STEO 등) 주황 → 무채색 */
+.api-tag{ color:#9AA2AB !important; border-color:rgba(255,255,255,.16) !important; background:rgba(255,255,255,.03) !important; }
+/* 5) 푸터 상단 주황선·구분선 → 무채색 */
+.footer{ border-top-color:rgba(255,255,255,.08) !important; }
+.footer-hd::after{ background:linear-gradient(90deg,rgba(255,255,255,.14),transparent) !important; }
+.cm-title{ border-left-color:rgba(255,255,255,.18) !important; }
 </style>
 </head>
 <body>
@@ -3161,7 +3172,7 @@ function _jiktBarRecolor(blue){
   });
 }
 function toggleTheme(){var h=document.documentElement;var blue=h.classList.toggle('theme-blue');try{localStorage.setItem('jikt_global_theme',blue?'blue':'warm');}catch(e){}var b=document.getElementById('themeToggle');if(b)b.textContent=blue?'라이트 모드':'다크 모드';_jiktBarRecolor(blue);try{if(typeof buildAllCharts==='function'&&typeof curAsset!=='undefined')buildAllCharts(curAsset);}catch(e){}}
-(function(){var t='dark';try{t=localStorage.getItem('jikt_theme')||'dark';}catch(e){}var blue=(t!=='light');if(blue)document.documentElement.classList.add('theme-blue');document.addEventListener('DOMContentLoaded',function(){_jiktBarRecolor(blue);try{if(typeof buildAllCharts==='function'&&typeof curAsset!=='undefined')buildAllCharts(curAsset);}catch(e){}});window.addEventListener('storage',function(e){if(e.key!=='jikt_theme')return;var wantBlue=(e.newValue!=='light');var cur=document.documentElement.classList.contains('theme-blue');if(wantBlue!==cur){document.documentElement.classList.toggle('theme-blue',wantBlue);try{_jiktBarRecolor(wantBlue);}catch(e2){}try{if(typeof buildAllCharts==='function'&&typeof curAsset!=='undefined')buildAllCharts(curAsset);}catch(e3){}}});})();
+(function(){var t='dark';try{t=localStorage.getItem('jikt_theme')||'dark';}catch(e){}var blue=(t!=='light');if(blue)document.documentElement.classList.remove('theme-blue');document.addEventListener('DOMContentLoaded',function(){_jiktBarRecolor(blue);try{if(typeof buildAllCharts==='function'&&typeof curAsset!=='undefined')buildAllCharts(curAsset);}catch(e){}});window.addEventListener('storage',function(e){if(e.key!=='jikt_theme')return;var wantBlue=(e.newValue!=='light');var cur=document.documentElement.classList.contains('theme-blue');if(wantBlue!==cur){document.documentElement.classList.toggle('theme-blue',wantBlue);try{_jiktBarRecolor(wantBlue);}catch(e2){}try{if(typeof buildAllCharts==='function'&&typeof curAsset!=='undefined')buildAllCharts(curAsset);}catch(e3){}}});})();
 </script>
 
 <canvas id="vol-fx" style="position:fixed;inset:0;z-index:-1;pointer-events:none"></canvas>
