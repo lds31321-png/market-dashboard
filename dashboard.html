@@ -545,8 +545,8 @@ body{ font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif; font-variant
 :root,html,body,.theme-blue,.theme-light{--mono:'Pretendard','Noto Sans KR',sans-serif!important;--font-n:'Pretendard','Noto Sans KR',sans-serif!important;--font-m:'Pretendard','Noto Sans KR',sans-serif!important;--sans:'Pretendard','Noto Sans KR',sans-serif!important;--uxc-font:'Pretendard','Noto Sans KR',sans-serif!important;--font:'Pretendard','Noto Sans KR',sans-serif!important;}
 body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font-variant-numeric:tabular-nums;}
 </style>
-  <!-- ===== [jk-dash-light-2026-07-22] 무료 포지션 대시보드 코냑 프리미엄 라이트 (색상 전용) ===== -->
-  <style id="jk-dash-light-2026-07-22">
+  <!-- ===== [jk-dash-silver-2026-07-22] 무료 포지션 대시보드 코냑 프리미엄 라이트 (색상 전용) ===== -->
+  <style id="jk-dash-silver-2026-07-22">
   /* 다크: 수익 코랄 유지 위한 rgb 변수 */
   :root{ --profit-rgb:255,128,128; }
   /* 라이트: 코냑 프리미엄 팔레트 (변수 재정의 → 전 컴포넌트 자동 재색상) */
@@ -554,13 +554,13 @@ body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font
     --bg:#EAE7E1; --card:#FFFFFF; --card2:#F7F5F1;
     --b1:#EFEBE5; --b2:#E2DCD2;
     --t1:#2B2926; --t2:#6E6A61; --t3:#A29C93;
-    --accent:#9E7550; --accent-a:rgba(158,117,80,.10); --accent-b:rgba(158,117,80,.06); --accent-rgb:158,117,80; --loss-rgb:139,149,161;
-    --profit:#9E7550; --profit-bg:rgba(158,117,80,.08); --profit-border:rgba(158,117,80,.22); --profit-rgb:158,117,80;
+    --accent:#5C6672; --accent-a:rgba(92,102,114,.10); --accent-b:rgba(92,102,114,.06); --accent-rgb:158,117,80; --loss-rgb:139,149,161;
+    --profit:#5C6672; --profit-bg:rgba(92,102,114,.08); --profit-border:rgba(92,102,114,.22); --profit-rgb:158,117,80;
     --loss:#6E6A61; --loss-bg:rgba(139,149,161,.07); --loss-border:rgba(139,149,161,.22);
-    --cyan:#9E7550; --green:#9E7550; --yellow:#B0885E; --orange:#9E7550; --red:#9E7550; --purple:#8b6fc9;
-    --cyan-a:rgba(158,117,80,.08); --green-a:rgba(158,117,80,.08); --yellow-a:rgba(176,136,94,.10); --orange-a:rgba(158,117,80,.08); --red-a:rgba(158,117,80,.08); --purple-a:rgba(139,111,201,.08);
+    --cyan:#5C6672; --green:#5C6672; --yellow:#77828F; --orange:#5C6672; --red:#5C6672; --purple:#8b6fc9;
+    --cyan-a:rgba(92,102,114,.08); --green-a:rgba(92,102,114,.08); --yellow-a:rgba(92,102,114,.10); --orange-a:rgba(92,102,114,.08); --red-a:rgba(92,102,114,.08); --purple-a:rgba(139,111,201,.08);
     --grad-title:linear-gradient(135deg,#2B2926 0%,#8A8178 100%);
-    --grad-green:linear-gradient(135deg,#B58A5F 0%,#9E7550 100%);
+    --grad-green:linear-gradient(135deg,#8E99A8 0%,#5C6672 100%);
     --shadow:0 1px 3px rgba(43,41,38,.05),0 12px 34px rgba(43,41,38,.07);
     --shadow-sm:0 1px 3px rgba(43,41,38,.05);
   }
@@ -569,7 +569,7 @@ body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font
   html.theme-light .nav{ background:rgba(234,231,225,.96) !important; }
   html.theme-light .hdr-home::after{ color:var(--accent) !important; }
   /* 카드 호버: 웜 틴트 + 프리미엄 그림자 */
-  html.theme-light .pos-card:hover{ border-color:rgba(158,117,80,.35) !important; box-shadow:0 4px 12px rgba(158,117,80,.08),0 16px 40px rgba(158,117,80,.12) !important; }
+  html.theme-light .pos-card:hover{ border-color:rgba(92,102,114,.35) !important; box-shadow:0 4px 12px rgba(92,102,114,.08),0 16px 40px rgba(92,102,114,.12) !important; }
   </style>
 
 </head>
@@ -895,7 +895,7 @@ function getSafetyBar(p){
       <div class="safety-label"><span style="color:var(--accent)">$${ps.strike} ← 손실</span><span style="color:var(--profit)">수익 구간</span><span style="color:var(--accent)">손실 → $${cs.strike}</span></div>
       <div class="safety-track">
         <div style="position:absolute;left:0;width:12%;height:100%;background:rgba(80,128,204,.35)"></div>
-        <div style="position:absolute;left:12%;right:12%;height:100%;background:linear-gradient(90deg,rgba(240,232,222,.9),rgba(176,136,94,.75),rgba(240,232,222,.9))"></div>
+        <div style="position:absolute;left:12%;right:12%;height:100%;background:linear-gradient(90deg,rgba(236,238,241,.9),rgba(92,102,114,.75),rgba(236,238,241,.9))"></div>
         <div style="position:absolute;right:0;width:12%;height:100%;background:rgba(80,128,204,.35)"></div>
       </div>
     </div>`;
@@ -907,7 +907,7 @@ function getSafetyBar(p){
   return `<div class="safety-wrap">
     <div class="safety-label"><span style="color:var(--profit)">현재 안전 구간 ($${cp?.toLocaleString()})</span><span style="color:var(--accent)">$${leg.strike.toLocaleString()} 이상 손실</span></div>
     <div class="safety-track">
-      <div style="width:${safeW}%;height:100%;background:linear-gradient(90deg,rgba(240,232,222,.7),rgba(176,136,94,.85));border-radius:4px"></div>
+      <div style="width:${safeW}%;height:100%;background:linear-gradient(90deg,rgba(236,238,241,.7),rgba(92,102,114,.85));border-radius:4px"></div>
     </div>
   </div>`;
 }
@@ -955,7 +955,7 @@ function buildSafetyBar(entry, current, strike, type){
       <div>
         ${entryPct != null
           ? `<div style="color:var(--t3);font-size:9px;">진입가</div><div style="color:rgba(255,255,255,.55);font-weight:600;">$${entry != null ? entry.toLocaleString() : ''}</div>`
-          : '<div style="color:rgba(176,136,94,.8);font-size:10px;font-weight:600;">← 수익구간</div>'}
+          : '<div style="color:rgba(92,102,114,.8);font-size:10px;font-weight:600;">← 수익구간</div>'}
       </div>
       <div style="text-align:center;">
         ${currentPct != null ? `<div style="color:var(--t3);font-size:9px;">현재가</div><div style="color:#c4b5fd;font-weight:700;">$${current != null ? current.toLocaleString() : ''}</div>` : ''}
@@ -985,11 +985,11 @@ function buildStrangleBar(entry, current, putStrike, callStrike){
   return `
     <div style="position:relative;height:28px;background:rgba(0,0,0,.05);border-radius:8px;overflow:hidden;margin-bottom:4px;">
       <!-- 왼쪽 손실 구간 -->
-      <div style="position:absolute;top:0;left:0;width:${putPct}%;height:100%;background:linear-gradient(90deg,rgba(238,235,230,1),rgba(150,142,132,.85));"></div>
+      <div style="position:absolute;top:0;left:0;width:${putPct}%;height:100%;background:linear-gradient(90deg,rgba(238,240,243,1),rgba(140,148,158,.85));"></div>
       <!-- 수익 구간 (풋 ~ 콜 사이) -->
-      <div style="position:absolute;top:0;left:${putPct}%;width:${profitW}%;height:100%;background:linear-gradient(90deg,rgba(240,232,222,1),rgba(176,136,94,.85),rgba(240,232,222,1));"></div>
+      <div style="position:absolute;top:0;left:${putPct}%;width:${profitW}%;height:100%;background:linear-gradient(90deg,rgba(236,238,241,1),rgba(92,102,114,.85),rgba(236,238,241,1));"></div>
       <!-- 오른쪽 손실 구간 -->
-      <div style="position:absolute;top:0;left:${callPct}%;right:0;height:100%;background:linear-gradient(90deg,rgba(238,235,230,1),rgba(150,142,132,.85));"></div>
+      <div style="position:absolute;top:0;left:${callPct}%;right:0;height:100%;background:linear-gradient(90deg,rgba(238,240,243,1),rgba(140,148,158,.85));"></div>
       <!-- 풋 행사가 핀 (파랑) -->
       <div style="position:absolute;top:0;bottom:0;left:${putPct}%;width:3px;background:linear-gradient(180deg,#93c5fd,#2563eb);transform:translateX(-50%);border-radius:2px;box-shadow:0 0 6px rgba(96,165,250,.6);"></div>
       <div style="position:absolute;top:50%;left:${putPct}%;transform:translate(-50%,-50%);width:9px;height:9px;border-radius:50%;background:#60a5fa;box-shadow:0 0 7px rgba(96,165,250,.7);"></div>
@@ -1042,7 +1042,7 @@ function ohPc(v){ return v>0?'var(--profit)':v<0?'#667085':'var(--t2)'; }
 function ohUF(usd,rate){ var man=Math.round((usd||0)*rate/10000); return (man>=0?'+':'-')+Math.abs(man).toLocaleString('ko-KR')+'만원'; }
 function ohSumTh(arr){ return '<tr>'+arr.map(function(t,i){return '<th style="padding:10px 12px;text-align:'+(i?'right':'left')+';font-weight:700;color:var(--accent);border-bottom:2px solid rgba(var(--accent-rgb),.25);white-space:nowrap;">'+t+'</th>';}).join('')+'</tr>'; }
 function ohSumTd(t,a,c,b){ return '<td style="padding:9px 12px;text-align:'+(a||'left')+';font-weight:'+(b||400)+';color:'+(c||'var(--t1)')+';border-bottom:1px solid rgba(0,0,0,.05);white-space:nowrap;">'+t+'</td>'; }
-function ohBarCell(v,mx){ var t=mx>0?Math.abs(v)/mx:0, w=Math.max(4,Math.round(100*t)); var _lt=document.documentElement.classList.contains('theme-light');var c=v>=0?(_lt?(t>=.66?['#D8C1A9','#9E7550']:t>=.33?['#E1CDB9','#B0885E']:['#EADFD0','#C2A184']):(t>=.66?['#F2BFBF','#D05C5C']:t>=.33?['#F6D1D1','#DD7878']:['#FADEDE','#E89696'])):(_lt?(t>=.66?['#CBC6BE','#8A8480']:t>=.33?['#D6D1CA','#9B958D']:['#E0DCD5','#ACA69E']):(t>=.66?['#BBD3EF','#4E80C0']:t>=.33?['#C9DDF2','#5F90CC']:['#D5E4F6','#8FB2DD'])); return '<td style="padding:9px 12px;width:38%;border-bottom:1px solid rgba(0,0,0,.05)"><div style="height:10px;border-radius:999px;background:rgba(0,0,0,.04);overflow:hidden"><div style="height:100%;width:'+w+'%;border-radius:999px;background:linear-gradient(90deg,'+c[0]+','+c[1]+')"></div></div></td>'; }
+function ohBarCell(v,mx){ var t=mx>0?Math.abs(v)/mx:0, w=Math.max(4,Math.round(100*t)); var _lt=document.documentElement.classList.contains('theme-light');var c=v>=0?(_lt?(t>=.66?['#B8C0CB','#5C6672']:t>=.33?['#C6CCD5','#6E7A8A']:['#D6DAE0','#899199']):(t>=.66?['#F2BFBF','#D05C5C']:t>=.33?['#F6D1D1','#DD7878']:['#FADEDE','#E89696'])):(_lt?(t>=.66?['#CBCFD5','#868D97']:t>=.33?['#D6D9DE','#979DA6']:['#E0E3E7','#AEB3BA']):(t>=.66?['#BBD3EF','#4E80C0']:t>=.33?['#C9DDF2','#5F90CC']:['#D5E4F6','#8FB2DD'])); return '<td style="padding:9px 12px;width:38%;border-bottom:1px solid rgba(0,0,0,.05)"><div style="height:10px;border-radius:999px;background:rgba(0,0,0,.04);overflow:hidden"><div style="height:100%;width:'+w+'%;border-radius:999px;background:linear-gradient(90deg,'+c[0]+','+c[1]+')"></div></div></td>'; }
 function ohSummary(groups,rate){
   if(!groups.length) return '';
   var mxE=0; groups.forEach(function(g){ if(Math.abs(g.ev)>mxE)mxE=Math.abs(g.ev); });
@@ -2088,7 +2088,7 @@ function renderPosKpi(){
   const neutralCount = a.length - profitCount - lossCount;
 
   // 색상 (수익=연빨강 var(--profit), 손실=연파랑 #667085)
-  const pnlColor = activePnlKrw > 0 ? (document.documentElement.classList.contains('theme-light')?'#9E7550':'#FF8080') : activePnlKrw < 0 ? '#667085' : 'var(--t3)';
+  const pnlColor = activePnlKrw > 0 ? (document.documentElement.classList.contains('theme-light')?'#5C6672':'#FF8080') : activePnlKrw < 0 ? '#667085' : 'var(--t3)';
   const pnlSign  = activePnlKrw > 0 ? '+' : activePnlKrw < 0 ? '-' : '';
 
   // 증거금 비율 (총 예탁금 대비) — 관리자 입력 pct 우선
@@ -2389,7 +2389,7 @@ function renderHistory(filter){
     const sign=x.pnl>0?'+':'';
     const pill=x.pnl>0?'<span class="badge b-green">수익</span>':x.pnl<0?'<span class="badge b-red">손실</span>':'<span class="badge b-gray">무손익</span>';
     const bw=Math.min(100,Math.abs(x.pnl)/2000000*100);
-    const bc=x.pnl>0?'rgba(176,136,94,0.7)':'rgba(100,140,220,0.7)';
+    const bc=x.pnl>0?'rgba(92,102,114,0.7)':'rgba(100,140,220,0.7)';
     const hist=STRATEGY_HIST.find(h=>h.num===x.n);
     const commodity=hist&&hist.commodity?hist.commodity:'';
     const hasDetail=hist&&(hist.commodity||hist.legs.length>0);
@@ -2606,8 +2606,8 @@ function buildStatCharts(){
       labels:[`수익 (${_tW}번)`,`손실 (${_tL}번)`,...(_tZ?[`무손익 (${_tZ}번)`]:[])],
       datasets:[{
         data:[_tW,_tL,...(_tZ?[_tZ]:[])],
-        backgroundColor:[(document.documentElement.classList.contains('theme-light')?'rgba(158,117,80,.65)':'rgba(255,128,128,.65)'),(document.documentElement.classList.contains('theme-light')?'rgba(139,149,161,.60)':'rgba(139,149,161,.55)'),...(ZEROS?['rgba(160,152,148,.35)']:[])],
-        borderColor:[(document.documentElement.classList.contains('theme-light')?'rgba(158,117,80,.9)':'rgba(255,128,128,.9)'),(document.documentElement.classList.contains('theme-light')?'rgba(139,149,161,.95)':'rgba(139,149,161,.9)'),...(ZEROS?['rgba(160,152,148,.5)']:[])],
+        backgroundColor:[(document.documentElement.classList.contains('theme-light')?'rgba(92,102,114,.65)':'rgba(255,128,128,.65)'),(document.documentElement.classList.contains('theme-light')?'rgba(139,149,161,.60)':'rgba(139,149,161,.55)'),...(ZEROS?['rgba(160,152,148,.35)']:[])],
+        borderColor:[(document.documentElement.classList.contains('theme-light')?'rgba(92,102,114,.9)':'rgba(255,128,128,.9)'),(document.documentElement.classList.contains('theme-light')?'rgba(139,149,161,.95)':'rgba(139,149,161,.9)'),...(ZEROS?['rgba(160,152,148,.5)']:[])],
         borderWidth:1.5,hoverOffset:8
       }]
     },
@@ -2663,8 +2663,8 @@ function buildStatCharts(){
           const bx=x-width/2,r=5;
           const g=ctx.createLinearGradient(0,barTop,0,barBot);
           if(isWin){
-            g.addColorStop(0,(document.documentElement.classList.contains('theme-light')?'rgba(158,117,80,.30)':'rgba(255,128,128,.30)'));
-            g.addColorStop(1,(document.documentElement.classList.contains('theme-light')?'rgba(158,117,80,.72)':'rgba(255,128,128,.72)'));
+            g.addColorStop(0,(document.documentElement.classList.contains('theme-light')?'rgba(92,102,114,.30)':'rgba(255,128,128,.30)'));
+            g.addColorStop(1,(document.documentElement.classList.contains('theme-light')?'rgba(92,102,114,.72)':'rgba(255,128,128,.72)'));
           } else {
             g.addColorStop(0,(document.documentElement.classList.contains('theme-light')?'rgba(139,149,161,.30)':'rgba(139,149,161,.30)'));
             g.addColorStop(1,(document.documentElement.classList.contains('theme-light')?'rgba(139,149,161,.72)':'rgba(139,149,161,.72)'));
@@ -2794,7 +2794,7 @@ loadPositions();
   var mx=W()/2,my=H()/2,gx=mx,gy=my,on=false,pts=[];
   window.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;on=true;pts.push({x:mx,y:my,t:performance.now()});if(pts.length>28)pts.shift();},{passive:true});
   window.addEventListener('mouseout',function(e){if(!e.relatedTarget)on=false;});
-  function col(a){return document.documentElement.classList.contains('theme-light')?'rgba(158,117,80,'+a+')':'rgba(120,168,232,'+a+')';}
+  function col(a){return document.documentElement.classList.contains('theme-light')?'rgba(92,102,114,'+a+')':'rgba(120,168,232,'+a+')';}
   function draw(now){
     ctx.clearRect(0,0,W(),H());
     gx+=(mx-gx)*0.085; gy+=(my-gy)*0.085;
