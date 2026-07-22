@@ -22,7 +22,7 @@
 </script>
 <title>직트 무료 포지션 공유</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="chart.umd.js"></script>
 <style>
 :root{
   /* ── Claude Light 팔레트 ── */
@@ -545,33 +545,29 @@ body{ font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif; font-variant
 :root,html,body,.theme-blue,.theme-light{--mono:'Pretendard','Noto Sans KR',sans-serif!important;--font-n:'Pretendard','Noto Sans KR',sans-serif!important;--font-m:'Pretendard','Noto Sans KR',sans-serif!important;--sans:'Pretendard','Noto Sans KR',sans-serif!important;--uxc-font:'Pretendard','Noto Sans KR',sans-serif!important;--font:'Pretendard','Noto Sans KR',sans-serif!important;}
 body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font-variant-numeric:tabular-nums;}
 </style>
-  <!-- ===== [jk-dash-silver-2026-07-22] 무료 포지션 대시보드 코냑 프리미엄 라이트 (색상 전용) ===== -->
-  <style id="jk-dash-silver-2026-07-22">
-  /* 다크: 수익 코랄 유지 위한 rgb 변수 */
-  :root{ --profit-rgb:255,128,128; }
-  /* 라이트: 코냑 프리미엄 팔레트 (변수 재정의 → 전 컴포넌트 자동 재색상) */
+<script>window.__JKLT=function(){try{return document.documentElement.classList.contains("theme-light")}catch(e){return false}};</script>
+  <style id="jk-dash-redblue-2026-07-22">
+  :root{ --profit-rgb:255,128,128; --loss-rgb2:102,112,133; }
   html.theme-light{
     --bg:#EAE7E1; --card:#FFFFFF; --card2:#F7F5F1;
     --b1:#EFEBE5; --b2:#E2DCD2;
     --t1:#2B2926; --t2:#6E6A61; --t3:#A29C93;
-    --accent:#5C6672; --accent-a:rgba(92,102,114,.10); --accent-b:rgba(92,102,114,.06); --accent-rgb:158,117,80; --loss-rgb:139,149,161;
-    --profit:#5C6672; --profit-bg:rgba(92,102,114,.08); --profit-border:rgba(92,102,114,.22); --profit-rgb:158,117,80;
-    --loss:#6E6A61; --loss-bg:rgba(139,149,161,.07); --loss-border:rgba(139,149,161,.22);
-    --cyan:#5C6672; --green:#5C6672; --yellow:#77828F; --orange:#5C6672; --red:#5C6672; --purple:#8b6fc9;
-    --cyan-a:rgba(92,102,114,.08); --green-a:rgba(92,102,114,.08); --yellow-a:rgba(92,102,114,.10); --orange-a:rgba(92,102,114,.08); --red-a:rgba(92,102,114,.08); --purple-a:rgba(139,111,201,.08);
+    --accent:#5C6672; --accent-a:rgba(92,102,114,.10); --accent-b:rgba(92,102,114,.06); --accent-rgb:92,102,114;
+    --profit:#D05A5A; --profit-bg:rgba(208,90,90,.08); --profit-border:rgba(208,90,90,.22); --profit-rgb:208,90,90;
+    --loss:#4F79C2; --loss-bg:rgba(79,121,194,.08); --loss-border:rgba(79,121,194,.22); --loss-rgb:79,121,194;
+    --cyan:#5C6672; --green:#D05A5A; --yellow:#B0885E; --orange:#5C6672; --red:#D05A5A; --purple:#8b6fc9;
+    --cyan-a:rgba(92,102,114,.08); --green-a:rgba(208,90,90,.08); --yellow-a:rgba(176,136,94,.10); --orange-a:rgba(92,102,114,.08); --red-a:rgba(208,90,90,.08); --purple-a:rgba(139,111,201,.08);
     --grad-title:linear-gradient(135deg,#2B2926 0%,#8A8178 100%);
-    --grad-green:linear-gradient(135deg,#8E99A8 0%,#5C6672 100%);
+    --grad-green:linear-gradient(135deg,#DD8080 0%,#D05A5A 100%);
     --shadow:0 1px 3px rgba(43,41,38,.05),0 12px 34px rgba(43,41,38,.07);
     --shadow-sm:0 1px 3px rgba(43,41,38,.05);
   }
-  /* 헤더·탭 배경 그레이지 톤 */
   html.theme-light .hdr{ background:rgba(234,231,225,.92) !important; }
   html.theme-light .nav{ background:rgba(234,231,225,.96) !important; }
   html.theme-light .hdr-home::after{ color:var(--accent) !important; }
-  /* 카드 호버: 웜 틴트 + 프리미엄 그림자 */
   html.theme-light .pos-card:hover{ border-color:rgba(92,102,114,.35) !important; box-shadow:0 4px 12px rgba(92,102,114,.08),0 16px 40px rgba(92,102,114,.12) !important; }
+  html.theme-light .dot{ background:var(--profit) !important; box-shadow:0 0 5px rgba(208,90,90,.5) !important; }
   </style>
-
 </head>
 <body>
 <style>
@@ -895,7 +891,7 @@ function getSafetyBar(p){
       <div class="safety-label"><span style="color:var(--accent)">$${ps.strike} ← 손실</span><span style="color:var(--profit)">수익 구간</span><span style="color:var(--accent)">손실 → $${cs.strike}</span></div>
       <div class="safety-track">
         <div style="position:absolute;left:0;width:12%;height:100%;background:rgba(80,128,204,.35)"></div>
-        <div style="position:absolute;left:12%;right:12%;height:100%;background:linear-gradient(90deg,rgba(236,238,241,.9),rgba(92,102,114,.75),rgba(236,238,241,.9))"></div>
+        <div style="position:absolute;left:12%;right:12%;height:100%;background:linear-gradient(90deg,rgba(250,236,236,.9),rgba(208,90,90,.75),rgba(250,236,236,.9))"></div>
         <div style="position:absolute;right:0;width:12%;height:100%;background:rgba(80,128,204,.35)"></div>
       </div>
     </div>`;
@@ -907,7 +903,7 @@ function getSafetyBar(p){
   return `<div class="safety-wrap">
     <div class="safety-label"><span style="color:var(--profit)">현재 안전 구간 ($${cp?.toLocaleString()})</span><span style="color:var(--accent)">$${leg.strike.toLocaleString()} 이상 손실</span></div>
     <div class="safety-track">
-      <div style="width:${safeW}%;height:100%;background:linear-gradient(90deg,rgba(236,238,241,.7),rgba(92,102,114,.85));border-radius:4px"></div>
+      <div style="width:${safeW}%;height:100%;background:linear-gradient(90deg,rgba(250,236,236,.7),rgba(208,90,90,.85));border-radius:4px"></div>
     </div>
   </div>`;
 }
@@ -955,7 +951,7 @@ function buildSafetyBar(entry, current, strike, type){
       <div>
         ${entryPct != null
           ? `<div style="color:var(--t3);font-size:9px;">진입가</div><div style="color:rgba(255,255,255,.55);font-weight:600;">$${entry != null ? entry.toLocaleString() : ''}</div>`
-          : '<div style="color:rgba(92,102,114,.8);font-size:10px;font-weight:600;">← 수익구간</div>'}
+          : '<div style="color:rgba(208,90,90,.8);font-size:10px;font-weight:600;">← 수익구간</div>'}
       </div>
       <div style="text-align:center;">
         ${currentPct != null ? `<div style="color:var(--t3);font-size:9px;">현재가</div><div style="color:#c4b5fd;font-weight:700;">$${current != null ? current.toLocaleString() : ''}</div>` : ''}
@@ -985,11 +981,11 @@ function buildStrangleBar(entry, current, putStrike, callStrike){
   return `
     <div style="position:relative;height:28px;background:rgba(0,0,0,.05);border-radius:8px;overflow:hidden;margin-bottom:4px;">
       <!-- 왼쪽 손실 구간 -->
-      <div style="position:absolute;top:0;left:0;width:${putPct}%;height:100%;background:linear-gradient(90deg,rgba(238,240,243,1),rgba(140,148,158,.85));"></div>
+      <div style="position:absolute;top:0;left:0;width:${putPct}%;height:100%;background:linear-gradient(90deg,rgba(236,241,250,1),rgba(79,121,194,.85));"></div>
       <!-- 수익 구간 (풋 ~ 콜 사이) -->
-      <div style="position:absolute;top:0;left:${putPct}%;width:${profitW}%;height:100%;background:linear-gradient(90deg,rgba(236,238,241,1),rgba(92,102,114,.85),rgba(236,238,241,1));"></div>
+      <div style="position:absolute;top:0;left:${putPct}%;width:${profitW}%;height:100%;background:linear-gradient(90deg,rgba(250,236,236,1),rgba(208,90,90,.85),rgba(250,236,236,1));"></div>
       <!-- 오른쪽 손실 구간 -->
-      <div style="position:absolute;top:0;left:${callPct}%;right:0;height:100%;background:linear-gradient(90deg,rgba(238,240,243,1),rgba(140,148,158,.85));"></div>
+      <div style="position:absolute;top:0;left:${callPct}%;right:0;height:100%;background:linear-gradient(90deg,rgba(236,241,250,1),rgba(79,121,194,.85));"></div>
       <!-- 풋 행사가 핀 (파랑) -->
       <div style="position:absolute;top:0;bottom:0;left:${putPct}%;width:3px;background:linear-gradient(180deg,#93c5fd,#2563eb);transform:translateX(-50%);border-radius:2px;box-shadow:0 0 6px rgba(96,165,250,.6);"></div>
       <div style="position:absolute;top:50%;left:${putPct}%;transform:translate(-50%,-50%);width:9px;height:9px;border-radius:50%;background:#60a5fa;box-shadow:0 0 7px rgba(96,165,250,.7);"></div>
@@ -1031,18 +1027,18 @@ window.ohToggle=function(id,btn){ var el=document.getElementById(id); if(!el)ret
 /* 추천표(이번 주 신규 추천 종목)와 동일한 표 스타일 */
 function ohTh(t,al){ return '<th style="text-align:'+(al||'left')+';font-size:13px;font-weight:600;color:var(--t2);padding:8px 13px;border-bottom:1.5px solid var(--b1);white-space:nowrap;letter-spacing:.02em;">'+t+'</th>'; }
 function ohCell(v,al,bold){ return '<td style="text-align:'+(al||'left')+';padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:14px;color:var(--t1);white-space:nowrap;'+(bold?'font-weight:700;':'')+'">'+hEsc(v)+'</td>'; }
-/* 수익=빨강(#667085), 손실=파랑(#667085) */
+/* 수익=빨강(var(--loss)), 손실=파랑(var(--loss)) */
 /* [2026-07-13] HTML 그대로 넣는 셀 (줄바꿈·색상 표기용) — 값은 넣는 쪽에서 이스케이프 처리함 */
 function ohCellRaw(v,al,bold){ return '<td style="text-align:'+(al||'left')+';padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:14px;color:var(--t1);white-space:nowrap;vertical-align:top;line-height:1.7;'+(bold?'font-weight:700;':'')+'">'+(v==null?'-':v)+'</td>'; }
-function ohPnlInner(usd,rate){ var man=Math.round((usd||0)*rate/10000); var sgn=usd>0?'+':usd<0?'-':''; var col=usd>0?'var(--profit)':usd<0?'#667085':'var(--t3)'; return '<span style="color:'+col+';font-weight:700;">'+sgn+Math.abs(man).toLocaleString('ko-KR')+'만원 <span style="font-size:11px;color:var(--t3);font-weight:600;">('+sgn+'$'+Math.abs(usd||0).toLocaleString()+')</span></span>'; }
+function ohPnlInner(usd,rate){ var man=Math.round((usd||0)*rate/10000); var sgn=usd>0?'+':usd<0?'-':''; var col=usd>0?(window.__JKLT()?'#D05A5A':'#FF8080'):usd<0?(window.__JKLT()?'#4F79C2':'#667085'):'var(--t3)'; return '<span style="color:'+col+';font-weight:700;">'+sgn+Math.abs(man).toLocaleString('ko-KR')+'만원 <span style="font-size:11px;color:var(--t3);font-weight:600;">('+sgn+'$'+Math.abs(usd||0).toLocaleString()+')</span></span>'; }
 function ohPnlTd(usd,rate){ return '<td style="text-align:right;padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:14px;white-space:nowrap;">'+ohPnlInner(usd,rate)+'</td>'; }
 
 /* === 1-3 종목별 평가손익 요약 (유료 대시보드와 동일 디자인) === */
-function ohPc(v){ return v>0?'var(--profit)':v<0?'#667085':'var(--t2)'; }
+function ohPc(v){ return v>0?(window.__JKLT()?'#D05A5A':'#FF8080'):v<0?(window.__JKLT()?'#4F79C2':'#667085'):'var(--t2)'; }
 function ohUF(usd,rate){ var man=Math.round((usd||0)*rate/10000); return (man>=0?'+':'-')+Math.abs(man).toLocaleString('ko-KR')+'만원'; }
 function ohSumTh(arr){ return '<tr>'+arr.map(function(t,i){return '<th style="padding:10px 12px;text-align:'+(i?'right':'left')+';font-weight:700;color:var(--accent);border-bottom:2px solid rgba(var(--accent-rgb),.25);white-space:nowrap;">'+t+'</th>';}).join('')+'</tr>'; }
 function ohSumTd(t,a,c,b){ return '<td style="padding:9px 12px;text-align:'+(a||'left')+';font-weight:'+(b||400)+';color:'+(c||'var(--t1)')+';border-bottom:1px solid rgba(0,0,0,.05);white-space:nowrap;">'+t+'</td>'; }
-function ohBarCell(v,mx){ var t=mx>0?Math.abs(v)/mx:0, w=Math.max(4,Math.round(100*t)); var _lt=document.documentElement.classList.contains('theme-light');var c=v>=0?(_lt?(t>=.66?['#B8C0CB','#5C6672']:t>=.33?['#C6CCD5','#6E7A8A']:['#D6DAE0','#899199']):(t>=.66?['#F2BFBF','#D05C5C']:t>=.33?['#F6D1D1','#DD7878']:['#FADEDE','#E89696'])):(_lt?(t>=.66?['#CBCFD5','#868D97']:t>=.33?['#D6D9DE','#979DA6']:['#E0E3E7','#AEB3BA']):(t>=.66?['#BBD3EF','#4E80C0']:t>=.33?['#C9DDF2','#5F90CC']:['#D5E4F6','#8FB2DD'])); return '<td style="padding:9px 12px;width:38%;border-bottom:1px solid rgba(0,0,0,.05)"><div style="height:10px;border-radius:999px;background:rgba(0,0,0,.04);overflow:hidden"><div style="height:100%;width:'+w+'%;border-radius:999px;background:linear-gradient(90deg,'+c[0]+','+c[1]+')"></div></div></td>'; }
+function ohBarCell(v,mx){ var t=mx>0?Math.abs(v)/mx:0, w=Math.max(4,Math.round(100*t)); var _lt=document.documentElement.classList.contains('theme-light');var c=v>=0?(_lt?(t>=.66?['#EBB9B9','#D05A5A']:t>=.33?['#F1CFCF','#DA7B7B']:['#F6E1E1','#E49C9C']):(t>=.66?['#F2BFBF','#D05C5C']:t>=.33?['#F6D1D1','#DD7878']:['#FADEDE','#E89696'])):(_lt?(t>=.66?['#C2D2ED','#4F79C2']:t>=.33?['#D0DCF1','#7091CE']:['#DEE6F5','#93AADB']):(t>=.66?['#BBD3EF','#4E80C0']:t>=.33?['#C9DDF2','#5F90CC']:['#D5E4F6','#8FB2DD'])); return '<td style="padding:9px 12px;width:38%;border-bottom:1px solid rgba(0,0,0,.05)"><div style="height:10px;border-radius:999px;background:rgba(0,0,0,.04);overflow:hidden"><div style="height:100%;width:'+w+'%;border-radius:999px;background:linear-gradient(90deg,'+c[0]+','+c[1]+')"></div></div></td>'; }
 function ohSummary(groups,rate){
   if(!groups.length) return '';
   var mxE=0; groups.forEach(function(g){ if(Math.abs(g.ev)>mxE)mxE=Math.abs(g.ev); });
@@ -1051,7 +1047,7 @@ function ohSummary(groups,rate){
   h+='<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">'
     +'<span class="mob-stepnum" style="font-size:14px;font-weight:800;color:var(--accent);background:rgba(var(--accent-rgb),.15);padding:4px 12px;border-radius:6px;border:1px solid rgba(var(--accent-rgb),.30);">1-3</span>'
     +'<span style="font-size:15px;font-weight:700;color:var(--t1);letter-spacing:.02em;">종목별 평가손익</span>'
-    +'<span style="font-size:12px;color:var(--t3);">보유 종목 · 평가손익 순</span></div>';
+    +'<span style="font-size:12px;color:var(--t3);">보유 종목 · 수익 빨강 / 손실 파랑</span></div>';
   h+='<table style="width:100%;border-collapse:collapse;font-family:var(--mono);">'+ohSumTh(['종목','','평가손익','매매비중','총 손익']);
   groups.forEach(function(g){ h+='<tr>'+ohSumTd(hEsc(g.name),'left','var(--t1)',700)+ohBarCell(g.ev,mxE)+ohSumTd(ohUF(g.ev,rate),'right',ohPc(g.ev),700)+ohSumTd(g.weight.toFixed(2)+'%','right')+ohSumTd(ohUF(g.tot,rate),'right',ohPc(g.tot),700)+'</tr>'; });
   h+='<tr style="background:rgba(var(--accent-rgb),.05)">'+ohSumTd('총 합계','left','var(--t1)',800)+ohSumTd('','left')+ohSumTd(ohUF(tE,rate),'right',ohPc(tE),800)+ohSumTd(tW.toFixed(2)+'%','right','var(--t1)',800)+ohSumTd(ohUF(tA,rate),'right',ohPc(tA),800)+'</tr>';
@@ -1223,7 +1219,7 @@ function ohClosedBlock(items, rate, mode){
   else { h+=ohTh('종목')+ohTh('구분')+ohTh('진입(pt)','right')+ohTh('청산(pt)','right')+ohTh('계약수','right')+ohTh('실현손익','right')+ohTh('사유'); }
   h+='</tr></thead><tbody>';
   var ohRow=function(x){
-    var rcol=x.is_stoploss?'var(--profit)':'var(--t2)';
+    var rcol=x.is_stoploss?(window.__JKLT()?'#D05A5A':'#FF8080'):'var(--t2)';
     var reasonTd='<td style="padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:13px;color:'+rcol+';white-space:nowrap;font-weight:'+(x.is_stoploss?'700':'400')+';">'+hEsc(x.reason||'-')+'</td>';
     if(mode==='full'){ return '<tr>'+ohCell(x.name,'left',true)+ohCellRaw(x.strat||'-')+ohCell(x.month)+ohCellRaw(x.strike||'-','right')+ohCellRaw(x.ct||'-','right')+ohCellRaw(x.entryPt||'-','right')+ohCellRaw(x.exitPt||'-','right')+ohCell(x.date)+ohPnlTd(x.pnl,rate)+reasonTd+'</tr>'; }
     var enTxt=(x.entry!=null)?String(x.entry):'-'; var exTxt=(x.exit!=null)?String(x.exit):'-'; var ctTxt=(x.contracts?x.contracts:1)+'계약';
@@ -1300,7 +1296,7 @@ function renderCards(pos){
       const pnlKrw=Math.round(Math.abs(p.current_pnl)*rate/10000);
       const cls=p.current_pnl>0?'profit':p.current_pnl<0?'loss':'neutral';
       const sign=p.current_pnl>0?'+':p.current_pnl<0?'-':'';
-      const pnlColor=p.current_pnl>0?'var(--profit)':p.current_pnl<0?'#667085':'var(--t3)';
+      const pnlColor=p.current_pnl>0?'var(--profit)':p.current_pnl<0?(window.__JKLT()?'#4F79C2':'#667085'):'var(--t3)';
       pnlHtml=`<div class="pnl-row ${cls}"><span class="pnl-label">현재 평가손익</span><span class="pnl-val ${cls}" style="color:${pnlColor};">${sign}${pnlKrw}만원 <span style="font-size:12px;opacity:.8;">(${sign}$${Math.abs(p.current_pnl).toLocaleString()})</span></span></div>`;
     } else {
       const pnlMsg=isExpired?'만기청산':'업데이트 예정';
@@ -2087,8 +2083,8 @@ function renderPosKpi(){
   const lossCount   = a.filter(p => (p.current_pnl||0) < 0).length;
   const neutralCount = a.length - profitCount - lossCount;
 
-  // 색상 (수익=연빨강 var(--profit), 손실=연파랑 #667085)
-  const pnlColor = activePnlKrw > 0 ? (document.documentElement.classList.contains('theme-light')?'#5C6672':'#FF8080') : activePnlKrw < 0 ? '#667085' : 'var(--t3)';
+  // 색상 (수익=연빨강 var(--profit), 손실=연파랑 var(--loss))
+  const pnlColor = activePnlKrw > 0 ? (window.__JKLT()?'#D05A5A':'#FF8080') : activePnlKrw < 0 ? (window.__JKLT()?'#4F79C2':'#667085') : 'var(--t3)';
   const pnlSign  = activePnlKrw > 0 ? '+' : activePnlKrw < 0 ? '-' : '';
 
   // 증거금 비율 (총 예탁금 대비) — 관리자 입력 pct 우선
@@ -2159,7 +2155,7 @@ function renderTimeline(){
 function showDotTip(n,pnl){
   const el=document.getElementById('dotTooltip');
   const sign=pnl>0?'+':'';
-  const color=pnl>0?'var(--profit)':pnl<0?'#667085':'var(--t3)';
+  const color=pnl>0?(window.__JKLT()?'#D05A5A':'#FF8080'):pnl<0?(window.__JKLT()?'#4F79C2':'#667085'):'var(--t3)';
   el.innerHTML=`<span style="color:var(--t2)">${n}번 전략:</span> <strong style="color:${color}">${sign}${comma(pnl)}원</strong>`;
 }
 function hideDotTip(){document.getElementById('dotTooltip').innerHTML='';}
@@ -2168,14 +2164,14 @@ function getStory(s){
   const strikes=s.legs.filter(l=>l.type&&l.type.includes('매도')).map(l=>l.strike).join(', ');
   if(n===0) return {text:'상세 데이터를 준비 중이에요.',color:'var(--t3)'};
   if(r==='loss'){
-    if(n>=7) return {text:`<span class="hl">${n}번의 계약 조정</span>으로 방어했으나 결국 손절 마감. 가격이 예상 범위를 크게 벗어난 전략.`,color:'#667085'};
-    if(n>=4) return {text:`진입 후 <span class="hl">${n}번의 추가 주문</span>으로 방어했으나 결국 손절 마감.`,color:'#667085'};
-    return {text:`진입 후 가격이 예상 범위를 벗어나 손절 마감.`,color:'#667085'};
+    if(n>=7) return {text:`<span class="hl">${n}번의 계약 조정</span>으로 방어했으나 결국 손절 마감. 가격이 예상 범위를 크게 벗어난 전략.`,color:(window.__JKLT()?'#4F79C2':'#667085')};
+    if(n>=4) return {text:`진입 후 <span class="hl">${n}번의 추가 주문</span>으로 방어했으나 결국 손절 마감.`,color:(window.__JKLT()?'#4F79C2':'#667085')};
+    return {text:`진입 후 가격이 예상 범위를 벗어나 손절 마감.`,color:(window.__JKLT()?'#4F79C2':'#667085')};
   }
-  if(n===1) return {text:`단 <span class="hl">1번의 주문</span>만으로 만기까지 수익 구간 유지. 가장 깔끔한 패턴.`,color:'var(--profit)'};
-  if(n===2) return {text:`<span class="hl">2개 주문</span>으로 양방향 커버하며 만기 수익 확정.`,color:'var(--profit)'};
-  if(n>=7) return {text:`<span class="hl">${n}개 주문</span>을 복합 운용하며 끝까지 수익 구간 유지. 고난도 전략.`,color:'var(--profit)'};
-  return {text:`진입 후 <span class="hl">${n}개 주문</span>으로 운용하며 만기 수익 확정.`,color:'var(--profit)'};
+  if(n===1) return {text:`단 <span class="hl">1번의 주문</span>만으로 만기까지 수익 구간 유지. 가장 깔끔한 패턴.`,color:(window.__JKLT()?'#D05A5A':'#FF8080')};
+  if(n===2) return {text:`<span class="hl">2개 주문</span>으로 양방향 커버하며 만기 수익 확정.`,color:(window.__JKLT()?'#D05A5A':'#FF8080')};
+  if(n>=7) return {text:`<span class="hl">${n}개 주문</span>을 복합 운용하며 끝까지 수익 구간 유지. 고난도 전략.`,color:(window.__JKLT()?'#D05A5A':'#FF8080')};
+  return {text:`진입 후 <span class="hl">${n}개 주문</span>으로 운용하며 만기 수익 확정.`,color:(window.__JKLT()?'#D05A5A':'#FF8080')};
 }
 
 function buildDetailRow(s, pnl, pct){
@@ -2378,7 +2374,7 @@ function renderHistory(filter){
           <td class="mono" style="color:${numColor};font-weight:700;font-size:14px;">${x.n}번 <span style="font-size:12px;color:var(--t3);font-weight:400;">(${statusLabel})</span></td>
           <td class="mono">${pnlText}<div style="font-size:13px;color:var(--t2);font-family:var(--mono);margin-top:4px;">${pos.underlying} · ${dLabel}</div></td>
           <td class="mono">${x.cumKrw!==undefined?comma(x.cumKrw)+'원':'—'}</td>
-          <td class="mono" style="color:${(x.cumPct||0)>=0?'var(--profit)':'#667085'}">${x.cumPct!==undefined?(x.cumPct>=0?'+':'')+x.cumPct.toFixed(2)+'%':'—'}</td>
+          <td class="mono" style="color:${(x.cumPct||0)>=0?(window.__JKLT()?'#D05A5A':'#FF8080'):(window.__JKLT()?'#4F79C2':'#667085')}">${x.cumPct!==undefined?(x.cumPct>=0?'+':'')+x.cumPct.toFixed(2)+'%':'—'}</td>
           <td>${x.pnlKrw!==undefined?(x.pnlKrw>0?'<span class="badge b-green">수익</span>':x.pnlKrw<0?'<span class="badge b-red">손실</span>':'<span class="badge b-gray">대기</span>'):'—'}</td>
         </tr>`;
       }).join('')
@@ -2389,7 +2385,7 @@ function renderHistory(filter){
     const sign=x.pnl>0?'+':'';
     const pill=x.pnl>0?'<span class="badge b-green">수익</span>':x.pnl<0?'<span class="badge b-red">손실</span>':'<span class="badge b-gray">무손익</span>';
     const bw=Math.min(100,Math.abs(x.pnl)/2000000*100);
-    const bc=x.pnl>0?'rgba(92,102,114,0.7)':'rgba(100,140,220,0.7)';
+    const bc=x.pnl>0?'rgba(208,90,90,0.7)':'rgba(100,140,220,0.7)';
     const hist=STRATEGY_HIST.find(h=>h.num===x.n);
     const commodity=hist&&hist.commodity?hist.commodity:'';
     const hasDetail=hist&&(hist.commodity||hist.legs.length>0);
@@ -2399,7 +2395,7 @@ function renderHistory(filter){
       <td class="mono" style="color:${isExpiredHist?'var(--t3)':'var(--t1)'}">${x.n}번${isExpiredHist?` <span style="font-size:12px;color:var(--t3);font-family:var(--mono);font-weight:400;">(만기청산)</span>`:''}</td>
       <td class="mono ${cls}">${sign}${comma(x.pnl)}원<div class="inline-bar" style="width:${bw}%;background:${bc};height:3px;border-radius:2px;margin-top:4px;"></div><div class="h-clo-sub" style="display:none;font-family:var(--mono);">${commodity?commodity+' · ':''}청산</div></td>
       <td class="mono">${comma(x.cum)}원</td>
-      <td class="mono" style="color:${x.pct>=0?'var(--profit)':'#667085'}">${(x.pct*100).toFixed(2)}%</td>
+      <td class="mono" style="color:${x.pct>=0?(window.__JKLT()?'#D05A5A':'#FF8080'):(window.__JKLT()?'#4F79C2':'#667085')}">${(x.pct*100).toFixed(2)}%</td>
       <td style="display:flex;align-items:center;gap:8px;">${pill}</td>
     </tr>`;
     return mainRow + buildDetailRow(x, x.pnl, x.pct);
@@ -2485,7 +2481,7 @@ function buildStatCharts(){
   const _finalCumPct = _ac/_dp*100;
   const _finalCumAmt = Math.round(_ac/10000);
   const _cumSign = _finalCumPct >= 0 ? '+' : '';
-  const _cumColor = _finalCumPct >= 0 ? 'var(--profit)' : '#667085';
+  const _cumColor = _finalCumPct >= 0 ? (window.__JKLT()?'#D05A5A':'#FF8080') : (window.__JKLT()?'#4F79C2':'#667085');
   const _cumEl = document.getElementById('heroCumPct');
   if(_cumEl){ _cumEl.textContent=_cumSign+_finalCumPct.toFixed(2); _cumEl.style.color=_cumColor; }
   const _amtEl = document.getElementById('heroCumAmt');
@@ -2511,7 +2507,7 @@ function buildStatCharts(){
   const kpis=[
     {label:'총 전략 수',  val:String(_tN),                        unit:'번',  sub:`${_aPos.length}개 진행중`, color:acC},
     {label:'승률',        val:(_tW/_tN*100).toFixed(1),           unit:'%',   sub:`${_tW}승 ${_tL}패 (진행중 포함)`,          color:winC},
-    {label:'평균 수익',   val:'+'+Math.round(winAvg/10000),       unit:'만원',sub:'수익 1회 평균',     color:'var(--profit)'},
+    {label:'평균 수익',   val:'+'+Math.round(winAvg/10000),       unit:'만원',sub:'수익 1회 평균',     color:(window.__JKLT()?'#D05A5A':'#FF8080')},
     {label:'평균 손실',   val:'-'+Math.round(lossAvg/10000),      unit:'만원',sub:'손실 1회 평균',     color:lossC},
     {label:'손익비',      val:pf.toFixed(2),                      unit:'x',   sub:'수익합 ÷ 손실합',       color:pf>=1?acC:lossC},
   ];
@@ -2557,16 +2553,16 @@ function buildStatCharts(){
       datasets:[{
         label:'누적 수익률',
         data:cumVals,
-        borderColor:'var(--profit)',
+        borderColor:(window.__JKLT()?'#D05A5A':'#FF8080'),
         borderWidth:2,
         pointRadius:0,
         pointHoverRadius:5,
-        pointHoverBackgroundColor:'var(--profit)',
+        pointHoverBackgroundColor:(window.__JKLT()?'#D05A5A':'#FF8080'),
         fill:true,
         backgroundColor:ctx=>{
           const g=ctx.chart.ctx.createLinearGradient(0,0,0,300);
-          g.addColorStop(0,'rgba(var(--profit-rgb),.20)');
-          g.addColorStop(1,'rgba(var(--profit-rgb),.01)');
+          g.addColorStop(0,(window.__JKLT()?'rgba(208,90,90,.20)':'rgba(255,128,128,.20)'));
+          g.addColorStop(1,(window.__JKLT()?'rgba(208,90,90,.01)':'rgba(255,128,128,.01)'));
           return g;
         },
         tension:.32
@@ -2606,8 +2602,8 @@ function buildStatCharts(){
       labels:[`수익 (${_tW}번)`,`손실 (${_tL}번)`,...(_tZ?[`무손익 (${_tZ}번)`]:[])],
       datasets:[{
         data:[_tW,_tL,...(_tZ?[_tZ]:[])],
-        backgroundColor:[(document.documentElement.classList.contains('theme-light')?'rgba(92,102,114,.65)':'rgba(255,128,128,.65)'),(document.documentElement.classList.contains('theme-light')?'rgba(139,149,161,.60)':'rgba(139,149,161,.55)'),...(ZEROS?['rgba(160,152,148,.35)']:[])],
-        borderColor:[(document.documentElement.classList.contains('theme-light')?'rgba(92,102,114,.9)':'rgba(255,128,128,.9)'),(document.documentElement.classList.contains('theme-light')?'rgba(139,149,161,.95)':'rgba(139,149,161,.9)'),...(ZEROS?['rgba(160,152,148,.5)']:[])],
+        backgroundColor:[(document.documentElement.classList.contains('theme-light')?'rgba(208,90,90,.65)':'rgba(255,128,128,.65)'),(document.documentElement.classList.contains('theme-light')?'rgba(79,121,194,.62)':'rgba(139,149,161,.55)'),...(ZEROS?['rgba(160,152,148,.35)']:[])],
+        borderColor:[(document.documentElement.classList.contains('theme-light')?'rgba(208,90,90,.9)':'rgba(255,128,128,.9)'),(document.documentElement.classList.contains('theme-light')?'rgba(79,121,194,.9)':'rgba(139,149,161,.9)'),...(ZEROS?['rgba(160,152,148,.5)']:[])],
         borderWidth:1.5,hoverOffset:8
       }]
     },
@@ -2627,7 +2623,7 @@ function buildStatCharts(){
         ctx.save();
         ctx.textAlign='center';ctx.textBaseline='middle';
         ctx.font='bold 24px IBM Plex Mono,monospace';
-        ctx.fillStyle='var(--profit)';
+        ctx.fillStyle=(window.__JKLT()?'#D05A5A':'#FF8080');
         ctx.fillText((_tW/_tN*100).toFixed(1)+'%',cx,cy-10);
         ctx.font='13px IBM Plex Sans KR,Noto Sans KR,sans-serif';
         ctx.fillStyle='#a89e98';
@@ -2638,7 +2634,7 @@ function buildStatCharts(){
   });
 
   document.getElementById('donut-legend').innerHTML=[
-    {label:`수익 ${_tW}번`,color:'var(--profit)'},
+    {label:`수익 ${_tW}번`,color:(window.__JKLT()?'#D05A5A':'#FF8080')},
     {label:`손실 ${_tL}번`,color:lossC},
     ...(_tZ?[{label:`무손익 ${_tZ}번`,color:'#a89e98'}]:[])
   ].map(l=>`
@@ -2663,11 +2659,11 @@ function buildStatCharts(){
           const bx=x-width/2,r=5;
           const g=ctx.createLinearGradient(0,barTop,0,barBot);
           if(isWin){
-            g.addColorStop(0,(document.documentElement.classList.contains('theme-light')?'rgba(92,102,114,.30)':'rgba(255,128,128,.30)'));
-            g.addColorStop(1,(document.documentElement.classList.contains('theme-light')?'rgba(92,102,114,.72)':'rgba(255,128,128,.72)'));
+            g.addColorStop(0,(document.documentElement.classList.contains('theme-light')?'rgba(208,90,90,.28)':'rgba(255,128,128,.30)'));
+            g.addColorStop(1,(document.documentElement.classList.contains('theme-light')?'rgba(208,90,90,.68)':'rgba(255,128,128,.72)'));
           } else {
-            g.addColorStop(0,(document.documentElement.classList.contains('theme-light')?'rgba(139,149,161,.30)':'rgba(139,149,161,.30)'));
-            g.addColorStop(1,(document.documentElement.classList.contains('theme-light')?'rgba(139,149,161,.72)':'rgba(139,149,161,.72)'));
+            g.addColorStop(0,(document.documentElement.classList.contains('theme-light')?'rgba(79,121,194,.28)':'rgba(139,149,161,.30)'));
+            g.addColorStop(1,(document.documentElement.classList.contains('theme-light')?'rgba(79,121,194,.66)':'rgba(139,149,161,.72)'));
           }
           ctx.save();
           ctx.fillStyle=g;
@@ -2679,7 +2675,7 @@ function buildStatCharts(){
           ctx.save();
           ctx.textAlign='center';ctx.textBaseline='bottom';
           ctx.font='bold '+(_mbS?9:12)+'px IBM Plex Mono,monospace';
-          ctx.fillStyle=isWin?'var(--profit)':'#667085';
+          ctx.fillStyle=isWin?(window.__JKLT()?'#D05A5A':'#FF8080'):(window.__JKLT()?'#4F79C2':'#667085');
           ctx.fillText(v+'번',x,barTop-4);
           ctx.restore();
         });
@@ -2709,8 +2705,8 @@ function buildStatCharts(){
         legend:{display:true,position:'bottom',labels:{
           color:tc,font:{size:_mbS?10:12,family:'IBM Plex Mono'},padding:_mbS?10:14,
           generateLabels:()=>[
-            {text:'수익',fillStyle:'var(--profit)',strokeStyle:'transparent',lineWidth:0,fontColor:'#B0B8C1',datasetIndex:0},
-            {text:'손실',fillStyle:'#667085',strokeStyle:'transparent',lineWidth:0,fontColor:'#B0B8C1',datasetIndex:1}
+            {text:'수익',fillStyle:(window.__JKLT()?'#D05A5A':'#FF8080'),strokeStyle:'transparent',lineWidth:0,fontColor:'#B0B8C1',datasetIndex:0},
+            {text:'손실',fillStyle:(window.__JKLT()?'#4F79C2':'#667085'),strokeStyle:'transparent',lineWidth:0,fontColor:'#B0B8C1',datasetIndex:1}
           ]
         }},
         tooltip:{enabled:false}
@@ -2824,7 +2820,7 @@ loadPositions();
    ⚠ 문서 맨 끝이므로 앞선 모바일 규칙을 이긴다(일부러).
 
    ★★ 색 절제 원칙 ★★
-     색은 손익 숫자에만.  수익 = #EA6A60(빨강) / 손실 = #667085(파랑)
+     색은 손익 숫자에만.  수익 = var(--profit)(빨강) / 손실 = var(--loss)(파랑)
      그 외 전부 무채색.  파란 버튼은 화면당 딱 하나(거래 시작하기)
      경고색(주황·노랑)은 무료 대시보드에서 쓰지 않는다
    ============================================================ */
@@ -3112,7 +3108,7 @@ loadPositions();
   /* 수익 = 빨강, 손실 = 파랑. 이것 말고는 색을 쓰지 않는다. */
   function pnlCol(t){
     var s=String(t||'').trim();
-    return /^-/.test(s) ? '#667085' : (/^\+/.test(s) ? '#EA6A60' : '#F5F6F8');
+    return /^-/.test(s) ? (window.__JKLT()?'#4F79C2':'#667085') : (/^\+/.test(s) ? (window.__JKLT()?'#D05A5A':'#EA6A60') : '#F5F6F8');
   }
 
   var sig='';
@@ -3612,7 +3608,7 @@ loadPositions();
 
    ★ 수치 기준 (유튜브 원칙)
      본문 14~16px · 여백 8배수 · 위계 3단 · 터치 32px 이상
-   ★ 색 절제 — 수익 #EA6A60 / 손실 #667085. 그 외 무채색
+   ★ 색 절제 — 수익 var(--profit) / 손실 var(--loss). 그 외 무채색
    ============================================================ */
 @media (max-width:640px){
 
@@ -3645,8 +3641,8 @@ loadPositions();
   .fh-bar{ margin-top:12px !important; height:6px !important; background:#23262E !important;
     border-radius:20px !important; display:flex !important; overflow:hidden !important; }
   .fh-bar > i{ display:block !important; height:100% !important; }
-  .fh-bar-w{ background:#EA6A60 !important; }
-  .fh-bar-l{ background:#667085 !important; }
+  .fh-bar-w{ background:var(--profit) !important; }
+  .fh-bar-l{ background:var(--loss) !important; }
 
   /* 필터 칩 (레퍼런스 #6) = 메타 12px. 종합 옵션 칩바는 11px */
   .fh-chips{ display:flex !important; gap:6px !important; margin:0 0 10px 0 !important; }
@@ -3692,7 +3688,7 @@ loadPositions();
   function T(e){ return e ? String(e.textContent||'').replace(/\s+/g,' ').trim() : ''; }
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function pnlCol(t){ var s=String(t||'').trim();
-    return /^-/.test(s) ? '#667085' : (/^\+/.test(s) ? '#EA6A60' : '#F5F6F8'); }
+    return /^-/.test(s) ? (window.__JKLT()?'#4F79C2':'#667085') : (/^\+/.test(s) ? (window.__JKLT()?'#D05A5A':'#EA6A60') : '#F5F6F8'); }
 
   var sig='', shown=20, filt='all';
 
@@ -3764,7 +3760,7 @@ loadPositions();
       }).join(' ');
       svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none">'
           +   '<polyline points="' + pl + '" fill="none" stroke="'
-          +   (pts[pts.length-1] >= pts[0] ? '#EA6A60' : '#667085')
+          +   (pts[pts.length-1] >= pts[0] ? (window.__JKLT()?'#D05A5A':'#EA6A60') : (window.__JKLT()?'#4F79C2':'#667085'))
           +   '" stroke-width="2" vector-effect="non-scaling-stroke"/>'
           + '</svg>';
     }
@@ -3869,7 +3865,7 @@ loadPositions();
      B그룹          → 대표값 크게 → 아래로 분해
      #38            → 승률 막대
    ★ 수치 기준 — 본문 14~16px · 여백 8배수 · 위계 3단 · 터치 32px
-   ★ 색 절제 — 수익 #EA6A60 / 손실 #667085. 그 외 무채색
+   ★ 색 절제 — 수익 var(--profit) / 손실 var(--loss). 그 외 무채색
    ============================================================ */
 @media (max-width:640px){
 
@@ -3938,7 +3934,7 @@ loadPositions();
   function T(e){ return e ? String(e.textContent||'').replace(/\s+/g,' ').trim() : ''; }
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   function pnlCol(t){ var s=String(t||'').trim();
-    return /^-/.test(s) ? '#667085' : (/^\+/.test(s) ? '#EA6A60' : '#F5F6F8'); }
+    return /^-/.test(s) ? (window.__JKLT()?'#4F79C2':'#667085') : (/^\+/.test(s) ? (window.__JKLT()?'#D05A5A':'#EA6A60') : '#F5F6F8'); }
   function num(s){ var v=parseFloat(String(s||'').replace(/[^\d.\-]/g,'')); return isNaN(v)?0:v; }
 
   var sig='';
@@ -3992,7 +3988,7 @@ loadPositions();
         }).join(' ');
         svg = '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">'
             +   '<polyline points="'+pl+'" fill="none" stroke="'
-            +   (pts[pts.length-1] >= pts[0] ? '#EA6A60' : '#667085')
+            +   (pts[pts.length-1] >= pts[0] ? (window.__JKLT()?'#D05A5A':'#EA6A60') : (window.__JKLT()?'#4F79C2':'#667085'))
             +   '" stroke-width="2" vector-effect="non-scaling-stroke"/>'
             + '</svg>';
         break;
@@ -4017,11 +4013,11 @@ loadPositions();
          +   '<p class="fs-top">'
          +     (g.dep ? esc(g.dep) + '으로 시작해<br>' : '')
          +     '<b>' + esc(g.total) + '번 거래</b>했고<br>'
-         +     '<b style="color:#EA6A60">' + esc(g.win) + '번 이겼습니다</b>'
+         +     '<b style="color:var(--profit)">' + esc(g.win) + '번 이겼습니다</b>'
          +   '</p>'
          +   '<div class="fs-bar">'
-         +     '<i style="width:'+wrPct+'%;background:#EA6A60"></i>'
-         +     '<i style="width:'+(100-wrPct)+'%;background:#667085"></i>'
+         +     '<i style="width:'+wrPct+'%;background:var(--profit)"></i>'
+         +     '<i style="width:'+(100-wrPct)+'%;background:var(--loss)"></i>'
          +   '</div>'
          +   '<p class="fs-lbl" style="margin-top:8px">승률 ' + esc(g.wr) + '% · '
          +     esc(g.win) + '승 ' + esc(g.los) + '패' + (g.live ? ' · ' + esc(g.live) + '개 진행중' : '') + '</p>'
@@ -4050,12 +4046,12 @@ loadPositions();
          +   '<div class="fs-cmp">'
          +     '<span class="fs-cmp-l">총 수익</span>'
          +     '<span class="fs-cmp-t"><i style="width:'+Math.round(sumW/mxSum*100)+'%;background:rgba(240,106,106,.35)"></i></span>'
-         +     '<span class="fs-cmp-v" style="color:#EA6A60">+'+Math.round(sumW).toLocaleString()+'만</span>'
+         +     '<span class="fs-cmp-v" style="color:var(--profit)">+'+Math.round(sumW).toLocaleString()+'만</span>'
          +   '</div>'
          +   '<div class="fs-cmp">'
          +     '<span class="fs-cmp-l">총 손실</span>'
          +     '<span class="fs-cmp-t"><i style="width:'+Math.round(sumL/mxSum*100)+'%;background:rgba(139,149,161,.35)"></i></span>'
-         +     '<span class="fs-cmp-v" style="color:#667085">-'+Math.round(sumL).toLocaleString()+'만</span>'
+         +     '<span class="fs-cmp-v" style="color:var(--loss)">-'+Math.round(sumL).toLocaleString()+'만</span>'
          +   '</div>'
          +   (pfNum ? '<p class="fs-said">총 수익 ÷ 총 손실 = <b>'+pfNum.toFixed(1)+'배</b>'
                     + '<br><span style="color:#8B95A1">평균 수익 '+esc(g.avgW)+'만원 · 평균 손실 '+esc(g.avgL)+'만원</span></p>' : '')
@@ -4072,8 +4068,8 @@ loadPositions();
        +     '<div class="fs-row"><span class="fs-lbl">총 전략 수</span><span class="v">'+esc(g.total)+'번</span></div>'
        +     '<div class="fs-row"><span class="fs-lbl">진행 중</span><span class="v">'+esc(g.live)+'개</span></div>'
        +     '<div class="fs-row"><span class="fs-lbl">승률</span><span class="v">'+esc(g.wr)+'%</span></div>'
-       +     '<div class="fs-row"><span class="fs-lbl">평균 수익</span><span class="v" style="color:#EA6A60">'+esc(g.avgW)+'만원</span></div>'
-       +     '<div class="fs-row"><span class="fs-lbl">평균 손실</span><span class="v" style="color:#667085">'+esc(g.avgL)+'만원</span></div>'
+       +     '<div class="fs-row"><span class="fs-lbl">평균 수익</span><span class="v" style="color:var(--profit)">'+esc(g.avgW)+'만원</span></div>'
+       +     '<div class="fs-row"><span class="fs-lbl">평균 손실</span><span class="v" style="color:var(--loss)">'+esc(g.avgL)+'만원</span></div>'
        +     '<div class="fs-row"><span class="fs-lbl">손익비</span><span class="v">'+esc(g.pf)+'배</span></div>'
        +     (g.money ? '<div class="fs-row"><span class="fs-lbl">누적 순수익</span><span class="v" style="color:'+pnlCol(g.money)+'">'+esc(g.money)+'</span></div>' : '')
        +   '</div>'
