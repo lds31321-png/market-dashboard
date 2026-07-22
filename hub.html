@@ -471,7 +471,7 @@
 
 </style>
 <script>
-(function(){try{var t=localStorage.getItem('jikt_theme')||'dark';if(t==='light')document.documentElement.classList.add('theme-light');}catch(e){}})();
+(function(){try{var t=localStorage.getItem('jikt_theme')||'light';if(t!=='dark')document.documentElement.classList.add('theme-light');}catch(e){}})();
 function jiktSyncThemeLabel(){var b=document.getElementById('jiktThemeBtn');if(!b)return;var light=document.documentElement.classList.contains('theme-light');var l=b.querySelector('.jt-label');if(l)l.textContent=light?'다크 모드':'라이트 모드';}
 function jiktToggleTheme(){var h=document.documentElement;var light=h.classList.toggle('theme-light');try{localStorage.setItem('jikt_theme',light?'light':'dark');}catch(e){}jiktSyncThemeLabel();}
 document.addEventListener('DOMContentLoaded',jiktSyncThemeLabel);
@@ -513,6 +513,184 @@ body{ font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif; font-variant
 :root,html,body,.theme-blue,.theme-light{--mono:'Pretendard','Noto Sans KR',sans-serif!important;--font-n:'Pretendard','Noto Sans KR',sans-serif!important;--font-m:'Pretendard','Noto Sans KR',sans-serif!important;--sans:'Pretendard','Noto Sans KR',sans-serif!important;--uxc-font:'Pretendard','Noto Sans KR',sans-serif!important;--font:'Pretendard','Noto Sans KR',sans-serif!important;}
 body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font-variant-numeric:tabular-nums;}
 </style>
+  <!-- ===== [jk-hub-light-2026-07-22] 메인 대시보드 라이트 뉴트럴 리스킨 (색상 전용, 폰트/레이아웃 유지) ===== -->
+  <style id="jk-hub-light-2026-07-22">
+  /* 페이지 배경: 따뜻한 그레이지 */
+  html.theme-light body{ background:#EAE7E1 !important; }
+  /* 앰비언트/글로우: 살몬 제거 → 은은한 뉴트럴 */
+  html.theme-light #hub-ambient{ background:
+    radial-gradient(1200px 600px at 18% -8%,rgba(43,41,38,.05),transparent 60%),
+    radial-gradient(1000px 560px at 100% 108%,rgba(43,41,38,.035),transparent 60%) !important; }
+  html.theme-light #hub-glow{ background:radial-gradient(circle,rgba(43,41,38,.06),rgba(43,41,38,.02) 35%,transparent 65%) !important; }
+
+  /* 헤더 */
+  html.theme-light .hub-logo{ color:#2B2926 !important; }
+  html.theme-light .hub-title{ color:#2B2926 !important; }
+  html.theme-light .hub-header .hub-sub{ color:#6E6A61 !important; }
+  html.theme-light .hub-flow .f{ color:#2B2926 !important; background:#FFFFFF !important; border-color:#EFEBE5 !important; }
+  html.theme-light .hub-flow .a{ color:#A29C93 !important; }
+
+  /* 카드 */
+  html.theme-light .hub-card{ background:#FFFFFF !important; border-color:#EFEBE5 !important; }
+  html.theme-light .hub-card:hover{ box-shadow:0 8px 32px rgba(43,41,38,.12) !important; border-color:#2B2926 !important; }
+  html.theme-light .card-step .n{ background:#2B2926 !important; color:#fff !important; }
+  html.theme-light .card-step .t{ color:#6E6A61 !important; }
+  html.theme-light .card-title{ color:#2B2926 !important; }
+  html.theme-light .card-desc{ color:#6E6A61 !important; }
+  html.theme-light .card-items{ color:#A29C93 !important; border-top-color:#EFEBE5 !important; }
+  html.theme-light .card-arrow{ color:#A29C93 !important; }
+
+  /* 상단 버튼: 살몬 → 차콜 아웃라인, 펄스 뉴트럴화 */
+  html.theme-light .jikt-refresh-btn{ background:#FFFFFF !important; color:#2B2926 !important; border-color:#2B2926 !important; animation:jiktPulseCognac 2.4s infinite !important; }
+  html.theme-light .jikt-refresh-btn:hover{ background:#2B2926 !important; color:#fff !important; }
+  html.theme-light .jikt-theme-btn{ background:#FFFFFF !important; color:#2B2926 !important; border-color:#2B2926 !important; animation:jiktPulseCognac 2.4s infinite !important; }
+  html.theme-light .jikt-theme-btn:hover{ background:#2B2926 !important; color:#fff !important; }
+  /* 코냑 브론즈 "숨쉬는" 펄스 — 링 색을 어센트로 (배경에 묻히지 않게) + 정지 그림자 내장 */
+  @keyframes jiktPulseCognac{ 0%{box-shadow:0 2px 8px rgba(43,41,38,.10), 0 0 0 0 rgba(158,117,80,.42);} 70%{box-shadow:0 2px 8px rgba(43,41,38,.10), 0 0 0 13px rgba(158,117,80,0);} 100%{box-shadow:0 2px 8px rgba(43,41,38,.10), 0 0 0 0 rgba(158,117,80,0);} }
+  @keyframes jiktPulseCognacBanner{ 0%{box-shadow:0 1px 2px rgba(43,41,38,.03), 0 8px 24px rgba(43,41,38,.05), 0 0 0 0 rgba(158,117,80,.32);} 70%{box-shadow:0 1px 2px rgba(43,41,38,.03), 0 8px 24px rgba(43,41,38,.05), 0 0 0 16px rgba(158,117,80,0);} 100%{box-shadow:0 1px 2px rgba(43,41,38,.03), 0 8px 24px rgba(43,41,38,.05), 0 0 0 0 rgba(158,117,80,0);} }
+
+  /* 쿠폰 배너 */
+  html.theme-light .jcb-banner{ background:#FFFFFF !important; border-color:#EFEBE5 !important; animation:jiktPulseCognacBanner 2.8s infinite !important; }
+  html.theme-light .jcb-banner:hover{ border-color:#2B2926 !important; }
+  html.theme-light .jcb-banner .ic{ color:#2B2926 !important; }
+  html.theme-light .jcb-banner .tx .t{ color:#2B2926 !important; }
+  html.theme-light .jcb-banner .tx .t b{ color:#2B2926 !important; }
+  html.theme-light .jcb-banner .tx .s{ color:#A29C93 !important; }
+  html.theme-light .jcb-banner .go{ color:#6E6A61 !important; }
+  html.theme-light .jcb-banner .s .sep-dot{ color:#C7C0B6 !important; }
+  html.theme-light .jcb-banner .t .ic{ color:#6E6A61 !important; }
+
+  /* 자가진단 팝업 */
+  html.theme-light .jintro-coupon{ animation:jiktPulseCognac 2.4s infinite !important; }
+  html.theme-light .jintro-box{ background:#FFFFFF !important; border-color:#EFEBE5 !important; box-shadow:0 30px 80px rgba(60,55,48,.22) !important; }
+  html.theme-light .jintro-x{ background:rgba(0,0,0,.05) !important; color:#A29C93 !important; }
+  html.theme-light .jintro-x:hover{ background:rgba(0,0,0,.10) !important; color:#2B2926 !important; }
+  html.theme-light .jintro-tag{ color:#2B2926 !important; }
+  html.theme-light .jintro-h{ color:#2B2926 !important; }
+  html.theme-light .jintro-sub{ color:#6E6A61 !important; }
+  html.theme-light .jintro-coupon{ background:#F3F0EA !important; border-color:#2B2926 !important; color:#2B2926 !important; }
+  html.theme-light .jintro-coupon .chev{ color:#2B2926 !important; }
+  html.theme-light .jintro-more{ color:#6E6A61 !important; border-top-color:#EFEBE5 !important; }
+  html.theme-light .jintro-more .chev{ color:#A29C93 !important; }
+  html.theme-light .jintro-dlead{ color:#6E6A61 !important; }
+  html.theme-light .jintro-fstep .fc{ background:#F3F0EA !important; border-color:#EFEBE5 !important; color:#2B2926 !important; }
+  html.theme-light .jintro-fstep .fl{ background:rgba(0,0,0,.10) !important; }
+  html.theme-light .jintro-fstep .ft{ color:#6E6A61 !important; }
+  html.theme-light .jintro-fstep .ft b{ color:#2B2926 !important; }
+  html.theme-light .jintro-fstep .ft .cp{ color:#2B2926 !important; }
+  html.theme-light .jintro-cta{ background:#2B2926 !important; color:#fff !important; }
+  html.theme-light .jintro-cta:hover{ background:#000 !important; }
+  html.theme-light .jintro-hide input:checked{ background:#2B2926 !important; border-color:#2B2926 !important; }
+
+  /* 할인쿠폰 팝업 */
+  html.theme-light .jcb-box{ background:#FFFFFF !important; border-color:#EFEBE5 !important; box-shadow:0 30px 80px rgba(60,55,48,.22) !important; }
+  html.theme-light .jcb-x{ background:rgba(0,0,0,.05) !important; color:#A29C93 !important; }
+  html.theme-light .jcb-x:hover{ background:rgba(0,0,0,.10) !important; color:#2B2926 !important; }
+  html.theme-light .jcb-tag{ color:#2B2926 !important; }
+  html.theme-light .jcb-h{ color:#2B2926 !important; }
+  html.theme-light .jcb-h b{ color:#2B2926 !important; }
+  html.theme-light .jcb-calc{ background:#F7F5F1 !important; border-color:#EFEBE5 !important; }
+  html.theme-light .jcb-calc-top{ color:#6E6A61 !important; }
+  html.theme-light .jcb-calc-top .dc{ color:#2B2926 !important; }
+  html.theme-light .jcb-bar{ background:#ECE9E3 !important; }
+  html.theme-light .jcb-bar-fill{ background:linear-gradient(90deg,#BDB6AC,#948E84) !important; }
+  html.theme-light .jcb-bar-pay{ color:#6E6A61 !important; }
+  html.theme-light .jcb-calc-formula{ color:#A29C93 !important; }
+  html.theme-light .jcb-calc-formula b{ color:#6E6A61 !important; }
+  html.theme-light .jcb-group-h{ color:#2B2926 !important; }
+  html.theme-light .jcc .amt .p{ color:#2B2926 !important; }
+  html.theme-light .jcc .chev{ color:#A29C93 !important; }
+  html.theme-light .jcc-body .stp b{ color:#2B2926 !important; }
+  html.theme-light .jcc-cta{ background:#F3F0EA !important; border-color:#EFEBE5 !important; color:#2B2926 !important; }
+  html.theme-light .jcc-cta:hover{ background:#ECE9E3 !important; }
+  html.theme-light .jcg-sum{ background:#F7F5F1 !important; border-color:#EFEBE5 !important; }
+  html.theme-light .jcg-sum .v b{ color:#2B2926 !important; }
+  html.theme-light .jcg-sum .v .pct{ color:#2B2926 !important; }
+  html.theme-light .jcb-foot-cta{ background:#2B2926 !important; color:#fff !important; }
+  html.theme-light .jcb-foot-cta:hover{ background:#000 !important; }
+
+  /* '오픈이벤트' 뱃지: 분홍 계열 → 차콜 아웃라인 (라이트 뉴트럴) */
+  html.theme-light .jcb-box .evt,
+  html.theme-light .jcc .nm .evt{ background:transparent !important; color:#2B2926 !important; border:1px solid #2B2926 !important; }
+
+  /* ===== [v2 개선] 입체감(부드러운 그림자) + 여백 확대 ===== */
+  /* 카드: 얇은 실선 대신 부드럽게 떠 있는 그림자 → 산뜻·고급 */
+  html.theme-light .hub-card{ border-color:#F0ECE5 !important;
+    box-shadow:0 1px 2px rgba(43,41,38,.03), 0 10px 30px rgba(43,41,38,.06) !important; }
+  html.theme-light .hub-card:hover{ border-color:#E4DFD6 !important;
+    box-shadow:0 4px 10px rgba(43,41,38,.05), 0 18px 44px rgba(43,41,38,.11) !important; }
+  /* 흐름 칩: 살짝 떠 있게 */
+  html.theme-light .hub-flow .f{ box-shadow:0 1px 3px rgba(43,41,38,.05) !important; }
+  /* 팝업 박스: 그림자 부드럽게 */
+  html.theme-light .jintro-box, html.theme-light .jcb-box{ box-shadow:0 24px 70px rgba(43,41,38,.16), 0 6px 18px rgba(43,41,38,.08) !important; }
+
+  /* --- 여백 확대: 쿠폰 아코디언 본문이 제목에 붙는 문제 --- */
+  html.theme-light .jcc-body{ padding-top:20px !important; padding-bottom:18px !important; }
+  html.theme-light .jcc-body .d{ margin-bottom:12px !important; line-height:1.75 !important; }
+  html.theme-light .jcc-body .stp{ margin-bottom:16px !important; line-height:1.9 !important; }
+  html.theme-light .jcc{ padding-top:15px !important; padding-bottom:15px !important; }
+  /* 펼쳐진 카드 컨테이너에 살짝 배경 구분 → 어디가 열렸는지 명확 */
+  html.theme-light .jcc[aria-expanded="true"]{ background:#FAF8F5 !important; border-radius:12px 12px 0 0 !important; }
+  html.theme-light .jcc[aria-expanded="true"] + .jcc-body{ background:#FAF8F5 !important; border-radius:0 0 12px 12px !important; margin-bottom:6px !important; }
+  /* 계산 요약 박스 여백 */
+  html.theme-light .jcg-sum{ padding:14px 16px !important; }
+
+  /* ===== [v2.1] 절제된 웜 포인트 (클레이/브론즈 #9E7550) — 초점에만 톡톡 ===== */
+  /* 단계 번호 뱃지 1·2·3 → 웜 (시선 흐름 유도) */
+  html.theme-light .card-step .n{ background:linear-gradient(135deg,#B58A5F 0%,#9E7550 55%,#8A6440 100%) !important; color:#fff !important; }
+  /* 카드 화살표 → 웜 */
+  html.theme-light .card-arrow{ color:#9E7550 !important; }
+  /* 카드 호버: 테두리·그림자 웜 틴트 */
+  html.theme-light .hub-card:hover{ border-color:#9E7550 !important;
+    box-shadow:0 4px 10px rgba(158,117,80,.10), 0 18px 44px rgba(158,117,80,.16) !important; }
+  /* 브랜드 라벨(JIKT·OPTION SELLING) → 웜 */
+  html.theme-light .hub-logo{ color:#9E7550 !important; }
+  /* 쿠폰 배너 아이콘·안내 화살표 → 웜, 호버 테두리 웜 */
+  html.theme-light .jcb-banner .ic{ color:#9E7550 !important; }
+  html.theme-light .jcb-banner .go{ color:#9E7550 !important; }
+  html.theme-light .jcb-banner:hover{ border-color:#9E7550 !important; }
+  /* 주요 숫자/할인율 → 웜 (65%, % 등) */
+  html.theme-light .jcb-h b{ color:#9E7550 !important; }
+  html.theme-light .jcb-calc-top .dc{ color:#9E7550 !important; }
+  html.theme-light .jcc .amt .p{ color:#9E7550 !important; }
+  html.theme-light .jcg-sum .v b{ color:#9E7550 !important; }
+  html.theme-light .jcg-sum .v .pct{ color:#9E7550 !important; }
+  /* 팝업 태그(옵션 투자 자가진단 / 트레이딩 룸 할인 쿠폰) → 웜 */
+  html.theme-light .jintro-tag{ color:#9E7550 !important; }
+  html.theme-light .jcb-tag{ color:#9E7550 !important; }
+  html.theme-light .jcb-group-h{ color:#9E7550 !important; }
+  /* 게이지바: 뉴트럴 그레이 → 웜 그라데이션 (은은하게) */
+  html.theme-light .jcb-bar-fill{ background:linear-gradient(90deg,#BC9670,#9E7550) !important; }
+
+  /* ===== [v4 프리미엄 폴리시] 금융 고급 세련 — 정제 디테일 ===== */
+  /* 배경: 평면 → 아주 은은한 웜 세로 그라데이션 (미묘한 깊이감) */
+  html.theme-light body{ background:linear-gradient(180deg,#EDEAE4 0%,#E8E4DD 55%,#E5E0D8 100%) !important; }
+  /* 상단 앰비언트: 정제된 웜 스포트라이트 (아주 옅게) */
+  html.theme-light #hub-ambient{ background:
+    radial-gradient(1200px 620px at 50% -12%,rgba(158,117,80,.06),transparent 62%),
+    radial-gradient(900px 520px at 100% 108%,rgba(43,41,38,.03),transparent 60%) !important; }
+
+  /* 타이포 정제: 브랜드 라벨 자간 넓게(정돈), 제목 자간 좁게(밀도) */
+  html.theme-light .hub-logo{ letter-spacing:.20em !important; font-weight:800 !important; }
+  html.theme-light .hub-title{ letter-spacing:-.012em !important; }
+  html.theme-light .card-title{ letter-spacing:-.006em !important; }
+  html.theme-light .card-step .t{ letter-spacing:.02em !important; font-weight:700 !important; }
+  html.theme-light .jikt-refresh-btn, html.theme-light .jikt-theme-btn{ letter-spacing:.01em !important; }
+
+  /* 그림자: 더 부드럽고 넓게 ("비싼" 그림자) */
+  html.theme-light .hub-card{ box-shadow:0 1px 2px rgba(43,41,38,.03), 0 16px 44px rgba(43,41,38,.055) !important; }
+  html.theme-light .hub-card:hover{ box-shadow:0 4px 12px rgba(158,117,80,.09), 0 22px 56px rgba(158,117,80,.15) !important; }
+
+  /* 헤어라인·뱃지 미세 정돈 */
+  html.theme-light .card-items{ border-top-color:#EFEAE2 !important; }
+  html.theme-light .card-step .n{ box-shadow:0 3px 8px rgba(158,117,80,.30) !important; letter-spacing:0 !important; }
+  /* 흐름 칩: 테두리 더 옅게 → 가벼운 정제감 */
+  html.theme-light .hub-flow .f{ border-color:#F0ECE5 !important; box-shadow:0 1px 4px rgba(43,41,38,.04) !important; }
+  /* 카드 호버: 부드럽게 떠오름 */
+  html.theme-light .hub-card{ transition:transform .28s cubic-bezier(.22,.61,.36,1), box-shadow .28s ease, border-color .28s ease !important; }
+  html.theme-light .hub-card:hover{ transform:translateY(-4px) !important; }
+  </style>
+
 </head>
 <body>
 <div id="hub-ambient"></div>
@@ -608,7 +786,7 @@ function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.n
   var mx=W()/2,my=H()/2,gx=mx,gy=my,on=false,pts=[];
   window.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;on=true;pts.push({x:mx,y:my,t:performance.now()});if(pts.length>28)pts.shift();},{passive:true});
   window.addEventListener('mouseout',function(e){if(!e.relatedTarget)on=false;});
-  function col(a){return document.documentElement.classList.contains('theme-light')?'rgba(214,152,120,'+a+')':'rgba(120,168,232,'+a+')';}
+  function col(a){return document.documentElement.classList.contains('theme-light')?'rgba(158,117,80,'+a+')':'rgba(120,168,232,'+a+')';}
   function draw(now){
     ctx.clearRect(0,0,W(),H());
     gx+=(mx-gx)*0.085; gy+=(my-gy)*0.085;
