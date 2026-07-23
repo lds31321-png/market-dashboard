@@ -1923,7 +1923,7 @@ input,select,textarea,progress{accent-color:#8B95A1 !important;}
   /* [B] 투자 정보 종합 현황판 '평균 잠재수익률' 바 목록 → 표 형식(순위|종목|게이지|잠재수익률) + 머리글 + 가로격자, 순위 뒤 세로선. PC 전용(모바일은 자체 레이아웃). 스타일만 + 머리글 1개. */
   function potTable(){
     if(window.matchMedia && window.matchMedia('(max-width:640px)').matches) return;
-    var pcts=[].slice.call(document.querySelectorAll('*')).filter(function(e){return e.children.length===0 && e.offsetParent!==null && !e.closest('table') && /^\d{1,2}\.\d{2}%$/.test((e.textContent||'').trim()) && e.parentElement && e.parentElement.parentElement && /[가-힣A-Z]/.test(e.parentElement.parentElement.innerText||'') && e.parentElement.querySelector && e.parentElement.querySelector('div[style*="overflow"]');});
+    var pcts=[].slice.call(document.querySelectorAll('*')).filter(function(e){return e.children.length===0 && e.offsetParent!==null && !e.closest('#rv-kpi') && !e.closest('table') && /^\d{1,2}\.\d{2}%$/.test((e.textContent||'').trim()) && e.parentElement && e.parentElement.parentElement && /[가-힣A-Z]/.test(e.parentElement.parentElement.innerText||'') && e.parentElement.querySelector && e.parentElement.querySelector('div[style*="overflow"]');});
     if(!pcts.length) return;
     var rows=[]; for(var q=0;q<pcts.length;q++){var r=pcts[q].parentElement.parentElement; if(rows.indexOf(r)<0) rows.push(r);}
     var COLS='40px 96px 1fr';
