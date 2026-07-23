@@ -2234,76 +2234,130 @@
   "sv_phase_note": "시장국면 안내\nㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n\n1. 신규 진입에 적용되는 사이징과 거리는 각각 '기준수량의 0.x배 진입'과 '기준행사가 프리의 0.x배 진입'을 의미하며 종합적으로 '1회 진입 기준 총 노출량의 0.x * 0.x배 진입'로 개인 1회 진입 노출량을  축소 진입 검토를 의미\nex) 기준계약수 : 10계약, 기준행사가프리 : 10불, 사이징 0.9배, 거리 0.9배일 경우, 기존 10계약 x 10불 = 100불에서\n1회 진입 기준 총 노출은 (10계약 x 0.9) x (10불 x 0.9)\n                                              = 9 x 9 = 81불 진입 권장으로 조정\n\n2. 기존포지션의 '노출량의 0.x배 축소'는 전일 종가와 현재가의 평균으로 기존 초기 보유 포지션 노출량의 0.x배 만큼을 청산하여 포지션 축소 검토를 의미\nex)  기존 초기 보유 포지션 노출량 100불이고 0.3배 축소일 경우\n       : 30불 청산하여 노출량 70불로 축소\n\n3. 노출캡의 x.x%는 상관성이 높은 섹터내 모든 거래종목의 동일방향 총 노출량을 캡 x.x% 이내로 제한 검토를 의미\nex) 운용자금이 1만불이고 노출캡이 1.5%일 경우\n      : 동일섹터 단일방향 노출캡 150불 제한",
   "sv_phase_note_updated": "1784784781938",
   "weekly_picks": {
-    "title": "07월 14일 추천 포지션",
+    "title": "07월 21일 추천 포지션",
     "strategies": [
       {
-        "date": "07월 14일",
-        "stratType": "풋 매도",
-        "commodities": "크루드 오일",
-        "legs": [
-          {
-            "date": "07월 14일",
-            "name": "크루드 오일",
-            "month": "09월물",
-            "strike": "51.5",
-            "optType": "풋옵션 매도",
-            "premium": "0.06",
-            "contracts": 1,
-            "premUsd": 60
-          }
-        ],
-        "margin": 637,
-        "totalPremUsd": 60,
-        "returnPct": 9.42,
-        "expiry": "2026-08-17",
-        "daysLeft": 34
-      },
-      {
-        "date": "07월 14일",
+        "date": "07월 21일",
         "stratType": "콜 매도",
         "commodities": "천연가스",
         "legs": [
           {
-            "date": "07월 14일",
+            "date": "07월 21일",
             "name": "천연가스",
             "month": "10월물",
-            "strike": "4.75",
+            "strike": "5.6",
             "optType": "콜옵션 매도",
-            "premium": "0.007",
+            "premium": "0.006",
             "contracts": 1,
-            "premUsd": 70
+            "premUsd": 60.0
           }
         ],
-        "margin": 211,
-        "totalPremUsd": 70,
-        "returnPct": 33.18,
+        "margin": 172,
+        "totalPremUsd": 60.0,
+        "returnPct": 34.88,
         "expiry": "2026-09-25",
-        "daysLeft": 73
+        "daysLeft": 66
       },
       {
-        "date": "07월 14일",
-        "stratType": "콜 매도",
+        "date": "07월 21일",
+        "stratType": "양매도",
         "commodities": "골드",
         "legs": [
           {
-            "date": "07월 14일",
+            "date": "07월 21일",
             "name": "골드",
-            "month": "10월물",
-            "strike": "5690.0",
+            "month": "09월물",
+            "strike": "5020.0",
             "optType": "콜옵션 매도",
-            "premium": "1.9",
+            "premium": "1.2",
             "contracts": 1,
-            "premUsd": 190
+            "premUsd": 120.0
+          },
+          {
+            "date": "07월 21일",
+            "name": "골드",
+            "month": "09월물",
+            "strike": "2990.0",
+            "optType": "풋옵션 매도",
+            "premium": "0.8",
+            "contracts": 1,
+            "premUsd": 80.0
           }
         ],
-        "margin": 3409,
-        "totalPremUsd": 190,
-        "returnPct": 5.57,
-        "expiry": "2026-09-24",
-        "daysLeft": 72
+        "margin": 4866,
+        "totalPremUsd": 200.0,
+        "returnPct": 4.11,
+        "expiry": "2026-08-26",
+        "daysLeft": 36
+      },
+      {
+        "date": "07월 21일",
+        "stratType": "풋 매도",
+        "commodities": "S&P500",
+        "legs": [
+          {
+            "date": "07월 21일",
+            "name": "S&P500",
+            "month": "09월물",
+            "strike": "4500.0",
+            "optType": "풋옵션 매도",
+            "premium": "2.5",
+            "contracts": 1,
+            "premUsd": 125.0
+          }
+        ],
+        "margin": 3804,
+        "totalPremUsd": 125.0,
+        "returnPct": 3.29,
+        "expiry": "2026-09-18",
+        "daysLeft": 59
+      },
+      {
+        "date": "07월 21일",
+        "stratType": "풋 매도",
+        "commodities": "크루드 오일",
+        "legs": [
+          {
+            "date": "07월 21일",
+            "name": "크루드 오일",
+            "month": "09월물",
+            "strike": "51.5",
+            "optType": "풋옵션 매도",
+            "premium": "0.03",
+            "contracts": 1,
+            "premUsd": 30.0
+          }
+        ],
+        "margin": 416,
+        "totalPremUsd": 30.0,
+        "returnPct": 7.21,
+        "expiry": "2026-08-17",
+        "daysLeft": 27
+      },
+      {
+        "date": "07월 21일",
+        "stratType": "풋 매도",
+        "commodities": "대두",
+        "legs": [
+          {
+            "date": "07월 21일",
+            "name": "대두",
+            "month": "10월물",
+            "strike": "1060.0",
+            "optType": "풋옵션 매도",
+            "premium": "1.0",
+            "contracts": 2,
+            "premUsd": 100.0
+          }
+        ],
+        "margin": 559,
+        "totalPremUsd": 100.0,
+        "returnPct": 17.89,
+        "expiry": "2026-09-25",
+        "daysLeft": 66
       }
     ],
-    "updated_at": "2026-07-16T07:19:03.997642Z"
+    "updated_at": "2026-07-23T05:50:14.053589Z"
   },
   "option_holdings": {
     "updated": "2026-07-21T06:27:23.825Z",
