@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260724-131737">
+<meta name="jikt-build" content="20260726-101721">
 <script>
 // [라이트 테마] 화면 요소(DOM)의 인라인 파랑 → 살몬. 캔버스/차트는 style속성에 색이 없어 안전.
 var _jiktMO=null;
@@ -44,7 +44,7 @@ window.addEventListener('storage',function(e){if(e.key==='jikt_theme'){var wl=(e
 
 /* [자동 최신화 v2] 배포 빌드버전 vs 서버 ver.txt 비교 → 다르면 캐시우회 1회 새로고침(무한루프 방지) */
 (function(){try{
-  var BUILD='20260724-131737';
+  var BUILD='20260726-101721';
   if(BUILD.charAt(0)==='_')return;
   fetch('../ver.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null;}).then(function(v){
     if(!v)return; v=v.trim(); if(!v||v===BUILD)return;
@@ -12253,5 +12253,6 @@ body{padding-bottom:0}
   else document.addEventListener('DOMContentLoaded', function(){ wrap(); initialCover(); });
 })();
 </script>
+<script>/*[중복카드 자동정리 가드] 어떤 환경에서든 시장현황 카드가 중복 생성되면 자동 제거*/!function(){function d(){try{var m={};Array.prototype.forEach.call(document.querySelectorAll(".ov-inst-card-v2"),function(c){var id=c.id||"";if(!id)return;(m[id]=m[id]||[]).push(c)});Object.keys(m).forEach(function(id){var a=m[id];if(a.length>1){a.sort(function(x,y){var xg=x.closest&&x.closest("#ov-inst-grid")?1:0,yg=y.closest&&y.closest("#ov-inst-grid")?1:0;if(xg!==yg)return yg-xg;return (y.textContent||"").length-(x.textContent||"").length});for(var i=1;i<a.length;i++){if(a[i].parentNode)a[i].parentNode.removeChild(a[i])}}})}catch(e){}}function s(){d();var n=0,iv=setInterval(function(){d();if(++n>18)clearInterval(iv)},700)}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",s);else s()}();</script>
 </body>
 </html>
