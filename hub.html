@@ -703,7 +703,7 @@ body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font
   <button class="jikt-refresh-btn" onclick="jiktRefresh()"><svg class="refresh-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v6h-6"/></svg>최신 데이터로 업데이트</button>
   <button class="jikt-viewmode-btn" id="jiktViewModeBtn" onclick="jiktToggleViewMode()"><span id="jiktViewModeLabel">PC 버전</span></button>
   <button class="jikt-theme-btn" id="jiktThemeBtn" onclick="jiktToggleTheme()"><span class="jt-label">라이트 모드</span></button>
-  <button class="jikt-guide-btn" onclick="jiktOpenGuide('e8y6W3FIprs','메인 대시보드 가이드')"><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="margin-right:2px"><path d="M8 5v14l11-7z"/></svg>가이드 영상</button>
+  <button class="jikt-guide-btn" onclick="jiktOpenGuide('e8y6W3FIprs','메인 대시보드 가이드')"><svg width="22" height="16" viewBox="0 0 24 17" style="flex-shrink:0" aria-hidden="true"><rect width="24" height="17" rx="5" fill="#FF3B30"/><path d="M9.5 4.6 L16.4 8.5 L9.5 12.4 Z" fill="#fff"/></svg>가이드 영상</button>
 </div>
 
 <div class="hub-flow">
@@ -1413,8 +1413,12 @@ jiktUpdateViewModeLabel();
 })();
 </script>
 <style>
-.jikt-guide-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 15px;border:1.5px solid var(--cyan,#3ecfaa);border-radius:8px;color:var(--cyan,#3ecfaa);font-size:15px;font-weight:700;background:transparent;cursor:pointer;transition:all .15s;font-family:inherit}
-.jikt-guide-btn:hover{background:var(--cyan,#3ecfaa);color:#fff}
+@keyframes jiktPulseGuide{0%{box-shadow:0 0 0 0 rgba(20,201,170,.55)}70%{box-shadow:0 0 0 15px rgba(20,201,170,0)}100%{box-shadow:0 0 0 0 rgba(20,201,170,0)}}
+.jikt-guide-btn{position:absolute;right:calc(100% + 181px);top:50%;transform:translateY(-50%);z-index:9999;white-space:nowrap;display:inline-flex;align-items:center;gap:7px;background:#1E2027;color:#14C9AA;border:1.7px solid #14C9AA;border-radius:999px;padding:11px 17px;font-size:14px;font-weight:800;font-family:'Noto Sans KR',sans-serif;cursor:pointer;animation:jiktPulseGuide 1.9s infinite}
+.jikt-guide-btn:hover{background:#14C9AA;color:#08201B;animation:none;box-shadow:0 0 14px rgba(20,201,170,.55)}
+html.theme-light .jikt-guide-btn{background:#ffffff;color:#0E9E88;border-color:#14C9AA}
+html.theme-light .jikt-guide-btn:hover{background:#0E9E88;color:#fff;animation:none}
+@media(max-width:640px){.jikt-guide-btn{position:static;right:auto;top:auto;transform:none;margin:10px auto 0;padding:10px 16px;font-size:13px}}
 #jiktGuideModal{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:20px}
 #jiktGuideModal.on{display:flex}
 .jgm-box{position:relative;width:min(960px,96vw)}
