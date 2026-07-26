@@ -703,7 +703,7 @@ body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font
   <button class="jikt-refresh-btn" onclick="jiktRefresh()"><svg class="refresh-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v6h-6"/></svg>최신 데이터로 업데이트</button>
   <button class="jikt-viewmode-btn" id="jiktViewModeBtn" onclick="jiktToggleViewMode()"><span id="jiktViewModeLabel">PC 버전</span></button>
   <button class="jikt-theme-btn" id="jiktThemeBtn" onclick="jiktToggleTheme()"><span class="jt-label">라이트 모드</span></button>
-  <button class="jikt-guide-btn" onclick="jiktOpenGuide('e8y6W3FIprs','메인 대시보드 가이드')"><svg width="22" height="16" viewBox="0 0 24 17" style="flex-shrink:0" aria-hidden="true"><rect width="24" height="17" rx="5" fill="#FF3B30"/><path d="M9.5 4.6 L16.4 8.5 L9.5 12.4 Z" fill="#fff"/></svg>가이드 영상</button>
+  
 </div>
 
 <div class="hub-flow">
@@ -717,6 +717,8 @@ body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font
   <div class="ln"></div>
   <div class="st"><div class="c">3</div><div class="l">거시 대비</div></div>
 </div>
+
+<div style="display:flex;justify-content:flex-end;margin:0 0 12px"><button class="jikt-guide-btn" onclick="jiktOpenGuide('e8y6W3FIprs','메인 대시보드 가이드')"><svg width="22" height="16" viewBox="0 0 24 17" style="flex-shrink:0" aria-hidden="true"><rect width="24" height="17" rx="5" fill="#FF3B30"/><path d="M9.5 4.6 L16.4 8.5 L9.5 12.4 Z" fill="#fff"/></svg>가이드 영상</button></div>
 
 <div class="jcb-banner" id="jcb-banner" role="button" tabindex="0">
   <span class="tx"><span class="t"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8z"/><path d="M14 6v12"/></svg></span>트레이딩 룸 <b>최대 65% 할인</b></span><span class="s">정가 <span class="jcb-old">200,000원</span> → 최저 <span class="jcb-new">70,000원</span><span class="sep-dot"> · </span>쿠폰 합산</span></span>
@@ -1413,12 +1415,11 @@ jiktUpdateViewModeLabel();
 })();
 </script>
 <style>
-@keyframes jiktPulseGuide{0%{box-shadow:0 0 0 0 rgba(20,201,170,.55)}70%{box-shadow:0 0 0 15px rgba(20,201,170,0)}100%{box-shadow:0 0 0 0 rgba(20,201,170,0)}}
-.jikt-guide-btn{position:absolute;right:calc(100% + 181px);top:50%;transform:translateY(-50%);z-index:9999;white-space:nowrap;display:inline-flex;align-items:center;gap:7px;background:#1E2027;color:#14C9AA;border:1.7px solid #14C9AA;border-radius:999px;padding:11px 17px;font-size:14px;font-weight:800;font-family:'Noto Sans KR',sans-serif;cursor:pointer;animation:jiktPulseGuide 1.9s infinite}
-.jikt-guide-btn:hover{background:#14C9AA;color:#08201B;animation:none;box-shadow:0 0 14px rgba(20,201,170,.55)}
-html.theme-light .jikt-guide-btn{background:#ffffff;color:#0E9E88;border-color:#14C9AA}
-html.theme-light .jikt-guide-btn:hover{background:#0E9E88;color:#fff;animation:none}
-@media(max-width:640px){.jikt-guide-btn{position:static;right:auto;top:auto;transform:none;margin:10px auto 0;padding:10px 16px;font-size:13px}}
+.jikt-guide-btn{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;background:#1E2027;color:#667085;border:1.6px solid #667085;border-radius:999px;padding:11px 18px;font-size:14px;font-weight:800;font-family:'Noto Sans KR',sans-serif;cursor:pointer}
+.jikt-guide-btn:hover{background:#667085;color:#ffffff}
+html.theme-light .jikt-guide-btn{background:#ffffff;color:#d9664a;border-color:#d9664a;animation:jiktPulseWarm 1.8s infinite}
+html.theme-light .jikt-guide-btn:hover{background:#d9664a;color:#fff;animation:none}
+@media(max-width:640px){.jikt-guide-btn{padding:10px 16px;font-size:13px}}
 #jiktGuideModal{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:20px}
 #jiktGuideModal.on{display:flex}
 .jgm-box{position:relative;width:min(960px,96vw)}
