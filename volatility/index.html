@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="jikt-build" content="20260727-122910">
+<meta name="jikt-build" content="20260727-125540">
 <script>
 // [라이트 테마] 화면 요소(DOM)의 인라인 파랑 → 살몬. 캔버스/차트는 style속성에 색이 없어 안전.
 var _jiktMO=null;
@@ -44,7 +44,7 @@ window.addEventListener('storage',function(e){if(e.key==='jikt_theme'){var wl=(e
 
 /* [자동 최신화 v2] 배포 빌드버전 vs 서버 ver.txt 비교 → 다르면 캐시우회 1회 새로고침(무한루프 방지) */
 (function(){try{
-  var BUILD='20260727-122910';
+  var BUILD='20260727-125540';
   if(BUILD.charAt(0)==='_')return;
   fetch('../ver.txt?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():null;}).then(function(v){
     if(!v)return; v=v.trim(); if(!v||v===BUILD)return;
@@ -12275,15 +12275,17 @@ body{padding-bottom:0}
   </div>
 </div>
 <script>
-var JIKT_TAB_GUIDE={'데이터 입력':{id:'OrhZbgOGLy8',title:'데이터 입력 가이드'},'시장 현황':{id:'DBYZmErLIj4',title:'시장 현황 가이드'}};
+var JIKT_TAB_GUIDE={'데이터 입력':{id:'OrhZbgOGLy8',title:'데이터 입력 가이드'}};
+var JIKT_SANHYUN_LIST={id:'DBYZmErLIj4',title:'시장 현황 가이드'},JIKT_SANHYUN_DETAIL={id:'ox6LS2xN1KM',title:'종목 상세 가이드'};
 function jiktActiveTabName(){var el=document.querySelector('.nav-tab.active');return el?el.textContent.replace(/\s+/g,' ').trim():'';}
-function jiktSyncTabGuide(){var b=document.getElementById('jiktTabGuideBtn');if(!b)return;var nm=jiktActiveTabName(),hit=null;for(var k in JIKT_TAB_GUIDE){if(nm.indexOf(k)>=0){hit=JIKT_TAB_GUIDE[k];break;}}if(hit){b.style.display='inline-flex';b.setAttribute('data-vid',hit.id);b.setAttribute('data-title',hit.title);}else{b.style.display='none';}}
+function jiktCurrentGuide(){var nm=jiktActiveTabName();if(nm.indexOf('시장 현황')>=0){var dv=document.getElementById('ov-detail-view');var inDetail=dv&&window.getComputedStyle(dv).display!=='none';return inDetail?JIKT_SANHYUN_DETAIL:JIKT_SANHYUN_LIST;}for(var k in JIKT_TAB_GUIDE){if(nm.indexOf(k)>=0)return JIKT_TAB_GUIDE[k];}return null;}
+function jiktSyncTabGuide(){var b=document.getElementById('jiktTabGuideBtn');if(!b)return;var g=jiktCurrentGuide();if(g){b.style.display='inline-flex';b.setAttribute('data-vid',g.id);b.setAttribute('data-title',g.title);}else{b.style.display='none';}}
 function jiktOpenActiveTabGuide(){var b=document.getElementById('jiktTabGuideBtn');if(b&&b.getAttribute('data-vid'))jiktOpenGuide(b.getAttribute('data-vid'),b.getAttribute('data-title'));}
 function jiktOpenGuide(vid,title){var m=document.getElementById('jiktGuideModal'),s=document.getElementById('jiktGuideSlot');if(title)document.getElementById('jiktGuideTitle').textContent=title;s.innerHTML='<iframe src="https://www.youtube.com/embed/'+vid+'?autoplay=1&rel=0&modestbranding=1" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>';m.classList.add('on');document.body.style.overflow='hidden';}
 function jiktCloseGuide(){var m=document.getElementById('jiktGuideModal');document.getElementById('jiktGuideSlot').innerHTML='';m.classList.remove('on');document.body.style.overflow='';}
 document.addEventListener('click',function(e){var t=e.target&&e.target.closest?e.target.closest('.nav-tab'):null;if(t)setTimeout(jiktSyncTabGuide,60);},true);
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.getElementById('jiktGuideModal').classList.contains('on'))jiktCloseGuide();});
-(function(){function go(){setTimeout(jiktSyncTabGuide,150);}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
+(function(){function go(){setTimeout(function(){jiktSyncTabGuide();var dv=document.getElementById('ov-detail-view');if(dv&&window.MutationObserver){new MutationObserver(jiktSyncTabGuide).observe(dv,{attributes:true,attributeFilter:['style','class']});}},200);}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();})();
 </script>
 </body>
 </html>
