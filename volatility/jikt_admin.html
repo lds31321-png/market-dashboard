@@ -216,7 +216,7 @@ window.JIKT_API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';   /* TODO 
   function loadUsers() {
     var box = document.getElementById('users-table');
     box.innerHTML = '로딩 중...';
-    api('GET', '/admin/users?page=1&pageSize=50').then(function(res){
+    api('GET', '/admin/users?page=1&pageSize=1000').then(function(res){
       if (!res.ok) return box.innerHTML = '<div class="empty">불러오기 실패</div>';
       if (res.users.length === 0) return box.innerHTML = '<div class="empty">회원 없음</div>';
       document.getElementById('users-meta').textContent = '전체 ' + res.total + '명';
