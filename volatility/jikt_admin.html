@@ -28,6 +28,7 @@
   .badge-trial{background:rgba(254,229,0,.20);color:#9a7d00}
   .badge-free{background:rgba(0,0,0,.06);color:#7a7368}
   .badge-suspended{background:rgba(200,48,48,.10);color:#c83030}
+  .badge-expired{background:rgba(217,102,74,.14);color:#c05a3a}
   .btn{padding:6px 12px;border-radius:6px;border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;margin-right:4px}
   .btn-primary{background:#d9664a;color:#fff}
   .btn-ghost{background:rgba(217,102,74,.10);color:#d9664a;border:1px solid rgba(217,102,74,.30)}
@@ -78,6 +79,7 @@
       <h2>회원 목록 <span class="meta" id="users-meta"></span></h2>
       <div style="margin:2px 0 14px;font-size:12.5px;color:#8B95A1;line-height:2">
         <span class="badge badge-paid">유료</span> 결제(30일 부여)된 회원 &nbsp;·&nbsp;
+        <span class="badge badge-expired">만료</span> 유료였다가 기간 만료 &nbsp;·&nbsp;
         <span class="badge badge-trial">체험</span> 가입 7일 이내(자동 체험) &nbsp;·&nbsp;
         <span class="badge badge-free">무료</span> 체험 만료·미결제 &nbsp;·&nbsp;
         <span class="badge badge-suspended">정지</span> 이용 정지된 회원
@@ -188,12 +190,14 @@ window.JIKT_API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';   /* TODO 
 
   function loadVisits() {
     var box = document.getElementById('visits-box'); if (!box) return;
-    api('GET', '/admin/visits?days=14').then(function(res){
+    api('GET', '/admin/visits?days=3650').then(function(res){
       if (!res || !res.ok || !res.stats) { box.textContent = '방문 통계 불러오기 실패'; return; }
       var s = res.stats, today = s[0] || {unique:0,total:0};
       var rows = s.map(function(d){ return '<tr><td style="padding:4px 10px">'+d.date+'</td><td style="padding:4px 10px;text-align:right;font-weight:700;color:#4593FC">'+d.unique+'</td><td style="padding:4px 10px;text-align:right">'+d.total+'</td></tr>'; }).join('');
-      box.innerHTML = '<div style="font-weight:800;color:#1a2330;margin-bottom:8px">방문 통계 — 오늘 순방문 <span style="color:#4593FC">'+today.unique+'명</span> · 총 <span style="color:#4593FC">'+today.total+'회</span></div>'
-        + '<table style="width:100%;border-collapse:collapse;font-size:12.5px"><tr style="color:#6b7280"><th style="text-align:left;padding:4px 10px">날짜</th><th style="text-align:right;padding:4px 10px">순방문자</th><th style="text-align:right;padding:4px 10px">총 방문</th></tr>'+rows+'</table>';
+      box.innerHTML = '<div id="visits-head" style="font-weight:800;color:#1a2330;cursor:pointer;display:flex;align-items:center;justify-content:space-between"><span>방문 통계 — 오늘 순방문 <span style="color:#4593FC">'+today.unique+'명</span> · 총 <span style="color:#4593FC">'+today.total+'회</span> <span style="color:#8B95A1;font-weight:600;font-size:12px">(전체 '+s.length+'일 누적)</span></span><span id="visits-arrow" style="color:#8B95A1;font-size:13px;margin-left:8px">▼</span></div>'
+        + '<div id="visits-detail" style="display:none;margin-top:8px"><table style="width:100%;border-collapse:collapse;font-size:12.5px"><tr style="color:#6b7280"><th style="text-align:left;padding:4px 10px">날짜</th><th style="text-align:right;padding:4px 10px">순방문자</th><th style="text-align:right;padding:4px 10px">총 방문</th></tr>'+rows+'</table></div>';
+      var _vh = document.getElementById('visits-head');
+      if (_vh) _vh.onclick = function(){ var t=document.getElementById('visits-detail'); var a=document.getElementById('visits-arrow'); var o=t.style.display==='none'; t.style.display=o?'block':'none'; a.textContent=o?'▲':'▼'; };
     }).catch(function(){ box.textContent = '방문 통계 오류'; });
   }
 
@@ -219,7 +223,10 @@ window.JIKT_API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';   /* TODO 
     api('GET', '/admin/users?page=1&pageSize=1000').then(function(res){
       if (!res.ok) return box.innerHTML = '<div class="empty">불러오기 실패</div>';
       if (res.users.length === 0) return box.innerHTML = '<div class="empty">회원 없음</div>';
-      document.getElementById('users-meta').textContent = '전체 ' + res.total + '명';
+      var _now = Date.now();
+      var _paidNow = res.users.filter(function(u){ return u.status!=='suspended' && u.paidUntil && new Date(u.paidUntil).getTime() > _now; }).length;
+      var _ever = res.users.filter(function(u){ return u.paidUntil; }).length;
+      document.getElementById('users-meta').innerHTML = '전체 ' + res.total + '명 · 유료이력 ' + _ever + '명 (현재 유료 ' + _paidNow + ' · 만료 ' + (_ever - _paidNow) + ')';
       var rows = res.users.map(function(u){
         return '<tr><td>' + esc(u.email) + '</td><td>' + esc(u.name) + '</td>'
           + '<td>' + u.provider + '</td>'
@@ -313,6 +320,7 @@ window.JIKT_API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';   /* TODO 
     var now = Date.now();
     if (u.paidUntil && new Date(u.paidUntil).getTime() > now) return '<span class="badge badge-paid">유료</span>';
     if (u.trialUntil && new Date(u.trialUntil).getTime() > now) return '<span class="badge badge-trial">체험</span>';
+    if (u.paidUntil) return '<span class="badge badge-expired">만료</span>';
     return '<span class="badge badge-free">무료</span>';
   }
 })();
