@@ -759,6 +759,68 @@ body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font
 
 </div>
 
+<!-- [2026-07-30] 수강 후기 마퀴 -->
+<style id="jikt-reviews-style">
+.jikt-reviews{--jrv-card:#191B21;--jrv-line:#2E323B;--jrv-name:#F0F2F5;--jrv-text:#C6CBD2;--jrv-muted:#8A9099;--jrv-headline:#EDEFF2;width:100%;max-width:1180px;margin:34px auto 46px;padding:32px 22px 6px;box-sizing:border-box;}
+html.theme-light .jikt-reviews{--jrv-card:#ffffff;--jrv-line:rgba(0,0,0,.09);--jrv-name:#1a1816;--jrv-text:#4a423c;--jrv-muted:#9b938c;--jrv-headline:#1a1816;}
+.jikt-rv-head{text-align:center;margin-bottom:22px;}
+.jikt-rv-title{font-size:22px;font-weight:800;color:var(--jrv-headline);letter-spacing:-0.4px;}
+.jikt-rv-sub{font-size:13.5px;color:var(--jrv-muted);margin-top:7px;}
+.jikt-rv-viewport{position:relative;overflow:hidden;width:100%;-webkit-mask:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);mask:linear-gradient(90deg,transparent 0,#000 5%,#000 95%,transparent 100%);}
+.jikt-rv-track{display:flex;gap:16px;width:max-content;align-items:stretch;animation:jiktRvScroll 62s linear infinite;will-change:transform;}
+.jikt-rv-viewport:hover .jikt-rv-track{animation-play-state:paused;}
+.jikt-rv-card{flex:0 0 300px;width:300px;box-sizing:border-box;background:var(--jrv-card);border:1px solid var(--jrv-line);border-radius:16px;padding:20px 22px 22px;box-shadow:0 4px 18px rgba(0,0,0,.10);display:flex;flex-direction:column;}
+.jikt-rv-stars{color:#F5C518;font-size:15px;letter-spacing:2px;line-height:1;}
+.jikt-rv-name{font-weight:700;font-size:14px;margin-top:13px;color:var(--jrv-name);}
+.jikt-rv-date{font-size:12px;color:var(--jrv-muted);margin-top:3px;}
+.jikt-rv-text{font-size:13.5px;line-height:1.62;color:var(--jrv-text);margin-top:13px;word-break:keep-all;}
+.jikt-rv-ctarow{text-align:center;margin-top:24px;}
+.jikt-rv-cta{display:inline-flex;align-items:center;gap:6px;padding:12px 26px;border-radius:999px;background:#03C75A;color:#fff;font-weight:700;font-size:14px;text-decoration:none;box-shadow:0 4px 14px rgba(3,199,90,.30);transition:filter .15s,transform .15s;}
+.jikt-rv-cta:hover{filter:brightness(1.06);transform:translateY(-1px);}
+@keyframes jiktRvScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+@media (prefers-reduced-motion:reduce){.jikt-rv-track{animation:none;}}
+@media (max-width:640px){.jikt-rv-card{flex:0 0 260px;width:260px;}.jikt-rv-title{font-size:19px;}}
+</style>
+<section class="jikt-reviews">
+  <div class="jikt-rv-head">
+    <div class="jikt-rv-title">수강 후기</div>
+    <div class="jikt-rv-sub">수강생들의 솔직한 후기입니다</div>
+  </div>
+  <div class="jikt-rv-viewport"><div class="jikt-rv-track" id="jikt-rv-track"></div></div>
+  <div class="jikt-rv-ctarow">
+    <a class="jikt-rv-cta" href="https://cafe.naver.com/f-e/cafes/29971409/menus/52?viewType=W" target="_blank" rel="noopener">네이버 카페에서 전체 후기 보기 · 작성하기 ›</a>
+  </div>
+</section>
+<script id="jikt-reviews-script">(function(){
+  function build(){
+    var track=document.getElementById('jikt-rv-track');
+    if(!track||track.childElementCount)return;
+    var reviews=[
+      {n:'K**************',d:'8일 전',t:'꼭 지켜야 하는 원칙들을 예시를 들어서 잘 설명해 주셨습니다. 감사합니다.'},
+      {n:'K**************',d:'8일 전',t:'전체내용을 빠른 시간에 해 주셔서 감사합니다. 마지막 충고 새기겠습니다.'},
+      {n:'K**************',d:'8일 전',t:'자세한 설명 감사합니다. 전체적인 방향을 잡을 수 있었습니다. 실전에 적용하기 위해서는 천천히 하나씩 해 보아야 할 것 같습니다.'},
+      {n:'Y***',d:'9일 전',t:'매매 뿐만 아니라 자금관리나 심리관리 까지 배울 수 있어서 나의 거래에 대한 반성도 하고 향후 거래에 대한 계획을 점검해 볼 수 있었습니다.'},
+      {n:'자****',d:'9일 전',t:'옵션을 어렴풋이 알고 있었는데, 옵션이 무엇인지 잘 알게되었습니다. 친절하고 상세한 설명을 통해 많은 도움이 되었습니다. 고급 강의 전략이 기대됩니다. 감사합니다.'},
+      {n:'이**',d:'10일 전',t:'옵션에 대해 고민을 하던 중에 이렇게 체계적인 커리큘럼을 통해 명확한 방향성을 제시해 줄 양질의 교육을 만들어 주셔서 감사합니다. 교육 커리큘럼을 성실히 잘 따라가도록 하겠습니다. 감사합니다.'},
+      {n:'황**',d:'10일 전',t:'얼른 해보고 싶어서 가슴이 웅장해지네요 ㅋㅋㅋ'},
+      {n:'박**',d:'10일 전',t:'자세하고 진심이 느껴지는 좋은 강의입니다. 시간이 되는대로 열심히 해보겠습니다.'}
+    ];
+    function card(r){
+      var c=document.createElement('div');c.className='jikt-rv-card';
+      var s=document.createElement('div');s.className='jikt-rv-stars';s.textContent='★★★★★';
+      var nm=document.createElement('div');nm.className='jikt-rv-name';nm.textContent=r.n;
+      var dt=document.createElement('div');dt.className='jikt-rv-date';dt.textContent=r.d;
+      var tx=document.createElement('div');tx.className='jikt-rv-text';tx.textContent=r.t;
+      c.appendChild(s);c.appendChild(nm);c.appendChild(dt);c.appendChild(tx);
+      return c;
+    }
+    reviews.concat(reviews).forEach(function(r){track.appendChild(card(r));});
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',build);}else{build();}
+})();</script>
+<!-- /수강 후기 마퀴 -->
+
+
 <script>
 /* [2026-06-12] 최신 데이터로 업데이트 — 클릭 시 캐시 우회 강제 새로고침. 그 경유로 들어가는 대시보드 링크도 캐시버스트 */
 function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.now()); }catch(e){ location.reload(); } }
