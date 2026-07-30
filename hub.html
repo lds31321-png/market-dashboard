@@ -845,6 +845,44 @@ html.theme-light .jikt-scrollcue .sc-t,html.theme-light .jikt-scrollcue .sc-a{co
   if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',build);}else{build();}
 })();</script>
 <!-- /수강 후기 마퀴 -->
+<!-- [2026-07-30] 강의·트레이딩키 신청 -->
+<style id="jikt-products-style">
+.jikt-products{--jp-card:#191B21;--jp-line:#2E323B;--jp-title:#F0F2F5;--jp-desc:#AEB4BD;--jp-tag:#8A9099;width:100%;max-width:900px;margin:0 auto 74px;padding:0 22px;box-sizing:border-box;}
+html.theme-light .jikt-products{--jp-card:#ffffff;--jp-line:rgba(0,0,0,.09);--jp-title:#1a1816;--jp-desc:#6b625a;--jp-tag:#b0a89f;}
+.jikt-products-head{text-align:center;margin-bottom:26px;}
+.jikt-products-title{font-size:22px;font-weight:800;color:var(--jp-title);letter-spacing:-.4px;}
+.jikt-products-sub{font-size:13.5px;color:var(--jp-desc);margin-top:7px;}
+.jikt-products-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.jikt-product{background:var(--jp-card);border:1px solid var(--jp-line);border-radius:18px;padding:28px 26px 26px;display:flex;flex-direction:column;box-shadow:0 6px 24px rgba(0,0,0,.08);text-decoration:none;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;}
+.jikt-product:hover{transform:translateY(-4px);box-shadow:0 12px 34px rgba(217,102,74,.16);border-color:#d9664a;}
+.jp-tag{font-size:12px;font-weight:800;letter-spacing:.09em;color:var(--jp-tag);}
+.jp-name{font-size:21px;font-weight:800;color:var(--jp-title);margin-top:11px;letter-spacing:-.3px;}
+.jp-desc{font-size:14px;line-height:1.6;color:var(--jp-desc);margin-top:11px;word-break:keep-all;flex:1;}
+.jp-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:24px;padding:15px 24px;border-radius:13px;background:#d9664a;color:#fff;font-weight:800;font-size:15.5px;box-shadow:0 5px 16px rgba(217,102,74,.30);transition:filter .15s;}
+.jikt-product:hover .jp-btn{filter:brightness(1.06);}
+@media (max-width:640px){.jikt-products-grid{grid-template-columns:1fr;}.jp-name{font-size:20px;}}
+</style>
+<section class="jikt-products">
+  <div class="jikt-products-head">
+    <div class="jikt-products-title">강의 · 트레이딩키 신청</div>
+    <div class="jikt-products-sub">원하는 상품을 선택해 신청하세요</div>
+  </div>
+  <div class="jikt-products-grid">
+    <a class="jikt-product" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener">
+      <div class="jp-tag">TRADING KEY</div>
+      <div class="jp-name">트레이딩키</div>
+      <div class="jp-desc">실전 매매에 활용하는 트레이딩키 단독 상품입니다.</div>
+      <span class="jp-btn">트레이딩키 신청하기 →</span>
+    </a>
+    <a class="jikt-product" href="https://optionacademy.liveklass.com/cu/B9CwtJag" target="_blank" rel="noopener">
+      <div class="jp-tag">ALL-IN-ONE</div>
+      <div class="jp-name">온라인 강의 풀 패키지</div>
+      <div class="jp-desc">온라인 강의 + 트레이딩키를 한 번에 담은 올인원 풀 패키지입니다.</div>
+      <span class="jp-btn">풀 패키지 신청하기 →</span>
+    </a>
+  </div>
+</section>
+<!-- /강의·트레이딩키 신청 -->
 
 
 <script>
