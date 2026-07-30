@@ -762,7 +762,7 @@ body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font
 <!-- [2026-07-30] 수강 후기 마퀴 -->
 <style id="jikt-reviews-style">
 html{overflow-x:hidden;}
-.jikt-reviews{--jrv-card:#191B21;--jrv-line:#2E323B;--jrv-name:#F0F2F5;--jrv-text:#C6CBD2;--jrv-muted:#8A9099;--jrv-headline:#EDEFF2;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-top:34px;margin-bottom:52px;padding:30px 0 10px;box-sizing:border-box;overflow:hidden;}
+.jikt-reviews{--jrv-card:#191B21;--jrv-line:#2E323B;--jrv-name:#F0F2F5;--jrv-text:#C6CBD2;--jrv-muted:#8A9099;--jrv-headline:#EDEFF2;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-top:110px;margin-bottom:56px;padding:30px 0 10px;box-sizing:border-box;overflow:hidden;}
 html.theme-light .jikt-reviews{--jrv-card:#ffffff;--jrv-line:rgba(0,0,0,.09);--jrv-name:#1a1816;--jrv-text:#4a423c;--jrv-muted:#9b938c;--jrv-headline:#1a1816;}
 .jikt-rv-viewport{position:relative;overflow:hidden;width:100%;}
 .jikt-rv-track{display:flex;gap:16px;width:max-content;align-items:stretch;padding:0 16px;animation:jiktRvScroll 66s linear infinite;will-change:transform;}
@@ -837,7 +837,7 @@ html.theme-light .jikt-scrollcue .sc-t,html.theme-light .jikt-scrollcue .sc-a{co
       if('IntersectionObserver' in window && vp){
         var io=new IntersectionObserver(function(es){
           es.forEach(function(e){ if(e.isIntersecting){cue.classList.remove('show');}else{cue.classList.add('show');} });
-        },{threshold:0.55});
+        },{threshold:0.1});
         io.observe(vp);
       }else{ cue.classList.add('show'); }
     }
