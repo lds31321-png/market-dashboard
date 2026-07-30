@@ -775,18 +775,21 @@ html.theme-light .jikt-reviews{--jrv-card:#ffffff;--jrv-line:rgba(0,0,0,.09);--j
 .jikt-rv-name{font-weight:700;font-size:14px;margin-top:13px;color:var(--jrv-name);}
 .jikt-rv-date{font-size:12px;color:var(--jrv-muted);margin-top:3px;}
 .jikt-rv-text{font-size:13.5px;line-height:1.62;color:var(--jrv-text);margin-top:13px;word-break:keep-all;}
-.jikt-rv-ctarow{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px;padding:0 22px;}
-.jikt-rv-cta{display:inline-flex;align-items:center;gap:7px;padding:12px 22px;border-radius:999px;background:#03C75A;color:#fff;font-weight:700;font-size:13.5px;text-decoration:none;box-shadow:0 4px 14px rgba(3,199,90,.28);transition:filter .15s,transform .15s;}
-.jikt-rv-cta:hover{filter:brightness(1.07);transform:translateY(-1px);}
-.jikt-rv-cta svg{opacity:.9;}
-html.theme-light .jikt-rv-cta{box-shadow:0 4px 14px rgba(3,199,90,.24);}
+.jikt-rv-ctarow{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:30px;padding:0 22px;}
+.jikt-rv-cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:210px;padding:16px 30px;border-radius:14px;font-weight:800;font-size:15px;text-decoration:none;background:#1E2027;color:#E4E8EE;border:1.6px solid #9AA3B2;transition:background .15s,color .15s,transform .15s;}
+.jikt-rv-cta:hover{background:#9AA3B2;color:#14161B;transform:translateY(-2px);}
+html.theme-light .jikt-rv-cta{background:#ffffff;color:#2B2926;border:1.6px solid #2B2926;}
+html.theme-light .jikt-rv-cta:hover{background:#2B2926;color:#ffffff;}
+.jikt-rv-cta svg{flex-shrink:0;}
 @keyframes jiktRvScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-.jikt-scrollcue{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:120;display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;background:#03C75A;color:#fff;font-weight:800;font-size:13.5px;border:none;cursor:pointer;box-shadow:0 7px 22px rgba(3,199,90,.42);opacity:0;pointer-events:none;transition:opacity .45s ease;animation:jiktCueBounce 1.55s ease-in-out infinite;}
+.jikt-scrollcue{position:fixed;left:50%;bottom:50px;transform:translateX(-50%);z-index:120;display:flex;flex-direction:column;align-items:center;gap:5px;background:transparent;border:none;cursor:pointer;padding:6px 12px;opacity:0;pointer-events:none;transition:opacity .45s ease;animation:jiktCueBounce 1.6s ease-in-out infinite;}
 .jikt-scrollcue.show{opacity:1;pointer-events:auto;}
-html.theme-light .jikt-scrollcue{box-shadow:0 7px 22px rgba(3,199,90,.34);}
-@keyframes jiktCueBounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(7px);}}
+.jikt-scrollcue .sc-t{font-size:15px;font-weight:800;letter-spacing:-.2px;color:#EDEFF2;}
+.jikt-scrollcue .sc-a{display:flex;color:#EDEFF2;}
+html.theme-light .jikt-scrollcue .sc-t,html.theme-light .jikt-scrollcue .sc-a{color:#1a1816;}
+@keyframes jiktCueBounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
 @media (prefers-reduced-motion:reduce){.jikt-rv-track{animation:none;}.jikt-scrollcue{animation:none;}}
-@media (max-width:640px){.jikt-rv-card{flex:0 0 262px;width:262px;}.jikt-rv-title{font-size:19px;}.jikt-rv-cta{font-size:13px;padding:11px 18px;}}
+@media (max-width:640px){.jikt-rv-card{flex:0 0 262px;width:262px;}.jikt-rv-title{font-size:19px;}.jikt-rv-cta{width:100%;min-width:0;font-size:15px;}}
 </style>
 <section class="jikt-reviews" id="jikt-reviews">
   <div class="jikt-rv-head">
@@ -795,12 +798,15 @@ html.theme-light .jikt-scrollcue{box-shadow:0 7px 22px rgba(3,199,90,.34);}
   </div>
   <div class="jikt-rv-viewport" id="jikt-rv-viewport"><div class="jikt-rv-track" id="jikt-rv-track"></div></div>
   <div class="jikt-rv-ctarow">
-    <a class="jikt-rv-cta" href="https://cafe.naver.com/f-e/cafes/29971409/menus/263" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>트레이딩키 후기 보기</a>
-    <a class="jikt-rv-cta" href="https://cafe.naver.com/f-e/cafes/29971409/menus/52?viewType=W" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>온라인 강의 후기 보기</a>
-    <a class="jikt-rv-cta" href="https://cafe.naver.com/f-e/cafes/29971409/menus/88?viewType=W" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>오프라인 강의 후기 보기</a>
+    <a class="jikt-rv-cta" href="https://cafe.naver.com/f-e/cafes/29971409/menus/263" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>트레이딩키 후기 보기</a>
+    <a class="jikt-rv-cta" href="https://cafe.naver.com/f-e/cafes/29971409/menus/52?viewType=W" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>온라인 강의 후기 보기</a>
+    <a class="jikt-rv-cta" href="https://cafe.naver.com/f-e/cafes/29971409/menus/88?viewType=W" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>오프라인 강의 후기 보기</a>
   </div>
 </section>
-<button class="jikt-scrollcue" id="jikt-scrollcue" type="button" aria-label="수강 후기로 이동">수강 후기 보기<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+<button class="jikt-scrollcue" id="jikt-scrollcue" type="button" aria-label="수강 후기로 이동">
+  <span class="sc-t">수강 후기</span>
+  <span class="sc-a"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+</button>
 <script id="jikt-reviews-script">(function(){
   function build(){
     var track=document.getElementById('jikt-rv-track');
