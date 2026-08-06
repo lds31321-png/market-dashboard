@@ -1123,17 +1123,20 @@ function ohLegsExitPt(legs,status){
 /* [2026-07-01] 청산 내역 통합: pnl 만기청산 + 관리자 손절/청산을 하나로 합쳐 표시 */
 function buildClosedFull(oh, pos){
   var cp=function(p){ return (p.current_pnl!=null)?p.current_pnl:((p.status==='expired')?(p.total_premium||0):0); };
-  var mkey=function(u,m){ return (u||'')+'|'+(parseInt(String(m).replace(/[^\d]/g,''),10)||0); };
+  // [2026-08-06 수정] 중복 제거 키를 종목+월 → 종목+월+콜풋+행사가로 세분화.
+  //   이전엔 같은 종목·같은 월에 만기 전략이 하나라도 있으면 그 달의 HTS 손절 항목이 통째로 사라졌다.
+  var mnum=function(m){ return parseInt(String(m).replace(/[^\d]/g,''),10)||0; };
+  var mkey=function(u,m,cp,strike){ return (u||'')+'|'+mnum(m)+'|'+(cp||'')+'|'+(isFinite(parseFloat(strike))?parseFloat(strike):(strike||'')); };
   var out=[], seen={};
   (pos||[]).filter(function(p){return p.status==='expired'||p.status==='closed'||p.status==='청산';})
     .sort(function(a,b){return (b.strategy_num||0)-(a.strategy_num||0);})
     .forEach(function(p){ var rs=(p['청산사유']||p.close_reason||(p.status==='expired'?'만기 소멸':'-'));
-      seen[mkey(p.underlying,p.expiry_month)]=1;
+      (p.legs||[]).forEach(function(lg){ var lcp=/put|풋/i.test(lg.type||'')?'P':/call|콜/i.test(lg.type||'')?'C':''; seen[mkey(p.underlying,p.expiry_month,lcp,lg.strike)]=1; });
       out.push({name:(p.underlying||'-'), strat:ohLegsGubun(p.legs), month:(p.expiry_month||'-'), date:hMd(p.expiry_date||p.shared_date), sd:(p.expiry_date||p.shared_date||''), pnl:cp(p), reason:rs, is_stoploss:/손절/.test(rs),
         strike:ohLegsStrike(p.legs), ct:ohLegsCt(p.legs), entryPt:ohLegsEntryPt(p.legs,p.underlying), exitPt:ohLegsExitPt(p.legs,p.status)});
     });
   ((oh&&oh.closed)||[]).forEach(function(c){
-    if(seen[mkey(c.underlying,c.mLabel)]) return;
+    if(seen[mkey(c.underlying,c.mLabel,(c.cp||(c.cpKo==='풋'?'P':'C')),c.strike)]) return;
     var isPut=(c.cp==='P'||c.cpKo==='풋');
     var strat=hEsc((isPut?'풋':'콜')+' 매도');
     var ck=(c.strike!=null&&c.strike!=='')?hEsc(String(c.strike)+(isPut?'P':'C')):'-';
