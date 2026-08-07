@@ -2067,24 +2067,32 @@ function renderPosKpi(){
   const _expReal=(allPos||[]).filter(p=>p.status==='expired'&&!_statN.has(p.strategy_num||0)).reduce((s,p)=>s+Math.round((p.current_pnl!=null?p.current_pnl:(p.total_premium||0))*r),0);
   const settledCum = ((typeof DATA!=='undefined'&&DATA.length>0)?DATA[DATA.length-1].cum:0) + _expReal;
 
-  // 활성 포지션 평가손익 합계 (원)
-  const activePnlKrw = a.reduce((s,p) => s + Math.round((p.current_pnl||0) * r), 0);
+  // 활성(공유 전략) 평가손익 합계 (원) — HTS 보유잔고가 없을 때의 폴백
+  const activePnlShared = a.reduce((s,p) => s + Math.round((p.current_pnl||0) * r), 0);
 
-  // 총 예탁금 (기본 + 청산 누적 + 활성 평가손익)
+  // [2026-08-07] 상단 KPI를 관리자(HTS 옵션잔고) 기준으로 —
+  //   보유 종목이 입력돼 있으면 headline 평가수익/카운트를 "보유 종목 상세" 합과 동일하게 맞춘다.
+  const _oh = (adminData && adminData.option_holdings) || null;
+  const _ohHolds = (_oh && _oh.holdings) || [];
+  const _hasOH = _ohHolds.length > 0;
+  const _ohPnlKrw = Math.round(_ohHolds.reduce((s,l)=>s+(l.pnl||0),0) * r);
+
+  // 평가수익 (원) — 보유잔고 있으면 HTS 기준, 없으면 공유 전략 기준
+  const activePnlKrw = _hasOH ? _ohPnlKrw : activePnlShared;
+
+  // 총 예탁금 (기본 + 청산 누적 + 현재 평가)
   const totalDeposit = baseDeposit + settledCum + activePnlKrw;
 
-  // 총 증거금 합계
+  // 총 증거금 합계 — 관리자 증거금 입력값(원) 우선
   let totalMargin = a.reduce((s,p) => s + (p.margin_krw||0), 0);
-
-  // [보유청산 v2] 관리자 증거금 입력값(원)이 있으면 우선 사용
-  const _oh = (adminData && adminData.option_holdings) || null;
   const _ohWon = _oh ? (_oh.margin_won!=null ? _oh.margin_won : (_oh.margin_usd!=null ? Math.round(_oh.margin_usd*(meta.exchange_rate||1500)) : (_oh.margin_man!=null ? _oh.margin_man*10000 : null))) : null;
   if(_ohWon!=null){ totalMargin = _ohWon; }
 
-  // 평가손익 카운트
-  const profitCount = a.filter(p => (p.current_pnl||0) > 0).length;
-  const lossCount   = a.filter(p => (p.current_pnl||0) < 0).length;
-  const neutralCount = a.length - profitCount - lossCount;
+  // 평가손익 카운트 — 보유잔고 있으면 보유 종목 기준
+  const _cntArr = _hasOH ? _ohHolds.map(l=>(l.pnl||0)) : a.map(p=>(p.current_pnl||0));
+  const profitCount = _cntArr.filter(v=>v>0).length;
+  const lossCount   = _cntArr.filter(v=>v<0).length;
+  const neutralCount = _cntArr.length - profitCount - lossCount;
 
   // 색상 (수익=연빨강 var(--profit), 손실=연파랑 var(--loss))
   const pnlColor = activePnlKrw > 0 ? (window.__JKLT()?'#D05A5A':'#FF8080') : activePnlKrw < 0 ? (window.__JKLT()?'#4F79C2':'#667085') : 'var(--t3)';
@@ -2099,7 +2107,7 @@ function renderPosKpi(){
   const fmtSign = n => (n>=0?'+':'-') + Math.round(Math.abs(n)/10000).toLocaleString();
 
   // 평가손익 sub 텍스트
-  let pnlSub = `${a.length}개 포지션`;
+  let pnlSub = `${_cntArr.length}개 ${_hasOH?'보유':'포지션'}`;
   if(profitCount) pnlSub += ` · ${profitCount}건 수익`;
   if(lossCount) pnlSub += ` · ${lossCount}건 손실`;
   if(neutralCount) pnlSub += ` · ${neutralCount}건 중립`;
