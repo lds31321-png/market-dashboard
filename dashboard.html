@@ -828,6 +828,7 @@ function loadPositions(){
         fetch('admin_data.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null)
           .then(ad=>{
             adminData=ad||{};
+            healLegacyHoldings(adminData);   // 옛 형식이면 자동 교정 (정상 데이터는 그대로)
             try{renderHoldings();}catch(e){console.error('[holdings]',e);}
             renderPosKpi();
           });
@@ -1015,6 +1016,26 @@ var h='<span class="ms-b'+(ph!=='안전'?' ms-abn':'')+'" style="--p:'+pc[1]+';f
 +'<span class="ms-b'+(lv>=1?' ms-abn':'')+'" style="--p:'+ac[1]+';font-size:12px;font-weight:700;color:'+ac[0]+';background:'+ac[1]+';padding:3px 9px;border-radius:999px;white-space:nowrap;">'+(lv>=1?'경보 '+lv+'단계':'경보 정상')+'</span>';
 if(s.tail)h+='<span class="ms-b ms-abn" style="--p:rgba(154,58,18,.10);font-size:12px;font-weight:700;color:#9a3a12;background:rgba(154,58,18,.10);padding:3px 9px;border-radius:999px;white-space:nowrap;">꼬리위험</span>';
 return '<div style="display:flex;gap:5px;margin-top:5px;flex-wrap:wrap;">'+h+'</div>';}catch(e){return ''}}
+/* ===== [2026-08-07 근본 안전장치] 옛 관리자(컬럼 밀림 파서)로 만들어진 admin_data.json이 배포돼도
+   대시보드가 스스로 올바른 값으로 교정해서 표시한다. → 관리자·캐시·폴더·동기화가 뭘 하든 화면은 항상 정상.
+   옛 형식 서명(정상 데이터엔 절대 없음): 모든 보유행의 opt_mv=0(빈 선물손익칸) AND 평균가=계약수(청산가능=미결제).
+   옛 매핑 avg=청산가능·cur=평균가·opt_mv=0·pnl=옵션시장가치·closable=옵션평가손익 → 올바른 자리로 재배치.
+   정상 데이터는 서명이 안 맞아 건드리지 않으며, 교정 뒤엔 opt_mv≠0 이라 두 번 교정되지 않는다(멱등). ===== */
+function healLegacyHoldings(ad){
+  try{
+    var oh = ad && ad.option_holdings; if(!oh) return;
+    var hs = oh.holdings; if(!hs || !hs.length || oh._healed) return;
+    var allOptMvZero = hs.every(function(h){ return (Number(h.opt_mv)||0)===0; });
+    var avgEqCt      = hs.every(function(h){ return Number(h.avg)===Number(h.contracts); });
+    if(!(allOptMvZero && avgEqCt)) return;   // 정상 데이터 → 손대지 않음
+    oh.holdings = hs.map(function(h){
+      return Object.assign({}, h, { avg:h.cur, opt_mv:h.pnl, pnl:h.closable, closable:h.contracts });
+    });
+    oh._healed = true;
+    try{ console.warn('[대시보드] 옛 형식 보유데이터 자동 교정 적용: '+hs.length+'행'); }catch(_e){}
+  }catch(e){ try{console.error('[heal]',e);}catch(_e){} }
+}
+
 /* ===== [보유청산 v3 2026-06-11] 보유·청산 영역 (추천표 스타일·수익빨강·이모지제거·P&L폴백) ===== */
 var PAID_GATE = false;  /* 무료 기간: false(모두 공개). 유료 전환 시 true 로 변경하면 비결제자 블러 처리 */
 function isPaidUser(){ try{ return localStorage.getItem('paid')==='1' || /[?&]paid=1/.test(location.search); }catch(e){ return false; } }
