@@ -66,9 +66,44 @@
   .footer a{color:#3182F6;text-decoration:none;font-weight:700}
   .footer a:hover{text-decoration:underline}
   #main-view{display:none}
+
+  /* [2026-08-25] 우측 상단 고정(follow-scroll) 결제하기 버튼 — 랜딩페이지용.
+     클릭하면 실제 결제창 대신 "결제 준비중" 안내 팝업을 띄움 (완성된 랜딩페이지 문구가 들어오기 전 임시 동작). */
+  #sticky-pay{position:fixed;top:20px;right:20px;z-index:80;display:flex;align-items:center;gap:10px;
+    background:#3182F6;color:#fff;border:none;border-radius:12px;padding:12px 18px;font-family:inherit;
+    font-weight:800;font-size:14.5px;cursor:pointer;box-shadow:0 6px 20px rgba(49,130,246,.35);transition:transform .15s,box-shadow .15s;}
+  #sticky-pay:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(49,130,246,.45);}
+  #sticky-pay .sp-price{font-weight:900}
+  @media (max-width:520px){#sticky-pay{top:12px;right:12px;padding:10px 14px;font-size:13px}}
+
+  #ready-modal{display:none;position:fixed;inset:0;z-index:200;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.55)}
+  #ready-modal.show{display:flex}
+  .rm-box{background:var(--sb-card);border:1px solid var(--sb-card-border);border-radius:16px;padding:32px 28px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+  .rm-icon{width:48px;height:48px;margin:0 auto 14px;border-radius:50%;background:rgba(49,130,246,.14);border:1.5px solid rgba(49,130,246,.4);display:flex;align-items:center;justify-content:center;color:#3182F6}
+  .rm-title{font-size:16px;font-weight:800;color:var(--sb-title);margin-bottom:8px}
+  .rm-desc{font-size:13.5px;color:var(--sb-sub);line-height:1.7;margin-bottom:20px}
+  .rm-close{width:100%;padding:12px;border-radius:10px;border:none;background:#3182F6;color:#fff;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit}
+  .rm-close:hover{background:#1B64DA}
 </style>
 </head>
 <body>
+
+<!-- [2026-08-25] 랜딩페이지 상단에 항상 붙어 따라다니는 결제하기 버튼 -->
+<button id="sticky-pay" onclick="jiktShowReadyModal()">
+  결제하기 <span class="sp-price">200,000원/월</span>
+</button>
+
+<div id="ready-modal" onclick="if(event.target===this)jiktCloseReadyModal()">
+  <div class="rm-box">
+    <div class="rm-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 7v5l3 3"/></svg>
+    </div>
+    <div class="rm-title">토스페이먼츠 결제 준비중입니다</div>
+    <div class="rm-desc">결제 페이지를 정비하고 있어요.<br>아래 카드에서 정기결제를 바로 신청하실 수 있어요.</div>
+    <button class="rm-close" onclick="jiktCloseReadyModal()">확인</button>
+  </div>
+</div>
+
 <div class="card">
 
   <div id="main-view">
@@ -201,25 +236,19 @@ function loadTossSdk(cb){
     return;
   }
 
-  /* ── 기본 화면: 이미 결제했는지 먼저 확인 ── */
-  showOnly('loading-view');
-  document.getElementById('loading-title').textContent = '확인하고 있어요…';
-  fetch(API + '/access/check', { headers: { 'Authorization': 'Bearer ' + token } })
-    .then(function(r){ return r.ok ? r.json() : null; })
-    .then(function(res){
-      if(res && res.ok && res.paid){
-        showOnly('success-view');
-        document.querySelector('#success-view .status-title').textContent = '이미 구독 중이에요';
-        document.querySelector('#success-view .status-desc').textContent = '결제 기간: ' + (res.paidUntil || '') + '까지';
-        return;
-      }
-      showOnly('main-view');
-      document.getElementById('main-view').classList.add('show');
-    }).catch(function(){
-      showOnly('main-view');
-      document.getElementById('main-view').classList.add('show');
-    });
+  /* ── 기본 화면: 랜딩페이지(정기결제 신청 카드)를 바로 보여줌.
+     [2026-08-25] 예전에는 여기서 /access/check로 "이미 결제했는지"를 먼저 물어보고
+     이미 결제된 계정이면 "이미 구독 중이에요" 화면으로 바로 보냈음.
+     지금은 라이브 클래스와 연동되어 있지 않고(중복결제 위험이 없고), 심사·데모 단계에서는
+     누가 들어오든 항상 신청 화면(랜딩페이지)이 보여야 하므로 그 분기를 없앰.
+     → 실제 서비스 오픈 후 다시 켜고 싶으면 이 주석 위 블록을 복원하면 됨. */
+  showOnly('main-view');
+  document.getElementById('main-view').classList.add('show');
 })();
+
+function jiktShowReadyModal(){ document.getElementById('ready-modal').classList.add('show'); document.body.style.overflow='hidden'; }
+function jiktCloseReadyModal(){ document.getElementById('ready-modal').classList.remove('show'); document.body.style.overflow=''; }
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') jiktCloseReadyModal(); });
 
 document.getElementById('agree-check').addEventListener('change', function(){
   document.getElementById('btn-pay').disabled = !this.checked;
