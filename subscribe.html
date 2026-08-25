@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>정기결제 — 직트 종합 옵션 대시보드</title>
+<title>트레이딩키 — 직트 종합 옵션 대시보드</title>
 <script>
 /* [2026-08-25] 허브 페이지(hub.html)와 같은 라이트/다크 모드 설정을 그대로 따라감.
    hub.html에서 저장하는 localStorage 'jikt_theme' 값을 읽어서, 렌더링 전에 미리 적용해
@@ -12,7 +12,8 @@
 </script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  /* [2026-08-25] 색상을 변수로 빼서 라이트/다크 두 모드를 모두 지원함 (기본값 = 다크) */
+  /* [2026-08-25] 색상을 변수로 빼서 라이트/다크 두 모드를 모두 지원함 (기본값 = 다크).
+     결제 버튼류의 파란색(#3182F6)은 토스페이먼츠 브랜드 컬러라서 라이트/다크 상관없이 그대로 둠. */
   :root{
     --sb-bg:#17171C;
     --sb-card:#1E2027;
@@ -23,6 +24,7 @@
     --sb-ghost-border:rgba(255,255,255,.18);
     --sb-ghost-hover:rgba(255,255,255,.06);
     --sb-spin-track:rgba(255,255,255,.15);
+    --sb-divider:rgba(255,255,255,.10);
   }
   html.theme-light{
     --sb-bg:#EDEAE4;
@@ -34,11 +36,33 @@
     --sb-ghost-border:rgba(0,0,0,.14);
     --sb-ghost-hover:rgba(0,0,0,.05);
     --sb-spin-track:rgba(0,0,0,.10);
+    --sb-divider:rgba(0,0,0,.10);
   }
-  body{font-family:'Nunito','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--sb-bg);color:var(--sb-text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;word-break:keep-all}
-  .card{background:var(--sb-card);border-radius:18px;padding:44px 40px;max-width:440px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,.20);border:1px solid var(--sb-card-border)}
-  h1{font-size:22px;font-weight:900;color:var(--sb-title);letter-spacing:-.02em;margin-bottom:6px}
-  .sub{font-size:13px;color:var(--sb-sub);margin-bottom:26px;line-height:1.7}
+  body{font-family:'Nunito','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--sb-bg);color:var(--sb-text);min-height:100vh;padding:88px 20px 60px;word-break:keep-all}
+
+  /* ── 랜딩페이지 본문 ── */
+  .wrap{max-width:640px;margin:0 auto}
+  .hero{text-align:center;margin-bottom:34px}
+  .hero-tag{font-size:12px;font-weight:800;letter-spacing:.12em;color:#3182F6}
+  .hero h1{font-size:30px;font-weight:900;color:var(--sb-title);letter-spacing:-.02em;margin-top:10px}
+  .hero-sub{font-size:14.5px;color:var(--sb-sub);margin-top:10px;line-height:1.7}
+
+  .section{background:var(--sb-card);border:1px solid var(--sb-card-border);border-radius:16px;padding:26px 26px;margin-bottom:16px}
+  .section h2{font-size:15px;font-weight:800;color:var(--sb-title);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section h2::before{content:'';width:5px;height:5px;border-radius:50%;background:#3182F6;flex-shrink:0}
+  .section p{font-size:13.5px;color:var(--sb-text);line-height:1.8}
+  .section p+p{margin-top:10px}
+  .section ul{list-style:none}
+  .section ul li{font-size:13.5px;color:var(--sb-text);line-height:1.8;padding-left:14px;position:relative}
+  .section ul li::before{content:'·';position:absolute;left:0;color:var(--sb-sub)}
+  .section ul li b{color:var(--sb-title)}
+  .section a{color:#3182F6;font-weight:700;text-decoration:none}
+  .section a:hover{text-decoration:underline}
+  .notice-box{background:rgba(49,130,246,.07);border:1px solid rgba(49,130,246,.22);border-radius:10px;padding:14px 16px;font-size:12.5px;color:var(--sb-sub);line-height:1.8;margin-top:6px}
+
+  /* ── 결제 카드 (실제 토스 결제 연동 부분) ── */
+  .card{background:var(--sb-card);border-radius:18px;padding:40px 36px;box-shadow:0 8px 40px rgba(0,0,0,.20);border:1px solid var(--sb-card-border)}
+  .card-h{font-size:18px;font-weight:900;color:var(--sb-title);letter-spacing:-.02em;margin-bottom:20px;text-align:center}
   .price-box{background:rgba(49,130,246,.08);border:1px solid rgba(49,130,246,.28);border-radius:12px;padding:20px 22px;margin-bottom:22px}
   .price-name{font-size:14px;color:var(--sb-text);font-weight:700;margin-bottom:6px}
   .price-amt{font-size:28px;font-weight:900;color:var(--sb-title);letter-spacing:-.01em}
@@ -67,15 +91,16 @@
   .footer a:hover{text-decoration:underline}
   #main-view{display:none}
 
-  /* [2026-08-25] 우측 상단 고정(follow-scroll) 결제하기 버튼 — 랜딩페이지용.
-     클릭하면 실제 결제창 대신 "결제 준비중" 안내 팝업을 띄움 (완성된 랜딩페이지 문구가 들어오기 전 임시 동작). */
+  /* [2026-08-25] 우측 상단 고정(follow-scroll) 결제하기 버튼 — 랜딩페이지 전체를 스크롤해도 항상 보임.
+     클릭하면 실제 결제창 대신 "결제 준비중" 안내 팝업을 띄움. */
   #sticky-pay{position:fixed;top:20px;right:20px;z-index:80;display:flex;align-items:center;gap:10px;
     background:#3182F6;color:#fff;border:none;border-radius:12px;padding:12px 18px;font-family:inherit;
     font-weight:800;font-size:14.5px;cursor:pointer;box-shadow:0 6px 20px rgba(49,130,246,.35);transition:transform .15s,box-shadow .15s;}
   #sticky-pay:hover{transform:translateY(-1px);box-shadow:0 8px 26px rgba(49,130,246,.45);}
   #sticky-pay .sp-price{font-weight:900}
-  @media (max-width:520px){#sticky-pay{top:12px;right:12px;padding:10px 14px;font-size:13px}}
+  @media (max-width:520px){#sticky-pay{top:12px;right:12px;padding:10px 14px;font-size:13px}body{padding-top:76px}}
 
+  /* [2026-08-25] 페이지 진입 즉시 뜨는 "결제 준비중" 안내 팝업 */
   #ready-modal{display:none;position:fixed;inset:0;z-index:200;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.55)}
   #ready-modal.show{display:flex}
   .rm-box{background:var(--sb-card);border:1px solid var(--sb-card-border);border-radius:16px;padding:32px 28px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35)}
@@ -88,71 +113,112 @@
 </head>
 <body>
 
-<!-- [2026-08-25] 랜딩페이지 상단에 항상 붙어 따라다니는 결제하기 버튼 -->
-<button id="sticky-pay" onclick="jiktShowReadyModal()">
-  결제하기 <span class="sp-price">200,000원/월</span>
-</button>
-
-<div id="ready-modal" onclick="if(event.target===this)jiktCloseReadyModal()">
+<!-- [2026-08-25] 페이지에 들어오자마자 바로 뜨는 안내 팝업 (class="show"가 기본값이라 로딩 즉시 표시됨) -->
+<div id="ready-modal" class="show" onclick="if(event.target===this)jiktCloseReadyModal()">
   <div class="rm-box">
     <div class="rm-icon">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 7v5l3 3"/></svg>
     </div>
     <div class="rm-title">토스페이먼츠 결제 준비중입니다</div>
-    <div class="rm-desc">결제 페이지를 정비하고 있어요.<br>아래 카드에서 정기결제를 바로 신청하실 수 있어요.</div>
+    <div class="rm-desc">아직 토스페이먼츠로는 결제가 연결되지 않았어요.<br>아래에서 트레이딩키 상품 정보를 먼저 확인해 주세요.</div>
     <button class="rm-close" onclick="jiktCloseReadyModal()">확인</button>
   </div>
 </div>
 
-<div class="card">
+<!-- [2026-08-25] 랜딩페이지 상단에 항상 붙어 따라다니는 결제하기 버튼 -->
+<button id="sticky-pay" onclick="jiktShowReadyModal()">
+  결제하기 <span class="sp-price">200,000원/월</span>
+</button>
 
-  <div id="main-view">
-    <h1>옵션 매도 종합 분석 시스템</h1>
-    <p class="sub">시장 현황·매매 전략·위험관리 탭을 포함한<br>전체 유료 영역을 이용하실 수 있어요.</p>
+<div class="wrap">
 
-    <div class="price-box">
-      <div class="price-name">월 정기결제</div>
-      <div class="price-amt">200,000<span>원 / 월 (VAT 포함)</span></div>
-      <div class="price-note">매월 자동 결제되며, 카카오톡 1:1 문의로 언제든 해지할 수 있어요.<br>해지해도 이미 결제된 기간까지는 계속 이용 가능해요.</div>
+  <div class="hero">
+    <div class="hero-tag">TRADING KEY</div>
+    <h1>트레이딩키</h1>
+    <div class="hero-sub">포지션 공유 · 매매일지 · 투자정보 · 변동성 알림</div>
+  </div>
+
+  <div class="section">
+    <h2>트레이딩키란?</h2>
+    <p>10년간의 가격 데이터로 검증한 진입 기준과, 수많은 급변동을 직접 겪으며 다듬은 위험관리 원칙을 그대로 담은 실전 옵션 투자 정보 서비스예요.</p>
+    <p>혼자 판단하기 어려웠던 진입·청산 시점을, 직트의 실제 포지션과 함께 확인하실 수 있어요.</p>
+  </div>
+
+  <div class="section">
+    <h2>이런 분께 추천합니다</h2>
+    <ul>
+      <li>옵션 매도를 <b>체계적으로</b> 배우고 싶은 분</li>
+      <li>진입·청산 타이밍이 늘 막막했던 분</li>
+      <li>감이 아닌 <b>데이터</b>로 판단하고 싶은 분</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>무엇을 제공하나요</h2>
+    <ul>
+      <li><b>포지션 공유</b> — 직트의 실제 진입 포지션을 공유</li>
+      <li><b>매매일지</b> — 거래 기록과 복기 자료</li>
+      <li><b>투자정보</b> — 시장 국면·종목별 분석 정보</li>
+      <li><b>변동성 알림</b> — 실시간 위험 신호 알림</li>
+      <li><b>종합 대시보드</b> — 위 모든 정보를 한 화면에서 확인</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>필수 안내</h2>
+    <p>가입자 확인을 위해, 커뮤니티에서 쓰시는 닉네임과 대시보드 닉네임을 동일하게 설정해 주세요.</p>
+    <div class="notice-box">궁금하신 점은 언제든 편하게 문의해 주세요 → <a href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener">카카오톡 1:1 문의</a></div>
+  </div>
+
+  <div class="card">
+    <div class="card-h">트레이딩키 정기결제</div>
+
+    <div id="main-view">
+      <div class="price-box">
+        <div class="price-name">월 정기결제</div>
+        <div class="price-amt">200,000<span>원 / 월 (VAT 포함)</span></div>
+        <div class="price-note">매월 자동 결제되며, 카카오톡 1:1 문의로 언제든 해지할 수 있어요.<br>해지해도 이미 결제된 기간까지는 계속 이용 가능해요.</div>
+      </div>
+
+      <div id="err-box" class="err"></div>
+
+      <label class="agree">
+        <input type="checkbox" id="agree-check">
+        <span><a href="./volatility/terms.html" target="_blank">이용약관</a>과 <a href="./volatility/refund.html" target="_blank">환불정책</a>을 확인했으며 이에 동의합니다. (필수)</span>
+      </label>
+
+      <button class="btn" id="btn-pay" disabled>카드 등록하고 정기결제 시작하기</button>
     </div>
 
-    <div id="err-box" class="err"></div>
-
-    <label class="agree">
-      <input type="checkbox" id="agree-check">
-      <span><a href="./volatility/terms.html" target="_blank">이용약관</a>과 <a href="./volatility/refund.html" target="_blank">환불정책</a>을 확인했으며 이에 동의합니다. (필수)</span>
-    </label>
-
-    <button class="btn" id="btn-pay" disabled>카드 등록하고 정기결제 시작하기</button>
-  </div>
-
-  <div id="loading-view" class="status">
-    <div class="spin"></div>
-    <div class="status-title" id="loading-title">처리 중이에요…</div>
-    <div class="status-desc" id="loading-desc">잠시만 기다려 주세요.</div>
-  </div>
-
-  <div id="success-view" class="status">
-    <div class="ok-badge">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+    <div id="loading-view" class="status">
+      <div class="spin"></div>
+      <div class="status-title" id="loading-title">처리 중이에요…</div>
+      <div class="status-desc" id="loading-desc">잠시만 기다려 주세요.</div>
     </div>
-    <div class="status-title">결제가 완료됐어요</div>
-    <div class="status-desc">유료 영역이 바로 열려요. 대시보드로 돌아가시면 됩니다.</div>
-    <button class="btn" style="margin-top:22px" id="btn-goto-dash">대시보드로 이동</button>
+
+    <div id="success-view" class="status">
+      <div class="ok-badge">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <div class="status-title">결제가 완료됐어요</div>
+      <div class="status-desc">유료 영역이 바로 열려요. 대시보드로 돌아가시면 됩니다.</div>
+      <button class="btn" style="margin-top:22px" id="btn-goto-dash">대시보드로 이동</button>
+    </div>
+
+    <div id="fail-view" class="status">
+      <div class="status-title" style="color:#F04452">결제에 실패했어요</div>
+      <div class="status-desc" id="fail-desc">다시 시도해 주세요. 계속 실패하면 카카오톡으로 문의해 주세요.</div>
+      <button class="btn" style="margin-top:22px" id="btn-retry">다시 시도하기</button>
+      <button class="btn btn-ghost" id="btn-kakao-help">카카오톡 1:1 문의</button>
+    </div>
+
+    <div class="footer">
+      © 2026 직트 · 사업자 782-08-02561 · 대표 임대성<br>
+      <a href="./volatility/terms.html" target="_blank">이용약관</a> · <a href="./volatility/refund.html" target="_blank">환불정책</a> · <a href="./volatility/privacy.html" target="_blank">개인정보처리방침</a><br>
+      문의 <a href="https://open.kakao.com/o/sWnslm0d" target="_blank">카카오톡 오픈채팅</a>
+    </div>
   </div>
 
-  <div id="fail-view" class="status">
-    <div class="status-title" style="color:#F04452">결제에 실패했어요</div>
-    <div class="status-desc" id="fail-desc">다시 시도해 주세요. 계속 실패하면 카카오톡으로 문의해 주세요.</div>
-    <button class="btn" style="margin-top:22px" id="btn-retry">다시 시도하기</button>
-    <button class="btn btn-ghost" id="btn-kakao-help">카카오톡 1:1 문의</button>
-  </div>
-
-  <div class="footer">
-    © 2026 직트 · 사업자 782-08-02561 · 대표 임대성<br>
-    <a href="./volatility/terms.html" target="_blank">이용약관</a> · <a href="./volatility/refund.html" target="_blank">환불정책</a> · <a href="./volatility/privacy.html" target="_blank">개인정보처리방침</a><br>
-    문의 <a href="https://open.kakao.com/o/sWnslm0d" target="_blank">카카오톡 오픈채팅</a>
-  </div>
 </div>
 
 <script>
@@ -170,8 +236,7 @@ function getToken(){ try{ return localStorage.getItem('jikt_token'); }catch(e){ 
 function showOnly(id){
   ['main-view','loading-view','success-view','fail-view'].forEach(function(v){
     document.getElementById(v).classList.remove('show');
-    if(v!=='main-view') document.getElementById(v).style.display = (v===id?'block':'none');
-    else document.getElementById(v).style.display = (v===id?'block':'none');
+    document.getElementById(v).style.display = (v===id?'block':'none');
   });
 }
 function showError(msg){
@@ -187,6 +252,12 @@ function loadTossSdk(cb){
   s.onerror = function(){ showOnly('fail-view'); document.getElementById('fail-desc').textContent = '결제 모듈을 불러오지 못했어요. 인터넷 연결을 확인하고 다시 시도해 주세요.'; };
   document.head.appendChild(s);
 }
+
+/* [2026-08-25] 페이지 진입 즉시 뜨는 안내 팝업 동안 배경 스크롤 막기 */
+document.body.style.overflow = 'hidden';
+function jiktShowReadyModal(){ document.getElementById('ready-modal').classList.add('show'); document.body.style.overflow='hidden'; }
+function jiktCloseReadyModal(){ document.getElementById('ready-modal').classList.remove('show'); document.body.style.overflow=''; }
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') jiktCloseReadyModal(); });
 
 (function init(){
   var token = getToken();
@@ -236,19 +307,13 @@ function loadTossSdk(cb){
     return;
   }
 
-  /* ── 기본 화면: 랜딩페이지(정기결제 신청 카드)를 바로 보여줌.
-     [2026-08-25] 예전에는 여기서 /access/check로 "이미 결제했는지"를 먼저 물어보고
-     이미 결제된 계정이면 "이미 구독 중이에요" 화면으로 바로 보냈음.
-     지금은 라이브 클래스와 연동되어 있지 않고(중복결제 위험이 없고), 심사·데모 단계에서는
-     누가 들어오든 항상 신청 화면(랜딩페이지)이 보여야 하므로 그 분기를 없앰.
-     → 실제 서비스 오픈 후 다시 켜고 싶으면 이 주석 위 블록을 복원하면 됨. */
+  /* ── 기본 화면: 랜딩페이지 + 정기결제 신청 카드를 바로 보여줌.
+     [2026-08-25] "이미 구독 중이에요" 자동 분기는 제거함 — 라이브 클래스와 연동되어 있지 않아
+     중복결제 위험이 없고, 심사·데모 단계에서는 누가 들어오든 항상 신청 화면이 보여야 함.
+     → 실제 서비스 오픈 후 다시 켜고 싶으면 /access/check 분기를 복원하면 됨. */
   showOnly('main-view');
   document.getElementById('main-view').classList.add('show');
 })();
-
-function jiktShowReadyModal(){ document.getElementById('ready-modal').classList.add('show'); document.body.style.overflow='hidden'; }
-function jiktCloseReadyModal(){ document.getElementById('ready-modal').classList.remove('show'); document.body.style.overflow=''; }
-document.addEventListener('keydown',function(e){ if(e.key==='Escape') jiktCloseReadyModal(); });
 
 document.getElementById('agree-check').addEventListener('change', function(){
   document.getElementById('btn-pay').disabled = !this.checked;
