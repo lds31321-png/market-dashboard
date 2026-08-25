@@ -11,94 +11,101 @@
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   :root{
-    --sb-bg:#17171C;
-    --sb-card:#1E2027;
-    --sb-card-border:rgba(255,255,255,.08);
-    --sb-title:#FFFFFF;
-    --sb-sub:#8B95A1;
-    --sb-text:#B0B8C1;
-    --sb-ghost-border:rgba(255,255,255,.18);
-    --sb-ghost-hover:rgba(255,255,255,.06);
-    --sb-spin-track:rgba(255,255,255,.15);
-    --sb-divider:rgba(255,255,255,.10);
+    --sb-bg:#111318;
+    --sb-card:#1A1D24;
+    --sb-card-hover:#1E212A;
+    --sb-card-border:rgba(255,255,255,.07);
+    --sb-title:#F5F6F8;
+    --sb-sub:#8B93A1;
+    --sb-text:#B7BECA;
+    --sb-ghost-border:rgba(255,255,255,.16);
+    --sb-ghost-hover:rgba(255,255,255,.05);
+    --sb-spin-track:rgba(255,255,255,.14);
+    --sb-shadow:0 1px 2px rgba(0,0,0,.24), 0 18px 40px rgba(0,0,0,.28);
   }
   html.theme-light{
-    --sb-bg:#EDEAE4;
+    --sb-bg:#F4F2EE;
     --sb-card:#FFFFFF;
-    --sb-card-border:#EFEBE5;
-    --sb-title:#2B2926;
-    --sb-sub:#6E6A61;
-    --sb-text:#4B463F;
-    --sb-ghost-border:rgba(0,0,0,.14);
-    --sb-ghost-hover:rgba(0,0,0,.05);
-    --sb-spin-track:rgba(0,0,0,.10);
-    --sb-divider:rgba(0,0,0,.10);
+    --sb-card-hover:#FBFAF8;
+    --sb-card-border:rgba(30,26,20,.07);
+    --sb-title:#221F1B;
+    --sb-sub:#7A7368;
+    --sb-text:#4E483F;
+    --sb-ghost-border:rgba(0,0,0,.12);
+    --sb-ghost-hover:rgba(0,0,0,.04);
+    --sb-spin-track:rgba(0,0,0,.09);
+    --sb-shadow:0 1px 2px rgba(30,26,20,.04), 0 18px 40px rgba(30,26,20,.07);
   }
-  body{font-family:'Nunito','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--sb-bg);color:var(--sb-text);min-height:100vh;padding:48px 20px 60px;word-break:keep-all}
+  html,body{height:100%}
+  body{font-family:'Pretendard','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--sb-bg);color:var(--sb-text);min-height:100vh;padding:56px 24px 80px;word-break:keep-all;-webkit-font-smoothing:antialiased}
 
   /* ── 2단 레이아웃: 왼쪽 상품 설명 / 오른쪽 결제 카드(스크롤해도 따라다님) ── */
-  .landing-grid{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:start}
-  @media (max-width:880px){.landing-grid{grid-template-columns:1fr}}
+  .landing-grid{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:1fr 356px;gap:40px;align-items:start}
+  @media (max-width:900px){.landing-grid{grid-template-columns:1fr;gap:28px}}
 
-  .back{display:inline-flex;align-items:center;gap:6px;color:#3182F6;text-decoration:none;font-weight:700;font-size:13px;margin-bottom:18px;padding:8px 14px;background:rgba(49,130,246,.08);border-radius:6px;border:1px solid rgba(49,130,246,.20)}
-  .back:hover{background:rgba(49,130,246,.16)}
+  .back{display:inline-flex;align-items:center;gap:6px;color:var(--sb-sub);text-decoration:none;font-weight:600;font-size:13px;margin-bottom:28px;transition:color .15s}
+  .back:hover{color:var(--sb-title)}
 
-  .hero{margin-bottom:22px}
-  .hero-tag{font-size:12px;font-weight:800;letter-spacing:.12em;color:#3182F6}
-  .hero h1{font-size:28px;font-weight:900;color:var(--sb-title);letter-spacing:-.02em;margin-top:8px}
-  .hero-sub{font-size:14px;color:var(--sb-sub);margin-top:8px;line-height:1.7}
+  .hero{margin-bottom:36px;padding-bottom:28px;border-bottom:1px solid var(--sb-card-border)}
+  .hero-tag{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:800;letter-spacing:.14em;color:#3182F6;background:rgba(49,130,246,.10);padding:5px 11px;border-radius:20px}
+  .hero h1{font-size:38px;font-weight:800;color:var(--sb-title);letter-spacing:-.03em;margin-top:16px;line-height:1.15}
+  .hero-sub{font-size:15px;color:var(--sb-sub);margin-top:12px;line-height:1.7;font-weight:500}
 
-  .section{background:var(--sb-card);border:1px solid var(--sb-card-border);border-radius:14px;padding:24px 26px;margin-bottom:14px}
-  .section h2{font-size:14.5px;font-weight:800;color:var(--sb-title);margin-bottom:10px}
-  .section .div{border-top:1px dashed var(--sb-divider);margin:14px 0}
-  .section p{font-size:13.5px;color:var(--sb-text);line-height:1.85;white-space:pre-line}
-  .section p+p{margin-top:8px}
+  .section{background:var(--sb-card);border:1px solid var(--sb-card-border);border-radius:18px;padding:30px 32px;margin-bottom:14px;box-shadow:var(--sb-shadow)}
+  .section-h{display:flex;align-items:center;gap:9px;margin-bottom:16px}
+  .section-h .dot{width:6px;height:6px;border-radius:50%;background:#3182F6;flex-shrink:0}
+  .section-h h2{font-size:15.5px;font-weight:700;color:var(--sb-title);letter-spacing:-.01em}
+  .section p{font-size:14px;color:var(--sb-text);line-height:1.9;white-space:pre-line;font-weight:400}
+  .section p+p{margin-top:10px}
+  .section .sub-h{font-size:13px;font-weight:700;color:var(--sb-title);margin-top:20px;margin-bottom:8px}
+  .section .sub-h:first-child{margin-top:0}
   .section ul{list-style:none;margin-top:2px}
-  .section ul li{font-size:13.5px;color:var(--sb-text);line-height:1.9;padding-left:14px;position:relative}
-  .section ul li::before{content:'·';position:absolute;left:0;color:var(--sb-sub)}
-  .section a{color:#3182F6;font-weight:700;text-decoration:none;word-break:break-all}
+  .section ul li{font-size:14px;color:var(--sb-text);line-height:2;padding-left:16px;position:relative}
+  .section ul li::before{content:'';position:absolute;left:2px;top:11px;width:4px;height:4px;border-radius:50%;background:var(--sb-sub)}
+  .section ul li b{color:var(--sb-title);font-weight:700}
+  .section a{color:#3182F6;font-weight:600;text-decoration:none;word-break:break-all}
   .section a:hover{text-decoration:underline}
 
   /* ── 결제 카드 (오른쪽 사이드바, position:sticky로 스크롤해도 따라다님) ── */
-  .side{position:sticky;top:24px}
-  .card{background:var(--sb-card);border-radius:16px;padding:28px 24px;box-shadow:0 8px 32px rgba(0,0,0,.18);border:1px solid var(--sb-card-border)}
-  .card-h{font-size:16px;font-weight:900;color:var(--sb-title);letter-spacing:-.02em;margin-bottom:16px}
-  .price-box{background:rgba(49,130,246,.08);border:1px solid rgba(49,130,246,.28);border-radius:12px;padding:16px 18px;margin-bottom:16px}
-  .price-name{font-size:12.5px;color:var(--sb-text);font-weight:700;margin-bottom:4px}
-  .price-amt{font-size:24px;font-weight:900;color:var(--sb-title);letter-spacing:-.01em}
-  .price-amt span{font-size:12.5px;color:var(--sb-sub);font-weight:700;margin-left:4px}
-  .price-note{font-size:11px;color:var(--sb-sub);margin-top:8px;line-height:1.7}
-  .agree{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--sb-text);line-height:1.6;margin-bottom:16px;cursor:pointer}
+  .side{position:sticky;top:28px}
+  .card{background:var(--sb-card);border-radius:20px;padding:32px 28px;box-shadow:var(--sb-shadow);border:1px solid var(--sb-card-border)}
+  .card-h{font-size:17px;font-weight:800;color:var(--sb-title);letter-spacing:-.02em;margin-bottom:20px}
+  .price-box{background:rgba(49,130,246,.07);border:1px solid rgba(49,130,246,.20);border-radius:14px;padding:20px 20px;margin-bottom:20px}
+  .price-name{font-size:12.5px;color:var(--sb-sub);font-weight:700;margin-bottom:6px}
+  .price-amt{font-size:27px;font-weight:800;color:var(--sb-title);letter-spacing:-.02em}
+  .price-amt span{font-size:12.5px;color:var(--sb-sub);font-weight:600;margin-left:4px}
+  .price-note{font-size:11.5px;color:var(--sb-sub);margin-top:10px;line-height:1.7}
+  .agree{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--sb-text);line-height:1.6;margin-bottom:18px;cursor:pointer}
   .agree input{margin-top:2px;width:15px;height:15px;flex-shrink:0;accent-color:#3182F6}
-  .agree a{color:#3182F6;font-weight:700;text-decoration:none}
+  .agree a{color:#3182F6;font-weight:600;text-decoration:none}
   .agree a:hover{text-decoration:underline}
-  .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 18px;border-radius:11px;border:none;font-size:14.5px;font-weight:800;cursor:pointer;transition:all .15s;font-family:inherit;background:#3182F6;color:#fff}
-  .btn:hover:not(:disabled){background:#1B64DA;transform:translateY(-1px)}
-  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px 18px;border-radius:13px;border:none;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;background:#3182F6;color:#fff;letter-spacing:-.01em}
+  .btn:hover:not(:disabled){background:#1B64DA;transform:translateY(-1px);box-shadow:0 8px 20px rgba(49,130,246,.30)}
+  .btn:disabled{opacity:.4;cursor:not-allowed}
   .btn-ghost{background:transparent;border:1.5px solid var(--sb-ghost-border);color:var(--sb-text);margin-top:9px}
-  .btn-ghost:hover:not(:disabled){background:var(--sb-ghost-hover)}
+  .btn-ghost:hover:not(:disabled){background:var(--sb-ghost-hover);box-shadow:none}
   .status{display:none;text-align:center;padding:14px 0}
   .status.show{display:block}
   .spin{width:30px;height:30px;margin:0 auto 14px;border:3px solid var(--sb-spin-track);border-top-color:#3182F6;border-radius:50%;animation:sp .8s linear infinite}
   @keyframes sp{to{transform:rotate(360deg)}}
-  .status-title{font-size:14.5px;font-weight:800;color:var(--sb-title);margin-bottom:6px}
+  .status-title{font-size:14.5px;font-weight:700;color:var(--sb-title);margin-bottom:6px}
   .status-desc{font-size:12.5px;color:var(--sb-sub);line-height:1.7}
-  .err{display:none;background:rgba(240,68,82,.12);border:1px solid rgba(240,68,82,.38);padding:11px 13px;border-radius:8px;margin-bottom:14px;font-size:12px;color:#F04452;font-weight:700}
+  .err{display:none;background:rgba(240,68,82,.10);border:1px solid rgba(240,68,82,.30);padding:11px 13px;border-radius:10px;margin-bottom:14px;font-size:12px;color:#F04452;font-weight:600}
   .err.show{display:block}
-  .ok-badge{width:44px;height:44px;margin:0 auto 14px;border-radius:50%;background:rgba(46,196,116,.14);border:1.5px solid rgba(46,196,116,.42);display:flex;align-items:center;justify-content:center;color:#2EC474}
-  .footer{margin-top:18px;padding-top:16px;border-top:1px solid var(--sb-card-border);text-align:center;font-size:10.5px;color:var(--sb-sub);line-height:1.8}
-  .footer a{color:#3182F6;text-decoration:none;font-weight:700}
-  .footer a:hover{text-decoration:underline}
+  .ok-badge{width:44px;height:44px;margin:0 auto 14px;border-radius:50%;background:rgba(46,196,116,.12);border:1.5px solid rgba(46,196,116,.36);display:flex;align-items:center;justify-content:center;color:#2EC474}
+  .footer{margin-top:20px;padding-top:18px;border-top:1px solid var(--sb-card-border);text-align:center;font-size:10.5px;color:var(--sb-sub);line-height:1.9}
+  .footer a{color:var(--sb-sub);text-decoration:none;font-weight:600}
+  .footer a:hover{color:#3182F6}
   #main-view{display:none}
 
   /* [2026-08-25] 페이지 진입 즉시 뜨는 "결제 준비중" 안내 팝업 */
-  #ready-modal{display:none;position:fixed;inset:0;z-index:200;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.55)}
+  #ready-modal{display:none;position:fixed;inset:0;z-index:200;align-items:center;justify-content:center;padding:20px;background:rgba(10,10,14,.60);backdrop-filter:blur(2px)}
   #ready-modal.show{display:flex}
-  .rm-box{background:var(--sb-card);border:1px solid var(--sb-card-border);border-radius:16px;padding:32px 28px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35)}
-  .rm-icon{width:48px;height:48px;margin:0 auto 14px;border-radius:50%;background:rgba(49,130,246,.14);border:1.5px solid rgba(49,130,246,.4);display:flex;align-items:center;justify-content:center;color:#3182F6}
-  .rm-title{font-size:16px;font-weight:800;color:var(--sb-title);margin-bottom:8px}
-  .rm-desc{font-size:13.5px;color:var(--sb-sub);line-height:1.7;margin-bottom:20px}
-  .rm-close{width:100%;padding:12px;border-radius:10px;border:none;background:#3182F6;color:#fff;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit}
+  .rm-box{background:var(--sb-card);border:1px solid var(--sb-card-border);border-radius:20px;padding:34px 30px;max-width:340px;width:100%;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.40)}
+  .rm-icon{width:48px;height:48px;margin:0 auto 16px;border-radius:50%;background:rgba(49,130,246,.12);border:1.5px solid rgba(49,130,246,.35);display:flex;align-items:center;justify-content:center;color:#3182F6}
+  .rm-title{font-size:16.5px;font-weight:700;color:var(--sb-title);margin-bottom:8px;letter-spacing:-.01em}
+  .rm-desc{font-size:13.5px;color:var(--sb-sub);line-height:1.7;margin-bottom:22px}
+  .rm-close{width:100%;padding:13px;border-radius:12px;border:none;background:#3182F6;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit}
   .rm-close:hover{background:#1B64DA}
 </style>
 </head>
@@ -121,7 +128,7 @@
   <!-- 왼쪽: 상품 소개 (원문 그대로) -->
   <div class="landing-main">
 
-    <a class="back" href="./">← 뒤로가기</a>
+    <a class="back" href="./hub.html">← 트레이딩룸 메인으로</a>
 
     <div class="hero">
       <div class="hero-tag">TRADING KEY</div>
@@ -130,15 +137,15 @@
     </div>
 
     <div class="section">
-      <h2>■ 문의</h2>
+      <div class="section-h"><span class="dot"></span><h2>문의</h2></div>
       <p>결제하셨다면 아래 채팅방으로
 트레이딩 룸 가입시 이름 또는 닉네임을 말씀해주세요.
 ▶ 고객센터 (1:1 카카오톡)
 <a href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener">https://open.kakao.com/o/sWnslm0d</a></p>
+    </div>
 
-      <div class="div"></div>
-
-      <h2>■ 필수 안내 (꼭 확인해주세요)</h2>
+    <div class="section">
+      <div class="section-h"><span class="dot"></span><h2>필수 안내 (꼭 확인해주세요)</h2></div>
       <p>라이브 클래스 닉네임과
 메인 대시보드(트레이딩 룸) 닉네임을
 반드시 동일하게 설정해 주시기 바랍니다.
@@ -150,7 +157,7 @@
     </div>
 
     <div class="section">
-      <h2>■ 가격 및 할인 안내</h2>
+      <div class="section-h"><span class="dot"></span><h2>가격 및 할인 안내</h2></div>
       <p>정가 200,000원 (1개월)
 
 신규 교육생은 참여도에 따라
@@ -164,9 +171,7 @@
 체크리스트 작성하러가기→
 <a href="https://lds31321-png.github.io/market-dashboard/hub.html" target="_blank" rel="noopener">https://lds31321-png.github.io/market-dashboard/hub.html</a></p>
 
-      <div class="div"></div>
-
-      <h2>■ 쿠폰 사용 방법</h2>
+      <div class="sub-h">쿠폰 사용 방법</div>
       <p>1. 발급받은 쿠폰 코드를 확인합니다.
 2. 결제 화면의 "쿠폰 입력란"에 코드를 입력합니다.
 3. 할인 금액이 적용된 것을 확인 후 결제합니다.
@@ -175,7 +180,7 @@
     </div>
 
     <div class="section">
-      <h2>■ 트레이딩 키란?</h2>
+      <div class="section-h"><span class="dot"></span><h2>트레이딩 키란?</h2></div>
       <p>10년간의 가격 데이터로 검증한 진입 기준과
 수많은 급변동을 직접 겪으며 다듬은 위험관리 원칙을
 그대로 담은 실전 옵션 투자 정보 서비스입니다.
@@ -183,44 +188,40 @@
 혼자 판단하기 어려웠던 진입·청산 시점을
 직트의 실제 포지션과 함께 확인하실 수 있습니다.</p>
 
-      <div class="div"></div>
-
-      <h2>■ 이런 분께 추천합니다</h2>
+      <div class="sub-h">이런 분께 추천합니다</div>
       <ul>
-        <li>옵션 매도를 체계적으로 배우고 싶은 분</li>
+        <li>옵션 매도를 <b>체계적으로</b> 배우고 싶은 분</li>
         <li>진입·청산 타이밍이 늘 막막했던 분</li>
-        <li>감이 아닌 데이터로 판단하고 싶은 분</li>
+        <li>감이 아닌 <b>데이터</b>로 판단하고 싶은 분</li>
       </ul>
 
-      <div class="div"></div>
-
-      <h2>■ 무엇을 제공하나요</h2>
+      <div class="sub-h">무엇을 제공하나요</div>
       <ul>
-        <li>포지션 공유 — 직트의 실제 진입 포지션을 공유</li>
-        <li>매매일지 — 거래 기록과 복기 자료</li>
-        <li>투자정보 — 시장 국면·종목별 분석 정보</li>
-        <li>변동성 알림 — 실시간 텔레그램 위험 신호</li>
-        <li>종합 대시보드 — 위 모든 정보를 한 화면에서 확인</li>
+        <li><b>포지션 공유</b> — 직트의 실제 진입 포지션을 공유</li>
+        <li><b>매매일지</b> — 거래 기록과 복기 자료</li>
+        <li><b>투자정보</b> — 시장 국면·종목별 분석 정보</li>
+        <li><b>변동성 알림</b> — 실시간 텔레그램 위험 신호</li>
+        <li><b>종합 대시보드</b> — 위 모든 정보를 한 화면에서 확인</li>
       </ul>
+    </div>
 
-      <div class="div"></div>
-
-      <h2>■ 문의</h2>
+    <div class="section">
+      <div class="section-h"><span class="dot"></span><h2>문의</h2></div>
       <p>궁금하신 점은 언제든 편하게 남겨주세요.
 ▶ 고객센터 (1:1 카카오톡)
 <a href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener">https://open.kakao.com/o/sWnslm0d</a></p>
     </div>
 
     <div class="section">
-      <h2>1. 시장 급등락? 이제는 VOL_WATCHTOWER가 알려드립니다</h2>
+      <div class="section-h"><span class="dot"></span><h2>시장 급등락? 이제는 VOL_WATCHTOWER가 알려드립니다</h2></div>
       <p>문제: 바쁜 일상 속, 실시간 시장 모니터링은 현실적으로 어렵습니다.
-해결: 실시간으로 시장 변동성을 감지하고, 조건 충족 시 자동으로 알림을 발송합니다.
-
-* 총 13개 종목을 상시 감시
-* 손실 확률 10~20% 수준의 옵션을 기준으로 추적
-* 기준 이상 급등 시 즉시 경고
-
-"내가 모니터를 보지 못할 때, 위험 신호를 대신 감지해주는 감시탑"
+해결: 실시간으로 시장 변동성을 감지하고, 조건 충족 시 자동으로 알림을 발송합니다.</p>
+      <ul style="margin-top:12px">
+        <li>총 13개 종목을 상시 감시</li>
+        <li>손실 확률 10~20% 수준의 옵션을 기준으로 추적</li>
+        <li>기준 이상 급등 시 즉시 경고</li>
+      </ul>
+      <p style="margin-top:14px">"내가 모니터를 보지 못할 때, 위험 신호를 대신 감지해주는 감시탑"
 바로 VOL_WATCHTOWER입니다.</p>
     </div>
 
