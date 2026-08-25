@@ -836,7 +836,14 @@ html.theme-light .jikt-scrollcue .sc-t,html.theme-light .jikt-scrollcue .sc-a{co
       cue.addEventListener('click',function(){sec.scrollIntoView({behavior:'smooth',block:'start'});});
       if('IntersectionObserver' in window && vp){
         var io=new IntersectionObserver(function(es){
-          es.forEach(function(e){ if(e.isIntersecting){cue.classList.remove('show');}else{cue.classList.add('show');} });
+          es.forEach(function(e){
+            /* [2026-08-25 수정] 리뷰 영역을 이미 지나쳐 더 아래(하단 사업자정보 등)로
+               내려간 경우엔 다시 뜨면 안 됨. boundingClientRect.top이 0보다 작으면
+               "위로 지나쳐감" → 숨김. 아직 화면 아래에 있으면(0보다 큼) → 유도 표시. */
+            if(e.isIntersecting){ cue.classList.remove('show'); }
+            else if(e.boundingClientRect.top < 0){ cue.classList.remove('show'); }
+            else{ cue.classList.add('show'); }
+          });
         },{threshold:0.1});
         io.observe(vp);
       }else{ cue.classList.add('show'); }
@@ -1583,13 +1590,18 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.ge
   <a class="jikt-rv-cta" href="./hub_refund.html">환불규정 보기</a>
 </div>
 
-<!-- [2026-08-25] 옵션 매도 종합 대시보드 정기구독 — 토스페이먼츠 결제창 진입 버튼 (심사 확인용) -->
-<a class="jikt-product" href="./subscribe.html" style="max-width:420px;margin:0 auto 60px;">
-  <div class="jp-tag">SUBSCRIPTION</div>
-  <div class="jp-name">옵션 매도 종합 대시보드</div>
-  <div class="jp-desc">시장 현황·매매 전략·위험관리 탭을 포함한 유료 대시보드 월 정기구독입니다.</div>
-  <span class="jp-btn">정기결제 신청하기 →</span>
-</a>
+<!-- [2026-08-25] 옵션 매도 종합 대시보드 정기구독 — 토스페이먼츠 결제창 진입 버튼 (심사 확인용)
+     .jikt-products로 감싸서 트레이딩키 카드와 동일한 색상 변수(--jp-*)를 그대로 받게 함.
+     (감싸지 않으면 --jp-title 등이 정의되지 않아 링크 기본색(보라)이 그대로 보임) -->
+<div class="jikt-products" style="margin:0 auto 60px;padding:0 22px;">
+  <a class="jikt-product" href="./subscribe.html" style="max-width:420px;margin:0 auto;position:relative;">
+    <span style="position:absolute;top:16px;right:16px;font-size:10.5px;font-weight:800;color:#d9664a;background:rgba(217,102,74,.12);border:1px solid rgba(217,102,74,.35);border-radius:20px;padding:4px 10px;letter-spacing:.01em;white-space:nowrap;">토스페이먼츠 결제 준비중</span>
+    <div class="jp-tag">SUBSCRIPTION</div>
+    <div class="jp-name">옵션 매도 종합 대시보드</div>
+    <div class="jp-desc">시장 현황·매매 전략·위험관리 탭을 포함한 유료 대시보드 월 정기구독입니다.</div>
+    <span class="jp-btn">정기결제 신청하기 →</span>
+  </a>
+</div>
 
 <!-- [2026-08-25] 사업자정보 표기 (토스페이먼츠 결제 심사 필수 게시 항목) -->
 <div style="max-width:640px;margin:0 auto 60px;padding:0 22px;text-align:center;font-size:12px;line-height:1.9;color:#8B95A1;">
