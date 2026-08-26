@@ -1246,9 +1246,17 @@ function ohClosedBlock(items, rate, mode){
   if(mode==='full'){ h+=ohTh('종목')+ohTh('구분')+ohTh('월물')+ohTh('행사가','right')+ohTh('계약','right')+ohTh('진입','right')+ohTh('청산','right')+ohTh('청산일')+ohTh('손익','right')+ohTh('사유'); }
   else { h+=ohTh('종목')+ohTh('구분')+ohTh('진입','right')+ohTh('청산','right')+ohTh('계약수','right')+ohTh('실현손익','right')+ohTh('사유'); }
   h+='</tr></thead><tbody>';
+  /* [2026-08-26 직트 지시] "만기 정산 (종가 4659.3) - 정산손익 검토 권장"처럼 종가 값이 붙어 길어지는
+     자동 사유 문구가 사유 칸 폭을 늘려 종목·구분·월물·행사가·계약·진입·청산·청산일 칸이 왼쪽으로
+     쏠리는 문제 — "종가(...) 붙는 부분은 빼고 핵심 문구만 남긴다. 이 패턴이 아닌 다른 사유 문구는 그대로 둔다. */
+  function ohShortReason(r){
+    r=String(r||'-');
+    var m=r.match(/^만기\s*정산\s*\(종가[^)]*\)\s*-\s*(.+)$/);
+    return m?m[1]:r;
+  }
   var ohRow=function(x){
     var rcol=x.is_stoploss?(window.__JKLT()?'#D05A5A':'#FF8080'):'var(--t2)';
-    var reasonTd='<td style="padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:13px;color:'+rcol+';white-space:nowrap;font-weight:'+(x.is_stoploss?'700':'400')+';">'+hEsc(x.reason||'-')+'</td>';
+    var reasonTd='<td style="padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.05);font-size:13px;color:'+rcol+';white-space:nowrap;font-weight:'+(x.is_stoploss?'700':'400')+';">'+hEsc(ohShortReason(x.reason))+'</td>';
     if(mode==='full'){ return '<tr>'+ohCell(x.name,'left',true)+ohCellRaw(x.strat||'-')+ohCell(x.month)+ohCellRaw(x.strike||'-','right')+ohCellRaw(x.ct||'-','right')+ohCellRaw(x.entryPt||'-','right')+ohCellRaw(x.exitPt||'-','right')+ohCell(x.date)+ohPnlTd(x.pnl,rate)+reasonTd+'</tr>'; }
     var enTxt=(x.entry!=null)?String(x.entry):'-'; var exTxt=(x.exit!=null)?String(x.exit):'-'; var ctTxt=(x.contracts?x.contracts:1)+'계약';
     return '<tr>'+ohCell(x.name,'left',true)+ohCell(x.sub||'-')+ohCell(enTxt,'right')+ohCell(exTxt,'right')+ohCell(ctTxt,'right')+ohPnlTd(x.pnl,rate)+reasonTd+'</tr>';
