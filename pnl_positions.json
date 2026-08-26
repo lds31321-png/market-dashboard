@@ -75,7 +75,7 @@
       "shared_date": "2026-08-25",
       "status": "active",
       "notion_url": "",
-      "strategy_type": "naked_call",
+      "strategy_type": "naked_put",
       "underlying": "크루드 오일",
       "underlying_en": "Crude Oil",
       "expiry_month": "12월물",
@@ -83,26 +83,19 @@
       "current_price": 77.86,
       "legs": [
         {
-          "type": "call_sell",
-          "strike": 146.0,
-          "contracts": 1,
-          "premium": 170.0,
-          "current_price_pt": 0.17
-        },
-        {
-          "type": "call_sell",
-          "strike": 146.0,
+          "type": "put_sell",
+          "strike": 52.0,
           "contracts": 1,
           "premium": 170.0,
           "current_price_pt": 0.17
         }
       ],
-      "total_premium": 340.0,
+      "total_premium": 170.0,
       "margin": 621,
       "margin_krw": 931500,
       "profit_scenarios": [],
-      "expected_return_pct": 54.75,
-      "monthly_return_pct": 19.55,
+      "expected_return_pct": 27.38,
+      "monthly_return_pct": 9.78,
       "current_pnl": 0,
       "memo": "",
       "chart_data": {
@@ -296,27 +289,21 @@
         ],
         "strike_lines": [
           {
-            "price": 146.0,
-            "label": "콜 매도 행사가 $146",
-            "color": "#e06070",
-            "dash": true
-          },
-          {
-            "price": 146.0,
-            "label": "콜 매도 행사가 $146",
+            "price": 52.0,
+            "label": "풋 매도 행사가 $52",
             "color": "#e06070",
             "dash": true
           }
         ],
         "profit_zone": {
-          "min": 0,
-          "max": 146.0,
+          "min": 52.0,
+          "max": 208.0,
           "label": "수익 구간"
         },
         "expiry_date": "2026-11-17",
         "entry_date": "2026-08-25"
       },
-      "entry_price": 82.44,
+      "entry_price": 79.15,
       "strategy_num": 202
     },
     {
@@ -339,14 +326,21 @@
           "contracts": 1,
           "premium": 170.0,
           "current_price_pt": 0.17
+        },
+        {
+          "type": "call_sell",
+          "strike": 146.0,
+          "contracts": 1,
+          "premium": 170.0,
+          "current_price_pt": 0.17
         }
       ],
-      "total_premium": 170.0,
+      "total_premium": 340.0,
       "margin": 1076,
       "margin_krw": 1614000,
       "profit_scenarios": [],
-      "expected_return_pct": 15.8,
-      "monthly_return_pct": 9.29,
+      "expected_return_pct": 31.6,
+      "monthly_return_pct": 18.59,
       "current_pnl": 0,
       "memo": "",
       "chart_data": {
@@ -544,6 +538,12 @@
             "label": "콜 매도 행사가 $146",
             "color": "#e06070",
             "dash": true
+          },
+          {
+            "price": 146.0,
+            "label": "콜 매도 행사가 $146",
+            "color": "#e06070",
+            "dash": true
           }
         ],
         "profit_zone": {
@@ -554,7 +554,7 @@
         "expiry_date": "2026-10-15",
         "entry_date": "2026-08-25"
       },
-      "entry_price": 84.58,
+      "entry_price": 80.88,
       "strategy_num": 201
     },
     {
@@ -575,11 +575,11 @@
           "type": "put_sell",
           "strike": 2.2,
           "contracts": 1,
-          "premium": 170.0,
+          "premium": 170,
           "current_price_pt": 0.017
         }
       ],
-      "total_premium": 170.0,
+      "total_premium": 170,
       "margin": 347,
       "margin_krw": 520500,
       "profit_scenarios": [],
@@ -813,11 +813,11 @@
           "type": "call_sell",
           "strike": 3.6,
           "contracts": 1,
-          "premium": 100.0,
+          "premium": 100,
           "current_price_pt": 0.01
         }
       ],
-      "total_premium": 100.0,
+      "total_premium": 100,
       "margin": 565,
       "margin_krw": 847500,
       "profit_scenarios": [],
@@ -2836,7 +2836,7 @@
       "profit_scenarios": [],
       "expected_return_pct": 0.97,
       "monthly_return_pct": 1.32,
-      "current_pnl": -250.0,
+      "current_pnl": -250,
       "memo": "만기 정산 ($-250, 종가 4659.3)",
       "chart_data": {
         "dates": [
@@ -2949,8 +2949,8 @@
         ],
         "closes": [
           4652.1,
-          4474.0,
-          4591.0,
+          4474,
+          4591,
           4623.7,
           4746.2,
           4883.8,
@@ -2974,23 +2974,23 @@
           4675.5,
           4627.8,
           4697.3,
-          4713.0,
+          4713,
           4600.7,
           4635.7,
           4763.1,
           4780.3,
           4799.9,
-          4798.0,
+          4798,
           4755.4,
-          4775.0,
+          4775,
           4752.9,
           4627.8,
           4623.9,
           4576.3,
           4600.7,
-          4609.0,
+          4609,
           4588.7,
-          4567.0,
+          4567,
           4512.4,
           4563.8,
           4625.3,
@@ -3019,16 +3019,16 @@
           4154.9,
           4196.8,
           4186.6,
-          4111.0,
+          4111,
           4169.7,
           4142.3,
-          4033.0,
+          4033,
           4097.1,
           4079.1,
           4019.1,
-          4046.0,
+          4046,
           4043.2,
-          4104.0,
+          4104,
           4179.4,
           4078.1,
           4098.9,
@@ -3040,7 +3040,7 @@
           4060.3,
           4121.9,
           4273.3,
-          4268.0,
+          4268,
           4367.1,
           4387.1,
           4408.2,
@@ -3057,7 +3057,7 @@
         ],
         "strike_lines": [
           {
-            "price": 4655.0,
+            "price": 4655,
             "label": "콜 매도 행사가 $4,655",
             "color": "#e06070",
             "dash": true
@@ -3065,7 +3065,7 @@
         ],
         "profit_zone": {
           "min": 0,
-          "max": 4655.0,
+          "max": 4655,
           "label": "수익 구간"
         },
         "expiry_date": "2026-08-26",
@@ -5690,15 +5690,15 @@
           5239.4,
           5173.7,
           5113.7,
-          5120.0,
+          5120,
           5005.9,
           4710.3,
           4680.5,
           4505.8,
           4499.6,
           4652.1,
-          4474.0,
-          4591.0,
+          4474,
+          4591,
           4623.7,
           4746.2,
           4883.8,
@@ -5722,23 +5722,23 @@
           4675.5,
           4627.8,
           4697.3,
-          4713.0,
+          4713,
           4600.7,
           4635.7,
           4763.1,
           4780.3,
           4799.9,
-          4798.0,
+          4798,
           4755.4,
-          4775.0,
+          4775,
           4752.9,
           4627.8,
           4623.9,
           4576.3,
           4600.7,
-          4609.0,
+          4609,
           4588.7,
-          4567.0,
+          4567,
           4512.4,
           4563.8,
           4625.3,
@@ -5767,16 +5767,16 @@
           4154.9,
           4196.8,
           4186.6,
-          4111.0,
+          4111,
           4169.7,
           4142.3,
-          4033.0,
+          4033,
           4097.1,
           4079.1,
           4019.1,
-          4046.0,
+          4046,
           4043.2,
-          4104.0,
+          4104,
           4179.4,
           4078.1,
           4098.9,
@@ -5788,7 +5788,7 @@
           4060.3,
           4121.9,
           4273.3,
-          4268.0,
+          4268,
           4367.1,
           4387.1,
           4408.2,
@@ -5805,21 +5805,21 @@
         ],
         "strike_lines": [
           {
-            "price": 5020.0,
+            "price": 5020,
             "label": "콜 행사가 $5,020",
             "color": "#e06070",
             "dash": true
           },
           {
-            "price": 2990.0,
+            "price": 2990,
             "label": "풋 행사가 $2,990",
             "color": "#e06070",
             "dash": true
           }
         ],
         "profit_zone": {
-          "min": 2990.0,
-          "max": 5020.0,
+          "min": 2990,
+          "max": 5020,
           "label": "수익 구간"
         },
         "expiry_date": "2026-08-26",
@@ -11045,7 +11045,7 @@
           3.151,
           3.15,
           3.014,
-          3.0,
+          3,
           3.077,
           3.268,
           3.28,
@@ -11112,7 +11112,7 @@
         ],
         "strike_lines": [
           {
-            "price": 5.0,
+            "price": 5,
             "label": "콜 매도 행사가 $5",
             "color": "#e06070",
             "dash": true
@@ -11120,7 +11120,7 @@
         ],
         "profit_zone": {
           "min": 0,
-          "max": 5.0,
+          "max": 5,
           "label": "수익 구간"
         },
         "expiry_date": "2026-08-26",
@@ -14948,7 +14948,7 @@
           3.151,
           3.15,
           3.014,
-          3.0,
+          3,
           3.077,
           3.268,
           3.28,
@@ -16598,7 +16598,7 @@
           3.151,
           3.15,
           3.014,
-          3.0,
+          3,
           3.077,
           3.268,
           3.28,
