@@ -10,27 +10,38 @@
 </script>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
+  /* [2026-08-25] 색상 체계를 hub.html(메인 트레이딩룸)과 동일한 라이트/다크 팔레트로 통일 — 토스 블루 사용 안 함 */
   :root{
-    --sb-bg:#111318;
-    --sb-card:#1A1D24;
-    --sb-card-hover:#1E212A;
-    --sb-card-border:rgba(255,255,255,.07);
-    --sb-title:#F5F6F8;
-    --sb-sub:#8B93A1;
-    --sb-text:#B7BECA;
+    --sb-bg:#17171C;
+    --sb-card:#1E2027;
+    --sb-card-hover:#23262E;
+    --sb-card-border:rgba(255,255,255,.08);
+    --sb-title:#FFFFFF;
+    --sb-sub:#8B95A1;
+    --sb-text:#B0B8C1;
+    --sb-accent:#667085;
+    --sb-accent-rgb:102,112,133;
+    --sb-btn-text:#667085;
+    --sb-btn-border:#667085;
+    --sb-btn-bg:#1E2027;
     --sb-ghost-border:rgba(255,255,255,.16);
     --sb-ghost-hover:rgba(255,255,255,.05);
     --sb-spin-track:rgba(255,255,255,.14);
     --sb-shadow:0 1px 2px rgba(0,0,0,.24), 0 18px 40px rgba(0,0,0,.28);
   }
   html.theme-light{
-    --sb-bg:#F4F2EE;
+    --sb-bg:linear-gradient(180deg,#EDEAE4 0%,#E8E4DD 55%,#E5E0D8 100%);
     --sb-card:#FFFFFF;
-    --sb-card-hover:#FBFAF8;
-    --sb-card-border:rgba(30,26,20,.07);
-    --sb-title:#221F1B;
-    --sb-sub:#7A7368;
+    --sb-card-hover:#FAF8F5;
+    --sb-card-border:#F0ECE5;
+    --sb-title:#2B2926;
+    --sb-sub:#6E6A61;
     --sb-text:#4E483F;
+    --sb-accent:#5C6672;
+    --sb-accent-rgb:92,102,114;
+    --sb-btn-text:#2B2926;
+    --sb-btn-border:#2B2926;
+    --sb-btn-bg:#FFFFFF;
     --sb-ghost-border:rgba(0,0,0,.12);
     --sb-ghost-hover:rgba(0,0,0,.04);
     --sb-spin-track:rgba(0,0,0,.09);
@@ -39,54 +50,72 @@
   html,body{height:100%}
   body{font-family:'Pretendard','Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--sb-bg);color:var(--sb-text);min-height:100vh;padding:56px 24px 80px;word-break:keep-all;-webkit-font-smoothing:antialiased}
 
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes sbPulse{0%{box-shadow:0 0 0 0 rgba(var(--sb-accent-rgb),.5)}70%{box-shadow:0 0 0 16px rgba(var(--sb-accent-rgb),0)}100%{box-shadow:0 0 0 0 rgba(var(--sb-accent-rgb),0)}}
+
   /* ── 2단 레이아웃: 왼쪽 상품 설명 / 오른쪽 결제 카드(스크롤해도 따라다님) ── */
   .landing-grid{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:1fr 356px;gap:40px;align-items:start}
   @media (max-width:900px){.landing-grid{grid-template-columns:1fr;gap:28px}}
 
-  .back{display:inline-flex;align-items:center;gap:6px;color:var(--sb-sub);text-decoration:none;font-weight:600;font-size:13px;margin-bottom:28px;transition:color .15s}
-  .back:hover{color:var(--sb-title)}
+  /* [2026-08-25] hub.html의 "다크 모드"/"최신 데이터로 업데이트" 알약형 버튼과 동일한 스타일 */
+  .back{display:inline-flex;align-items:center;gap:8px;background:var(--sb-btn-bg);color:var(--sb-btn-text);border:1.6px solid var(--sb-btn-border);border-radius:999px;padding:10px 18px;font-size:13px;font-weight:800;font-family:inherit;text-decoration:none;cursor:pointer;margin-bottom:28px;transition:background .15s,color .15s}
+  .back:hover{background:var(--sb-btn-text);color:#fff}
 
-  .hero{margin-bottom:36px;padding-bottom:28px;border-bottom:1px solid var(--sb-card-border)}
-  .hero-tag{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:800;letter-spacing:.14em;color:#3182F6;background:rgba(49,130,246,.10);padding:5px 11px;border-radius:20px}
+  .hero{position:relative;margin-bottom:36px;padding-bottom:28px;border-bottom:1px solid var(--sb-card-border);animation:fadeUp .5s ease both}
+  .hero::before{content:'';position:absolute;top:-40px;left:-40px;width:220px;height:220px;background:radial-gradient(circle,rgba(var(--sb-accent-rgb),.16),transparent 70%);pointer-events:none;z-index:-1}
+  .hero-tag{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:800;letter-spacing:.14em;color:var(--sb-accent);background:rgba(var(--sb-accent-rgb),.10);padding:5px 11px;border-radius:20px}
   .hero h1{font-size:38px;font-weight:800;color:var(--sb-title);letter-spacing:-.03em;margin-top:16px;line-height:1.15}
   .hero-sub{font-size:15px;color:var(--sb-sub);margin-top:12px;line-height:1.7;font-weight:500}
 
-  .section{background:var(--sb-card);border:1px solid var(--sb-card-border);border-radius:18px;padding:30px 32px;margin-bottom:14px;box-shadow:var(--sb-shadow)}
+  /* [2026-08-25] hub.html .hub-card:hover 와 동일한 붕 뜨는(lift) + 테두리 발광 효과 */
+  .section{background:var(--sb-card);border:1.5px solid var(--sb-card-border);border-radius:18px;padding:30px 32px;margin-bottom:14px;box-shadow:var(--sb-shadow);animation:fadeUp .5s ease both;cursor:default;transition:transform .28s cubic-bezier(.22,.61,.36,1),box-shadow .28s ease,border-color .28s ease}
+  .section:nth-of-type(1){animation-delay:.02s} .section:nth-of-type(2){animation-delay:.06s} .section:nth-of-type(3){animation-delay:.10s} .section:nth-of-type(4){animation-delay:.14s} .section:nth-of-type(5){animation-delay:.18s} .section:nth-of-type(6){animation-delay:.22s}
+  .section:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(var(--sb-accent-rgb),.20);border-color:var(--sb-accent)}
   .section-h{display:flex;align-items:center;gap:9px;margin-bottom:16px}
-  .section-h .dot{width:6px;height:6px;border-radius:50%;background:#3182F6;flex-shrink:0}
+  .section-h .dot{width:6px;height:6px;border-radius:50%;background:var(--sb-accent);flex-shrink:0}
   .section-h h2{font-size:15.5px;font-weight:700;color:var(--sb-title);letter-spacing:-.01em}
-  .section p{font-size:14px;color:var(--sb-text);line-height:1.9;white-space:pre-line;font-weight:400}
+  .section p{font-size:14px;color:var(--sb-text);line-height:1.9;font-weight:400}
   .section p+p{margin-top:10px}
   .section .sub-h{font-size:13px;font-weight:700;color:var(--sb-title);margin-top:20px;margin-bottom:8px}
   .section .sub-h:first-child{margin-top:0}
   .section ul{list-style:none;margin-top:2px}
   .section ul li{font-size:14px;color:var(--sb-text);line-height:2;padding-left:16px;position:relative}
   .section ul li::before{content:'';position:absolute;left:2px;top:11px;width:4px;height:4px;border-radius:50%;background:var(--sb-sub)}
+  .section ol{margin:0;padding-left:20px}
+  .section ol li{font-size:14px;color:var(--sb-text);line-height:2}
   .section ul li b{color:var(--sb-title);font-weight:700}
-  .section a{color:#3182F6;font-weight:600;text-decoration:none;word-break:break-all}
+  .section a{color:var(--sb-accent);font-weight:600;text-decoration:none;word-break:break-all}
   .section a:hover{text-decoration:underline}
+  .quote-box{background:rgba(var(--sb-accent-rgb),.06);border-left:3px solid var(--sb-accent);border-radius:0 10px 10px 0;padding:12px 16px;margin-top:14px;font-size:13.5px;color:var(--sb-text);font-style:italic;line-height:1.8}
+  .discount-box{background:rgba(46,196,116,.07);border:1px solid rgba(46,196,116,.22);border-radius:12px;padding:16px 18px;margin-top:14px;font-size:13.5px;color:var(--sb-text);line-height:1.9}
+  .discount-box b{color:var(--sb-title)}
+  .discount-box .final{color:#2EC474;font-weight:800}
 
   /* ── 결제 카드 (오른쪽 사이드바, position:sticky로 스크롤해도 따라다님) ── */
-  .side{position:sticky;top:28px}
-  .card{background:var(--sb-card);border-radius:20px;padding:32px 28px;box-shadow:var(--sb-shadow);border:1px solid var(--sb-card-border)}
+  .side{position:sticky;top:28px;animation:fadeUp .5s ease .1s both}
+  .card{background:var(--sb-card);border-radius:20px;padding:32px 28px;box-shadow:var(--sb-shadow);border:1.5px solid var(--sb-card-border);cursor:default;transition:transform .28s cubic-bezier(.22,.61,.36,1),box-shadow .28s ease,border-color .28s ease}
+  .card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(var(--sb-accent-rgb),.20);border-color:var(--sb-accent)}
   .card-h{font-size:17px;font-weight:800;color:var(--sb-title);letter-spacing:-.02em;margin-bottom:20px}
-  .price-box{background:rgba(49,130,246,.07);border:1px solid rgba(49,130,246,.20);border-radius:14px;padding:20px 20px;margin-bottom:20px}
+  .price-box{background:rgba(var(--sb-accent-rgb),.07);border:1px solid rgba(var(--sb-accent-rgb),.20);border-radius:14px;padding:20px 20px;margin-bottom:20px}
   .price-name{font-size:12.5px;color:var(--sb-sub);font-weight:700;margin-bottom:6px}
   .price-amt{font-size:27px;font-weight:800;color:var(--sb-title);letter-spacing:-.02em}
   .price-amt span{font-size:12.5px;color:var(--sb-sub);font-weight:600;margin-left:4px}
   .price-note{font-size:11.5px;color:var(--sb-sub);margin-top:10px;line-height:1.7}
-  .agree{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--sb-text);line-height:1.6;margin-bottom:18px;cursor:pointer}
-  .agree input{margin-top:2px;width:15px;height:15px;flex-shrink:0;accent-color:#3182F6}
-  .agree a{color:#3182F6;font-weight:600;text-decoration:none}
+  .policy-links{display:flex;gap:8px;margin-bottom:14px}
+  .policy-links a{flex:1;text-align:center;font-size:12px;font-weight:600;color:var(--sb-text);background:var(--sb-ghost-hover);border:1px solid var(--sb-card-border);border-radius:9px;padding:9px 8px;text-decoration:none;transition:border-color .15s,color .15s}
+  .policy-links a:hover{border-color:var(--sb-accent);color:var(--sb-accent)}
+  .agree{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--sb-text);line-height:1.6;margin-bottom:18px;cursor:pointer}
+  .agree input{margin-top:2px;width:15px;height:15px;flex-shrink:0;accent-color:var(--sb-accent)}
+  .agree a{color:var(--sb-accent);font-weight:600;text-decoration:none}
   .agree a:hover{text-decoration:underline}
-  .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px 18px;border-radius:13px;border:none;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s;font-family:inherit;background:#3182F6;color:#fff;letter-spacing:-.01em}
-  .btn:hover:not(:disabled){background:#1B64DA;transform:translateY(-1px);box-shadow:0 8px 20px rgba(49,130,246,.30)}
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:15px 18px;border-radius:13px;border:none;font-size:15px;font-weight:700;cursor:pointer;transition:filter .15s,transform .15s,box-shadow .15s;font-family:inherit;background:var(--sb-accent);color:#fff;letter-spacing:-.01em}
+  .btn:hover:not(:disabled){filter:brightness(.88);transform:translateY(-1px);box-shadow:0 8px 20px rgba(var(--sb-accent-rgb),.30)}
   .btn:disabled{opacity:.4;cursor:not-allowed}
   .btn-ghost{background:transparent;border:1.5px solid var(--sb-ghost-border);color:var(--sb-text);margin-top:9px}
-  .btn-ghost:hover:not(:disabled){background:var(--sb-ghost-hover);box-shadow:none}
+  .btn-ghost:hover:not(:disabled){background:var(--sb-ghost-hover);box-shadow:none;filter:none}
   .status{display:none;text-align:center;padding:14px 0}
   .status.show{display:block}
-  .spin{width:30px;height:30px;margin:0 auto 14px;border:3px solid var(--sb-spin-track);border-top-color:#3182F6;border-radius:50%;animation:sp .8s linear infinite}
+  .spin{width:30px;height:30px;margin:0 auto 14px;border:3px solid var(--sb-spin-track);border-top-color:var(--sb-accent);border-radius:50%;animation:sp .8s linear infinite}
   @keyframes sp{to{transform:rotate(360deg)}}
   .status-title{font-size:14.5px;font-weight:700;color:var(--sb-title);margin-bottom:6px}
   .status-desc{font-size:12.5px;color:var(--sb-sub);line-height:1.7}
@@ -95,18 +124,18 @@
   .ok-badge{width:44px;height:44px;margin:0 auto 14px;border-radius:50%;background:rgba(46,196,116,.12);border:1.5px solid rgba(46,196,116,.36);display:flex;align-items:center;justify-content:center;color:#2EC474}
   .footer{margin-top:20px;padding-top:18px;border-top:1px solid var(--sb-card-border);text-align:center;font-size:10.5px;color:var(--sb-sub);line-height:1.9}
   .footer a{color:var(--sb-sub);text-decoration:none;font-weight:600}
-  .footer a:hover{color:#3182F6}
+  .footer a:hover{color:var(--sb-accent)}
   #main-view{display:none}
 
   /* [2026-08-25] 페이지 진입 즉시 뜨는 "결제 준비중" 안내 팝업 */
   #ready-modal{display:none;position:fixed;inset:0;z-index:200;align-items:center;justify-content:center;padding:20px;background:rgba(10,10,14,.60);backdrop-filter:blur(2px)}
   #ready-modal.show{display:flex}
   .rm-box{background:var(--sb-card);border:1px solid var(--sb-card-border);border-radius:20px;padding:34px 30px;max-width:340px;width:100%;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.40)}
-  .rm-icon{width:48px;height:48px;margin:0 auto 16px;border-radius:50%;background:rgba(49,130,246,.12);border:1.5px solid rgba(49,130,246,.35);display:flex;align-items:center;justify-content:center;color:#3182F6}
+  .rm-icon{width:48px;height:48px;margin:0 auto 16px;border-radius:50%;background:rgba(var(--sb-accent-rgb),.12);border:1.5px solid rgba(var(--sb-accent-rgb),.35);display:flex;align-items:center;justify-content:center;color:var(--sb-accent)}
   .rm-title{font-size:16.5px;font-weight:700;color:var(--sb-title);margin-bottom:8px;letter-spacing:-.01em}
   .rm-desc{font-size:13.5px;color:var(--sb-sub);line-height:1.7;margin-bottom:22px}
-  .rm-close{width:100%;padding:13px;border-radius:12px;border:none;background:#3182F6;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit}
-  .rm-close:hover{background:#1B64DA}
+  .rm-close{width:100%;padding:13px;border-radius:12px;border:none;background:var(--sb-accent);color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;transition:filter .15s}
+  .rm-close:hover{filter:brightness(.88)}
 </style>
 </head>
 <body>
@@ -138,55 +167,41 @@
 
     <div class="section">
       <div class="section-h"><span class="dot"></span><h2>문의</h2></div>
-      <p>결제하셨다면 아래 채팅방으로
-트레이딩 룸 가입시 이름 또는 닉네임을 말씀해주세요.
-▶ 고객센터 (1:1 카카오톡)
-<a href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener">https://open.kakao.com/o/sWnslm0d</a></p>
+      <p>결제하셨다면 아래 채팅방으로 트레이딩 룸 가입 시 이름 또는 닉네임을 말씀해주세요.</p>
+      <p>▶ 고객센터 (1:1 카카오톡)<br><a href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener">https://open.kakao.com/o/sWnslm0d</a></p>
     </div>
 
     <div class="section">
       <div class="section-h"><span class="dot"></span><h2>필수 안내 (꼭 확인해주세요)</h2></div>
-      <p>라이브 클래스 닉네임과
-메인 대시보드(트레이딩 룸) 닉네임을
-반드시 동일하게 설정해 주시기 바랍니다.
-
-가입자 확인 및 쿠폰 적용을 위해
-두 닉네임이 일치해야 정상 처리됩니다.
-
-트레이딩 룸 : <a href="https://lds31321-png.github.io/market-dashboard/hub.html" target="_blank" rel="noopener">https://lds31321-png.github.io/market-dashboard/hub.html</a></p>
+      <p>라이브 클래스 닉네임과 메인 대시보드(트레이딩 룸) 닉네임을 반드시 동일하게 설정해 주시기 바랍니다.</p>
+      <p>가입자 확인 및 쿠폰 적용을 위해 두 닉네임이 일치해야 정상 처리됩니다.</p>
+      <p>트레이딩 룸 : <a href="https://lds31321-png.github.io/market-dashboard/hub.html" target="_blank" rel="noopener">https://lds31321-png.github.io/market-dashboard/hub.html</a></p>
     </div>
 
     <div class="section">
       <div class="section-h"><span class="dot"></span><h2>가격 및 할인 안내</h2></div>
-      <p>정가 200,000원 (1개월)
-
-신규 교육생은 참여도에 따라
-아래와 같이 할인받으실 수 있습니다.
-
-▶ 체크리스트 통과자
-신규가입 30,000원 + 체크리스트 통과 50,000원
-= 80,000원 할인
-→ 최종 결제 120,000원
-
-체크리스트 작성하러가기→
-<a href="https://lds31321-png.github.io/market-dashboard/hub.html" target="_blank" rel="noopener">https://lds31321-png.github.io/market-dashboard/hub.html</a></p>
+      <p><b style="color:var(--sb-title)">정가 200,000원 (1개월)</b></p>
+      <p>신규 교육생은 참여도에 따라 아래와 같이 할인받으실 수 있습니다.</p>
+      <div class="discount-box">
+        ▶ 체크리스트 통과자<br>
+        신규가입 30,000원 + 체크리스트 통과 50,000원 = <b>80,000원 할인</b><br>
+        → 최종 결제 <span class="final">120,000원</span>
+      </div>
+      <p style="margin-top:14px">체크리스트 작성하러가기 → <a href="https://lds31321-png.github.io/market-dashboard/hub.html" target="_blank" rel="noopener">https://lds31321-png.github.io/market-dashboard/hub.html</a></p>
 
       <div class="sub-h">쿠폰 사용 방법</div>
-      <p>1. 발급받은 쿠폰 코드를 확인합니다.
-2. 결제 화면의 "쿠폰 입력란"에 코드를 입력합니다.
-3. 할인 금액이 적용된 것을 확인 후 결제합니다.
-
-※ 쿠폰은 중복(합산) 적용됩니다.</p>
+      <ol>
+        <li>발급받은 쿠폰 코드를 확인합니다.</li>
+        <li>결제 화면의 "쿠폰 입력란"에 코드를 입력합니다.</li>
+        <li>할인 금액이 적용된 것을 확인 후 결제합니다.</li>
+      </ol>
+      <p style="margin-top:8px;font-size:12.5px;color:var(--sb-sub)">※ 쿠폰은 중복(합산) 적용됩니다.</p>
     </div>
 
     <div class="section">
       <div class="section-h"><span class="dot"></span><h2>트레이딩 키란?</h2></div>
-      <p>10년간의 가격 데이터로 검증한 진입 기준과
-수많은 급변동을 직접 겪으며 다듬은 위험관리 원칙을
-그대로 담은 실전 옵션 투자 정보 서비스입니다.
-
-혼자 판단하기 어려웠던 진입·청산 시점을
-직트의 실제 포지션과 함께 확인하실 수 있습니다.</p>
+      <p>10년간의 가격 데이터로 검증한 진입 기준과 수많은 급변동을 직접 겪으며 다듬은 위험관리 원칙을 그대로 담은 실전 옵션 투자 정보 서비스입니다.</p>
+      <p>혼자 판단하기 어려웠던 진입·청산 시점을 직트의 실제 포지션과 함께 확인하실 수 있습니다.</p>
 
       <div class="sub-h">이런 분께 추천합니다</div>
       <ul>
@@ -207,22 +222,20 @@
 
     <div class="section">
       <div class="section-h"><span class="dot"></span><h2>문의</h2></div>
-      <p>궁금하신 점은 언제든 편하게 남겨주세요.
-▶ 고객센터 (1:1 카카오톡)
-<a href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener">https://open.kakao.com/o/sWnslm0d</a></p>
+      <p>궁금하신 점은 언제든 편하게 남겨주세요.</p>
+      <p>▶ 고객센터 (1:1 카카오톡)<br><a href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener">https://open.kakao.com/o/sWnslm0d</a></p>
     </div>
 
     <div class="section">
       <div class="section-h"><span class="dot"></span><h2>시장 급등락? 이제는 VOL_WATCHTOWER가 알려드립니다</h2></div>
-      <p>문제: 바쁜 일상 속, 실시간 시장 모니터링은 현실적으로 어렵습니다.
-해결: 실시간으로 시장 변동성을 감지하고, 조건 충족 시 자동으로 알림을 발송합니다.</p>
+      <p><b style="color:var(--sb-title)">문제</b> — 바쁜 일상 속, 실시간 시장 모니터링은 현실적으로 어렵습니다.</p>
+      <p><b style="color:var(--sb-title)">해결</b> — 실시간으로 시장 변동성을 감지하고, 조건 충족 시 자동으로 알림을 발송합니다.</p>
       <ul style="margin-top:12px">
         <li>총 13개 종목을 상시 감시</li>
         <li>손실 확률 10~20% 수준의 옵션을 기준으로 추적</li>
         <li>기준 이상 급등 시 즉시 경고</li>
       </ul>
-      <p style="margin-top:14px">"내가 모니터를 보지 못할 때, 위험 신호를 대신 감지해주는 감시탑"
-바로 VOL_WATCHTOWER입니다.</p>
+      <div class="quote-box">"내가 모니터를 보지 못할 때, 위험 신호를 대신 감지해주는 감시탑" — 바로 VOL_WATCHTOWER입니다.</div>
     </div>
 
   </div>
@@ -241,9 +254,14 @@
 
         <div id="err-box" class="err"></div>
 
+        <div class="policy-links">
+          <a href="./volatility/terms.html" target="_blank">이용약관 보기</a>
+          <a href="./volatility/refund.html" target="_blank">환불정책 보기</a>
+        </div>
+
         <label class="agree">
           <input type="checkbox" id="agree-check">
-          <span><a href="./volatility/terms.html" target="_blank">이용약관</a>과 <a href="./volatility/refund.html" target="_blank">환불정책</a>을 확인했으며 이에 동의합니다. (필수)</span>
+          <span>이용약관과 환불정책을 확인했으며 이에 동의합니다. (필수)</span>
         </label>
 
         <button class="btn" id="btn-pay" disabled>카드 등록하고 정기결제 시작하기</button>
