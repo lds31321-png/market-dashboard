@@ -1,6 +1,6 @@
 {
   "meta": {
-    "last_updated": "2026-09-01",
+    "last_updated": "2026-09-02",
     "base_currency": "USD",
     "exchange_rate": 1500,
     "total_deposit_krw": 50000000,
@@ -75,7 +75,7 @@
       "shared_date": "2026-09-01",
       "status": "active",
       "notion_url": "",
-      "strategy_type": "naked_call",
+      "strategy_type": "strangle",
       "underlying": "골드",
       "underlying_en": "Gold",
       "expiry_month": "10월물",
@@ -90,7 +90,7 @@
           "current_price_pt": 1.7
         },
         {
-          "type": "call_sell",
+          "type": "put_sell",
           "strike": 3795.0,
           "contracts": 1,
           "premium": 160.0,
@@ -295,19 +295,19 @@
         "strike_lines": [
           {
             "price": 5200.0,
-            "label": "콜 매도 행사가 $5,200",
+            "label": "콜 행사가 $5,200",
             "color": "#e06070",
             "dash": true
           },
           {
             "price": 3795.0,
-            "label": "콜 매도 행사가 $3,795",
+            "label": "풋 행사가 $3,795",
             "color": "#e06070",
             "dash": true
           }
         ],
         "profit_zone": {
-          "min": 0,
+          "min": 3795.0,
           "max": 5200.0,
           "label": "수익 구간"
         },
@@ -333,13 +333,13 @@
       "legs": [
         {
           "type": "put_sell",
-          "strike": 44.0,
+          "strike": 44,
           "contracts": 1,
-          "premium": 70.0,
+          "premium": 70,
           "current_price_pt": 0.07
         }
       ],
-      "total_premium": 70.0,
+      "total_premium": 70,
       "margin": 323,
       "margin_krw": 484500,
       "profit_scenarios": [],
@@ -569,13 +569,13 @@
       "legs": [
         {
           "type": "call_sell",
-          "strike": 135.0,
+          "strike": 135,
           "contracts": 1,
-          "premium": 170.0,
+          "premium": 170,
           "current_price_pt": 0.17
         }
       ],
-      "total_premium": 170.0,
+      "total_premium": 170,
       "margin": 982,
       "margin_krw": 1473000,
       "profit_scenarios": [],
@@ -807,11 +807,11 @@
           "type": "put_sell",
           "strike": 2.45,
           "contracts": 1,
-          "premium": 120.0,
+          "premium": 120,
           "current_price_pt": 0.012
         }
       ],
-      "total_premium": 120.0,
+      "total_premium": 120,
       "margin": 936,
       "margin_krw": 1404000,
       "profit_scenarios": [],
