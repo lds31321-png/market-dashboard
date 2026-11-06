@@ -11,7 +11,7 @@
 /* [2026-06-11] 로컬(localhost) 검수 시 대시보드 링크를 루트 작업본으로 전환 (라이브는 volatility/ 하위폴더 유지) */
 !function(){var h=location.hostname;if(h!=='localhost'&&h!=='127.0.0.1')return;function fx(){var as=document.querySelectorAll('a[href]');for(var i=0;i<as.length;i++){var a=as[i],u=a.getAttribute('href')||'';if(u.indexOf('volatility/volatility_dashboard_v3.html')>=0)a.setAttribute('href','volatility_dashboard_v3.html');}}document.readyState==='loading'?document.addEventListener('DOMContentLoaded',fx):fx();}();
 </script>
-<title>직트&레이 트레이딩 룸</title>
+<title>직트 트레이딩 룸</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
@@ -471,7 +471,7 @@
 
 </style>
 <script>
-(function(){try{var t=localStorage.getItem('jikt_theme')||'light';if(t!=='dark')document.documentElement.classList.add('theme-light');}catch(e){}})();
+/* [2026-11-06] 다크 모드 숨김 — 저장값과 무관하게 라이트 고정 */document.documentElement.classList.add('theme-light');
 function jiktSyncThemeLabel(){var b=document.getElementById('jiktThemeBtn');if(!b)return;var light=document.documentElement.classList.contains('theme-light');var l=b.querySelector('.jt-label');if(l)l.textContent=light?'다크 모드':'라이트 모드';}
 function jiktToggleTheme(){var h=document.documentElement;var light=h.classList.toggle('theme-light');try{localStorage.setItem('jikt_theme',light?'light':'dark');}catch(e){}jiktSyncThemeLabel();}
 document.addEventListener('DOMContentLoaded',jiktSyncThemeLabel);
@@ -697,9 +697,7 @@ body{font-family:'Pretendard','Noto Sans KR',system-ui,sans-serif!important;font
 <div id="hub-glow"></div>
 
 <div class="hub-header">
-  <div class="hub-logo">JIKT · OPTION SELLING</div>
-  <div class="hub-title">직트&레이 트레이딩 룸</div>
-  <div class="hub-sub" style="font-size:16px;font-weight:700;color:#B0B8C1">수익은 시장이 주고, 손실은 우리가 통제합니다</div>
+  <div class="hub-title">직트 트레이딩 룸</div>
   <button class="jikt-refresh-btn" onclick="jiktRefresh()"><svg class="refresh-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v6h-6"/></svg>최신 데이터로 업데이트</button>
   <button class="jikt-viewmode-btn" id="jiktViewModeBtn" onclick="jiktToggleViewMode()"><span id="jiktViewModeLabel">PC 버전</span></button>
   <button class="jikt-theme-btn" id="jiktThemeBtn" onclick="jiktToggleTheme()"><span class="jt-label">라이트 모드</span></button>
@@ -877,7 +875,7 @@ html.theme-light .jikt-products{--jp-card:#ffffff;--jp-line:rgba(0,0,0,.09);--jp
     <div class="jikt-products-sub">원하는 상품을 선택해 신청하세요</div>
   </div>
   <div class="jikt-products-grid">
-    <a class="jikt-product" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener">
+    <a class="jikt-product jp-hidden" href="https://optionacademy.liveklass.com/cu/kMWKNaR7" target="_blank" rel="noopener">
       <div class="jp-tag">TRADING KEY</div>
       <div class="jp-name">트레이딩키</div>
       <div class="jp-desc">실전 매매에 활용하는 트레이딩키 단독 상품입니다.</div>
@@ -953,59 +951,6 @@ function jiktRefresh(){ try{ location.replace(location.pathname + '?v=' + Date.n
     requestAnimationFrame(draw);
   }
   requestAnimationFrame(draw);
-})();
-</script>
-
-<!-- [2026-06-30] 옵션투자준비 체크리스트 안내 팝업 -->
-<div id="jikt-intro-modal" class="jintro-wrap">
-  <div class="jintro-box">
-    <button class="jintro-x" data-jclose aria-label="닫기">×</button>
-    <div class="jintro-tag">옵션 투자 자가진단</div>
-    <div class="jintro-h">나는 투자를 시작하기에<br>적합한 사람일까?</div>
-    <div class="jintro-sub">단 3분이면 자가진단이 끝납니다.<br>자기객관화를 통해 나의 투자 준비 수준을 점검해 보세요.</div>
-    <button class="jintro-coupon" data-jmore aria-expanded="false">5만원 할인쿠폰 받기 <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
-    <div class="jintro-detail" data-jdetail hidden>
-      <div class="jintro-dlead">옵션투자준비 체크리스트는 옵션 매도에 대한 이해와 실전 운용 준비 정도를 스스로 점검하는 3분 자가진단입니다. 아래 순서대로 진행하시면 됩니다.</div>
-      <div class="jintro-flow">
-        <div class="jintro-fstep"><div class="fn"><div class="fc">1</div><div class="fl"></div></div><div class="ft"><b>작성·제출</b> — 아래 '체크리스트 작성하기'를 눌러 구글폼에 응답하고 제출합니다. (약 3분)</div></div>
-        <div class="jintro-fstep"><div class="fn"><div class="fc">2</div><div class="fl"></div></div><div class="ft"><b>결과 받기</b> — 입력하신 이메일로 진단 결과가 회신됩니다. 결과에는 나에게 맞는 교육 단계가 안내됩니다.</div></div>
-        <div class="jintro-fstep"><div class="fn"><div class="fc">3</div><div class="fl"></div></div><div class="ft"><b>'2단계 추천' 확인</b> — 결과가 <span class="cp">2단계(트레이딩키) 추천</span>으로 나오면 할인쿠폰 대상입니다. <span style="color:#8B95A1">2단계는 실전 투자 정보를 제공하는 트레이딩키 서비스입니다.</span></div></div>
-        <div class="jintro-fstep"><div class="fn"><div class="fc">4</div><div class="fl"></div></div><div class="ft"><b>인증</b> — 이메일로 받은 진단 결과를 <b>캡처하거나 복사</b>해서 카카오톡 1:1 채팅으로 보냅니다.</div></div>
-        <div class="jintro-fstep"><div class="fn"><div class="fc">5</div><div class="fl"></div></div><div class="ft"><b>쿠폰 지급</b> — 인증이 확인되면 1:1 카카오톡으로 <span class="cp">5만원 할인쿠폰 코드</span>를 전달해 드립니다. 첫 1회에 한해 1개월 내 사용 가능합니다.</div></div>
-        <div class="jintro-fstep"><div class="fn"><div class="fc">6</div><div class="fl"></div></div><div class="ft"><b>사용</b> — 받은 쿠폰코드를 라이브 클래스 결제 화면의 <b>쿠폰 입력란</b>에 입력하면 할인이 적용됩니다.</div></div>
-      </div>
-    </div>
-
-    <div class="jintro-btns">
-      <a class="jintro-cta" href="https://forms.gle/uFwfnCBEis8ThqGV6" target="_blank" rel="noopener noreferrer">체크리스트 작성하기 →</a>
-      <a class="jintro-kakao" href="https://open.kakao.com/o/sQK7Yx1g" target="_blank" rel="noopener noreferrer">카카오톡 1:1 문의</a>
-    </div>
-
-    <div class="jintro-foot">
-      <label class="jintro-hide"><input type="checkbox" data-jhide12>하루 동안 보지 않기</label>
-      <button class="jintro-closetxt" data-jclose>닫기</button>
-    </div>
-  </div>
-</div>
-<script>
-/* [2026-06-30] 안내 팝업 — 진입 시 항상 표시 */
-(function(){
-  var w=document.getElementById('jikt-intro-modal'); if(!w) return;
-  var KEY='jikt_intro_hide_until';
-  try{ var until=parseInt(localStorage.getItem(KEY)||'0',10); if(until && Date.now()<until) return; }catch(e){}
-  function close(){ w.classList.remove('on'); document.body.style.overflow=''; }
-  w.addEventListener('click',function(e){ if(e.target===w) close(); });
-  w.querySelectorAll('[data-jclose]').forEach(function(b){ b.addEventListener('click',close); });
-  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
-  var cb=w.querySelector('[data-jhide12]');
-  if(cb){ cb.addEventListener('change',function(){ try{ if(cb.checked){ localStorage.setItem(KEY, String(Date.now()+24*3600*1000)); } else { localStorage.removeItem(KEY); } }catch(e){} }); }
-  var mb=w.querySelector('[data-jmore]'), dt=w.querySelector('[data-jdetail]');
-  if(mb&&dt){ mb.addEventListener('click',function(){
-    var hidden=dt.hasAttribute('hidden');
-    if(hidden){ dt.removeAttribute('hidden'); mb.classList.add('open'); mb.setAttribute('aria-expanded','true'); }
-    else{ dt.setAttribute('hidden',''); mb.classList.remove('open'); mb.setAttribute('aria-expanded','false'); }
-  }); }
-  w.classList.add('on'); document.body.style.overflow='hidden';
 })();
 </script>
 
@@ -1100,7 +1045,7 @@ jiktUpdateViewModeLabel();
          줄바꿈이 폭증했다. 작아야 할 것까지 키운 것이 촌스러움의 원인이었다.
 
        대표값   28px / 800 / #F5F6F8   — 결제 70,000원 (화면당 1개)
-       페이지제목 26px / 800 / #F5F6F8 — 직트&레이 트레이딩 룸 · 팝업 제목
+       페이지제목 26px / 800 / #F5F6F8 — 직트 트레이딩 룸 · 팝업 제목
        제목     20px / 800 / #F5F6F8   — 카드 제목 · 쿠폰 토글
        본문     15px / 500 / #B0B8C1   — 부제 · 설명 · 절차 · 쿠폰 이름
        메타     13px / 500 / #8B95A1   — 로고 · 단계라벨 · 요약줄 · 사용기간 · % · 버튼 · 캡션
@@ -1508,11 +1453,11 @@ jiktUpdateViewModeLabel();
       }
     }catch(e){}
 
-    /* 0-B) [직트 재지시 2026-07-16] 모바일 제목을 전체 문구 `직트&레이 트레이딩 룸` 으로.
+    /* 0-B) [직트 재지시 2026-07-16] 모바일 제목을 전체 문구 `직트 트레이딩 룸` 으로.
             (예전엔 '트레이딩 룸'으로 줄였는데, 전체 문구로 표시해달라는 요청) */
     try{
       var ttl=document.querySelector('.hub-title');
-      if(ttl && ttl.textContent.trim()!=='직트&레이 트레이딩 룸') ttl.textContent='직트&레이 트레이딩 룸';
+      if(ttl && ttl.textContent.trim()!=='직트 트레이딩 룸') ttl.textContent='직트 트레이딩 룸';
     }catch(e){}
 
     /* 1) 쿠폰 배너를 카드 3장 아래로 옮긴다 */
@@ -1607,5 +1552,14 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.ge
   경기도 고양시 일산동구 중앙로 1080, 402동 4층 402-S91호 · 010-2649-0502<br>
   <a href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener" style="color:#8B95A1;font-weight:700;text-decoration:underline">카카오톡 오픈채팅 문의</a>
 </div>
+<style id="jikt-hide-2026-11-06">
+/* [2026-11-06] 숨김 처리 — 되돌리려면 이 블록을 지우면 된다 */
+#jcb-banner{ display:none !important; }      /* 트레이딩 룸 최대 65% 할인 배너 */
+#jiktThemeBtn{ display:none !important; }    /* 다크 모드 버튼 */
+.jikt-product.jp-hidden{ display:none !important; }  /* 트레이딩키 카드 (토스 심사용 카드는 심사 중이라 표시) */
+/* 카드 2장을 가운데로 나란히, 폰에서는 세로로 */
+.jikt-products-grid{ grid-template-columns:repeat(2,minmax(0,380px)) !important; justify-content:center !important; }
+@media (max-width:640px){ .jikt-products-grid{ grid-template-columns:minmax(0,1fr) !important; } }
+</style>
 </body>
 </html>
