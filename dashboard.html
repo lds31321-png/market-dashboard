@@ -1424,6 +1424,11 @@ function buildPositionChart(p, canvasId){
   // 과거 데이터 라벨 (기간 자르지 않음 — 과거 흐름 전체 표시)
   const histLabels=cd.dates.map(d=>fmtLabel(d));
   const histCloses=[...cd.closes];
+  /* [2026-11-07 직트 지시 · 캔들 차트] 증권사 HTS 처럼 일봉 캔들로 그린다(양봉 빨강 · 음봉 파랑).
+     시가·고가·저가가 없는 날이 10% 넘으면(옛 기록 등) 종전 선 차트 그대로. 종가·만기·행사가 계산은 바뀌지 않는다. */
+  const _ohlc=!!(cd.opens&&cd.highs&&cd.lows&&cd.opens.length===cd.dates.length&&cd.highs.length===cd.dates.length&&cd.lows.length===cd.dates.length);
+  const histOpens=_ohlc?cd.opens.slice():[], histHighs=_ohlc?cd.highs.slice():[], histLows=_ohlc?cd.lows.slice():[];
+  const _candle=_ohlc&&histOpens.filter((v,i)=>v!=null&&histHighs[i]!=null&&histLows[i]!=null&&histCloses[i]!=null).length>=histCloses.length*0.9;
 
   // 마지막 데이터 날짜부터 만기일까지 빈 날짜 생성
   const lastDateStr=cd.dates[cd.dates.length-1];
@@ -1458,7 +1463,7 @@ function buildPositionChart(p, canvasId){
   const daysLeft=Math.max(0,Math.round((new Date(p.expiry_date)-new Date())/86400000));
 
   // y축 범위: 행사가 포함해서 넉넉하게
-  const allPrices=[...histCloses,...(cd.strike_lines||[]).map(sl=>(sl&&sl.price!=null)?sl.price:sl)];
+  const allPrices=[...histCloses,...(_candle?[...histHighs,...histLows].filter(v=>v!=null):[]),...(cd.strike_lines||[]).map(sl=>(sl&&sl.price!=null)?sl.price:sl)];
   const mn=Math.min(...allPrices), mx=Math.max(...allPrices);
   const pad=(mx-mn)*0.12;
   const yMin=mn-pad, yMax=mx+pad;
@@ -1508,6 +1513,25 @@ function buildPositionChart(p, canvasId){
         const y1=clamp(yPx(pMin),top,bottom);
         c.fillStyle='rgba(50,100,220,0.07)';
         c.fillRect(left,y1,right-left,bottom-y1);
+      }
+
+      // ── [2026-11-07 직트 지시] 일봉 캔들 (구간 배경 위 · 행사가선 아래) ──
+      if(_candle){
+        c.save();
+        const _slot=histLabels.length>1?Math.abs(x.getPixelForValue(1)-x.getPixelForValue(0)):12;
+        const _bw=Math.max(1.5,Math.min(12,_slot*0.65));
+        for(let i=0;i<histCloses.length;i++){
+          const o=histOpens[i],h=histHighs[i],l=histLows[i],cl=histCloses[i];
+          if(o==null||h==null||l==null||cl==null) continue;
+          const col=(cl>=o)?'#d93a3a':'#2f6fd6';
+          const xp=x.getPixelForValue(i);
+          const yh=clamp(yPx(h),top,bottom), yl=clamp(yPx(l),top,bottom);
+          const yo=clamp(yPx(o),top,bottom), yc=clamp(yPx(cl),top,bottom);
+          c.strokeStyle=col; c.lineWidth=1;
+          c.beginPath(); c.moveTo(xp,yh); c.lineTo(xp,yl); c.stroke();
+          c.fillStyle=col; c.fillRect(xp-_bw/2,Math.min(yo,yc),_bw,Math.max(1,Math.abs(yo-yc)));
+        }
+        c.restore();
       }
 
       // ── 행사가 수평선 ──
@@ -1750,7 +1774,7 @@ function buildPositionChart(p, canvasId){
     data:{
       labels,
       datasets:[{
-        label:'종가',data:closes,borderColor:'#0077cc',borderWidth:2,
+        label:'종가',data:closes,borderColor:_candle?'rgba(0,0,0,0)':'#0077cc',borderWidth:2,   /* 캔들일 때 선은 숨기고 툴팁용으로만 둔다 */
         pointRadius:0,pointHoverRadius:4,
         fill:false,tension:.2
       }]
@@ -1764,7 +1788,9 @@ function buildPositionChart(p, canvasId){
           backgroundColor:'rgba(20,20,20,.88)',borderColor:'rgba(0,0,0,.15)',borderWidth:1,
           titleColor:'#aaa',titleFont:{size:10,family:'IBM Plex Mono'},
           bodyColor:'#fff',bodyFont:{size:11,family:'IBM Plex Mono'},
-          callbacks:{title:t=>`${t[0].label}`,label:c=>`  종가: $${c.parsed.y.toLocaleString()}`}
+          callbacks:{title:t=>`${t[0].label}`,label:c=>{ const i=c.dataIndex;
+            if(_candle&&i<histCloses.length&&histOpens[i]!=null) return ['  시가: $'+histOpens[i].toLocaleString(),'  고가: $'+histHighs[i].toLocaleString(),'  저가: $'+histLows[i].toLocaleString(),'  종가: $'+c.parsed.y.toLocaleString()];
+            return `  종가: $${c.parsed.y.toLocaleString()}`; }}
         }
       },
       layout:(window.matchMedia('(max-width:640px)').matches?{padding:{right:8,left:2,top:10,bottom:16}}:{padding:{right:68,left:4,top:10,bottom:44}}),
@@ -1907,7 +1933,7 @@ function openModal(id){
   // ── 차트 범례 ──
   const strikeLabelShort=p.chart_data?.strike_lines?.map(sl=>'$'+((sl&&sl.price!=null)?sl.price:sl).toLocaleString()).join(' / ')||'';
   const legendHtml=p.chart_data?`<div class="chart-legend">
-    <span class="cleg"><span style="display:inline-block;width:18px;height:2px;background:#0077cc;vertical-align:middle"></span> 가격</span>
+    <span class="cleg"><span style="display:inline-block;width:7px;height:12px;background:#d93a3a;vertical-align:middle;border-radius:1px"></span><span style="display:inline-block;width:7px;height:12px;background:#2f6fd6;vertical-align:middle;margin-left:2px;border-radius:1px"></span> 가격 (빨강 상승 · 파랑 하락)</span>
     <span class="cleg"><span style="display:inline-block;width:18px;height:0;border-top:2px dashed #cc2222;vertical-align:middle"></span> 행사가 ${strikeLabelShort}</span>
     <span class="cleg"><span style="display:inline-block;width:18px;height:2px;background:rgba(10,10,10,.75);vertical-align:middle"></span> 만기일</span>
     <span class="cleg"><span style="display:inline-block;width:18px;height:0;border-top:2px dashed rgba(10,10,10,.55);vertical-align:middle"></span> 진입일</span>
