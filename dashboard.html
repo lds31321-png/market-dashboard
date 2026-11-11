@@ -1454,7 +1454,9 @@ function buildPositionChart(p, canvasId){
   if(expiryIdx<0){
     const expIso=(p.expiry_date||cd.expiry_date||'').slice(0,10);
     const hiIdx=expIso?cd.dates.findIndex(d=>(d||'').replace(/\//g,'-').slice(0,10)===expIso):-1;
-    if(hiIdx>=0) expiryIdx=hiIdx;
+    /* [2026-11-12 직트 「만기일이 없네」] hiIdx는 시세 전체(cd.dates) 기준인데 화면은 뒤쪽 일부(histLabels)만 보여 준다.
+       지난 월물(만기일에서 시세가 끊긴 차트)은 만기선이 화면 밖 번호로 잡혀 그려지지 않았다 → 보이는 구간 기준으로 바꾼다 */
+    if(hiIdx>=0) expiryIdx=hiIdx-(cd.dates.length-histLabels.length);
     else if(futureLabels.length>0) expiryIdx=histLabels.length+futureLabels.length-1;
   }
 
@@ -1466,7 +1468,9 @@ function buildPositionChart(p, canvasId){
   const allPrices=[...histCloses,...(_candle?[...histHighs,...histLows].filter(v=>v!=null):[]),...(cd.strike_lines||[]).map(sl=>(sl&&sl.price!=null)?sl.price:sl)];
   const mn=Math.min(...allPrices), mx=Math.max(...allPrices);
   const pad=(mx-mn)*0.12;
-  const yMin=mn-pad, yMax=mx+pad;
+  /* [2026-11-12] 축 끝 숫자가 $5,342.128처럼 지저분하게 찍혔다 → 눈금 단위에 맞춰 반올림 */
+  const _ystep=(function(r){ if(!(r>0)) return 1; const s=Math.pow(10,Math.floor(Math.log10(r/8))); return r/s>40?s*5:(r/s>16?s*2:s); })((mx-mn)+2*pad);
+  const yMin=Math.floor((mn-pad)/_ystep)*_ystep, yMax=Math.ceil((mx+pad)/_ystep)*_ystep;
 
   // ── 커스텀 드로잉 플러그인 (흰 배경 + 정확한 구간 계산) ──
   const customPlugin={
@@ -1534,236 +1538,160 @@ function buildPositionChart(p, canvasId){
         c.restore();
       }
 
+      /* ══ [2026-11-12 직트 「텍스트가 차트·선에 겹치면 안 된다」 전수조사]
+         글자(행사가·진입·만기일·현재가·남은 일수·수익/손실구간)를 그리기 전에 선과 캔들이 차지한 자리를 기록하고,
+         글자마다 후보 자리 중 아무것도 겹치지 않는 곳(없으면 가장 덜 겹치는 곳)에 흰 바탕을 깔아 그린다. ══ */
+      const _mb=window.matchMedia('(max-width:640px)').matches;
+      const CW=chart.width, CH2=chart.height;
+      const occ=[];
+      const _hit=(r,b)=>r.x0<b.x1&&r.x1>b.x0&&r.y0<b.y1&&r.y1>b.y0;
+      const _slotW=histLabels.length>1?Math.abs(x.getPixelForValue(1)-x.getPixelForValue(0)):8;
+      function priceHits(r){
+        let n=0;
+        for(let i=0;i<histCloses.length;i++){
+          const xp=x.getPixelForValue(i); if(xp<r.x0-_slotW/2-1||xp>r.x1+_slotW/2+1) continue;
+          const hi=(_candle&&histHighs[i]!=null)?histHighs[i]:histCloses[i], lo=(_candle&&histLows[i]!=null)?histLows[i]:histCloses[i];
+          if(hi==null||lo==null) continue;
+          const yh=yPx(Math.max(hi,lo))-3, yl=yPx(Math.min(hi,lo))+3;
+          if(yh<r.y1&&yl>r.y0) n++;
+          /* 선 차트는 이웃 점 사이 선분도 차지한다 */
+          if(!_candle&&i+1<histCloses.length&&histCloses[i+1]!=null){ const y2=yPx(histCloses[i+1]); if(Math.min(yh,y2-3)<r.y1&&Math.max(yl,y2+3)>r.y0) n++; }
+        }
+        return n;
+      }
+      function cost(r,skip){
+        let s=0;
+        if(r.x0<2||r.x1>CW-2||r.y0<2||r.y1>CH2-2) s+=5000;
+        occ.forEach(b=>{ if(b!==skip&&_hit(r,b)) s+=b.wt; });
+        return s+priceHits(r)*40;
+      }
+      function claim(x0,y0,x1,y1,wt){ const b={x0:Math.min(x0,x1),y0:Math.min(y0,y1),x1:Math.max(x0,x1),y1:Math.max(y0,y1),wt:wt||300}; occ.push(b); return b; }
+      function place(w,h,cands,keep){
+        let best=null,bc=1e12;
+        for(const q of cands){ if(keep&&!keep(q)) continue; const r={x0:q[0],y0:q[1],x1:q[0]+w,y1:q[1]+h}; const sc=cost(r); if(sc<bc){bc=sc;best=r;} if(sc===0) break; }
+        if(best) claim(best.x0,best.y0,best.x1,best.y1,1000);
+        return best;
+      }
+      function pill(r,bg,fg,txt,font){
+        c.save(); c.fillStyle=bg; c.beginPath();
+        if(c.roundRect) c.roundRect(r.x0,r.y0,r.x1-r.x0,r.y1-r.y0,4); else c.rect(r.x0,r.y0,r.x1-r.x0,r.y1-r.y0);
+        c.fill(); c.font=font; c.fillStyle=fg; c.textAlign='center'; c.textBaseline='middle';
+        c.fillText(txt,(r.x0+r.x1)/2,(r.y0+r.y1)/2+0.5); c.restore();
+      }
+      const FONT_S='bold 10px IBM Plex Mono,monospace', FONT_K='bold 11px IBM Plex Sans KR,Noto Sans KR,sans-serif';
+      const FONT_Z=(_mb?'bold 12px ':'bold 14px ')+'IBM Plex Sans KR,Noto Sans KR,sans-serif';
+      function tw(txt,font){ c.save(); c.font=font; const w=c.measureText(txt).width; c.restore(); return w; }
+
       // ── 행사가 수평선 ──
+      const strikeYs=[];
       cd.strike_lines.forEach(sl=>{
-        if(sl.price<yMin*0.98||sl.price>yMax*1.02)return;
-        const yp=clamp(yPx(sl.price),top,bottom);
-
-        c.save();
-        c.setLineDash([8,5]);
-        c.strokeStyle='#cc2222';
-        c.lineWidth=1.5;
-        c.globalAlpha=0.9;
-        c.beginPath();c.moveTo(left,yp);c.lineTo(right,yp);c.stroke();
-        c.setLineDash([]);c.globalAlpha=1;
-
-        // 오른쪽 가격 라벨
-        const priceStr='$'+sl.price.toLocaleString();
-        c.font='bold 10px IBM Plex Mono,monospace';
-        const tw=c.measureText(priceStr).width+12;
-        c.fillStyle='#cc2222';
-        c.fillRect(right-tw-2,yp-9,tw,17);
-        c.fillStyle='#fff';
-        c.textAlign='right';c.textBaseline='middle';
-        c.fillText(priceStr,right-5,yp);
-        c.restore();
+        if(sl.price<yMin||sl.price>yMax) return;
+        const yp=yPx(sl.price); strikeYs.push([yp,sl.price]);
+        c.save(); c.setLineDash([8,5]); c.strokeStyle='#cc2222'; c.lineWidth=1.5; c.globalAlpha=0.9;
+        c.beginPath(); c.moveTo(left,yp); c.lineTo(right,yp); c.stroke(); c.restore();
+        /* 선 자리는 가격표를 놓은 뒤에 막는다(가격표는 자기 선 위에 얹힌다) */
       });
 
-      // ── 구간 텍스트 (profit_zone 기반) ──
-      c.save();
-      c.font='bold 14px IBM Plex Sans KR,Noto Sans KR,sans-serif';
-      c.textAlign='center';c.textBaseline='middle';
-
-      // 수익구간 텍스트
-      // ⚠ 모바일에서 가격선·행사가 라벨과 겹쳐 글자가 안 읽혔다 → 왼쪽 끝에 붙이고 살짝 작게
-      const _mbZ=window.matchMedia('(max-width:640px)').matches;
-      if(_mbZ){ c.font='bold 12px IBM Plex Sans KR,Noto Sans KR,sans-serif'; c.textAlign='left'; }
-
-      /* ★ [직트 지시 2026-07-14] 구간 글자가 **가격선에 가려져 안 읽혔다.**
-           → 글자 뒤에 흰 배경 박스를 깔아 선 위로 띄운다 (모바일에서만). */
-      function zoneText(txt, color, tx, ty){
-        if(_mbZ){
-          const w=c.measureText(txt).width;
-          c.save();
-          c.fillStyle='rgba(255,255,255,0.88)';
-          const bx = tx-4, by = ty-9, bw = w+8, bh = 18;
-          if(c.roundRect){ c.beginPath(); c.roundRect(bx,by,bw,bh,4); c.fill(); }
-          else c.fillRect(bx,by,bw,bh);
-          c.restore();
-        }
-        c.fillStyle=color;
-        c.fillText(txt, tx, ty);
-      }
-
+      // ── 진입일 위치 ──
+      let enIdx=-1;
       {
-        const y1=clamp(yPx(pMax),top,bottom);
-        const y2=clamp(yPx(Math.max(pMin,yMin)),top,bottom);
-        const midY=(y1+y2)/2;
-        if(midY>top&&midY<bottom&&y2-y1>30){
-          zoneText('수익구간','rgba(200,30,30,0.85)', _mbZ ? (left+8) : (left+right)*0.38, midY);
+        const enStr=String(cd.entry_date||'').replace(/-/g,'/').replace(/\d{4}\//,'');
+        enIdx=enStr?histLabels.indexOf(enStr):-1;
+        if(enIdx<0&&cd.entry_date){
+          const enD=new Date(cd.entry_date); let minDiff=Infinity;
+          if(!isNaN(enD)) histLabels.forEach((lb,i)=>{ const pts=lb.split('/'); const d2=new Date(enD.getFullYear(),parseInt(pts[0])-1,parseInt(pts[1])); const diff=Math.abs(d2-enD); if(diff<minDiff){minDiff=diff;enIdx=i;} });
         }
       }
-      // 손실구간 위 텍스트
-      {
-        const y1=clamp(yPx(pMax),top,bottom);
-        const midY=(top+y1)/2;
-        if(midY>top&&midY<bottom&&y1-top>20){
-          zoneText('손실구간','rgba(40,80,200,0.85)', _mbZ ? (left+8) : (left+right)*0.5, midY);
-        }
-      }
-      // 손실구간 아래 텍스트
-      {
-        const y1=clamp(yPx(pMin),top,bottom);
-        const midY=(y1+bottom)/2;
-        if(midY>top&&midY<bottom&&bottom-y1>20){
-          zoneText('손실구간','rgba(40,80,200,0.85)', _mbZ ? (left+8) : (left+right)*0.5, midY);
-        }
-      }
-      c.restore();
-
-      /* ★ [직트 지시 2026-07-14] 만기 화살표가 **중간에 뚝 잘려** 있었다.
-           원인: 화살표를 `마지막 데이터(오늘) → 만기` 로만 그렸다.
-           → **진입선부터 만기선까지** 쭉 잇는다. 그러려면 진입 위치를 먼저 구해야 한다. */
-      let _entryXp = null;
-      {
-        const enStr0=cd.entry_date.replace(/-/g,'/').replace(/\d{4}\//,'');
-        let enIdx0=histLabels.indexOf(enStr0);
-        if(enIdx0<0){
-          const enD0=new Date(cd.entry_date); let minDiff0=Infinity;
-          histLabels.forEach((lb,i)=>{
-            const pts=lb.split('/');
-            const d2=new Date(enD0.getFullYear(), parseInt(pts[0])-1, parseInt(pts[1]));
-            const diff=Math.abs(d2-enD0);
-            if(diff<minDiff0){ minDiff0=diff; enIdx0=i; }
-          });
-        }
-        if(enIdx0>=0) _entryXp = x.getPixelForValue(enIdx0);
-      }
+      const entryXp=enIdx>=0?x.getPixelForValue(enIdx):null;
 
       // ── 만기일 수직선 ──
-      if(expiryIdx>=0&&expiryIdx<labels.length){
-        const xp=x.getPixelForValue(expiryIdx);
-        c.save();
-        // 굵은 검정 실선
-        c.strokeStyle='rgba(10,10,10,0.88)';
-        c.lineWidth=2.5;
-        c.setLineDash([]);
-        const _mbE=window.matchMedia('(max-width:640px)').matches;
-        /* ⚠ 모바일에서 만기일 선이 차트 오른쪽 테두리와 겹쳐 안 보였다
-              → 진입선처럼 **점선**으로 그려서 확실히 구분되게 한다 */
-        if(_mbE){ c.setLineDash([6,4]); c.lineWidth=2; }
-        // 모바일: 선을 축까지만(바깥 여백 제거), 배지는 플롯 안쪽 하단으로
-        c.beginPath();c.moveTo(xp,top);c.lineTo(xp,_mbE?bottom:bottom+30);c.stroke();
-        c.setLineDash([]);
-
-        // 만기일 배지
-        c.font='bold 11px IBM Plex Sans KR,Noto Sans KR,sans-serif';
-        c.textAlign='center';c.textBaseline='middle';
-        const lbl='만기일';
-        const lw=c.measureText(lbl).width+16;
-        // 모바일: 만기선 왼쪽 + 상단 1/3 지점(하단 라벨군과 분리, 테두리 안 잘림)
-        const _mbRectX=_mbE?(xp-lw-3):(xp-lw/2);
-        const _mbRectY=_mbE?(top+(bottom-top)*0.30):(bottom+10);
-        const _mbTxtX=_mbE?(xp-lw/2-3):xp;
-        const _mbTxtY=_mbRectY+10;
-        c.fillStyle='rgba(10,10,10,0.92)';
-        c.beginPath();
-        c.roundRect?c.roundRect(_mbRectX,_mbRectY,lw,20,4):c.rect(_mbRectX,_mbRectY,lw,20);
-        c.fill();
-        c.fillStyle='#fff';
-        c.fillText(lbl,_mbTxtX,_mbTxtY);
-
-        // 잔존일 화살표 (→ N일)
-        // ⚠ 모바일에서 아래쪽 행사가 점선·라벨과 겹쳤다 → 위쪽(만기일 배지 아래)으로 올린다
-        // ★ [직트 지시] 시작점을 **진입선**으로 바꾼다 (예전엔 '오늘'부터라 중간이 비어 보였다)
-        const lastXp=x.getPixelForValue(histLabels.length-1);
-        const startXp = (_mbE && _entryXp!=null) ? (_entryXp+4) : (lastXp+6);
-        const midX=(startXp+xp)/2;
-        const arrowY=_mbE ? (top+(bottom-top)*0.30+34) : (bottom-14);
-
-        // 화살표 선 — 진입 → 만기 전 구간
-        c.strokeStyle='rgba(10,10,10,0.45)';
-        c.lineWidth=1.2;
-        c.setLineDash([4,3]);
-        c.beginPath();c.moveTo(startXp,arrowY);c.lineTo(xp-4,arrowY);c.stroke();
-        c.setLineDash([]);
-
-        // 화살표 머리
-        c.fillStyle='rgba(10,10,10,0.5)';
-        c.beginPath();c.moveTo(xp-4,arrowY);c.lineTo(xp-10,arrowY-4);c.lineTo(xp-10,arrowY+4);c.closePath();c.fill();
-
-        // 잔존일 텍스트 — 글자 뒤에 흰 배경을 깔아 선에 안 가리게
-        c.font='bold 12px IBM Plex Sans KR,Noto Sans KR,sans-serif';
-        c.textAlign='center';c.textBaseline='bottom';
-        const _dtxt='→ '+daysLeft+'일';
-        if(_mbE){
-          const _dw=c.measureText(_dtxt).width;
-          c.fillStyle='rgba(255,255,255,0.9)';
-          const _bx=midX-_dw/2-5, _by=arrowY-19, _bw=_dw+10, _bh=17;
-          if(c.roundRect){ c.beginPath(); c.roundRect(_bx,_by,_bw,_bh,4); c.fill(); }
-          else c.fillRect(_bx,_by,_bw,_bh);
-        }
-        c.fillStyle='rgba(10,10,10,0.78)';
-        c.fillText(_dtxt,midX,arrowY-3);
-        c.restore();
+      const hasExp=expiryIdx>=0&&expiryIdx<labels.length;
+      const expXp=hasExp?x.getPixelForValue(expiryIdx):null;
+      if(hasExp){
+        c.save(); c.strokeStyle='rgba(10,10,10,0.88)'; c.lineWidth=_mb?2:2.5; if(_mb) c.setLineDash([6,4]);
+        c.beginPath(); c.moveTo(expXp,top); c.lineTo(expXp,bottom); c.stroke(); c.restore();
+        claim(expXp-2,top,expXp+2,bottom,300);
       }
-
       // ── 진입일 수직선 ──
-      {
-        const enStr=cd.entry_date.replace(/-/g,'/').replace(/\d{4}\//,'');
-        let enIdx=histLabels.indexOf(enStr);
-        if(enIdx<0){
-          const enD=new Date(cd.entry_date);let minDiff=Infinity;
-          histLabels.forEach((lb,i)=>{
-            const pts=lb.split('/');
-            const yr=enD.getFullYear();
-            const d2=new Date(yr,parseInt(pts[0])-1,parseInt(pts[1]));
-            const diff=Math.abs(d2-enD);
-            if(diff<minDiff){minDiff=diff;enIdx=i;}
-          });
-        }
-        if(enIdx>=0){
-          const xp=x.getPixelForValue(enIdx);
-          c.save();
-          // 진입일: 검정 점선, 뚜렷하게
-          c.strokeStyle='rgba(10,10,10,0.6)';
-          c.lineWidth=1.5;
-          c.setLineDash([5,4]);
-          c.beginPath();c.moveTo(xp,top);c.lineTo(xp,bottom);c.stroke();
-          c.setLineDash([]);
-
-          // 진입 배지
-          c.font='bold 10px IBM Plex Sans KR,sans-serif';
-          c.textAlign='center';c.textBaseline='middle';
-          const lbl2='진입';
-          const lw2=c.measureText(lbl2).width+12;
-          c.fillStyle='rgba(10,10,10,0.75)';
-          c.fillRect(xp-lw2/2,top+24,lw2,17);
-          c.fillStyle='#fff';
-          c.fillText(lbl2,xp,top+32.5);
-          c.restore();
-        }
+      if(entryXp!=null){
+        c.save(); c.strokeStyle='rgba(10,10,10,0.6)'; c.lineWidth=1.5; c.setLineDash([5,4]);
+        c.beginPath(); c.moveTo(entryXp,top); c.lineTo(entryXp,bottom); c.stroke(); c.restore();
+      }
+      // ── 남은 일수 화살표(진입 또는 오늘 → 만기). 만기가 지난 차트는 그리지 않는다 ──
+      const lastXp=x.getPixelForValue(histLabels.length-1);
+      let arrow=null;
+      if(hasExp&&expXp-lastXp>8){
+        const startXp=(_mb&&entryXp!=null&&entryXp<expXp-24)?(entryXp+4):(lastXp+4);
+        const ay=_mb?(top+(bottom-top)*0.30+34):(bottom-14);
+        c.save(); c.strokeStyle='rgba(10,10,10,0.45)'; c.lineWidth=1.2; c.setLineDash([4,3]);
+        c.beginPath(); c.moveTo(startXp,ay); c.lineTo(expXp-4,ay); c.stroke(); c.setLineDash([]);
+        c.fillStyle='rgba(10,10,10,0.5)'; c.beginPath(); c.moveTo(expXp-4,ay); c.lineTo(expXp-10,ay-4); c.lineTo(expXp-10,ay+4); c.closePath(); c.fill(); c.restore();
+        claim(startXp,ay-4,expXp,ay+4,200);
+        arrow={x0:startXp,x1:expXp,y:ay};
+      }
+      // ── 현재가(만기 지난 차트는 만기 종가) 점 ──
+      const _lastC=histCloses[histCloses.length-1];
+      const _expired=(p.status==='expired')||(hasExp&&expiryIdx<=histLabels.length-1);
+      let dot=null;
+      if(_lastC!=null&&_lastC>=yMin&&_lastC<=yMax){
+        dot={x:lastXp,y:yPx(_lastC)};
+        c.save(); c.beginPath(); c.arc(dot.x,dot.y,5,0,Math.PI*2); c.fillStyle='#0088cc'; c.fill(); c.strokeStyle='#fff'; c.lineWidth=1.5; c.stroke(); c.restore();
+        claim(dot.x-6,dot.y-6,dot.x+6,dot.y+6,1000);
       }
 
-      // ── 현재가 점 (항상 선 끝에 붙여 그림: 마지막 종가 위치 = 떨어진 점 방지) ──
-      const _lastC=histCloses[histCloses.length-1];
-      if(_lastC!=null&&_lastC>=yMin&&_lastC<=yMax){
-        const yp=yPx(_lastC);
-        const xp=x.getPixelForValue(histLabels.length-1);
-        c.save();
-        c.beginPath();c.arc(xp,yp,5,0,Math.PI*2);
-        c.fillStyle='#0088cc';c.fill();
-        c.strokeStyle='#fff';c.lineWidth=1.5;c.stroke();
-        c.font='bold 10px IBM Plex Mono,monospace';
-        /* ★ [직트 지시 2026-07-14] 현재가 글자가 **가격선에 가려져 안 보였다.**
-             → 글자 뒤에 흰 배경 박스를 깔고, 점 아래로 살짝 내려 선을 피한다. */
-        if(window.matchMedia('(max-width:640px)').matches){
-          const _ctxt='현재 $'+_lastC.toLocaleString();
-          const _cw=c.measureText(_ctxt).width;
-          c.textAlign='right';c.textBaseline='middle';
-          const _ty = yp + 15;                 // 점 아래로 내려 선을 피한다
-          c.fillStyle='rgba(255,255,255,0.92)';
-          const _bx=xp-9-_cw-5, _by=_ty-8, _bw=_cw+10, _bh=16;
-          if(c.roundRect){ c.beginPath(); c.roundRect(_bx,_by,_bw,_bh,4); c.fill(); }
-          else c.fillRect(_bx,_by,_bw,_bh);
-          c.fillStyle='#0077b5';
-          c.fillText(_ctxt, xp-9, _ty);
-        }else{
-          c.fillStyle='#0088cc';
-          c.textAlign='left';c.textBaseline='bottom';
-          c.fillText('현재 $'+_lastC.toLocaleString(),xp+8,yp+2);
-        }
-        c.restore();
+      // ═══ 글자: 중요한 것부터 자리를 잡는다 ═══
+      // ① 행사가 가격표(오른쪽 끝 고정, 둘이 겹치면 아래위로 비킨다)
+      strikeYs.forEach(([yp,price])=>{
+        const txt='$'+price.toLocaleString(), w=tw(txt,FONT_S)+12, h=17;
+        const r=place(w,h,[[right-w-2,yp-h/2],[right-w-7,yp-h/2],[right-w-2,yp+5],[right-w-2,yp-h-5]]);
+        if(r) pill(r,'#cc2222','#fff',txt,FONT_S);
+      });
+      strikeYs.forEach(([yp])=>claim(left,yp-3,right,yp+3,300));
+      // ② 만기일 배지(데스크톱: 축 아래 / 모바일: 플롯 안)
+      if(hasExp){
+        const txt='만기일', w=tw(txt,FONT_K)+16, h=20;
+        const cands=_mb?[[expXp-w-3,top+(bottom-top)*0.30],[expXp-w-3,top+6],[expXp-w-3,bottom-h-24]]:[[expXp-w/2,bottom+10],[expXp-w-3,bottom+10]];
+        const r=place(w,h,cands);
+        if(!_mb){ c.save(); c.strokeStyle='rgba(10,10,10,0.88)'; c.lineWidth=2.5; c.beginPath(); c.moveTo(expXp,bottom); c.lineTo(expXp,r?r.y0:bottom+10); c.stroke(); c.restore(); }
+        if(r) pill(r,'rgba(10,10,10,0.92)','#fff',txt,FONT_K);
+      }
+      // ③ 진입 배지: 진입선 위, 행사가 선·가격표·캔들을 피해 위→아래 순으로 찾는다
+      if(entryXp!=null){
+        const txt='진입', w=tw(txt,FONT_K)+12, h=17, cands=[];
+        for(let yy=top+4; yy<=bottom-h-4; yy+=10) cands.push([entryXp-w/2,yy]);
+        for(let yy=top+4; yy<=bottom-h-4; yy+=10) cands.push([entryXp-w-3,yy],[entryXp+3,yy]);
+        const r=place(w,h,cands);
+        if(r) pill(r,'rgba(10,10,10,0.75)','#fff',txt,FONT_K);
+        claim(entryXp-2,top,entryXp+2,bottom,300);
+      }
+      // ④ 현재가(또는 만기 종가) 글자: 점 오른쪽 → 위아래 → 왼쪽
+      if(dot){
+        const txt=(_expired?'만기 종가 $':'현재 $')+_lastC.toLocaleString(), w=tw(txt,FONT_S)+10, h=16;
+        const r=place(w,h,[[dot.x+8,dot.y-h/2],[dot.x+8,dot.y-h-4],[dot.x+8,dot.y+4],[dot.x-8-w,dot.y-h-6],[dot.x-8-w,dot.y+6],[dot.x-w/2,dot.y-h-10],[dot.x-w/2,dot.y+10],[dot.x-8-w,dot.y-h/2],[dot.x-12-w,dot.y+14],[dot.x-12-w,dot.y-h-16],[dot.x-12-w,dot.y+26],[dot.x-12-w,dot.y-h-28]].concat([38,50,62,74,86,98,110].reduce((acc,d)=>acc.concat([[dot.x-12-w,dot.y+d],[dot.x-12-w,dot.y-h-d]]),[])));
+        if(r) pill(r,'rgba(255,255,255,0.92)','#0077b5',txt,FONT_S);
+      }
+      // ⑤ 남은 일수
+      if(arrow){
+        const txt='→ '+daysLeft+'일', w=tw(txt,'bold 12px IBM Plex Sans KR,Noto Sans KR,sans-serif')+10, h=17, mx2=(arrow.x0+arrow.x1)/2;
+        const r=place(w,h,[[arrow.x1-w-6,arrow.y+4],[arrow.x1-w-6,arrow.y-h-3],[mx2-w/2,arrow.y-h-3],[mx2-w/2,arrow.y+4],[arrow.x1-w-6,arrow.y-h-3],[arrow.x0+2,arrow.y-h-3],[arrow.x1-w-6,arrow.y-2*h-6],[arrow.x1-w-6,top+30],[arrow.x1-w-6,(top+bottom)/2]]);
+        if(r) pill(r,'rgba(255,255,255,0.9)','rgba(10,10,10,0.78)',txt,'bold 12px IBM Plex Sans KR,Noto Sans KR,sans-serif');
+      }
+      // ⑥ 수익구간·손실구간: 자기 구역 안에서 캔들·선·글자가 없는 자리
+      function zoneLabel(txt,color,y0,y1){
+        const w=tw(txt,FONT_Z)+10, h=_mb?18:20;
+        if(y1-y0<h+4) return;
+        const xs=[0.5,0.38,0.62,0.25,0.75,0.12,0.88,0.05], cands=[];
+        const ys=[]; for(let k=0;k<=8;k++){ const yy=y0+2+(y1-y0-h-4)*(k%2?0.5-Math.ceil(k/2)/8:0.5+Math.ceil(k/2)/8); if(yy>=y0+2&&yy+h<=y1-2) ys.push(yy); }
+        ys.forEach(yy=>xs.forEach(f=>cands.push([left+(right-left)*f-w/2,yy])));
+        const r=place(w,h,cands);
+        if(r) pill(r,'rgba(255,255,255,0.85)',color,txt,FONT_Z);
+      }
+      {
+        const yTop=clamp(yPx(pMax),top,bottom), yBot=clamp(yPx(Math.max(pMin,yMin)),top,bottom);
+        if(yTop-top>20) zoneLabel('손실구간','rgba(40,80,200,0.9)',top,yTop);
+        if(yBot-yTop>30) zoneLabel('수익구간','rgba(200,30,30,0.9)',yTop,yBot);
+        const yLow=clamp(yPx(pMin),top,bottom);
+        if(bottom-yLow>20) zoneLabel('손실구간','rgba(40,80,200,0.9)',yLow,bottom);
       }
     }
   };
@@ -1797,7 +1725,9 @@ function buildPositionChart(p, canvasId){
       scales:{
         x:{ticks:{color:'#555',font:{size:_mbS?8:10,family:'IBM Plex Mono'},maxTicksLimit:_mbS?6:9,maxRotation:_mbS?0:50,autoSkip:true},grid:{color:'rgba(0,0,0,.06)',drawBorder:false}},
         y:{ticks:{color:'#555',font:{size:_mbS?8:10,family:'IBM Plex Mono'},maxTicksLimit:_mbS?6:undefined,padding:_mbS?2:3,callback:v=>_mbS?('$'+(Math.abs(v)>=10?Math.round(v):Math.round(v*10)/10).toLocaleString()):('$'+v.toLocaleString())},
-          grid:{color:'rgba(0,0,0,.06)',drawBorder:false},min:yMin,max:yMax}
+          grid:{color:'rgba(0,0,0,.06)',drawBorder:false},min:yMin,max:yMax,
+          /* [2026-11-12] 축 끝값이 바로 옆 눈금과 붙어 겹쳐 찍히면($8.5·$8) 끝값 눈금을 뺀다 */
+          afterBuildTicks:function(ax){ var t=ax.ticks; if(!t||t.length<4) return; var st=t[2].value-t[1].value; if(t[1].value-t[0].value<st*0.6) t.splice(0,1); var k=t.length; if(t[k-1].value-t[k-2].value<st*0.6) t.splice(k-1,1); ax.ticks=t; }}
       }
     },
     plugins:[customPlugin]
