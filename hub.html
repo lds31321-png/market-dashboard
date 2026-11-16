@@ -1950,6 +1950,12 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.ge
   #jk1 .jk1-ent p{ word-break:keep-all !important; }
 }
 </style>
+<style id="jkg-sticky">
+/* [2026-11-16 직트 「스크롤해도 위쪽 메뉴와 칸 단추가 고정되게」] 옆으로 밀림 막기를 hidden 대신 clip으로. hidden은 위쪽 고정(sticky)을 풀어 버린다 */
+@media (max-width:640px){
+  html:not(:has(#jk1.jk1-open)):not(#_s1):not(#_s2), html:not(:has(#jk1.jk1-open)):not(#_s1):not(#_s2) body{ overflow-x:clip !important; overflow-y:visible !important; }
+}
+</style>
 <style id="jkg-css">
 /* [2026-11-16 직트 「메뉴 단추 크게, 로고처럼 빛나게」] */
 #jk1 .jk1-mbar .jk1-menu{ width:40px !important; height:40px !important; border-radius:10px !important; background:#111 !important; color:#fff !important; position:relative !important; overflow:hidden !important; margin:0 6px 0 4px !important; -webkit-tap-highlight-color:transparent; flex-shrink:0 !important; }
