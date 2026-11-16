@@ -4038,18 +4038,32 @@ loadPositions();
           if(v != null && !isNaN(v)) pts.push(parseFloat(v));
         }
         if(pts.length < 3) continue;
-        var mn=Math.min.apply(null,pts), mx=Math.max.apply(null,pts), rg=(mx-mn)||1;
-        var W=300,H=110,P=10;
-        var pl = pts.map(function(v,i2){
-          var x = P + (i2/(pts.length-1))*(W-P*2);
-          var y = (H-P) - ((v-mn)/rg)*(H-P*2);
-          return x.toFixed(1)+','+y.toFixed(1);
-        }).join(' ');
-        svg = '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none">'
-            +   '<polyline points="'+pl+'" fill="none" stroke="'
-            +   (pts[pts.length-1] >= pts[0] ? (window.__JKLT()?'#D05A5A':'#EA6A60') : (window.__JKLT()?'#4F79C2':'#667085'))
-            +   '" stroke-width="2" vector-effect="non-scaling-stroke"/>'
-            + '</svg>';
+        /* [2026-11-16 직트 「누적 차트가 PC 차트와 너무 다르고 성의 없어 보인다」] PC 차트처럼 눈금, 채움, 최고점 선, 마지막 값을 넣는다 */
+        var lbs = ch.data.labels || [];
+        var mn=Math.min(0,Math.min.apply(null,pts)), mx=Math.max.apply(null,pts);
+        var st=[5,10,20,25,50,100,200].filter(function(q){ return (mx-mn)/q <= 4; })[0] || 100;
+        var y0=Math.floor(mn/st)*st, y1=Math.ceil(mx/st)*st; if(y1===y0) y1=y0+st;
+        var W=300,H=150;
+        function Y(v){ return H - (v-y0)/(y1-y0)*H; }
+        var line = pts.map(function(v,i2){ return (i2/(pts.length-1)*W).toFixed(1)+','+Y(v).toFixed(1); }).join(' ');
+        var gl='', yl='';
+        for(var t=y0; t<=y1+1e-9; t+=st){
+          gl += '<line x1="0" x2="'+W+'" y1="'+Y(t).toFixed(1)+'" y2="'+Y(t).toFixed(1)+'" class="c2g"/>';
+          yl += '<span style="top:'+((1-(t-y0)/(y1-y0))*100).toFixed(2)+'%">'+(t>0?'+':'')+t+'%</span>';
+        }
+        var pk=Math.max.apply(null,pts), last=pts[pts.length-1];
+        svg = '<div class="c2"><div class="c2-p">'
+            + '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true">'
+            +   '<defs><linearGradient id="c2f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D05A5A" stop-opacity=".22"/><stop offset="1" stop-color="#D05A5A" stop-opacity="0"/></linearGradient></defs>'
+            +   gl
+            +   '<line x1="0" x2="'+W+'" y1="'+Y(pk).toFixed(1)+'" y2="'+Y(pk).toFixed(1)+'" class="c2k"/>'
+            +   '<polygon points="0,'+H+' '+line+' '+W+','+H+'" fill="url(#c2f)"/>'
+            +   '<polyline points="'+line+'" class="c2l"/>'
+            + '</svg>'
+            + '<em class="c2-pk" style="top:'+((Y(pk)/H)*100).toFixed(2)+'%">최고 +'+pk.toFixed(2)+'%</em>'
+            + '<i class="c2-dot" style="top:'+((Y(last)/H)*100).toFixed(2)+'%"></i>'
+            + '<div class="c2-y">'+yl+'</div>'
+            + '</div><div class="c2-x"><span>'+esc(String(lbs[0]||''))+'</span><span>'+esc(String(lbs[lbs.length-1]||''))+'</span></div></div>';
         break;
       }
     }catch(e){}
@@ -4068,18 +4082,19 @@ loadPositions();
 
     /* 0) 맨 위 한 문장 (3안에서 가져옴) */
     if(g.total && g.win){
+      /* [2026-11-16 직트 「213번 거래했고 186번 이겼습니다는 AI 말투, 총 거래 몇 회, 수익 몇 회처럼」] */
       h += '<div class="fs-card">'
-         +   '<p class="fs-top">'
-         +     (g.dep ? esc(g.dep) + '으로 시작해<br>' : '')
-         +     '<b>' + esc(g.total) + '번 거래</b>했고<br>'
-         +     '<b style="color:var(--profit)">' + esc(g.win) + '번 이겼습니다</b>'
-         +   '</p>'
+         +   '<p class="fs-lbl">'+(g.dep ? '예탁금 '+esc(g.dep)+' 기준 ' : '')+'운용 성과</p>'
+         +   '<div class="fs-k3">'
+         +     '<div><span>총 거래</span><b>'+esc(g.total)+'<small>회</small></b></div>'
+         +     '<div><span>수익</span><b style="color:var(--profit)">'+esc(g.win)+'<small>회</small></b></div>'
+         +     '<div><span>손실</span><b style="color:var(--loss)">'+esc(g.los)+'<small>회</small></b></div>'
+         +   '</div>'
          +   '<div class="fs-bar">'
          +     '<i style="width:'+wrPct+'%;background:var(--profit)"></i>'
          +     '<i style="width:'+(100-wrPct)+'%;background:var(--loss)"></i>'
          +   '</div>'
-         +   '<p class="fs-lbl" style="margin-top:8px">승률 ' + esc(g.wr) + '% · '
-         +     esc(g.win) + '승 ' + esc(g.los) + '패' + (g.live ? ' · ' + esc(g.live) + '개 진행중' : '') + '</p>'
+         +   '<p class="fs-lbl" style="margin-top:8px">승률 ' + esc(g.wr) + '%' + (g.live ? ', 진행 중 ' + esc(g.live) + '건' : '') + '</p>'
          + '</div>';
     }
 
@@ -4087,7 +4102,7 @@ loadPositions();
     h += '<div class="fs-card">'
        +   '<p class="fs-lbl">누적 수익률</p>'
        +   '<p class="fs-v" style="color:'+pnlCol(g.rate)+'">'+esc(g.rate)+'</p>'
-       +   (svg ? '<div class="fs-chart">'+svg+'</div>' : '')
+       +   (svg ? '<div class="fs-chart2">'+svg+'</div>' : '')
        +   (now ? '<p class="fs-said">원금 '+esc(g.dep)+' → 현재 <b>'+now.toLocaleString()+'만원</b></p>'
                 : (g.money ? '<p class="fs-said">누적 순수익 <b>'+esc(g.money)+'</b></p>' : ''))
        + '</div>';
@@ -4667,6 +4682,24 @@ html.theme-light{ --bg:#F3F3F3; --card:#FFFFFF; --card2:#F8F8F8; --b1:#E4E4E4; -
   html.theme-light body #mBody > a{ height:44px !important; padding:0 !important; border-radius:10px !important; font-size:14px !important; font-weight:500 !important; background:#111 !important; }
 }
 @media (max-width:640px){
+  /* [2026-11-16] 수익 통계 휴대폰: 운용 성과 숫자 3칸, 누적 곡선 */
+  html body .fs-k3{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:12px 0 4px; }
+  html body .fs-k3 > div{ display:flex; flex-direction:column; gap:4px; }
+  html body .fs-k3 span{ font-size:12px; color:#8A8A8A; }
+  html body .fs-k3 b{ font-size:24px !important; font-weight:500 !important; letter-spacing:-.03em !important; line-height:1.2 !important; }
+  html body .fs-k3 small{ font-size:13px !important; font-weight:400 !important; color:#8A8A8A !important; margin-left:2px; }
+  html body .fs-chart2{ margin-top:16px; }
+  html body .fs-chart2 .c2-p{ position:relative; height:168px; margin-right:44px; }
+  html body .fs-chart2 svg{ display:block; width:100%; height:100%; overflow:visible; }
+  html body .fs-chart2 .c2g{ stroke:#EEEEEE; stroke-width:1; vector-effect:non-scaling-stroke; }
+  html body .fs-chart2 .c2k{ stroke:#B5B5B5; stroke-width:1; stroke-dasharray:4 3; vector-effect:non-scaling-stroke; }
+  html body .fs-chart2 .c2l{ fill:none; stroke:#D05A5A; stroke-width:2; stroke-linejoin:round; vector-effect:non-scaling-stroke; }
+  html body .fs-chart2 .c2-pk{ position:absolute; left:4px; transform:translateY(4px); font-style:normal; font-size:11px; color:#767676; background:rgba(255,255,255,.85); padding:0 3px; border-radius:3px; }
+  html body .fs-chart2 .c2-dot{ position:absolute; right:-4px; width:8px; height:8px; margin-top:-4px; border-radius:50%; background:#D05A5A; box-shadow:0 0 0 3px rgba(208,90,90,.18); }
+  html body .fs-chart2 .c2-y{ position:absolute; top:0; bottom:0; left:100%; width:44px; }
+  html body .fs-chart2 .c2-y span{ position:absolute; left:8px; transform:translateY(-50%); font-size:11px; color:#9A9A9A; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  html body .fs-chart2 .c2-x{ display:flex; justify-content:space-between; margin:8px 44px 0 0; font-size:11px; color:#9A9A9A; }
+
   html body .fh-chart polyline, html body .fs-chart polyline{ stroke:#111111 !important; stroke-width:1.6 !important; }
   html body .fh-bar, html body .fs-bar{ background:#EDEDED !important; border-radius:999px !important; }
   html body .fh-bar-w, html body .fs-bar > i:first-child{ background:#111111 !important; }
@@ -5398,6 +5431,10 @@ html body .fm-cta:hover, html body .action-btn:hover, html body .filter-btn:hove
 }
 </style>
 <style id="jk-mob-free-2026-11-16">
+  /* [2026-11-16 직트 「메뉴 아래 흰 영역 깜빡임」] 주소창이 숨었다 나타날 때 뒤 흰 바탕이 비치지 않게 */
+  #jk2.jk2-open{ overscroll-behavior:contain; box-shadow:0 0 0 100vmax #262626; overflow-y:auto; }
+  html:has(#jk2.jk2-open), html:has(#jk2.jk2-open) body{ overflow:hidden !important; }
+
 /* [2026-11-16 직트 「모바일 완전 엉망, 레퍼런스대로 폰트 크기, 배치, 레이아웃, UI」] 휴대폰 폭 전용. 참고 10, 12번: 바탕 위 흰 카드(테두리 없음), 모서리 16, 카드 사이 12, 좌우 16, 굵기는 제목만 600 */
 @media (max-width:640px){
   html, html body{ background:#F6F6F6 !important; overflow-x:hidden !important; }
