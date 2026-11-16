@@ -5525,4 +5525,56 @@ html body .fm-cta:hover, html body .action-btn:hover, html body .filter-btn:hove
   html body #overlay table.tbl-rec tbody td::before{ color:#767676 !important; }
 }
 </style>
+<style id="jkg-css">
+/* [2026-11-16 직트 「메뉴 단추 크게, 로고처럼 빛나게」] */
+#jk2-mbar .jk2-menu{ width:40px !important; height:40px !important; border-radius:10px !important; background:#111 !important; color:#fff !important; position:relative !important; overflow:hidden !important; margin:0 6px 0 4px !important; -webkit-tap-highlight-color:transparent; flex-shrink:0 !important; }
+#jk2-mbar .jk2-menu svg{ width:24px !important; height:24px !important; stroke-width:2.1 !important; position:relative; z-index:1; }
+#jk2-mbar .jk2-menu::after{ content:""; position:absolute; top:-30%; bottom:-30%; left:-90%; width:45%; background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.6),rgba(255,255,255,0)); transform:skewX(-20deg); animation:jkMWipe 3.8s ease-in-out infinite; pointer-events:none; z-index:2; }
+#jk2-mbar .jk2-menu::before{ content:""; position:absolute; inset:0; background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.45),rgba(255,255,255,0) 70%); opacity:0; animation:jkMFlash 3.8s ease-in-out infinite; pointer-events:none; z-index:0; }
+@keyframes jkMWipe{ 0%{left:-90%} 30%{left:150%} 100%{left:150%} }
+@keyframes jkMFlash{ 0%,14%{opacity:0} 20%{opacity:1} 34%,100%{opacity:0} }
+/* 묶음 메뉴: 누르면 먼저 펼친다 */
+#jk2 .jkg-shut{ display:none !important; }
+#jk2 .jkg-chev{ display:none; }
+#jk2.jk2-open .jkg-chev{ display:block !important; width:18px !important; height:18px !important; margin-left:auto !important; opacity:.55; transition:transform .2s; flex-shrink:0; }
+#jk2.jk2-open .jkg-open .jkg-chev{ transform:rotate(180deg); }
+</style>
+<script id="jkg-js">
+(function(){ try{
+  var C={"app": "#jk2", "side": "#jk2", "open": "jk2-open", "subCls": "jk2-sub", "miCls": "jk2-mi", "groups": [{"head": "nav:not(.jk2-low) > a[title=\"무료 포지션 공유\"]", "sub": ".jk2-sub", "cur": true}, {"head": "nav:not(.jk2-low) > a[title=\"종합 옵션 대시보드\"]", "items": [["데이터 입력", "jk3t=데이터 입력"], ["매매 운용", "jk3t=매매 운용"], ["매매 전략", "jk3t=매매 전략"], ["위험 및 자금 관리", "jk3t=위험 및 자금 관리"], ["매매 현황", "jk3t=매매 현황"], ["매매 복기", "jk3t=매매 복기"]]}]};
+  var app=document.querySelector(C.app), side=document.querySelector(C.side); if(!app||!side) return;
+  var CHEV='<svg class="jkg-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+  var groups=[];
+  C.groups.forEach(function(g){
+    var head=side.querySelector(g.head); if(!head) return;
+    var sub=g.sub?side.querySelector(g.sub):null;
+    if(!sub){
+      sub=document.createElement('div'); sub.className=C.subCls;
+      g.items.forEach(function(it){
+        var a=document.createElement('a'); a.className=C.miCls; a.title=it[0]; a.href='#'; a.innerHTML='<span></span>'; a.querySelector('span').textContent=it[0];
+        a.addEventListener('click',function(e){ e.preventDefault(); var base=(head.getAttribute('href')||'').split('#')[0]; location.href=base+'#'+it[1]; });
+        sub.appendChild(a); });
+      head.parentNode.insertBefore(sub, head.nextSibling);
+    }
+    head.classList.add('jkg-head'); head.insertAdjacentHTML('beforeend',CHEV);
+    groups.push({head:head,sub:sub,cur:!!g.cur});
+  });
+  function setOpen(gr,on){ gr.head.classList.toggle('jkg-open',on); gr.sub.classList.toggle('jkg-shut',!on); }
+  function reset(){ groups.forEach(function(gr){ setOpen(gr,gr.cur); }); }
+  reset();
+  new MutationObserver(function(){ if(!app.classList.contains(C.open)) reset(); }).observe(app,{attributes:true,attributeFilter:['class']});
+  document.addEventListener('click',function(e){
+    if(!app.classList.contains(C.open)) return;
+    var h=e.target&&e.target.closest&&e.target.closest('.jkg-head'); if(!h||!side.contains(h)) return;
+    var gr=groups.filter(function(x){ return x.head===h; })[0]; if(!gr) return;
+    e.preventDefault(); e.stopPropagation(); if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+    setOpen(gr,!h.classList.contains('jkg-open'));
+  },true);
+}catch(e){} })();
+
+/* 다른 화면 메뉴에서 「포지션 현황, 매매 내역, 수익 통계」를 눌러 들어오면 그 칸을 연다 */
+(function(){ try{ var m=(location.hash||'').match(/jk2t=(\d)/); if(!m) return;
+  function go(){ var b=document.querySelector('#jk2 [data-jk2t="'+m[1]+'"]'); if(b){ b.click(); window.scrollTo(0,0); } }
+  setTimeout(go,700); }catch(e){} })();
+</script>
 </html>
