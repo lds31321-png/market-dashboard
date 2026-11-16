@@ -5433,7 +5433,9 @@ html body .fm-cta:hover, html body .action-btn:hover, html body .filter-btn:hove
 <style id="jk-mob-free-2026-11-16">
   /* [2026-11-16 직트 「메뉴 아래 흰 영역 깜빡임」] 주소창이 숨었다 나타날 때 뒤 흰 바탕이 비치지 않게 */
   #jk2.jk2-open{ overscroll-behavior:contain; box-shadow:0 0 0 100vmax #262626; overflow-y:auto; }
-  html:has(#jk2.jk2-open), html:has(#jk2.jk2-open) body{ overflow:hidden !important; }
+  html:has(#jk2.jk2-open), html:has(#jk2.jk2-open) body{ overflow:hidden !important; background:#262626 !important; }
+  /* [2026-11-16] 메뉴를 밀 때 손가락이 닿은 항목에 휴대폰 기본 눌림 표시가 흰색으로 떴다 사라지던 것 제거 */
+  html, #jk2 a, #jk2 button{ -webkit-tap-highlight-color:transparent; }
 
 /* [2026-11-16 직트 「모바일 완전 엉망, 레퍼런스대로 폰트 크기, 배치, 레이아웃, UI」] 휴대폰 폭 전용. 참고 10, 12번: 바탕 위 흰 카드(테두리 없음), 모서리 16, 카드 사이 12, 좌우 16, 굵기는 제목만 600 */
 @media (max-width:640px){
