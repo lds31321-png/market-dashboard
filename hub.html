@@ -1874,7 +1874,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.ge
     var seen=false; try{ seen=sessionStorage.getItem('jk1Intro')==='1'; sessionStorage.setItem('jk1Intro','1'); }catch(e){}
     if(seen){ document.documentElement.classList.remove('jk1-intro-pre'); return; }
     var el=document.createElement('div'); el.id='jk-intro';
-    el.innerHTML='<div class="ji-cam" style="--ji-img:url('+JK_BLD+')"><div class="ji-bg"></div><div class="ji-bg2"></div><div class="ji-light"></div><div class="ji-vig"></div></div><div class="ji-dim"></div><div class="ji-sky"></div><div class="ji-c"><div class="ji-mark"><img src="'+JK_LOGO+'" alt="직트"></div><div class="ji-name"><span>누구나 쉽게 배우는</span><b>AI 투자 활용법</b></div><div class="ji-line"></div></div><div class="ji-foot"><span>운용 화면 준비</span><b>0%</b></div><div class="ji-bar"><i></i></div>';
+    el.innerHTML='<div class="ji-cam" style="--ji-img:url('+JK_BLD+')"><div class="ji-bg"></div><div class="ji-bg2"></div><div class="ji-vig"></div></div><div class="ji-dim"></div><div class="ji-sky"></div><div class="ji-c"><div class="ji-mark"><img src="'+JK_LOGO+'" alt="직트"></div><div class="ji-name"><span>누구나 쉽게 배우는</span><b>AI 투자 활용법</b></div><div class="ji-line"></div></div><div class="ji-foot"><span>운용 화면 준비</span><b>0%</b></div><div class="ji-bar"><i></i></div>';
     document.body.appendChild(el);
     document.documentElement.classList.remove('jk1-intro-pre');
     var num=el.querySelector(".ji-foot b"), t0=null, DUR=2400;
