@@ -1797,6 +1797,16 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.ge
   #jk-intro.out{ transform:translateY(-100%); }
   #jk-intro .ji-bg{ position:absolute; inset:-2%; background:#07090C center/cover no-repeat; opacity:0; transform:scale(1.14); animation:jiBg 3.1s cubic-bezier(.2,.6,.2,1) forwards; transition:transform 1.05s cubic-bezier(.76,0,.24,1) .1s; }
   #jk-intro.out .ji-bg{ transform:translateY(22%) scale(1.04); }
+  /* [2026-11-16 직트 「건물 배경을 더 입체적으로, 진짜 퀄리티 높다는 느낌」] 카메라가 빌딩 사이에서 고개를 들며 올려다보는 움직임, 가장자리는 흐리게 더 빨리 움직여 깊이감, 유리에 빛이 한 번 스치고 지나감 */
+  #jk-intro .ji-cam{ position:absolute; inset:0; perspective:820px; perspective-origin:50% 70%; overflow:hidden; transition:transform 1.05s cubic-bezier(.76,0,.24,1) .1s; }
+  #jk-intro.out .ji-cam{ transform:translateY(22%); }
+  #jk-intro .ji-cam .ji-bg{ inset:-6%; background-image:var(--ji-img); background-color:#07090C; transform-origin:50% 85%; animation:jiCam 3.3s cubic-bezier(.22,.61,.2,1) forwards; transition:none; will-change:transform,opacity; }
+  #jk-intro .ji-bg2{ position:absolute; inset:-14%; background:var(--ji-img) center/cover no-repeat; filter:blur(7px) brightness(.7); opacity:0; transform-origin:50% 85%; -webkit-mask-image:radial-gradient(ellipse 58% 52% at 50% 46%, transparent 45%, #000 100%); mask-image:radial-gradient(ellipse 58% 52% at 50% 46%, transparent 45%, #000 100%); animation:jiDepth 3.3s cubic-bezier(.22,.61,.2,1) forwards; will-change:transform,opacity; }
+  #jk-intro .ji-light{ position:absolute; top:-30%; bottom:-30%; left:-70%; width:55%; background:linear-gradient(100deg, rgba(255,255,255,0) 0%, rgba(214,226,255,.16) 36%, rgba(255,255,255,.5) 50%, rgba(214,226,255,.16) 64%, rgba(255,255,255,0) 100%); transform:rotate(18deg); mix-blend-mode:screen; animation:jiGlint 2.2s cubic-bezier(.45,0,.2,1) .7s forwards; pointer-events:none; }
+  #jk-intro .ji-vig{ position:absolute; inset:0; background:radial-gradient(ellipse 85% 70% at 50% 42%, rgba(0,0,0,0) 40%, rgba(0,0,0,.55) 100%); pointer-events:none; }
+  #jk-intro .ji-sky{ position:absolute; inset:0; background:radial-gradient(ellipse 38% 26% at 50% 34%, rgba(205,220,255,.22), rgba(205,220,255,0) 70%); mix-blend-mode:screen; opacity:0; animation:jiSky 3.3s ease-out .3s forwards; pointer-events:none; }
+  #jk-intro.out .ji-sky{ opacity:0 !important; transition:opacity .4s; }
+  @keyframes jiSky{ 0%{ opacity:0; transform:scale(.8); } 60%{ opacity:1; } 100%{ opacity:.8; transform:scale(1.05); } }
   #jk-intro .ji-dim{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(5,7,10,.78) 0%, rgba(5,7,10,.58) 42%, rgba(5,7,10,.86) 100%); }
   #jk-intro .ji-c{ position:absolute; left:0; right:0; top:50%; transform:translateY(-56%); display:flex; flex-direction:column; align-items:center; text-align:center; transition:opacity .45s ease, transform .9s cubic-bezier(.76,0,.24,1); }
   #jk-intro.out .ji-c{ opacity:0; transform:translateY(-80%); }
@@ -1816,6 +1826,9 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.ge
   #jk1 .jk1-mbar .jk1-mark{ width:28px !important; height:28px !important; flex:0 0 28px !important; }
   #jk1 .jk1-mbar .jk1-mark img{ display:block; width:100%; height:100%; border-radius:7px; object-fit:cover; }
   #jk-intro .ji-mark img{ display:block; width:100%; height:100%; object-fit:cover; }
+  @keyframes jiCam{ 0%{ opacity:0; transform:rotateX(16deg) rotateZ(-5deg) scale(1.42) translateY(5%); } 28%{ opacity:1; } 100%{ opacity:1; transform:rotateX(0) rotateZ(0) scale(1.06) translateY(0); } }
+  @keyframes jiDepth{ 0%{ opacity:0; transform:rotateZ(-7deg) scale(1.7); } 30%{ opacity:.95; } 100%{ opacity:.85; transform:rotateZ(0) scale(1.14); } }
+  @keyframes jiGlint{ to{ left:150%; } }
   @keyframes jiBg{ 0%{ opacity:0; transform:scale(1.14); } 30%{ opacity:1; } 100%{ opacity:1; transform:scale(1.02); } }
   @keyframes jiMark{ to{ opacity:1; transform:none; filter:blur(0); } }
   @keyframes jiWipe{ to{ left:140%; } }
@@ -1861,7 +1874,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.ge
     var seen=false; try{ seen=sessionStorage.getItem('jk1Intro')==='1'; sessionStorage.setItem('jk1Intro','1'); }catch(e){}
     if(seen){ document.documentElement.classList.remove('jk1-intro-pre'); return; }
     var el=document.createElement('div'); el.id='jk-intro';
-    el.innerHTML='<div class="ji-bg" style="background-image:url('+JK_BLD+')"></div><div class="ji-dim"></div><div class="ji-c"><div class="ji-mark"><img src="'+JK_LOGO+'" alt="직트"></div><div class="ji-name"><span>누구나 쉽게 배우는</span><b>AI 투자 활용법</b></div><div class="ji-line"></div></div><div class="ji-foot"><span>운용 화면 준비</span><b>0%</b></div><div class="ji-bar"><i></i></div>';
+    el.innerHTML='<div class="ji-cam" style="--ji-img:url('+JK_BLD+')"><div class="ji-bg"></div><div class="ji-bg2"></div><div class="ji-light"></div><div class="ji-vig"></div></div><div class="ji-dim"></div><div class="ji-sky"></div><div class="ji-c"><div class="ji-mark"><img src="'+JK_LOGO+'" alt="직트"></div><div class="ji-name"><span>누구나 쉽게 배우는</span><b>AI 투자 활용법</b></div><div class="ji-line"></div></div><div class="ji-foot"><span>운용 화면 준비</span><b>0%</b></div><div class="ji-bar"><i></i></div>';
     document.body.appendChild(el);
     document.documentElement.classList.remove('jk1-intro-pre');
     var num=el.querySelector(".ji-foot b"), t0=null, DUR=2400;
