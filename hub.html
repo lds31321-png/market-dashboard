@@ -7,6 +7,20 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style id="jk1-intro-pre-css">
+/* [2026-11-16 직트 「들어가면 대시보드 화면이 0.5초 떴다가 인트로로 바뀐다」] 인트로가 붙기 전까지 본 화면을 감춘다 */
+html.jk1-intro-pre, html.jk1-intro-pre body{ background:#07090C !important; }
+html.jk1-intro-pre body > *:not(#jk-intro){ visibility:hidden !important; }
+</style>
+<script id="jk1-intro-pre-js">
+(function(){ try{
+  if(!window.matchMedia||!window.matchMedia('(max-width:640px)').matches) return;
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  if(sessionStorage.getItem('jk1Intro')==='1') return;
+  var h=document.documentElement; h.classList.add('jk1-intro-pre');
+  setTimeout(function(){ h.classList.remove('jk1-intro-pre'); },5000);
+}catch(e){} })();
+</script>
 <script>
 /* [2026-06-11] 로컬(localhost) 검수 시 대시보드 링크를 루트 작업본으로 전환 (라이브는 volatility/ 하위폴더 유지) */
 !function(){var h=location.hostname;if(h!=='localhost'&&h!=='127.0.0.1')return;function fx(){var as=document.querySelectorAll('a[href]');for(var i=0;i<as.length;i++){var a=as[i],u=a.getAttribute('href')||'';if(u.indexOf('volatility/volatility_dashboard_v3.html')>=0)a.setAttribute('href','volatility_dashboard_v3.html');}}document.readyState==='loading'?document.addEventListener('DOMContentLoaded',fx):fx();}();
@@ -1845,10 +1859,11 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.ge
   function intro(){
     if(!mobile()||reduced()) return;
     var seen=false; try{ seen=sessionStorage.getItem('jk1Intro')==='1'; sessionStorage.setItem('jk1Intro','1'); }catch(e){}
-    if(seen) return;
+    if(seen){ document.documentElement.classList.remove('jk1-intro-pre'); return; }
     var el=document.createElement('div'); el.id='jk-intro';
     el.innerHTML='<div class="ji-bg" style="background-image:url('+JK_BLD+')"></div><div class="ji-dim"></div><div class="ji-c"><div class="ji-mark"><img src="'+JK_LOGO+'" alt="직트"></div><div class="ji-name"><span>누구나 쉽게 배우는</span><b>AI 투자 활용법</b></div><div class="ji-line"></div></div><div class="ji-foot"><span>운용 화면 준비</span><b>0%</b></div><div class="ji-bar"><i></i></div>';
     document.body.appendChild(el);
+    document.documentElement.classList.remove('jk1-intro-pre');
     var num=el.querySelector(".ji-foot b"), t0=null, DUR=2400;
     function step(ts){ if(!t0) t0=ts; var k=Math.min(1,(ts-t0-300)/DUR); if(k<0) k=0; var e=1-Math.pow(1-k,3); if(num) num.textContent=Math.round(e*100)+'%'; if(k<1&&el.parentNode) requestAnimationFrame(step); }
     if(window.requestAnimationFrame) requestAnimationFrame(step);
@@ -1964,11 +1979,10 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.ge
 #jk1 .jk1-mbar .jk1-menu::before{ content:""; position:absolute; inset:0; background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.45),rgba(255,255,255,0) 70%); opacity:0; animation:jkMFlash 3.8s ease-in-out infinite; pointer-events:none; z-index:0; }
 @keyframes jkMWipe{ 0%{left:-90%} 30%{left:150%} 100%{left:150%} }
 @keyframes jkMFlash{ 0%,14%{opacity:0} 20%{opacity:1} 34%,100%{opacity:0} }
-/* 묶음 메뉴: 누르면 먼저 펼친다 */
+/* 묶음 메뉴: 휴대폰 메뉴에서는 늘 펼쳐 둔다. PC 옆 메뉴는 전과 같이 지금 화면 묶음만 보인다 */
 #jk1 .jkg-shut{ display:none !important; }
-#jk1 .jkg-chev{ display:none; }
-#jk1.jk1-open .jkg-chev{ display:block !important; width:18px !important; height:18px !important; margin-left:auto !important; opacity:.55; transition:transform .2s; flex-shrink:0; }
-#jk1.jk1-open .jkg-open .jkg-chev{ transform:rotate(180deg); }
+#jk1 .jkg-chev{ display:none !important; }
+@media (min-width:641px){ #jk1 .jkg-pc-hide{ display:none !important; } }
 
 #jk1 .jk1-sub{ margin:2px 0 10px 21px; padding-left:12px; border-left:1px solid #444; }
 #jk1 .jk1-sub .jk1-mi{ height:44px; padding:0 10px; font-size:15px; font-weight:400; color:#8C8C8C; gap:0; }
@@ -1978,8 +1992,6 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.ge
 (function(){ try{
   var C={"app": "#jk1", "side": "#jk1 .jk1-side", "open": "jk1-open", "subCls": "jk1-sub", "miCls": "jk1-mi", "groups": [{"head": "nav:not(.jk1-low) > a[title=\"무료 포지션 공유\"]", "items": [["포지션 현황", "jk2t=0"], ["매매 내역", "jk2t=1"], ["수익 통계", "jk2t=2"]]}, {"head": "nav:not(.jk1-low) > a[title=\"종합 옵션 대시보드\"]", "items": [["데이터 입력", "jk3t=데이터 입력"], ["매매 운용", "jk3t=매매 운용"], ["매매 전략", "jk3t=매매 전략"], ["위험 및 자금 관리", "jk3t=위험 및 자금 관리"], ["매매 현황", "jk3t=매매 현황"], ["매매 복기", "jk3t=매매 복기"]]}]};
   var app=document.querySelector(C.app), side=document.querySelector(C.side); if(!app||!side) return;
-  var CHEV='<svg class="jkg-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
-  var groups=[];
   C.groups.forEach(function(g){
     var head=side.querySelector(g.head); if(!head) return;
     var sub=g.sub?side.querySelector(g.sub):null;
@@ -1991,20 +2003,10 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.ge
         sub.appendChild(a); });
       head.parentNode.insertBefore(sub, head.nextSibling);
     }
-    head.classList.add('jkg-head'); head.insertAdjacentHTML('beforeend',CHEV);
-    groups.push({head:head,sub:sub,cur:!!g.cur});
+    head.classList.add('jkg-head');
+    sub.classList.remove('jkg-shut'); if(!g.cur) sub.classList.add('jkg-pc-hide');
   });
-  function setOpen(gr,on){ gr.head.classList.toggle('jkg-open',on); gr.sub.classList.toggle('jkg-shut',!on); }
-  function reset(){ groups.forEach(function(gr){ setOpen(gr,gr.cur); }); }
-  reset();
-  new MutationObserver(function(){ if(!app.classList.contains(C.open)) reset(); }).observe(app,{attributes:true,attributeFilter:['class']});
-  document.addEventListener('click',function(e){
-    if(!app.classList.contains(C.open)) return;
-    var h=e.target&&e.target.closest&&e.target.closest('.jkg-head'); if(!h||!side.contains(h)) return;
-    var gr=groups.filter(function(x){ return x.head===h; })[0]; if(!gr) return;
-    e.preventDefault(); e.stopPropagation(); if(e.stopImmediatePropagation) e.stopImmediatePropagation();
-    setOpen(gr,!h.classList.contains('jkg-open'));
-  },true);
+  /* [2026-11-16 직트 「두 묶음은 그냥 계속 펼쳐져 있게, 꺽쇠 없애고」] 늘 펼쳐 두고, 묶음 이름을 누르면 그 화면으로 바로 간다 */
 }catch(e){} })();
 </script>
 </body>

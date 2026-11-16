@@ -3808,20 +3808,33 @@ loadPositions();
       if(!isNaN(v)) pts.push(v);
     }
     var svg = '';
+    /* [2026-11-16 직트 「매매 내역 차트가 구리다, 수익 통계처럼」] 수익 통계 차트와 같은 모양: 눈금, 옅은 채움, 최고점 점선, 마지막 점 */
     if(pts.length > 2){
-      var mn = Math.min.apply(null, pts), mx = Math.max.apply(null, pts);
-      var rng = (mx - mn) || 1;
-      var W = 300, H = 96, P = 10;
-      var pl = pts.map(function(v, i){
-        var x = P + (i / (pts.length - 1)) * (W - P * 2);
-        var y = (H - P) - ((v - mn) / rng) * (H - P * 2);
-        return x.toFixed(1) + ',' + y.toFixed(1);
-      }).join(' ');
-      svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none">'
-          +   '<polyline points="' + pl + '" fill="none" stroke="'
-          +   (pts[pts.length-1] >= pts[0] ? (window.__JKLT()?'#D05A5A':'#EA6A60') : (window.__JKLT()?'#4F79C2':'#667085'))
-          +   '" stroke-width="2" vector-effect="non-scaling-stroke"/>'
-          + '</svg>';
+      var mn=Math.min(0,Math.min.apply(null,pts)), mx=Math.max.apply(null,pts);
+      var st=[5,10,20,25,50,100,200].filter(function(q){ return (mx-mn)/q <= 4; })[0] || 100;
+      var y0=Math.floor(mn/st)*st, y1=Math.ceil(mx/st)*st; if(y1===y0) y1=y0+st;
+      var W=300,H=150;
+      var Y=function(v){ return H - (v-y0)/(y1-y0)*H; };
+      var line = pts.map(function(v,i2){ return (i2/(pts.length-1)*W).toFixed(1)+','+Y(v).toFixed(1); }).join(' ');
+      var gl='', yl='';
+      for(var t=y0; t<=y1+1e-9; t+=st){
+        gl += '<line x1="0" x2="'+W+'" y1="'+Y(t).toFixed(1)+'" y2="'+Y(t).toFixed(1)+'" class="c2g"/>';
+        yl += '<span style="top:'+((1-(t-y0)/(y1-y0))*100).toFixed(2)+'%">'+(t>0?'+':'')+t+'%</span>';
+      }
+      var pk=Math.max.apply(null,pts), lastV=pts[pts.length-1];
+      var nFirst=(rows[rows.length-1]||{}).no, nLast=(rows[0]||{}).no;
+      svg = '<div class="c2"><div class="c2-p">'
+          + '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true">'
+          +   '<defs><linearGradient id="c2fh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D05A5A" stop-opacity=".22"/><stop offset="1" stop-color="#D05A5A" stop-opacity="0"/></linearGradient></defs>'
+          +   gl
+          +   '<line x1="0" x2="'+W+'" y1="'+Y(pk).toFixed(1)+'" y2="'+Y(pk).toFixed(1)+'" class="c2k"/>'
+          +   '<polygon points="0,'+H+' '+line+' '+W+','+H+'" fill="url(#c2fh)"/>'
+          +   '<polyline points="'+line+'" class="c2l"/>'
+          + '</svg>'
+          + '<em class="c2-pk" style="top:'+((Y(pk)/H)*100).toFixed(2)+'%">최고 +'+pk.toFixed(2)+'%</em>'
+          + '<i class="c2-dot" style="top:'+((Y(lastV)/H)*100).toFixed(2)+'%"></i>'
+          + '<div class="c2-y">'+yl+'</div>'
+          + '</div><div class="c2-x"><span>'+(nFirst?'#'+nFirst:'')+'</span><span>'+(nLast?'#'+nLast:'')+'</span></div></div>';
     }
 
     var last = rows[0] || {};
@@ -3835,7 +3848,7 @@ loadPositions();
     h += '<div class="fh-card">'
        +   '<p class="fh-lbl">누적 수익률</p>'
        +   '<p class="fh-v" style="color:' + pnlCol(cumRate) + '">' + esc(cumRate) + '</p>'
-       +   (svg ? '<div class="fh-chart">' + svg + '</div>' : '')
+       +   (svg ? '<div class="fs-chart2">' + svg + '</div>' : '')
        +   '<div class="fh-bar">'
        +     '<i class="fh-bar-w" style="width:' + wr + '%"></i>'
        +     '<i class="fh-bar-l" style="width:' + (100 - wr) + '%"></i>'
@@ -5539,18 +5552,15 @@ html body .fm-cta:hover, html body .action-btn:hover, html body .filter-btn:hove
 #jk2-mbar .jk2-menu::before{ content:""; position:absolute; inset:0; background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.45),rgba(255,255,255,0) 70%); opacity:0; animation:jkMFlash 3.8s ease-in-out infinite; pointer-events:none; z-index:0; }
 @keyframes jkMWipe{ 0%{left:-90%} 30%{left:150%} 100%{left:150%} }
 @keyframes jkMFlash{ 0%,14%{opacity:0} 20%{opacity:1} 34%,100%{opacity:0} }
-/* 묶음 메뉴: 누르면 먼저 펼친다 */
+/* 묶음 메뉴: 휴대폰 메뉴에서는 늘 펼쳐 둔다. PC 옆 메뉴는 전과 같이 지금 화면 묶음만 보인다 */
 #jk2 .jkg-shut{ display:none !important; }
-#jk2 .jkg-chev{ display:none; }
-#jk2.jk2-open .jkg-chev{ display:block !important; width:18px !important; height:18px !important; margin-left:auto !important; opacity:.55; transition:transform .2s; flex-shrink:0; }
-#jk2.jk2-open .jkg-open .jkg-chev{ transform:rotate(180deg); }
+#jk2 .jkg-chev{ display:none !important; }
+@media (min-width:641px){ #jk2 .jkg-pc-hide{ display:none !important; } }
 </style>
 <script id="jkg-js">
 (function(){ try{
   var C={"app": "#jk2", "side": "#jk2", "open": "jk2-open", "subCls": "jk2-sub", "miCls": "jk2-mi", "groups": [{"head": "nav:not(.jk2-low) > a[title=\"무료 포지션 공유\"]", "sub": ".jk2-sub", "cur": true}, {"head": "nav:not(.jk2-low) > a[title=\"종합 옵션 대시보드\"]", "items": [["데이터 입력", "jk3t=데이터 입력"], ["매매 운용", "jk3t=매매 운용"], ["매매 전략", "jk3t=매매 전략"], ["위험 및 자금 관리", "jk3t=위험 및 자금 관리"], ["매매 현황", "jk3t=매매 현황"], ["매매 복기", "jk3t=매매 복기"]]}]};
   var app=document.querySelector(C.app), side=document.querySelector(C.side); if(!app||!side) return;
-  var CHEV='<svg class="jkg-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
-  var groups=[];
   C.groups.forEach(function(g){
     var head=side.querySelector(g.head); if(!head) return;
     var sub=g.sub?side.querySelector(g.sub):null;
@@ -5562,20 +5572,10 @@ html body .fm-cta:hover, html body .action-btn:hover, html body .filter-btn:hove
         sub.appendChild(a); });
       head.parentNode.insertBefore(sub, head.nextSibling);
     }
-    head.classList.add('jkg-head'); head.insertAdjacentHTML('beforeend',CHEV);
-    groups.push({head:head,sub:sub,cur:!!g.cur});
+    head.classList.add('jkg-head');
+    sub.classList.remove('jkg-shut'); if(!g.cur) sub.classList.add('jkg-pc-hide');
   });
-  function setOpen(gr,on){ gr.head.classList.toggle('jkg-open',on); gr.sub.classList.toggle('jkg-shut',!on); }
-  function reset(){ groups.forEach(function(gr){ setOpen(gr,gr.cur); }); }
-  reset();
-  new MutationObserver(function(){ if(!app.classList.contains(C.open)) reset(); }).observe(app,{attributes:true,attributeFilter:['class']});
-  document.addEventListener('click',function(e){
-    if(!app.classList.contains(C.open)) return;
-    var h=e.target&&e.target.closest&&e.target.closest('.jkg-head'); if(!h||!side.contains(h)) return;
-    var gr=groups.filter(function(x){ return x.head===h; })[0]; if(!gr) return;
-    e.preventDefault(); e.stopPropagation(); if(e.stopImmediatePropagation) e.stopImmediatePropagation();
-    setOpen(gr,!h.classList.contains('jkg-open'));
-  },true);
+  /* [2026-11-16 직트 「두 묶음은 그냥 계속 펼쳐져 있게, 꺽쇠 없애고」] 늘 펼쳐 두고, 묶음 이름을 누르면 그 화면으로 바로 간다 */
 }catch(e){} })();
 
 /* 다른 화면 메뉴에서 「포지션 현황, 매매 내역, 수익 통계」를 눌러 들어오면 그 칸을 연다 */
