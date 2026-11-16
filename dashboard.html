@@ -3231,7 +3231,7 @@ loadPositions();
     }
 
     var held=[], closed=[];
-    cards.forEach(function(c){ var o=readCard(c); (o.closed?closed:held).push(o); });
+    cards.forEach(function(c){ var o=readCard(c); if(!o||!String(o.nm||'').trim()) return; /* [2026-11-16] PC 표 머리 줄이 빈 카드로 그려지던 문제 */ (o.closed?closed:held).push(o); });
 
     /* ⚠ 청산 카드에는 **손익 숫자가 없다** ("현재 평가손익: 만기청산" 이라고만 적혀 있음).
           실현 손익은 **두 번째 표**(종목·구분·월물·행사가·계약·진입·청산·청산일·손익·사유)에 있다.
@@ -3865,7 +3865,7 @@ loadPositions();
          +     '<p class="fh-meta">' + esc(meta.join(' · ')) + '</p>'
          +   '</div>'
          +   '<div class="fh-r">'
-         +     '<p class="fh-pnl" style="color:' + pnlCol(money) + '">' + esc(money) + '</p>'
+         +     '<p class="fh-pnl" style="color:' + pnlCol(money) + '">' + esc((function(v){ var m=String(v).replace(/\s/g,'').match(/^([+\-]?)([\d,]+)원$/); if(!m) return v; var w=parseInt(m[2].replace(/,/g,''),10); if(!isFinite(w)||w<10000) return v; return m[1]+Math.round(w/10000).toLocaleString('ko-KR')+'만원'; })(money)) + '</p>'
          +     (r.rate ? '<p class="fh-cum">누적 ' + esc(r.rate) + '</p>' : '')
          +   '</div>'
          + '</div>';
@@ -5395,6 +5395,53 @@ html body .fm-cta:hover, html body .action-btn:hover, html body .filter-btn:hove
   html.theme-light body .jk2-seg button:not(.on):hover{ background:rgba(255,255,255,.75); color:#111; box-shadow:0 1px 2px rgba(17,17,17,.06); }
   html.theme-light body :is(#ohheld,#ohclosed) tr.oh-click > td{ transition:background .15s; }
   html.theme-light body :is(#ohheld,#ohclosed) tr.oh-click:hover > td{ background:#F7F7F7 !important; }
+}
+</style>
+<style id="jk-mob-free-2026-11-16">
+/* [2026-11-16 직트 「모바일 완전 엉망, 레퍼런스대로 폰트 크기, 배치, 레이아웃, UI」] 휴대폰 폭 전용. 참고 10, 12번: 바탕 위 흰 카드(테두리 없음), 모서리 16, 카드 사이 12, 좌우 16, 굵기는 제목만 600 */
+@media (max-width:640px){
+  html, html body{ background:#F6F6F6 !important; overflow-x:hidden !important; }
+  html body .fm-wrap, html body .fh-wrap, html body .fs-wrap{ padding-left:0 !important; padding-right:0 !important; }
+  html body .page.active{ padding-left:12px !important; padding-right:12px !important; }
+  html body :is(.fm-card,.fm-pos,.fh-card,.fh-row,.fs-card){ border:none !important; box-shadow:none !important; border-radius:16px !important; background:#FFFFFF !important; }
+  html body :is(.fm-card,.fm-pos,.fh-card,.fs-card){ padding:20px 18px !important; margin-bottom:12px !important; }
+  html body .fh-row{ padding:16px 18px !important; margin-bottom:8px !important; }
+  /* 글자: 제목 600, 숫자와 본문 400 */
+  html body :is(.fm-t,.fm-pos-nm,.fh-nm,.fs-card h3){ font-size:16px !important; font-weight:600 !important; color:#111 !important; letter-spacing:-.02em !important; }
+  html body :is(.fm-pnl,.fh-pnl){ font-size:16px !important; font-weight:600 !important; letter-spacing:-.02em !important; }
+  html body :is(.fm-pos-meta,.fh-meta,.fm-pnl-s,.fh-cum,.fm-dim){ font-size:13px !important; font-weight:400 !important; color:#8A8A8A !important; }
+  html body :is(.fm-lbl,.fh-lbl){ font-size:13px !important; color:#767676 !important; font-weight:400 !important; }
+  html body :is(.fm-v,.fh-v){ font-size:32px !important; font-weight:400 !important; letter-spacing:-.03em !important; line-height:1.2 !important; }
+  html body :is(.fm-said,.fh-said){ font-size:13px !important; color:#767676 !important; font-weight:400 !important; }
+  html body :is(.fm-said,.fh-said) b{ font-weight:600 !important; color:#111 !important; }
+  html body .fm-sec{ font-size:15px !important; font-weight:600 !important; color:#111 !important; margin:24px 4px 12px !important; }
+  html body .fm-sec b{ font-weight:600 !important; color:#8A8A8A !important; margin-left:4px; }
+  /* 막대: 가는 검정 한 가지 */
+  html body .fm-bar{ height:3px !important; background:#EFEFEF !important; border-radius:2px !important; margin-top:14px !important; }
+  html body .fm-bar > span{ background:#111 !important; border-radius:2px !important; }
+  html body .fh-bar{ height:3px !important; border-radius:2px !important; overflow:hidden !important; }
+  html body .fh-bar-w{ background:#111 !important; } html body .fh-bar-l{ background:#E4E4E4 !important; }
+  html body .fs-card [style*="gradient"], html body .fs-card i[style*="gradient"]{ background:#111 !important; }
+  /* 수익 통계: 굵기 600 이하, 비교 막대는 가는 단색 */
+  html body #t3 .fs-card b, html body #t3 .fs-cmp-v, html body #t3 .fs-card > p:not([class]){ font-weight:600 !important; }
+  html body #t3 .fs-card b{ font-size:inherit; }
+  html body #t3 .fs-top + p b, html body #t3 .fs-card p > b:first-child{ letter-spacing:-.02em; }
+  html body #t3 .fs-v{ font-size:32px !important; letter-spacing:-.03em !important; }
+  html body #t3 .fs-cmp-t{ height:6px !important; border-radius:3px !important; background:#EFEFEF !important; }
+  html body #t3 .fs-cmp-t > i{ height:6px !important; border-radius:3px !important; background:#111 !important; }
+  html body #t3 .fs-cmp-t:nth-of-type(n) > i{ }
+  html body #t3 .fs-card:has(.fs-cmp-t) .fs-cmp-t ~ * {}
+  /* 위쪽 탭: 높이 40 알약, 선택만 검정 */
+  html body .nav .nav-tab{ height:40px !important; min-height:40px !important; font-size:14px !important; font-weight:500 !important; border-radius:999px !important; }
+  html body .nav .nav-tab:not(.active){ background:#FFFFFF !important; border:none !important; color:#767676 !important; }
+  html body .nav .nav-tab.active{ background:#111 !important; color:#fff !important; font-weight:600 !important; border:none !important; }
+  /* 필터 칩 */
+  html body .fh-chips button{ height:36px !important; font-size:14px !important; border-radius:999px !important; border:none !important; background:transparent !important; color:#8A8A8A !important; font-weight:500 !important; }
+  html body .fh-chips button.on{ background:#FFFFFF !important; color:#111 !important; font-weight:600 !important; }
+  html body .fh-more{ border:none !important; background:#FFFFFF !important; border-radius:12px !important; height:44px !important; font-size:14px !important; font-weight:500 !important; color:#111 !important; }
+  /* 단추: 주 단추 하나만 검정, 나머지는 흰 면 */
+  html body .fm-cta:not(.fm-detail-btn){ height:48px !important; border-radius:12px !important; font-size:15px !important; font-weight:600 !important; }
+  html body .fm-sub-btn{ height:44px !important; border-radius:12px !important; border:none !important; background:#F6F6F6 !important; font-size:14px !important; font-weight:500 !important; color:#111 !important; }
 }
 </style>
 </html>
