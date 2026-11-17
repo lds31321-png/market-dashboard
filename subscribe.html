@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>트레이딩키 — 직트 종합 옵션 대시보드</title>
+<title>트레이딩키 정기구독 | 직트 트레이딩 룸</title>
 <script>
+/* [2026-11-17] 로그인하고 돌아오면 주소 뒤의 토큰을 저장하고 주소를 정리한다 */
+(function(){try{var h=location.hash||'';if(h.indexOf('token=')>=0){var p=new URLSearchParams(h.replace(/^#/,''));var tk=p.get('token'),uid=p.get('uid');if(tk){localStorage.setItem('jikt_token',tk);if(uid)localStorage.setItem('jikt_uid',uid);}var u=new URL(location.href);u.hash='';u.searchParams.delete('login');u.searchParams.delete('v');history.replaceState(null,'',u.pathname+u.search);}}catch(e){}})();
 /* [2026-08-25] 허브 페이지(hub.html)와 같은 라이트/다크 모드 설정을 그대로 따라감. */
 (function(){try{var t=localStorage.getItem('jikt_theme')||'light';if(t!=='dark')document.documentElement.classList.add('theme-light');}catch(e){}})();
 </script>
@@ -126,6 +128,18 @@
   .footer a{color:var(--sb-sub);text-decoration:none;font-weight:600}
   .footer a:hover{color:var(--sb-accent)}
   #main-view{display:none}
+  .pay-ready{margin-top:10px;text-align:center;font-size:12.5px;color:var(--sb-sub)}
+  .footer span{white-space:nowrap}
+  /* [2026-11-17] 휴대폰: 결제 카드를 제목 바로 아래로 올린다 (설명 끝까지 내려가지 않아도 가격과 신청 단추가 보이게) */
+  @media (max-width:900px){
+    .landing-grid{display:flex;flex-direction:column;gap:0}
+    .landing-main{display:contents}
+    .side{order:1;position:static;margin-bottom:14px}
+    .section{order:2}
+  }
+  .kakao-link{display:inline-flex;align-items:center;margin-top:14px;padding:11px 18px;border-radius:11px;background:var(--sb-ghost-hover);border:1px solid var(--sb-ghost-border);color:var(--sb-title) !important;font-size:14px;font-weight:600;text-decoration:none !important}
+  html.theme-light .price-box{background:#F7F7F7;border:0}
+  .rm-box .btn-ghost{margin-top:8px;padding:12px}
 
   /* [2026-08-25] 페이지 진입 즉시 뜨는 "결제 준비중" 안내 팝업 */
   #ready-modal{display:none;position:fixed;inset:0;z-index:200;align-items:center;justify-content:center;padding:20px;background:rgba(10,10,14,.60);backdrop-filter:blur(2px)}
@@ -137,18 +151,42 @@
   .rm-close{width:100%;padding:13px;border-radius:12px;border:none;background:var(--sb-accent);color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;transition:filter .15s}
   .rm-close:hover{filter:brightness(.88)}
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style id="jk-sub-theme">
+/* [2026-11-17] 홈, 약관 화면과 같은 밝은 디자인으로 맞춤: 바탕 #F3F3F3, 흰 카드 14px, 글 #111, 굵기 600 이하 */
+html.theme-light{
+  --sb-bg:#F3F3F3; --sb-card:#FFFFFF; --sb-card-hover:#FFFFFF; --sb-card-border:#FFFFFF;
+  --sb-title:#111111; --sb-sub:#8A8A8A; --sb-text:#4A4A4A; --sb-accent:#111111; --sb-accent-rgb:17,17,17;
+  --sb-btn-text:#111111; --sb-btn-border:#E6E6E6; --sb-btn-bg:#FFFFFF;
+  --sb-ghost-border:#E6E6E6; --sb-ghost-hover:#F7F7F7; --sb-spin-track:rgba(0,0,0,.09); --sb-shadow:none;
+}
+html.theme-light body{font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+html.theme-light .hero-tag{background:#FFFFFF;color:#8A8A8A;font-weight:600;letter-spacing:0;font-size:12.5px}
+html.theme-light .hero::before{display:none}
+html.theme-light .hero{border-bottom-color:#E6E6E6}
+html.theme-light .hero h1{font-weight:300;font-size:40px;letter-spacing:-.5px}
+html.theme-light .section,html.theme-light .card{border-radius:14px;border:0;box-shadow:none}
+html.theme-light .section:hover,html.theme-light .card:hover{transform:none;box-shadow:none}
+html.theme-light .section h2,html.theme-light .card-h{font-weight:600}
+html.theme-light b,html.theme-light strong{font-weight:600}
+html.theme-light .price-amt{font-weight:600}
+html.theme-light #btn-pay,html.theme-light #btn-goto-dash,html.theme-light #btn-goto-dash2,html.theme-light #btn-retry{background:#111;color:#fff;border:0;font-weight:600;box-shadow:none}
+html.theme-light .btn:disabled{background:#CFCFCF !important;opacity:1}
+@media (max-width:640px){ html.theme-light body{padding:24px 16px 56px} html.theme-light .hero h1{font-size:30px} }
+</style>
 </head>
 <body>
 
 <!-- [2026-08-25] 페이지에 들어오자마자 바로 뜨는 안내 팝업 (class="show"가 기본값이라 로딩 즉시 표시됨) -->
-<div id="ready-modal" class="show" onclick="if(event.target===this)jiktCloseReadyModal()">
+<div id="ready-modal" onclick="if(event.target===this)jiktCloseReadyModal()">
   <div class="rm-box">
     <div class="rm-icon">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 7v5l3 3"/></svg>
     </div>
-    <div class="rm-title">토스페이먼츠 결제 준비중입니다</div>
-    <div class="rm-desc">아직 토스페이먼츠로는 결제가 연결되지 않았어요.<br>아래에서 트레이딩키 상품 정보를 먼저 확인해 주세요.</div>
-    <button class="rm-close" onclick="jiktCloseReadyModal()">확인</button>
+    <div class="rm-title">카드 결제는 준비중입니다</div>
+    <div class="rm-desc">토스페이먼츠 카드 결제를 연결하고 있습니다. 지금 이용을 원하시면 카카오톡 1:1 문의로 알려 주세요.</div>
+    <button class="rm-close" onclick="window.open(KAKAO,'_blank')">카카오톡 1:1 문의</button>
+    <button class="btn btn-ghost" onclick="jiktCloseReadyModal()">닫기</button>
   </div>
 </div>
 
@@ -157,78 +195,48 @@
   <!-- 왼쪽: 상품 소개 (원문 그대로) -->
   <div class="landing-main">
 
-    <a class="back" href="./hub.html">← 트레이딩룸 메인으로</a>
+    <a class="back" href="./hub.html">← 트레이딩 룸 메인으로</a>
 
     <div class="hero">
-      <div class="hero-tag">TRADING KEY</div>
-      <h1>트레이딩 키</h1>
-      <div class="hero-sub">포지션 공유 · 매매일지 · 투자정보 · 변동성 알림</div>
+      <div class="hero-tag">월 정기구독</div>
+      <h1>트레이딩키</h1>
+      <div class="hero-sub">포지션 공유, 매매 운용, 매매 복기</div>
     </div>
 
     <div class="section">
-      <div class="section-h"><span class="dot"></span><h2>문의</h2></div>
-      <p>결제하셨다면 아래 채팅방으로 트레이딩 룸 가입 시 이름 또는 닉네임을 말씀해주세요.</p>
-      <p>▶ 고객센터 (1:1 카카오톡)<br><a href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener">https://open.kakao.com/o/sWnslm0d</a></p>
-    </div>
-
-    <div class="section">
-      <div class="section-h"><span class="dot"></span><h2>가격 및 할인 안내</h2></div>
-      <p><b style="color:var(--sb-title)">정가 200,000원 (1개월)</b></p>
-      <p>신규 교육생은 참여도에 따라 아래와 같이 할인받으실 수 있습니다.</p>
-      <div class="discount-box">
-        ▶ 체크리스트 통과자<br>
-        신규가입 30,000원 + 체크리스트 통과 50,000원 = <b>80,000원 할인</b><br>
-        → 최종 결제 <span class="final">120,000원</span>
-      </div>
-      <p style="margin-top:14px">체크리스트 작성하러가기 → <a href="https://lds31321-png.github.io/market-dashboard/hub.html" target="_blank" rel="noopener">https://lds31321-png.github.io/market-dashboard/hub.html</a></p>
-
-      <div class="sub-h">쿠폰 사용 방법</div>
-      <ol>
-        <li>발급받은 쿠폰 코드를 확인합니다.</li>
-        <li>결제 화면의 "쿠폰 입력란"에 코드를 입력합니다.</li>
-        <li>할인 금액이 적용된 것을 확인 후 결제합니다.</li>
-      </ol>
-      <p style="margin-top:8px;font-size:12.5px;color:var(--sb-sub)">※ 쿠폰은 중복(합산) 적용됩니다.</p>
-    </div>
-
-    <div class="section">
-      <div class="section-h"><span class="dot"></span><h2>트레이딩 키란?</h2></div>
+      <div class="section-h"><span class="dot"></span><h2>트레이딩키란?</h2></div>
       <p>10년간의 가격 데이터로 검증한 진입 기준과 수많은 급변동을 직접 겪으며 다듬은 위험관리 원칙을 그대로 담은 실전 옵션 투자 정보 서비스입니다.</p>
-      <p>혼자 판단하기 어려웠던 진입·청산 시점을 직트의 실제 포지션과 함께 확인하실 수 있습니다.</p>
+      <p>혼자 판단하기 어려웠던 진입과 청산 시점을 직트의 실제 포지션과 함께 확인하실 수 있습니다.</p>
 
       <div class="sub-h">이런 분께 추천합니다</div>
       <ul>
         <li>옵션 매도를 <b>체계적으로</b> 배우고 싶은 분</li>
-        <li>진입·청산 타이밍이 늘 막막했던 분</li>
+        <li>진입과 청산 타이밍이 늘 막막했던 분</li>
         <li>감이 아닌 <b>데이터</b>로 판단하고 싶은 분</li>
       </ul>
 
       <div class="sub-h">무엇을 제공하나요</div>
       <ul>
-        <li><b>포지션 공유</b> — 직트의 실제 진입 포지션을 공유</li>
-        <li><b>매매일지</b> — 거래 기록과 복기 자료</li>
-        <li><b>투자정보</b> — 시장 국면·종목별 분석 정보</li>
-        <li><b>변동성 알림</b> — 실시간 텔레그램 위험 신호</li>
-        <li><b>종합 대시보드</b> — 위 모든 정보를 한 화면에서 확인</li>
+        <li><b>포지션 공유</b>: 직트가 실제로 진입한 포지션을 그대로 공유합니다</li>
+        <li><b>매매 운용</b>: 보유 포지션 점검과 신규 진입 설계를 한 화면에서 확인합니다</li>
+        <li><b>매매 복기</b>: 거래 내역으로 승률과 손익비를 계산하고 손실 원인을 정리합니다</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-h"><span class="dot"></span><h2>가격과 결제</h2></div>
+      <ul>
+        <li><b>월 120,000원 (VAT 포함)</b>, 30일마다 자동으로 결제되는 정기구독입니다.</li>
+        <li>카드를 등록하면 첫 달 요금이 바로 결제되고, 그날부터 30일 동안 이용할 수 있습니다. 결제가 끝나면 종합 옵션 대시보드의 유료 영역이 바로 열립니다.</li>
+        <li>이 화면의 <b>구독 관리</b>에서 언제든 직접 해지할 수 있습니다. 해지해도 이미 결제한 기간이 끝날 때까지 이용할 수 있습니다.</li>
+        <li>온라인 강의 풀 패키지에 포함된 1개월 이용권은 기간이 끝나면 그대로 종료되며, 정기구독으로 자동 전환되지 않습니다.</li>
       </ul>
     </div>
 
     <div class="section">
       <div class="section-h"><span class="dot"></span><h2>문의</h2></div>
-      <p>궁금하신 점은 언제든 편하게 남겨주세요.</p>
-      <p>▶ 고객센터 (1:1 카카오톡)<br><a href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener">https://open.kakao.com/o/sWnslm0d</a></p>
-    </div>
-
-    <div class="section">
-      <div class="section-h"><span class="dot"></span><h2>시장 급등락? 이제는 VOL_WATCHTOWER가 알려드립니다</h2></div>
-      <p><b style="color:var(--sb-title)">문제</b> — 바쁜 일상 속, 실시간 시장 모니터링은 현실적으로 어렵습니다.</p>
-      <p><b style="color:var(--sb-title)">해결</b> — 실시간으로 시장 변동성을 감지하고, 조건 충족 시 자동으로 알림을 발송합니다.</p>
-      <ul style="margin-top:12px">
-        <li>총 13개 종목을 상시 감시</li>
-        <li>손실 확률 10~20% 수준의 옵션을 기준으로 추적</li>
-        <li>기준 이상 급등 시 즉시 경고</li>
-      </ul>
-      <div class="quote-box">"내가 모니터를 보지 못할 때, 위험 신호를 대신 감지해주는 감시탑" — 바로 VOL_WATCHTOWER입니다.</div>
+      <p>궁금하신 점은 카카오톡 1:1 문의로 편하게 남겨 주세요.</p>
+      <a class="kakao-link" href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener">카카오톡 1:1 문의하기</a>
     </div>
 
   </div>
@@ -241,23 +249,41 @@
       <div id="main-view">
         <div class="price-box">
           <div class="price-name">월 정기결제</div>
-          <div class="price-amt">200,000<span>원 / 월 (VAT 포함)</span></div>
-          <div class="price-note">매월 자동 결제되며, 카카오톡 1:1 문의로 언제든 해지할 수 있어요.<br>해지해도 이미 결제된 기간까지는 계속 이용 가능해요.</div>
+          <div class="price-amt">120,000<span>원 / 월 (VAT 포함)</span></div>
+          <div class="price-note">30일마다 자동 결제됩니다. 언제든 직접 해지할 수 있고, 해지해도 결제한 기간이 끝날 때까지 이용할 수 있습니다.</div>
         </div>
 
         <div id="err-box" class="err"></div>
 
         <div class="policy-links">
-          <a href="./volatility/terms.html" target="_blank">이용약관 보기</a>
-          <a href="./volatility/refund.html" target="_blank">환불정책 보기</a>
+          <a href="./volatility/terms.html" target="_blank">이용약관</a>
+          <a href="./volatility/refund.html" target="_blank">환불정책</a>
+          <a href="./volatility/privacy.html" target="_blank">개인정보</a>
         </div>
 
         <label class="agree">
           <input type="checkbox" id="agree-check">
-          <span>이용약관과 환불정책을 확인했으며 이에 동의합니다. (필수)</span>
+          <span>이용약관, 환불정책, 개인정보처리방침을 확인했으며 이에 동의합니다. (필수)</span>
+        </label>
+        <label class="agree">
+          <input type="checkbox" id="agree-auto">
+          <span>등록한 카드로 120,000원(VAT 포함)이 30일마다 자동 결제되는 것에 동의합니다. 해지 전까지 계속 결제됩니다. (필수)</span>
         </label>
 
         <button class="btn" id="btn-pay" disabled>카드 등록하고 정기결제 시작하기</button>
+        <div class="pay-ready" id="pay-ready">카드 결제는 준비중입니다</div>
+      </div>
+
+      <div id="manage-view" class="status" style="text-align:left">
+        <div class="price-box">
+          <div class="price-name">구독 관리</div>
+          <div class="price-amt" id="mg-state" style="font-size:22px">이용 중</div>
+          <div class="price-note" id="mg-desc"></div>
+        </div>
+        <div id="mg-err" class="err"></div>
+        <button class="btn" id="btn-goto-dash2">대시보드로 이동</button>
+        <button class="btn btn-ghost" id="btn-cancel-sub">정기결제 해지하기</button>
+        <button class="btn btn-ghost" id="btn-resub" style="display:none">정기구독 신청하기</button>
       </div>
 
       <div id="loading-view" class="status">
@@ -283,9 +309,11 @@
       </div>
 
       <div class="footer">
-        © 2026 직트 · 사업자 782-08-02561 · 대표 임대성<br>
-        <a href="./volatility/terms.html" target="_blank">이용약관</a> · <a href="./volatility/refund.html" target="_blank">환불정책</a> · <a href="./volatility/privacy.html" target="_blank">개인정보처리방침</a><br>
-        문의 <a href="https://open.kakao.com/o/sWnslm0d" target="_blank">카카오톡 오픈채팅</a>
+        <span>© 2026 직트</span> <span>대표 임대성</span> <span>사업자 782-08-02561</span><br>
+        <span>통신판매 제2025-고양일산동-2062호</span><br>
+        <span>경기도 고양시 일산동구 중앙로 1080,</span> <span>402동 4층 402-S21호</span><br>
+        <span>전화 010-2649-0502</span><br>
+        <a href="./volatility/terms.html" target="_blank">이용약관</a> | <a href="./volatility/refund.html" target="_blank">환불정책</a> | <a href="./volatility/privacy.html" target="_blank">개인정보처리방침</a>
       </div>
     </div>
   </div>
@@ -294,12 +322,15 @@
 
 <script>
 var TOSS_CLIENT_KEY = 'test_ck_jkYG57Eba3Gy0bd6dW6rpWDOxmA1';
+/* [2026-11-17 직트] 토스페이먼츠 계약과 실제 키가 준비되기 전까지 false. 결제 단추를 누르면 준비중 안내만 띄운다.
+   준비가 끝나면 true로 바꾸고 위 TOSS_CLIENT_KEY를 실제 키로 바꾼다. */
+var TOSS_READY = false;
 var API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';
 var KAKAO = 'https://open.kakao.com/o/sWnslm0d';
 
 function getToken(){ try{ return localStorage.getItem('jikt_token'); }catch(e){ return null; } }
 function showOnly(id){
-  ['main-view','loading-view','success-view','fail-view'].forEach(function(v){
+  ['main-view','loading-view','success-view','fail-view','manage-view'].forEach(function(v){
     document.getElementById(v).classList.remove('show');
     document.getElementById(v).style.display = (v===id?'block':'none');
   });
@@ -318,21 +349,17 @@ function loadTossSdk(cb){
   document.head.appendChild(s);
 }
 
-document.body.style.overflow = 'hidden';
 function jiktCloseReadyModal(){ document.getElementById('ready-modal').classList.remove('show'); document.body.style.overflow=''; }
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') jiktCloseReadyModal(); });
+if(TOSS_READY){ var pr=document.getElementById('pay-ready'); if(pr) pr.style.display='none'; }
 
 (function init(){
   var token = getToken();
-  if(!token){
-    location.href = './volatility/login.html?from=subscribe';
-    return;
-  }
-
   var params = new URLSearchParams(location.search);
   var step = params.get('step');
 
   if(step === 'confirm'){
+    if(!token){ location.href = './volatility/login.html?from=subscribe'; return; }
     showOnly('loading-view');
     document.getElementById('loading-title').textContent = '카드 등록을 확인하고 있어요…';
     var authKey = params.get('authKey');
@@ -370,13 +397,61 @@ document.addEventListener('keydown',function(e){ if(e.key==='Escape') jiktCloseR
 
   showOnly('main-view');
   document.getElementById('main-view').classList.add('show');
+  if(token) loadManage(token);
 })();
 
-document.getElementById('agree-check').addEventListener('change', function(){
-  document.getElementById('btn-pay').disabled = !this.checked;
+/* 구독 관리: 로그인한 회원의 결제 상태를 읽어 해지 버튼을 보여 준다 */
+function fmtDay(iso){ try{ var d=new Date(iso); if(isNaN(d)) return '-'; return d.getFullYear()+'년 '+(d.getMonth()+1)+'월 '+d.getDate()+'일'; }catch(e){ return '-'; } }
+function loadManage(token){
+  fetch(API + '/auth/me', { headers: { 'Authorization': 'Bearer ' + token } })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d){
+      var u = d && d.user; if(!u) return;
+      var sub = u.subscription || {};
+      var paidOn = u.paidUntil && new Date(u.paidUntil).getTime() > Date.now();
+      if(!sub.active && !paidOn) return;   /* 구독도 이용 기간도 없으면 결제 안내 그대로 */
+      showOnly('manage-view');
+      var st = document.getElementById('mg-state'), ds = document.getElementById('mg-desc');
+      if(sub.active && sub.hasBillingKey){
+        st.textContent = '정기결제 이용 중';
+        ds.innerHTML = '이용 기한 ' + fmtDay(u.paidUntil) + '까지<br>다음 결제 예정일 ' + fmtDay(sub.nextPaymentAt) + ' (120,000원)';
+        document.getElementById('btn-cancel-sub').style.display = '';
+        document.getElementById('btn-resub').style.display = 'none';
+      } else {
+        st.textContent = (sub.hasBillingKey && sub.cancelRequestedAt) ? '자동결제 해지됨' : '이용 중';
+        ds.innerHTML = fmtDay(u.paidUntil) + '까지 이용할 수 있어요.<br>이후에는 자동으로 결제되지 않습니다.';
+        document.getElementById('btn-cancel-sub').style.display = 'none';
+        document.getElementById('btn-resub').style.display = '';
+      }
+    }).catch(function(){});
+}
+
+document.getElementById('btn-cancel-sub').addEventListener('click', function(){
+  var token = getToken(); if(!token) return;
+  if(!confirm('정기결제를 해지할까요?\n이미 결제한 기간이 끝날 때까지는 계속 이용할 수 있고, 다음 결제는 진행되지 않습니다.')) return;
+  var btn = this; btn.disabled = true; btn.textContent = '해지 처리 중…';
+  fetch(API + '/payment/cancel', { method: 'POST', headers: { 'Authorization': 'Bearer ' + token } })
+    .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, data: d }; }); })
+    .then(function(res){
+      btn.disabled = false; btn.textContent = '정기결제 해지하기';
+      if(res.ok && res.data && res.data.ok){ loadManage(token); }
+      else { var e=document.getElementById('mg-err'); e.textContent='해지를 처리하지 못했어요. 잠시 후 다시 시도해 주세요.'; e.classList.add('show'); }
+    }).catch(function(){
+      btn.disabled = false; btn.textContent = '정기결제 해지하기';
+      var e=document.getElementById('mg-err'); e.textContent='서버와 통신하지 못했어요. 잠시 후 다시 시도해 주세요.'; e.classList.add('show');
+    });
 });
+document.getElementById('btn-resub').addEventListener('click', function(){ showOnly('main-view'); document.getElementById('main-view').classList.add('show'); });
+document.getElementById('btn-goto-dash2').addEventListener('click', function(){ location.href = './volatility/'; });
+
+function syncAgree(){
+  document.getElementById('btn-pay').disabled = !(document.getElementById('agree-check').checked && document.getElementById('agree-auto').checked);
+}
+document.getElementById('agree-check').addEventListener('change', syncAgree);
+document.getElementById('agree-auto').addEventListener('change', syncAgree);
 
 document.getElementById('btn-pay').addEventListener('click', function(){
+  if(!TOSS_READY){ document.getElementById('ready-modal').classList.add('show'); return; }
   var token = getToken();
   if(!token){ location.href = './volatility/login.html?from=subscribe'; return; }
   var btn = this;
@@ -412,7 +487,7 @@ document.getElementById('btn-pay').addEventListener('click', function(){
 });
 
 document.getElementById('btn-goto-dash').addEventListener('click', function(){
-  location.href = './index.html';
+  location.href = './volatility/';
 });
 document.getElementById('btn-retry').addEventListener('click', function(){
   location.href = './subscribe.html';

@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<script>/*[JIKT 로그인 게이트]*/(function(){try{var h=location.hash||"";if(h.indexOf("token=")>=0){var p=new URLSearchParams(h.replace(/^#/,""));var tk=p.get("token"),uid=p.get("uid");if(tk){localStorage.setItem("jikt_token",tk);if(uid)localStorage.setItem("jikt_uid",uid);}try{var u=new URL(location.href);u.hash="";u.searchParams.delete("login");history.replaceState(null,"",u.pathname+u.search);}catch(e){try{location.hash="";}catch(_){}}}var live=location.hostname.indexOf("github.io")>=0;var token=localStorage.getItem("jikt_token");if(live&&!token){location.replace("volatility/login.html");}}catch(e){}})();</script>
+<script>/*[JIKT 로그인 게이트]*/(function(){try{var h=location.hash||"";if(h.indexOf("token=")>=0){var p=new URLSearchParams(h.replace(/^#/,""));var tk=p.get("token"),uid=p.get("uid");if(tk){localStorage.setItem("jikt_token",tk);if(uid)localStorage.setItem("jikt_uid",uid);}try{var u=new URL(location.href);u.hash="";u.searchParams.delete("login");history.replaceState(null,"",u.pathname+u.search);}catch(e){try{location.hash="";}catch(_){}}}/* [2026-11-17 직트 「로그인 없이 열기」] 홈은 로그인 없이 연다. 종합 옵션 대시보드는 그쪽 화면에서 로그인을 요구한다 */}catch(e){}})();</script>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
@@ -904,11 +904,11 @@ html.theme-light .jikt-products{--jp-card:#ffffff;--jp-line:rgba(0,0,0,.09);--jp
     <!-- [2026-08-25] 옵션 매도 종합 대시보드 정기구독 — 토스페이먼츠 결제창 진입 버튼 (심사 확인용).
          트레이딩키 카드와 태그·이름·설명 문구를 동일하게 맞추고, 버튼 문구와 "준비중" 배지만 다르게 함. -->
     <a class="jikt-product" href="./subscribe.html">
-      <span class="jp-badge">토스페이먼츠 결제 준비중</span>
+      <span class="jp-badge">월 120,000원 자동결제</span>
       <div class="jp-tag" style="visibility:hidden" aria-hidden="true">TRADING KEY</div>
       <div class="jp-name">1개월 포지션 공유 및 전용 프로그램</div>
       <div class="jp-desc">실전 매매에 활용하는 1개월 포지션 공유 및 전용 프로그램 단독 상품입니다.</div>
-      <span class="jp-btn">결제 신청하기 →</span>
+      <span class="jp-btn">구독 신청하기 →</span>
     </a>
   </div>
 </section>
@@ -1562,8 +1562,8 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.ge
 
 <!-- [2026-08-25] 사업자정보 표기 (토스페이먼츠 결제 심사 필수 게시 항목) -->
 <div style="max-width:640px;margin:0 auto 60px;padding:0 22px;text-align:center;font-size:12px;line-height:1.9;color:#8B95A1;">
-  © 2026 직트 · 사업자 782-08-02561 · 통신판매 제2025-고양일산동-0262호 · 대표 임대성<br>
-  경기도 고양시 일산동구 중앙로 1080, 402동 4층 402-S91호 · 010-2649-0502<br>
+  © 2026 직트 · 사업자 782-08-02561 · 통신판매 제2025-고양일산동-2062호 · 대표 임대성<br>
+  경기도 고양시 일산동구 중앙로 1080, 402동 4층 402-S21호 · 010-2649-0502<br>
   <a href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener" style="color:#8B95A1;font-weight:700;text-decoration:underline">카카오톡 오픈채팅 문의</a>
 </div>
 
@@ -1641,6 +1641,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.ge
   #jk1 .jk1-pd a{ height:34px; padding:0 14px; border-radius:8px; background:#111; color:#fff; font-size:12.5px; display:flex; align-items:center; white-space:nowrap; transition:background .15s; }
   #jk1 .jk1-pd a:hover{ background:#373737; }
   #jk1 .jk1-foot{ margin-top:22px; font-size:11.5px; line-height:1.8; color:#9C9C9C; }
+.jk1-foot a{ color:inherit; text-decoration:underline; text-underline-offset:2px; }
 }
 /* 폭이 좁은 컴퓨터 화면·태블릿: 메뉴는 그림만, 칸은 한 줄로 */
 @media (min-width:641px) and (max-width:1099px){
@@ -1702,8 +1703,8 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&document.ge
 <div class="jk1-row"><div class="jk1-card jk1-ent"><div class="jk1-step"><u>1</u>체험과 연습 단계</div><h2>무료 포지션 공유</h2><p>공유되는 실제 포지션을 따라 진입하며 옵션 매도를 직접 경험하는 연습 공간입니다.</p><div class="jk1-box" id="jk1-pos"></div><a class="jk1-go" href="dashboard.html" data-jk1v>무료 포지션 보러 가기<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></div>
 <div class="jk1-card jk1-ent"><div class="jk1-step"><u>2</u>실전 운용 단계</div><h2>종합 옵션 대시보드</h2><p>위험, 자금, 전략을 바탕으로 내 자금에 맞는 진입과 관리 정보를 제공하는 실전 운용 영역입니다.</p><div class="jk1-tiles"><span class="jk1-tile"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>매매 전략</span><span class="jk1-tile"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>위험 및 자금 관리</span><span class="jk1-tile"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>매매 현황</span><span class="jk1-tile"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>매매 복기</span><span class="jk1-tile"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>데이터 입력</span><span class="jk1-tile"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>사용 가이드</span></div><a class="jk1-go b" href="volatility/volatility_dashboard_v3.html" data-jk1v>종합 옵션 대시보드 열기<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a></div></div>
 <div class="jk1-row2"><div class="jk1-card"><div class="jk1-ch">수강 후기<a href="https://cafe.naver.com/f-e/cafes/29971409/menus/52?viewType=W" target="_blank" rel="noopener">온라인 강의 후기 보기</a></div><div class="jk1-rvs"><div class="jk1-rv"><span class="jk1-st">★★★★★</span><b>K**************</b><i>8일 전</i><p>꼭 지켜야 하는 원칙들을 예시를 들어서 잘 설명해 주셨습니다. 감사합니다.</p></div><div class="jk1-rv"><span class="jk1-st">★★★★★</span><b>K**************</b><i>8일 전</i><p>자세한 설명 감사합니다. 전체적인 방향을 잡을 수 있었습니다. 실전에 적용하기 위해서는 천천히 하나씩 해 보아야 할 것 같습니다.</p></div><div class="jk1-rv"><span class="jk1-st">★★★★★</span><b>Y***</b><i>9일 전</i><p>매매 뿐만 아니라 자금관리나 심리관리 까지 배울 수 있어서 나의 거래에 대한 반성도 하고 향후 거래에 대한 계획을 점검해 볼 수 있었습니다.</p></div></div></div>
-<div class="jk1-card" id="jk1-prod"><div class="jk1-ch">강의 및 프로그램</div><div style="padding:6px 0 4px"><div class="jk1-pd"><div><small>ALL-IN-ONE</small><b>온라인 강의 풀 패키지</b></div><a href="https://optionacademy.liveklass.com/cu/B9CwtJag" target="_blank" rel="noopener">풀 패키지 신청하기</a></div><div class="jk1-pd"><div><small>토스페이먼츠 결제 준비중</small><b>1개월 포지션 공유 및 전용 프로그램</b></div><a href="./subscribe.html">결제 신청하기</a></div></div></div></div>
-<div class="jk1-foot">© 2026 직트 | 사업자 782-08-02561 | 통신판매 제2025-고양일산동-0262호 | 대표 임대성<br>경기도 고양시 일산동구 중앙로 1080, 402동 4층 402-S91호 | 010-2649-0502</div></main></div>
+<div class="jk1-card" id="jk1-prod"><div class="jk1-ch">강의 및 프로그램</div><div style="padding:6px 0 4px"><div class="jk1-pd"><div><small>라이브 클래스에서 1회 결제</small><b>온라인 강의 풀 패키지</b></div><a href="https://optionacademy.liveklass.com/cu/B9CwtJag" target="_blank" rel="noopener">풀 패키지 신청하기</a></div><div class="jk1-pd"><div><small>월 120,000원 매월 자동결제</small><b>트레이딩키 정기구독</b></div><a href="./subscribe.html">구독 신청하기</a></div></div></div></div>
+<div class="jk1-foot">© 2026 직트 | 대표 임대성 | 사업자 782-08-02561 | 통신판매 제2025-고양일산동-2062호<br>경기도 고양시 일산동구 중앙로 1080, 402동 4층 402-S21호 | 010-2649-0502<br><a href="./hub_terms.html">이용약관</a> | <a href="./hub_refund.html">환불규정</a> | <a href="./volatility/privacy.html">개인정보처리방침</a></div></main></div>
 <script id="jk1-js-2026-11-14">
 /* 1안 메인 화면: 공유 포지션 숫자·목록을 pnl_positions.json에서 읽어 채운다(읽기 전용). 못 읽으면 줄표(–)로 둔다. */
 (function(){

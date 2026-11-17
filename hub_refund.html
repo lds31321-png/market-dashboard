@@ -2,174 +2,140 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>환불규정 — 직트&레이 트레이딩 룸</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>환불규정 | 직트 트레이딩 룸</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 <style>
-  :root{
-    --cream:#f0e9e1;
-    --ink:#1a1816;
-    --ink2:#4a4440;
-    --ink3:#7a736e;
-    --line:rgba(0,0,0,.09);
-    --lineHard:rgba(0,0,0,.55);
-    --salmon:#d9664a;
-    --warn:#c8803a;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    min-height:100vh;
-    background:
-      radial-gradient(ellipse 70% 50% at 15% 0%, rgba(255,255,255,.5) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 45% at 100% 100%, rgba(0,0,0,.03) 0%, transparent 60%),
-      var(--cream);
-    color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-    line-height:1.7;
-  }
-  .wrap{max-width:760px;margin:0 auto;padding:48px 24px 96px;}
-
-  .eyebrow{
-    font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--ink);
-    text-align:center;width:100%;margin-bottom:22px;
-  }
-  .pillbtn{
-    display:inline-flex;align-items:center;gap:6px;
-    font-size:13px;font-weight:700;color:var(--ink);
-    background:#fff;border:1.3px solid var(--lineHard);border-radius:999px;
-    padding:9px 18px;text-decoration:none;white-space:nowrap;
-  }
-
-  .titleblock{text-align:center;margin-bottom:36px;}
-  h1{font-size:30px;margin:0 0 8px;letter-spacing:-.01em;font-weight:800;}
-  .meta{color:var(--ink3);font-size:13px;}
-
-  .card{
-    background:#ffffff;
-    border:1px solid var(--line);
-    border-radius:22px;
-    box-shadow:0 1px 2px rgba(0,0,0,.03), 0 8px 24px rgba(0,0,0,.05);
-    padding:26px 28px;
-    margin-bottom:20px;
-  }
-  .card p{margin:0 0 8px;font-size:14px;color:var(--ink2);}
-  .card p:last-child{margin-bottom:0;}
-
-  h2{
-    font-size:16px;
-    font-weight:800;
-    margin:0 0 12px;
-    padding-bottom:10px;
-    border-bottom:1px solid var(--line);
-    display:flex;align-items:center;gap:8px;
-  }
-  h2 .num{
-    display:inline-flex;align-items:center;justify-content:center;
-    width:22px;height:22px;border-radius:50%;
-    background:var(--ink);color:#fff;font-size:11px;font-weight:800;
-    flex-shrink:0;
-  }
-  p{margin:0 0 12px;font-size:14.5px;color:var(--ink2);}
-  ol.articles{padding-left:0;list-style:none;margin:0;}
-  ol.articles > li{margin-bottom:6px;}
-
-  table{width:100%;border-collapse:collapse;margin:14px 0 4px;font-size:13.5px;}
-  table th, table td{
-    text-align:left;
-    padding:10px 12px;
-    border-bottom:1px solid var(--line);
-    vertical-align:top;
-    color:var(--ink2);
-  }
-  table th{color:var(--ink);font-weight:700;width:140px;}
-
-  .callout{
-    background:rgba(0,0,0,.025);
-    border:1px solid var(--line);
-    border-radius:12px;
-    padding:14px 18px;
-    margin:14px 0 4px;
-    font-size:13.5px;
-    color:var(--ink2);
-  }
-
-  .footer-nav{
-    margin-top:44px;
-    display:flex;gap:10px;flex-wrap:wrap;justify-content:center;
-  }
+:root{--bg:#F3F3F3;--card:#FFFFFF;--t1:#111111;--t2:#4A4A4A;--t3:#8A8A8A;--line:#E6E6E6;--soft:#F7F7F7}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--t1);font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:15px;line-height:1.75;word-break:keep-all;overflow-wrap:anywhere}
+a{color:inherit}
+.lg-top{max-width:1120px;margin:0 auto;padding:22px 24px 0;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.lg-crumb{font-size:13px;color:var(--t3)}
+.lg-crumb a{text-decoration:none;color:var(--t3)}
+.lg-crumb a:hover{color:var(--t1)}
+.lg-pill{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-size:13px;font-weight:600;text-decoration:none;color:var(--t1);white-space:nowrap}
+.lg-pill:hover{border-color:#BDBDBD}
+.lg-head{max-width:1120px;margin:0 auto;padding:18px 24px 0}
+.lg-kicker{font-size:13px;color:var(--t3)}
+.lg-head h1{margin:4px 0 0;font-size:40px;line-height:1.25;font-weight:300;letter-spacing:-.5px}
+.lg-meta{margin-top:6px;font-size:13px;color:var(--t3)}
+.lg-tabs{max-width:1120px;margin:20px auto 0;padding:0 24px;display:flex;gap:8px;flex-wrap:wrap}
+.lg-tabs a{height:38px;display:inline-flex;align-items:center;padding:0 16px;border-radius:10px;background:var(--card);border:1px solid var(--line);font-size:14px;font-weight:500;text-decoration:none;color:var(--t2)}
+.lg-tabs a.on{background:#111;border-color:#111;color:#fff;font-weight:600}
+.lg-body{max-width:1120px;margin:20px auto 0;padding:0 24px 40px;display:grid;grid-template-columns:240px minmax(0,1fr);gap:20px;align-items:start}
+.lg-toc{position:sticky;top:16px;background:var(--card);border-radius:14px;padding:16px 10px;max-height:calc(100vh - 32px);overflow:auto}
+.lg-toc b{display:block;padding:0 10px 8px;font-size:12px;font-weight:600;color:var(--t3)}
+.lg-toc a{display:flex;gap:8px;padding:7px 10px;border-radius:8px;font-size:13px;line-height:1.45;color:var(--t2);text-decoration:none}
+.lg-toc a:hover{background:var(--soft);color:var(--t1)}
+.lg-toc a span{flex:0 0 auto;min-width:22px;color:var(--t3)}
+.lg-main{display:flex;flex-direction:column;gap:14px;min-width:0}
+.lg-card{background:var(--card);border-radius:14px;padding:24px 26px;scroll-margin-top:16px}
+.lg-info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 24px}
+.lg-info div{min-width:0}
+.lg-info small{display:block;font-size:12px;color:var(--t3);line-height:1.5}
+.lg-info span{display:block;font-size:14px;font-weight:500;color:var(--t1);line-height:1.55}
+.lg-info a{font-weight:600}
+.lg-h{display:flex;align-items:center;gap:10px;margin:0 0 12px;font-size:17px;font-weight:600;line-height:1.4}
+.lg-n{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;padding:0 7px;border-radius:7px;background:#111;color:#fff;font-size:12px;font-weight:600}
+.lg-card p{margin:0 0 10px;color:var(--t2)}
+.lg-card p:last-child{margin-bottom:0}
+.lg-card b,.lg-card strong{color:var(--t1);font-weight:600}
+.lg-card h3{margin:18px 0 8px;font-size:15px;font-weight:600}
+.lg-card ol,.lg-card ul{margin:0 0 10px;padding-left:22px;color:var(--t2)}
+.lg-card ol.articles{list-style:none;padding-left:0}
+.lg-card li{margin:4px 0}
+.lg-card li p{margin:0}
+.lg-card table{width:100%;border-collapse:collapse;margin:6px 0 12px;font-size:14px}
+.lg-card th,.lg-card td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top;color:var(--t2);line-height:1.6}
+.lg-card th{background:var(--soft);color:var(--t1);font-weight:600;white-space:nowrap}
+.lg-card table tr td:first-child{color:var(--t1);font-weight:500}
+.lg-card .callout,.lg-card .warn,.lg-card .note{margin-top:12px;padding:14px 16px;border-radius:10px;background:var(--soft);color:var(--t1);font-size:14px;line-height:1.7}
+.lg-tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.lg-tail{font-size:13px;color:var(--t3)}
+.lg-foot{max-width:1120px;margin:0 auto;padding:6px 24px 40px;font-size:12px;line-height:1.9;color:var(--t3)}
+.lg-foot a{color:var(--t3)}
+@media (max-width:860px){
+  .lg-body{grid-template-columns:minmax(0,1fr)}
+  .lg-toc{display:none}
+}
+@media (max-width:640px){
+  .lg-top{padding:16px 16px 0}
+  .lg-head{padding:14px 16px 0}
+  .lg-head h1{font-size:30px}
+  .lg-tabs{padding:0 16px;margin-top:16px;gap:6px}
+  .lg-tabs a{height:36px;padding:0 12px;font-size:13px}
+  .lg-body{padding:0 16px 32px;margin-top:16px}
+  .lg-card{padding:20px 18px}
+  .lg-info{grid-template-columns:minmax(0,1fr)}
+  .lg-h{font-size:16px}
+  .lg-card table{font-size:13px}
+  .lg-card th,.lg-card td{padding:8px 9px}
+  .lg-foot{padding:4px 16px 32px}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="titleblock">
-    <h1>환불규정</h1>
-    <div class="meta">직트&레이 트레이딩 룸 · 시행일 2024년 1월 30일 · 전자상거래법 기준</div>
-  </div>
+<div class="lg-top"><div class="lg-crumb"><a href="./hub.html">홈</a> / 환불규정</div><a class="lg-pill" href="./hub.html">트레이딩 룸으로</a></div>
+<header class="lg-head"><div class="lg-kicker">직트 트레이딩 룸</div><h1>환불규정</h1><div class="lg-meta">직트&amp;레이 트레이딩 룸, 시행일 2024년 1월 30일, 전자상거래법 기준</div></header>
+<nav class="lg-tabs" aria-label="약관 문서"><a href="./hub_terms.html">이용약관</a><a href="./hub_refund.html" class="on" aria-current="page">환불규정</a><a href="./volatility/privacy.html">개인정보처리방침</a></nav>
+<div class="lg-body">
+<aside class="lg-toc" aria-label="목차"><b>목차</b><a href="#s1"><span>1</span>기본 원칙</a><a href="#s2"><span>2</span>청약철회 가능 기간</a><a href="#s3"><span>3</span>상품별 환불 기준</a><a href="#s4"><span>4</span>회사 귀책사유로 인한 환불</a><a href="#s5"><span>5</span>환불 절차</a><a href="#s6"><span>6</span>기타</a></aside>
+<main class="lg-main">
+<section class="lg-card"><div class="lg-info"></div></section>
 
-  <div class="card">
-    <h2><span class="num">1</span>기본 원칙</h2>
-    <p>회사는 「전자상거래 등에서의 소비자보호에 관한 법률」에 따라 이용자의 청약철회권을 보장합니다. 다만 강의·트레이딩키와 같은 디지털 콘텐츠의 특성상, 콘텐츠 제공이 개시된 이후에는 관련 법령이 정한 범위 내에서 청약철회가 제한될 수 있습니다.</p>
-  </div>
-
-  <div class="card">
-    <h2><span class="num">2</span>청약철회 가능 기간</h2>
-    <ol class="articles">
-      <li><p>① 이용자는 결제일로부터 7일 이내에 청약철회(환불 요청)를 할 수 있습니다.</p></li>
-      <li><p>② 다만 아래 각 호에 해당하는 경우에는 청약철회가 제한됩니다.</p></li>
-    </ol>
-    <div class="callout">
-      · 강의 콘텐츠를 실제로 재생·다운로드하여 이용을 시작한 경우, 이용을 시작한 부분에 대해서는 청약철회가 제한됩니다.<br>
-      · 트레이딩키(정보제공서비스)를 개통하여 정보 제공이 개시된 이후에는 청약철회가 제한됩니다.
+<section class="lg-card" id="s1"><h2 class="lg-h"><span class="lg-n">1</span>기본 원칙</h2>
+<p>회사는 「전자상거래 등에서의 소비자보호에 관한 법률」에 따라 이용자의 청약철회권을 보장합니다. 다만 강의, 트레이딩키와 같은 디지털 콘텐츠의 특성상, 콘텐츠 제공이 개시된 이후에는 관련 법령이 정한 범위 내에서 청약철회가 제한될 수 있습니다.</p>
+</section>
+<section class="lg-card" id="s2"><h2 class="lg-h"><span class="lg-n">2</span>청약철회 가능 기간</h2>
+<ol class="articles">
+<li><p>① 이용자는 결제일로부터 7일 이내에 청약철회(환불 요청)를 할 수 있습니다.</p></li>
+<li><p>② 다만 아래 각 호에 해당하는 경우에는 청약철회가 제한됩니다.</p></li>
+</ol>
+<div class="callout">
+     , 강의 콘텐츠를 실제로 재생, 다운로드하여 이용을 시작한 경우, 이용을 시작한 부분에 대해서는 청약철회가 제한됩니다.<br/>
+     , 트레이딩키(정보제공서비스)를 개통하여 정보 제공이 개시된 이후에는 청약철회가 제한됩니다.
     </div>
-  </div>
-
-  <div class="card">
-    <h2><span class="num">3</span>상품별 환불 기준</h2>
-    <table>
-      <tr>
-        <th>온라인 강의</th>
-        <td>
-          7일 이내 & 미수강 시 전액 환불.<br>
+</section>
+<section class="lg-card" id="s3"><h2 class="lg-h"><span class="lg-n">3</span>상품별 환불 기준</h2>
+<div class="lg-tablewrap"><table>
+<tr>
+<th>온라인 강의</th>
+<td>
+          7일 이내 &amp; 미수강 시 전액 환불.<br/>
           7일 경과 또는 일부 수강 시, 환불액 = 결제금액 − (정가 기준 1강 단가 × 수강한 강의 수). 전체 강의의 1/3 이상을 수강한 경우 환불이 제한될 수 있습니다.
         </td>
-      </tr>
-      <tr>
-        <th>트레이딩키<br>(기간제 이용권)</th>
-        <td>
-          개통(정보 제공 개시) 전 환불 요청 시 전액 환불.<br>
+</tr>
+<tr>
+<th>트레이딩키<br/>(기간제 이용권)</th>
+<td>
+          개통(정보 제공 개시) 전 환불 요청 시 전액 환불.<br/>
           개통 이후에는 정보제공서비스의 특성상 환불이 제한됩니다. 다만 회사의 귀책사유(시스템 장애로 인한 장기간 서비스 중단 등)로 정상 이용이 불가능했던 경우, 미이용 기간에 비례하여 환불합니다.
         </td>
-      </tr>
-      <tr>
-        <th>풀 패키지<br>(강의+트레이딩키)</th>
-        <td>구성 상품별로 각각의 기준을 적용하여 환불액을 산정합니다.</td>
-      </tr>
-    </table>
-  </div>
+</tr>
+<tr>
+<th>풀 패키지<br/>(강의+트레이딩키)</th>
+<td>구성 상품별로 각각의 기준을 적용하여 환불액을 산정합니다.</td>
+</tr>
+</table></div>
+</section>
+<section class="lg-card" id="s4"><h2 class="lg-h"><span class="lg-n">4</span>회사 귀책사유로 인한 환불</h2>
+<p>회사의 귀책사유(콘텐츠 제공 불가, 장기간 시스템 장애 등)로 서비스를 정상적으로 이용할 수 없었던 경우, 이용자는 이용하지 못한 기간, 범위에 해당하는 금액을 환불받을 수 있습니다.</p>
+</section>
+<section class="lg-card" id="s5"><h2 class="lg-h"><span class="lg-n">5</span>환불 절차</h2>
+<ol class="articles">
+<li><p>① 환불을 원하는 이용자는 카카오톡 1:1 채널로 환불을 요청합니다.</p></li>
+<li><p>② 회사는 요청 접수 후 환불 가능 여부를 확인하여 안내하며, 승인된 환불은 결제 수단에 따라 처리 절차와 소요 기간이 다를 수 있습니다.</p></li>
+<li><p>③ 신용카드 결제는 카드사 승인 취소, 계좌이체 등은 환불 계좌로 반환하는 방식으로 처리됩니다.</p></li>
+</ol>
+</section>
+<section class="lg-card" id="s6"><h2 class="lg-h"><span class="lg-n">6</span>기타</h2>
+<p>이 환불규정에서 정하지 않은 사항은 「전자상거래 등에서의 소비자보호에 관한 법률」 및 관계 법령, 이용약관을 따릅니다.</p>
+</section>
 
-  <div class="card">
-    <h2><span class="num">4</span>회사 귀책사유로 인한 환불</h2>
-    <p>회사의 귀책사유(콘텐츠 제공 불가, 장기간 시스템 장애 등)로 서비스를 정상적으로 이용할 수 없었던 경우, 이용자는 이용하지 못한 기간·범위에 해당하는 금액을 환불받을 수 있습니다.</p>
-  </div>
-
-  <div class="card">
-    <h2><span class="num">5</span>환불 절차</h2>
-    <ol class="articles">
-      <li><p>① 환불을 원하는 이용자는 카카오톡 1:1 채널로 환불을 요청합니다.</p></li>
-      <li><p>② 회사는 요청 접수 후 환불 가능 여부를 확인하여 안내하며, 승인된 환불은 결제 수단에 따라 처리 절차와 소요 기간이 다를 수 있습니다.</p></li>
-      <li><p>③ 신용카드 결제는 카드사 승인 취소, 계좌이체 등은 환불 계좌로 반환하는 방식으로 처리됩니다.</p></li>
-    </ol>
-  </div>
-
-  <div class="card">
-    <h2><span class="num">6</span>기타</h2>
-    <p>이 환불규정에서 정하지 않은 사항은 「전자상거래 등에서의 소비자보호에 관한 법률」 및 관계 법령, 이용약관을 따릅니다.</p>
-  </div>
-
-  <div class="footer-nav">
-    <a class="pillbtn" href="./hub.html">← 트레이딩 룸으로</a>
-    <a class="pillbtn" href="./hub_terms.html">이용약관 보기 →</a>
-  </div>
+</main>
 </div>
+<footer class="lg-foot">© 2026 직트 | 대표 임대성 | 사업자등록번호 782-08-02561 | 통신판매업 신고 제2025-고양일산동-2062호<br>경기도 고양시 일산동구 중앙로 1080, 402동 4층 402-S21호 | 010-2649-0502 | <a href="https://open.kakao.com/o/sWnslm0d" target="_blank" rel="noopener">카카오톡 문의</a></footer>
 </body>
 </html>

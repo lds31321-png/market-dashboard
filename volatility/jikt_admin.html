@@ -82,7 +82,8 @@
         <span class="badge badge-expired">만료</span> 유료였다가 기간 만료 &nbsp;·&nbsp;
         <span class="badge badge-trial">체험</span> 가입 7일 이내(자동 체험) &nbsp;·&nbsp;
         <span class="badge badge-free">무료</span> 체험 만료·미결제 &nbsp;·&nbsp;
-        <span class="badge badge-suspended">정지</span> 이용 정지된 회원
+        <span class="badge badge-suspended">정지</span> 이용 정지된 회원<br>
+        <span class="badge badge-trial">1개월 신청</span> 풀 패키지 구매자가 1개월 무료를 신청함. 라이브클래스 구매 내역과 이름을 확인한 뒤 「1개월 승인」을 누르면 그때부터 30일이 열립니다.
       </div>
       <div id="users-table" class="empty">로딩 중...</div>
     </div>
@@ -227,19 +228,29 @@ window.JIKT_API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';   /* TODO 
       var _paidNow = res.users.filter(function(u){ return u.status!=='suspended' && u.paidUntil && new Date(u.paidUntil).getTime() > _now; }).length;
       var _ever = res.users.filter(function(u){ return u.paidUntil; }).length;
       document.getElementById('users-meta').innerHTML = '전체 ' + res.total + '명 · 유료이력 ' + _ever + '명 (현재 유료 ' + _paidNow + ' · 만료 ' + (_ever - _paidNow) + ')';
-      var rows = res.users.map(function(u){
+      var _pend = res.users.filter(function(u){ return u.freeMonth && u.freeMonth.status==='pending'; });
+      if (_pend.length) document.getElementById('users-meta').innerHTML += ' | <b style="color:#c23d4b">1개월 신청 ' + _pend.length + '명</b>';
+      var _list = _pend.concat(res.users.filter(function(u){ return !(u.freeMonth && u.freeMonth.status==='pending'); }));
+      var rows = _list.map(function(u){
+        var fm = u.freeMonth || {};
+        var fmCell = fm.status==='pending' ? '<span class="badge badge-trial">1개월 신청</span><br><span style="font-size:12px">결제 이름: ' + esc(fm.payerName) + '<br>' + shortDate(fm.requestedAt) + '</span>'
+          : fm.status==='approved' ? '<span style="font-size:12px">1개월 사용함 (' + shortDate(fm.decidedAt) + ')</span>'
+          : fm.status==='rejected' ? '<span style="font-size:12px">1개월 반려 (' + shortDate(fm.decidedAt) + ')</span>' : '';
         return '<tr><td>' + esc(u.email) + '</td><td>' + esc(u.name) + '</td>'
           + '<td>' + u.provider + '</td>'
           + '<td>' + planBadge(u) + '</td>'
           + '<td>' + shortDate(u.paidUntil) + '</td>'
+          + '<td>' + sourceText(u) + (fmCell ? '<br>' + fmCell : '') + '</td>'
           + '<td>' + shortDate(u.createdAt) + '</td>'
           + '<td>'
+          + (fm.status==='pending' ? '<button class="btn btn-primary" onclick="adminFree(\''+u.userId+'\',true)">1개월 승인</button> <button class="btn btn-ghost" onclick="adminFree(\''+u.userId+'\',false)">반려</button> ' : '')
           + (u.status==='active' ? '<button class="btn btn-danger" onclick="adminSuspend(\''+u.userId+'\')">정지</button>' : '<button class="btn btn-primary" onclick="adminReactivate(\''+u.userId+'\')">복구</button>')
+          + ' <button class="btn btn-ghost" onclick="adminGrant(\''+u.userId+'\',\'liveklass_tk\')">라이브클래스 30일</button>'
           + ' <button class="btn btn-ghost" onclick="adminGrant(\''+u.userId+'\')">30일 부여</button>'
           + ' <button class="btn btn-ghost" onclick="adminRevoke(\''+u.userId+'\')">유료 취소</button>'
           + '</td></tr>';
       }).join('');
-      box.innerHTML = '<table><tr><th>이메일</th><th>이름</th><th>가입</th><th>플랜</th><th>만료</th><th>가입일</th><th>조작</th></tr>' + rows + '</table>';
+      box.innerHTML = '<table><tr><th>이메일</th><th>이름</th><th>가입</th><th>플랜</th><th>만료</th><th>이용권</th><th>가입일</th><th>조작</th></tr>' + rows + '</table>';
     });
   }
 
@@ -299,10 +310,15 @@ window.JIKT_API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';   /* TODO 
   window.adminReactivate = function(uid){
     api('POST', '/admin/users/' + uid + '/reactivate').then(function(){ loadUsers(); loadStats(); });
   };
-  window.adminGrant = function(uid){
-    var days = prompt('며칠 부여? (기본 30)', '30');
+  window.adminGrant = function(uid, source){
+    var days = prompt((source==='liveklass_tk' ? '라이브클래스 월 결제로 ' : '') + '며칠 부여? (기본 30)', '30');
     if (!days) return;
-    api('POST', '/admin/users/' + uid + '/grant?days=' + days).then(function(){ loadUsers(); loadStats(); });
+    api('POST', '/admin/users/' + uid + '/grant?days=' + days + '&source=' + (source || 'manual')).then(function(){ loadUsers(); loadStats(); });
+  };
+  /* [2026-11-17] 풀 패키지 1개월 무료: 승인하면 그때부터 30일, 반려하면 회원 화면에 확인 안 됨 안내 */
+  window.adminFree = function(uid, ok){
+    if (!confirm(ok ? '라이브클래스 풀 패키지 구매를 확인했나요? 승인하면 지금부터 30일이 열립니다.' : '1개월 무료 신청을 반려할까요?')) return;
+    api('POST', '/admin/users/' + uid + (ok ? '/freeapprove' : '/freereject')).then(function(){ loadUsers(); loadStats(); });
   };
   window.adminRevoke = function(uid){
     if (!confirm('이 회원의 유료 권한을 취소(즉시 만료)할까요?')) return;
@@ -315,6 +331,12 @@ window.JIKT_API = 'https://jikt-dashboard-api.eotjd3133.workers.dev';   /* TODO 
 
   function esc(s){ return String(s || '').replace(/[<>&]/g, function(c){ return ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]); }); }
   function shortDate(s){ if(!s)return '-'; return s.slice(0,10); }
+  var SRC_NAME = { toss:'토스 정기구독', free_month:'풀 패키지 1개월', liveklass_tk:'라이브클래스 월 결제', manual:'수동 부여' };
+  function sourceText(u){
+    var t = u.accessSource ? (SRC_NAME[u.accessSource] || u.accessSource) : (u.paidUntil ? '예전 부여' : '-');
+    if (u.subscription && u.subscription.active && u.subscription.tossBillingKey) t += '<br><span style="font-size:12px;color:#8B95A1">자동결제 중</span>';
+    return t;
+  }
   function planBadge(u){
     if (u.status === 'suspended') return '<span class="badge badge-suspended">정지</span>';
     var now = Date.now();
