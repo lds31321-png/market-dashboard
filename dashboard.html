@@ -1054,6 +1054,8 @@ function isPaidUser(){ try{ return localStorage.getItem('paid')==='1' || /[?&]pa
 function applyHoldingsGate(){ var g=document.getElementById('holdingsGate'); if(g) g.style.display=(PAID_GATE && !isPaidUser())?'flex':'none'; }
 function hEsc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c];});}
 function hRate(){ try{ return (typeof meta!=='undefined' && meta && meta.exchange_rate) || 1500; }catch(e){ return 1500; } }
+/* [2026-11-23] 증거금 원화 = 증거금(달러) x 금일 환율. 달러 증거금이 없으면 저장된 원화 그대로 */
+function jkMarginKrw(p){ var m=+p.margin; return (m>0)?Math.round(m*hRate()):(p.margin_krw||0); }
 function hMd(iso){ if(!iso) return '-'; var m=String(iso).match(/(\d{4})-(\d{2})-(\d{2})/); return m?(m[2]+'/'+m[3]):String(iso); }
 function hStrat(s){ var m={naked_call:'콜 매도',naked_put:'풋 매도',strangle:'양매도',ratio_spread:'비율 스프레드',covered:'커버드 콜',spread:'스프레드'}; return m[s]||s||'-'; }
 window.ohToggle=function(id,btn){ var el=document.getElementById(id); if(!el)return; var open=el.style.display!=='none'; el.style.display=open?'none':''; if(btn){var c=btn.querySelector('.oh-caret'); if(c)c.textContent=open?'▾':'▸';} };
@@ -1084,9 +1086,9 @@ function ohSummary(groups,rate){
     +'<span class="mob-stepnum" style="font-size:14px;font-weight:800;color:var(--accent);background:rgba(var(--accent-rgb),.15);padding:4px 12px;border-radius:6px;border:1px solid rgba(var(--accent-rgb),.30);">1-3</span>'
     +'<span style="font-size:15px;font-weight:700;color:var(--t1);letter-spacing:.02em;">종목별 평가손익</span>'
     +'<span style="font-size:12px;color:var(--t3);">보유 종목 · 수익 빨강 / 손실 파랑</span></div>';
-  h+='<table style="width:100%;border-collapse:collapse;font-family:var(--mono);">'+ohSumTh(['종목','','평가손익','매매비중','총 손익']);
-  groups.forEach(function(g){ h+='<tr>'+ohSumTd(hEsc(g.name),'left','var(--t1)',700)+ohBarCell(g.ev,mxE)+ohSumTd(ohUF(g.ev,rate),'right',ohPc(g.ev),700)+ohSumTd(g.weight.toFixed(2)+'%','right')+ohSumTd(ohUF(g.tot,rate),'right',ohPc(g.tot),700)+'</tr>'; });
-  h+='<tr style="background:rgba(var(--accent-rgb),.05)">'+ohSumTd('총 합계','left','var(--t1)',800)+ohSumTd('','left')+ohSumTd(ohUF(tE,rate),'right',ohPc(tE),800)+ohSumTd(tW.toFixed(2)+'%','right','var(--t1)',800)+ohSumTd(ohUF(tA,rate),'right',ohPc(tA),800)+'</tr>';
+  h+='<table style="width:100%;border-collapse:collapse;font-family:var(--mono);">'+ohSumTh(['종목','','평가손익','매매비중']);
+  groups.forEach(function(g){ h+='<tr>'+ohSumTd(hEsc(g.name),'left','var(--t1)',700)+ohBarCell(g.ev,mxE)+ohSumTd(ohUF(g.ev,rate),'right',ohPc(g.ev),700)+ohSumTd(g.weight.toFixed(2)+'%','right')+'</tr>'; });
+  h+='<tr style="background:rgba(var(--accent-rgb),.05)">'+ohSumTd('총 합계','left','var(--t1)',800)+ohSumTd('','left')+ohSumTd(ohUF(tE,rate),'right',ohPc(tE),800)+ohSumTd(tW.toFixed(2)+'%','right','var(--t1)',800)+'</tr>';
   h+='</table></div>';
   return h;
 }
@@ -1154,11 +1156,27 @@ function ohLegsEntryPt(legs,u){
   /* [2026-07-13] 매수 다리는 프리미엄이 음수(지불)로 저장돼 있음 → 옵션가는 절댓값으로 표기 (매수/매도 구분은 '구분' 컬럼이 담당) */
   return L.map(function(l){ return hEsc(ohFmtPt(Math.abs((l.premium||0)/(l.contracts||1)/m))); }).join('<br>');
 }
-/* 다리별 청산 옵션가(pt) — 만기소멸이면 다리마다 0, 그 외는 '-' */
+/* [2026-11-23 직트 「실제대로 반영」] 청산한 다리(leg.closed, stoploss_link.py)를 화면에도 그대로 보인다 */
+function ptFmt(v){ v=Number(v)||0; return Math.abs(v)<0.01?v.toFixed(4):v.toFixed(3); }
+function legClosedN(l){ return (l.closed||[]).reduce(function(s,e){ return s+(e.contracts||0); },0); }
+function legRealized(l){ return (l.closed||[]).reduce(function(s,e){ return s+(e.pnl||0); },0); }
+function legExitAvg(l){ var n=0,s=0; (l.closed||[]).forEach(function(e){ n+=(e.contracts||0); s+=(e.exit_pt||0)*(e.contracts||0); }); return n?s/n:null; }
+function legMult(u){ return ({'크루드 오일':1000,'원유':1000,'천연가스':10000,'골드':100,'S&P500':50,'호주달러':100000,'10년국채':1000,'대두':50,'밀':50,'옥수수':50,'엔화':12.5,'유로':125000})[u]||1000; }
+/* 다리별 확정 손익(USD). 종료 포지션: 청산 계약은 실현손익, 남은 계약은 정산가(만기소멸이면 프리미엄). 진행 중: 청산분만, 청산 없으면 null */
+function legFinalUsd(p,l){
+  var n=l.contracts||1, cn=legClosedN(l), rz=legRealized(l);
+  if(p.status!=='expired') return cn?rz:null;
+  var on=Math.max(0,n-cn); if(!on) return rz;
+  var prem=Math.abs(l.premium||0)*on/n, k=parseFloat(l.strike)||0, s=Number(p.current_price), iv=0;   // 매수 다리 음수 저장(#144)도 크기만
+  if(p.current_pnl!=null&&isFinite(s)) iv=/call/.test(l.type||'')?Math.max(0,s-k):Math.max(0,k-s);
+  var m=legMult(p.underlying);
+  return rz+(/sell/.test(l.type||'')?(prem-iv*on*m):(-prem+iv*on*m));
+}
+/* 다리별 청산 옵션가(pt): 청산한 다리는 청산가, 만기소멸이면 0, 그 외는 '-' */
 function ohLegsExitPt(legs,status){
   var L=ohLegsSorted(legs);
   if(!L.length) return '-';
-  return L.map(function(){ return (status==='expired')?'0':'-'; }).join('<br>');
+  return L.map(function(l){ var x=legExitAvg(l); return x!=null?hEsc(ohFmtPt(x)):((status==='expired')?'0':'-'); }).join('<br>');
 }
 /* [2026-11-15] 보유·청산 표의 행을 눌러 포지션 상세 모달을 열기 위해, 종목+월물+콜풋+행사가로 공유 포지션을 찾는다 */
 function ohFindPid(u,m,cp,strike,closed){
@@ -1227,7 +1245,7 @@ function ohRenderPnl(pos,rate){
   var clo=pos.filter(function(p){return p.status==='expired'||p.status==='closed'||p.status==='청산';}).sort(function(a,b){return (b.strategy_num||0)-(a.strategy_num||0);});
   var dep=(typeof meta!=='undefined'&&meta&&meta.total_deposit_krw)||50000000;
   var G={},order=[];
-  act.forEach(function(p){ var k=p.underlying||'기타'; if(!G[k]){G[k]={n:k,ev:0,mk:0};order.push(k);} G[k].ev+=(p.current_pnl||0); G[k].mk+=(p.margin_krw||0); });
+  act.forEach(function(p){ var k=p.underlying||'기타'; if(!G[k]){G[k]={n:k,ev:0,mk:0};order.push(k);} G[k].ev+=(p.current_pnl||0); G[k].mk+=jkMarginKrw(p); });
   var closedPnl=function(p){ return (p.current_pnl!=null)?p.current_pnl:((p.status==='expired')?(p.total_premium||0):0); };
   var realized={}; clo.forEach(function(p){ var k=p.underlying||'기타'; realized[k]=(realized[k]||0)+closedPnl(p); });
   var groups=order.map(function(k){ var g=G[k]; return {name:k, ev:g.ev, weight:(g.mk/dep*100), tot:g.ev+(realized[k]||0)}; });
@@ -1355,15 +1373,17 @@ function renderCards(pos){
 
     // 현재 평가손익
     let pnlHtml='';
-    if(p.current_pnl){
-      const pnlKrw=Math.round(Math.abs(p.current_pnl)*rate/10000);
-      const cls=p.current_pnl>0?'profit':p.current_pnl<0?'loss':'neutral';
-      const sign=p.current_pnl>0?'+':p.current_pnl<0?'-':'';
-      const pnlColor=p.current_pnl>0?'var(--profit)':p.current_pnl<0?(window.__JKLT()?'#4F79C2':'#667085'):'var(--t3)';
-      pnlHtml=`<div class="pnl-row ${cls}"><span class="pnl-label">현재 평가손익</span><span class="pnl-val ${cls}" style="color:${pnlColor};">${sign}${pnlKrw}만원 <span style="font-size:12px;opacity:.8;">(${sign}$${Math.abs(p.current_pnl).toLocaleString()})</span></span></div>`;
+    /* [2026-11-23] 종료 포지션은 확정 손익(만기소멸이면 프리미엄 전액, 청산 다리는 실현손익) */
+    const _cDone=p.status==='expired', _cv=_cDone?(p.current_pnl!=null?p.current_pnl:(p.total_premium||0)):p.current_pnl;
+    if(_cv){
+      const pnlKrw=Math.round(Math.abs(_cv)*rate/10000);
+      const cls=_cv>0?'profit':_cv<0?'loss':'neutral';
+      const sign=_cv>0?'+':_cv<0?'-':'';
+      const pnlColor=_cv>0?'var(--profit)':_cv<0?(window.__JKLT()?'#4F79C2':'#667085'):'var(--t3)';
+      pnlHtml=`<div class="pnl-row ${cls}"><span class="pnl-label">${_cDone?'확정 손익':'현재 평가손익'}</span><span class="pnl-val ${cls}" style="color:${pnlColor};">${sign}${pnlKrw}만원 <span style="font-size:12px;opacity:.8;">(${sign}$${Math.abs(_cv).toLocaleString()})</span></span></div>`;
     } else {
-      const pnlMsg=isExpired?'만기청산':'업데이트 예정';
-      pnlHtml=`<div class="pnl-row neutral"><span class="pnl-label">현재 평가손익</span><span class="pnl-val neutral" style="font-size:12px">${pnlMsg}</span></div>`;
+      const pnlMsg=_cDone?'0원':isExpired?'만기청산':'업데이트 예정';
+      pnlHtml=`<div class="pnl-row neutral"><span class="pnl-label">${_cDone?'확정 손익':'현재 평가손익'}</span><span class="pnl-val neutral" style="font-size:12px">${pnlMsg}</span></div>`;
     }
 
     const rs=p.expected_return_max_pct?`${p.expected_return_pct}~${p.expected_return_max_pct}%`:`${p.expected_return_pct}%`;
@@ -1372,6 +1392,8 @@ function renderCards(pos){
 
     const marginKrw=Math.round((p.margin||0)*rate/10000);
     const premiumKrw=Math.round((p.total_premium||0)*rate/10000);
+    /* [2026-11-23] 기대 수익률: 상세 창 「증거금 대비」와 같은 값. 값이 없으면 최대 가능 수익 / 투자금 */
+    const erTxt=p.expected_return_max_pct?rs.replace('~','~<wbr>'):((p.expected_return_pct!=null&&p.expected_return_pct!=='')?(+p.expected_return_pct).toFixed(2)+'%':((p.margin>0)?((p.total_premium||0)/p.margin*100).toFixed(2)+'%':'-'));
 
     return `<div class="pos-card ${isExpired?'expired':''} ${isNew?'new-pos':''}" id="card-${p.id}" onclick="openModal('${p.id}')">
 
@@ -1395,8 +1417,8 @@ function renderCards(pos){
         ${p.strategy_num?`#${p.strategy_num}번`:''}  ·  ${p.shared_date.slice(5).replace('-','/')} 공유
       </div>
 
-      <!-- 투자금액 / 기대수익 -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+      <!-- 투자금액 / 기대수익 / 기대 수익률 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;">
         <div style="background:rgba(0,0,0,.03);border-radius:8px;padding:10px 12px;min-width:0;">
           <div style="font-size:14px;color:var(--t2);font-family:var(--mono);margin-bottom:6px;white-space:nowrap;">투자금(증거금)</div>
           <div style="font-size:20px;font-weight:700;font-family:var(--mono);color:var(--t1);line-height:1.2;">${marginKrw}만원</div>
@@ -1404,6 +1426,10 @@ function renderCards(pos){
         <div style="background:rgba(var(--profit-rgb),.06);border-radius:8px;padding:10px 12px;border:1px solid rgba(var(--profit-rgb),.18);min-width:0;">
           <div style="font-size:14px;color:var(--t2);font-family:var(--mono);margin-bottom:6px;">최대 가능 수익</div>
           <div style="font-size:20px;font-weight:700;font-family:var(--mono);color:var(--profit);line-height:1.2;">+${premiumKrw}만원</div>
+        </div>
+        <div style="background:rgba(var(--profit-rgb),.06);border-radius:8px;padding:10px 12px;border:1px solid rgba(var(--profit-rgb),.18);min-width:0;">
+          <div style="font-size:14px;color:var(--t2);font-family:var(--mono);margin-bottom:6px;white-space:nowrap;">기대 수익률</div>
+          <div style="font-size:20px;font-weight:700;font-family:var(--mono);color:var(--profit);line-height:1.2;">${erTxt}</div>
         </div>
       </div>
 
@@ -1727,7 +1753,7 @@ function buildPositionChart(p, canvasId){
       const _CDIST=[30,42,56,72,90,110,130];
       // ③ 현재가(또는 만기 종가): 점을 가리키는 화살표, 화살표 끝에 글자(마지막 캔들 옆이라 자리가 좁아 먼저 잡는다)
       if(dot){
-        const txt=(_expired?'만기 종가 $':'현재가 $')+_lastC.toLocaleString();
+        const txt=(_expired?(p.closed_date?'청산일 종가 $':(hasExp&&expiryIdx<=histLabels.length-1)?'만기 종가 $':'마지막 종가 $'):'현재가 $')+_lastC.toLocaleString();   // [2026-11-23] 차트가 만기 전에 끝나면 만기 종가라 하지 않음
         callout([{x:dot.x,y:dot.y,gap:8,dists:_CDIST,dirs:[[0.7,-0.7],[0.7,0.7],[1,0],[0,-1],[0,1],[-0.7,-0.7],[-0.7,0.7],[-0.4,-0.9],[-0.4,0.9],[0.4,-0.9],[0.4,0.9],[-1,0]]}],txt);
       }
       // ④ 진입: 진입 캔들의 꼭대기(위에서) 또는 바닥(아래에서)을 가리키는 화살표
@@ -1909,18 +1935,27 @@ function openModal(id){
 
   // ── 현재 평가손익 ──
   let pnlBlock='';
-  if(p.current_pnl){
-    const isProfit=p.current_pnl>0;
-    const sign=p.current_pnl>0?'+':p.current_pnl<0?'-':'';
-    const pnlKrw=Math.round(Math.abs(p.current_pnl)*rate/10000);
+  /* [2026-11-23 직트 「실제대로 반영」] 종료 포지션은 「업데이트 예정」 대신 확정 손익과 청산 내역 */
+  const _mDone=p.status==='expired', _mv=_mDone?(p.current_pnl!=null?p.current_pnl:(p.total_premium||0)):p.current_pnl;
+  const _mLabel=_mDone?'확정 손익':'현재 평가손익';
+  const _mWhy=(_mDone||(p.legs||[]).some(l=>(l.closed||[]).length))&&p.close_reason?`<div style="font-size:12px;color:var(--t3);font-family:var(--mono);margin-top:6px;">${hEsc(p.close_reason)}</div>`:(_mDone&&p.current_pnl==null?`<div style="font-size:12px;color:var(--t3);font-family:var(--mono);margin-top:6px;">만기소멸, 프리미엄 전액</div>`:'');
+  if(_mv){
+    const isProfit=_mv>0;
+    const sign=_mv>0?'+':_mv<0?'-':'';
+    const pnlKrw=Math.round(Math.abs(_mv)*rate/10000);
     const bg=isProfit?'rgba(255,220,220,.12)':'rgba(200,220,255,.12)';
     const border=isProfit?'rgba(var(--profit-rgb),.25)':'rgba(var(--accent-rgb),.2)';
     const color=isProfit?'var(--profit)':'var(--loss)';
     const bg2=isProfit?'rgba(var(--profit-rgb),.07)':'rgba(var(--accent-rgb),.07)';
     pnlBlock=`<div style="background:${bg2};border:1px solid ${border};border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
-      <span style="font-size:13px;color:var(--t2);font-family:var(--mono);">현재 평가손익</span>
-      <span style="font-size:16px;font-weight:700;font-family:var(--mono);color:${color};white-space:nowrap;">${sign}${pnlKrw}만원 <span style="font-size:12px;opacity:.75;">(${sign}$${Math.abs(p.current_pnl).toLocaleString()})</span></span>
-    </div>`;
+      <span style="font-size:13px;color:var(--t2);font-family:var(--mono);">${_mLabel}</span>
+      <span style="font-size:16px;font-weight:700;font-family:var(--mono);color:${color};white-space:nowrap;">${sign}${pnlKrw}만원 <span style="font-size:12px;opacity:.75;">(${sign}$${Math.abs(_mv).toLocaleString()})</span></span>
+    </div>${_mWhy}`;
+  } else if(_mDone){
+    pnlBlock=`<div style="background:rgba(0,0,0,.03);border:1px solid var(--b1);border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-size:13px;color:var(--t2);font-family:var(--mono);">${_mLabel}</span>
+      <span style="font-size:16px;font-weight:700;font-family:var(--mono);color:var(--t3);">0원</span>
+    </div>${_mWhy}`;
   } else {
     pnlBlock=`<div style="background:rgba(0,0,0,.03);border:1px solid var(--b1);border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
       <span style="font-size:13px;color:var(--t2);font-family:var(--mono);">현재 평가손익</span>
@@ -2012,14 +2047,15 @@ function openModal(id){
               const mult={'크루드 오일':1000,'천연가스':10000,'골드':100,'S&P500':50,'호주달러':100000,'10년국채':1000,'대두':50,'밀':50,'옥수수':50};
               const m=mult[p.underlying]||1000;
               const contracts=l.contracts||1;
-              const entryPt=l.premium?+(l.premium/(contracts*m)).toFixed(3):0;
+              const entryPt=l.premium?(l.premium/(contracts*m)):0;
               const border=i<p.legs.length-1?'border-bottom:1px solid rgba(0,0,0,.04);':'';
-              const hasPnl=p.current_pnl&&p.current_pnl!==0;
+              const _lv=legFinalUsd(p,l);   // [2026-11-23] 종료 포지션과 청산 다리는 다리별 실제 손익
+              const hasPnl=_lv!=null||(p.current_pnl&&p.current_pnl!==0);
               const sellLegs=p.legs.filter(x=>x.type.includes('sell'));
-              const legPnlKRW=hasPnl&&isSell?Math.round(p.current_pnl*(meta.exchange_rate||1500)/Math.max(sellLegs.length,1)):0;
+              const legPnlKRW=_lv!=null?Math.round(_lv*(meta.exchange_rate||1500)):(hasPnl&&isSell?Math.round(p.current_pnl*(meta.exchange_rate||1500)/Math.max(sellLegs.length,1)):0);
               const pnlColor=legPnlKRW>=0?'var(--profit)':'var(--loss)';
               const pnlSign=legPnlKRW>=0?'+':'';
-              const pnlCell=!isSell
+              const pnlCell=(!isSell&&_lv==null)
                 ?'<span style="color:var(--t3);font-size:11px;">매수 레그</span>'
                 :hasPnl
                   ?'<span style="color:'+pnlColor+';font-weight:600;font-family:var(--mono);">'+pnlSign+legPnlKRW.toLocaleString()+'원</span>'
@@ -2029,9 +2065,11 @@ function openModal(id){
                 +'<td style="padding:11px 12px;color:var(--t2);font-family:var(--mono);">'+p.expiry_month+'</td>'
                 +'<td style="padding:11px 12px;color:var(--t1);font-family:var(--mono);font-weight:700;">$'+l.strike+'</td>'
                 +'<td style="padding:11px 12px;"><span style="color:'+color+';font-weight:600;font-size:12px;">'+(typeMap[l.type]||l.type)+'</span></td>'
-                +'<td style="padding:11px 12px;text-align:right;font-family:var(--mono);color:var(--t2);">'+entryPt.toFixed(3)+'</td>'
-                +'<td style="padding:11px 12px;text-align:right;font-family:var(--mono);color:var(--t3);font-size:12px;">업데이트 예정</td>'
-                +'<td style="padding:11px 12px;text-align:right;font-family:var(--mono);color:var(--t2);">'+contracts+'계약</td>'
+                +'<td style="padding:11px 12px;text-align:right;font-family:var(--mono);color:var(--t2);">'+ptFmt(entryPt)+'</td>'
+                +(legExitAvg(l)!=null?'<td style="padding:11px 12px;text-align:right;font-family:var(--mono);color:var(--t2);">청산 '+ptFmt(legExitAvg(l))+'</td>'
+                  :p.status==='expired'?'<td style="padding:11px 12px;text-align:right;font-family:var(--mono);color:var(--t3);font-size:12px;">만기</td>'
+                  :'<td style="padding:11px 12px;text-align:right;font-family:var(--mono);color:var(--t3);font-size:12px;">업데이트 예정</td>')
+                +'<td style="padding:11px 12px;text-align:right;font-family:var(--mono);color:var(--t2);">'+contracts+'계약'+(legClosedN(l)?'<span style="font-size:11px;color:var(--t3);"> (청산 '+legClosedN(l)+')</span>':'')+'</td>'
                 +'<td style="padding:11px 12px;text-align:right;">'+pnlCell+'</td>'
                 +'</tr>';
             }).join('')}
@@ -2145,7 +2183,7 @@ function renderPosKpi(){
   const totalDeposit = baseDeposit + settledCum + activePnlKrw;
 
   // 총 증거금 합계 — 관리자 증거금 입력값(원) 우선
-  let totalMargin = a.reduce((s,p) => s + (p.margin_krw||0), 0);
+  let totalMargin = a.reduce((s,p) => s + jkMarginKrw(p), 0);
   const _ohWon = _oh ? (_oh.margin_won!=null ? _oh.margin_won : (_oh.margin_usd!=null ? Math.round(_oh.margin_usd*(meta.exchange_rate||1500)) : (_oh.margin_man!=null ? _oh.margin_man*10000 : null))) : null;
   if(_ohWon!=null){ totalMargin = _ohWon; }
 
@@ -2246,8 +2284,18 @@ function getStory(s){
   return {text:`진입 후 <span class="hl">${n}개 주문</span>으로 운용하며 만기 수익 확정.`,color:(window.__JKLT()?'#D05A5A':'#FF8080')};
 }
 
+/* [2026-11-23] 매매 내역 #144번 이후(포지션 자료로 들어온 종료 포지션) 펼침을 포지션 자료로 채운다 */
+function histFromPos(s){
+  const p=s&&s.pos; if(!p) return null;
+  const tm={'call_sell':'C 매도','put_sell':'P 매도','call_buy':'C 매수','put_buy':'P 매수'};
+  const usd=(p.current_pnl!=null?p.current_pnl:(p.total_premium||0)), krw=Math.round(usd*(meta.exchange_rate||1500));
+  return {num:s.n, commodity:p.underlying||'', strategy_type:hStrat(p.strategy_type), expiry_month:p.expiry_month||'', entry_date:p.shared_date||'',
+    result:krw>0?'win':krw<0?'loss':'zero', total_premium:p.total_premium||0, margin:p.margin||0, pnl:krw,
+    close_reason:p.close_reason||(p.current_pnl==null?'만기소멸, 프리미엄 전액':''),
+    legs:(p.legs||[]).map(l=>({type:(tm[l.type]||l.type)+(legClosedN(l)?' 청산':''), strike:l.strike, premium_usd:l.premium||0}))};
+}
 function buildDetailRow(s, pnl, pct){
-  const hist = STRATEGY_HIST.find(h=>h.num===s.n);
+  const hist = STRATEGY_HIST.find(h=>h.num===s.n) || histFromPos(s);
 
   // 기본 정보
   const commodity = hist?.commodity || '—';
@@ -2295,7 +2343,7 @@ function buildDetailRow(s, pnl, pct){
   const pnlColor = isWin ? 'var(--accent)' : isLoss ? 'var(--loss)' : 'var(--t3)';
   const pnlBg = isWin ? 'rgba(var(--accent-rgb),.06)' : isLoss ? 'rgba(var(--loss-rgb),.06)' : 'rgba(0,0,0,.03)';
   const pnlBorder = isWin ? 'rgba(var(--accent-rgb),.18)' : isLoss ? 'rgba(var(--loss-rgb),.18)' : 'var(--b1)';
-  const resultText = isWin ? '수익 청산' : isLoss ? '손절 청산' : '만기 무손익';
+  const resultText = isWin ? '수익 청산' : isLoss ? '손절 청산' : (hist&&hist.close_reason ? '손익 없음' : '만기 무손익');
 
   // story
 
@@ -2312,6 +2360,7 @@ function buildDetailRow(s, pnl, pct){
           <div>
             <div class="dg-label">청산 손익</div>
             <div class="dg-val" style="font-size:18px;color:${pnlColor};">${pnlKRW>0?'+':''}${pnlKRW.toLocaleString()}원</div>
+            ${hist&&hist.close_reason?`<div style="font-size:12px;color:var(--t3);font-family:var(--mono);margin-top:4px;">${hEsc(hist.close_reason)}</div>`:''}
           </div>
           <div style="text-align:right;">
             <div class="dg-label">결과</div>
@@ -2432,13 +2481,13 @@ function renderHistory(filter){
           const isCall=l.type.includes('call');
           const color=isSell?(isCall?'var(--accent)':'var(--loss)'):'var(--profit)';
           const contracts=l.contracts||1;
-          const entryPt=l.premium?+(l.premium/(contracts*m)).toFixed(3):0;
+          const entryPt=l.premium?(l.premium/(contracts*m)):0;
           return `<span style="display:inline-flex;align-items:center;gap:7px;background:rgba(0,0,0,.03);border:1px solid var(--b1);border-radius:6px;padding:7px 12px;">
             <span style="font-size:12px;font-weight:600;color:${color};font-family:var(--mono);">${typeMap[l.type]||l.type}</span>
             <span style="color:var(--b2);">|</span>
             <span style="font-size:14px;font-weight:700;color:var(--t1);font-family:var(--mono);">$${l.strike}</span>
             <span style="font-size:11px;color:var(--t3);">${contracts}계약</span>
-            <span style="font-size:11px;color:var(--t2);font-family:var(--mono);">진입 ${entryPt.toFixed(3)}</span>
+            <span style="font-size:11px;color:var(--t2);font-family:var(--mono);">진입 ${ptFmt(entryPt)}</span>
           </span>`;
         }).join('');
         const premKrw=Math.round((pos.total_premium||0)*rate/10000);
@@ -2459,7 +2508,7 @@ function renderHistory(filter){
     const bw=Math.min(100,Math.abs(x.pnl)/2000000*100);
     const bc=x.pnl>0?'rgba(208,90,90,0.7)':'rgba(100,140,220,0.7)';
     const hist=STRATEGY_HIST.find(h=>h.num===x.n);
-    const commodity=hist&&hist.commodity?hist.commodity:'';
+    const commodity=hist&&hist.commodity?hist.commodity:((x.pos&&x.pos.underlying)||'');
     const hasDetail=hist&&(hist.commodity||hist.legs.length>0);
     const isExpiredHist = false; // 만기청산 행도 일반 행과 동일하게 표시 (라벨/회색 없음, 자연스러운 연속)
   const trStyle = isExpiredHist ? 'background:rgba(0,0,0,.02);border-left:3px solid rgba(0,0,0,.1);opacity:.75;' : '';
@@ -2517,9 +2566,9 @@ function buildStatCharts(){
   const _expC=(allPos||[]).filter(p=>p.status==='expired'&&!_statN.has(p.strategy_num||0))
     .sort((a,b)=>(a.strategy_num||0)-(b.strategy_num||0))
     .map(p=>({n:p.strategy_num||0,krw:Math.round((p.current_pnl!=null?p.current_pnl:(p.total_premium||0))*_r2)}));
-  const _eW=_expC.filter(x=>x.krw>0), _eL=_expC.filter(x=>x.krw<0);
+  const _eW=_expC.filter(x=>x.krw>0), _eL=_expC.filter(x=>x.krw<0), _eZ=_expC.filter(x=>x.krw===0);   // [2026-11-23] 손절 반영으로 0원 종료(#181)가 생김
   const _eWamt=_eW.reduce((s,x)=>s+x.krw,0), _eLamt=Math.abs(_eL.reduce((s,x)=>s+x.krw,0));
-  const _tW=WINS+_eW.length+_aW.length, _tL=LOSSES+_eL.length+_aL.length, _tZ=ZEROS+_aZ.length, _tN=143+(allPos||[]).filter(p=>(p.strategy_num||0)>143).length;
+  const _tW=WINS+_eW.length+_aW.length, _tL=LOSSES+_eL.length+_aL.length, _tZ=ZEROS+_eZ.length+_aZ.length, _tN=143+(allPos||[]).filter(p=>(p.strategy_num||0)>143).length;
 
   const wins   = DATA.filter(d=>d.pnl>0);
   const losses = DATA.filter(d=>d.pnl<0);
@@ -2756,10 +2805,11 @@ function buildStatCharts(){
   };
 
   // ── 구간별 승패 ──
-  const _actLabel=_aPos.length?`144~${_tN}`:'';
-  const segs=['1~30','31~60','61~90','91~120','121~143',...(_aPos.length?[_actLabel]:[])];
-  const sw=[...['1~30','31~60','61~90','91~120','121~143'].map((_,i)=>{const s=i*30,e=i===4?143:s+30;return DATA.slice(s,e).filter(d=>d.pnl>0).length;}),...(_aPos.length?[_aW.length]:[])];
-  const sl=[...['1~30','31~60','61~90','91~120','121~143'].map((_,i)=>{const s=i*30,e=i===4?143:s+30;return DATA.slice(s,e).filter(d=>d.pnl<0).length;}),...(_aPos.length?[_aL.length]:[])];
+  const _has144=_aPos.length||_expC.length;   // [2026-11-23] 144번 이후 구간에 종료 포지션도 셈(전에는 진행 중만)
+  const _actLabel=_has144?`144~${_tN}`:'';
+  const segs=['1~30','31~60','61~90','91~120','121~143',...(_has144?[_actLabel]:[])];
+  const sw=[...['1~30','31~60','61~90','91~120','121~143'].map((_,i)=>{const s=i*30,e=i===4?143:s+30;return DATA.slice(s,e).filter(d=>d.pnl>0).length;}),...(_has144?[_eW.length+_aW.length]:[])];
+  const sl=[...['1~30','31~60','61~90','91~120','121~143'].map((_,i)=>{const s=i*30,e=i===4?143:s+30;return DATA.slice(s,e).filter(d=>d.pnl<0).length;}),...(_has144?[_eL.length+_aL.length]:[])];
 
   _statCharts.bar=new Chart(document.getElementById('barChart'),{
     type:'bar',
@@ -3223,6 +3273,7 @@ loadPositions();
       var m;
       m = t.match(/투자금\(증거금\)\s*([^\s]+)/);        o.margin = m ? m[1] : '';
       m = t.match(/최대 가능 수익\s*([+\-][^\s]+)/);      o.maxp   = m ? m[1] : '';
+      m = t.match(/기대 수익률\s*([\d.~]+%)/);           o.er     = m ? m[1] : '';
       m = t.match(/현재 평가손익\s*([+\-][\d,\.]+만원)/); o.pnl    = m ? m[1] : '';
       /* ⚠ 아직 값이 안 붙은 포지션은 원본이 '업데이트 예정' 이라고 적어 둔다.
             빈칸으로 두면 고장난 것처럼 보인다 → 그대로 알려준다 */
@@ -3375,9 +3426,10 @@ loadPositions();
                ⚠ 캔버스를 그림으로 뜨려 했지만 **빈 그림**만 나왔다 (Chart.js 가 그린 내용을 버퍼에 안 남김).
                → 팝업을 그대로 열되, 모바일에서는 **아래에서 올라오는 시트**로 보이게 다듬는다. */
          +   '<div class="fm-pos-bd">'
-         +     '<div class="fm-grid2">'
+         +     '<div class="fm-grid2"'+(o.er?' style="grid-template-columns:1fr 1fr 1fr !important"':'')+'>'
          +       '<div class="fm-tile"><p class="fm-dim">투자금(증거금)</p><p class="v">'+esc(o.margin)+'</p></div>'
          +       '<div class="fm-tile"><p class="fm-dim">최대 가능 수익</p><p class="v" style="color:'+pnlCol(o.maxp)+'">'+esc(o.maxp)+'</p></div>'
+         +       (o.er ? '<div class="fm-tile"><p class="fm-dim">기대 수익률</p><p class="v" style="color:'+pnlCol('+')+'">'+esc(o.er)+'</p></div>' : '')
          +     '</div>'
          +     '<p class="fm-dim fm-note" style="margin-top:8px">'+esc([o.no, o.exp?('만기 '+o.exp):'', o.pnlUsd].filter(Boolean).join(' · '))+'</p>'
          +     (o.pid ? '<span class="fm-cta fm-detail-btn" data-pid="'+esc(o.pid)+'">차트 · 상세 보기 &rarr;</span>' : '')
@@ -4549,7 +4601,10 @@ html.theme-light{ --bg:#F3F3F3; --card:#FFFFFF; --card2:#F8F8F8; --b1:#E4E4E4; -
   html.theme-light body .pos-card > div:nth-child(3) > div{ background:none !important; border:none !important; border-radius:0 !important; padding:0 !important; }
   html.theme-light body .pos-card > div:nth-child(3) > div + div{ border-left:1px solid #EFEFEF !important; padding-left:14px !important; }
   html.theme-light body .pos-card > div:nth-child(3) > div > div:first-child{ font-size:12px !important; color:#767676 !important; margin-bottom:2px !important; }
-  html.theme-light body .pos-card > div:nth-child(3) > div > div:last-child{ font-size:22px !important; font-weight:500 !important; letter-spacing:-.03em !important; }
+  html.theme-light body .pos-card > div:nth-child(3) > div > div:last-child{ font-size:17px !important; font-weight:500 !important; letter-spacing:-.03em !important; white-space:nowrap; }
+  html.theme-light body .pos-card > div:nth-child(3){ grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.12fr) !important; }
+  html.theme-light body .pos-card > div:nth-child(3) > div + div{ padding-left:7px !important; }
+  html.theme-light body .pos-card > div:nth-child(3) > div > div:first-child{ font-size:11px !important; white-space:nowrap !important; letter-spacing:-.03em; }
   html.theme-light body .pos-card .pnl-row{ background:none !important; border:none !important; border-top:1px solid #F1F1F1 !important; border-radius:0 !important; padding:10px 0 0 !important; margin:12px 0 10px !important; }
   html.theme-light body .pos-card .pnl-label{ font-size:12.5px !important; color:#767676 !important; }
   html.theme-light body .pos-card .pnl-val{ font-size:15px !important; font-weight:600 !important; }
@@ -5239,7 +5294,7 @@ html.theme-light{ --bg:#F3F3F3; --card:#FFFFFF; --card2:#F8F8F8; --b1:#E4E4E4; -
   #jk2 .jk2-sub .jk2-mi.on:before{ left:-36px; top:10px; bottom:10px; }
   #jk2 .jk2-copy{ font-size:12px; }
   html.theme-light body .pos-grid{ display:flex !important; flex-direction:column; gap:0 !important; background:#fff; border:1px solid #E4E4E4; border-radius:16px; overflow:hidden; }
-  html.theme-light body .pos-grid > .jk2-lh, html.theme-light body .pos-grid > .pos-card{ display:grid !important; grid-template-columns:minmax(250px,1.6fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.1fr) minmax(230px,1.7fr) 84px; column-gap:28px; align-items:center; }
+  html.theme-light body .pos-grid > .jk2-lh, html.theme-light body .pos-grid > .pos-card{ display:grid !important; grid-template-columns:minmax(250px,1.6fr) minmax(0,.85fr) minmax(0,.85fr) minmax(76px,.7fr) minmax(0,1.1fr) minmax(230px,1.7fr) 84px; column-gap:24px; align-items:center; }
   html.theme-light body .pos-grid > .jk2-lh{ padding:13px 26px 11px; font-size:12px; color:#9C9C9C; border-bottom:1px solid #EFEFEF; }
   html.theme-light body .pos-grid > .pos-card{ grid-template-rows:auto auto; border:none !important; border-top:1px solid #F2F2F2 !important; border-radius:0 !important; padding:15px 26px !important; background:#fff !important; box-shadow:none !important; }
   html.theme-light body .pos-grid > .jk2-lh + .pos-card{ border-top:none !important; }
@@ -5252,17 +5307,18 @@ html.theme-light{ --bg:#F3F3F3; --card:#FFFFFF; --card2:#F8F8F8; --b1:#E4E4E4; -
   html.theme-light body .pos-card > div:nth-child(3){ display:contents !important; }
   html.theme-light body .pos-card > div:nth-child(3) > div, html.theme-light body .pos-card > div:nth-child(3) > div + div{ grid-row:1/3; padding:0 !important; border:none !important; }
   html.theme-light body .pos-card > div:nth-child(3) > div:first-child{ grid-column:2; }
-  html.theme-light body .pos-card > div:nth-child(3) > div:last-child{ grid-column:3; }
+  html.theme-light body .pos-card > div:nth-child(3) > div:nth-child(2){ grid-column:3; }
+  html.theme-light body .pos-card > div:nth-child(3) > div:nth-child(3){ grid-column:4; }
   html.theme-light body .pos-card > div:nth-child(3) > div > div:first-child{ display:none !important; }
   html.theme-light body .pos-card > div:nth-child(3) > div > div:last-child{ font-size:16px !important; font-weight:500 !important; letter-spacing:-.02em !important; }
-  html.theme-light body .pos-card .pnl-row{ grid-column:4; grid-row:1/3; margin:0 !important; padding:0 !important; border:none !important; justify-content:flex-start !important; }
+  html.theme-light body .pos-card .pnl-row{ grid-column:5; grid-row:1/3; margin:0 !important; padding:0 !important; border:none !important; justify-content:flex-start !important; }
   html.theme-light body .pos-card .pnl-label{ display:none !important; }
   html.theme-light body .pos-card .pnl-val{ font-size:16px !important; font-weight:500 !important; }
-  html.theme-light body .pos-card > div:nth-child(5){ grid-column:5; grid-row:1/3; margin:0 !important; }
+  html.theme-light body .pos-card > div:nth-child(5){ grid-column:6; grid-row:1/3; margin:0 !important; }
   html.theme-light body .pos-card > div:nth-child(5) > div:first-child{ margin-bottom:7px !important; }
   html.theme-light body .pos-card > div:nth-child(5) > div:first-child span:first-child{ font-size:13px !important; color:#5B5B5B !important; }
   html.theme-light body .pos-card > div:nth-child(5) > div:nth-child(3){ display:none !important; }
-  html.theme-light body .pos-card > div:nth-child(6){ grid-column:6; grid-row:1/3; justify-content:flex-end !important; padding:0 !important; border:none !important; }
+  html.theme-light body .pos-card > div:nth-child(6){ grid-column:7; grid-row:1/3; justify-content:flex-end !important; padding:0 !important; border:none !important; }
   html.theme-light body .pos-card > div:nth-child(6) > span:first-child{ display:none; }
 }
   html.theme-light body .pos-grid > .jk2-lx{ padding:22px 26px 10px; font-size:13px; font-weight:600; color:#111; border-top:1px solid #E4E4E4; background:#FAFAFA; }
@@ -5271,7 +5327,7 @@ html.theme-light{ --bg:#F3F3F3; --card:#FFFFFF; --card2:#F8F8F8; --b1:#E4E4E4; -
 </style>
 <script id="jk2-list-js-2026-11-14">
 (function(){
-  var LH=['종목','투자금(증거금)','최대 가능 수익','현재 평가손익','월물과 만기',''];
+  var LH=['종목','투자금(증거금)','최대 가능 수익','기대 수익률','현재 평가손익','월물과 만기',''];
   function ensure(){ var g=document.getElementById('posGrid'); if(!g) return; var f=g.firstElementChild;
     if(!(f&&f.classList.contains('jk2-lh'))){ var old=g.querySelector(':scope > .jk2-lh'); if(old) old.remove();
     var h=document.createElement('div'); h.className='jk2-lh'; LH.forEach(function(t){ var s=document.createElement('span'); s.textContent=t; h.appendChild(s); }); g.insertBefore(h,g.firstChild); }
@@ -5424,16 +5480,18 @@ html.theme-light{ --bg:#F3F3F3; --card:#FFFFFF; --card2:#F8F8F8; --b1:#E4E4E4; -
   html.theme-light body .pos-grid > .pos-card .pnl-val.profit, html.theme-light body .pos-grid > .pos-card .pnl-val.loss{ display:inline-grid !important; grid-template-columns:66px auto; column-gap:8px; justify-items:end; align-items:baseline; }
   html.theme-light body .pos-grid > .pos-card .pnl-val.profit, html.theme-light body .pos-grid > .pos-card .pnl-val.loss{ grid-template-columns:66px 62px !important; }
   html.theme-light body .pos-grid > .pos-card .pnl-val > span{ justify-self:end; }
-  html.theme-light body .pos-grid > .jk2-lh > span:nth-child(4){ display:inline-grid; grid-template-columns:66px 62px; column-gap:8px; justify-items:end; white-space:nowrap; }
-  html.theme-light body .pos-grid > .jk2-lh > span:nth-child(4)::after{ content:"(달러)"; }
+  html.theme-light body .pos-grid > .jk2-lh > span:nth-child(5){ display:inline-grid; grid-template-columns:66px 62px; column-gap:8px; justify-items:end; white-space:nowrap; }
+  html.theme-light body .pos-grid > .jk2-lh > span:nth-child(5)::after{ content:"(달러)"; }
   /* 머리줄: 월물과 만기 칸 오른쪽 끝에 잔존일 */
-  html.theme-light body .pos-grid > .jk2-lh > span:nth-child(5){ display:flex; justify-content:space-between; }
-  html.theme-light body .pos-grid > .jk2-lh > span:nth-child(5)::after{ content:"잔존일"; }
+  html.theme-light body .pos-grid > .jk2-lh > span:nth-child(6){ display:flex; justify-content:space-between; }
+  html.theme-light body .pos-grid > .jk2-lh > span:nth-child(6)::after{ content:"잔존일"; }
 }
 /* [2026-11-15 직트 「꼭 봐야 하는 곳만 참고 이미지의 초록으로 포인트」] 수익은 붉은색, 손실은 파란색 그대로. 초록은 「새로 올라온 것」 표시에만 */
 html.theme-light body span[style*="border:1px solid var(--accent)"]{ color:#12964F !important; border-color:#BFE8D0 !important; background:#EEFAF3 !important; }
 html.theme-light body span[style*="border:1px solid var(--accent)"]::before{ content:""; display:inline-block; width:6px; height:6px; border-radius:50%; background:#1DB868; margin-right:7px; vertical-align:middle; position:relative; top:-1px; }
-@media (min-width:1100px){ html.theme-light body .pos-grid > .pos-card.new-pos{ box-shadow:inset 3px 0 0 #1DB868 !important; } }
+/* [2026-11-23 직트 「점으로 바꾸는 게 낫겠다. 동그라미」] 신규 진입 줄: 왼쪽 막대 대신 왼쪽 여백에 작은 점. 종목명 자리는 다른 줄과 같게 둔다 */
+@media (min-width:1100px){ html.theme-light body .pos-grid > .pos-card.new-pos{ box-shadow:none !important; position:relative; }
+  html.theme-light body .pos-grid > .pos-card.new-pos::before{ content:""; position:absolute; left:11px; top:27px; width:7px; height:7px; margin-top:-3.5px; border-radius:50%; background:#1DB868; } }
 </style>
 <style id="jk-hover-lift-2026-11-15">
 /* [2026-11-15 직트 「클릭이 되는 영역에도 붕 뜨는 효과」] 홈 화면과 같은 떠오름: 위로 3px, 옅은 그림자. 화면 전용 */
@@ -5595,5 +5653,64 @@ html body .fm-cta:hover, html body .action-btn:hover, html body .filter-btn:hove
 (function(){ try{ var m=(location.hash||'').match(/jk2t=(\d)/); if(!m) return;
   function go(){ var b=document.querySelector('#jk2 [data-jk2t="'+m[1]+'"]'); if(b){ b.click(); window.scrollTo(0,0); } }
   setTimeout(go,700); }catch(e){} })();
+
+/* [2026-11-23 직트 「여백이 좌측에 엄청 남잖아」「접기로 접혀 있어야지 원래 그 레이아웃에 맞게」]
+   넓은 화면에서 이번 주 신규 추천이 왼쪽 보유 및 청산 칸보다 길면, 왼쪽 칸 높이에 맞는 줄까지만 두고 나머지는 접는다.
+   두 칸이 나란히 있을 때만 접고(휴대폰, 좁은 화면은 그대로), 왼쪽에서 표를 열어 길어지면 그만큼 다시 편다 */
+(function(){ try{
+  var st=document.createElement('style');
+  st.textContent='html body #t1 > div > table tr.rec-row.jk2-rec-hide.jk2-rec-hide{display:none !important;}'
+    +'html body #t1 .jk2-rec-more{grid-column:1/-1;margin-top:12px;width:100%;}';
+  document.head.appendChild(st);
+  var open=false, btn=null, tm=null;
+  function parts(){ return [document.querySelector('#t1 > div[style*="var(--card)"]:not([style*="position:relative"])'), document.querySelector('#t1 > div[style*="position:relative"]')]; }
+  /* 왼쪽 칸 내용 높이: 보이는 자식(숨김, 떠 있는 것 제외)의 가장 아래 끝 + 아래 여백 */
+  function contentH(el){ var r=el.getBoundingClientRect(), b=0, cs=getComputedStyle(el);
+    [].forEach.call(el.children,function(x){ var s=getComputedStyle(x); if(s.display==='none'||s.position==='absolute'||s.position==='fixed') return; b=Math.max(b,x.getBoundingClientRect().bottom-r.top+parseFloat(s.marginBottom||0)); });
+    return b?b+parseFloat(cs.paddingBottom||0)+parseFloat(cs.borderBottomWidth||0):r.height; }
+  function label(n){ btn.textContent=open?'이번 주 신규 추천 전체 보기':('이번 주 신규 추천 나머지 '+n+'건'); var i=document.createElement('i'); i.textContent=open?'접기':'펼치기'; btn.appendChild(i); }
+  function fit(){ var p=parts(), c=p[0], l=p[1]; if(!c||!l) return; var tb=c.querySelector(':scope > table'); if(!tb) return;
+    var rows=[].slice.call(tb.querySelectorAll('tr.rec-row')); rows.forEach(function(r){ r.classList.remove('jk2-rec-hide'); });
+    if(!btn){ btn=document.createElement('button'); btn.type='button'; btn.className='jk2-fold-btn jk2-rec-more';
+      btn.addEventListener('click',function(){ open=!open; fit(); }); tb.parentNode.insertBefore(btn,tb.nextSibling); }
+    var foot=c.querySelector(':scope > div:first-child > span:nth-child(3)');
+    if(getComputedStyle(c).display==='grid'){ c.style.gridTemplateRows='auto 1fr auto auto'; btn.style.gridRow='3'; if(foot) foot.style.gridRow='4'; }
+    btn.style.display='none';
+    var cr=c.getBoundingClientRect(), lr=l.getBoundingClientRect();
+    if(!(cr.left>=lr.right-1) || rows.length<4) return;   // 나란히 있을 때만
+    var lh=contentH(l), sa=c.style.alignSelf; c.style.alignSelf='start';
+    try{ if(c.getBoundingClientRect().height<=lh+1) return;
+      btn.style.display='';
+      if(open){ label(0); return; }
+      /* 양매도는 두 줄이라 포지션(같은 gotoCard) 단위로 접는다. 위 「n건」과 같은 셈 */
+      var G=[], key=null; rows.forEach(function(r){ var k2=r.getAttribute('onclick')||r.rowIndex; if(k2!==key){ G.push([]); key=k2; } G[G.length-1].push(r); });
+      var k=G.length; label(0);
+      while(k>1 && c.getBoundingClientRect().height>lh+1){ k--; G[k].forEach(function(r){ r.classList.add('jk2-rec-hide'); }); label(G.length-k); }
+    } finally { c.style.alignSelf=sa; } }
+  function later(){ clearTimeout(tm); tm=setTimeout(fit,60); }
+  window.addEventListener('resize',later);
+  function watch(){ var l=parts()[1]; if(l) new MutationObserver(later).observe(l,{childList:true,subtree:true,attributes:true,attributeFilter:['style','class']}); }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',function(){ watch(); later(); }); else { watch(); later(); }
+  setTimeout(fit,900); setTimeout(fit,2200);
+}catch(e){} })();
 </script>
+<style id="jk-er-narrow-2026-11-23">
+@media (min-width:1100px) and (max-width:1535px){
+  html.theme-light body .pos-grid > .jk2-lh, html.theme-light body .pos-grid > .pos-card{ grid-template-columns:minmax(252px,1.6fr) minmax(0,.8fr) minmax(0,.8fr) minmax(0,.7fr) minmax(0,1fr) minmax(140px,1.5fr) 80px !important; column-gap:12px !important; }
+  html.theme-light body .pos-grid > .jk2-lh{ padding-left:16px !important; padding-right:16px !important; }
+  html.theme-light body .pos-grid > .pos-card{ padding-left:16px !important; padding-right:16px !important; }
+  html.theme-light body .pos-grid > .pos-card.new-pos::before{ left:6px !important; }
+  html.theme-light body .pos-grid > .pos-card .pnl-val.profit, html.theme-light body .pos-grid > .pos-card .pnl-val.loss{ grid-template-columns:auto !important; justify-items:start !important; row-gap:1px; }
+  html.theme-light body .pos-grid > .pos-card .pnl-val > span{ justify-self:start !important; }
+  html.theme-light body .pos-grid > .jk2-lh > span:nth-child(5){ display:flex !important; flex-direction:column; align-items:flex-start; }
+}
+@media (min-width:1100px) and (max-width:1279px){
+  html.theme-light body .pos-grid > .jk2-lh, html.theme-light body .pos-grid > .pos-card{ grid-template-columns:minmax(252px,1.6fr) minmax(0,.8fr) minmax(0,.8fr) minmax(62px,.7fr) minmax(0,1fr) minmax(100px,1.1fr) 72px !important; column-gap:10px !important; }
+  html.theme-light body .pos-card > div:nth-child(3) > div > div:last-child{ font-size:14.5px !important; }
+  html.theme-light body .pos-grid > .pos-card .pnl-val{ font-size:14.5px !important; }
+  html.theme-light body .pos-grid > .pos-card .pnl-val.neutral{ white-space:normal !important; font-size:12px !important; }
+}
+/* 기대 수익률이 범위(7.23~113.6%)면 물결 뒤에서 줄을 바꿀 수 있게 */
+html.theme-light body .pos-card > div:nth-child(3) > div:nth-child(3) > div:last-child{ white-space:normal !important; }
+</style>
 </html>
